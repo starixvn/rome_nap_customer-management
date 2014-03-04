@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14C507F3-3AEF-4BFF-B597-EA9FC46B75C1}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.NAP.Miscellany.Websites</RootNamespace>
+    <AssemblyName>Fanex.NAP.Miscellany.Websites</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Core">
+      <HintPath>..\packages\BundleTransformer.Core.1.8.23\lib\net40\BundleTransformer.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleTransformer.Less">
+      <HintPath>..\packages\BundleTransformer.Less.1.8.25\lib\net40\BundleTransformer.Less.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\Dependencies\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging">
+      <HintPath>..\Dependencies\Fanex\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Core">
+      <HintPath>..\Dependencies\Fanex\Fanex.NAP.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Framework">
+      <HintPath>..\Dependencies\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Core">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.1.1.0\lib\net40\JavaScriptEngineSwitcher.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Msie">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Msie.1.1.2\lib\net40\JavaScriptEngineSwitcher.Msie.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="MsieJavaScriptEngine">
+      <HintPath>..\packages\MsieJavaScriptEngine.1.4.0\lib\net40\MsieJavaScriptEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20710.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Providers">
+      <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.1\lib\net40\System.Web.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="UMControllerLibrary">
+      <HintPath>..\Dependencies\Others\UMControllerLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\UserControl\Controllers\UserController.cs" />
+    <Compile Include="Areas\UserControl\UserControlAreaRegistration.cs" />
+    <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
+    <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
+    <Compile Include="Areas\UserLogin\Controllers\UserSiteController.cs" />
+    <Compile Include="Areas\UserLogin\UserLoginAreaRegistration.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\NAPCommonSpNames.xml" />
+    <Content Include="Areas\UserLogin\scripts\lib\jquery-1.8.0.min.js" />
+    <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
+    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.svg" />
+    <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
+    <Content Include="Areas\UserLogin\themes\img\bg.png" />
+    <Content Include="Areas\UserLogin\themes\img\bg_header.png" />
+    <Content Include="Areas\UserLogin\themes\img\down.png" />
+    <Content Include="Areas\UserLogin\themes\img\firefox_original.png" />
+    <Content Include="Areas\UserLogin\themes\img\ie.png" />
+    <Content Include="Areas\UserLogin\themes\img\lock.png" />
+    <Content Include="Areas\UserLogin\themes\img\logo.png" />
+    <Content Include="Areas\UserLogin\themes\img\password.png" />
+    <Content Include="Areas\UserLogin\themes\img\pattern6.png" />
+    <Content Include="Areas\UserLogin\themes\img\title-bg.jpg" />
+    <Content Include="Areas\UserLogin\themes\img\username.png" />
+    <Content Include="Areas\UserLogin\themes\img\warn.png" />
+    <Content Include="Areas\UserLogin\themes\img\welcome.png" />
+    <Content Include="Content\Themes\img\1350530947_page_excel.png" />
+    <Content Include="Content\Themes\img\actions\add-user.png" />
+    <Content Include="Content\Themes\img\actions\chgpwd-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\action-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\chgpwd-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\edit-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\permission-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\site-ico.png" />
+    <Content Include="Content\Themes\img\actions\dd\user-info-ico.png" />
+    <Content Include="Content\Themes\img\actions\edit-ico.png" />
+    <Content Include="Content\Themes\img\actions\permission-ico.png" />
+    <Content Include="Content\Themes\img\actions\site-ico.png" />
+    <Content Include="Content\Themes\img\actions\url-ico.png" />
+    <Content Include="Content\Themes\img\actions\user-info-ico.png" />
+    <Content Include="Content\Themes\img\arrow-down.png" />
+    <Content Include="Content\Themes\img\arrow-up.png" />
+    <Content Include="Content\Themes\img\bg-menu.png" />
+    <Content Include="Content\Themes\img\bg-submenu-more.png" />
+    <Content Include="Content\Themes\img\bgmenu-hover.png" />
+    <Content Include="Content\Themes\img\bgmenu-more.png" />
+    <Content Include="Content\Themes\img\bg_body.png" />
+    <Content Include="Content\Themes\img\bg_footer.jpg" />
+    <Content Include="Content\Themes\img\bg_header.png" />
+    <Content Include="Content\Themes\img\blank.png" />
+    <Content Include="Content\Themes\img\btn-edit.png" />
+    <Content Include="Content\Themes\img\chosen-sprite.png" />
+    <Content Include="Content\Themes\img\collapse-icon.png" />
+    <Content Include="Content\Themes\img\collapse-small.png" />
+    <Content Include="Content\Themes\img\collapsed.png" />
+    <Content Include="Content\Themes\img\combo-pickr\bottom.png" />
+    <Content Include="Content\Themes\img\combo-pickr\closebutton.png" />
+    <Content Include="Content\Themes\img\combo-pickr\inner.png" />
+    <Content Include="Content\Themes\img\combo-pickr\link-overlay.png" />
+    <Content Include="Content\Themes\img\combo-pickr\mainbg.png" />
+    <Content Include="Content\Themes\img\combo-pickr\openbutton.png" />
+    <Content Include="Content\Themes\img\Controls.png" />
+    <Content Include="Content\Themes\img\edit-icon.png" />
+    <Content Include="Content\Themes\img\excel-icon.png" />
+    <Content Include="Content\Themes\img\expand-icon.png" />
+    <Content Include="Content\Themes\img\expand-small.png" />
+    <Content Include="Content\Themes\img\expanded.png" />
+    <Content Include="Content\Themes\img\favorite-icon.png" />
+    <Content Include="Content\Themes\img\grid-view.png" />
+    <Content Include="Content\Themes\img\hub.png" />
+    <Content Include="Content\Themes\img\icn-collpase.png" />
+    <Content Include="Content\Themes\img\icn-expand.png" />
+    <Content Include="Content\Themes\img\icon-calendar.png" />
+    <Content Include="Content\Themes\img\info-square-blue.png" />
+    <Content Include="Content\Themes\img\information-icon.png" />
+    <Content Include="Content\Themes\img\information-icon2.png" />
+    <Content Include="Content\Themes\img\info_blue.png" />
+    <Content Include="Content\Themes\img\lnk-white.png" />
+    <Content Include="Content\Themes\img\loading.gif" />
+    <Content Include="Content\Themes\img\logo.png" />
+    <Content Include="Content\Themes\img\logo1.png" />
+    <Content Include="Content\Themes\img\logo2.png" />
+    <Content Include="Content\Themes\img\logo3.png" />
+    <Content Include="Content\Themes\img\moreinfo.png" />
+    <Content Include="Content\Themes\img\report-icon.png" />
+    <Content Include="Content\Themes\img\seperation.png" />
+    <Content Include="Content\Themes\img\setting.png" />
+    <Content Include="Content\Themes\img\small-arrow-down.png" />
+    <Content Include="Content\Themes\img\sort-icon.png" />
+    <Content Include="Content\Themes\img\sprites-image.png" />
+    <Content Include="Content\Themes\img\sprites.png" />
+    <Content Include="Content\Themes\img\textures\fabric.png" />
+    <Content Include="Content\Themes\img\textures\grid.png" />
+    <Content Include="Content\Themes\img\textures\scratches.png" />
+    <Content Include="Content\Themes\img\tick-ico-16.png" />
+    <Content Include="Content\Themes\img\tree-view.png" />
+    <Content Include="Content\Themes\img\ui-modal-btn.png" />
+    <Content Include="Content\Themes\img\user.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_flat_60_4264ac_40x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_flat_75_5476bb_40x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_flat_90_466bb9_40x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_flat_90_aaaaaa_40x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_glass_45_f4f3f1_1x400.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_glass_55_f8da4e_1x400.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_gloss-wave_45_e14f1c_500x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_highlight-soft_90_999999_1x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_4264ac_256x240.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_c6cddc_256x240.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_cbd4e6_256x240.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_d0d9ec_256x240.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_f7a50d_256x240.png" />
+    <Content Include="Content\Themes\jquery\images\ui-icons_fcd113_256x240.png" />
+    <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.css" />
+    <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
+    <Content Include="Content\Themes\reset.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\Layout.js" />
+    <Content Include="Scripts\Libs\others\Namespace.js" />
+    <Content Include="Scripts\Miscellany.js" />
+    <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.css" />
+    <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.js" />
+    <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Pagination.css" />
+    <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Pagination.js" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\1350530947_page_excel.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\ajax-loader.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\back-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\bgtitle.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\bg_gloss_wave.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\check-box.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\collapse-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\collapse-small.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\email.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\excel-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\expand-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\expand-small.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\go-hover-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\icn_add.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\icn_del.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\icn_edit.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\icon_page.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\refresh_icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\report_check.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\send-mail.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\seperations.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\setting.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sort-icon-new.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sort-icon-new1.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sort-icon-new3.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sort-icon.png" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sorting_asc.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sorting_bg.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\sorting_desc.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\images\white-top-bottom.gif" />
+    <Content Include="Scripts\Libs\Fanex.Grid\moment.js" />
+    <Content Include="Scripts\Libs\Fanex.Grid\numeral.js" />
+    <Content Include="Scripts\Libs\html5-libs\head.js" />
+    <Content Include="Scripts\Libs\html5-libs\html5shiv.js" />
+    <Content Include="Scripts\Libs\html5-libs\html5shiv.min.js" />
+    <Content Include="Scripts\Libs\html5-libs\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Libs\html5-libs\modernizr-2.6.2.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-migrate-1.2.1.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.cookie.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.cookie.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.easing.1.3.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.numeric-1.3.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.numeric-1.3.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.selectBoxIt.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.selectBoxIt.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.validate-1.10.0.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.validate-1.10.0.min.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Libs\msgbox\images\alert.png" />
+    <Content Include="Scripts\Libs\msgbox\images\btn-close.png" />
+    <Content Include="Scripts\Libs\msgbox\images\confirm.png" />
+    <Content Include="Scripts\Libs\msgbox\images\error.png" />
+    <Content Include="Scripts\Libs\msgbox\images\info.png" />
+    <Content Include="Scripts\Libs\msgbox\images\question.png" />
+    <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.css" />
+    <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Sites\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Controllers\Fanex.NAP.Miscellany.Controllers.csproj">
+      <Project>{2C4A415A-8958-443C-A2FA-A82B3E001B25}</Project>
+      <Name>Fanex.NAP.Miscellany.Controllers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Core\Fanex.NAP.Miscellany.Core.csproj">
+      <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
+      <Name>Fanex.NAP.Miscellany.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.ConnectionString.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.AppSettings.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\UserControl\Views\User\ChangePassword.cshtml" />
+    <Content Include="Areas\UserControl\Views\User\UserProfile.cshtml" />
+    <Content Include="Areas\UserControl\Views\Web.config" />
+    <Content Include="Areas\UserLogin\Views\Common\Offline.cshtml" />
+    <Content Include="Areas\UserLogin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\UserLogin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\UserLogin\Views\SSO\SSOIndex.cshtml" />
+    <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
+    <Content Include="Areas\UserLogin\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Areas\UserLogin\themes\fonts\Abel.woff" />
+    <None Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
+    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.eot" />
+    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.otf" />
+    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.ttf" />
+    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Areas\UserLogin\themes\login.less" />
+    <Content Include="Areas\UserLogin\themes\select-site.less" />
+    <None Include="BundleTransformer.Configuration.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Content\Themes\colors.less" />
+    <Content Include="Content\Themes\common.less" />
+    <Content Include="Content\Themes\fonts.less" />
+    <None Include="Content\Themes\fonts\OpenSans.woff" />
+    <None Include="Content\Themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Content\Themes\grid.less" />
+    <None Include="Content\Themes\jqueryui-custom.less" />
+    <Content Include="Content\Themes\style.less" />
+    <None Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.less" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\CloseOpenMember\Index.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51897</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

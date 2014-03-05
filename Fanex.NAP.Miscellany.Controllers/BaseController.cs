@@ -33,7 +33,7 @@ namespace Fanex.NAP.Miscellany.Controllers
 
         protected readonly int SiteId = NapSettings.Settings.SiteId;
 
-        private int _isSiteLogin = NapSettings.Settings.IsSiteLogin;
+        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
         private IUserService _userService;
 
@@ -52,7 +52,7 @@ namespace Fanex.NAP.Miscellany.Controllers
             {
                 IsLive = this.Environment.Equals(Constant.LIVE),
                 HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.ReCheckIn
+                IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
 
             this._userService = new UserService { ServiceContext = ServiceContext };
@@ -63,11 +63,11 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// If "0", users must login through NAP Hub.
         /// </summary>
         /// <value>Is site login.</value>
-        public int IsSiteLogin
+        public bool EnableDirectLogin
         {
             get
             {
-                return this._isSiteLogin;
+                return this._enableDirectLogin;
             }
         }
 

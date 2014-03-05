@@ -97,6 +97,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This function enables you to OPEN/CLOSE all downline Members without changing current status od Super/Master/Agnet.&lt;br/&gt;You can OPEN/CLOSE only Credit Members..
+        /// </summary>
+        public static string CloseOpenMemberNote {
+            get {
+                return ResourceManager.GetString("CloseOpenMemberNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm password cannot be empty..
         /// </summary>
         public static string ConfirmPasswordCannotEmpty {

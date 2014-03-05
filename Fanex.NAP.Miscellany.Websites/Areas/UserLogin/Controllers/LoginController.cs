@@ -18,6 +18,7 @@ namespace Fanex.NAP.Miscellany.Areas.UserLogin.Controllers
     using System.Web.Security;
     using Fanex.Common;
     using Fanex.Common.Extensions;
+    using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
@@ -77,11 +78,15 @@ namespace Fanex.NAP.Miscellany.Areas.UserLogin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var maintenanceInfo = this._maintenanceService.GetDowntimeInfo();
-
-            if (maintenanceInfo.IsDowntime)
+            if (!NapSettings.Settings.IsNapHub && !EnableDirectLogin)
             {
-                return this.RedirectToAction("Offline", "Common");
+                // if login-directly feature is disabled then redirect users to NAP Hub
+                return Redirect(NapSettings.Settings.HubUrl);
+            }
+
+            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
+            {
+                return RedirectToAction("Offline", "Common");
             }
 
             return View();
@@ -145,28 +150,16 @@ namespace Fanex.NAP.Miscellany.Areas.UserLogin.Controllers
                             this.CreateAuthInfo(user);
 
                             // if the user login directly, not through NAP Hub
-                            if (this.IsSiteLogin == 1)
+                            if (this.EnableDirectLogin)
                             {
                                 // checks if logging-in user is active on this site
-                                bool userIsActiveOnThisSite = false;
-
-                                foreach (var siteLevel in siteLevelList)
+                                if (siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any())
                                 {
-                                    if (siteLevel.Site.Id == this.SiteId && siteLevel.IsActive)
-                                    {
-                                        userIsActiveOnThisSite = true;
-                                    }
+                                    return Redirect(FormsAuthentication.DefaultUrl);
                                 }
 
-                                if (userIsActiveOnThisSite)
-                                {
-                                    return this.Redirect(FormsAuthentication.DefaultUrl);
-                                }
-                                else
-                                {
-                                    this.DoSignOut();
-                                    ViewBag.Message = ViewResources.Your_account_was_suspended;
-                                }
+                                DoSignOut();
+                                ViewBag.Message = ViewResources.Your_account_was_suspended;
                             }
                             else
                             {

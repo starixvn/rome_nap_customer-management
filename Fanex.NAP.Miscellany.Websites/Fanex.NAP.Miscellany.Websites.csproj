@@ -186,7 +186,6 @@
     <Content Include="Areas\UserLogin\themes\img\username.png" />
     <Content Include="Areas\UserLogin\themes\img\warn.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
-    <Content Include="Content\Themes\img\1350530947_page_excel.png" />
     <Content Include="Content\Themes\img\actions\add-user.png" />
     <Content Include="Content\Themes\img\actions\chgpwd-ico.png" />
     <Content Include="Content\Themes\img\actions\dd\action-ico.png" />
@@ -200,55 +199,25 @@
     <Content Include="Content\Themes\img\actions\site-ico.png" />
     <Content Include="Content\Themes\img\actions\url-ico.png" />
     <Content Include="Content\Themes\img\actions\user-info-ico.png" />
-    <Content Include="Content\Themes\img\arrow-down.png" />
-    <Content Include="Content\Themes\img\arrow-up.png" />
-    <Content Include="Content\Themes\img\bg-menu.png" />
-    <Content Include="Content\Themes\img\bg-submenu-more.png" />
     <Content Include="Content\Themes\img\bgmenu-hover.png" />
     <Content Include="Content\Themes\img\bgmenu-more.png" />
-    <Content Include="Content\Themes\img\bg_body.png" />
     <Content Include="Content\Themes\img\bg_footer.jpg" />
     <Content Include="Content\Themes\img\bg_header.png" />
     <Content Include="Content\Themes\img\blank.png" />
-    <Content Include="Content\Themes\img\btn-edit.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
-    <Content Include="Content\Themes\img\collapse-small.png" />
-    <Content Include="Content\Themes\img\collapsed.png" />
-    <Content Include="Content\Themes\img\combo-pickr\bottom.png" />
-    <Content Include="Content\Themes\img\combo-pickr\closebutton.png" />
-    <Content Include="Content\Themes\img\combo-pickr\inner.png" />
-    <Content Include="Content\Themes\img\combo-pickr\link-overlay.png" />
-    <Content Include="Content\Themes\img\combo-pickr\mainbg.png" />
-    <Content Include="Content\Themes\img\combo-pickr\openbutton.png" />
-    <Content Include="Content\Themes\img\Controls.png" />
-    <Content Include="Content\Themes\img\edit-icon.png" />
-    <Content Include="Content\Themes\img\excel-icon.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
-    <Content Include="Content\Themes\img\expand-small.png" />
-    <Content Include="Content\Themes\img\expanded.png" />
-    <Content Include="Content\Themes\img\favorite-icon.png" />
     <Content Include="Content\Themes\img\grid-view.png" />
-    <Content Include="Content\Themes\img\hub.png" />
     <Content Include="Content\Themes\img\icn-collpase.png" />
     <Content Include="Content\Themes\img\icn-expand.png" />
     <Content Include="Content\Themes\img\icon-calendar.png" />
-    <Content Include="Content\Themes\img\info-square-blue.png" />
     <Content Include="Content\Themes\img\information-icon.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\info_blue.png" />
-    <Content Include="Content\Themes\img\lnk-white.png" />
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
-    <Content Include="Content\Themes\img\logo1.png" />
-    <Content Include="Content\Themes\img\logo2.png" />
-    <Content Include="Content\Themes\img\logo3.png" />
-    <Content Include="Content\Themes\img\moreinfo.png" />
-    <Content Include="Content\Themes\img\report-icon.png" />
     <Content Include="Content\Themes\img\seperation.png" />
-    <Content Include="Content\Themes\img\setting.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
-    <Content Include="Content\Themes\img\sort-icon.png" />
     <Content Include="Content\Themes\img\sprites-image.png" />
     <Content Include="Content\Themes\img\sprites.png" />
     <Content Include="Content\Themes\img\textures\fabric.png" />
@@ -256,7 +225,6 @@
     <Content Include="Content\Themes\img\textures\scratches.png" />
     <Content Include="Content\Themes\img\tick-ico-16.png" />
     <Content Include="Content\Themes\img\tree-view.png" />
-    <Content Include="Content\Themes\img\ui-modal-btn.png" />
     <Content Include="Content\Themes\img\user.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_60_4264ac_40x100.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_75_5476bb_40x100.png" />
@@ -278,7 +246,13 @@
     <Content Include="Content\Themes\reset.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Layout.js" />
+    <Content Include="Scripts\Libs\DatePicker\images\icon-calendar.png" />
+    <Content Include="Scripts\Libs\DatePicker\jquery.nexDatePicker.css" />
+    <Content Include="Scripts\Libs\DatePicker\jquery.nexDatePicker.js" />
     <Content Include="Scripts\Libs\others\Namespace.js" />
+    <Content Include="Scripts\Libs\Tipsy\jquery.tipsy.js" />
+    <Content Include="Scripts\Libs\Tipsy\jquery.tipsy.min.js" />
+    <Content Include="Scripts\Libs\Tipsy\tipsy.css" />
     <Content Include="Scripts\Miscellany.js" />
     <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.css" />
     <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.js" />
@@ -347,6 +321,7 @@
     <Content Include="Scripts\Libs\msgbox\images\question.png" />
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.css" />
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
+    <Content Include="Scripts\Sites\OpenCloseMember.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -359,9 +334,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Sites\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -407,10 +380,11 @@
     <Content Include="Content\Themes\colors.less" />
     <Content Include="Content\Themes\common.less" />
     <Content Include="Content\Themes\fonts.less" />
+    <Content Include="Content\Sites\openCloseMember.less" />
     <None Include="Content\Themes\fonts\OpenSans.woff" />
     <None Include="Content\Themes\fonts\YanoneKaffeesatz.woff" />
     <Content Include="Content\Themes\grid.less" />
-    <None Include="Content\Themes\jqueryui-custom.less" />
+    <Content Include="Content\Themes\jqueryui-custom.less" />
     <Content Include="Content\Themes\style.less" />
     <None Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.less" />
     <Content Include="Views\Error\AccessDenied.cshtml" />

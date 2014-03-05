@@ -28,6 +28,7 @@ namespace Fanex.NAP.Miscellany.Websites
         {
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
+            RegisterOpenCloseMemberBundles(bundles);
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Fanex.NAP.Miscellany.Websites
         public static void RegisterLoginBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
-                "~/style/login",
+                "~/styles/login",
                 "~/Areas/UserLogin/themes/login.less");
 
             bundles.Add(new ScriptBundle("~/scripts/loginJS").Include(
@@ -51,12 +52,14 @@ namespace Fanex.NAP.Miscellany.Websites
         public static void RegisterCommonBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
-                "~/style/common",
+                "~/styles/common",
                 "~/Content/Themes/jquery/jquery-ui-1.9.1.custom.css",
                 "~/Content/Themes/reset.css",
                 "~/Content/Themes/style.less",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.css",
+                "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.css",
+                "~/Scripts/Libs/Tipsy/tipsy.css",
                 "~/Scripts/Libs/msgbox/msgbox-0.0.1.css");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
@@ -65,10 +68,26 @@ namespace Fanex.NAP.Miscellany.Websites
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js",
                 "~/Scripts/Libs/Fanex.Grid/moment.js",
                 "~/Scripts/Libs/Fanex.Grid/numeral.js",
+                "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.js",
                 "~/Scripts/Libs/msgbox/msgbox-0.0.1.js",
+                "~/Scripts/Libs/Tipsy/jquery.tipsy.js",
                 "~/Scripts/Libs/others/Namespace.js",
                 "~/Scripts/Miscellany.js",
                 "~/Scripts/Layout.js"));
+        }
+
+        /// <summary>
+        /// Registers the common bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterOpenCloseMemberBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/openCloseMember",
+                "~/Content/Sites/openCloseMember.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/openCloseMember").Include(
+                "~/Scripts/Sites/OpenCloseMember.js"));
         }
     }
 

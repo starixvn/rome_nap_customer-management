@@ -129,6 +129,9 @@
   <data name="ChangedProfile" xml:space="preserve">
     <value>The profile has been changed successfully!</value>
   </data>
+  <data name="CloseOpenMemberNote" xml:space="preserve">
+    <value>This function enables you to OPEN/CLOSE all downline Members without changing current status od Super/Master/Agnet.&lt;br/&gt;You can OPEN/CLOSE only Credit Members.</value>
+  </data>
   <data name="ConfirmPasswordCannotEmpty" xml:space="preserve">
     <value>Confirm password cannot be empty.</value>
   </data>

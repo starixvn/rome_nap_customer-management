@@ -29,6 +29,7 @@ namespace Fanex.NAP.Miscellany.Websites
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
             RegisterOpenCloseMemberBundles(bundles);
+            RegisterAllowAccessManagementBundles(bundles);
         }
 
         /// <summary>
@@ -53,7 +54,7 @@ namespace Fanex.NAP.Miscellany.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/common",
-                "~/Content/Themes/jquery/jquery-ui-1.9.1.custom.css",
+                "~/Content/Themes/jquery/jquery-ui-1.9.1.custom.min.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.css",
                 "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.css",
@@ -88,6 +89,20 @@ namespace Fanex.NAP.Miscellany.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/openCloseMember").Include(
                 "~/Scripts/Sites/OpenCloseMember.js"));
+        }
+
+        /// <summary>
+        /// Registers the common bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterAllowAccessManagementBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/allowAccessManagement",
+                "~/Content/Sites/allowAccessMamagement.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/allowAccessManagement").Include(
+                "~/Scripts/Sites/AllowAccessManagement.js"));
         }
     }
 

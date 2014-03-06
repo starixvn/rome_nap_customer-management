@@ -1,7 +1,9 @@
 ﻿@using Fanex.NAP.Miscellany.Core.Resources
 @{
     ViewBag.Title = Messages.NotFound;
-    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="row title">@Messages.NotFound</h1>
-<span>@Messages.NotFoundMessage</span>
+@section Headline {
+    <div class="title"><div>@Messages.NotFound</div></div>
+}
+<span class="margin-left">@Messages.NotFoundMessage</span>

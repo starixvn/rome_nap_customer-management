@@ -10,7 +10,7 @@
 {
     <div class="title">
         <div>
-            <span>@ViewLang.Customer / </span><span class="curr">@ViewBag.Title</span>
+            <span class="curr">@ViewBag.Title</span>
         </div>
     </div>
 }
@@ -26,10 +26,10 @@
                         <span>@ViewLang.Username:</span>
                     </label>
                 </div>
-                <div class="edit-field col_2 align-left">
+                <div class="edit-field col_5 align-left">
                     <input type="text" id="txtUsername" />
                 </div>
-                <div class="lbl-field col_5 align-right">
+                <div class="lbl-field col_2 align-right">
                     <label for="ddlStatus">@ViewLang.Status:</label>
                 </div>
                 <div class="edit-field col_3 align-left">
@@ -40,7 +40,7 @@
                     </select>
                 </div>
                 <div class="submit width-auto col_4">
-                    <input id="btnSearch" name="btnSearch" type="submit" value="@ViewLang.Search" />
+                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
                 </div>
             </div>
             <div class="filter-row"></div>

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="AccessManagement">
+    <Setting Key="Member_LoginVerifySel" SpName="Member_LoginVerifySel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyIns" SpName="Member_LoginVerifyIns" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyUpd" SpName="Member_LoginVerifyUpd" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyDel" SpName="Member_LoginVerifyDel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+  </Function>
+</Functions>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = ViewLang.AllowAccessManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/allowAccessManagement")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+@section FilterForm
+{
+    <div id="filter-bar">
+        <div class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_3 align-right">
+                    <label for="txtUsername">@ViewLang.Username:</label>
+                </div>
+                <div class="edit-field col_5 align-left">
+                    <input type="text" id="txtUsername" />
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
+                </div>
+            </div>
+            <div class="filter-row"></div>
+        </div>
+    </div>
+}
+<div class="display-none">
+    <div id="divMemberList" class="freegrid"></div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/allowAccessManagement")
+    <script type="text/javascript">
+        var labels = {
+        };
+    </script>
+}

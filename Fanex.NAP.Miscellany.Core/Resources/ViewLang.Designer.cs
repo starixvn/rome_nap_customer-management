@@ -61,6 +61,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Request.
+        /// </summary>
+        public static string AddRequest {
+            get {
+                return ResourceManager.GetString("AddRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
@@ -75,6 +84,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow Access Management.
+        /// </summary>
+        public static string AllowAccessManagement {
+            get {
+                return ResourceManager.GetString("AllowAccessManagement", resourceCulture);
             }
         }
         

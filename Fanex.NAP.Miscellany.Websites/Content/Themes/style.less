@@ -1712,6 +1712,45 @@ ul.filter-note {
 }
 
 /********************************************************/
+/*                    Custom buttons                    */
+/********************************************************/
+.blue-button {
+    border:solid 1px @menu_border;
+    .bg_linear_gradient(@menu_bg, @menu_bg_light);
+
+    &:hover {
+        border: 1px solid @menu_border - #21201C;
+        .bg_linear_gradient(@menu_bg_light + #0C0303, @menu_bg_light - #0C110F);
+        .box_shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+        cursor: pointer;
+    }
+}
+
+.red-button {
+    border:solid 1px @red_button_border;
+    .bg_linear_gradient(@red_button_bg_light, @red_button_bg);
+
+    &:hover {
+        border: 1px solid @red_button_border - #21201C;
+        .bg_linear_gradient(@red_button_bg_light + #0C0303, @red_button_bg_light - #0C110F);
+        .box_shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+        cursor: pointer;
+    }
+}
+
+.green-button {
+    border:solid 1px @green_button_border;
+    .bg_linear_gradient(@green_button_bg_light, @green_button_bg);
+
+    &:hover {
+        border: 1px solid @green_button_border - #21201C;
+        .bg_linear_gradient(@green_button_bg_light + #0C0303, @green_button_bg_light - #0C110F);
+        .box_shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
+        cursor: pointer;
+    }
+}
+
+/********************************************************/
 /*                  Msgbox custom style                 */
 /********************************************************/
 .msgbox {
@@ -1722,42 +1761,48 @@ ul.filter-note {
         padding: 0;
 
         .msgbox-header {
-            background-color: @menu_bg;
+            .bg_linear_gradient(@menu_bg_light, @menu_bg);
             color: @white;
             text-align: center;
             padding: 5px;
 
             .msgbox-close {
-                top: 5px;
-                right: 5px;
-                background-position: -1px -35px;
+                top: 7px;
+                right: 7px;
+                background-position: -1px -50px;
                 border: none;
                 
                 &:hover {
                     background-color: transparent;
-                    background-position: -1px -50px;
+                    cursor: pointer;
                 }
             }
         }
 
         .msgbox-content {
-            margin: 20px;
+            background: url(img/icon-question.png) no-repeat;
+            margin: 15px 20px;
+            padding: 15px 0 15px 55px;
         }
 
         .msgbox-btn-wrap {
-            padding-bottom: 10px;
+            padding: 15px 0;
             margin: auto;
             text-align: center;
             width: 93%;
             border-color: @border;
 
             .msgbox-btn {
+                display: inline-block;
+                height: 18px;
+                width: 65px;
+
                 &.ok {
-                    .button();
+                    .blue-button;
                 }
 
                 &.cancel {
-                    .button();
+                    .red-button;
                 }
             }
         }

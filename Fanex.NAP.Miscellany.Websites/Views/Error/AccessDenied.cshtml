@@ -1,7 +1,9 @@
 ﻿@using Fanex.NAP.Miscellany.Core.Resources
 @{
     ViewBag.Title = Messages.AccessDenied;
-    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1 class="row title">@Messages.AccessDenied</h1>
-<span>@Messages.AccessDeniedMessage</span>
+@section Headline {
+    <div class="title"><div>@Messages.AccessDenied</div></div>
+}
+<span class="margin-left">@Messages.AccessDeniedMessage</span>

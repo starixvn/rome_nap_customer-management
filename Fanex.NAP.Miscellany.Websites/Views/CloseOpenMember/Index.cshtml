@@ -14,36 +14,39 @@
         </div>
     </div>
 }
-<div id="filter-bar">
-    <span id="spnNote" class="note-info-message" title="@Messages.CloseOpenMemberNote"></span>
-    <div class="filter-form">
-        <div class="filter-row">
-            <div class="lbl-field col_9 align-right">
-                <label for="txtUsername">
-                    <span class="level-label">@string.Format("{0}/ {1}/ {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
-                    <span>@ViewLang.Username:</span>
-                </label>
+@section FilterForm
+{
+    <div id="filter-bar">
+        <span id="spnNote" class="note-info-message" title="@Messages.CloseOpenMemberNote"></span>
+        <div class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_9 align-right">
+                    <label for="txtUsername">
+                        <span class="level-label">@string.Format("{0}/ {1}/ {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
+                        <span>@ViewLang.Username:</span>
+                    </label>
+                </div>
+                <div class="edit-field col_2 align-left">
+                    <input type="text" id="txtUsername" />
+                </div>
+                <div class="lbl-field col_5 align-right">
+                    <label for="ddlStatus">@ViewLang.Status:</label>
+                </div>
+                <div class="edit-field col_3 align-left">
+                    <select id="ddlStatus">
+                        <option value="null">@ViewLang.All</option>
+                        <option value="0">@ViewLang.Open</option>
+                        <option value="1">@ViewLang.Close</option>
+                    </select>
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnSearch" name="btnSearch" type="submit" value="@ViewLang.Search" />
+                </div>
             </div>
-            <div class="edit-field col_2 align-left">
-                <input type="text" id="txtUsername" />
-            </div>
-            <div class="lbl-field col_5 align-right">
-                <label for="ddlStatus">@ViewLang.Status:</label>
-            </div>
-            <div class="edit-field col_3 align-left">
-                <select id="ddlStatus">
-                    <option value="null">@ViewLang.All</option>
-                    <option value="0">@ViewLang.Open</option>
-                    <option value="1">@ViewLang.Close</option>
-                </select>
-            </div>
-            <div class="submit width-auto col_4">
-                <input id="btnSearch" name="btnSearch" type="submit" value="@ViewLang.Search" />
-            </div>
+            <div class="filter-row"></div>
         </div>
-        <div class="filter-row"></div>
     </div>
-</div>
+}
 <div class="display-none">
     <div id="divMemberList" class="freegrid"></div>
 </div>

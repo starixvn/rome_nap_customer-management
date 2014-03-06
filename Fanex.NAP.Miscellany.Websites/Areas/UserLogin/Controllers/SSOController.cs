@@ -126,6 +126,57 @@ namespace Fanex.NAP.Miscellany.Areas.UserLogin.Controllers
             return this.Redirect(FormsAuthentication.LoginUrl);
         }
 
+        /// <summary>
+        /// Login from Accounting site.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="onlineUserId">The online user identifier.</param>
+        /// <param name="loginTime">The login time.</param>
+        /// <param name="redirectUrl">The redirect URL.</param>
+        /// <returns>The login result page.</returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult AccountingLogin(string username, string onlineUserId, string loginTime, string redirectUrl)
+        {
+            TimeSpan expiration = new TimeSpan();
+            string currentTime = this._userService.UserSSOGetTime();
+
+            Session.Clear();
+
+            username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
+            onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
+            loginTime = Cryptography.CfsDeCrypt(loginTime.Replace(" ", "+"));
+            expiration = Converter.ToDateTime(currentTime) - Converter.ToDateTime(loginTime);
+
+            if (expiration.TotalSeconds <= this._timeExipration)
+            {
+                var user = this._userService.GetByUsername(username) as User;
+
+                // saves user session & auth info
+                this._currentSession.UserId = user.Id;
+                this._currentSession.Username = user.Username;
+                this._currentSession.OnUserId = Convert.ToInt32(onlineUserId);
+                this._currentSession.SessionId = Session.SessionID.ToString();
+                this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+
+                if (this.SiteId != 0)
+                {
+                    this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
+                                                                                  user.Id,
+                                                                                  SiteId,
+                                                                                  this.Environment,
+                                                                                  true) as IList<MenuItem>;
+                }
+
+                this.IsAccountingLogin = true;
+                this.CreateAuthInfo(user);
+
+                return this.Redirect(redirectUrl);
+            }
+
+            return Redirect(FormsAuthentication.LoginUrl);
+        }
+
         #region utilities
 
         /// <summary>

@@ -211,6 +211,8 @@
     <Content Include="Content\Themes\img\icn-collpase.png" />
     <Content Include="Content\Themes\img\icn-expand.png" />
     <Content Include="Content\Themes\img\icon-calendar.png" />
+    <Content Include="Content\Themes\img\icon-error-message.png" />
+    <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\information-icon.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\info_blue.png" />

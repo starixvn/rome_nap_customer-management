@@ -28,12 +28,12 @@
 	position: fixed;
 	z-index: 9999;
 }
-
+/*
 .chrome .msgbox-overlay {
 	opacity: 0.3;
 	filter: alpha(opacity=30);
 }
-
+*/
 .msgbox {
 	font-weight: bold;
 	color: #333;

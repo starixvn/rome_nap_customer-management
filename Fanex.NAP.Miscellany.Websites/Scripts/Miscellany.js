@@ -22,6 +22,8 @@ var Miscellany = (function ($) {
         agentIsApple: null,
         agentIsMobile: null,
 
+        errorSuccessMsg: null,
+
         initCoreValues: function () {
             Miscellany.MiscellanyRoot = $('#MiscellanyRoot').val();
             Miscellany.dialogPopup = $('#dialog-popup');
@@ -33,6 +35,8 @@ var Miscellany = (function ($) {
             Miscellany.agentIsOldIe = Miscellany.msieVersion !== -1 && Miscellany.msieVersion < 9.0;
             Miscellany.agentIsApple = Miscellany.agentIs('apple') != null;
             Miscellany.agentIsMobile = Miscellany.agentIs('mobile') != null;
+
+            Miscellany.errorSuccessMsg = $('#divErrorSuccessMsg');
         },
         resolveRootUrl: function (relativeUrl) {
             return Miscellany.MiscellanyRoot + relativeUrl;
@@ -55,6 +59,18 @@ var Miscellany = (function ($) {
         },
         showWarningMessage: function (message) {
             Miscellany.headlineMsgBox.showWarn(message, { duration: 3000 });
+        },
+        showInlineErrorMsg: function (message) {
+            Miscellany.errorSuccessMsg.html(message);
+            Miscellany.errorSuccessMsg.removeClass('success').addClass('error');
+        },
+        showInlineInfoMsg: function (message) {
+            Miscellany.errorSuccessMsg.html(message);
+            Miscellany.errorSuccessMsg.removeClass('error').addClass('success');
+        },
+        hideInlineMsg: function () {
+            Miscellany.errorSuccessMsg.removeClass('error').removeClass('success');
+            Miscellany.errorSuccessMsg.html('');
         },
         /* jshint ignore:start */
         getIeVersion: function () {

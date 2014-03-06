@@ -1,4 +1,7 @@
 ﻿@using Fanex.NAP.Core.Web
+@{
+    var isAccountingLogin = (bool)ViewBag.IsAccountingLogin;
+}
 <!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
 <!--[if (IE 8)]><html lang="en" class="ie8 oldie"><![endif]-->
@@ -15,27 +18,32 @@
     @RenderSection("Head", false)
 </head>
 <body>
-    <header>
-        <div class="logo">
-            <a href="~/?ref=logo"></a>
-        </div>
-        @Html.Action("_Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
-        <div class="user-info">
-            <div class="greeting">
-                <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
-                <ul>
-                    <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "User", new { Area = "UserControl" }, new { })</li>
-                    <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "User", new { Area = "UserControl" }, new { })</li>
-                    <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { Area = "UserLogin" }, new { })</li>
-                </ul>
+    @if (!isAccountingLogin)
+    {
+        <header>
+            <div class="logo">
+                <a href="~/?ref=logo"></a>
             </div>
-        </div>
-    </header>
+            @Html.Action("_Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
+            <div class="user-info">
+                <div class="greeting">
+                    <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
+                    <ul>
+                        <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "User", new { Area = "UserControl" }, new { })</li>
+                        <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "User", new { Area = "UserControl" }, new { })</li>
+                        <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { Area = "UserLogin" }, new { })</li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    }
     <section id="headline">
         @RenderSection("Headline", false)
     </section>
     <section id="body">
         <div class="content">
+            @RenderSection("FilterForm", false)
+            <div id="divErrorSuccessMsg" class="message"></div>
             @RenderBody()
         </div>
     </section>

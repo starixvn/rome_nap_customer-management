@@ -54,13 +54,13 @@ namespace Fanex.NAP.Miscellany.Websites
             bundles.AddAndInclude(
                 "~/styles/common",
                 "~/Content/Themes/jquery/jquery-ui-1.9.1.custom.css",
-                "~/Content/Themes/reset.css",
-                "~/Content/Themes/style.less",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.css",
                 "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.css",
                 "~/Scripts/Libs/Tipsy/tipsy.css",
-                "~/Scripts/Libs/msgbox/msgbox-0.0.1.css");
+                "~/Scripts/Libs/msgbox/msgbox-0.0.1.css",
+                "~/Content/Themes/reset.css",
+                "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libs/jQuery/jquery-*",

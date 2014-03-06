@@ -65,7 +65,8 @@ Fanex.Miscellany.CloseOpenMember = function () {
         domElements.btnSearch.click(function () {
             // @@TODO: Validate.
             getParameters();
-            getMemberList();
+            //getMemberList();
+            Miscellany.headlineMsgBox.confirm('Are you sure want to OPEN selected accounts', function () { }, { modal: true, closeBtn: false, header: true });
         });
     };
 

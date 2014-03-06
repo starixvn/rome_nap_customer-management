@@ -55,6 +55,8 @@ namespace Fanex.NAP.Miscellany.Controllers
                 IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
 
+            ViewBag.IsAccountingLogin = this.IsAccountingLogin;
+
             this._userService = new UserService { ServiceContext = ServiceContext };
         }
 
@@ -83,6 +85,8 @@ namespace Fanex.NAP.Miscellany.Controllers
                 ViewBag.ViewFlags = value;
             }
         }
+
+        protected bool IsAccountingLogin { get; set; }
 
         /// <summary>
         /// Determines whether the specified user has the right on a function.

@@ -129,10 +129,10 @@
                 });
             }
 
-//            if (_this.options.draggable) {
-//                _this.dragObject = new dragObject($this.attr('id'), $this.attr('id'));
-//                $this.css({ cursor: 'move' });
-//            }
+            //            if (_this.options.draggable) {
+            //                _this.dragObject = new dragObject($this.attr('id'), $this.attr('id'));
+            //                $this.css({ cursor: 'move' });
+            //            }
         },
 
         show: function (msg, options) {
@@ -256,10 +256,17 @@
             this.checkDomExistence();
             var _this = this,
                 $this = _this.target,
+                header = $('<div class="msgbox-header">Confirmation</div>'),
                 cmdBtns = '<div class="msgbox-btn-wrap">' + _this.options.tpl.okBtn + ' ' + _this.options.tpl.cancelBtn + '</div>';
 
             _this.show(msg, $.extend(options, { type: 'confirm' }));
             _this.target.append(cmdBtns);
+
+            if (options.header) {
+                $(_this.options.tpl.closeBtn).appendTo(header).click(function () { _this.close(); });
+                _this.target.prepend(header);
+            }
+
             clearTimeout(_this.timeout);
 
             $this.find('.ok').click(function () {

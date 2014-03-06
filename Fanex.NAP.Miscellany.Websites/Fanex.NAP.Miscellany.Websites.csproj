@@ -217,6 +217,7 @@
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
+    <Content Include="Content\Themes\img\miscellany.ico" />
     <Content Include="Content\Themes\img\seperation.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
     <Content Include="Content\Themes\img\sprites-image.png" />

@@ -60,6 +60,8 @@ namespace Fanex.NAP.Miscellany.Websites
                 "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.css",
                 "~/Scripts/Libs/Tipsy/tipsy.css",
                 "~/Scripts/Libs/msgbox/msgbox-0.0.1.css",
+                "~/Content/Extensions/jquery.combobox-ext.less",
+                "~/Content/Extensions/jquery.extensions.less",
                 "~/Content/Themes/reset.css",
                 "~/Content/Themes/style.less");
 
@@ -73,6 +75,9 @@ namespace Fanex.NAP.Miscellany.Websites
                 "~/Scripts/Libs/msgbox/msgbox-0.0.1.js",
                 "~/Scripts/Libs/Tipsy/jquery.tipsy.js",
                 "~/Scripts/Libs/others/Namespace.js",
+                "~/Scripts/Extensions/nativeObjectExtensions.js",
+                "~/Scripts/Extensions/jquery.combobox-ext.js",
+                "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Scripts/Miscellany.js",
                 "~/Scripts/Layout.js"));
         }

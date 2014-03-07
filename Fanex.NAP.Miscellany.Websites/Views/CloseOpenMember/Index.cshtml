@@ -32,14 +32,14 @@
                 <div class="lbl-field col_2 align-right">
                     <label for="ddlStatus">@ViewLang.Status:</label>
                 </div>
-                <div class="edit-field col_3 align-left">
-                    <select id="ddlStatus">
+                <div class="edit-field col_5 align-left">
+                    <select id="ddlStatus" class="combobox-autocomplete level-combobox">
                         <option value="null">@ViewLang.All</option>
                         <option value="0">@ViewLang.Open</option>
                         <option value="1">@ViewLang.Close</option>
                     </select>
                 </div>
-                <div class="submit width-auto col_4">
+                <div class="submit width-auto col_3">
                     <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
                 </div>
             </div>

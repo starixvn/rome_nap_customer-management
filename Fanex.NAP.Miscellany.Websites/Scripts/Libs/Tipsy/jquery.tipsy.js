@@ -28,20 +28,11 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
-                switch (this.options.tipType) {
-                    case 1:
-                        {
-                            $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
-                        }
-                        break;
-                    case 2:
-                        {
-                            $tip.find('.tipsy-inner-error')[this.options.html ? 'html' : 'text'](title);
-                        }
-                        break;
-                }
-                
-                $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
+
+                classStyle = classStyle == '' ? classStyle : classStyle + '-';
+
+                $tip.find('.' + classStyle + 'tipsy-inner')[this.options.html ? 'html' : 'text'](title);
+                $tip[0].className = classStyle + 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({ top: 0, left: 0, visibility: 'hidden', display: 'block' }).prependTo(document.body);
 
                 var pos = $.extend({}, this.$element.offset(), {
@@ -77,19 +68,8 @@
                     }
                 }
 
-                $tip.css(tp).addClass('tipsy-' + gravity);
-                switch (this.options.tipType) {
-                    case 1:
-                        {
-                            $tip.find('.tipsy-arrow')[0].className = 'tipsy-arrow tipsy-arrow-' + gravity.charAt(0);
-                        }
-                        break;
-                    case 2:
-                        {
-                            $tip.find('.tipsy-arrow-error')[0].className = 'tipsy-arrow-error tipsy-arrow-error-' + gravity.charAt(0);
-                        }
-                        break;
-                }
+                $tip.css(tp).addClass(classStyle + 'tipsy-' + gravity);
+                $tip.find('.' + classStyle + 'tipsy-arrow')[0].className = classStyle + 'tipsy-arrow ' + classStyle + 'tipsy-arrow-' + gravity.charAt(0);
                 if (this.options.className) {
                     $tip.addClass(maybeCall(this.options.className, this.$element[0]));
                 }
@@ -132,8 +112,7 @@
 
         tip: function () {
             if (!this.$tip) {
-                var errorClass = this.options.tipType == 2 ? "-error" : "";
-                this.$tip = $('<div class="tipsy"></div>').html('<div class="tipsy-arrow' + errorClass + '"></div><div class="tipsy-inner' + errorClass + '"></div>');
+                this.$tip = $('<div class="' + classStyle + 'tipsy"></div>').html('<div class="' + classStyle + 'tipsy-arrow"></div><div class="' + classStyle + 'tipsy-inner"></div>');
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
@@ -220,12 +199,11 @@
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        //// 1: Infor, 2 Error
-        tipType: 1
+        classStyle: ''
     };
 
     $.fn.tipsy.revalidate = function () {
-        $('.tipsy').each(function () {
+        $('.' + classStyle + 'tipsy').each(function () {
             var pointee = $.data(this, 'tipsy-pointee');
             if (!pointee || !isElementInDOM(pointee)) {
                 $(this).remove();
@@ -259,7 +237,7 @@
     * @param prefer (string, e.g. 'n', 'sw', 'w') - the direction to prefer
     *        if there are no viewable region edges effecting the tooltip's
     *        gravity. It will try to vary from this minimally, for example,
-    *        if 'sw' is preferred and an element is near the right viewable 
+    *        if 'sw' is preferred and an element is near the right viewable
     *        region edge, but not the top edge, it will set the gravity for
     *        that element's tooltip to be 'se', preserving the southern
     *        component.
@@ -267,9 +245,9 @@
     $.fn.tipsy.autoBounds = function (margin, prefer) {
         return function () {
             var dir = { ns: prefer[0], ew: (prefer.length > 1 ? prefer[1] : false) },
-			    boundTop = $(document).scrollTop() + margin,
-			    boundLeft = $(document).scrollLeft() + margin,
-			    $this = $(this);
+                boundTop = $(document).scrollTop() + margin,
+                boundLeft = $(document).scrollLeft() + margin,
+                $this = $(this);
 
             if ($this.offset().top < boundTop) dir.ns = 'n';
             if ($this.offset().left < boundLeft) dir.ew = 'w';

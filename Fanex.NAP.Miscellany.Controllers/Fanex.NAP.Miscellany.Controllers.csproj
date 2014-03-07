@@ -67,6 +67,18 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.Miscellany.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Criteria\Fanex.NAP.Miscellany.Criteria.csproj">
+      <Project>{85B0833C-4389-4F0F-80D4-02D49DB7906E}</Project>
+      <Name>Fanex.NAP.Miscellany.Criteria</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Services\Fanex.NAP.Miscellany.Services.csproj">
+      <Project>{DEA81795-9434-49DE-A2F4-84FCF7544F36}</Project>
+      <Name>Fanex.NAP.Miscellany.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.ViewModels\Fanex.NAP.Miscellany.ViewModels.csproj">
+      <Project>{88808F97-D8C0-45BE-80D8-9C814A5CFDE6}</Project>
+      <Name>Fanex.NAP.Miscellany.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

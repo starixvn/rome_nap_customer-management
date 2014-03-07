@@ -187,6 +187,7 @@
     <Content Include="Areas\UserLogin\themes\img\username.png" />
     <Content Include="Areas\UserLogin\themes\img\warn.png" />
     <Content Include="Areas\UserLogin\themes\img\welcome.png" />
+    <Content Include="Content\Extensions\images\x-icon.png" />
     <Content Include="Content\Themes\img\actions\add-user.png" />
     <Content Include="Content\Themes\img\actions\chgpwd-ico.png" />
     <Content Include="Content\Themes\img\actions\dd\action-ico.png" />
@@ -217,7 +218,6 @@
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
-    <Content Include="Content\Themes\img\miscellany.ico" />
     <Content Include="Content\Themes\img\seperation.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
     <Content Include="Content\Themes\img\sprites-image.png" />
@@ -250,9 +250,11 @@
     <Content Include="Scripts\Libs\DatePicker\images\icon-calendar.png" />
     <Content Include="Scripts\Libs\DatePicker\jquery.nexDatePicker.css" />
     <Content Include="Scripts\Libs\DatePicker\jquery.nexDatePicker.js" />
+    <Content Include="Scripts\Extensions\jquery.extensions.js" />
+    <Content Include="Scripts\Extensions\jquery.combobox-ext.js" />
+    <Content Include="Scripts\Extensions\nativeObjectExtensions.js" />
     <Content Include="Scripts\Libs\others\Namespace.js" />
     <Content Include="Scripts\Libs\Tipsy\jquery.tipsy.js" />
-    <Content Include="Scripts\Libs\Tipsy\jquery.tipsy.min.js" />
     <Content Include="Scripts\Libs\Tipsy\tipsy.css" />
     <Content Include="Scripts\Miscellany.js" />
     <Content Include="Scripts\Libs\Fanex.Grid\Fanex.Grid.css" />
@@ -292,7 +294,6 @@
     <Content Include="Scripts\Libs\Fanex.Grid\moment.js" />
     <Content Include="Scripts\Libs\Fanex.Grid\numeral.js" />
     <Content Include="Scripts\Libs\html5-libs\head.js" />
-    <Content Include="Scripts\Libs\html5-libs\html5shiv.js" />
     <Content Include="Scripts\Libs\html5-libs\html5shiv.min.js" />
     <Content Include="Scripts\Libs\html5-libs\modernizr-2.6.2.js" />
     <Content Include="Scripts\Libs\html5-libs\modernizr-2.6.2.min.js" />
@@ -375,6 +376,8 @@
     <Content Include="Content\Themes\fonts.less" />
     <Content Include="Content\Sites\openCloseMember.less" />
     <Content Include="Content\Sites\allowAccessMamagement.less" />
+    <Content Include="Content\Extensions\jquery.combobox-ext.less" />
+    <Content Include="Content\Extensions\jquery.extensions.less" />
     <None Include="Content\Themes\fonts\OpenSans.woff" />
     <None Include="Content\Themes\fonts\YanoneKaffeesatz.woff" />
     <Content Include="Content\Themes\grid.less" />

@@ -1,0 +1,63 @@
+@import "../Themes/fonts.less";
+@import "../Themes/colors.less";
+@import "../Themes/common.less";
+
+.ui-combobox {
+    position: relative;
+    float: left;
+    z-index: 1000;
+
+    > input {
+        float: left;
+
+        &:disabled {
+            background: #F3EFEE !important;
+            color: #CBCBCB;
+        }
+    }
+
+    > a {
+        float: right;
+    }
+
+    .ui-combobox-toggle {
+        margin-left: -1px;
+        height: 20px;
+        padding: 2px;
+        border-color: @filter_border !important;
+        background: transparent !important;
+
+        &:hover {
+            background: transparent !important;//#dadada !important;
+        }
+    }
+    .ui-combobox-input {
+        margin: 0 !important;
+        height: 20px !important;
+        padding: 2px;
+    }
+    .ui-menu .ui-menu-item a {
+        padding-right: 20px;
+        line-height: 1.4;
+        white-space: nowrap;
+        border: 1px solid #fff;
+
+        &.ui-state-focus, &.ui-state-active {
+            margin: 0;
+        }
+    }
+}
+.ui-autocomplete {
+    max-height: 395px;
+    max-width: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .ui-state-hover {
+        .border_radius(0);
+        background: @menu_bg_light;
+    }
+}
+.ui-widget-content {
+    border: 1px solid @filter_border;
+}

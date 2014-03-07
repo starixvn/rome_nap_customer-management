@@ -1079,7 +1079,7 @@ header {
             height:24px;
             input[type=text], input[type=password], select {
                 border: 1px solid @filter_border;
-                pading:2px;
+                padding:2px;
                 font-size: 0.9em;
                 color: @text;
             }
@@ -1807,4 +1807,7 @@ ul.filter-note {
             }
         }
     }
+}
+input[type=text]::-ms-clear {
+    display:none;
 }

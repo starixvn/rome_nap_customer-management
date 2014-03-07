@@ -14,7 +14,7 @@ namespace Fanex.NAP.Miscellany.Controllers
     using Fanex.NAP.Core.Web.Attribute;
 
     /// <summary>
-    /// Close open member controller.
+    /// Allow Access Management controller.
     /// </summary>
     public class AllowAccessManagementController : BaseController
     {
@@ -23,7 +23,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
         public ActionResult Index()
         {
             return View();

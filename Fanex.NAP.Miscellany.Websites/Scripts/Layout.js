@@ -32,4 +32,7 @@ $(document).ready(function () {
             $('header .user-info .greeting').removeClass('selected');
         });
     }
+
+    $('select.combobox-autocomplete').combobox();
+    $('input[type=text]').clearfield();
 });

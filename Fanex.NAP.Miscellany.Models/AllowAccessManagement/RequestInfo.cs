@@ -16,22 +16,28 @@ namespace Fanex.NAP.Miscellany.Models.AllowAccessManagement
     /// </summary>
     public class RequestInfo
     {
-        public int RequestId { get; set; }
+        public int RequestID { get; set; }
 
-        public DateTime ExpiredDate { get; set; }
+        public int CustID { get; set; }
 
-        public string Country { get; set; }
+        public string Username { get; set; }
+
+        public byte RoleID { get; set; }
+
+        public string CountryCode { get; set; }
 
         public string IP { get; set; }
 
+        public DateTime? ExpiryDate { get; set; }
+
         public string Remark { get; set; }
 
-        public string Creator { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
-        public string LastModifiedBy { get; set; }
+        public string UpdatedBy { get; set; }
 
-        public DateTime LastModifiedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

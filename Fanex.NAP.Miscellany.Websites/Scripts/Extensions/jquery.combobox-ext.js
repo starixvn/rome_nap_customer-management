@@ -46,7 +46,8 @@
                                 matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
                                 valid = false;
 
-                            Validator.hideError(txt);
+                            console.log('change');
+                            Validator.clearError(txt);
                             select.children('option').each(function () {
                                 if ($(this).text().match(matcher)) {
                                     this.selected = valid = true;
@@ -56,8 +57,8 @@
 
                             if (!valid) {
                                 // remove invalid value, as it didn't match anything
-                                txt.val('');
-                                //Validator.showError(txt, value + ' didn\'t match any item', 'n');
+                                //txt.val('');
+                                Validator.showError(txt, value + ' didn\'t match any item', 'n');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;

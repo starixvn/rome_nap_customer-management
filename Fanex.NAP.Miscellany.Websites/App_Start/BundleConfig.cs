@@ -78,6 +78,7 @@ namespace Fanex.NAP.Miscellany.Websites
                 "~/Scripts/Extensions/nativeObjectExtensions.js",
                 "~/Scripts/Extensions/jquery.combobox-ext.js",
                 "~/Scripts/Extensions/jquery.extensions.js",
+                "~/Scripts/Validator.js",
                 "~/Scripts/Miscellany.js",
                 "~/Scripts/Layout.js"));
         }

@@ -89,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ViewLang.resx</DependentUpon>
     </Compile>
+    <Compile Include="Web\CacheManager.cs" />
     <Compile Include="Web\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup />

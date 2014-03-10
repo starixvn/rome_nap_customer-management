@@ -33,4 +33,32 @@
             $(this).removeClass('on-x-icon');
         });
     };
+
+    // Mask input field to allow enter IP format only.
+    $.fn.ipAddress = function () {
+        var $this = $(this);
+
+        if ($this.mask) {
+            var options = {
+                onKeyPress: function (cep, event, currentField, options) {
+                    if (cep) {
+                        var ipArray = cep.split('.');
+                        var lastValue = ipArray[ipArray.length - 1];
+                        var resultingValue = '';
+
+                        if (lastValue !== '' && parseInt(lastValue) > 255) {
+                            ipArray[ipArray.length - 1] = '255';
+                            resultingValue = ipArray.join(".");
+                            currentField.val(resultingValue);
+                        }
+                    }
+                },
+                translation: {
+                    'Z': { pattern: /[0-9]/, optional: true }
+                }
+            };
+
+            $this.mask('0ZZ.0ZZ.0ZZ.0ZZ', options);
+        }
+    };
 })(jQuery);

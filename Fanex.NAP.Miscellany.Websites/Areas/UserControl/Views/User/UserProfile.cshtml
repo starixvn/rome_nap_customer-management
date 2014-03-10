@@ -16,54 +16,64 @@
 }
 @using (Html.BeginForm())
 {
-    <div id="filter-bar">
-        <div class="filter-form">
-            <div class="filter-row">
-                <div class="lbl-field col_5">
-                    @Html.LabelFor(c => c.FirstName)
-                </div>
-                <div class="edit-field col_10">
-                    @Html.TextBoxFor(c => c.FirstName, new { @class = "userprofile" })
-                </div>
+    <div class="form w120 margin-left" id="divProfile">
+        <div id="divErrorSuccessMsg" class="message"></div>
+        <div id="divValidationSummary" class="display-none">
+            @Html.ValidationSummary()
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.FirstName)
             </div>
-            <div class="filter-row">
-                <div class="lbl-field col_5">
-                    @Html.LabelFor(c => c.LastName)
-                </div>
-                <div class="edit-field col_10">
-                    @Html.TextBoxFor(c => c.LastName, new { @class = "userprofile" })
-                </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.FirstName, new { @class = "userprofile" })
             </div>
-            <div class="filter-row">
-                <div class="lbl-field col_5">
-                    @Html.LabelFor(c => c.Email)
-                </div>
-                <div class="edit-field col_10">
-                    @Html.TextBoxFor(c => c.Email, new { @class = "userprofile" })
-                </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.LastName)
             </div>
-            <div class="filter-row">
-                <div class="lbl-field col_5"></div>
-                <div class="edit-field col_10">
-                    <div class="submit width-auto col_3">
-                        <input type="submit" value="@ViewResources.Save" />
-                    </div>
-                    <div class="cancel width-auto col_3">
-                        <input type="button" value="Cancel" onclick="Miscellany.navigateToRoot('', 0); return false;"/>
-                    </div>
-                </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.LastName, new { @class = "userprofile" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                @Html.LabelFor(c => c.Email)
+            </div>
+            <div class="edit-field">
+                @Html.TextBoxFor(c => c.Email, new { @class = "userprofile" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+            </div>
+            <div class="edit-field">
+                <input type="submit" id="btnSubmit" value="@ViewResources.Save" class="blue-button" />
+                <input type="button" value="Cancel" onclick="Miscellany.navigateToRoot('', 0); return false;" class="red-button"/>
             </div>
         </div>
     </div>
     @Html.HiddenFor(m => m.GroupId)
 }
 @section Foot {
-    @if (success)
-     {
-        <script type="text/javascript">
-            $(function () {
-                Miscellany.headlineMsgBox.showInfo('@ViewResources.Your_changes_were_saved!', { closeBtn: false });
+    <script type="text/javascript">
+        var isSuccess = '@success' === 'True';
+        var form = $('#divProfile');
+        var serverError = $('#divValidationSummary');
+
+        $(function () {
+            if (isSuccess) {
+                Miscellany.showInlineInfoMsg('@ViewResources.Your_changes_were_saved!', $('#divErrorSuccessMsg', form));
+            } else if (serverError.find('li:first').text() !== '') {
+                Miscellany.showInlineErrorMsg(serverError.html(), $('#divErrorSuccessMsg', form));
+            }
+
+            form.find('#btnSubmit').click(function () {
+                if (!Validator.validateForm(form, 'w')) {
+                    return false;
+                }
             });
-        </script>
-    }
+        });
+    </script>
 }

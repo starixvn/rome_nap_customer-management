@@ -123,6 +123,9 @@
   <data name="AccessDeniedMessage" xml:space="preserve">
     <value>You are not authorized to access this link.</value>
   </data>
+  <data name="AddRequestSuccessfully" xml:space="preserve">
+    <value>The new request was added successfully!</value>
+  </data>
   <data name="ChangedPassword" xml:space="preserve">
     <value>The password has been changed successfully!</value>
   </data>
@@ -135,6 +138,12 @@
   <data name="ConfirmPasswordCannotEmpty" xml:space="preserve">
     <value>Confirm password cannot be empty.</value>
   </data>
+  <data name="DeleteRequestConfirm" xml:space="preserve">
+    <value>Are you sure to delete this request?</value>
+  </data>
+  <data name="DeleteRequestSuccessfully" xml:space="preserve">
+    <value>The request was deleted successfully!</value>
+  </data>
   <data name="ExistingUserNameError" xml:space="preserve">
     <value>Username is already exists!</value>
   </data>
@@ -146,6 +155,9 @@
   </data>
   <data name="InvalidEmail" xml:space="preserve">
     <value>Invalid email.</value>
+  </data>
+  <data name="InvalidIPError" xml:space="preserve">
+    <value>Invalid IP address!</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>Invalid username!</value>
@@ -167,6 +179,12 @@
   </data>
   <data name="PasswordMinLengthError" xml:space="preserve">
     <value>The password must have at least 6 characters.</value>
+  </data>
+  <data name="RequiredFieldError" xml:space="preserve">
+    <value>This is required field!</value>
+  </data>
+  <data name="UpdateRequestSuccessfully" xml:space="preserve">
+    <value>The request was updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Miscellany!</value>

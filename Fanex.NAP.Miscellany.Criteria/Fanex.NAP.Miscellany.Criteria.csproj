@@ -51,7 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllowAccessManagement\DeleteRequestCriteria.cs" />
-    <Compile Include="AllowAccessManagement\InsertNewRequestCriteria.cs" />
+    <Compile Include="Common\GetCountryListCriteria.cs" />
+    <Compile Include="AllowAccessManagement\GetRequestInfoCriteria.cs" />
+    <Compile Include="AllowAccessManagement\GetRequestInfoListCriteria.cs" />
+    <Compile Include="AllowAccessManagement\InsertRequestCriteria.cs" />
     <Compile Include="AllowAccessManagement\UpdateRequestCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

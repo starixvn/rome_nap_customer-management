@@ -1,0 +1,68 @@
+﻿<div id="divRequestForm" class="form">
+    <div class="form-row">
+        <div class="lbl-field  normal-label">
+            @Html.Label("txtUsername", ViewLang.Username)
+        </div>
+        <div class="edit-field">
+            @Html.TextBox("txtUsername", string.Empty, new { @class = "width-200", data_val_required = @Messages.RequiredFieldError })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field radio-button">
+            @Html.RadioButton("Restriction", "Country", true, new { id = "lblCountry", @for = "ddlCountry" })
+        </div>
+        <div class="lbl-field">
+            @Html.Label("lblCountry", ViewLang.Country)
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList(
+                "ddlCountry",
+                (IEnumerable<SelectListItem>)ViewBag.CountryList,
+                ViewLang.SelectACountry,
+                new { @class = "country-width", data_val_required = @Messages.RequiredFieldError })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field radio-button">
+            @Html.RadioButton("Restriction", "IP", true, new { id = "lblIP", @for = "txtIP" })
+        </div>
+        <div class="lbl-field">
+            @Html.Label("lblIP", ViewLang.IP)
+        </div>
+        <div class="edit-field">
+            @Html.TextBox(
+                "txtIP",
+                string.Empty,
+                new 
+                { 
+                    data_val_ip = Messages.InvalidIPError,
+                    data_val_required = @Messages.RequiredFieldError,
+                    @class = "width-200"
+                })
+        </div>
+    </div>
+    <div class="form-row padding-left-20">
+        <div id="dpkExpiredDate" class="lbl-field width-140">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field normal-label">
+            @Html.Label("txtRemark", ViewLang.Remark)
+        </div>
+        <div class="edit-field">
+            @Html.TextArea(
+                "txtRemark",
+                string.Empty,
+                3,
+                65,
+                new { data_val_required = @Messages.RequiredFieldError, @class = "width-200" })
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <div class="lbl-field  normal-label"></div>
+        <div class="edit-field">
+            <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Save" />
+            <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+        </div>
+    </div>
+</div>

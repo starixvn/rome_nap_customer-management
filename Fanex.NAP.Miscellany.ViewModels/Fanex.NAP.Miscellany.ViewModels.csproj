@@ -39,6 +39,12 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Core">
+      <HintPath>..\Dependencies\Fanex\Fanex.NAP.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -51,6 +57,12 @@
     <Compile Include="AllowAccessManagement\NewRequestItem.cs" />
     <Compile Include="AllowAccessManagement\RequestItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Models\Fanex.NAP.Miscellany.Models.csproj">
+      <Project>{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59}</Project>
+      <Name>Fanex.NAP.Miscellany.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

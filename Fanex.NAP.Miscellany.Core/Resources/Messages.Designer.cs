@@ -79,6 +79,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new request was added successfully!.
+        /// </summary>
+        public static string AddRequestSuccessfully {
+            get {
+                return ResourceManager.GetString("AddRequestSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password has been changed successfully!.
         /// </summary>
         public static string ChangedPassword {
@@ -115,6 +124,24 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure to delete this request?.
+        /// </summary>
+        public static string DeleteRequestConfirm {
+            get {
+                return ResourceManager.GetString("DeleteRequestConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request was deleted successfully!.
+        /// </summary>
+        public static string DeleteRequestSuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteRequestSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username is already exists!.
         /// </summary>
         public static string ExistingUserNameError {
@@ -147,6 +174,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string InvalidEmail {
             get {
                 return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid IP address!.
+        /// </summary>
+        public static string InvalidIPError {
+            get {
+                return ResourceManager.GetString("InvalidIPError", resourceCulture);
             }
         }
         
@@ -210,6 +246,24 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string PasswordMinLengthError {
             get {
                 return ResourceManager.GetString("PasswordMinLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is required field!.
+        /// </summary>
+        public static string RequiredFieldError {
+            get {
+                return ResourceManager.GetString("RequiredFieldError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The request was updated successfully!.
+        /// </summary>
+        public static string UpdateRequestSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateRequestSuccessfully", resourceCulture);
             }
         }
         

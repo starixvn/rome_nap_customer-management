@@ -24,6 +24,13 @@ var Miscellany = (function ($) {
 
         errorSuccessMsg: null,
 
+        pagerRanges: [50, 100, 200, 500],
+        pageSize: 50,
+
+        formats: {
+            DateFormat: 'mm/dd/yy'
+        },
+
         initCoreValues: function () {
             Miscellany.MiscellanyRoot = $('#MiscellanyRoot').val();
             Miscellany.dialogPopup = $('#dialog-popup');
@@ -60,17 +67,29 @@ var Miscellany = (function ($) {
         showWarningMessage: function (message) {
             Miscellany.headlineMsgBox.showWarn(message, { duration: 3000 });
         },
-        showInlineErrorMsg: function (message) {
-            Miscellany.errorSuccessMsg.html(message);
-            Miscellany.errorSuccessMsg.removeClass('success').addClass('error');
+        showInlineErrorMsg: function (message, $obj) {
+            var $msgDiv = $obj || Miscellany.errorSuccessMsg;
+
+            $msgDiv.html(message);
+            $msgDiv.removeClass('success').addClass('error').slideDown();
+            setTimeout(function () {
+                Miscellany.hideInlineMsg($msgDiv);
+            }, 3000);
         },
-        showInlineInfoMsg: function (message) {
-            Miscellany.errorSuccessMsg.html(message);
-            Miscellany.errorSuccessMsg.removeClass('error').addClass('success');
+        showInlineInfoMsg: function (message, $obj) {
+            var $msgDiv = $obj || Miscellany.errorSuccessMsg;
+            console.log('su');
+            $msgDiv.html(message);
+            $msgDiv.removeClass('error').addClass('success').slideDown();
+            setTimeout(function () {
+                Miscellany.hideInlineMsg($msgDiv);
+            }, 3000);
         },
-        hideInlineMsg: function () {
-            Miscellany.errorSuccessMsg.removeClass('error').removeClass('success');
-            Miscellany.errorSuccessMsg.html('');
+        hideInlineMsg: function ($obj) {
+            var $msgDiv = $obj || Miscellany.errorSuccessMsg;
+
+            $msgDiv.removeClass('error').removeClass('success').slideUp();
+            $msgDiv.html('');
         },
         /* jshint ignore:start */
         getIeVersion: function () {

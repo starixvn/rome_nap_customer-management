@@ -1,4 +1,6 @@
 ﻿@{
+    var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
+
     ViewBag.Title = ViewLang.AllowAccessManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -16,34 +18,65 @@
 }
 @section FilterForm
 {
-    <div id="filter-bar">
+    <div class="filter-bar">
         <div class="filter-form">
             <div class="filter-row">
                 <div class="lbl-field col_3 align-right">
-                    <label for="txtUsername">@ViewLang.Username:</label>
+                    <label for="txtSearchUserName">@ViewLang.Username:</label>
                 </div>
                 <div class="edit-field col_5 align-left">
-                    <input type="text" id="txtUsername" />
+                    <input type="text" id="txtSearchUserName" />
                 </div>
                 <div class="submit width-auto col_4">
                     <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
                 </div>
-                <div class="submit width-auto col_4">
-                    <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
-                </div>
+                @if (hasEditAccessRight)
+                {
+                    <div class="submit width-auto col_4">
+                        <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
+                    </div>
+                }
             </div>
             <div class="filter-row"></div>
         </div>
     </div>
 }
-<div class="display-none">
+<div class="display-none content-grid">
     <div id="divMemberList" class="freegrid"></div>
 </div>
+@if (hasEditAccessRight)
+{
+    <div class="display-none">
+        @Html.Action("RequestForm")
+    </div>
+}
 @section Foot
 {
     @Scripts.Render("~/scripts/allowAccessManagement")
     <script type="text/javascript">
         var labels = {
+            id: '@ViewLang.ID',
+            username: '@ViewLang.Username',
+            expiredDate: '@ViewLang.ExpiredDate',
+            country: '@ViewLang.Country',
+            ip: '@ViewLang.IP',
+            remark: '@ViewLang.Remark',
+            creator: '@ViewLang.Creator',
+            createdDate: '@ViewLang.CreatedDate',
+            lastModifiedBy: '@ViewLang.LastModifiedBy',
+            lastModifiedDate: '@ViewLang.LastModifiedDate',
+            edit: '@ViewLang.Edit',
+            del: '@ViewLang.Delete',
+            addNewRequest: '@ViewLang.AddNewRequest',
+            editRequest: '@ViewLang.EditRequest'
         };
+        var messages = {
+            addRequestSuccessfully: '@Messages.AddRequestSuccessfully',
+            updateRequestSuccessfully: '@Messages.UpdateRequestSuccessfully',
+            deleteRequestConfirm: '@Messages.DeleteRequestConfirm',
+            deleteRequestSuccessfully: '@Messages.DeleteRequestSuccessfully'
+        };
+        var hasEditAccessRight = '@hasEditAccessRight' === 'True';
+        var minDate = '@DateTime.Today.AddDays(1)';
     </script>
 }

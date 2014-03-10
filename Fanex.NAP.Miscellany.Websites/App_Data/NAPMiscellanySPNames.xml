@@ -5,5 +5,8 @@
     <Setting Key="Member_LoginVerifyIns" SpName="Member_LoginVerifyIns" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Member_LoginVerifyUpd" SpName="Member_LoginVerifyUpd" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Member_LoginVerifyDel" SpName="Member_LoginVerifyDel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifySelList" SpName="Member_LoginVerifySelList" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifySelReqById" SpName="Member_LoginVerifySelReqById" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBTXN.IPDB.bodbAdminNet"></Setting>
   </Function>
 </Functions>

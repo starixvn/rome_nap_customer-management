@@ -39,6 +39,12 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data, Version=0.5.404.62, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Dependencies\Fanex\Fanex.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core">
       <HintPath>..\Dependencies\Fanex\Fanex.NAP.Core.dll</HintPath>
     </Reference>
@@ -54,12 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Implements\AllowAccessManagementService.cs" />
+    <Compile Include="Implements\BaseService.cs" />
+    <Compile Include="Interfaces\IAllowAccessManagementService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implements\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.Miscellany.Core\Fanex.NAP.Miscellany.Core.csproj">
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>

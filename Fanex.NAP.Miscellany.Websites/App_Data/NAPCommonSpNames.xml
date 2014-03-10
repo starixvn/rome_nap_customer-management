@@ -277,6 +277,7 @@
   </Function>
   <Function Name="Cust">
     <Setting Key="NAP_Cust_GetByUsername" SpName="NAP_Cust_GetByUsername" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
+    <Setting Key="NAP_Cust_Update" SpName="NAP_Cust_Update" DbName="DBNAP.bodb_NAP.bodbAdminNet"  />
     <Setting Key="NAP_Cust_UpdatePassword" SpName="NAP_Cust_UpdatePassword" DbName="DBTXN.CustDB.bodbAdminNet"  />
   </Function>
   <Function Name="LogExecSp">

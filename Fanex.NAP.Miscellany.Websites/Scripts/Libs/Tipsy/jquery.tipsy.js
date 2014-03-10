@@ -20,6 +20,7 @@
         this.$element = $(element);
         this.options = options;
         this.enabled = true;
+        this.correctOptions();
         this.fixTitle();
     };
 
@@ -28,14 +29,13 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
-
-                classStyle = classStyle == '' ? classStyle : classStyle + '-';
+                var classStyle = this.options.classStyle;
 
                 $tip.find('.' + classStyle + 'tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = classStyle + 'tipsy'; // reset classname in case of dynamic gravity
-                $tip.remove().css({ top: 0, left: 0, visibility: 'hidden', display: 'block' }).prependTo(document.body);
+                $tip.remove().css({ top: 0, left: 0, visibility: 'hidden', display: 'block' }).prependTo(this.$element.parent()); //.prependTo(document.body);
 
-                var pos = $.extend({}, this.$element.offset(), {
+                var pos = $.extend({}, this.$element.position(), {
                     width: this.$element[0].offsetWidth,
                     height: this.$element[0].offsetHeight
                 });
@@ -62,9 +62,9 @@
 
                 if (gravity.length == 2) {
                     if (gravity.charAt(1) == 'w') {
-                        tp.left = pos.left + pos.width / 2 - 15;
+                        tp.left = pos.left - 5;
                     } else {
-                        tp.left = pos.left + pos.width / 2 - actualWidth + 15;
+                        tp.left = pos.left + pos.width - actualWidth + 5;
                     }
                 }
 
@@ -90,6 +90,10 @@
             }
         },
 
+        correctOptions: function () {
+            this.options.classStyle = this.options.classStyle == '' ? this.options.classStyle : this.options.classStyle + '-';
+        },
+
         fixTitle: function () {
             var $e = this.$element;
             if ($e.attr('title') || typeof ($e.attr('original-title')) != 'string') {
@@ -112,7 +116,7 @@
 
         tip: function () {
             if (!this.$tip) {
-                this.$tip = $('<div class="' + classStyle + 'tipsy"></div>').html('<div class="' + classStyle + 'tipsy-arrow"></div><div class="' + classStyle + 'tipsy-inner"></div>');
+                this.$tip = $('<div class="' + this.options.classStyle + 'tipsy"></div>').html('<div class="' + this.options.classStyle + 'tipsy-arrow"></div><div class="' + this.options.classStyle + 'tipsy-inner"></div>');
                 this.$tip.data('tipsy-pointee', this.$element[0]);
             }
             return this.$tip;
@@ -203,7 +207,7 @@
     };
 
     $.fn.tipsy.revalidate = function () {
-        $('.' + classStyle + 'tipsy').each(function () {
+        $('.' + this.options.classStyle + 'tipsy').each(function () {
             var pointee = $.data(this, 'tipsy-pointee');
             if (!pointee || !isElementInDOM(pointee)) {
                 $(this).remove();

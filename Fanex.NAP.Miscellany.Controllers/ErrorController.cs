@@ -11,7 +11,6 @@ namespace Fanex.NAP.Miscellany.Controllers
 {
     using System.Web.Mvc;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Miscellany.Controllers;
 
     /// <summary>
     /// Error controller.

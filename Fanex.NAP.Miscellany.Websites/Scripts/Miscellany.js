@@ -67,7 +67,7 @@ var Miscellany = (function ($) {
         showWarningMessage: function (message) {
             Miscellany.headlineMsgBox.showWarn(message, { duration: 3000 });
         },
-        showInlineAjaxErrorMsg: function (xhr, $obj, callbackFunc) {
+        showInlineAjaxErrorMsg: function (xhr, $obj) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
             var message = Miscellany.internalError;
 
@@ -79,18 +79,12 @@ var Miscellany = (function ($) {
 
             $msgDiv.html(message);
             $msgDiv.removeClass('success').addClass('error').slideDown();
-            setTimeout(function () {
-                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
-            }, 5000);
         },
-        showInlineErrorMsg: function (message, $obj, callbackFunc) {
+        showInlineErrorMsg: function (message, $obj) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
 
             $msgDiv.html(message);
             $msgDiv.removeClass('success').addClass('error').slideDown();
-            setTimeout(function () {
-                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
-            }, 3000);
         },
         showInlineInfoMsg: function (message, $obj, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;

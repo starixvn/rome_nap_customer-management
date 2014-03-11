@@ -22,7 +22,7 @@
         <div class="filter-form">
             <div class="filter-row">
                 <div class="lbl-field col_3 align-right">
-                    <label for="txtSearchUserName">@ViewLang.Username:</label>
+                    <label for="txtSearchUserName">@ViewLang.Username</label>
                 </div>
                 <div class="edit-field col_5 align-left">
                     <input type="text" id="txtSearchUserName" />
@@ -61,19 +61,20 @@
             country: '@ViewLang.Country',
             ip: '@ViewLang.IP',
             remark: '@ViewLang.Remark',
-            creator: '@ViewLang.Creator',
+            createdBy: '@ViewLang.CreatedBy',
             createdDate: '@ViewLang.CreatedDate',
             lastModifiedBy: '@ViewLang.LastModifiedBy',
             lastModifiedDate: '@ViewLang.LastModifiedDate',
             edit: '@ViewLang.Edit',
             del: '@ViewLang.Delete',
             addNewRequest: '@ViewLang.AddNewRequest',
-            editRequest: '@ViewLang.EditRequest'
+            editRequest: '@ViewLang.EditRequest',
+            unlimited: '@ViewLang.Unlimited'
         };
         var messages = {
             addRequestSuccessfully: '@Messages.AddRequestSuccessfully',
             updateRequestSuccessfully: '@Messages.UpdateRequestSuccessfully',
-            deleteRequestConfirm: '@Messages.DeleteRequestConfirm',
+            deleteRequestConfirm: '@Html.Raw(Messages.DeleteRequestConfirm)',
             deleteRequestSuccessfully: '@Messages.DeleteRequestSuccessfully'
         };
         var hasEditAccessRight = '@hasEditAccessRight' === 'True';

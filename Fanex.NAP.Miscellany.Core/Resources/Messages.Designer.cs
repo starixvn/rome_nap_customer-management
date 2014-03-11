@@ -124,7 +124,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to delete this request?.
+        ///   Looks up a localized string similar to Are you sure to delete the request: &lt;b&gt;[{0}]&lt;/b&gt;?.
         /// </summary>
         public static string DeleteRequestConfirm {
             get {
@@ -250,7 +250,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is required field!.
+        ///   Looks up a localized string similar to Required field!.
         /// </summary>
         public static string RequiredFieldError {
             get {

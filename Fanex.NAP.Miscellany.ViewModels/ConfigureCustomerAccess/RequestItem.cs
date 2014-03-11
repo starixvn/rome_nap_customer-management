@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Miscellany.Models.ConfigureCustomerAccess;
@@ -32,7 +33,7 @@ namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
                 this.CountryCode = rawData.CountryCode;
                 this.IP = rawData.IP;
                 this.Remark = rawData.Remark;
-                this.Creator = rawData.CreatedBy;
+                this.CreatedBy = rawData.CreatedBy;
                 this.LastModifiedBy = rawData.UpdatedBy;
 
                 if (!string.IsNullOrEmpty(rawData.CountryCode) && countryList.ContainsKey(rawData.CountryCode))
@@ -43,6 +44,7 @@ namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
                 if (rawData.ExpiryDate.HasValue)
                 {
                     this.ExpiredDate = rawData.ExpiryDate.Value.ToShortFormatedDate();
+                    this.IsExpired = rawData.ExpiryDate.Value < DateTime.Now;
                 }
 
                 if (rawData.CreatedDate.HasValue)
@@ -65,6 +67,8 @@ namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
 
         public string ExpiredDate { get; set; }
 
+        public bool IsExpired { get; set; }
+
         public string CountryCode { get; set; }
 
         public string Country { get; set; }
@@ -73,7 +77,7 @@ namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
 
         public string Remark { get; set; }
 
-        public string Creator { get; set; }
+        public string CreatedBy { get; set; }
 
         public string CreatedDate { get; set; }
 

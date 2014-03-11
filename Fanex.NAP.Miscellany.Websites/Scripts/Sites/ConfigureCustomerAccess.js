@@ -120,7 +120,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         });
 
         popupElements.btnSave.click(function () {
-            if (Validator.validateForm(mainDOMElements.divPopup)) {
+            if (Validator.validateForm(mainDOMElements.divPopup, 'ne')) {
                 var parameters = {
                     RequestId: popupElements.hdnRequestId.val(),
                     CustId: popupElements.hdnCustId.val(),
@@ -223,37 +223,38 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
 
         columns = [{ HeaderText: labels.id, Width: 70, Name: 'ColID', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.username, Width: 130, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.expiredDate, Width: 100, Name: 'ColExpiredDate', HeaderAlign: 'center', CellAlign: 'center' },
-                   { HeaderText: labels.country, Width: 120, Name: 'ColCountry', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.ip, Width: 120, Name: 'ColIP', HeaderAlign: 'center', CellAlign: 'center' },
-                   { HeaderText: labels.remark, Width: 55, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'center' },
-                   { HeaderText: labels.creator, Width: 130, Name: 'ColCreator', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.createdDate, Width: 100, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                   { HeaderText: labels.expiredDate, Width: 80, Name: 'ColExpiredDate', HeaderAlign: 'center', CellAlign: 'center' },
+                   { HeaderText: labels.country, Width: 230, Name: 'ColCountry', HeaderAlign: 'center', CellAlign: 'left' },
+                   { HeaderText: labels.ip, Width: 100, Name: 'ColIP', HeaderAlign: 'center', CellAlign: 'center' },
+                   { HeaderText: labels.remark, Width: 45, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'center' },
+                   { HeaderText: labels.createdBy, Width: 130, Name: 'ColCreatedBy', HeaderAlign: 'center', CellAlign: 'left' },
+                   { HeaderText: labels.createdDate, Width: 80, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.lastModifiedBy, Width: 130, Name: 'ColLastModifiedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.lastModifiedDate, Width: 120, Name: 'ColLastModifiedDate', HeaderAlign: 'center', CellAlign: 'center'}];
+                   { HeaderText: labels.lastModifiedDate, Width: 110, Name: 'ColLastModifiedDate', HeaderAlign: 'center', CellAlign: 'center'}];
 
         if (hasEditAccessRight) {
-            columns.push({ HeaderText: labels.edit, Width: 50, Name: 'ColEdit', HeaderAlign: 'center', CellAlign: 'center' });
-            columns.push({ HeaderText: labels.del, Width: 50, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' });
+            columns.push({ HeaderText: labels.edit, Width: 30, Name: 'ColEdit', HeaderAlign: 'center', CellAlign: 'center' });
+            columns.push({ HeaderText: labels.del, Width: 40, Name: 'ColDelete', HeaderAlign: 'center', CellAlign: 'center' });
         }
 
         if (data && data.length > 0) {
             var row = null;
+            var expiredDateVal = null;
             var remarkCol = '<span class="ico-remark" title="{0}"></span>';
             var editCol = '<span class="ico-edit" data-item-index="{0}" title="{1}"></span>';
             var delCol = '<span class="ico-delete" data-request-id="{0}" title="{1}"></span>';
 
             cachedData = data;
             $.each(data, function (index, item) {
-                row =
-                {
+                expiredDateVal = item.ExpiredDate || labels.unlimited;
+                row = {
                     Columns: [{ Name: 'ColID', Value: item.RequestId },
                               { Name: 'ColUsername', Value: item.Username },
-                              { Name: 'ColExpiredDate', Value: item.ExpiredDate },
+                              { Name: 'ColExpiredDate', Value: expiredDateVal },
                               { Name: 'ColCountry', Value: item.Country },
                               { Name: 'ColIP', Value: item.IP },
                               { Name: 'ColRemark', Value: remarkCol.format(item.Remark) },
-                              { Name: 'ColCreator', Value: item.Creator },
+                              { Name: 'ColCreatedBy', Value: item.CreatedBy },
                               { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColLastModifiedBy', Value: item.LastModifiedBy },
                               { Name: 'ColLastModifiedDate', Value: item.LastModifiedDate}]
@@ -262,6 +263,10 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
                 if (hasEditAccessRight) {
                     row.Columns.push({ Name: 'ColEdit', Value: editCol.format(index, labels.edit) });
                     row.Columns.push({ Name: 'ColDelete', Value: delCol.format(item.RequestId, labels.del) });
+                }
+
+                if (item.IsExpired) {
+                    row.CssClass = 'highlight';
                 }
 
                 bodyData.push(row);
@@ -424,7 +429,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
 
     // Delete request.
     var deleteRequest = function (requestId) {
-        Miscellany.headlineMsgBox.confirm(messages.deleteRequestConfirm, function () {
+        Miscellany.headlineMsgBox.confirm(messages.deleteRequestConfirm.format(requestId), function () {
             var parameters = {
                 RequestId: requestId
             };

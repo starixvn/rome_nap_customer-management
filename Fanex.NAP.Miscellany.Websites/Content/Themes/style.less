@@ -732,6 +732,10 @@ footer {
                 padding:2px;
                 font-size: 0.9em;
                 color: @text;
+
+                &:disabled {
+                    background-color: @disabled_field !important;
+                }
             }
 
             input[type=password] {
@@ -998,11 +1002,11 @@ footer {
     }
 
     input[type=checkbox] {
-                &:active, &:focus, &:hover {
-                    border: none !important;
-                    box-shadow: none !important;
-                }
-            }
+        &:active, &:focus, &:hover {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
 }
 
 .ie9 .filter-form .edit-field {
@@ -1056,6 +1060,10 @@ footer {
                 border: 1px solid @form_border;
                 font-size: 0.9em;
                 color: @text;
+
+                &:disabled {
+                    background-color: @disabled_field !important;
+                }
             }
 
             textarea {

@@ -63,6 +63,7 @@ namespace Fanex.NAP.Miscellany.Controllers
                 Value = obj.Key
             });
 
+            countrySelectList = countrySelectList.OrderBy(obj => obj.Text);
             ViewBag.CountryList = countrySelectList;
 
             return PartialView();

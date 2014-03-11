@@ -144,9 +144,9 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Created By.
         /// </summary>
-        public static string CreadtedBy {
+        public static string CreatedBy {
             get {
-                return ResourceManager.GetString("CreadtedBy", resourceCulture);
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
             }
         }
         

@@ -110,6 +110,7 @@
     <EmbeddedResource Include="Resources\ViewLang.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ViewLang.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

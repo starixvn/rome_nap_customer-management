@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Models.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.Models.ConfigureCustomerAccess
 {
     using System;
 

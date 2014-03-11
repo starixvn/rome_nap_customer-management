@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="AllowAccessManagementController.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ConfigureCustomerAccessController.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -15,27 +15,27 @@ namespace Fanex.NAP.Miscellany.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Miscellany.Criteria.AllowAccessManagement;
+    using Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess;
     using Fanex.NAP.Miscellany.Services.Implements;
     using Fanex.NAP.Miscellany.Services.Interfaces;
-    using Fanex.NAP.Miscellany.ViewModels.AllowAccessManagement;
+    using Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess;
 
     /// <summary>
     /// Allow Access Management controller.
     /// </summary>
-    public class AllowAccessManagementController : BaseController
+    public class ConfigureCustomerAccessController : BaseController
     {
-        private readonly IAllowAccessManagementService _accessManagementService;
+        private readonly IConfigureCustomerAccessService _accessManagementService;
 
-        public AllowAccessManagementController() :
+        public ConfigureCustomerAccessController() :
             this(null)
         {
         }
 
-        public AllowAccessManagementController(IAllowAccessManagementService accessManagementService)
+        public ConfigureCustomerAccessController(IConfigureCustomerAccessService accessManagementService)
         {
-            this._accessManagementService = accessManagementService ?? new AllowAccessManagementService();
-            ViewBag.HasEditAccessRight = this.HasRight(MiscellanyFunctionKeys.AllowAccessManagement, Constant.Policy.Host);
+            this._accessManagementService = accessManagementService ?? new ConfigureCustomerAccessService();
+            ViewBag.HasEditAccessRight = this.HasRight(MiscellanyFunctionKeys.ConfigureCustomerAccess, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
@@ -56,7 +56,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         [ChildActionOnly]
         public PartialViewResult RequestForm()
         {
-            Dictionary<string, string> countryList = (this._accessManagementService as AllowAccessManagementService).CountryList;
+            Dictionary<string, string> countryList = (this._accessManagementService as ConfigureCustomerAccessService).CountryList;
             IEnumerable<SelectListItem> countrySelectList = countryList.Select(obj => new SelectListItem
             {
                 Text = obj.Value,
@@ -74,7 +74,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of JSON objects.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Read)]
         public JsonResult GetRequestList(GetRequestInfoListCriteria criteria)
         {
             IEnumerable<RequestItem> requestList = this._accessManagementService.GetRequestList(criteria);
@@ -92,7 +92,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>JSON object indicates the data of queried request.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Host)]
         public JsonResult GetRequest(GetRequestInfoCriteria criteria)
         {
             return Json(this._accessManagementService.GetRequest(criteria));
@@ -104,7 +104,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <param name="criteria">The criteria contain data of new request.</param>
         /// <returns>JSON object indicates the new request is inserted successfully or not.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Host)]
         public JsonResult InsertRequest(InsertRequestCriteria criteria)
         {
             ICommandResult result = null;
@@ -124,7 +124,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <param name="criteria">The criteria contain updated data the request.</param>
         /// <returns>JSON object indicates the new request is updated successfully or not.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Host)]
         public JsonResult UpdateRequest(UpdateRequestCriteria criteria)
         {
             ICommandResult result = null;
@@ -144,7 +144,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <param name="criteria">The criteria contain updated data the request.</param>
         /// <returns>JSON object indicates the new request is updated successfully or not.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Host)]
         public JsonResult DeleteRequest(DeleteRequestCriteria criteria)
         {
             ICommandResult result = this._accessManagementService.DeleteRequest(criteria);

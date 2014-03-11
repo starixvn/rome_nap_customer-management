@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 3/6/2014 3:47:09 PM
+// Lasted generated date: 3/11/2014 2:59:47 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -23,8 +23,6 @@ public static class MiscellanyFunctionKeys
 {
     public const string Administration = "Administration";
 
-        public const string AllowAccessManagement = "AllowAccessManagement";
-
         public const string AssignFunctionToGroup = "AssignFunctionToGroup";
 
         public const string AssignFunctionToUser = "AssignFunctionToUser";
@@ -32,6 +30,8 @@ public static class MiscellanyFunctionKeys
         public const string AssignSiteToUser = "AssignSiteToUser";
 
         public const string Close_OpenMembers = "Close_OpenMembers";
+
+        public const string ConfigureCustomerAccess = "ConfigureCustomerAccess";
 
         public const string Customer = "Customer";
 

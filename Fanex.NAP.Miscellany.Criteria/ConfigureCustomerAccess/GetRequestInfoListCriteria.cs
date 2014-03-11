@@ -1,30 +1,28 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="DeleteRequestCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetRequestInfoListCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Jason.Ly" date="2014.3.6">Created</change>
+//   <change who="Jason.Ly" date="2014.3.7">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that are used to delete a request.
+    /// The criteria that are used to get list of requests.
     /// </summary>
-    public class DeleteRequestCriteria : CriteriaBase
+    public class GetRequestInfoListCriteria : CriteriaBase
     {
-        public int RequestID { get; set; }
+        public string Username { get; set; }
 
-        public int DeletedBy { get; set; }
+        public int PageIndex { get; set; }
 
-        public string IPAction { get; set; }
+        public int PageSize { get; set; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
+        public int TotalItems { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -32,7 +30,7 @@ namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "Member_LoginVerifyDel";
+            return "Member_LoginVerifySelList";
         }
 
         /// <summary>

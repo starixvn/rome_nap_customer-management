@@ -97,15 +97,6 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Allow Access Management.
-        /// </summary>
-        public static string AllowAccessManagement {
-            get {
-                return ResourceManager.GetString("AllowAccessManagement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -133,11 +124,29 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Configure Customer Access.
+        /// </summary>
+        public static string ConfigureCustomerAccess {
+            get {
+                return ResourceManager.GetString("ConfigureCustomerAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created By.
+        /// </summary>
+        public static string CreadtedBy {
+            get {
+                return ResourceManager.GetString("CreadtedBy", resourceCulture);
             }
         }
         

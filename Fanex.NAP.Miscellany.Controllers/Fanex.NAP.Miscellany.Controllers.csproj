@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllowAccessManagementController.cs" />
+    <Compile Include="ConfigureCustomerAccessController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CloseOpenMemberController.cs" />
     <Compile Include="ErrorController.cs" />

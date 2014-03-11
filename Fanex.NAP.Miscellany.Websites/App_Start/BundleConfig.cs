@@ -29,7 +29,7 @@ namespace Fanex.NAP.Miscellany.Websites
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
             RegisterOpenCloseMemberBundles(bundles);
-            RegisterAllowAccessManagementBundles(bundles);
+            RegisterConfigureCustomerAccessBundles(bundles);
         }
 
         /// <summary>
@@ -103,14 +103,14 @@ namespace Fanex.NAP.Miscellany.Websites
         /// Registers the common bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
-        public static void RegisterAllowAccessManagementBundles(BundleCollection bundles)
+        public static void RegisterConfigureCustomerAccessBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
-                "~/styles/allowAccessManagement",
-                "~/Content/Sites/allowAccessMamagement.less");
+                "~/styles/configureCustomerAccess",
+                "~/Content/Sites/configureCustomerAccess.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/allowAccessManagement").Include(
-                "~/Scripts/Sites/AllowAccessManagement.js"));
+            bundles.Add(new ScriptBundle("~/scripts/configureCustomerAccess").Include(
+                "~/Scripts/Sites/ConfigureCustomerAccess.js"));
         }
     }
 

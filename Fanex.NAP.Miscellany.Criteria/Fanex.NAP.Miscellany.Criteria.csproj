@@ -50,12 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllowAccessManagement\DeleteRequestCriteria.cs" />
+    <Compile Include="ConfigureCustomerAccess\DeleteRequestCriteria.cs" />
     <Compile Include="Common\GetCountryListCriteria.cs" />
-    <Compile Include="AllowAccessManagement\GetRequestInfoCriteria.cs" />
-    <Compile Include="AllowAccessManagement\GetRequestInfoListCriteria.cs" />
-    <Compile Include="AllowAccessManagement\InsertRequestCriteria.cs" />
-    <Compile Include="AllowAccessManagement\UpdateRequestCriteria.cs" />
+    <Compile Include="ConfigureCustomerAccess\GetRequestInfoCriteria.cs" />
+    <Compile Include="ConfigureCustomerAccess\GetRequestInfoListCriteria.cs" />
+    <Compile Include="ConfigureCustomerAccess\InsertRequestCriteria.cs" />
+    <Compile Include="ConfigureCustomerAccess\UpdateRequestCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

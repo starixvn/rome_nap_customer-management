@@ -7,11 +7,11 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.ViewModels.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess
 {
     using System.Collections.Generic;
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Miscellany.Models.AllowAccessManagement;
+    using Fanex.NAP.Miscellany.Models.ConfigureCustomerAccess;
 
     /// <summary>
     /// View model for new/updated request.

@@ -1,28 +1,22 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetRequestInfoListCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetRequestInfoCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Jason.Ly" date="2014.3.7">Created</change>
+//   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that are used to get list of requests.
+    /// The criteria that are used to get request information.
     /// </summary>
-    public class GetRequestInfoListCriteria : CriteriaBase
+    public class GetRequestInfoCriteria : CriteriaBase
     {
-        public string Username { get; set; }
-
-        public int PageIndex { get; set; }
-
-        public int PageSize { get; set; }
-
-        public int TotalItems { get; set; }
+        public int RequestId { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -30,7 +24,7 @@ namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "Member_LoginVerifySelList";
+            return "Member_LoginVerifySelReqById";
         }
 
         /// <summary>

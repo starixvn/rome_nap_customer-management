@@ -3,21 +3,21 @@
 
 $(document).ready(function () {
     'use strict';
-    var manager = new Fanex.NAP.Miscellany.AllowAccessManagement();
+    var manager = new Fanex.NAP.Miscellany.ConfigureCustomerAccess();
 
     manager.InitPage();
 });
 
-Namespace.Register('Fanex.NAP.Miscellany.AllowAccessManagement');
-Fanex.NAP.Miscellany.AllowAccessManagement = function () {
+Namespace.Register('Fanex.NAP.Miscellany.ConfigureCustomerAccess');
+Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
     'use strict';
 
     var $this = this;
     var urls = {
-        GetRequestList: Miscellany.resolveRootUrl('AllowAccessManagement/GetRequestList'),
-        InsertRequest: Miscellany.resolveRootUrl('AllowAccessManagement/InsertRequest'),
-        UpdateRequest: Miscellany.resolveRootUrl('AllowAccessManagement/UpdateRequest'),
-        DeleteRequest: Miscellany.resolveRootUrl('AllowAccessManagement/DeleteRequest')
+        GetRequestList: Miscellany.resolveRootUrl('ConfigureCustomerAccess/GetRequestList'),
+        InsertRequest: Miscellany.resolveRootUrl('ConfigureCustomerAccess/InsertRequest'),
+        UpdateRequest: Miscellany.resolveRootUrl('ConfigureCustomerAccess/UpdateRequest'),
+        DeleteRequest: Miscellany.resolveRootUrl('ConfigureCustomerAccess/DeleteRequest')
     };
     var cachedData = null;
     var searchParameters = {

@@ -317,7 +317,7 @@
     <Content Include="Scripts\Libs\msgbox\images\question.png" />
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.css" />
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
-    <Content Include="Scripts\Sites\AllowAccessManagement.js" />
+    <Content Include="Scripts\Sites\ConfigureCustomerAccess.js" />
     <Content Include="Scripts\Sites\OpenCloseMember.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -363,12 +363,12 @@
     <Content Include="Areas\UserLogin\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Areas\UserLogin\themes\fonts\Abel.woff" />
-    <None Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
-    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.eot" />
-    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.otf" />
-    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.ttf" />
-    <None Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Areas\UserLogin\themes\fonts\Abel.woff" />
+    <Content Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
+    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.eot" />
+    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.otf" />
+    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.ttf" />
+    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
     <Content Include="Areas\UserLogin\themes\login.less" />
     <Content Include="Areas\UserLogin\themes\select-site.less" />
     <None Include="BundleTransformer.Configuration.xsd">
@@ -378,11 +378,11 @@
     <Content Include="Content\Themes\common.less" />
     <Content Include="Content\Themes\fonts.less" />
     <Content Include="Content\Sites\openCloseMember.less" />
-    <Content Include="Content\Sites\allowAccessMamagement.less" />
+    <Content Include="Content\Sites\configureCustomerAccess.less" />
     <Content Include="Content\Extensions\jquery.combobox-ext.less" />
     <Content Include="Content\Extensions\jquery.extensions.less" />
-    <None Include="Content\Themes\fonts\OpenSans.woff" />
-    <None Include="Content\Themes\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Content\Themes\fonts\OpenSans.woff" />
+    <Content Include="Content\Themes\fonts\YanoneKaffeesatz.woff" />
     <Content Include="Content\Themes\grid.less" />
     <Content Include="Content\Themes\custom.less" />
     <Content Include="Content\Themes\style.less" />
@@ -392,8 +392,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\CloseOpenMember\Index.cshtml" />
-    <Content Include="Views\AllowAccessManagement\Index.cshtml" />
-    <Content Include="Views\AllowAccessManagement\RequestForm.cshtml" />
+    <Content Include="Views\ConfigureCustomerAccess\Index.cshtml" />
+    <Content Include="Views\ConfigureCustomerAccess\RequestForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

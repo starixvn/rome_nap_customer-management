@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="IAllowAccessManagementService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="IConfigureCustomerAccessService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -11,10 +11,10 @@ namespace Fanex.NAP.Miscellany.Services.Interfaces
 {
     using System.Collections.Generic;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Miscellany.Criteria.AllowAccessManagement;
-    using Fanex.NAP.Miscellany.ViewModels.AllowAccessManagement;
+    using Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess;
+    using Fanex.NAP.Miscellany.ViewModels.ConfigureCustomerAccess;
 
-    public interface IAllowAccessManagementService
+    public interface IConfigureCustomerAccessService
     {
         /// <summary>
         /// Gets the request list.

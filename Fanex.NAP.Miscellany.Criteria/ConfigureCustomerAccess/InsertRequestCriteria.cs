@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess
 {
     using System;
     using Fanex.NAP.Framework.Data;

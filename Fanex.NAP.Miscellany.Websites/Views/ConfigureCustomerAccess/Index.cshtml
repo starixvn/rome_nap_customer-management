@@ -1,12 +1,12 @@
 ﻿@{
     var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
 
-    ViewBag.Title = ViewLang.AllowAccessManagement;
+    ViewBag.Title = ViewLang.ConfigureCustomerAccess;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head
 {
-    @Styles.Render("~/styles/allowAccessManagement")
+    @Styles.Render("~/styles/configureCustomerAccess")
 }
 @section Headline
 {
@@ -52,7 +52,7 @@
 }
 @section Foot
 {
-    @Scripts.Render("~/scripts/allowAccessManagement")
+    @Scripts.Render("~/scripts/configureCustomerAccess")
     <script type="text/javascript">
         var labels = {
             id: '@ViewLang.ID',

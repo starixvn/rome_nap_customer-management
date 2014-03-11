@@ -60,9 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implements\AllowAccessManagementService.cs" />
+    <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\BaseService.cs" />
-    <Compile Include="Interfaces\IAllowAccessManagementService.cs" />
+    <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="UpdateRequestCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="DeleteRequestCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -7,29 +7,18 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
+namespace Fanex.NAP.Miscellany.Criteria.ConfigureCustomerAccess
 {
-    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that contain the updated data of a request.
+    /// The criteria that are used to delete a request.
     /// </summary>
-    public class UpdateRequestCriteria : CriteriaBase
+    public class DeleteRequestCriteria : CriteriaBase
     {
-        public int RequestId { get; set; }
+        public int RequestID { get; set; }
 
-        public int CustId { get; set; }
-
-        public string IPRequest { get; set; }
-
-        public string CountryCode { get; set; }
-
-        public DateTime? ExpiryDate { get; set; }
-
-        public string Remark { get; set; }
-
-        public int UpdatedBy { get; set; }
+        public int DeletedBy { get; set; }
 
         public string IPAction { get; set; }
 
@@ -43,7 +32,7 @@ namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "Member_LoginVerifyUpd";
+            return "Member_LoginVerifyDel";
         }
 
         /// <summary>

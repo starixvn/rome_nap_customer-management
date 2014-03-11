@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CountryInfo.cs" />
-    <Compile Include="AllowAccessManagement\RequestInfo.cs" />
+    <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

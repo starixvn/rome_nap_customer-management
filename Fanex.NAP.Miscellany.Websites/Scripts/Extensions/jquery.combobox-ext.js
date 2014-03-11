@@ -12,7 +12,7 @@
                 value = selected.val() ? selected.text() : '',
                 wrapper = this.wrapper = $('<span>').addClass('ui-combobox').insertAfter(select);
 
-            input = $('<input>')
+            input = this.input = $('<input>')
                 .appendTo(wrapper)
                 .val(value)
                 .addClass('ui-state-default ui-combobox-input')
@@ -25,12 +25,13 @@
                         response(select.children('option').map(function () {
                             var text = $(this).text();
 
-                            if (this.value && (!request.term || matcher.test(text)))
+                            if (this.value && (!request.term || matcher.test(text))) {
                                 return {
                                     label: text,
                                     value: text,
                                     option: this
                                 };
+                            }
                         }));
                     },
                     select: function (event, ui) {
@@ -46,7 +47,6 @@
                                 matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
                                 valid = false;
 
-                            console.log('change');
                             Validator.clearError(txt);
                             select.children('option').each(function () {
                                 if ($(this).text().match(matcher)) {
@@ -58,7 +58,7 @@
                             if (!valid) {
                                 // remove invalid value, as it didn't match anything
                                 //txt.val('');
-                                Validator.showError(txt, value + ' didn\'t match any item', 'n');
+                                Validator.showError(txt, value + ' didn\'t match any item');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;
@@ -84,7 +84,7 @@
                 $(ul).removeClass('ui-corner-all');
             };
 
-            $('<a>')
+            this.a = $('<a>')
                 .attr('tabIndex', -1)
                 .attr('title', 'Show All Items')
                 .appendTo(wrapper)
@@ -117,12 +117,14 @@
         },
 
         disable: function () {
+            this.element.prop('disabled', true);
             this.input.prop('disabled', true);
             this.input.autocomplete('disable');
             this.a.button('disable');
         },
 
         enable: function () {
+            this.element.prop('disabled', false);
             this.input.prop('disabled', false);
             this.input.autocomplete('enable');
             this.a.button('enable');

@@ -79,7 +79,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The new request was added successfully!.
+        ///   Looks up a localized string similar to The request has been saved successfully!.
         /// </summary>
         public static string AddRequestSuccessfully {
             get {
@@ -259,7 +259,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The request was updated successfully!.
+        ///   Looks up a localized string similar to The request has been updated successfully!.
         /// </summary>
         public static string UpdateRequestSuccessfully {
             get {

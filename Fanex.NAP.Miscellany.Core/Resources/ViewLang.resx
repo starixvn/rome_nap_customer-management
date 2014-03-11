@@ -207,6 +207,9 @@
   <data name="Super" xml:space="preserve">
     <value>Super</value>
   </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
   </data>

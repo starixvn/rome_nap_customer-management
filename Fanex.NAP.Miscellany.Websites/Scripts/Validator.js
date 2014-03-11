@@ -14,6 +14,7 @@ var Validator = (function ($) {
                 trigger: 'manual',
                 gravity: gravity ? gravity : 'sw',
                 classStyle: 'error',
+                inDocument: false,
                 opacity: 0.97
             });
             $obj.tipsy('show');

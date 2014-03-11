@@ -67,28 +67,45 @@ var Miscellany = (function ($) {
         showWarningMessage: function (message) {
             Miscellany.headlineMsgBox.showWarn(message, { duration: 3000 });
         },
-        showInlineErrorMsg: function (message, $obj) {
+        showInlineAjaxErrorMsg: function (xhr, $obj, callbackFunc) {
+            var $msgDiv = $obj || Miscellany.errorSuccessMsg;
+            var message = Miscellany.internalError;
+
+            if (xhr.status === 403) {
+                message = Miscellany.accessDeniedError;
+            } else if (xhr.status === 404) {
+                message = Miscellany.notFoundError;
+            }
+
+            $msgDiv.html(message);
+            $msgDiv.removeClass('success').addClass('error').slideDown();
+            setTimeout(function () {
+                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
+            }, 5000);
+        },
+        showInlineErrorMsg: function (message, $obj, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
 
             $msgDiv.html(message);
             $msgDiv.removeClass('success').addClass('error').slideDown();
             setTimeout(function () {
-                Miscellany.hideInlineMsg($msgDiv);
+                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
             }, 3000);
         },
-        showInlineInfoMsg: function (message, $obj) {
+        showInlineInfoMsg: function (message, $obj, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
             console.log('su');
             $msgDiv.html(message);
             $msgDiv.removeClass('error').addClass('success').slideDown();
             setTimeout(function () {
-                Miscellany.hideInlineMsg($msgDiv);
+                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
             }, 3000);
         },
-        hideInlineMsg: function ($obj) {
+        hideInlineMsg: function ($obj, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
 
-            $msgDiv.removeClass('error').removeClass('success').slideUp();
+            callbackFunc = callbackFunc || function () { };
+            $msgDiv.removeClass('error').removeClass('success').slideUp(callbackFunc);
             $msgDiv.html('');
         },
         /* jshint ignore:start */

@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllowAccessManagement\NewRequestItem.cs" />
     <Compile Include="AllowAccessManagement\RequestItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

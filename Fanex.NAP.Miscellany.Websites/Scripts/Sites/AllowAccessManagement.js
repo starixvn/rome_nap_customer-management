@@ -34,11 +34,15 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
         divPopup: null
     };
     var popupElements = {
+        divErrorSuccessMsg: null,
+        hdnRequestId: null,
+        hdnCustId: null,
         txtUsername: null,
         rdbRestriction: null,
         ddlCountry: null,
         txtIP: null,
         dpkExpiredDate: null,
+        chkUnlimited: null,
         txtRemark: null,
         btnSave: null,
         btnCancel: null
@@ -56,11 +60,15 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
 
     // Cache popup elements
     var cachePopupElements = function () {
+        popupElements.divErrorSuccessMsg = $('#divPopupErrSucMsg', mainDOMElements.divPopup);
+        popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
+        popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
         popupElements.txtUsername = $('#txtUsername', mainDOMElements.divPopup);
         popupElements.rdbRestriction = $('[name=Restriction]', mainDOMElements.divPopup);
         popupElements.ddlCountry = $('#ddlCountry', mainDOMElements.divPopup);
         popupElements.txtIP = $('#txtIP', mainDOMElements.divPopup);
         popupElements.dpkExpiredDate = $('#dpkExpiredDate', mainDOMElements.divPopup);
+        popupElements.chkUnlimited = $('#chkUnlimited', mainDOMElements.divPopup);
         popupElements.txtRemark = $('#txtRemark', mainDOMElements.divPopup);
         popupElements.btnSave = $('#btnSave', mainDOMElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', mainDOMElements.divPopup);
@@ -91,31 +99,46 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
 
     // Bind event handlers to elements on the popup.
     var bindPopupEventhandlers = function (isNewRequest) {
-        if (!isNewRequest) {
-            popupElements.txtUsername.prop('disabled', true);
-        }
+        popupElements.rdbRestriction.change(function () {
+            var selectedValue = $(this).val();
 
-        //@@TODO: Combobox, datepicker, radio button.
-        mainDOMElements.divPopup.find('select').each(function () {
-            $(this).addClass('combobox-autocomplete').combobox();
-        });
-        mainDOMElements.divPopup.find('input[type=text]').each(function () {
-            $(this).clearfield();
+            if (selectedValue === 'Country') {
+                popupElements.ddlCountry.combobox('enable');
+                popupElements.txtIP.prop('disabled', true);
+            } else {
+                popupElements.ddlCountry.combobox('disable');
+                popupElements.txtIP.prop('disabled', false);
+            }
         });
 
-        Layout.createDatepicker(popupElements.dpkExpiredDate, 'txtExpiredDate', labels.expiredDate, minDate, minDate, null);
-        mainDOMElements.divPopup.find('#txtExpiredDate').addClass('width-200');
-        popupElements.txtIP.ipAddress();
+        popupElements.chkUnlimited.change(function () {
+            if (popupElements.chkUnlimited.is(':checked')) {
+                mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', true);
+            } else {
+                mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', false);
+            }
+        });
 
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(mainDOMElements.divPopup)) {
                 var parameters = {
+                    RequestId: popupElements.hdnRequestId.val(),
+                    CustId: popupElements.hdnCustId.val(),
                     Username: popupElements.txtUsername.val(),
-                    Country: null, //??
-                    IP: null, //??
-                    ExpiredDate: popupElements.dpkExpiredDate.val(),
+                    CountryCode: '',
+                    IPRequest: '',
                     Remark: popupElements.txtRemark.val()
                 };
+
+                if ($(popupElements.rdbRestriction[0]).is(':checked')) {
+                    parameters.CountryCode = popupElements.ddlCountry.val();
+                } else {
+                    parameters.IPRequest = popupElements.txtIP.val();
+                }
+
+                if (!popupElements.chkUnlimited.is(':checked')) {
+                    parameters.ExpiryDate = popupElements.dpkExpiredDate.nexDatePicker('getSingleDate');
+                }
 
                 if (isNewRequest) {
                     addNewRequest(parameters);
@@ -128,6 +151,31 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
         popupElements.btnCancel.click(function () {
             Miscellany.closePopup();
         });
+
+        // Initialize fields.
+        mainDOMElements.divPopup.find('select').each(function () {
+            $(this).addClass('combobox-autocomplete').combobox();
+        });
+        mainDOMElements.divPopup.find('input[type=text]').each(function () {
+            $(this).clearfield();
+        });
+
+        Layout.createDatepicker(popupElements.dpkExpiredDate, 'txtExpiredDate', labels.expiredDate, minDate, minDate, null);
+        mainDOMElements.divPopup.find('#txtExpiredDate').addClass('width-120');
+        popupElements.txtIP.ipAddress();
+
+        if (!isNewRequest) {
+            popupElements.txtUsername.prop('disabled', true);
+            popupElements.chkUnlimited.change();
+
+            if ($(popupElements.rdbRestriction[0]).is(':checked')) {
+                $(popupElements.rdbRestriction[0]).change();
+            } else {
+                $(popupElements.rdbRestriction[1]).change();
+            }
+        } else {
+            $(popupElements.rdbRestriction[0]).prop('checked', true).change();
+        }
     };
 
     // Get data
@@ -158,9 +206,7 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
         var bodyData = [];
         var columns = [];
         var gridOptions = {
-            showHighlightRow: false,
             showFooter: true,
-            showNumberColumn: true,
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -170,21 +216,21 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
                 itemsPerPageArray: Miscellany.pagerRanges,
                 pagerSelectCallBack: handleChangingPage
             },
-            gridExpandHeight: 250
+            gridExpandHeight: 150
         };
 
         mainDOMElements.divMemberList.addClass('display-none');
 
         columns = [{ HeaderText: labels.id, Width: 70, Name: 'ColID', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.username, Width: 130, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.expiredDate, Width: 100, Name: 'ColExpiredDate', HeaderAlign: 'center', CellAlign: 'right' },
+                   { HeaderText: labels.expiredDate, Width: 100, Name: 'ColExpiredDate', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.country, Width: 120, Name: 'ColCountry', HeaderAlign: 'center', CellAlign: 'left' },
                    { HeaderText: labels.ip, Width: 120, Name: 'ColIP', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.remark, Width: 55, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.creator, Width: 130, Name: 'ColCreator', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.createdDate, Width: 100, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'right' },
+                   { HeaderText: labels.createdDate, Width: 100, Name: 'ColCreatedDate', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.lastModifiedBy, Width: 130, Name: 'ColLastModifiedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                   { HeaderText: labels.lastModifiedDate, Width: 120, Name: 'ColLastModifiedDate', HeaderAlign: 'center', CellAlign: 'right'}];
+                   { HeaderText: labels.lastModifiedDate, Width: 120, Name: 'ColLastModifiedDate', HeaderAlign: 'center', CellAlign: 'center'}];
 
         if (hasEditAccessRight) {
             columns.push({ HeaderText: labels.edit, Width: 50, Name: 'ColEdit', HeaderAlign: 'center', CellAlign: 'center' });
@@ -208,7 +254,7 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
                               { Name: 'ColIP', Value: item.IP },
                               { Name: 'ColRemark', Value: remarkCol.format(item.Remark) },
                               { Name: 'ColCreator', Value: item.Creator },
-                              { Name: 'ColCreatedDate', Value: item.CreadtedDated },
+                              { Name: 'ColCreatedDate', Value: item.CreatedDate },
                               { Name: 'ColLastModifiedBy', Value: item.LastModifiedBy },
                               { Name: 'ColLastModifiedDate', Value: item.LastModifiedDate}]
                 };
@@ -269,28 +315,47 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
 
         Miscellany.modal(title, form);
         cachePopupElements();
-        bindPopupEventhandlers(isNewRequest);
 
         if (!isNewRequest) {
             fillRequestInfo(request);
         }
+
+        bindPopupEventhandlers(isNewRequest);
+    };
+
+    // Disable request form.
+    var disableRequestForm = function () {
+        popupElements.txtUsername.prop('disabled', true);
+        popupElements.rdbRestriction.prop('disabled', true);
+        popupElements.ddlCountry.combobox('disable');
+        popupElements.txtIP.prop('disabled', true);
+        mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', true);
+        popupElements.chkUnlimited.prop('disabled', true);
+        popupElements.txtRemark.prop('disabled', true);
     };
 
     // Fill request data into edit form.
     var fillRequestInfo = function (request) {
-        console.log(request);
         if (request) {
             popupElements.txtUsername.val(request.Username);
-            popupElements.dpkExpiredDate.datepicker('setDate', request.ExpiredDate);
             popupElements.txtRemark.val(request.Remark);
-            //popupElements.rdbRestriction ??;
+            popupElements.hdnCustId.val(request.CustId);
+            popupElements.hdnRequestId.val(request.RequestId);
 
             if (request.IP) {
                 popupElements.txtIP.val(request.IP);
+                $(popupElements.rdbRestriction[1]).prop('checked', true);
             }
 
             if (request.CountryCode) {
-                popupElements.ddlCountry.combobox('autocomplete', request.CountryCode);
+                popupElements.ddlCountry.val(request.CountryCode);
+                $(popupElements.rdbRestriction[0]).prop('checked', true);
+            }
+
+            if (request.ExpiredDate) {
+                popupElements.dpkExpiredDate.datepicker('setDate', request.ExpiredDate);
+            } else {
+                popupElements.chkUnlimited.prop('checked', true);
             }
         }
     };
@@ -306,11 +371,19 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
             beforeSend: function () {
                 Miscellany.disableInput();
             },
-            success: function () {
-                //@@TODO: Show success msg, close popup and reload grid.
+            success: function (result) {
+                if (result.IsSuccessful) {
+                    Miscellany.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, function () {
+                        Miscellany.closePopup();
+                    });
+                    disableRequestForm();
+                    getRequestList();
+                } else {
+                    Miscellany.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                }
             },
-            error: function (xhr, status, err) {
-                Miscellany.handleAjaxError(xhr, status, err);
+            error: function (xhr) {
+                Miscellany.showInlineAjaxErrorMsg(xhr, popupElements.divErrorSuccessMsg);
             },
             complete: function () {
                 Miscellany.enableInput();
@@ -329,11 +402,19 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
             beforeSend: function () {
                 Miscellany.disableInput();
             },
-            success: function () {
-                //@@TODO: Show success msg, close popup and reload grid.
+            success: function (result) {
+                if (result.IsSuccessful) {
+                    Miscellany.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, function () {
+                        Miscellany.closePopup();
+                    });
+                    disableRequestForm();
+                    getRequestList();
+                } else {
+                    Miscellany.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                }
             },
-            error: function (xhr, status, err) {
-                Miscellany.handleAjaxError(xhr, status, err);
+            error: function (xhr) {
+                Miscellany.showInlineAjaxErrorMsg(xhr, popupElements.divErrorSuccessMsg);
             },
             complete: function () {
                 Miscellany.enableInput();
@@ -358,10 +439,11 @@ Fanex.NAP.Miscellany.AllowAccessManagement = function () {
                     Miscellany.disableInput();
                 },
                 success: function () {
-                    //@@TODO: Show success msg.
+                    Miscellany.showInlineInfoMsg(messages.deleteRequestSuccessfully);
+                    getRequestList();
                 },
-                error: function (xhr, status, err) {
-                    Miscellany.handleAjaxError(xhr, status, err);
+                error: function (xhr) {
+                    Miscellany.showInlineAjaxErrorMsg(xhr);
                 },
                 complete: function () {
                     Miscellany.enableInput();

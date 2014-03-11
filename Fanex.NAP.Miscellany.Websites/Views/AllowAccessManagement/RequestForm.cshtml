@@ -1,9 +1,12 @@
 ﻿<div id="divRequestForm" class="form">
+    <div id="divPopupErrSucMsg" class="message no-margin-top margin-bottom"></div>
     <div class="form-row">
         <div class="lbl-field  normal-label">
             @Html.Label("txtUsername", ViewLang.Username)
         </div>
         <div class="edit-field">
+            @Html.Hidden("hdnCustId", string.Empty)
+            @Html.Hidden("hdnRequestId", string.Empty)
             @Html.TextBox("txtUsername", string.Empty, new { @class = "width-200", data_val_required = @Messages.RequiredFieldError })
         </div>
     </div>
@@ -42,7 +45,10 @@
         </div>
     </div>
     <div class="form-row padding-left-20">
-        <div id="dpkExpiredDate" class="lbl-field width-140">
+        <div id="dpkExpiredDate" class="lbl-field width-140"></div>
+        <div class="edit-field chk-unlimited">
+            <input type="checkbox" id="chkUnlimited" />
+            <label for="chkUnlimited">@ViewLang.Unlimited</label>
         </div>
     </div>
     <div class="form-row">

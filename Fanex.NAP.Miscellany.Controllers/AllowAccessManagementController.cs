@@ -14,6 +14,7 @@ namespace Fanex.NAP.Miscellany.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Miscellany.Criteria.AllowAccessManagement;
     using Fanex.NAP.Miscellany.Services.Implements;
     using Fanex.NAP.Miscellany.Services.Interfaces;
@@ -106,7 +107,15 @@ namespace Fanex.NAP.Miscellany.Controllers
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
         public JsonResult InsertRequest(InsertRequestCriteria criteria)
         {
-            return Json(this._accessManagementService.InsertRequest(criteria));
+            ICommandResult result = null;
+
+            criteria.CountryCode = criteria.CountryCode ?? string.Empty;
+            criteria.IPRequest = criteria.IPRequest ?? string.Empty;
+            criteria.Creator = this.CurrentSession.UserId;
+            criteria.IPAction = this.CurrentContext.IP;
+            result = this._accessManagementService.InsertRequest(criteria);
+
+            return Json(result);
         }
 
         /// <summary>
@@ -118,7 +127,15 @@ namespace Fanex.NAP.Miscellany.Controllers
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
         public JsonResult UpdateRequest(UpdateRequestCriteria criteria)
         {
-            return Json(this._accessManagementService.UpdateRequest(criteria));
+            ICommandResult result = null;
+
+            criteria.CountryCode = criteria.CountryCode ?? string.Empty;
+            criteria.IPRequest = criteria.IPRequest ?? string.Empty;
+            criteria.UpdatedBy = this.CurrentSession.UserId;
+            criteria.IPAction = this.CurrentContext.IP;
+            result = this._accessManagementService.UpdateRequest(criteria);
+
+            return Json(result);
         }
 
         /// <summary>
@@ -130,7 +147,8 @@ namespace Fanex.NAP.Miscellany.Controllers
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.AllowAccessManagement, Policy = Constant.Policy.Host)]
         public JsonResult DeleteRequest(DeleteRequestCriteria criteria)
         {
-            return Json(this._accessManagementService.DeleteRequest(criteria));
+            ICommandResult result = this._accessManagementService.DeleteRequest(criteria);
+            return Json(result);
         }
     }
 }

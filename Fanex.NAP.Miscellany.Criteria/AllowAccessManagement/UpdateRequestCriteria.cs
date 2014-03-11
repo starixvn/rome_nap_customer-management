@@ -25,7 +25,7 @@ namespace Fanex.NAP.Miscellany.Criteria.AllowAccessManagement
 
         public string CountryCode { get; set; }
 
-        public DateTime ExpiryDate { get; set; }
+        public DateTime? ExpiryDate { get; set; }
 
         public string Remark { get; set; }
 

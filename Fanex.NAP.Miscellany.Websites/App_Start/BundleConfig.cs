@@ -67,6 +67,8 @@ namespace Fanex.NAP.Miscellany.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
                 "~/Scripts/Libs/jQuery/jquery-*",
+                "~/Scripts/Libs/jQuery/jquery.mask.min.js",
+                "~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js",
                 "~/Scripts/Libs/Fanex.Grid/moment.js",

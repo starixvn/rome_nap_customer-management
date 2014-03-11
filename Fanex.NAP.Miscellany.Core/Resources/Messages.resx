@@ -124,7 +124,7 @@
     <value>You are not authorized to access this link.</value>
   </data>
   <data name="AddRequestSuccessfully" xml:space="preserve">
-    <value>The new request was added successfully!</value>
+    <value>The request has been saved successfully!</value>
   </data>
   <data name="ChangedPassword" xml:space="preserve">
     <value>The password has been changed successfully!</value>
@@ -184,7 +184,7 @@
     <value>This is required field!</value>
   </data>
   <data name="UpdateRequestSuccessfully" xml:space="preserve">
-    <value>The request was updated successfully!</value>
+    <value>The request has been updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Miscellany!</value>

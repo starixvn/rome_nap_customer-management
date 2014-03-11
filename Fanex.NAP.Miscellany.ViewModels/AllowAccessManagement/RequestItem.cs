@@ -27,6 +27,7 @@ namespace Fanex.NAP.Miscellany.ViewModels.AllowAccessManagement
             if (rawData != null)
             {
                 this.RequestId = rawData.RequestID;
+                this.CustId = rawData.CustID;
                 this.Username = rawData.Username;
                 this.CountryCode = rawData.CountryCode;
                 this.IP = rawData.IP;
@@ -57,6 +58,8 @@ namespace Fanex.NAP.Miscellany.ViewModels.AllowAccessManagement
         }
 
         public int RequestId { get; set; }
+
+        public int CustId { get; set; }
 
         public string Username { get; set; }
 

@@ -8,7 +8,6 @@
             if ($this.val() !== '') {
                 $this.addClass('x-icon');
             }
-            console.log($this.val() !== '');
         }).focusout(function () {
             $this.removeClass('x-icon');
         }).keyup(function () {

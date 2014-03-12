@@ -77,6 +77,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
     // Initialize fields and handle events.
     var initFields = function () {
         searchParameters.PageSize = Miscellany.pageSize;
+        searchParameters.PageIndex = 0;
 
         mainDOMElements.txtSearchUserName.keyup(function (event) {
             if (event.keyCode === 13) {
@@ -105,6 +106,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
             if (selectedValue === 'Country') {
                 popupElements.ddlCountry.combobox('enable');
                 popupElements.txtIP.prop('disabled', true);
+                Validator.clearError(popupElements.txtIP); // Clear error when the field is disabled.
             } else {
                 popupElements.ddlCountry.combobox('disable');
                 popupElements.txtIP.prop('disabled', false);
@@ -120,7 +122,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         });
 
         popupElements.btnSave.click(function () {
-            if (Validator.validateForm(mainDOMElements.divPopup, 'ne')) {
+            if (Validator.validateForm(mainDOMElements.divPopup, 'se')) {
                 var parameters = {
                     RequestId: popupElements.hdnRequestId.val(),
                     CustId: popupElements.hdnCustId.val(),

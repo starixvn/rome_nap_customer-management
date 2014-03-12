@@ -7,7 +7,7 @@
             var input,
                 self = this,
                 select = this.element.hide(),
-                selectClass = this.element.context.attributes['class'],
+                selectAttributes = this.element.context.attributes,
                 selected = select.children(':selected'),
                 value = selected.val() ? selected.text() : '',
                 wrapper = this.wrapper = $('<span>').addClass('ui-combobox').insertAfter(select);
@@ -39,6 +39,7 @@
                         self._trigger('selected', event, {
                             item: ui.item.option
                         });
+                        select.trigger('change');
                     },
                     change: function (event, ui) {
                         if (!ui.item) {
@@ -58,7 +59,7 @@
                             if (!valid) {
                                 // remove invalid value, as it didn't match anything
                                 //txt.val('');
-                                Validator.showError(txt, value + ' didn\'t match any item');
+                                Validator.showError(txt, value + ' didn\'t match any item', 'se');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;
@@ -82,6 +83,11 @@
                     self._renderItem(ul, item);
                 });
                 $(ul).removeClass('ui-corner-all');
+
+                // Clear error when an item is selected.
+                $(ul).children().click(function () {
+                    Validator.clearError(input);
+                });
             };
 
             this.a = $('<a>')
@@ -111,9 +117,13 @@
                     input.focus();
                 });
 
-            if (typeof selectClass !== 'undefined') {
-                input.removeClass('ui-state-default').addClass(selectClass.value);
-            }
+            $.each(selectAttributes, function () {
+                if (this.name === 'class') {
+                    input.removeClass('ui-state-default').addClass(this.value);
+                } else if (this.name !== 'style') {
+                    input.attr(this.name, this.value);
+                }
+            });
         },
 
         disable: function () {
@@ -121,6 +131,7 @@
             this.input.prop('disabled', true);
             this.input.autocomplete('disable');
             this.a.button('disable');
+            Validator.clearError(this.input); // Clear all error.
         },
 
         enable: function () {

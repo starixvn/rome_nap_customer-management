@@ -1,5 +1,5 @@
 ﻿<div id="divRequestForm" class="form">
-    <div id="divPopupErrSucMsg" class="message no-margin-top margin-bottom"></div>
+    <div id="divPopupErrSucMsg" class="message margin-bottom"></div>
     <div class="form-row">
         <div class="lbl-field  normal-label">
             @Html.Label("txtUsername", ViewLang.Username)
@@ -61,7 +61,7 @@
                 string.Empty,
                 5,
                 65,
-                new { data_val_required = @Messages.RequiredFieldError, @class = "width-200" })
+                new { data_val_required = @Messages.RequiredFieldError, @class = "width-200", maxlength = 200 })
         </div>
     </div>
     <div class="form-row button-row">

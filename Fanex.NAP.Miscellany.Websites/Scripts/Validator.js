@@ -5,7 +5,7 @@ var Validator = (function ($) {
     return {
         showError: function ($obj, message, gravity) {
             if ($obj.is(':hidden')) {
-                $obj = $obj.parent();
+                return;
             }
 
             $obj.attr('title', message);
@@ -19,6 +19,11 @@ var Validator = (function ($) {
             });
             $obj.tipsy('show');
             $obj.focus();
+
+            // Hide error when changing the field.
+            $obj.change(function () {
+                $obj.tipsy('hide');
+            });
         },
         clearError: function ($obj) {
             $obj.tipsy('hide');
@@ -73,7 +78,7 @@ var Validator = (function ($) {
                 var errMsg = $obj.attr('data-val-regex');
                 var value = $obj.val();
                 var pattern = new RegExp($obj.attr('data-val-regex-pattern'));
-                console.log(pattern.test(value));
+
                 if (errMsg && !$obj.prop('disabled') && !pattern.test(value)) {
                     Validator.showError($obj, errMsg, gravity);
                     return false;
@@ -129,7 +134,6 @@ var Validator = (function ($) {
             });
 
             $('[data-val-regex]', form).each(function () {
-                console.log('test');
                 if (!Validator.validateRegexField($(this), gravity)) {
                     errorCounter++;
                 }

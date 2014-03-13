@@ -24,10 +24,15 @@
         height: 20px;
         padding: 2px;
         border-color: @filter_border !important;
-        background: transparent !important;
+        background: @filter_bar_bg !important;
 
         &:hover {
-            background: transparent !important;//#dadada !important;
+            background: @filter_bar_bg !important;//#dadada !important;
+            .box_shadow()
+        }
+
+        &:disabled {
+            background-color: @disabled_field;
         }
     }
     .ui-combobox-input {

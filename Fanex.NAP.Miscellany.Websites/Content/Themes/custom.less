@@ -1,58 +1,4 @@
 /********************************************************/
-/*                     Custom Jquery Ui                  */
-/********************************************************/
-.ui-datepicker-week-end
-{
-    color: #C84519;
-}
-.ui-datepicker {
-    .ui-datepicker-title {
-        select { 
-            font-size: 0.9em; 
-            margin:1px 6px; 
-            border: 1px solid #CECCCD;
-            height: 18px;
-        }
-    }
-
-    .ui-datepicker-prev {
-        margin:1.5px 0 0px 1.5px;
-    }
-
-    .ui-datepicker-next {
-        margin:1.5px 1.5px 0 0;
-    }
-}
-
-.ui-widget-header, .ui-state-active
-{
-    background: linear-gradient(#486CB8, #5A7DC1) repeat scroll 0 0 #5A7DC1 !important;
-}
-.ui-widget
-{
-    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif !important;
-}
-
-.ui-button  {
-    background: repeat scroll 0 0 #5A7DC1 !important;
-    border: 1px solid #C4D6FC !important;
-    color: #FFFFFF !important;
-    font-weight: bold !important;
-    
-}
-.ui-button:hover {
-    background: repeat scroll 0 0 #6891e8 !important;
-}
-
-.ui-widget .ui-widget {
-    font-size: 0.85em !important;
-}
-
-.ui-dialog {
-    .box_shadow(0 3px 9px rgba(0, 0, 0, 0.5));
-}
-
-/********************************************************/
 /*                  Msgbox custom style                 */
 /********************************************************/
 .msgbox {
@@ -191,6 +137,89 @@ input.ui-multiselect-state-default{
             &.highlight td {
                 background-color: #c5e6a8;
             }
+        }
+    }
+}
+
+/********************************************************/
+/*         Custom jQuery Dialog and Datepicker          */
+/********************************************************/
+.ui-widget {
+    font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif !important;
+}
+
+.ui-widget-header, .ui-state-active {
+    .bg_linear_gradient(@menu_bg_light, @menu_bg);
+}
+
+.ui-datepicker {
+    .ui-datepicker-title {
+        select { 
+            font-size: 0.9em; 
+            margin:1px 6px; 
+            border: 1px solid #CECCCD;
+            height: 18px;
+        }
+    }
+
+    .ui-datepicker-prev {
+        margin:1.5px 0 0px 1.5px;
+    }
+
+    .ui-datepicker-next {
+        margin:1.5px 1.5px 0 0;
+    }
+
+    .ui-datepicker-week-end {
+        color: #C84519;
+    }
+}
+
+
+.ui-dialog {
+    .box_shadow(0 3px 9px rgba(0, 0, 0, 0.5));
+    .border_radius(0);
+    padding: 0;
+
+    .ui-widget-header {
+        .border_radius(0);
+        font-weight: normal;
+        text-align: center;
+
+        .ui-dialog-title {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ui-dialog-titlebar-close {
+            padding: 0;
+
+            .ui-icon-closethick {
+                background: url(img/btn-close.png) no-repeat -1px -48px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            &.ui-state-hover {
+                background: none;
+                border: none;
+            }
+        }
+    }
+
+    .ui-dialog-content {
+        margin-top: -13px;
+        padding-top: 17px;
+        float: left;
+
+        .form {
+            background-color: transparent;
+            border: none;
+            padding: 15px 0 10px 0;
+            .box_shadow(none);
         }
     }
 }

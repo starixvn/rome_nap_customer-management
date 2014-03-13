@@ -39,6 +39,9 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CasinoLibrary">
+      <HintPath>..\Dependencies\Others\CasinoLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Fanex\Fanex.Common.dll</HintPath>
     </Reference>
@@ -50,6 +53,24 @@
     </Reference>
     <Reference Include="Fanex.NAP.Framework">
       <HintPath>..\Dependencies\Fanex\Fanex.NAP.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="GotDotNet.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\Others\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt">
+      <HintPath>..\Dependencies\Others\IBCCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDBLibrary">
+      <HintPath>..\Dependencies\Others\IBCDBLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Dependencies\Others\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\Dependencies\Others\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NetUtility">
+      <HintPath>..\Dependencies\Others\NetUtility.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

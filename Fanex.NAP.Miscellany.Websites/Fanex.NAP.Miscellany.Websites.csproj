@@ -205,6 +205,7 @@
     <Content Include="Content\Themes\img\bgmenu-more.png" />
     <Content Include="Content\Themes\img\bg_footer.jpg" />
     <Content Include="Content\Themes\img\bg_header.png" />
+    <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
@@ -221,7 +222,6 @@
     <Content Include="Content\Themes\img\miscellany.ico" />
     <Content Include="Content\Themes\img\seperation.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
-    <Content Include="Content\Themes\img\sprites-image.png" />
     <Content Include="Content\Themes\img\sprites.png" />
     <Content Include="Content\Themes\img\textures\fabric.png" />
     <Content Include="Content\Themes\img\textures\grid.png" />
@@ -246,6 +246,7 @@
     <Content Include="Content\Themes\jquery\images\ui-icons_fcd113_256x240.png" />
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
+    <Content Include="DBConnectionData\GlobalSetting.ini" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Validator.js" />
@@ -346,7 +347,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.ConnectionString.config" />
+    <Content Include="Web.ConnectionString.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.AppSettings.config" />

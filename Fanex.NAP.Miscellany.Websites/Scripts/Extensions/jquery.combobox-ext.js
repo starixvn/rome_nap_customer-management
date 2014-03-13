@@ -1,5 +1,6 @@
 ﻿/* File Created: March 6, 2014 */
 /* global Validator */
+'use strict';
 
 (function ($) {
     $.widget('ui.combobox', {
@@ -43,8 +44,8 @@
                     },
                     change: function (event, ui) {
                         if (!ui.item) {
-                            var txt = $(this);
-                            value = txt.val(),
+                            var txt = $(this),
+                                value = txt.val(),
                                 matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
                                 valid = false;
 

@@ -557,14 +557,6 @@ header {
                 }
             }
         }
-
-        .user-info {
-            .greeting {
-                h2 {
-                    //padding-left: 16px;
-                }
-            }
-        }
     }
 }
 
@@ -593,16 +585,15 @@ header {
         font-size: 1.2em;
         color: @headline_text;
         display: inline-block;
-        float: left;	
+        float: left;
         margin: 2px 0 2px 10px;
-        height:32px;		
-        div{
+        height: 32px;
+        div {
             margin-left: 0px;
             margin-top: 8px;
             text-shadow: 0 1px rgba(0, 0, 0, 0.25);
             display: inline-block;
-            .curr
-            {
+            .curr {
                 color:@headline_text_curr;
             }
         }
@@ -616,13 +607,12 @@ header {
         float: left;
         min-width: 98%;
         margin: 2px 0 2px 10px;
-        height:32px;		
-        div{
+        height: 32px;
+        div {
             margin-left: 10px;
             margin-top: 8px;
             text-shadow: 0 1px rgba(0, 0, 0, 0.25);
-            .curr
-            {
+            .curr {
                 color:@headline_text_curr;
             }
         }
@@ -682,7 +672,7 @@ footer {
 
 .filter-bar {
     width: 98%;
-    background-color:@filter_bar_bg;
+    background-color: @filter_bar_bg;
     border: solid 1px @filter_border;
     margin: 6px 0px 0 10px;
     margin-top:6px; 
@@ -704,7 +694,7 @@ footer {
             display: inline;
             float: left;
         }
-        .lbl-field{
+        .lbl-field {
             .text_shadow(0 0 0.023em black);
         }
 
@@ -754,7 +744,7 @@ footer {
                 height: 20px;
             }
 
-            input[type='checkbox']{
+            input[type='checkbox'] {
                 margin-right:2px;
                 margin-top:3px;
             }
@@ -1011,13 +1001,12 @@ footer {
 
 .ie9 .filter-form .edit-field {
     input[type=checkbox] {
-                &:active, &:focus, &:hover {
-                    border: none !important;
-                    box-shadow: none !important;
-                }
-            }
+        &:active, &:focus, &:hover {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
 }
-
 
 /********************************************************/
 /*                      Forms                           */
@@ -1087,14 +1076,6 @@ footer {
                 }
             }
 
-            input[type=text].input-validation-error,
-            input[type=password].input-validation-error,
-            textarea.input-validation-error,
-            select.input-validation-error {
-                border: solid 1px @msg_err_border;
-                background-color: @msg_err_bg + #444;
-            }
-
             * {
                 vertical-align: middle;
             }
@@ -1126,7 +1107,7 @@ footer {
             background-color: @msg_err_bg;
             border: solid 1px @msg_err_border;
         }
-        .warn {			
+        .warn {
             background-color: @msg_warn_bg;
             border: solid 1px @msg_warn_border;
         }
@@ -1170,13 +1151,6 @@ footer {
     .form-row.summary {
         min-height: 0;
     }
-}
-
-input[type=text].input-validation-error,
-input[type=password].input-validation-error,
-select.input-validation-error {
-    border: solid 1px @msg_err_border !important;
-    background-color: @msg_err_bg + #444 !important;
 }
 
 .form.w120 {

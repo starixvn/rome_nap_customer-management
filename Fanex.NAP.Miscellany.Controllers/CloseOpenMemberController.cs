@@ -28,5 +28,27 @@ namespace Fanex.NAP.Miscellany.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// Get member list.
+        /// </summary>
+        /// <returns>Member list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        public JsonResult GetMemberList()
+        {
+            return Json(null);
+        }
+
+        /// <summary>
+        /// Update member status.
+        /// </summary>
+        /// <returns>JSON object indicates the result of updating process.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        public JsonResult UpdateMembers()
+        {
+            return Json(null);
+        }
     }
 }

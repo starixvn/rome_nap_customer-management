@@ -35,6 +35,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
     };
     var popupElements = {
         divErrorSuccessMsg: null,
+        divForm: null,
         hdnRequestId: null,
         hdnCustId: null,
         txtUsername: null,
@@ -61,6 +62,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
     // Cache popup elements
     var cachePopupElements = function () {
         popupElements.divErrorSuccessMsg = $('#divPopupErrSucMsg', mainDOMElements.divPopup);
+        popupElements.divForm = $('#divRequestForm', mainDOMElements.divPopup);
         popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
         popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
         popupElements.txtUsername = $('#txtUsername', mainDOMElements.divPopup);
@@ -115,14 +117,14 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
 
         popupElements.chkUnlimited.change(function () {
             if (popupElements.chkUnlimited.is(':checked')) {
-                mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', true);
+                popupElements.divForm.find('#txtExpiredDate').prop('disabled', true);
             } else {
-                mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', false);
+                popupElements.divForm.find('#txtExpiredDate').prop('disabled', false);
             }
         });
 
         popupElements.btnSave.click(function () {
-            if (Validator.validateForm(mainDOMElements.divPopup, 'se')) {
+            if (Validator.validateForm(popupElements.divForm, 'w')) {
                 var parameters = {
                     RequestId: popupElements.hdnRequestId.val(),
                     CustId: popupElements.hdnCustId.val(),
@@ -155,15 +157,15 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         });
 
         // Initialize fields.
-        mainDOMElements.divPopup.find('select').each(function () {
+        popupElements.divForm.find('select').each(function () {
             $(this).addClass('combobox-autocomplete').combobox();
         });
-        mainDOMElements.divPopup.find('input[type=text]').each(function () {
+        popupElements.divForm.find('input[type=text]').each(function () {
             $(this).clearfield();
         });
 
         Layout.createDatepicker(popupElements.dpkExpiredDate, 'txtExpiredDate', labels.expiredDate, minDate, minDate, null);
-        mainDOMElements.divPopup.find('#txtExpiredDate').addClass('width-120');
+        popupElements.divForm.find('#txtExpiredDate').addClass('width-120');
         popupElements.txtIP.ipAddress();
 
         if (!isNewRequest) {
@@ -178,6 +180,18 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         } else {
             $(popupElements.rdbRestriction[0]).prop('checked', true).change();
         }
+
+        $.each(Validator.getValidatedFields(popupElements.divForm), function () {
+            $(this).on('raiseError', function () {
+                if (!popupElements.divForm.hasClass('expand-form')) {
+                    popupElements.divForm.addClass('expand-form');
+                }
+            }).on('clearError', function () {
+                if (Validator.countErrors(popupElements.divForm) === 0) {
+                    popupElements.divForm.removeClass('expand-form');
+                }
+            });
+        });
     };
 
     // Get data
@@ -336,7 +350,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         popupElements.rdbRestriction.prop('disabled', true);
         popupElements.ddlCountry.combobox('disable');
         popupElements.txtIP.prop('disabled', true);
-        mainDOMElements.divPopup.find('#txtExpiredDate').prop('disabled', true);
+        popupElements.divForm.find('#txtExpiredDate').prop('disabled', true);
         popupElements.chkUnlimited.prop('disabled', true);
         popupElements.txtRemark.prop('disabled', true);
     };

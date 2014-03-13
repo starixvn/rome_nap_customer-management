@@ -9,37 +9,42 @@ var Validator = (function ($) {
             }
 
             $obj.attr('title', message);
-            $obj.tipsy(
-            {
+            $obj.tipsy({
                 trigger: 'manual',
                 gravity: gravity ? gravity : 'sw',
                 classStyle: 'error',
                 inDocument: false,
                 opacity: 0.97
             });
-            $obj.tipsy('show');
+            $obj.tipsy('show').triggerHandler('raiseError');
             $obj.focus();
 
             // Hide error when changing the field.
             $obj.change(function () {
-                $obj.tipsy('hide');
+                Validator.clearError($obj);
             });
         },
         clearError: function ($obj) {
             $obj.tipsy('hide');
-            $obj.removeAttr('original-title');
+            $obj.removeAttr('original-title').triggerHandler('clearError');
         },
         clearErrors: function ($form) {
             $form.find('[original-title]').each(function () {
-                $(this).tipsy('hide');
-                $(this).removeAttr('original-title');
+                Validator.clearError($(this));
             });
         },
         valicateRequiredField: function ($obj, gravity) {
+            var $ele = $obj;
             var errMsg = $obj.attr('data-val-required');
-            var value = $.trim($obj.val());
+            var value;
 
-            if (errMsg && !$obj.prop('disabled') && !value) {
+            if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                $ele = $obj.find('input:first');
+            }
+
+            value = $.trim($ele.val());
+
+            if (errMsg && !$ele.prop('disabled') && !value) {
                 Validator.showError($obj, errMsg, gravity);
                 return false;
             } else {
@@ -48,10 +53,17 @@ var Validator = (function ($) {
         },
         validateNumberField: function ($obj, gravity) {
             if (!$obj.attr('original-title')) {
+                var $ele = $obj;
                 var errMsg = $obj.attr('data-val-number');
-                var value = $.trim($obj.val().replace(/,/g, ''));
+                var value;
 
-                if (errMsg && !$obj.prop('disabled') && (!$.isNumeric(value))) {
+                if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                    $ele = $obj.find('input:first');
+                }
+
+                value = $.trim($ele.val().replace(/,/g, ''));
+
+                if (errMsg && !$ele.prop('disabled') && (!$.isNumeric(value))) {
                     Validator.showError($obj, errMsg, gravity);
                     return false;
                 }
@@ -61,11 +73,18 @@ var Validator = (function ($) {
         },
         validateMinLengthField: function ($obj, gravity) {
             if (!$obj.attr('original-title')) {
+                var $ele = $obj;
                 var errMsg = $obj.attr('data-val-length');
-                var value = $obj.val();
                 var minLen = parseInt($obj.attr('data-min-length'));
+                var value;
 
-                if (errMsg && !$obj.prop('disabled') && (value.length < minLen)) {
+                if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                    $ele = $obj.find('input:first');
+                }
+
+                value = $ele.val();
+
+                if (errMsg && !$ele.prop('disabled') && (value.length < minLen)) {
                     Validator.showError($obj, errMsg, gravity);
                     return false;
                 }
@@ -75,11 +94,18 @@ var Validator = (function ($) {
         },
         validateRegexField: function ($obj, gravity) {
             if (!$obj.attr('original-title')) {
+                var $ele = $obj;
                 var errMsg = $obj.attr('data-val-regex');
-                var value = $obj.val();
                 var pattern = new RegExp($obj.attr('data-val-regex-pattern'));
+                var value;
 
-                if (errMsg && !$obj.prop('disabled') && !pattern.test(value)) {
+                if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                    $ele = $obj.find('input:first');
+                }
+
+                value = $ele.val();
+
+                if (errMsg && !$ele.prop('disabled') && !pattern.test(value)) {
                     Validator.showError($obj, errMsg, gravity);
                     return false;
                 }
@@ -89,12 +115,20 @@ var Validator = (function ($) {
         },
         validateIPField: function ($obj, gravity) {
             if (!$obj.attr('original-title')) {
+                var $ele = $obj;
                 var errMsg = $obj.attr('data-val-ip');
-                var ip = $.trim($obj.val());
-                var ipArray = ip.split('.');
                 var isValid = true;
+                var ip;
+                var ipArray;
 
-                if (errMsg && !$obj.prop('disabled')) {
+                if (!$obj.is('input') && !$obj.is('select') && !$obj.is('textarea')) {
+                    $ele = $obj.find('input:first');
+                }
+
+                ip = $.trim($ele.val());
+                ipArray = ip.split('.');
+
+                if (errMsg && !$ele.prop('disabled')) {
                     $.each(ipArray, function (index, part) {
                         if (part !== '' && parseInt(part) > 255) {
                             isValid = false;
@@ -110,42 +144,56 @@ var Validator = (function ($) {
 
             return true;
         },
-        validateForm: function (form, gravity) {
+        validateForm: function ($form, gravity) {
             var errorCounter = 0;
 
-            Validator.clearErrors(form);
+            Validator.clearErrors($form);
 
-            $('[data-val-required]', form).each(function () {
+            $('[data-val-required]', $form).each(function () {
                 if (!Validator.valicateRequiredField($(this), gravity)) {
                     errorCounter++;
                 }
             });
 
-            $('[data-val-number]', form).each(function () {
+            $('[data-val-number]', $form).each(function () {
                 if (!Validator.validateNumberField($(this), gravity)) {
                     errorCounter++;
                 }
             });
 
-            $('[data-val-length]', form).each(function () {
+            $('[data-val-length]', $form).each(function () {
                 if (!Validator.validateMinLengthField($(this), gravity)) {
                     errorCounter++;
                 }
             });
 
-            $('[data-val-regex]', form).each(function () {
+            $('[data-val-regex]', $form).each(function () {
                 if (!Validator.validateRegexField($(this), gravity)) {
                     errorCounter++;
                 }
             });
 
-            $('[data-val-ip]', form).each(function () {
+            $('[data-val-ip]', $form).each(function () {
                 if (!Validator.validateIPField($(this), gravity)) {
                     errorCounter++;
                 }
             });
 
             return errorCounter === 0;
+        },
+        getValidatedFields: function ($form) {
+            var fields = [];
+
+            fields.push($('[data-val-required]', $form));
+            fields.push($('[data-val-number]', $form));
+            fields.push($('[data-val-length]', $form));
+            fields.push($('[data-val-regex]', $form));
+            fields.push($('[data-val-ip]', $form));
+
+            return fields;
+        },
+        countErrors: function ($form) {
+            return $('[original-title]', $form).length;
         }
     };
 } (jQuery));

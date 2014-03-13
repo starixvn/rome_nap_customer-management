@@ -49,7 +49,7 @@
                                 matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
                                 valid = false;
 
-                            Validator.clearError(txt);
+                            Validator.clearError(wrapper);
                             select.children('option').each(function () {
                                 if ($(this).text().match(matcher)) {
                                     this.selected = valid = true;
@@ -60,7 +60,7 @@
                             if (!valid) {
                                 // remove invalid value, as it didn't match anything
                                 //txt.val('');
-                                Validator.showError(txt, value + ' didn\'t match any item', 'se');
+                                Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;
@@ -87,7 +87,7 @@
 
                 // Clear error when an item is selected.
                 $(ul).children().click(function () {
-                    Validator.clearError(input);
+                    Validator.clearError(wrapper);
                 });
             };
 
@@ -122,7 +122,7 @@
                 if (this.name === 'class') {
                     input.removeClass('ui-state-default').addClass(this.value);
                 } else if (this.name !== 'style') {
-                    input.attr(this.name, this.value);
+                    wrapper.attr(this.name, this.value);
                 }
             });
         },
@@ -132,7 +132,7 @@
             this.input.prop('disabled', true);
             this.input.autocomplete('disable');
             this.a.button('disable');
-            Validator.clearError(this.input); // Clear all error.
+            Validator.clearError(this.wrapper); // Clear all error.
         },
 
         enable: function () {

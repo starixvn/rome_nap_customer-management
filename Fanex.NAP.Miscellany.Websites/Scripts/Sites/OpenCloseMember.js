@@ -20,9 +20,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
         Username: null,
         Status: null,
         PageIndex: null,
-        PageSize: null,
-        OrderColumn: null,
-        OrderDirection: null
+        PageSize: null
     };
     var domElements = {
         txtUsername: null,
@@ -47,11 +45,10 @@ Fanex.Miscellany.CloseOpenMember = function () {
         domElements.divMemberList = $('#divMemberList');
     };
 
-    // @@TODO: Default values for OrderColumn, OrderDirection
     // Get parameters.
     var getParameters = function () {
         parameters.Username = domElements.txtUsername.val();
-        parameters.Status = domElements.ddlStatus;
+        parameters.Status = domElements.ddlStatus.val();
         parameters.PageIndex = 0;
     };
 

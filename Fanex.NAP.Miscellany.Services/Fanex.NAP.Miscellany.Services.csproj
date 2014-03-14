@@ -83,7 +83,9 @@
   <ItemGroup>
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\BaseService.cs" />
+    <Compile Include="Implements\OpenCloseMemberService.cs" />
     <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
+    <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -99,6 +101,10 @@
     <ProjectReference Include="..\Fanex.NAP.Miscellany.Models\Fanex.NAP.Miscellany.Models.csproj">
       <Project>{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59}</Project>
       <Name>Fanex.NAP.Miscellany.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.Miscellany.Repositories\Fanex.NAP.Miscellany.Repositories.csproj">
+      <Project>{7FBEED0D-8FC5-4A37-B458-2D5D85A17EF1}</Project>
+      <Name>Fanex.NAP.Miscellany.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.Miscellany.ViewModels\Fanex.NAP.Miscellany.ViewModels.csproj">
       <Project>{88808F97-D8C0-45BE-80D8-9C814A5CFDE6}</Project>

@@ -1,5 +1,4 @@
 ﻿/* File Created: March 3, 2014 */
-/* jshint freeze: false */
 'use strict';
 
 var Miscellany = (function ($) {
@@ -9,7 +8,6 @@ var Miscellany = (function ($) {
         dialogMsg: null,
         dialogPopup: null,
         headlineMsgBox: null,
-        loadingBox: null,
         alertCallback: null,
         confirmCallback: null,
 
@@ -24,7 +22,7 @@ var Miscellany = (function ($) {
 
         errorSuccessMsg: null,
 
-        pagerRanges: [50, 100, 200, 500],
+        pagerRanges: [50, 100, 200, 300, 500],
         pageSize: 50,
 
         formats: {
@@ -44,6 +42,17 @@ var Miscellany = (function ($) {
             Miscellany.agentIsMobile = Miscellany.agentIs('mobile') != null;
 
             Miscellany.errorSuccessMsg = $('#divErrorSuccessMsg');
+
+            Miscellany.headlineMsgBox = $.msgbox({
+                message: '',
+                //containerId: 'msg-bar',
+                type: 'err',
+                modal: false,
+                position: ['top:130', 'center'],
+                theme: '',
+                zIndex: 9999,
+                useAnimation: false
+            });
         },
         resolveRootUrl: function (relativeUrl) {
             return Miscellany.MiscellanyRoot + relativeUrl;
@@ -102,13 +111,12 @@ var Miscellany = (function ($) {
             $msgDiv.removeClass('error').removeClass('success').slideUp(callbackFunc);
             $msgDiv.html('');
         },
-        /* jshint ignore:start */
         getIeVersion: function () {
             var version = -1; // Return value assumes failure.
 
             if (window.navigator.userAgent.indexOf("MSIE") > 0) {
                 var usrAgent = navigator.userAgent;
-                var reg = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+                var reg = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
 
                 if (reg.exec(usrAgent) != null) {
                     version = parseFloat(RegExp.$1);
@@ -117,7 +125,6 @@ var Miscellany = (function ($) {
 
             return version;
         },
-        /* jshint ignore:end */
         agentIs: function (name) {
             switch (name.toLowerCase()) {
                 case 'ipad':
@@ -200,22 +207,6 @@ var Miscellany = (function ($) {
         htmlDecode: function (value) {
             return $('<div/>').html(value).text();
         },
-        showSuccessMsg: function (msg, url, msec) {
-            var msgWrp = $('.validation-summary-valid');
-
-            msgWrp.addClass('success')
-                .find('li:first').html(Miscellany.htmlDecode(msg)).show();
-
-            Miscellany.showSuccessMsgCountDown(url, msec / 1000);
-        },
-        showSuccessMsgCountDown: function (url, msec) {
-            if (msec-- > 0) {
-                setTimeout('Miscellany.showSuccessMsgCountDown("' + url + '", ' + msec + ')', 1000);
-                $('.validation-summary-valid .msec').html(msec);
-            } else {
-                window.location.replace(Miscellany.resolveClientUrl(url));
-            }
-        },
 
         encodeURI: function (str) {
             // ref: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/encodeURI
@@ -227,27 +218,4 @@ var Miscellany = (function ($) {
 
 $(document).ready(function () {
     Miscellany.initCoreValues();
-
-    Miscellany.headlineMsgBox = $.msgbox({
-        message: '',
-        //containerId: 'msg-bar',
-        type: 'err',
-        modal: false,
-        position: ['top:130', 'center'],
-        theme: '',
-        zIndex: 9999,
-        useAnimation: false
-    });
-
-    Miscellany.loadingBox = $.msgbox({
-        message: 'Loading...',
-        type: 'warn',
-        modal: true,
-        position: ['top:0', 'center'],
-        closeBtn: false,
-        theme: '',
-        zIndex: 9999,
-        sticky: true,
-        useAnimation: false
-    });
 });

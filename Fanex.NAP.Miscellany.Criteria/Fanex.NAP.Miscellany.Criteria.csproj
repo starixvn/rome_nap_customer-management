@@ -56,7 +56,7 @@
     <Compile Include="ConfigureCustomerAccess\GetRequestInfoListCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\InsertRequestCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\UpdateRequestCriteria.cs" />
-    <Compile Include="OpenCloseMember\GetMemberListCriteria.cs" />
+    <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -33,7 +33,7 @@ var Validator = (function ($) {
                 Validator.clearError($(this));
             });
         },
-        valicateRequiredField: function ($obj, gravity) {
+        validateRequiredField: function ($obj, gravity) {
             var $ele = $obj;
             var errMsg = $obj.attr('data-val-required');
             var value;
@@ -150,7 +150,7 @@ var Validator = (function ($) {
             Validator.clearErrors($form);
 
             $('[data-val-required]', $form).each(function () {
-                if (!Validator.valicateRequiredField($(this), gravity)) {
+                if (!Validator.validateRequiredField($(this), gravity)) {
                     errorCounter++;
                 }
             });

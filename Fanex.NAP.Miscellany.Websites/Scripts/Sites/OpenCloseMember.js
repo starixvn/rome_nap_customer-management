@@ -1,5 +1,5 @@
 ﻿/* File Created: March 4, 2014 */
-/* global Namespace, Fanex, Miscellany, labels */
+/* global Namespace, Fanex, Miscellany, Validator, labels */
 
 'use strict';
 
@@ -27,14 +27,11 @@ Fanex.Miscellany.CloseOpenMember = function () {
         ddlStatus: null,
         btnSearch: null,
         spnNote: null,
-        divMemberList: null
+        divMemberList: null,
+        divButtons: null,
+        btnOpen: null,
+        btnClose: null
     };
-    var levels = {
-        super: 1,
-        master: 2,
-        agent: 3
-    };
-    var pageRanges = [50, 100, 200, 500];
 
     // Cache DOM elements
     var cacheDOM = function () {
@@ -43,6 +40,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
         domElements.btnSearch = $('#btnSearch');
         domElements.spnNote = $('#spnNote');
         domElements.divMemberList = $('#divMemberList');
+        domElements.divButtons = $('#divButtons');
+        domElements.btnOpen = $('#btnOpen');
+        domElements.btnClose = $('#btnClose');
     };
 
     // Get parameters.
@@ -54,24 +54,33 @@ Fanex.Miscellany.CloseOpenMember = function () {
 
     // Initialize fields and handle events.
     var initFields = function () {
+        parameters.PageSize = Miscellany.pageSize;
+
         domElements.spnNote.tipsy({
             html: true,
             opacity: 0.9,
             gravity: 'ne'
         });
+
         domElements.btnSearch.click(function () {
-            // @@TODO: Validate.
-            getParameters();
-            //getMemberList();
-            Miscellany.headlineMsgBox.confirm('Are you sure want to OPEN selected accounts', function () { }, { modal: true, closeBtn: false, header: true });
+            var isValid = Validator.validateRequiredField(domElements.txtUsername, 'n');
+
+            if (isValid) {
+                getParameters();
+                getMemberList();
+            }
         });
     };
 
+    // Render grid.
     var renderMemberList = function (data) {
+        var chkFormat = '<input type="checkbox" id="{0}"/><label for="{0}" class="lbl-for-chk">{1}</label>';
+        var statusCol = chkFormat.format('chk' + labels.status, labels.status);
         var gridOptions =
         {
-            columns: [{ HeaderText: labels.member, Width: 150, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.status, Width: 80, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'left'}],
+            columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'center'}],
             showDistinctRow: false,
             showNumberColumn: true,
             showPager: true,
@@ -79,38 +88,77 @@ Fanex.Miscellany.CloseOpenMember = function () {
             pagerOption: {
                 itemsPerPage: parameters.PageSize,
                 currentPage: parameters.PageIndex,
-                itemsPerPageArray: pageRanges,
+                itemsPerPageArray: Miscellany.pagerRanges,
                 pagerSelectCallBack: handleChangingPage
             },
-            sortOption: {
-                serverSortFunction: handleSorting
-            },
-            gridExpandHeight: 200
+            gridExpandHeight: 180
         };
-        //var bodyData = [];
+        var bodyData = [];
+        var row;
+        var currentRow = 0;
+        var currentAgentRow;
+        var currentMasterRow;
+        var masterChildren;
+        var downlineList;
 
-        if (data.Level < levels.agent) {
-            gridOptions.columns.unshift({ HeaderText: labels.agent, Width: 150, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'center' });
+        if (data && data.DownlineList.length > 0) {
+            downlineList = data.DownlineList;
 
-            if (data.Level < levels.master) {
-                gridOptions.columns.unshift({ HeaderText: labels.master, Width: 150, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'center' });
+            if (downlineList[0].AgentStatusList[0].Username) {
+                gridOptions.columns.splice(1, 0, { HeaderText: labels.agent, Width: 220, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'center' });
             }
+
+            if (downlineList[0].Username) {
+                gridOptions.columns.splice(1, 0, { HeaderText: labels.master, Width: 220, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'center' });
+            }
+
+            $.each(downlineList, function (masterIndex, master) {
+                masterChildren = 0;
+                currentMasterRow = currentRow;
+
+                $.each(master.AgentStatusList, function (agentIndex, agent) {
+                    masterChildren += agent.MemberStatusList.length;
+                    currentAgentRow = currentRow;
+
+                    $.each(agent.MemberStatusList, function (index, item) {
+                        row = {
+                            Columns: [{ Name: 'ColOrder', Value: currentRow },
+                                      { Name: 'ColMember', Value: item.Username },
+                                      { Name: 'ColStatus', Value: item.Closed ? 'Closed' : 'Open'}]
+                        };
+                        bodyData.push(row);
+                        currentRow++;
+                    });
+
+                    if (agent.Username) {
+                        row = bodyData[currentAgentRow];
+                        row.Columns.splice(1, 0, {
+                            Name: 'ColAgent',
+                            Value: chkFormat.format('age' + agent.Username, agent.Username),
+                            MergeRowNumber: agent.MemberStatusList.length });
+                    }
+                });
+
+                if (master.Username) {
+                    row = bodyData[currentMasterRow];
+                    row.Columns.splice(1, 0, {
+                        Name: 'ColMaster',
+                        Value: chkFormat.format('mas' + master.Username, master.Username),
+                        MergeRowNumber: masterChildren });
+                }
+            });
         }
 
+        gridOptions.pagerOption.totalItem = data.TotalItems;
+        gridOptions.bodyRows = bodyData;
         domElements.divMemberList.fanexGrid(gridOptions);
+        domElements.divButtons.removeClass('display-none');
     };
 
     // Handle paging at server side.
     var handleChangingPage = function (pageIndex, itemsPerPage) {
         parameters.PageSize = itemsPerPage;
         parameters.PageIndex = pageIndex;
-        getMemberList();
-    };
-
-    // Handle sorting at server side.
-    var handleSorting = function (sortColumnName, sortDirection) {
-        parameters.SortDirection = sortDirection;
-        parameters.PageIndex = 0;
         getMemberList();
     };
 
@@ -125,6 +173,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 renderMemberList(result);
+                console.log(result);
             },
             error: function (xhr, status, err) {
                 Miscellany.handleAjaxError(xhr, status, err);

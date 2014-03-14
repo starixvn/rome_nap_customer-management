@@ -246,7 +246,6 @@
     <Content Include="Content\Themes\jquery\images\ui-icons_fcd113_256x240.png" />
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
-    <Content Include="DBConnectionData\GlobalSetting.ini" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Validator.js" />

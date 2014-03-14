@@ -27,8 +27,18 @@ namespace Fanex.NAP.Miscellany.ViewModels.OpenCloseMember
 
         public string Username { get; set; }
 
-        public int SiteId { get; set; }
-
         public List<AgentDownlineStatus> AgentStatusList { get; set; }
+
+        /// <summary>
+        /// Adds the agent to agent list.
+        /// </summary>
+        /// <param name="agent">The agent.</param>
+        public void AddAgent(AgentDownlineStatus agent)
+        {
+            if (agent != null)
+            {
+                this.AgentStatusList.Add(agent);
+            }
+        }
     }
 }

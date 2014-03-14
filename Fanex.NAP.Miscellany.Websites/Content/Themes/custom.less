@@ -42,8 +42,9 @@
 
             .msgbox-btn {
                 display: inline-block;
-                height: 18px !important;
-                width: 65px;
+                height: 23px !important;
+                min-width: 60px !important;
+                line-height: 22px;
 
                 &.ok {
                     .blue-button;
@@ -131,12 +132,16 @@ input.ui-multiselect-state-default{
 
         .grid-fixed-table tr{
             &.highlight-row:hover td {
-                background-color: #EEFDAC;
+                background-color: #faffa8;
             }
 
             &.highlight td {
-                background-color: #C5E6A8;
+                background-color: #FEECD1;
             }
+        }
+
+        .freegrid-even td {
+            background-color: #ebf5fc;
         }
     }
 }
@@ -220,6 +225,10 @@ input.ui-multiselect-state-default{
             border: none;
             padding: 15px 0 10px 0;
             .box_shadow(none);
+
+            input[type=button], input[type=submit] {
+                font-family: 'Lucida Sans',Tahoma,Arial,Helvetica,sans-serif;
+            }
         }
     }
 }

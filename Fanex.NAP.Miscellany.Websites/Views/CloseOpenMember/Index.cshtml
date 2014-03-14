@@ -23,18 +23,18 @@
                 <div class="lbl-field col_9 align-right">
                     <label for="txtUsername">
                         <span class="level-label">@string.Format("{0}/ {1}/ {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
-                        <span>@ViewLang.Username:</span>
+                        <span>@ViewLang.Username</span>
                     </label>
                 </div>
                 <div class="edit-field col_5 align-left">
-                    <input type="text" id="txtUsername" />
+                    <input type="text" id="txtUsername" data-val-required="@Messages.RequiredFieldError"/>
                 </div>
-                <div class="lbl-field col_2 align-right">
-                    <label for="ddlStatus">@ViewLang.Status:</label>
+                <div class="lbl-field col_5 align-right">
+                    <label for="ddlStatus">@ViewLang.MembersStatus</label>
                 </div>
                 <div class="edit-field col_5 align-left">
                     <select id="ddlStatus" class="combobox-autocomplete level-combobox">
-                        <option value="null">@ViewLang.All</option>
+                        <option value="-1">@ViewLang.All</option>
                         <option value="0">@ViewLang.Open</option>
                         <option value="1">@ViewLang.Close</option>
                     </select>
@@ -47,14 +47,19 @@
         </div>
     </div>
 }
-<div class="display-none">
+<div class="display-none content-grid">
     <div id="divMemberList" class="freegrid"></div>
+</div>
+<div id="divButtons" class="button-div display-none">
+    <input id="btnOpen" type="button" class="green-button" value="@ViewLang.OpenSelectedAccounts" />
+    <input id="btnClose" type="button" class="red-button" value="@ViewLang.CloseSelectedAccounts" />
 </div>
 @section Foot
 {
     @Scripts.Render("~/scripts/openCloseMember")
     <script type="text/javascript">
         var labels = {
+            order: '#',
             master: '@ViewLang.Master',
             agent: '@ViewLang.Agent',
             member: '@ViewLang.Member',

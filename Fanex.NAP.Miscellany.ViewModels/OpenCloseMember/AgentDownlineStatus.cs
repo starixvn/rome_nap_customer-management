@@ -27,8 +27,18 @@ namespace Fanex.NAP.Miscellany.ViewModels.OpenCloseMember
 
         public string Username { get; set; }
 
-        public int SiteId { get; set; }
-
         public List<MemberStatus> MemberStatusList { get; set; }
+
+        /// <summary>
+        /// Adds the member to the members' status list.
+        /// </summary>
+        /// <param name="member">The member.</param>
+        public void AddMember(MemberStatus member)
+        {
+            if (member != null)
+            {
+                this.MemberStatusList.Add(member);
+            }
+        }
     }
 }

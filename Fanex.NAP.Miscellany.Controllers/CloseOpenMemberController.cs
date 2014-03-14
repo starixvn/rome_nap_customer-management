@@ -12,12 +12,29 @@ namespace Fanex.NAP.Miscellany.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Miscellany.Criteria.OpenCloseMember;
+    using Fanex.NAP.Miscellany.Services.Implements;
+    using Fanex.NAP.Miscellany.Services.Interfaces;
+    using Fanex.NAP.Miscellany.ViewModels.OpenCloseMember;
 
     /// <summary>
     /// Close open member controller.
     /// </summary>
     public class CloseOpenMemberController : BaseController
     {
+        private readonly IOpenCloseMemberService _openCloseMemberService;
+
+        public CloseOpenMemberController() :
+            this(null)
+        {
+        }
+
+        public CloseOpenMemberController(IOpenCloseMemberService openCloseMemberService)
+        {
+            this._openCloseMemberService = openCloseMemberService ?? new OpenCloseMemberService();
+            ViewBag.HasEditAccessRight = this.HasRight(MiscellanyFunctionKeys.Close_OpenMembers, Constant.Policy.Host);
+        }
+
         /// <summary>
         /// Redirects to Index view.
         /// </summary>
@@ -30,18 +47,28 @@ namespace Fanex.NAP.Miscellany.Controllers
         }
 
         /// <summary>
-        /// Get member list.
+        /// Gets member list.
         /// </summary>
+        /// <param name="filter">Filter conditions.</param>
         /// <returns>Member list.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
-        public JsonResult GetMemberList()
+        public JsonResult GetMemberList(GettingMembersStatusFilter filter)
         {
-            return Json(null);
+            var criteria = new GetMembersStatusCriteria
+            {
+                Username = filter.Username,
+                IsClosed = filter.Status,
+                ItemPerPage = filter.PageSize,
+                PageIndex = filter.PageIndex + 1
+            };
+            GettingMembersStatusResult result = this._openCloseMemberService.GetMembersStatus(criteria);
+
+            return Json(result);
         }
 
         /// <summary>
-        /// Update member status.
+        /// Updates member status.
         /// </summary>
         /// <returns>JSON object indicates the result of updating process.</returns>
         [HttpPost]

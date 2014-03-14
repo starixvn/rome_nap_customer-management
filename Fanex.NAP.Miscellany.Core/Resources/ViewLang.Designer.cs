@@ -124,6 +124,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CLOSE selected accounts.
+        /// </summary>
+        public static string CloseSelectedAccounts {
+            get {
+                return ResourceManager.GetString("CloseSelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configure Customer Access.
         /// </summary>
         public static string ConfigureCustomerAccess {
@@ -268,6 +277,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member&apos;s Status.
+        /// </summary>
+        public static string MembersStatus {
+            get {
+                return ResourceManager.GetString("MembersStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miscellany.
         /// </summary>
         public static string Miscellany {
@@ -282,6 +300,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string Open {
             get {
                 return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPEN selected accounts.
+        /// </summary>
+        public static string OpenSelectedAccounts {
+            get {
+                return ResourceManager.GetString("OpenSelectedAccounts", resourceCulture);
             }
         }
         

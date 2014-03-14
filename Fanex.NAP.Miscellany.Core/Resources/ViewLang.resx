@@ -216,4 +216,13 @@
   <data name="Username" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="CloseSelectedAccounts" xml:space="preserve">
+    <value>CLOSE selected accounts</value>
+  </data>
+  <data name="OpenSelectedAccounts" xml:space="preserve">
+    <value>OPEN selected accounts</value>
+  </data>
+  <data name="MembersStatus" xml:space="preserve">
+    <value>Member's Status</value>
+  </data>
 </root>

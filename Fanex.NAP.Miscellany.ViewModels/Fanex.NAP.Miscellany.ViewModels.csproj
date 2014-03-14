@@ -56,6 +56,8 @@
   <ItemGroup>
     <Compile Include="ConfigureCustomerAccess\RequestItem.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
+    <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
+    <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />
     <Compile Include="OpenCloseMember\MasterDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\MemberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

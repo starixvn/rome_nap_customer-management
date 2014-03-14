@@ -1,5 +1,6 @@
 ﻿/* File Created: March 6, 2014 */
-/*jshint ignore:start */
+/* jshint freeze: false */
+/* jshint strict: false */
 
 // String Format
 String.prototype.format = function () {
@@ -15,5 +16,3 @@ Array.prototype.remove = function (from, to) {
     this.length = from < 0 ? this.length + from : from;
     return this.push.apply(this, rest);
 };
-
-/*jshint ignore:end */

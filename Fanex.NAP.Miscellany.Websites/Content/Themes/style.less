@@ -32,7 +32,7 @@
     font-family: 'Open Sans', 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
 }
 
-.font_tahoma{
+.font_tahoma {
     font-family: Tahoma, Arial, Helvetica, sans-serif;
 }
 
@@ -696,6 +696,11 @@ footer {
         }
         .lbl-field {
             .text_shadow(0 0 0.023em black);
+            .column(3);
+            text-align: right;
+            padding: 4px 0 0;
+            margin:0px;
+            height:21px;
         }
 
         .edit-field, .submit {
@@ -703,14 +708,6 @@ footer {
                 vertical-align: baseline;
                 text-align: left;
             }
-        }
-
-        .lbl-field {
-            .column(3);
-            text-align: right;
-            padding: 4px 0 0;
-            margin:0px;
-            height:21px;
         }
 
         .edit-field {
@@ -755,9 +752,6 @@ footer {
                 border-radius: 2px;
                 option {
                     padding: 2px 4px;
-                    /*background: @body_bg;
-                    border-top: 1px solid @white;
-                    border-bottom: 1px solid @filter_border;*/
                 }
             }
 
@@ -782,7 +776,7 @@ footer {
         .submit {
             .column(2);
             input[type=submit] {
-                .button(@filter_submit);
+                .button();
                 font-size: .85em;
                 text-shadow: 0 1px rgba(0, 0, 0, 0.5);
             }
@@ -791,7 +785,7 @@ footer {
         .cancel {
             .column(2);
             input[type=button] {
-                .button(@filter_submit);
+                .button();
                 font-size: .85em;
                 text-shadow: 0 1px rgba(0, 0, 0, 0.5);
             }
@@ -1063,17 +1057,10 @@ footer {
             }
 
             input[type=submit], input[type=reset] {
-                .button;
+                .button();
             }
             .cancel {
-                .button;
-            }
-
-            input, textarea, select {
-                &:active, &:focus, &:hover {
-                    border: @filter_border 1px solid;
-                    .box_shadow(0 1px 3px  rgba(0, 0, 0, 0.5));
-                }
+                .button();
             }
 
             * {
@@ -1625,49 +1612,16 @@ input.txtdate {
 /********************************************************/
 /*                    Custom buttons                    */
 /********************************************************/
-.custom-button {
-    height: 25px;
-    width: 80px;
-    color: @white;
-    .border_radius(2px);
-
-    &:hover {
-        .box_shadow(1px 1px 2px rgba(0, 0, 0, 0.2));
-        cursor: pointer;
-    }
-}
-
 .blue-button {
-    .custom-button;
-    border:solid 1px @menu_border;
-    .bg_linear_gradient(@menu_bg, @menu_bg_light);
-
-    &:hover {
-        border: 1px solid @menu_border - #21201C;
-        .bg_linear_gradient(@menu_bg_light + #0C0303, @menu_bg_light - #0C110F);
-    }
+    .button();
 }
 
 .red-button {
-    .custom-button;
-    border:solid 1px @red_button_border;
-    .bg_linear_gradient(@red_button_bg_light, @red_button_bg);
-
-    &:hover {
-        border: 1px solid @red_button_border - #21201C;
-        .bg_linear_gradient(@red_button_bg_light + #0C0303, @red_button_bg_light - #0C110F);
-    }
+    .custom_button(@red_button_bg, @red_button_bg_light, @red_button_bg_hover, @red_button_border);
 }
 
 .green-button {
-    .custom-button;
-    border:solid 1px @green_button_border;
-    .bg_linear_gradient(@green_button_bg_light, @green_button_bg);
-
-    &:hover {
-        border: 1px solid @green_button_border - #21201C;
-        .bg_linear_gradient(@green_button_bg_light + #0C0303, @green_button_bg_light - #0C110F);
-    }
+    .custom_button(@green_button_bg, @green_button_bg_light, @green_button_bg_hover, @green_button_border);
 }
 input::-ms-reveal {
         display: none;

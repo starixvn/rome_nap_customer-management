@@ -9,4 +9,7 @@
     <Setting Key="Member_LoginVerifySelReqById" SpName="Member_LoginVerifySelReqById" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBTXN.IPDB.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="OpenCloseMember">
+    <Setting Key="NAP_customerUpdClosebyList_sel" SpName="NAP_customerUpdClosebyList_sel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

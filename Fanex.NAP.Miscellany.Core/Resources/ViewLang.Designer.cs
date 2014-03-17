@@ -115,6 +115,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Closed.
+        /// </summary>
+        public static string Closed {
+            get {
+                return ResourceManager.GetString("Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close/Open Member.
         /// </summary>
         public static string CloseOpenMember {
@@ -219,6 +228,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string ExpiredDate {
             get {
                 return ResourceManager.GetString("ExpiredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GMT-4.
+        /// </summary>
+        public static string GMTMinus4 {
+            get {
+                return ResourceManager.GetString("GMTMinus4", resourceCulture);
             }
         }
         

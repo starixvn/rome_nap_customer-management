@@ -62,6 +62,12 @@ Fanex.Miscellany.CloseOpenMember = function () {
             gravity: 'ne'
         });
 
+        domElements.txtUsername.keyup(function (event) {
+            if (event.keyCode === 13) {
+                domElements.btnSearch.click();
+            }
+        });
+
         domElements.btnSearch.click(function () {
             var isValid = Validator.validateRequiredField(domElements.txtUsername, 'n');
 
@@ -74,13 +80,15 @@ Fanex.Miscellany.CloseOpenMember = function () {
 
     // Render grid.
     var renderMemberList = function (data) {
-        var chkFormat = '<input type="checkbox" id="{0}"/><label for="{0}" class="lbl-for-chk">{1}</label>';
-        var statusCol = chkFormat.format('chk' + labels.status, labels.status);
+        var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
+        var statusFormat = '<input type="checkbox" id="{0}"/><label for="{0}" class="lbl-for-chkStatus">{1}</label>';
+        var statusCol = chkFormat.format('chkStatus', '', labels.status);
+
         var gridOptions =
         {
             columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'center'}],
+                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'left'}],
             showDistinctRow: false,
             showNumberColumn: true,
             showPager: true,
@@ -124,7 +132,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
                                       { Name: 'ColMember', Value: item.Username },
-                                      { Name: 'ColStatus', Value: item.Closed ? 'Closed' : 'Open'}]
+                                      { Name: 'ColStatus', Value: statusFormat.format(item.CustId, item.Closed ? labels.closed : labels.open)}]
                         };
                         bodyData.push(row);
                         currentRow++;
@@ -134,8 +142,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
                         row = bodyData[currentAgentRow];
                         row.Columns.splice(1, 0, {
                             Name: 'ColAgent',
-                            Value: chkFormat.format('age' + agent.Username, agent.Username),
-                            MergeRowNumber: agent.MemberStatusList.length });
+                            Value: chkFormat.format('age' + agent.Username, 'mas' + master.Username, agent.Username),
+                            MergeRowNumber: agent.MemberStatusList.length
+                        });
                     }
                 });
 
@@ -143,8 +152,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
                     row = bodyData[currentMasterRow];
                     row.Columns.splice(1, 0, {
                         Name: 'ColMaster',
-                        Value: chkFormat.format('mas' + master.Username, master.Username),
-                        MergeRowNumber: masterChildren });
+                        Value: chkFormat.format('mas' + master.Username, 'chkStatus', master.Username),
+                        MergeRowNumber: masterChildren
+                    });
                 }
             });
         }
@@ -152,7 +162,11 @@ Fanex.Miscellany.CloseOpenMember = function () {
         gridOptions.pagerOption.totalItem = data.TotalItems;
         gridOptions.bodyRows = bodyData;
         domElements.divMemberList.fanexGrid(gridOptions);
-        domElements.divButtons.removeClass('display-none');
+
+        if (bodyData.length > 0) {
+            handleGridEvents();
+            showHideButtons();
+        }
     };
 
     // Handle paging at server side.
@@ -162,7 +176,31 @@ Fanex.Miscellany.CloseOpenMember = function () {
         getMemberList();
     };
 
-    // @@TODO: Handle given result here.
+    var handleGridEvents = function () {
+        domElements.divMemberList.find('input[type=checkbox]').each(function () {
+            $(this).checkboxGroup();
+        });
+    };
+
+    var showHideButtons = function () {
+        var status = parseInt(domElements.ddlStatus.val());
+
+        domElements.divButtons.addClass('display-none');
+        domElements.btnOpen.hide();
+        domElements.btnClose.hide();
+
+        if (status === -1) {
+            domElements.btnOpen.show();
+            domElements.btnClose.show();
+        } else if (status === 0) {
+            domElements.btnOpen.show();
+        } else {
+            domElements.btnClose.show();
+        }
+
+        domElements.divButtons.removeClass('display-none');
+    };
+
     var getMemberList = function () {
         Miscellany.disableInput();
         $.ajax({
@@ -172,8 +210,11 @@ Fanex.Miscellany.CloseOpenMember = function () {
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
-                renderMemberList(result);
-                console.log(result);
+                if (result.ErrorCode > 0) {
+                    Validator.showError(domElements.txtUsername, result.ErrorMsg, 'n');
+                } else {
+                    renderMemberList(result);
+                }
             },
             error: function (xhr, status, err) {
                 Miscellany.handleAjaxError(xhr, status, err);

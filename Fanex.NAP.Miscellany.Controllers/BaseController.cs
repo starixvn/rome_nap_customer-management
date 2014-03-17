@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.Miscellany.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
@@ -33,6 +34,8 @@ namespace Fanex.NAP.Miscellany.Controllers
 
         protected readonly int SiteId = NapSettings.Settings.SiteId;
 
+        private const string ServerTimezone = "Atlantic Standard Time";
+
         private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
         private IUserService _userService;
@@ -56,6 +59,7 @@ namespace Fanex.NAP.Miscellany.Controllers
             };
 
             ViewBag.IsAccountingLogin = this.IsAccountingLogin;
+            ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
 
             this._userService = new UserService { ServiceContext = ServiceContext };
         }
@@ -87,6 +91,22 @@ namespace Fanex.NAP.Miscellany.Controllers
         }
 
         protected bool IsAccountingLogin { get; set; }
+
+        /// <summary>
+        /// Gets the server date.
+        /// </summary>
+        /// <value>
+        /// The GMT-4 date.
+        /// </value>
+        protected DateTime ServerDate
+        {
+            get
+            {
+                TimeZoneInfo serverTzi = TimeZoneInfo.FindSystemTimeZoneById(ServerTimezone);
+
+                return TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, serverTzi);
+            }
+        }
 
         /// <summary>
         /// Determines whether the specified user has the right on a function.

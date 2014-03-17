@@ -39,6 +39,10 @@
         </header>
     }
     <section id="headline">
+        @if (!isAccountingLogin)
+        {
+            <span class="server-time">@string.Format("{0} {1}", ViewBag.ServerDate, ViewLang.GMTMinus4)</span>
+        }
         @RenderSection("Headline", false)
     </section>
     <section id="body">

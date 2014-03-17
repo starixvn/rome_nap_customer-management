@@ -66,13 +66,8 @@
     // Check box group.
     $.fn.checkboxGroup = function () {
         var $this = $(this),
-            id = this.id,
+            id = $(this).attr('id'),
             childCheckboxes = $('input[type="checkbox"][data-chk-group="' + id + '"]');
-
-        // Initialize the value of group.
-        if (childCheckboxes.find(':checked').length === childCheckboxes.length) {
-            $this.prop('checked', true);
-        }
 
         $this.change(function () {
             if ($this.is(':checked')) {
@@ -83,11 +78,15 @@
         });
 
         childCheckboxes.change(function () {
+            var groupId = $(this).attr('data-chk-group'),
+                group = $('input[type="checkbox"][data-chk-group="' + groupId + '"]'),
+                groupChk = $('input[type="checkbox"][id="' + groupId + '"]');
+
             if ($(this).is(':checked') &&
-                childCheckboxes.find(':checked').length === childCheckboxes.length) {
-                $this.prop('checked', true);
-            } else if (childCheckboxes.find(':checked').length === 0) {
-                $this.prop('checked', false);
+                group.filter(':checked').length === group.length) {
+                groupChk.prop('checked', true);
+            } else {
+                groupChk.prop('checked', false);
             }
         });
     };

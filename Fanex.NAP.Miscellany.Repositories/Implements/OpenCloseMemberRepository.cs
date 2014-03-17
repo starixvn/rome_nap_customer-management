@@ -9,8 +9,10 @@
 
 namespace Fanex.NAP.Miscellany.Repositories.Implements
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Data;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.Miscellany.Criteria.OpenCloseMember;
@@ -29,12 +31,33 @@ namespace Fanex.NAP.Miscellany.Repositories.Implements
         /// <returns>List of MemberStatusInfo objects.</returns>
         public IEnumerable<MemberStatusInfo> GetMembersStatusData(GetMembersStatusCriteria criteria)
         {
-            IEnumerable<MemberStatusInfo> memberList = null;
+            List<MemberStatusInfo> memberList = new List<MemberStatusInfo>();
             Hashtable param = criteria.GetSpParams();
 
             using (IObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
-                memberList = db.Query<MemberStatusInfo>(param);
+                ////memberList = db.Query<MemberStatusInfo>(param);
+                using (var dataset = db.ExecuteDataSet(param))
+                {
+                    if (dataset.Tables.Count > 0)
+                    {
+                        DataTable list = dataset.Tables[0];
+
+                        foreach (DataRow row in list.Rows)
+                        {
+                            memberList.Add(new MemberStatusInfo
+                            {
+                                CustId = Convert.ToInt32(row["custid"]),
+                                Master = Convert.ToString(row["master"]),
+                                Agent = Convert.ToString(row["agent"]),
+                                Member = Convert.ToString(row["member"]),
+                                SyncCasino = Convert.ToBoolean(row["synccasino"]),
+                                Closed = Convert.ToBoolean(row["closed"])
+                            });
+                        }
+                    }
+                }
+
                 param = db.GetOuputParams();
 
                 if (param.ContainsKey("totalitems"))

@@ -26,8 +26,8 @@
                         <span>@ViewLang.Username</span>
                     </label>
                 </div>
-                <div class="edit-field col_5 align-left">
-                    <input type="text" id="txtUsername" data-val-required="@Messages.RequiredFieldError"/>
+                <div class="edit-field col_7 align-left">
+                    <input type="text" id="txtUsername" class="width-180" data-val-required="@Messages.RequiredFieldError"/>
                 </div>
                 <div class="lbl-field col_5 align-right">
                     <label for="ddlStatus">@ViewLang.MembersStatus</label>
@@ -64,7 +64,7 @@
             agent: '@ViewLang.Agent',
             member: '@ViewLang.Member',
             status: '@ViewLang.Status',
-            close: '@ViewLang.Close',
+            closed: '@ViewLang.Closed',
             open: '@ViewLang.Open'
         };
     </script>

@@ -225,4 +225,10 @@
   <data name="MembersStatus" xml:space="preserve">
     <value>Member's Status</value>
   </data>
+  <data name="GMTMinus4" xml:space="preserve">
+    <value>GMT-4</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
 </root>

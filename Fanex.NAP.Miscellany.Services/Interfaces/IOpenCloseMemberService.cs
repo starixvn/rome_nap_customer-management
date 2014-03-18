@@ -15,10 +15,17 @@ namespace Fanex.NAP.Miscellany.Services.Interfaces
     public interface IOpenCloseMemberService
     {
         /// <summary>
-        /// Get the members' status of a super/master/agent.
+        /// Gets the members' status of a super/master/agent.
         /// </summary>
-        /// <param name="criteria">The filter conditions.</param>
+        /// <param name="filter">The filter conditions.</param>
         /// <returns>Queried result.</returns>
-        GettingMembersStatusResult GetMembersStatus(GetMembersStatusCriteria criteria);
+        GettingMembersStatusResult GetMembersStatus(GettingMembersStatusFilter filter);
+
+        /// <summary>
+        /// Updates members' status.
+        /// </summary>
+        /// <param name="filter">The filter contains the updated data.</param>
+        /// <returns>Updated result.</returns>
+        UpdatedMembersStatusResult UpdateMembersStatus(UpdatedMembersStatusFilter filter);
     }
 }

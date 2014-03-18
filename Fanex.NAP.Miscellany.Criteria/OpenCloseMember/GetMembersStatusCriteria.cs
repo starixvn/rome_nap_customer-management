@@ -38,7 +38,7 @@ namespace Fanex.NAP.Miscellany.Criteria.OpenCloseMember
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_customerUpdClosebyList_sel";
+            return "NAP_Misc_OpenCloseMembers_List";
         }
 
         /// <summary>

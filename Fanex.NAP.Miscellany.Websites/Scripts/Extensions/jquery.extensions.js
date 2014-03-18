@@ -67,7 +67,22 @@
     $.fn.checkboxGroup = function () {
         var $this = $(this),
             id = $(this).attr('id'),
-            childCheckboxes = $('input[type="checkbox"][data-chk-group="' + id + '"]');
+            childCheckboxes = $('input[type="checkbox"][data-chk-group="' + id + '"]'),
+
+            updateGroupValue = function (groupId, value) {
+                var group = $('input[type="checkbox"][data-chk-group="' + groupId + '"]'),
+                    groupChk = $('input[type="checkbox"][id="' + groupId + '"]');
+
+                if (value) {
+                    if (group.filter(':checked').length === group.length) {
+                        groupChk.trigger('update', true);
+                    }
+                } else {
+                    if (group.filter(':checked').length === group.length - 1) {
+                        groupChk.trigger('update', false);
+                    }
+                }
+            };
 
         $this.change(function () {
             if ($this.is(':checked')) {
@@ -75,19 +90,22 @@
             } else {
                 childCheckboxes.prop('checked', false);
             }
+
+            childCheckboxes.trigger('change');
         });
 
-        childCheckboxes.change(function () {
-            var groupId = $(this).attr('data-chk-group'),
-                group = $('input[type="checkbox"][data-chk-group="' + groupId + '"]'),
-                groupChk = $('input[type="checkbox"][id="' + groupId + '"]');
+        $this.on('update', function (event, value) {
+            var groupId = $this.attr('data-chk-group');
 
-            if ($(this).is(':checked') &&
-                group.filter(':checked').length === group.length) {
-                groupChk.prop('checked', true);
-            } else {
-                groupChk.prop('checked', false);
-            }
+            $(this).prop('checked', value);
+            updateGroupValue(groupId, value);
+        });
+
+        childCheckboxes.click(function () {
+            var groupId = $(this).attr('data-chk-group'),
+                value = $(this).is(':checked');
+
+            updateGroupValue(groupId, value);
         });
     };
 })(jQuery);

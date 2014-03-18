@@ -10,6 +10,7 @@
     <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBTXN.IPDB.bodbAdminNet"></Setting>
   </Function>
   <Function Name="OpenCloseMember">
-    <Setting Key="NAP_customerUpdClosebyList_sel" SpName="NAP_customerUpdClosebyList_sel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_Misc_OpenCloseMembers_List" SpName="NAP_Misc_OpenCloseMembers_List" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_Misc_OpenCloseMembers_UPD" SpName="NAP_Misc_OpenCloseMembers_UPD" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
   </Function>
 </Functions>

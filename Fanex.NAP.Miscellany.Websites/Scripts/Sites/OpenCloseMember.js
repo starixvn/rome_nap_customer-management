@@ -1,5 +1,5 @@
 ﻿/* File Created: March 4, 2014 */
-/* global Namespace, Fanex, Miscellany, Validator, labels */
+/* global Namespace, Fanex, Miscellany, Validator, labels, messages */
 
 'use strict';
 
@@ -31,6 +31,10 @@ Fanex.Miscellany.CloseOpenMember = function () {
         divButtons: null,
         btnOpen: null,
         btnClose: null
+    };
+    var updateType = {
+        open: 0,
+        close: 1
     };
 
     // Cache DOM elements
@@ -67,25 +71,63 @@ Fanex.Miscellany.CloseOpenMember = function () {
                 domElements.btnSearch.click();
             }
         });
+        domElements.txtUsername.focus();
 
         domElements.btnSearch.click(function () {
             var isValid = Validator.validateRequiredField(domElements.txtUsername, 'n');
+
+            clearStatusColError();
 
             if (isValid) {
                 getParameters();
                 getMemberList();
             }
         });
+
+        domElements.btnOpen.click(function () {
+            var selectedMembers = getCheckedMembers(true);
+
+            if (selectedMembers.length > 0) {
+                var updatingParameters = {
+                    MemberStatusList: selectedMembers,
+                    UpdateType: updateType.open
+                };
+
+                Miscellany.headlineMsgBox.confirm(messages.openMemberConfirmationMsg, function () {
+                    updateMemberStatus(updatingParameters);
+                }, { modal: true, closeBtn: false, header: true });
+            }
+        });
+
+        domElements.btnClose.click(function () {
+            var selectedMembers = getCheckedMembers(false);
+
+            if (selectedMembers.length > 0) {
+                var updatingParameters = {
+                    MemberStatusList: selectedMembers,
+                    UpdateType: updateType.close
+                };
+
+                Miscellany.headlineMsgBox.confirm(messages.closeMemberConfirmationMsg, function () {
+                    updateMemberStatus(updatingParameters);
+                }, { modal: true, closeBtn: false, header: true });
+            }
+        });
     };
 
     // Render grid.
     var renderMemberList = function (data) {
-        var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
-        var statusFormat = '<input type="checkbox" id="{0}"/><label for="{0}" class="lbl-for-chkStatus">{1}</label>';
-        var statusCol = chkFormat.format('chkStatus', '', labels.status);
+        var statusChkColId = 'chkStatus';
+        var masterChkId;
+        var agentChkId;
 
-        var gridOptions =
-        {
+        var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
+        var statusFormat = '<input type="checkbox" id="{0}" class="checkbox-status"' +
+                                  'data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
+                           '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
+        var statusCol = chkFormat.format(statusChkColId, '', labels.status);
+
+        var gridOptions = {
             columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'left'}],
@@ -108,6 +150,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
         var currentMasterRow;
         var masterChildren;
         var downlineList;
+        var highlightClass;
 
         if (data && data.DownlineList.length > 0) {
             downlineList = data.DownlineList;
@@ -123,36 +166,48 @@ Fanex.Miscellany.CloseOpenMember = function () {
             $.each(downlineList, function (masterIndex, master) {
                 masterChildren = 0;
                 currentMasterRow = currentRow;
+                masterChkId = master.Username ? 'mas' + master.Username : statusChkColId;
 
                 $.each(master.AgentStatusList, function (agentIndex, agent) {
                     masterChildren += agent.MemberStatusList.length;
                     currentAgentRow = currentRow;
+                    agentChkId = agent.Username ? 'age' + agent.Username : statusChkColId;
 
                     $.each(agent.MemberStatusList, function (index, item) {
+                        statusCol = statusFormat.format(
+                                                     item.CustId,
+                                                     item.IsChecked,
+                                                     item.Closed,
+                                                     item.SyncCasino,
+                                                     agentChkId, item.Closed ? labels.closed : labels.open);
+                        highlightClass = item.Closed ? 'highlight' : '';
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
-                                      { Name: 'ColMember', Value: item.Username },
-                                      { Name: 'ColStatus', Value: statusFormat.format(item.CustId, item.Closed ? labels.closed : labels.open)}]
+                                      { Name: 'ColMember', Value: item.Username, TdClass: highlightClass },
+                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass}]
                         };
+
                         bodyData.push(row);
                         currentRow++;
                     });
 
+                    // Show Agent column if the searched user is Super/Master.
                     if (agent.Username) {
                         row = bodyData[currentAgentRow];
                         row.Columns.splice(1, 0, {
                             Name: 'ColAgent',
-                            Value: chkFormat.format('age' + agent.Username, 'mas' + master.Username, agent.Username),
+                            Value: chkFormat.format(agentChkId, masterChkId, agent.Username),
                             MergeRowNumber: agent.MemberStatusList.length
                         });
                     }
                 });
 
+                // Show Master column if searched user is Super.
                 if (master.Username) {
                     row = bodyData[currentMasterRow];
                     row.Columns.splice(1, 0, {
                         Name: 'ColMaster',
-                        Value: chkFormat.format('mas' + master.Username, 'chkStatus', master.Username),
+                        Value: chkFormat.format(masterChkId, 'chkStatus', master.Username),
                         MergeRowNumber: masterChildren
                     });
                 }
@@ -176,12 +231,24 @@ Fanex.Miscellany.CloseOpenMember = function () {
         getMemberList();
     };
 
+    // Handle grid's events.
     var handleGridEvents = function () {
-        domElements.divMemberList.find('input[type=checkbox]').each(function () {
+        var checkboxes = domElements.divMemberList.find('input[type=checkbox]');
+
+        checkboxes.each(function () {
             $(this).checkboxGroup();
         });
+
+        setTimeout(function () {
+            checkboxes.filter('[data-checked="true"]').each(function () {
+                var $ele = $(this);
+
+                $ele.prop('checked', true).trigger('update', true);
+            });
+        }, 50);
     };
 
+    // Show.hide OPEN/CLOSE buttons.
     var showHideButtons = function () {
         var status = parseInt(domElements.ddlStatus.val());
 
@@ -201,6 +268,42 @@ Fanex.Miscellany.CloseOpenMember = function () {
         domElements.divButtons.removeClass('display-none');
     };
 
+    // Validate status column.
+    var getCheckedMembers = function (isClosed) {
+        var checkedRows = domElements.divMemberList.find('input[type="checkbox"][data-closed="' + isClosed + '"]:checked');
+        var chkStatus = domElements.divMemberList.find('#chkStatus');
+        var selectedMembers = [];
+
+        clearStatusColError();
+
+        if (checkedRows.length === 0) {
+            chkStatus.attr('title', messages.requiredStatusCol).tipsy({
+                trigger: 'manual',
+                gravity: 'sw',
+                classStyle: 'error',
+                opacity: 0.97
+            }).tipsy('show');
+        } else {
+            $.each(checkedRows, function (index, member) {
+                var $member = $(member);
+
+                selectedMembers.push({
+                    CustId: $member.attr('id'),
+                    SyncCasino: $member.attr('data-sync-casino')
+                });
+            });
+        }
+
+        return selectedMembers;
+    };
+
+    var clearStatusColError = function () {
+        var chkStatus = domElements.divMemberList.find('#chkStatus');
+
+        chkStatus.tipsy('hide').removeAttr('original-title');
+    };
+
+    // Get member list.
     var getMemberList = function () {
         Miscellany.disableInput();
         $.ajax({
@@ -215,6 +318,32 @@ Fanex.Miscellany.CloseOpenMember = function () {
                 } else {
                     renderMemberList(result);
                 }
+            },
+            error: function (xhr, status, err) {
+                Miscellany.handleAjaxError(xhr, status, err);
+            },
+            complete: function () {
+                Miscellany.enableInput();
+            }
+        });
+    };
+
+    // Update members' status.
+    var updateMemberStatus = function (updatingParameters) {
+        updatingParameters.SearchedUsername = parameters.Username;
+        updatingParameters.Status = parameters.Status;
+        updatingParameters.PageSize = parameters.PageSize;
+        updatingParameters.PageIndex = parameters.PageIndex;
+
+        Miscellany.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.UpdateMembers,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(updatingParameters),
+            success: function () {
+                //@@TODO: Refresh grid and show messages.
             },
             error: function (xhr, status, err) {
                 Miscellany.handleAjaxError(xhr, status, err);

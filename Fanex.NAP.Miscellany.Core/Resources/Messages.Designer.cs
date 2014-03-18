@@ -106,6 +106,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to CLOSE selected accounts?.
+        /// </summary>
+        public static string CloseMemberConfirmationMessage {
+            get {
+                return ResourceManager.GetString("CloseMemberConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This function enables you to OPEN/CLOSE all downline Members without changing current status od Super/Master/Agnet.&lt;br/&gt;You can OPEN/CLOSE only Credit Members..
         /// </summary>
         public static string CloseOpenMemberNote {
@@ -232,6 +241,15 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to OPEN selected accounts?.
+        /// </summary>
+        public static string OpenMemberConfirmationMessage {
+            get {
+                return ResourceManager.GetString("OpenMemberConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The confirm password does not match with the new password..
         /// </summary>
         public static string PasswordDoesNotMatch {
@@ -255,6 +273,33 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         public static string RequiredFieldError {
             get {
                 return ResourceManager.GetString("RequiredFieldError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least on Member account must be selected!.
+        /// </summary>
+        public static string RequiredStatusColumnError {
+            get {
+                return ResourceManager.GetString("RequiredStatusColumnError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update {0}/{1} Member accounts. Please retry with Member accounts that are checked in the list..
+        /// </summary>
+        public static string UpdateMemberStatusFailed {
+            get {
+                return ResourceManager.GetString("UpdateMemberStatusFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully updated {0}/{1} Member accounts..
+        /// </summary>
+        public static string UpdateMemberStatusSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateMemberStatusSuccessfully", resourceCulture);
             }
         }
         

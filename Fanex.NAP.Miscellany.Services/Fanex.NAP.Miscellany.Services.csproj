@@ -72,6 +72,9 @@
     <Reference Include="NetUtility">
       <HintPath>..\Dependencies\Others\NetUtility.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Libraries.AOP">
+      <HintPath>..\Dependencies\Others\Sunplus.Libraries.AOP.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -83,7 +86,9 @@
   <ItemGroup>
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\BaseService.cs" />
-    <Compile Include="Implements\OpenCloseMemberService.cs" />
+    <Compile Include="Implements\OpenCloseMemberService.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -180,18 +180,6 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         } else {
             $(popupElements.rdbRestriction[0]).prop('checked', true).change();
         }
-
-        $.each(Validator.getValidatedFields(popupElements.divForm), function () {
-            $(this).on('raiseError', function () {
-                if (!popupElements.divForm.hasClass('expand-form')) {
-                    popupElements.divForm.addClass('expand-form');
-                }
-            }).on('clearError', function () {
-                if (Validator.countErrors(popupElements.divForm) === 0) {
-                    popupElements.divForm.removeClass('expand-form');
-                }
-            });
-        });
     };
 
     // Get data
@@ -222,6 +210,7 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         var bodyData = [];
         var columns = [];
         var gridOptions = {
+            showDistinctRow: false,
             showFooter: true,
             showPager: true,
             customPager: true,
@@ -394,8 +383,8 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    Miscellany.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, function () {
-                        Miscellany.closePopup();
+                    Miscellany.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(Miscellany.closePopup, 3000);
                     });
                     disableRequestForm();
                     getRequestList();
@@ -425,8 +414,8 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    Miscellany.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, function () {
-                        Miscellany.closePopup();
+                    Miscellany.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(Miscellany.closePopup, 3000);
                     });
                     disableRequestForm();
                     getRequestList();

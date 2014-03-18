@@ -95,14 +95,20 @@ var Miscellany = (function ($) {
             $msgDiv.html(message);
             $msgDiv.removeClass('success').addClass('error').slideDown();
         },
-        showInlineInfoMsg: function (message, $obj, callbackFunc) {
+        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;
-            console.log('su');
+
+            autoHide = autoHide === undefined ? true : autoHide;
             $msgDiv.html(message);
             $msgDiv.removeClass('error').addClass('success').slideDown();
-            setTimeout(function () {
-                Miscellany.hideInlineMsg($msgDiv, callbackFunc);
-            }, 3000);
+
+            if (autoHide) {
+                setTimeout(function () {
+                    Miscellany.hideInlineMsg($msgDiv, callbackFunc);
+                }, 3000);
+            } else if (callbackFunc) {
+                callbackFunc();
+            }
         },
         hideInlineMsg: function ($obj, callbackFunc) {
             var $msgDiv = $obj || Miscellany.errorSuccessMsg;

@@ -36,24 +36,19 @@ namespace Fanex.NAP.Miscellany.Repositories.Implements
 
             using (IObjectDb db = new ObjectDb(criteria.GetSettingKey()))
             {
-                ////memberList = db.Query<MemberStatusInfo>(param);
                 using (var dataset = db.ExecuteDataSet(param))
                 {
                     if (dataset.Tables.Count > 0)
                     {
                         DataTable list = dataset.Tables[0];
+                        bool hasMaster = list.Columns.Contains("master");
+                        bool hasAgent = list.Columns.Contains("agent");
 
                         foreach (DataRow row in list.Rows)
                         {
-                            memberList.Add(new MemberStatusInfo
-                            {
-                                CustId = Convert.ToInt32(row["custid"]),
-                                Master = Convert.ToString(row["master"]),
-                                Agent = Convert.ToString(row["agent"]),
-                                Member = Convert.ToString(row["member"]),
-                                SyncCasino = Convert.ToBoolean(row["synccasino"]),
-                                Closed = Convert.ToBoolean(row["closed"])
-                            });
+                            var member = GetMemberInfo(row, hasMaster, hasAgent);
+
+                            memberList.Add(member);
                         }
                     }
                 }
@@ -77,6 +72,36 @@ namespace Fanex.NAP.Miscellany.Repositories.Implements
             }
 
             return memberList;
+        }
+
+        /// <summary>
+        /// Gets the member information.
+        /// </summary>
+        /// <param name="row">The row contains the raw data.</param>
+        /// <param name="hasMaster">If set to <c>true</c> [has master].</param>
+        /// <param name="hasAgent">If set to <c>true</c> [has agent].</param>
+        /// <returns>Member information.</returns>
+        private MemberStatusInfo GetMemberInfo(DataRow row, bool hasMaster, bool hasAgent)
+        {
+            var member = new MemberStatusInfo
+            {
+                CustId = Convert.ToInt32(row["custid"]),
+                Member = Convert.ToString(row["member"]),
+                SyncCasino = Convert.ToBoolean(row["synccasino"]),
+                Closed = Convert.ToBoolean(row["closed"])
+            };
+
+            if (hasMaster)
+            {
+                member.Master = Convert.ToString(row["master"]);
+            }
+
+            if (hasAgent)
+            {
+                member.Agent = Convert.ToString(row["agent"]);
+            }
+
+            return member;
         }
     }
 }

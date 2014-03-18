@@ -16,11 +16,21 @@ namespace Fanex.NAP.Miscellany.Criteria.OpenCloseMember
     /// </summary>
     public class UpdateMembersStatusCriteria : CriteriaBase
     {
-        public string CustIdList { get; set; }
+        public string CustIDs { get; set; }
 
-        public int AdminId { get; set; }
+        public int UserID { get; set; }
 
-        public string AdminUsername { get; set; }
+        public byte UpdateType { get; set; }
+
+        public int UpdatedCount { get; set; }
+
+        public string Language { get; set; }
+
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public string IP { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -28,7 +38,7 @@ namespace Fanex.NAP.Miscellany.Criteria.OpenCloseMember
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "Key";
+            return "NAP_Misc_OpenCloseMembers_UPD";
         }
 
         /// <summary>

@@ -55,14 +55,7 @@ namespace Fanex.NAP.Miscellany.Controllers
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
         public JsonResult GetMemberList(GettingMembersStatusFilter filter)
         {
-            var criteria = new GetMembersStatusCriteria
-            {
-                Username = filter.Username,
-                IsClosed = filter.Status,
-                ItemPerPage = filter.PageSize,
-                PageIndex = filter.PageIndex + 1
-            };
-            GettingMembersStatusResult result = this._openCloseMemberService.GetMembersStatus(criteria);
+            GettingMembersStatusResult result = this._openCloseMemberService.GetMembersStatus(filter);
 
             return Json(result);
         }
@@ -70,12 +63,20 @@ namespace Fanex.NAP.Miscellany.Controllers
         /// <summary>
         /// Updates member status.
         /// </summary>
+        /// <param name="filter">Filter conditions.</param>
         /// <returns>JSON object indicates the result of updating process.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
-        public JsonResult UpdateMembers()
+        public JsonResult UpdateMembers(UpdatedMembersStatusFilter filter)
         {
-            return Json(null);
+            UpdatedMembersStatusResult result = null;
+
+            filter.AdminId = this.CurrentSession.UserId;
+            filter.AdminUsername = this.CurrentSession.Username;
+            filter.IP = this.CurrentContext.IP;
+            result = this._openCloseMemberService.UpdateMembersStatus(filter);
+
+            return Json(result);
         }
     }
 }

@@ -60,6 +60,9 @@
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />
     <Compile Include="OpenCloseMember\MasterDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\MemberStatus.cs" />
+    <Compile Include="OpenCloseMember\UpdatedMembersStatusFilter.cs" />
+    <Compile Include="OpenCloseMember\UpdatedMembersStatusResult.cs" />
+    <Compile Include="OpenCloseMember\UpdatedMemberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

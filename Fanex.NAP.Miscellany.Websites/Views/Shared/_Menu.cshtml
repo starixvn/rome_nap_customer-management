@@ -17,7 +17,7 @@
         className = "first";
     }
 
-    if (i == lvl0MenuItemList.Count - 1)
+    if ((i == lvl0MenuItemList.Count - 1) && (lvl0MenuItemList.Count > 1))
     {
         className += className.Length > 0 ? " last" : "last";
     }
@@ -32,10 +32,10 @@
 
         <li class="@className"><a href="javascript:;">@menuItem.Name</a>
             <ul>
-        @foreach (var subMenuItem in lvl1MenuItemList)
-        {
-                <li><a href="@Url.Content(subMenuItem.GetValidUrl())">@subMenuItem.Name</a></li>
-        }
+                @foreach (var subMenuItem in lvl1MenuItemList)
+                {
+                    <li><a href="@Url.Content(subMenuItem.GetValidUrl())">@subMenuItem.Name</a></li>
+                }
             </ul>
         </li>
     }

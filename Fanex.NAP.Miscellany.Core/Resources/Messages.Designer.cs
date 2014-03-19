@@ -115,7 +115,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This function enables you to OPEN/CLOSE all downline Members without changing current status od Super/Master/Agnet.&lt;br/&gt;You can OPEN/CLOSE only Credit Members..
+        ///   Looks up a localized string similar to This function enables you to OPEN/CLOSE all downline Members without changing current status of Super/Master/Agent.&lt;br/&gt;You can OPEN/CLOSE only Credit Members..
         /// </summary>
         public static string CloseOpenMemberNote {
             get {

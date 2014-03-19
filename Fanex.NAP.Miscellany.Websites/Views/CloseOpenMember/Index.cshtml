@@ -22,7 +22,7 @@
             <div class="filter-row">
                 <div class="lbl-field col_9 align-right">
                     <label for="txtUsername">
-                        <span class="level-label">@string.Format("{0}/ {1}/ {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
+                        <span class="level-label">@string.Format("{0} / {1} / {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
                         <span>@ViewLang.Username</span>
                     </label>
                 </div>
@@ -36,7 +36,7 @@
                     <select id="ddlStatus" class="combobox-autocomplete level-combobox">
                         <option value="-1">@ViewLang.All</option>
                         <option value="0">@ViewLang.Open</option>
-                        <option value="1">@ViewLang.Close</option>
+                        <option value="1">@ViewLang.Closed</option>
                     </select>
                 </div>
                 <div class="submit width-auto col_3">

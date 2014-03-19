@@ -55,8 +55,11 @@ Fanex.NAP.Miscellany.ConfigureCustomerAccess = function () {
         mainDOMElements.btnSearch = $('#btnSearch');
         mainDOMElements.btnAddRequest = $('#btnAddRequest');
         mainDOMElements.divMemberList = $('#divMemberList');
-        mainDOMElements.divRequestForm = $('#divRequestForm');
+        mainDOMElements.divRequestForm = $('#divRequestForm').clone();
         mainDOMElements.divPopup = $('#dialog-popup');
+
+        // Remove the #divRequestForm element since it was cached. It also helps to prevent the 'for' attributes do not work correctly in the popup.
+        $('#divPopupContent').empty();
     };
 
     // Cache popup elements

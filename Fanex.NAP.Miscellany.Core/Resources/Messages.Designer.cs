@@ -133,7 +133,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to want to delete the request: &lt;b&gt;[{0}]&lt;/b&gt;?.
+        ///   Looks up a localized string similar to Are you sure you to want to delete the request: &lt;b&gt;[{0}]&lt;/b&gt;?.
         /// </summary>
         public static string DeleteRequestConfirm {
             get {

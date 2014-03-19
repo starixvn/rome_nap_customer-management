@@ -23,6 +23,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
         PageSize: null
     };
     var domElements = {
+        divSecondErrSucMsg: null,
         txtUsername: null,
         ddlStatus: null,
         btnSearch: null,
@@ -33,12 +34,13 @@ Fanex.Miscellany.CloseOpenMember = function () {
         btnClose: null
     };
     var updateType = {
-        open: 0,
-        close: 1
+        close: 0,
+        open: 1
     };
 
     // Cache DOM elements
     var cacheDOM = function () {
+        domElements.divSecondErrSucMsg = $('#divSecondErrSucMsg');
         domElements.txtUsername = $('#txtUsername');
         domElements.ddlStatus = $('#ddlStatus');
         domElements.btnSearch = $('#btnSearch');
@@ -141,7 +143,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
                 itemsPerPageArray: Miscellany.pagerRanges,
                 pagerSelectCallBack: handleChangingPage
             },
-            gridExpandHeight: 180
+            gridExpandHeight: 240
         };
         var bodyData = [];
         var row;
@@ -305,6 +307,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
 
     // Get member list.
     var getMemberList = function () {
+        hideErrorMsg();
         Miscellany.disableInput();
         $.ajax({
             type: 'POST',
@@ -319,8 +322,8 @@ Fanex.Miscellany.CloseOpenMember = function () {
                     renderMemberList(result);
                 }
             },
-            error: function (xhr, status, err) {
-                Miscellany.handleAjaxError(xhr, status, err);
+            error: function (xhr) {
+                Miscellany.showInlineAjaxErrorMsg(xhr);
             },
             complete: function () {
                 Miscellany.enableInput();
@@ -335,6 +338,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
         updatingParameters.PageSize = parameters.PageSize;
         updatingParameters.PageIndex = parameters.PageIndex;
 
+        hideErrorMsg();
         Miscellany.disableInput();
         $.ajax({
             type: 'POST',
@@ -342,16 +346,34 @@ Fanex.Miscellany.CloseOpenMember = function () {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(updatingParameters),
-            success: function () {
-                //@@TODO: Refresh grid and show messages.
+            success: function (result) {
+                if (result.ErrorCode > 0) {
+                    Miscellany.showInlineErrorMsg(result.ErrorMsg);
+                } else if (result.NumberOfUpdatedItems === result.TotalItems) {
+                    Miscellany.showInlineInfoMsg(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
+                } else if (result.NumberOfFailedItems === result.TotalItems) {
+                    Miscellany.showInlineErrorMsg(messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
+                } else {
+                    Miscellany.showInlineInfoMsg(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
+                    Miscellany.showInlineErrorMsg(
+                                   messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems),
+                                   domElements.divSecondErrSucMsg);
+                }
+
+                renderMemberList(result.MembersStatusResult);
             },
-            error: function (xhr, status, err) {
-                Miscellany.handleAjaxError(xhr, status, err);
+            error: function (xhr) {
+                Miscellany.showInlineAjaxErrorMsg(xhr);
             },
             complete: function () {
                 Miscellany.enableInput();
             }
         });
+    };
+
+    var hideErrorMsg = function () {
+        Miscellany.hideInlineMsg();
+        Miscellany.hideInlineMsg(domElements.divSecondErrSucMsg);
     };
 
     $this.InitPage = function () {

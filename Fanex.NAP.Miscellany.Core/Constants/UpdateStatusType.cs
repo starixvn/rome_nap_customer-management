@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="AccountStatus.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="UpdateStatusType.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -9,10 +9,10 @@
 
 namespace Fanex.NAP.Miscellany.Core.Constants
 {
-    public struct AccountStatus
+    public struct UpdateStatusType
     {
         public const int All = -1;
-        public const int Open = 0;
-        public const int Closed = 1;
+        public const int Close = 0;
+        public const int Open = 1;
     }
 }

@@ -63,6 +63,9 @@
     <Reference Include="IBCDBLibrary">
       <HintPath>..\Dependencies\Others\IBCDBLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="ILogger">
+      <HintPath>..\Dependencies\Others\ILogger.dll</HintPath>
+    </Reference>
     <Reference Include="log4net">
       <HintPath>..\Dependencies\Others\log4net.dll</HintPath>
     </Reference>

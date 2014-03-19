@@ -150,28 +150,36 @@ namespace Fanex.NAP.Miscellany.Services.Implements
                 int numOfUpdatedMembers = memberList.Count();
                 int index = 0;
 
-                while (index < numOfUpdatedMembers)
+                try
                 {
-                    int count = Math.Min(BatchLimitation, numOfUpdatedMembers - index);
-                    IEnumerable<UpdatedMemberStatus> tempMemberList = memberList.GetRange(index, count);
-                    int[] custIdArray = tempMemberList.Select(obj => obj.CustId).ToArray();
-                    string custIDList = string.Join(",", custIdArray);
-                    bool updateResult = customerManager.UpdateMultipleCustClosed(
-                                                            custIDList,
-                                                            filter.UpdateType == AccountStatus.Closed,
-                                                            filter.IP,
-                                                            filter.AdminId,
-                                                            filter.AdminUsername,
-                                                            AccountingSystemId);
+                    while (index < numOfUpdatedMembers)
+                    {
+                        int count = Math.Min(BatchLimitation, numOfUpdatedMembers - index);
+                        IEnumerable<UpdatedMemberStatus> tempMemberList = memberList.GetRange(index, count);
+                        int[] custIdArray = tempMemberList.Select(obj => obj.CustId).ToArray();
+                        string custIDList = string.Join(",", custIdArray);
+                        bool updateResult = customerManager.UpdateMultipleCustClosed(
+                                                                custIDList,
+                                                                filter.UpdateType == UpdateStatusType.Close,
+                                                                filter.IP,
+                                                                filter.AdminId,
+                                                                filter.AdminUsername,
+                                                                AccountingSystemId);
 
-                    if (updateResult)
-                    {
-                        updatedMembers.AddRange(tempMemberList);
+                        if (updateResult)
+                        {
+                            updatedMembers.AddRange(tempMemberList);
+                        }
+                        else
+                        {
+                            break;
+                        }
+
+                        index += count;
                     }
-                    else
-                    {
-                        break;
-                    }
+                }
+                catch (Exception)
+                {
                 }
             }
 

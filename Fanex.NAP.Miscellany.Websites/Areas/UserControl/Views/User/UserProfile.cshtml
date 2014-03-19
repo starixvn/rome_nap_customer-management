@@ -8,7 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Headline {
-    <div class="usertitle">
+    <div class="title">
         <div>
             <span>@HttpContext.Current.User.Identity.Name / </span><span class="curr">@ViewBag.Title</span>
         </div>
@@ -16,7 +16,7 @@
 }
 @using (Html.BeginForm())
 {
-    <div class="form w120 margin-left" id="divProfile">
+    <div class="form w120 user-control" id="divProfile">
         <div id="divErrorSuccessMsg" class="message margin-bottom"></div>
         <div id="divValidationSummary" class="display-none">
             @Html.ValidationSummary()

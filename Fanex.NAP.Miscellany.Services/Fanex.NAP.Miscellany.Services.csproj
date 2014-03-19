@@ -57,7 +57,7 @@
     <Reference Include="GotDotNet.ApplicationBlocks.Data">
       <HintPath>..\Dependencies\Others\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
     </Reference>
-    <Reference Include="IBCCrypt">
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Dependencies\Others\IBCCrypt.dll</HintPath>
     </Reference>
     <Reference Include="IBCDBLibrary">
@@ -78,6 +78,9 @@
     <Reference Include="Sunplus.Libraries.AOP">
       <HintPath>..\Dependencies\Others\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
+    <Reference Include="Sunplus.Libraries.APILogger">
+      <HintPath>..\Dependencies\Others\Sunplus.Libraries.APILogger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -87,13 +90,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiLogers\CasinoApiLogger.cs" />
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
-    <Compile Include="Implements\BaseService.cs" />
+    <Compile Include="Implements\MiscellanyBaseService.cs" />
     <Compile Include="Implements\OpenCloseMemberService.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Implements\WriteLogsService.cs" />
     <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
+    <Compile Include="Interfaces\IWriteLogsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

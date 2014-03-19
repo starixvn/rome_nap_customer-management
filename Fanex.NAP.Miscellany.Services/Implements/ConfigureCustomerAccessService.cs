@@ -20,7 +20,7 @@ namespace Fanex.NAP.Miscellany.Services.Implements
     /// <summary>
     /// Access management service.
     /// </summary>
-    public class ConfigureCustomerAccessService : BaseService, IConfigureCustomerAccessService
+    public class ConfigureCustomerAccessService : MiscellanyBaseService, IConfigureCustomerAccessService
     {
         /// <summary>
         /// Gets the request list.

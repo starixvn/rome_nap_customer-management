@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.3.18">Created</change>
 // </history>
 
-namespace Fanex.NAP.Miscellany.Criteria.OpenCloseMember
+namespace Fanex.NAP.Miscellany.Criteria.WriteLogs
 {
     using Fanex.NAP.Framework.Data;
 
@@ -16,21 +16,21 @@ namespace Fanex.NAP.Miscellany.Criteria.OpenCloseMember
     /// </summary>
     public class WriteCasinoApiLogCriteria : CriteriaBase
     {
-        public int SystemId { get; set; }
+        public byte SystemID { get; set; }
 
-        public int UserId { get; set; }
+        public int UserID { get; set; }
 
-        public int CustId { get; set; }
+        public int CustID { get; set; }
 
-        public int ActionId { get; set; }
+        public int ActionID { get; set; }
 
-        public string FunctionName { get; set; }
+        public string FuncName { get; set; }
 
         public string TrackingValue { get; set; }
 
-        public int ReturnCode { get; set; }
-
         public string ReturnValue { get; set; }
+
+        public int ReturnCode { get; set; }
 
         /// <summary>
         /// Gets the setting key.

@@ -13,33 +13,56 @@ namespace Fanex.NAP.Miscellany.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using CasinoLibrary.SBAgent;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Miscellany.Core.Constants;
     using Fanex.NAP.Miscellany.Criteria.OpenCloseMember;
     using Fanex.NAP.Miscellany.Models.OpenCloseMember;
     using Fanex.NAP.Miscellany.Repositories.Implements;
     using Fanex.NAP.Miscellany.Repositories.Interfaces;
+    using Fanex.NAP.Miscellany.Services.ApiLogers;
     using Fanex.NAP.Miscellany.Services.Interfaces;
     using Fanex.NAP.Miscellany.ViewModels.OpenCloseMember;
+    using Sunplus.Libraries.APILogger;
 
     /// <summary>
     /// Open close member service.
     /// </summary>
-    public class OpenCloseMemberService : BaseService, IOpenCloseMemberService
+    public class OpenCloseMemberService : MiscellanyBaseService, IOpenCloseMemberService
     {
         private const int BatchLimitation = 50;
         private const int AccountingSystemId = 3;
 
+        private static int userId = 0;
+
         private readonly IOpenCloseMemberRepository _openCloseMemberRepository;
 
+        static OpenCloseMemberService()
+        {
+            CasinoApiLogger casinoLogger = new CasinoApiLogger(AccountingSystemId, GetUserId, GetUserId);
+            APILogManager apiLogManager = new APILogManager(casinoLogger);
+            apiLogManager.Register(
+                              typeof(CasinoLibrary.SBAgent.Customer),
+                              "Update*|Insert*|AutoInsert*|Move*|Remove*|Reset*|FullSettlementResetMaxTransfer|Rollback*");
+        }
+
         public OpenCloseMemberService() :
-            this(null)
+            this(null, null)
         {
         }
 
-        public OpenCloseMemberService(IOpenCloseMemberRepository openCloseMemberRepository)
+        public OpenCloseMemberService(IServiceContext serviceContext) :
+            this(serviceContext, null)
         {
+        }
+
+        public OpenCloseMemberService(IServiceContext serviceContext, IOpenCloseMemberRepository openCloseMemberRepository)
+        {
+            this.ServiceContext = serviceContext ?? new ServiceContext();
             this._openCloseMemberRepository = openCloseMemberRepository ?? new OpenCloseMemberRepository();
+
+            userId = this.ServiceContext.UserId;
         }
 
         /// <summary>
@@ -135,6 +158,15 @@ namespace Fanex.NAP.Miscellany.Services.Implements
         }
 
         /// <summary>
+        /// Gets the user identifier.
+        /// </summary>
+        /// <returns>The user ID.</returns>
+        private static int GetUserId()
+        {
+            return userId;
+        }
+
+        /// <summary>
         /// Updates the RNG casino status.
         /// </summary>
         /// <param name="memberList">List of members that need to synchronize status with RNG Casino.</param>
@@ -180,6 +212,8 @@ namespace Fanex.NAP.Miscellany.Services.Implements
                 }
                 catch (Exception)
                 {
+                    // Assum that any exception occurs during calling API is a failure and CasinoApiLogger will write log for this.
+                    // No need to throw exception here.
                 }
             }
 

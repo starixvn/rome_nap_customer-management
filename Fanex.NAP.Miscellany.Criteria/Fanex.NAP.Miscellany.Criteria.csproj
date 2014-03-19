@@ -58,7 +58,7 @@
     <Compile Include="ConfigureCustomerAccess\UpdateRequestCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
-    <Compile Include="OpenCloseMember\WriteCasinoApiLogCriteria.cs" />
+    <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="BaseService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="MiscellanyBaseService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -12,8 +12,8 @@ namespace Fanex.NAP.Miscellany.Services.Implements
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using Fanex.Common.Helper;
     using Fanex.Data;
+    using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.Framework.Data;
     using Fanex.NAP.Miscellany.Core.Web;
@@ -23,16 +23,9 @@ namespace Fanex.NAP.Miscellany.Services.Implements
     /// <summary>
     /// Base Service.
     /// </summary>
-    public class BaseService
+    public class MiscellanyBaseService : BaseService
     {
-        protected readonly IDynamicRepository DynamicRepository;
-
         private const string CachedCountryList = "Fanex.Miscellany.Service.Common.CountryList";
-
-        public BaseService(IDynamicRepository repository = null)
-        {
-            DynamicRepository = repository ?? new DynamicRepository();
-        }
 
         public Dictionary<string, string> CountryList
         {
@@ -56,86 +49,6 @@ namespace Fanex.NAP.Miscellany.Services.Implements
                 }
 
                 return countryList;
-            }
-        }
-
-        protected IDynamicRepository Repository
-        {
-            get
-            {
-                return DynamicRepository;
-            }
-        }
-
-        /// <summary>
-        /// Gets the list data.
-        /// </summary>
-        /// <typeparam name="T">Generic type.</typeparam>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The list data.</returns>
-        protected virtual IEnumerable<T> GetData<T>(ICriteria criteria)
-        {
-            Check.Argument.IsNotNull(criteria, "criteria");
-
-            if (criteria.IsValid())
-            {
-                return DynamicRepository.Fetch<T>(criteria);
-            }
-            else
-            {
-                return new List<T>();
-            }
-        }
-
-        /// <summary>
-        /// Gets the list of data and total items.
-        /// </summary>
-        /// <typeparam name="T">Generic type.</typeparam>
-        /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <param name="totalItems">Total items.</param>
-        /// <returns>The list of data.</returns>
-        protected virtual IEnumerable<T> GetData<T>(ICriteria criteria, out int totalItems)
-        {
-            IEnumerable<T> result = null;
-
-            Check.Argument.IsNotNull(criteria, "criteria");
-            totalItems = 0;
-
-            using (IObjectDb db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                Hashtable outputParam = null;
-
-                result = db.Query<T>(criteria.GetSpParams());
-                outputParam = db.GetOuputParams();
-
-                if (outputParam.ContainsKey("totalitems"))
-                {
-                    totalItems = (int)outputParam["totalitems"];
-                }
-            }
-
-            result = result ?? new List<T>();
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets data.
-        /// </summary>
-        /// <typeparam name="T">Generic type.</typeparam>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The data item.</returns>
-        protected virtual T GetItem<T>(ICriteria criteria) where T : new()
-        {
-            Check.Argument.IsNotNull(criteria, "criteria");
-
-            if (criteria.IsValid())
-            {
-                return DynamicRepository.Get<T>(criteria);
-            }
-            else
-            {
-                return new T();
             }
         }
 

@@ -124,16 +124,16 @@ Fanex.Miscellany.CloseOpenMember = function () {
         var agentChkId;
 
         var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
-        var statusHeaderFormat = '<input type="checkbox" id="{0}" class="checkbox-status"/><label for="{0}" class="lbl-for-chkStatus">{1}</label>';
-        var statusFormat = '<input type="checkbox" id="{0}" class="checkbox-status"' +
-                                  'data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
+        var statusHeaderFormat = '<div class="checkbox"><input type="checkbox" id="{0}" class="checkbox-status"/></div><label for="{0}" class="lbl-for-chkStatus">{1}</label>';
+        var statusFormat = '<div class="checkbox"><input type="checkbox" id="{0}" class="checkbox-status"' +
+                                  'data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/></div>' +
                            '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
         var statusCol = statusHeaderFormat.format(statusChkColId, labels.status);
 
         var gridOptions = {
             columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left'}],
+                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left', CssClass: 'status'}],
             showDistinctRow: false,
             showNumberColumn: true,
             showPager: true,
@@ -187,7 +187,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
                                       { Name: 'ColMember', Value: item.Username, TdClass: highlightClass },
-                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass}]
+                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass, CssClass: 'status'}]
                         };
 
                         bodyData.push(row);

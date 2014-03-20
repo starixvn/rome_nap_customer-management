@@ -9,37 +9,53 @@
     display: inline-block;
 }
 
-.lbl-for-chk {
-    margin-left: 5px;
-}
-
-.lbl-for-chkStatus {
-    //margin-left: 30px;
-}
-
-.checkbox-status {
-   // margin-left: 5px;
-}
-
 .error-tipsy-inner {
     max-width: 300px;
 }
 
 /* Formatting status */
-.table-cell.status {
-    display: table;
 
-    .checkbox {
-        display: table-cell;
-        float: left;
-        text-align: right;
-        width: 20px;
-    }
 
-    .lbl-for-chkStatus {
-        display: table-cell;
-        text-align: center;
-        width: 100px;
-        vertical-align: middle;
+.content-grid {
+    .freegrid {
+        .grid-fixed-table tr{
+            &.highlight-row {
+                &:hover td {
+                    background-color: transparent;
+
+                    //&:nth-last-child(1), &:nth-last-child(2), &:nth-child(1) {
+                    &:first-child, &.hover-column {
+                        background-color: #faffa8;
+                    }
+                }
+            }
+
+            .table-cell.status {
+                display: table;
+
+                .checkbox-status {
+                    display: table-cell;
+                    float: left;
+                    text-align: right;
+                    width: 20px;
+
+                    &.status-header {
+                        margin-top: 5px;
+                    }
+                }
+
+                .lbl-for-chkStatus {
+                    display: table-cell;
+                    text-align: center;
+                    width: 100px;
+                    vertical-align: middle;
+                }
+            }
+
+            .lbl-for-chk {
+                margin-left: 5px;
+                vertical-align: middle;
+            }
+        }
     }
 }

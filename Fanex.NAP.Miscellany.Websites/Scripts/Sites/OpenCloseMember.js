@@ -31,7 +31,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
         divMemberList: null,
         divButtons: null,
         btnOpen: null,
-        btnClose: null
+        btnOpenValue: null,
+        btnClose: null,
+        btnCloseValue: null
     };
     var updateType = {
         close: 0,
@@ -48,7 +50,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
         domElements.divMemberList = $('#divMemberList');
         domElements.divButtons = $('#divButtons');
         domElements.btnOpen = $('#btnOpen');
+        domElements.btnOpenValue = domElements.btnOpen.attr('data-value');
         domElements.btnClose = $('#btnClose');
+        domElements.btnCloseValue = domElements.btnClose.attr('data-value');
     };
 
     // Get parameters.
@@ -95,7 +99,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
                     UpdateType: updateType.open
                 };
 
-                Miscellany.headlineMsgBox.confirm(messages.openMemberConfirmationMsg, function () {
+                Miscellany.headlineMsgBox.confirm(messages.openMemberConfirmationMsg.format(selectedMembers.length), function () {
                     updateMemberStatus(updatingParameters);
                 }, { modal: true, closeBtn: false, header: true });
             }
@@ -110,11 +114,14 @@ Fanex.Miscellany.CloseOpenMember = function () {
                     UpdateType: updateType.close
                 };
 
-                Miscellany.headlineMsgBox.confirm(messages.closeMemberConfirmationMsg, function () {
+                Miscellany.headlineMsgBox.confirm(messages.closeMemberConfirmationMsg.format(selectedMembers.length), function () {
                     updateMemberStatus(updatingParameters);
                 }, { modal: true, closeBtn: false, header: true });
             }
         });
+
+        domElements.btnOpen.attr('value', domElements.btnOpenValue.format(''));
+        domElements.btnClose.attr('value', domElements.btnCloseValue.format(''));
     };
 
     // Render grid.
@@ -124,9 +131,11 @@ Fanex.Miscellany.CloseOpenMember = function () {
         var agentChkId;
 
         var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
-        var statusHeaderFormat = '<div class="checkbox"><input type="checkbox" id="{0}" class="checkbox-status"/></div><label for="{0}" class="lbl-for-chkStatus">{1}</label>';
-        var statusFormat = '<div class="checkbox"><input type="checkbox" id="{0}" class="checkbox-status"' +
-                                  'data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/></div>' +
+        var statusHeaderFormat = '<div class="checkbox-status status-header"><input type="checkbox" id="{0}"/></div>' +
+                                 '<label for="{0}" class="lbl-for-chkStatus">{1}</label>';
+        var statusFormat = '<div class="checkbox-status">' +
+                               '<input type="checkbox" id="{0}" data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
+                           '</div>' +
                            '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
         var statusCol = statusHeaderFormat.format(statusChkColId, labels.status);
 
@@ -183,7 +192,7 @@ Fanex.Miscellany.CloseOpenMember = function () {
                                                      item.Closed,
                                                      item.SyncCasino,
                                                      agentChkId, item.Closed ? labels.closed : labels.open);
-                        highlightClass = item.Closed ? 'highlight' : '';
+                        highlightClass = (item.Closed ? 'highlight ' : '') + 'hover-column';
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
                                       { Name: 'ColMember', Value: item.Username, TdClass: highlightClass },
@@ -249,6 +258,25 @@ Fanex.Miscellany.CloseOpenMember = function () {
                 $ele.prop('checked', true).trigger('update', true);
             });
         }, 50);
+
+        // Count number of checked/unchecked checkboxes and update to the Open/Close button.
+        checkboxes.filter('[data-closed]').change(function () {
+            var updatedCounter = '';
+            var counter;
+
+            if ($(this).attr('data-closed') === 'true') {
+                counter = checkboxes.filter('[data-closed="true"]:checked').length;
+
+                updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
+                domElements.btnOpen.attr('value', domElements.btnOpenValue.format(updatedCounter));
+            } else {
+                counter = checkboxes.filter('[data-closed][data-closed="false"]:checked').length;
+
+                updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
+                domElements.btnClose.attr('value', domElements.btnCloseValue.format(updatedCounter));
+            }
+            console.log(counter);
+        });
     };
 
     // Show.hide OPEN/CLOSE buttons.
@@ -276,11 +304,12 @@ Fanex.Miscellany.CloseOpenMember = function () {
         var checkedRows = domElements.divMemberList.find('input[type="checkbox"][data-closed="' + isClosed + '"]:checked');
         var chkStatus = domElements.divMemberList.find('#chkStatus');
         var selectedMembers = [];
+        var msg = messages.requiredStatusCol.format(isClosed ? labels.closed : labels.open);
 
         clearStatusColError();
 
         if (checkedRows.length === 0) {
-            chkStatus.attr('title', messages.requiredStatusCol).tipsy({
+            chkStatus.attr('title', msg).tipsy({
                 trigger: 'manual',
                 gravity: 'sw',
                 classStyle: 'error',

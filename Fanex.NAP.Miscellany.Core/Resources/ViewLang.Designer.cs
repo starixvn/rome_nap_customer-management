@@ -133,7 +133,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CLOSE selected accounts.
+        ///   Looks up a localized string similar to CLOSE {0}selected account(s).
         /// </summary>
         public static string CloseSelectedAccounts {
             get {
@@ -322,7 +322,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPEN selected accounts.
+        ///   Looks up a localized string similar to OPEN {0}selected account(s).
         /// </summary>
         public static string OpenSelectedAccounts {
             get {

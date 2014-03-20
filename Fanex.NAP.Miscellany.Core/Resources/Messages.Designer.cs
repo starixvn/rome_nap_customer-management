@@ -106,7 +106,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to CLOSE selected accounts?.
+        ///   Looks up a localized string similar to Are you sure you want to CLOSE {0} selected accounts?.
         /// </summary>
         public static string CloseMemberConfirmationMessage {
             get {
@@ -241,7 +241,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to OPEN selected accounts?.
+        ///   Looks up a localized string similar to Are you sure you want to OPEN {0} selected accounts?.
         /// </summary>
         public static string OpenMemberConfirmationMessage {
             get {
@@ -277,7 +277,7 @@ namespace Fanex.NAP.Miscellany.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to At least on Member account must be selected!.
+        ///   Looks up a localized string similar to At least one \&apos;{0}\&apos; Member account must be selected!.
         /// </summary>
         public static string RequiredStatusColumnError {
             get {

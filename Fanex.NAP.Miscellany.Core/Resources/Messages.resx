@@ -133,7 +133,7 @@
     <value>The profile has been changed successfully!</value>
   </data>
   <data name="CloseMemberConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to CLOSE selected accounts?</value>
+    <value>Are you sure you want to CLOSE {0} selected accounts?</value>
   </data>
   <data name="CloseOpenMemberNote" xml:space="preserve">
     <value>This function enables you to OPEN/CLOSE all downline Members without changing current status of Super/Master/Agent.&lt;br/&gt;You can OPEN/CLOSE only Credit Members.</value>
@@ -178,7 +178,7 @@
     <value>Old password cannot be empty.</value>
   </data>
   <data name="OpenMemberConfirmationMessage" xml:space="preserve">
-    <value>Are you sure you want to OPEN selected accounts?</value>
+    <value>Are you sure you want to OPEN {0} selected accounts?</value>
   </data>
   <data name="PasswordDoesNotMatch" xml:space="preserve">
     <value>The confirm password does not match with the new password.</value>
@@ -190,7 +190,7 @@
     <value>Required field!</value>
   </data>
   <data name="RequiredStatusColumnError" xml:space="preserve">
-    <value>At least on Member account must be selected!</value>
+    <value>At least one \'{0}\' Member account must be selected!</value>
   </data>
   <data name="UpdateMemberStatusFailed" xml:space="preserve">
     <value>Failed to update {0}/{1} Member accounts. Please retry with Member accounts that are checked in the list.</value>

@@ -217,10 +217,10 @@
     <value>Username</value>
   </data>
   <data name="CloseSelectedAccounts" xml:space="preserve">
-    <value>CLOSE selected accounts</value>
+    <value>CLOSE {0}selected account(s)</value>
   </data>
   <data name="OpenSelectedAccounts" xml:space="preserve">
-    <value>OPEN selected accounts</value>
+    <value>OPEN {0}selected account(s)</value>
   </data>
   <data name="MembersStatus" xml:space="preserve">
     <value>Member's Status</value>

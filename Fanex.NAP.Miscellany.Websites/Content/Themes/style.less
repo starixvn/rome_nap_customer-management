@@ -191,12 +191,9 @@ input, select {
     outline: 0 none;
 }
 
-:focus {outline:none;}
-::-moz-focus-inner {border:0;}
-
-/********************************************************/
-/*                  Basic elements/styles               */
-/********************************************************/
+input[type=checkbox] {
+    padding: 0;
+}
 
 p, ul, ol, dl {
     margin-bottom: 16px;
@@ -218,6 +215,9 @@ iframe {
 .js noscript {
     display: none;
 }
+
+:focus { outline:none; }
+::-moz-focus-inner { border:0; }
 
 /********************************************************/
 /*                  Common                              */
@@ -496,7 +496,7 @@ header {
 
 .ie8 header {
     nav {
-        margin-left: 143px;
+        margin-left: 162px;
         .menu {
             > li {
                 > a {

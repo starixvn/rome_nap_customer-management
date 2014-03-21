@@ -120,8 +120,31 @@ Fanex.Miscellany.CloseOpenMember = function () {
             }
         });
 
+        resetButtonValues();
+    };
+
+    // Reset counting values of buttons.
+    var resetButtonValues = function () {
         domElements.btnOpen.attr('value', domElements.btnOpenValue.format(''));
         domElements.btnClose.attr('value', domElements.btnCloseValue.format(''));
+    };
+
+    // Update counters in the Open/Close buttons.
+    var updateButtonsCounters = function ($obj, checkboxes) {
+        var updatedCounter = '';
+        var counter;
+
+        if ($obj.attr('data-closed') === 'true') {
+            counter = checkboxes.filter('[data-closed="true"]:checked').length;
+
+            updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
+            domElements.btnOpen.attr('value', domElements.btnOpenValue.format(updatedCounter));
+        } else {
+            counter = checkboxes.filter('[data-closed][data-closed="false"]:checked').length;
+
+            updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
+            domElements.btnClose.attr('value', domElements.btnCloseValue.format(updatedCounter));
+        }
     };
 
     // Render grid.
@@ -163,6 +186,8 @@ Fanex.Miscellany.CloseOpenMember = function () {
         var masterChildren;
         var downlineList;
         var highlightClass;
+
+        resetButtonValues();
 
         if (data && data.DownlineList.length > 0) {
             downlineList = data.DownlineList;
@@ -251,6 +276,15 @@ Fanex.Miscellany.CloseOpenMember = function () {
             $(this).checkboxGroup();
         });
 
+        // Count number of checked/unchecked checkboxes and update to the Open/Close button.
+        checkboxes.filter('[data-closed]').change(function () {
+            updateButtonsCounters($(this), checkboxes);
+            console.log('change');
+        }).on('update', function () {
+            updateButtonsCounters($(this), checkboxes);
+            console.log('update');
+        });
+
         setTimeout(function () {
             checkboxes.filter('[data-checked="true"]').each(function () {
                 var $ele = $(this);
@@ -258,28 +292,9 @@ Fanex.Miscellany.CloseOpenMember = function () {
                 $ele.prop('checked', true).trigger('update', true);
             });
         }, 50);
-
-        // Count number of checked/unchecked checkboxes and update to the Open/Close button.
-        checkboxes.filter('[data-closed]').change(function () {
-            var updatedCounter = '';
-            var counter;
-
-            if ($(this).attr('data-closed') === 'true') {
-                counter = checkboxes.filter('[data-closed="true"]:checked').length;
-
-                updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
-                domElements.btnOpen.attr('value', domElements.btnOpenValue.format(updatedCounter));
-            } else {
-                counter = checkboxes.filter('[data-closed][data-closed="false"]:checked').length;
-
-                updatedCounter = counter > 0 ? counter + ' ' : updatedCounter;
-                domElements.btnClose.attr('value', domElements.btnCloseValue.format(updatedCounter));
-            }
-            console.log(counter);
-        });
     };
 
-    // Show.hide OPEN/CLOSE buttons.
+    // Show/hide OPEN/CLOSE buttons.
     var showHideButtons = function () {
         var status = parseInt(domElements.ddlStatus.val());
 

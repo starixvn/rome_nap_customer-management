@@ -279,10 +279,8 @@ Fanex.Miscellany.CloseOpenMember = function () {
         // Count number of checked/unchecked checkboxes and update to the Open/Close button.
         checkboxes.filter('[data-closed]').change(function () {
             updateButtonsCounters($(this), checkboxes);
-            console.log('change');
         }).on('update', function () {
             updateButtonsCounters($(this), checkboxes);
-            console.log('update');
         });
 
         setTimeout(function () {

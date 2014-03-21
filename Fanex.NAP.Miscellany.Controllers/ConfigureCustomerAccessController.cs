@@ -148,7 +148,12 @@ namespace Fanex.NAP.Miscellany.Controllers
         [NapAuth(FunctionKey = MiscellanyFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Host)]
         public JsonResult DeleteRequest(DeleteRequestCriteria criteria)
         {
-            ICommandResult result = this._accessManagementService.DeleteRequest(criteria);
+            ICommandResult result = null;
+
+            criteria.DeletedBy = this.CurrentSession.UserId;
+            criteria.IPAction = this.CurrentContext.IP;
+            result = this._accessManagementService.DeleteRequest(criteria);
+
             return Json(result);
         }
     }

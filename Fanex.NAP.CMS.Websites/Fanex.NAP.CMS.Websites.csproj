@@ -183,13 +183,12 @@
     <Content Include="Areas\UserLogin\themes\img\firefox_original.png" />
     <Content Include="Areas\UserLogin\themes\img\ie.png" />
     <Content Include="Areas\UserLogin\themes\img\lock.png" />
-    <Content Include="Areas\UserLogin\themes\img\logo.png" />
     <Content Include="Areas\UserLogin\themes\img\password.png" />
     <Content Include="Areas\UserLogin\themes\img\pattern6.png" />
     <Content Include="Areas\UserLogin\themes\img\title-bg.jpg" />
     <Content Include="Areas\UserLogin\themes\img\username.png" />
     <Content Include="Areas\UserLogin\themes\img\warn.png" />
-    <Content Include="Areas\UserLogin\themes\img\welcome.png" />
+    <Content Include="Areas\UserLogin\themes\img\logo.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
     <Content Include="Content\Themes\img\actions\add-user.png" />
     <Content Include="Content\Themes\img\actions\chgpwd-ico.png" />

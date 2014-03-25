@@ -37,42 +37,6 @@
 }
 
 /********************************************************/
-/*                Generic backgrounds                   */
-/********************************************************/
-
-.carbon {
-    color: white;
-    background: #3c4044 url(img/textures/grid.png);
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.4)), to(rgba(0, 0, 0, 0))), #3c4044 url(img/textures/grid.png);
-    background: -webkit-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(img/textures/grid.png);
-    background: -moz-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(img/textures/grid.png);
-    background: -ms-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(img/textures/grid.png);
-    background: -o-linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(img/textures/grid.png);
-    background: linear-gradient( top, rgba(0,0,0,0.4), rgba(0,0,0,0)), #3c4044 url(img/textures/grid.png);
-}
-.linen {
-    color: white;
-    border-color: #929ba6;
-    background: #a7b2be url(img/textures/fabric.png);
-    background: url(img/textures/fabric.png), -webkit-gradient(linear, left top, left bottom, from(#5d656e), to(#a7b2be)) repeat-x, #a7b2be;
-    background: url(img/textures/fabric.png), -webkit-linear-gradient(top, #5d656e, #a7b2be) repeat-x, #a7b2be;
-    background: url(img/textures/fabric.png), -moz-linear-gradient(top, #5d656e, #a7b2be) repeat-x, #a7b2be;
-    background: url(img/textures/fabric.png), -ms-linear-gradient(top, #5d656e, #a7b2be) repeat-x, #a7b2be;
-    background: url(img/textures/fabric.png), -o-linear-gradient(top, #5d656e, #a7b2be) repeat-x, #a7b2be;
-    background: url(img/textures/fabric.png), linear-gradient(top, #5d656e, #a7b2be) repeat-x, #a7b2be;
-}
-.scratch-metal {
-    border-color: #999999;
-    background: #dedede url(img/textures/scratches.png);
-    background: url(img/textures/scratches.png), -webkit-gradient(linear, left top, left bottom, from(#aaaaaa), to(#aaaaaa), color-stop(0.25, #f2f2f2), color-stop(0.38, #ffffff), color-stop(0.63, #c5c5c5), color-stop(0.87, #f7f7f7));
-    background: url(img/textures/scratches.png), -webkit-linear-gradient(top, #aaaaaa, #f2f2f2 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, #aaaaaa);
-    background: url(img/textures/scratches.png), -moz-linear-gradient(top, #aaaaaa, #f2f2f2 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, #aaaaaa);
-    background: url(img/textures/scratches.png), -ms-linear-gradient(top, #aaaaaa, #f2f2f2 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, #aaaaaa);
-    background: url(img/textures/scratches.png), -o-linear-gradient(top, #aaaaaa, #f2f2f2 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, #aaaaaa);
-    background: url(img/textures/scratches.png), linear-gradient(top, #aaaaaa, #f2f2f2 25%, #ffffff 38%, #c5c5c5 63%, #f7f7f7 87%, #aaaaaa);
-}
-
-/********************************************************/
 /*                     Utility classes                  */
 /********************************************************/
 
@@ -143,22 +107,22 @@
     position: absolute;
     top: 50%;
     margin-top: -8px;
-    }
-    .absolute-left {
-        left: 0;
-    }
-    .absolute-right {
-        right: 0;
-    }
+}
+.absolute-left {
+    left: 0;
+}
+.absolute-right {
+    right: 0;
+}
 
 .clearfix() {
     *zoom:1;
-    
-    &:before,
-    &:after {
+
+    &:before, &:after {
         content:"";
         display:table;
     }
+
     &:after {
         clear:both;
     }
@@ -195,10 +159,19 @@ input[type=checkbox] {
     padding: 0;
 }
 
+input::-ms-reveal, input::-ms-clear {
+    display: none;
+}
+
+select {
+    cursor: pointer;
+}
+
 p, ul, ol, dl {
     margin-bottom: 16px;
     list-style-type: none;
 }
+
 a {
     text-decoration: none;
     outline: 0 none;
@@ -209,58 +182,17 @@ a {
         color: @link;
     }
 }
+
 iframe {
     display: block;
 }
+
 .js noscript {
     display: none;
 }
 
 :focus { outline:none; }
 ::-moz-focus-inner { border:0; }
-
-/********************************************************/
-/*                  Common                              */
-/********************************************************/
-
-.ico-tick {
-    background: url(img/tick-ico-16.png) no-repeat;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-}
-
-.datetime {
-    .time {
-        font-size: .85em;
-    }
-}
-
-.num-of-user {
-    font-weight: bold;
-}
-
-h2 .title {
-    display: block;
-    padding-bottom: 5px;
-    .font_yanone;
-    font-size: 1.4em;
-    color: @text;
-}
-
-.tree-grid-toggle {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin: 0 4px -4px -2px;
-    font-size: 0;
-    background: url(img/sprites.png) no-repeat 0 -25px;
-}
-
-.tree-grid-toggle.collapse {
-    cursor: pointer;   
-    background-position: 0 0;
-}
 
 /********************************************************/
 /*                        Headers                       */
@@ -286,6 +218,7 @@ header {
         left: 0px;
         padding: 0px;
         z-index:1;
+
         a {
             display: block;
             background: url(img/logo.png) center left no-repeat;
@@ -295,6 +228,7 @@ header {
             width:147px;
             border-right: 1px solid #7ea3e9;
             box-shadow: 1px 0 #244799;
+
             &:hover {
                 text-decoration: none;
             }
@@ -309,16 +243,19 @@ header {
             z-index: 200 !important;
             margin: 0;
             margin-top:2px;
+
             li {
                 display: block;
                 float: left;
                 list-style-type: none;
                 position: relative;
+
                 a {
                     color: @menu_text;
                     .text_shadow(0em 0em 0.025em #d6dee9);
                 }
             }
+
             > li {
                 > a {
                     display: block;
@@ -326,6 +263,7 @@ header {
                     padding:8px 16px;
                     border:solid 1px transparent;
                 }
+
                 ul {
                     position: absolute;
                     top: 26px;
@@ -340,10 +278,12 @@ header {
                     .box_shadow(0 3px 2px 1px rgba(0,0,0,0.2));
                     .transition;
                     padding:4px 0px;
+
                     li {
                         display: block;
                         clear: both;
                         width: 100%;
+
                         a {
                             color: @sub_menu_text;
                             background-image:none;
@@ -354,6 +294,7 @@ header {
                             min-width: 160px;
                             font-size: 1em;
                         }
+
                         &:hover a {
                             text-decoration: none;
                             background-color: @menu_border;
@@ -376,9 +317,7 @@ header {
                         text-decoration: none;
                         color: @menu_text_o;
                     }
-                    > li.last a{
-                        
-                    }
+
                     ul {
                         top: 26px;
                         visibility: visible;
@@ -386,27 +325,26 @@ header {
                     }
                 }
             }
-            > li.first {
-            }
+
             > li.normal {
                 ul {
-                left: 0px;
+                    left: 0px;
                 }
             }
+
             > li.last {
                 border-right: 0 none;
+
                 ul {
                     right:0px;
                 }
             }
+
             > li.has-kids:hover{
                 background:url(img/bgmenu-more.png);
+
                 > a {
-                cursor: default;
-                }
-            }
-            > li.last:hover{
-                > a {
+                    cursor: default;
                 }
             }
         }
@@ -436,11 +374,13 @@ header {
                 font-size: 1em;
                 .text_shadow(0 0 0.03em black);
                 .box_shadow(inset 0px 0px 2px rgba(0,0,0,0.75));
-                .info-acc{
+
+                .info-acc {
                     color: #fecc35;
                     font-weight: bold;
                     display: inline-block;
                 }
+
                 .info-more {
                     background: url(img/small-arrow-down.png) no-repeat center 6px;
                     margin-left:6px;
@@ -461,26 +401,30 @@ header {
                 width:100%;
                 padding: 2px 0px;
                 z-index: 11;
-                    li {
+
+                li {
+                    display: block;
+                    text-align: left;
+                    white-space: nowrap;
+                    padding: 4px 10px;
+
+                    a {
                         display: block;
-                        text-align: left;
-                        white-space: nowrap;
-                        padding: 4px 10px;
+                        color: @sub_menu_text;
+                        font-size: 0.9em;
+                    }
+
+                    &:hover{
+                        background-color:@sub_menu_bg_o;
+
                         a {
-                            display: block;
-                            color: @sub_menu_text;
-                            font-size: 0.9em;
-                        }
-                        &:hover{
-                            background-color:@sub_menu_bg_o;
-                            a {
-                                text-decoration: none;
-                                color:@sub_menu_text_o;
-                                .text_shadow();
-                            }
+                            text-decoration: none;
+                            color:@sub_menu_text_o;
+                            .text_shadow();
                         }
                     }
                 }
+            }
 
             &:hover {
                 ul {
@@ -502,6 +446,7 @@ header {
                 > a {
                     font-size: 1em;
                 }
+
                 ul li a {
                     font-size: 1em;
                     min-width: 180px;
@@ -546,6 +491,7 @@ header {
                     border-top: solid 1px #555;
                     box-shadow: 1px 0 0px #333333, -1px 0 0px #555 inset;
                 }
+
                 > li.first {
                     border-top: solid 1px #000;
                 }
@@ -668,8 +614,9 @@ footer {
             display: inline;
             float: left;
         }
+
         .lbl-field {
-            .text_shadow(0 0 0.023em black);
+            .text_shadow(0 0 0.023em @black);
             .column(3);
             text-align: right;
             padding: 4px 0 0;
@@ -704,8 +651,7 @@ footer {
                 height: 20px;
             }
 
-            input.userprofile
-            {
+            input.userprofile {
                 width: 165px !important;
                 height: 20px;
             }
@@ -955,6 +901,7 @@ footer {
     input[type=submit] {
         min-width: 0 !important;
     }
+
     .edit-field input[type=text]{
         line-height:20px;
     }
@@ -1079,18 +1026,18 @@ footer {
     }
 }
 
-.form.w120 {
+.form.w80 {
     .form-row {
         .lbl-field {
-            width: 120px;
+            width: 80px;
         }
     }
 }
 
-.form.w140 {
+.form.w120 {
     .form-row {
         .lbl-field {
-            width: 140px;
+            width: 120px;
         }
     }
 }
@@ -1154,51 +1101,7 @@ footer {
         border-width: 1px;
     }
 
-    .btn-user-info {
-        background: url(img/actions/user-info-ico.png) no-repeat center 0;
-        display: block;
-        height: 19px;
-        font-size: 0;
-
-        &:hover {
-            background-position: center -65px;
-        }
-    }
-
-    .btn-edit {
-        .btn-user-info;
-        background-image: url(img/actions/edit-icon.png);
-
-        &:hover {
-            background-position: center -64px;
-        }
-    }
-
-    .btn-url {
-        .btn-user-info;
-        background-image: url(img/actions/url-ico.png);
-
-        &:hover {
-            background-position: center -63px;
-        }
-    }
-
-    .btn-permission {
-        .btn-user-info;
-        background-image: url(img/actions/permission-ico.png);
-
-        &:hover {
-            background-position: center -72px;
-        }
-    }
-
-    .btn-add-user {
-        .btn-user-info;
-        background-image: url(img/actions/add-user.png);
-    }
-
     .action-wrp {
-
         .btn-action {
             display: block;
             margin: 0 auto;
@@ -1287,60 +1190,27 @@ footer {
 }
 
 /********************************************************/
-/*                          Note                        */
-/********************************************************/
-.report-note {
-    margin-top: 55px;
-    font-size: 11px;
-
-    .note-title {
-        background: url("img/icn-collpase.png") no-repeat scroll left center transparent;
-        margin-left: 1px;
-        padding-left: 28px;
-        font-weight: bold;
-        cursor:pointer;
-    }
-
-    .note-title-expand {
-        background: url("img/icn-expand.png") no-repeat scroll left center transparent;
-    }
-
-    ul {
-        margin-bottom: 0!important;
-    }
-}
-
-ul.filter-note {
-    list-style:none;
-    margin:0px;
-    padding:0px;
-    li {
-        font-weight:bold;
-        ul {
-            margin:0;
-            padding:0px;
-            margin-left:24px;
-            li {
-                font-weight:normal;
-                ul {
-                    margin-left: 24px;
-                }
-            }
-        }
-    }
-}
-
-/********************************************************/
 /*                  Common CSS classes                  */
 /********************************************************/
-select {
-    cursor: pointer;
-}
 
 .loading {
     width:32px;
     height:32px;
     background:url(img/loading.gif) no-repeat scroll 0 0 transparent;
+}
+
+.datetime {
+    .time {
+        font-size: .85em;
+    }
+}
+
+h2 .title {
+    display: block;
+    padding-bottom: 5px;
+    .font_yanone;
+    font-size: 1.4em;
+    color: @text;
 }
 
 .note-info-message {
@@ -1366,13 +1236,6 @@ select {
 
 .bold {
     font-weight: bold;
-}
-
-input.txtdate {
-    background: url("img/icon-calendar.png") no-repeat scroll 96% 50% #FFFFFF;
-    cursor: pointer;
-    padding: 2px;
-    width: 100px;
 }
 
 .color-red {
@@ -1480,7 +1343,7 @@ input.txtdate {
 .normal-table { 
     border-collapse: collapse;
     border-spacing: 0;
-    cursor: default;    
+    cursor: default;
     border: 1px solid #C5C5C5;
     font-size: 0.9em;
         
@@ -1502,14 +1365,11 @@ input.txtdate {
         padding: 2px;
         vertical-align: middle;
         background: #3c5ea5;
-        background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
-        background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
-        color: #fff;
+        color: @white;
     }
 
-    td 
-    {
-        background-color: #FFFFFF;
+    td {
+        background-color: @white;
         border-color: #C5C5C5;
         border-style: solid;
         border-width: 0 1px 1px 0;
@@ -1520,43 +1380,6 @@ input.txtdate {
         padding: 2px;
         vertical-align: middle;
         white-space: normal;
-    }
-}
-
-/********************************************************/
-/*                Show/hide filter bar                  */
-/********************************************************/
-#headline .title .showHideFilter
-{
-    &.expanded 
-    {
-        background: url("img/expand-icon.png") repeat scroll 0 -27px transparent;
-        cursor: pointer;
-        height: 17px;
-
-        width: 18px;
-        margin: -3px 6px;
-        display: inline-block;
-        
-        &:hover
-        {
-            background-position: 0 -1px;
-        }   
-    }
-
-    &.collapsed 
-    {
-        background: url("img/collapse-icon.png") repeat scroll 0 -27px transparent;
-        cursor: pointer;
-        height: 17px;
-        width: 18px;
-        margin: -3px 6px;
-        display: inline-block;
-        
-        &:hover
-        {
-            background-position: 0 -1px;
-        }  
     }
 }
 
@@ -1594,7 +1417,4 @@ input.txtdate {
 
 .green-button {
     .custom_button(@green_button_bg, @green_button_bg_light, @green_button_bg_hover, @green_button_border);
-}
-input::-ms-reveal {
-        display: none;
 }

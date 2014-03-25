@@ -313,7 +313,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to CMS!.
+        ///   Looks up a localized string similar to Welcome to Customer Management!.
         /// </summary>
         public static string WelcomeMessage {
             get {

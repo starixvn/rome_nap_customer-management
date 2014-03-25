@@ -142,7 +142,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CMS.
+        ///   Looks up a localized string similar to Customer Management.
         /// </summary>
         public static string CMS {
             get {

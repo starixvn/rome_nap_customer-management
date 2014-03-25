@@ -202,6 +202,6 @@
     <value>The request has been updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Welcome to CMS!</value>
+    <value>Welcome to Customer Management!</value>
   </data>
 </root>

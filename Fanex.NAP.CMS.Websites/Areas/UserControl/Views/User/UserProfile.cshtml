@@ -17,6 +17,7 @@
 @using (Html.BeginForm())
 {
     <div class="form w80 user-control" id="divProfile">
+        <div id="divErrorSuccessMsg" class="inline-message"></div>
         <div id="divValidationSummary" class="display-none">
             @Html.ValidationSummary()
         </div>
@@ -60,12 +61,13 @@
         var isSuccess = '@success' === 'True';
         var form = $('#divProfile');
         var serverError = $('#divValidationSummary');
+        var msgArea = $('#divErrorSuccessMsg', form);
 
         $(function () {
             if (isSuccess) {
-                CMS.showInfoMessage('@ViewResources.Your_changes_were_saved!');
+                CMS.showInlineInfoMsg('@ViewResources.Your_changes_were_saved!', msgArea);
             } else if (serverError.find('li:first').text() !== '') {
-                CMS.showErrorMessage(serverError.html());
+                CMS.showInlineErrorMsg(serverError.html(), msgArea);
             }
 
             form.find('#btnSubmit').click(function () {

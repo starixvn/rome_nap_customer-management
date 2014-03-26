@@ -130,6 +130,30 @@ var CMS = (function ($) {
             CMS.headlineMsgBox.close();
         },
 
+        // Show inline message in the case of form or popup.
+        showInlineErrorMsg: function (message, $obj) {
+            $obj.html(message);
+            $obj.removeClass('success').addClass('error').slideDown();
+        },
+        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
+            autoHide = autoHide === undefined ? true : autoHide;
+            $obj.html(message);
+            $obj.removeClass('error').addClass('info').slideDown();
+
+            if (autoHide) {
+                setTimeout(function () {
+                    CMS.hideInlineMsg($obj, callbackFunc);
+                }, 3000);
+            } else if (callbackFunc) {
+                callbackFunc();
+            }
+        },
+        hideInlineMsg: function ($obj, callbackFunc) {
+            callbackFunc = callbackFunc || function () { };
+            $obj.removeClass('error').removeClass('info').slideUp(callbackFunc);
+            $obj.html('');
+        },
+
         getIeVersion: function () {
             var version = -1; // Return value assumes failure.
 

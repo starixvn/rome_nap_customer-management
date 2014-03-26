@@ -34,6 +34,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
         divPopup: null
     };
     var popupElements = {
+        divErrorSuccessMsg: null,
         divForm: null,
         hdnRequestId: null,
         hdnCustId: null,
@@ -63,6 +64,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
 
     // Cache popup elements
     var cachePopupElements = function () {
+        popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', mainDOMElements.divPopup);
         popupElements.divForm = $('#divRequestForm', mainDOMElements.divPopup);
         popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
         popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
@@ -384,13 +386,13 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInfoMessage(messages.addRequestSuccessfully, function () {
-                        CMS.closePopup();
+                    CMS.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(CMS.closePopup, 3000);
                     });
                     disableRequestForm();
                     getRequestList();
                 } else {
-                    CMS.showErrorMessage(result.Message);
+                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
                 }
             },
             error: function (xhr) {
@@ -415,13 +417,13 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInfoMessage(messages.updateRequestSuccessfully, function () {
-                        CMS.closePopup();
+                    CMS.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(CMS.closePopup, 3000);
                     });
                     disableRequestForm();
                     getRequestList();
                 } else {
-                    CMS.showErrorMessage(result.Message);
+                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
                 }
             },
             error: function (xhr) {

@@ -1,6 +1,18 @@
 /********************************************************/
 /*                  Msgbox custom style                 */
 /********************************************************/
+.error-icon {
+    padding: 3px 0 3px 30px;
+    background: url(img/icon-error-message.png) no-repeat;
+    color: #db2c2c;
+}
+
+.info-icon {
+    padding: 3px 0 3px 30px;
+    background: url(img/icon-success-message.png) no-repeat;
+    color: @msg_text;
+}
+
 .msgbox {
     &.custom-confirm {
         font-weight: normal;
@@ -74,25 +86,35 @@
             }
         }
 
-        .mix-msg {
-            margin-top: 7px;
+        .error {
+            .error-icon;
+        }
 
+        .info {
+            .info-icon;
+        }
+
+        .mix-msg {
             .info {
                 margin-bottom: 10px;
             }
         }
+    }
+}
 
-        .error {
-            padding: 3px 0 3px 30px;
-            background: url(img/icon-error-message.png) no-repeat;
-            color: #db2c2c;
-        }
+// Custom CSS for inline message.
+.inline-message {
+    display: none;
+    margin: 0 0 15px 20px;
+    font-style: oblique;
+    clear: both;
 
-        .info {
-            padding: 3px 0 3px 30px;
-            background: url(img/icon-success-message.png) no-repeat;
-            color: @msg_text;
-        }
+    &.error {
+        .error-icon;
+    }
+
+    &.info {
+        .info-icon;
     }
 }
 

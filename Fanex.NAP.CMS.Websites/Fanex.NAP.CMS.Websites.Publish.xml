@@ -3,25 +3,23 @@
   <publishProfile publishUrl="D:\Apollo-Deploy\NAP Customer Management" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="Scripts/Libs/jQuery/jquery-1.8.2.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/numeral.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/ru-ru/MsieJavaScriptEngine.resources.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/Fanex.NAP.CMS.Websites.dll" publishTime="03/25/2014 17:05:27" />
+    <file relUrl="bin/Fanex.NAP.CMS.Websites.dll" publishTime="03/26/2014 09:46:03" />
     <file relUrl="Areas/UserLogin/Views/Web.config" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="bin/System.Web.WebPages.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/Fanex.NAP.CMS.Controllers.pdb" publishTime="03/25/2014 17:05:27" />
+    <file relUrl="bin/Antlr3.Runtime.dll" publishTime="03/26/2014 09:30:19" />
+    <file relUrl="bin/System.Web.Providers.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Areas/UserLogin/themes/img/lock.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/msgbox/images/question.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/img/username.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Views/ConfigureCustomerAccess/RequestForm.cshtml" publishTime="03/25/2014 17:05:20" />
-    <file relUrl="bin/ru-ru/BundleTransformer.Core.resources.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.svg" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Web.config" publishTime="03/25/2014 17:37:12" />
-    <file relUrl="bin/Fanex.NAP.CMS.Services.pdb" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="Views/ConfigureCustomerAccess/RequestForm.cshtml" publishTime="03/26/2014 10:38:40" />
+    <file relUrl="Content/Themes/img/actions/dd/user-info-ico.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/ru-ru/BundleTransformer.Core.resources.dll" publishTime="03/26/2014 09:30:19" />
+    <file relUrl="Scripts/Extensions/nativeObjectExtensions.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Web.config" publishTime="03/26/2014 10:44:16" />
+    <file relUrl="bin/Fanex.NAP.CMS.Services.pdb" publishTime="03/26/2014 09:46:02" />
     <file relUrl="Content/Themes/img/chosen-sprite.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.eot" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/sorting_asc.gif" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/fonts/Abel.woff" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Areas/UserLogin/Views/Common/Offline.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Tipsy/tipsy.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Sunplus.Libraries.APILogger.dll" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/grid.less" publishTime="03/25/2014 14:49:33" />
@@ -29,10 +27,12 @@
     <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Views/Error/AccessDenied.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/textures/scratches.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/JavaScriptEngineSwitcher.Msie.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/JavaScriptEngineSwitcher.Msie.dll" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Content/Themes/img/tree-view.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Views/Web.config" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.ttf" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserLogin/themes/img/warn.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/back-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/Fanex.Grid.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Web.AppSettings.config" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/tick-ico-16.png" publishTime="03/25/2014 14:49:33" />
@@ -43,115 +43,111 @@
     <file relUrl="Content/Sites/openCloseMember.less" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/img/auth-bg.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Razor.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Views/Home/Index.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/actions/dd/chgpwd-ico.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Net.Http.Formatting.xml" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/ru-ru/JavaScriptEngineSwitcher.Core.resources.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/System.Web.WebPages.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/ru-ru/JavaScriptEngineSwitcher.Core.resources.dll" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Areas/UserLogin/themes/img/bg.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Newtonsoft.Json.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/JavaScriptEngineSwitcher.Core.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/JavaScriptEngineSwitcher.Core.dll" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Content/Themes/img/information-icon2.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Views/Shared/Error.cshtml" publishTime="03/25/2014 15:06:00" />
     <file relUrl="Content/Themes/img/collapse-icon.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/jquery/images/ui-bg_highlight-soft_90_999999_1x100.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Sites/ConfigureCustomerAccess.js" publishTime="03/26/2014 10:41:47" />
     <file relUrl="Content/Themes/img/actions/dd/site-ico.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Extensions/jquery.combobox-ext.less" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Models.pdb" publishTime="03/26/2014 09:46:01" />
     <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.woff" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Core.dll" publishTime="03/25/2014 17:05:26" />
     <file relUrl="Scripts/Sites/OpenCloseMember.js" publishTime="03/25/2014 17:36:00" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/sorting_bg.gif" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserLogin/themes/img/password.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Areas/UserLogin/themes/img/pattern6.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/email.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Fanex.Data.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/expand-small.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Core.pdb" publishTime="03/26/2014 09:46:02" />
+    <file relUrl="Content/Themes/jquery/images/ui-icons_4264ac_256x240.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-icons_c6cddc_256x240.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/CMS.js" publishTime="03/25/2014 17:32:46" />
-    <file relUrl="Scripts/Layout.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/CMS.js" publishTime="03/26/2014 10:33:14" />
+    <file relUrl="bin/Fanex.NAP.Core.dll" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_gloss-wave_45_e14f1c_500x100.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Controllers.dll" publishTime="03/25/2014 17:05:27" />
-    <file relUrl="bin/System.Web.Providers.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/white-top-bottom.gif" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Views/_ViewStart.cshtml" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/ru-ru/MsieJavaScriptEngine.resources.dll" publishTime="03/26/2014 09:44:39" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/refresh_icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Areas/UserControl/Views/User/UserProfile.cshtml" publishTime="03/25/2014 17:05:05" />
     <file relUrl="bin/System.Net.Http.Formatting.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Areas/UserControl/Views/Web.config" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/img/bg_footer.jpg" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="App_Data/NAPMiscellanySPNames.xml" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/jQuery/jquery.validate.unobtrusive.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.WebPages.xml" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/Fanex.NAP.CMS.Models.pdb" publishTime="03/25/2014 17:05:25" />
-    <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/fonts/YanoneKaffeesatz.woff" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/img/bg_header.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Criteria.pdb" publishTime="03/25/2014 17:05:25" />
-    <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Content/Themes/jquery/images/ui-icons_4264ac_256x240.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/common.less" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Criteria.pdb" publishTime="03/26/2014 09:46:01" />
+    <file relUrl="Content/Themes/img/icn-collpase.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Layout.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/sort-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/icon-success-message.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Views/Error/NotFound.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/select-site.less" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/DatePicker/jquery.nexDatePicker.css" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Extensions/jquery.combobox-ext.less" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/ajax-loader.gif" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/actions/dd/action-ico.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/ru-ru/BundleTransformer.Less.resources.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="Content/Themes/img/actions/site-ico.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/ru-ru/BundleTransformer.Less.resources.dll" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Scripts/Extensions/jquery.extensions.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/jquery/images/ui-bg_flat_60_4264ac_40x100.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Extensions/nativeObjectExtensions.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/jQuery/jquery.mask.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/html5-libs/modernizr-2.6.2.min.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/custom.less" publishTime="03/25/2014 16:24:42" />
+    <file relUrl="Content/Themes/custom.less" publishTime="03/26/2014 10:30:58" />
     <file relUrl="Views/CloseOpenMember/Index.cshtml" publishTime="03/25/2014 15:07:33" />
     <file relUrl="Global.asax" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/sort-icon.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Repositories.dll" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="bin/Fanex.NAP.CMS.Repositories.dll" publishTime="03/26/2014 09:46:02" />
     <file relUrl="bin/IBCFile.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/img/actions/chgpwd-ico.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/log4net.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Data.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/img/bgmenu-more.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/expand-icon.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.ViewModels.dll" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="bin/Fanex.NAP.CMS.ViewModels.dll" publishTime="03/26/2014 09:46:02" />
     <file relUrl="bin/CasinoLibrary.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Areas/UserLogin/themes/img/firefox_original.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="packages.config" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Content/Themes/img/logo.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/img/title-bg.jpg" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/fonts/OpenSans.woff" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="packages.config" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/System.Web.Mvc.xml" publishTime="03/25/2014 11:24:28" />
     <file relUrl="bin/Sunplus.Libraries.AOP.dll" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/bgtitle.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/grid-view.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/bg_gloss_wave.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Web.ConnectionString.config" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/System.Web.Optimization.xml" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/System.Web.Optimization.xml" publishTime="03/26/2014 09:30:19" />
     <file relUrl="Content/Extensions/jquery.extensions.less" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-icons_cbd4e6_256x240.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_glass_55_f8da4e_1x400.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/icon-question.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Views/Error/Index.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_glass_45_f4f3f1_1x400.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/icn_del.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/UMControllerLibrary.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="bin/System.Web.Optimization.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/System.Web.Optimization.dll" publishTime="03/26/2014 09:30:19" />
     <file relUrl="Scripts/Libs/jQuery/jquery.validate-1.10.0.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/sort-icon-new3.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/System.Web.Mvc.xml" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Content/Themes/img/actions/user-info-ico.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/BundleTransformer.Less.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="bin/BundleTransformer.Less.dll" publishTime="03/26/2014 09:44:38" />
     <file relUrl="Scripts/Libs/Fanex.Grid/Fanex.Pagination.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/Views/UserSite/Site.cshtml" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Views/_ViewStart.cshtml" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Services.dll" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="bin/Fanex.NAP.CMS.Services.dll" publishTime="03/26/2014 09:46:02" />
     <file relUrl="Content/Themes/img/actions/dd/edit-ico.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/1350530947_page_excel.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/style.less" publishTime="03/25/2014 17:30:09" />
-    <file relUrl="bin/Fanex.NAP.CMS.Websites.pdb" publishTime="03/25/2014 17:05:27" />
-    <file relUrl="bin/Fanex.NAP.CMS.Models.dll" publishTime="03/25/2014 17:05:25" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/expand-small.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Websites.pdb" publishTime="03/26/2014 09:46:03" />
+    <file relUrl="bin/Fanex.NAP.CMS.Models.dll" publishTime="03/26/2014 09:46:01" />
     <file relUrl="Content/Extensions/images/x-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/report_check.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.Common.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="Scripts/Libs/html5-libs/head.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/DatePicker/images/icon-calendar.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Logging.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/jquery/images/ui-icons_d0d9ec_256x240.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/SPSRemoting.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/icon_page.gif" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/NetUtility.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Areas/UserLogin/scripts/lib/jquery-1.8.0.min.js" publishTime="03/25/2014 14:49:33" />
@@ -160,9 +156,9 @@
     <file relUrl="Scripts/Libs/Fanex.Grid/images/send-mail.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/reset.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/IBCCrypt.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="Scripts/Libs/jQuery/jquery-migrate-1.2.1.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Razor.xml" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Content/Themes/img/small-arrow-down.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/img/actions/add-user.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Controllers.dll" publishTime="03/26/2014 09:46:03" />
     <file relUrl="Content/Themes/img/bgmenu-hover.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/html5-libs/html5shiv.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/others/Namespace.js" publishTime="03/25/2014 14:49:33" />
@@ -174,8 +170,9 @@
     <file relUrl="Scripts/Libs/jQuery/jquery.cookie.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/msgbox/images/alert.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/textures/fabric.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserLogin/scripts/ReCheckIn.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-icons_f7a50d_256x240.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/img/actions/dd/user-info-ico.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/img/bg_footer.jpg" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/go-hover-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/textures/grid.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/sprites.png" publishTime="03/25/2014 14:49:33" />
@@ -186,91 +183,94 @@
     <file relUrl="Scripts/Libs/msgbox/images/btn-close.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Views/ConfigureCustomerAccess/Index.cshtml" publishTime="03/25/2014 15:06:50" />
     <file relUrl="Content/Themes/img/bg_header.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Antlr3.Runtime.pdb" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="03/25/2014 15:05:29" />
+    <file relUrl="bin/Antlr3.Runtime.pdb" publishTime="03/26/2014 09:30:19" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="03/26/2014 08:45:52" />
     <file relUrl="Content/Themes/img/cms.ico" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/BundleTransformer.Core.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="Areas/UserLogin/themes/img/password.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/WebGrease.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/BundleTransformer.Core.dll" publishTime="03/26/2014 09:30:19" />
+    <file relUrl="bin/Fanex.NAP.Framework.dll" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/WebGrease.dll" publishTime="03/26/2014 09:30:19" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/icn_edit.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="bin/Microsoft.Practices.Unity.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="bin/Fanex.NAP.CMS.Criteria.dll" publishTime="03/25/2014 17:05:25" />
+    <file relUrl="bin/Fanex.NAP.CMS.Criteria.dll" publishTime="03/26/2014 09:46:01" />
     <file relUrl="Scripts/Libs/msgbox/images/confirm.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/Views/Login/Index.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Http.WebHost.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Areas/UserLogin/themes/img/down.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/sort-icon-new1.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/DatePicker/jquery.nexDatePicker.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.ViewModels.pdb" publishTime="03/26/2014 09:46:02" />
     <file relUrl="Scripts/Libs/Tipsy/jquery.tipsy.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/check-box.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/System.Net.Http.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="Scripts/Extensions/jquery.combobox-ext.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Validator.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/seperation.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Fanex.Caching.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/img/icn-expand.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserLogin/themes/img/logo.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/collapse-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/Views/Shared/_Layout.cshtml" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Repositories.pdb" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="bin/Fanex.NAP.CMS.Repositories.pdb" publishTime="03/26/2014 09:46:02" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/seperations.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Common.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/jquery/images/ui-icons_fcd113_256x240.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/colors.less" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/excel-icon.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/jQuery/jquery.validate.unobtrusive.min.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Sites/ConfigureCustomerAccess.js" publishTime="03/25/2014 17:35:39" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/sorting_desc.gif" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/SPSRemoting.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="Content/Themes/img/small-arrow-down.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/icon-error-message.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/expand-icon.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/Microsoft.Practices.Unity.Interception.dll" publishTime="03/25/2014 11:24:27" />
-    <file relUrl="bin/Fanex.Logging.dll" publishTime="03/25/2014 11:24:27" />
+    <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.svg" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Mvc.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/icn_add.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/setting.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="App_Data/NAPCommonSpNames.xml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Areas/UserLogin/themes/fonts/YanoneKaffeesatz.otf" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/fonts.less" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/System.Web.Http.WebHost.xml" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/Fanex.Logging.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_inset-hard_100_fcfdfd_1x100.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Http.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Areas/UserLogin/scripts/ReCheckIn.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Microsoft.Practices.EnterpriseLibrary.Logging.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Views/Shared/_Menu.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.Http.xml" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="bin/Fanex.NAP.CMS.ViewModels.pdb" publishTime="03/25/2014 17:05:26" />
-    <file relUrl="Areas/UserControl/Views/User/ChangePassword.cshtml" publishTime="03/25/2014 17:04:57" />
-    <file relUrl="Content/Themes/img/actions/site-ico.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/img/actions/add-user.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserControl/Views/User/ChangePassword.cshtml" publishTime="03/26/2014 10:35:15" />
+    <file relUrl="Areas/UserControl/Views/Web.config" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/msgbox/images/info.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/jQuery/jquery.mask.min.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/html5-libs/head.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/white-top-bottom.gif" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/actions/edit-ico.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_flat_90_aaaaaa_40x100.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/System.Net.Http.WebRequest.dll" publishTime="03/25/2014 11:24:28" />
-    <file relUrl="Views/Error/Index.cshtml" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Controllers.pdb" publishTime="03/26/2014 09:46:03" />
+    <file relUrl="bin/Fanex.Common.dll" publishTime="03/25/2014 11:24:27" />
     <file relUrl="Scripts/Libs/Fanex.Grid/images/collapse-small.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/moment.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/fonts/YanoneKaffeesatz.woff" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/MsieJavaScriptEngine.dll" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="bin/MsieJavaScriptEngine.dll" publishTime="03/26/2014 09:44:39" />
     <file relUrl="Scripts/Libs/msgbox/images/error.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/msgbox/msgbox-0.0.1.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/ILogger.dll" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.CMS.Core.pdb" publishTime="03/25/2014 17:05:26" />
+    <file relUrl="Content/Themes/jquery/images/ui-bg_flat_60_4264ac_40x100.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_flat_90_466bb9_40x100.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/back-icon.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="bin/Fanex.NAP.Core.dll" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/System.Web.Http.WebHost.xml" publishTime="03/25/2014 11:24:28" />
+    <file relUrl="Content/Themes/style.less" publishTime="03/25/2014 17:30:09" />
+    <file relUrl="Scripts/Libs/DatePicker/jquery.nexDatePicker.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/btn-close.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Areas/UserLogin/themes/img/logo.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Extensions/jquery.combobox-ext.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/Fanex.Grid/images/icn_del.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserControl/Views/User/UserProfile.cshtml" publishTime="03/26/2014 10:37:01" />
+    <file relUrl="App_Data/NAPMiscellanySPNames.xml" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Areas/UserLogin/Views/Common/Offline.cshtml" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/actions/url-ico.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/jquery/images/ui-bg_flat_75_5476bb_40x100.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Scripts/Libs/Fanex.Grid/Fanex.Pagination.css" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Themes/img/actions/dd/permission-ico.png" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/img/icn-collpase.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/Fanex.NAP.CMS.Core.dll" publishTime="03/26/2014 09:46:02" />
     <file relUrl="Scripts/Libs/Fanex.Grid/Fanex.Grid.js" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Scripts/Libs/jQuery/jquery-migrate-1.2.1.js" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/jquery/images/ui-bg_highlight-soft_90_999999_1x100.png" publishTime="03/25/2014 14:49:33" />
     <file relUrl="Content/Sites/configureCustomerAccess.less" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Areas/UserLogin/themes/img/warn.png" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="bin/System.Net.Http.dll" publishTime="03/25/2014 11:24:28" />
     <file relUrl="Areas/UserLogin/Views/SSO/SSOIndex.cshtml" publishTime="03/25/2014 14:49:33" />
-    <file relUrl="Content/Themes/common.less" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Scripts/Libs/Fanex.Grid/images/sorting_desc.gif" publishTime="03/25/2014 14:49:33" />
+    <file relUrl="Content/Themes/fonts.less" publishTime="03/25/2014 14:49:33" />
     <file relUrl="bin/System.Web.WebPages.Deployment.xml" publishTime="03/25/2014 11:24:28" />
   </publishProfile>
 </publishData>

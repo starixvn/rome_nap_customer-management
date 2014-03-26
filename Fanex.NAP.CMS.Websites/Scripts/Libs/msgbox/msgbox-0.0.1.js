@@ -139,7 +139,8 @@
             this.checkDomExistence();
             var _this = this,
                 $this = _this.target,
-                opts = $.extend({}, _this.options, options);
+                opts = $.extend({}, _this.options, options),
+                customCss = opts.css || '';
 
             msg = msg ? msg : opts.message;
 
@@ -148,7 +149,7 @@
 
                 // show overlay and message
                 _this.overlay.visible(opts.modal);
-                $this.attr('class', str_msgbox + ' ' + opts.type).html('<div class="msgbox-content">' + msg + '</div>').show();
+                $this.attr('class', str_msgbox + ' ' + customCss + ' ' + opts.type).html('<div class="msgbox-content">' + msg + '</div>').show();
                 if (!opts.closeBtn) $this.children('.msgbox-content').css({ 'padding-right': (opts.theme == 'chrome' ? 20 : 0) });
 
                 // show close button
@@ -177,6 +178,10 @@
 
         showErr: function (msg, options) {
             this.show(msg, $.extend(options, { type: 'err' }));
+        },
+
+        showMsgBox: function (msg, options) {
+            this.show(msg, $.extend(options, { type: 'msg' }));
         },
 
         close: function (clearMsg) {

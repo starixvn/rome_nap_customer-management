@@ -15,6 +15,9 @@ var CMS = (function ($) {
         notFoundError: null,
         internalError: null,
 
+        isAccountingLogin: null,
+        popupTopMargin: null, // Used for re-position popups when re-direct from accounting site.
+
         msieVersion: null,
         agentIsOldIe: null,
         agentIsApple: null,
@@ -36,6 +39,9 @@ var CMS = (function ($) {
             CMS.notFoundError = $('#NotFoundError').val();
             CMS.internalError = $('#InternalError').val();
 
+            CMS.isAccountingLogin = $('#IsAccountingLogin').val() === 'True';
+            CMS.popupTopMargin = CMS.isAccountingLogin ? 40 : 0;
+
             CMS.msieVersion = CMS.getIeVersion();
             CMS.agentIsOldIe = CMS.msieVersion !== -1 && CMS.msieVersion < 9.0;
             CMS.agentIsApple = CMS.agentIs('apple') != null;
@@ -53,31 +59,18 @@ var CMS = (function ($) {
                 zIndex: 9999,
                 useAnimation: false
             });
+
+            // Close error/success message popup when the popup is closed.
+            CMS.dialogPopup.on('dialogclose', function () {
+                CMS.closeMsgBox();
+            });
         },
         resolveRootUrl: function (relativeUrl) {
             return CMS.CMSRoot + relativeUrl;
         },
+
         // Handles common error when making ajax request
         handleAjaxError: function (xhr) {
-            if (xhr.status === 403) {
-                CMS.headlineMsgBox.showErr(CMS.accessDeniedError, { sticky: true });
-            } else if (xhr.status === 404) {
-                CMS.headlineMsgBox.showErr(CMS.notFoundError, { sticky: true });
-            } else {
-                CMS.headlineMsgBox.showErr(CMS.internalError, { sticky: true });
-            }
-        },
-        showInfoMessage: function (message) {
-            CMS.headlineMsgBox.showInfo(message, { duration: 3000 });
-        },
-        showErrorMessage: function (message) {
-            CMS.headlineMsgBox.showErr(message, { duration: 3000 });
-        },
-        showWarningMessage: function (message) {
-            CMS.headlineMsgBox.showWarn(message, { duration: 3000 });
-        },
-        showInlineAjaxErrorMsg: function (xhr, $obj) {
-            var $msgDiv = $obj || CMS.errorSuccessMsg;
             var message = CMS.internalError;
 
             if (xhr.status === 403) {
@@ -86,37 +79,57 @@ var CMS = (function ($) {
                 message = CMS.notFoundError;
             }
 
-            $msgDiv.html(message);
-            $msgDiv.removeClass('success').addClass('error').slideDown();
+            CMS.showErrorMessage(message);
         },
-        showInlineErrorMsg: function (message, $obj) {
-            var $msgDiv = $obj || CMS.errorSuccessMsg;
+        showErrorMessage: function (message) {
+            var msgWrapper = '<div id="divError" class="error">' + message + '</div>';
+            var options = {
+                sticky: true,
+                position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
+                css: 'custom-msgbox'
+            };
 
-            $msgDiv.html(message);
-            $msgDiv.removeClass('success').addClass('error').slideDown();
+            CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
         },
-        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
-            var $msgDiv = $obj || CMS.errorSuccessMsg;
+        showInfoMessage: function (message, callbackFunc) {
+            var msgWrapper = '<div id="divError" class="info">' + message + '</div>';
+            var options = {
+                position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
+                css: 'custom-msgbox',
+                duration: 3000
+            };
 
-            autoHide = autoHide === undefined ? true : autoHide;
-            $msgDiv.html(message);
-            $msgDiv.removeClass('error').addClass('success').slideDown();
-
-            if (autoHide) {
-                setTimeout(function () {
-                    CMS.hideInlineMsg($msgDiv, callbackFunc);
-                }, 3000);
-            } else if (callbackFunc) {
-                callbackFunc();
-            }
+            CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
+            setTimeout(callbackFunc, 3000);
         },
-        hideInlineMsg: function ($obj, callbackFunc) {
-            var $msgDiv = $obj || CMS.errorSuccessMsg;
+        showMixMessage: function (infoMsg, errorMsg) {
+            var msgWrapper = '<div class="mix-msg"><div id="divInfo" class="info">' + infoMsg + '</div>' +
+                             '<div id="divError" class="error">' + errorMsg + '</div></div>';
+            var options = {
+                sticky: true,
+                position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
+                css: 'custom-msgbox'
+            };
 
-            callbackFunc = callbackFunc || function () { };
-            $msgDiv.removeClass('error').removeClass('success').slideUp(callbackFunc);
-            $msgDiv.html('');
+            CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
+            setTimeout(function () {
+                CMS.headlineMsgBox.target.find('#divInfo').slideUp();
+            }, 3000);
         },
+        showConfirmMessage: function (message, callbackFunc) {
+            var options = {
+                modal: true,
+                closeBtn: false,
+                header: true,
+                css: 'custom-confirm'
+            };
+
+            CMS.headlineMsgBox.confirm(message, callbackFunc, options);
+        },
+        closeMsgBox: function () {
+            CMS.headlineMsgBox.close();
+        },
+
         getIeVersion: function () {
             var version = -1; // Return value assumes failure.
 
@@ -156,11 +169,12 @@ var CMS = (function ($) {
                     return null;
             }
         },
+
         modal: function (title, html, option) {
             CMS.dialogPopup.html(html).dialog({
                 width: 'auto',
                 modal: true,
-                position: ['center', 160],
+                position: ['center', 160 - CMS.popupTopMargin], //['center', 160],
                 title: title
             });
 
@@ -172,7 +186,7 @@ var CMS = (function ($) {
             CMS.dialogPopup.html(html).dialog({
                 width: 'auto',
                 modal: false,
-                position: ['center', 160],
+                position: ['center', 160 - CMS.popupTopMargin], //['center', 160],
                 title: title
             });
 

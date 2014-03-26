@@ -16,31 +16,28 @@
         </div>
     </div>
 }
-@section FilterForm
-{
-    <div class="filter-bar">
-        <div class="filter-form">
-            <div class="filter-row">
-                <div class="lbl-field col_3 align-right">
-                    <label for="txtSearchUserName">@ViewLang.Username</label>
-                </div>
-                <div class="edit-field col_5 align-left">
-                    <input type="text" id="txtSearchUserName" />
-                </div>
-                <div class="submit width-auto col_4">
-                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
-                </div>
-                @if (hasEditAccessRight)
-                {
-                    <div class="submit width-auto col_4">
-                        <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
-                    </div>
-                }
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtSearchUserName">@ViewLang.Username</label>
             </div>
-            <div class="filter-row"></div>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtSearchUserName" />
+            </div>
+            <div class="submit width-auto col_4">
+                <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+            @if (hasEditAccessRight)
+            {
+                <div class="submit width-auto col_4">
+                    <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
+                </div>
+            }
         </div>
+        <div class="filter-row"></div>
     </div>
-}
+</div>
 <div class="display-none content-grid">
     <div id="divMemberList" class="freegrid"></div>
 </div>

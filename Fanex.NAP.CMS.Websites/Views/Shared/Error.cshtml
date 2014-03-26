@@ -1,16 +1,9 @@
-﻿@{
-    Layout = null;
+﻿@using Fanex.NAP.CMS.Core.Resources
+@{
+    ViewBag.Title = Messages.InternalError;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
-</head>
-<body>
-    <h2>
-        Sorry, an error occurred while processing your request.
-    </h2>
-</body>
-</html>
+@section Headline {
+    <div class="title"><div>@Messages.InternalError</div></div>
+}
+<span class="margin-left">@Messages.InternalErrorMessage</span>

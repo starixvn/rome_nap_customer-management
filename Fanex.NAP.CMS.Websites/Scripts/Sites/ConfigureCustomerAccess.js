@@ -34,7 +34,6 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
         divPopup: null
     };
     var popupElements = {
-        divErrorSuccessMsg: null,
         divForm: null,
         hdnRequestId: null,
         hdnCustId: null,
@@ -64,7 +63,6 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
 
     // Cache popup elements
     var cachePopupElements = function () {
-        popupElements.divErrorSuccessMsg = $('#divPopupErrSucMsg', mainDOMElements.divPopup);
         popupElements.divForm = $('#divRequestForm', mainDOMElements.divPopup);
         popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
         popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
@@ -386,17 +384,17 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
-                        setTimeout(CMS.closePopup, 3000);
+                    CMS.showInfoMessage(messages.addRequestSuccessfully, function () {
+                        CMS.closePopup();
                     });
                     disableRequestForm();
                     getRequestList();
                 } else {
-                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                    CMS.showErrorMessage(result.Message);
                 }
             },
             error: function (xhr) {
-                CMS.showInlineAjaxErrorMsg(xhr, popupElements.divErrorSuccessMsg);
+                CMS.handleAjaxError(xhr);
             },
             complete: function () {
                 CMS.enableInput();
@@ -417,17 +415,17 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
-                        setTimeout(CMS.closePopup, 3000);
+                    CMS.showInfoMessage(messages.updateRequestSuccessfully, function () {
+                        CMS.closePopup();
                     });
                     disableRequestForm();
                     getRequestList();
                 } else {
-                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                    CMS.showErrorMessage(result.Message);
                 }
             },
             error: function (xhr) {
-                CMS.showInlineAjaxErrorMsg(xhr, popupElements.divErrorSuccessMsg);
+                CMS.handleAjaxError(xhr);
             },
             complete: function () {
                 CMS.enableInput();
@@ -437,7 +435,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
 
     // Delete request.
     var deleteRequest = function (requestId) {
-        CMS.headlineMsgBox.confirm(messages.deleteRequestConfirm.format(requestId), function () {
+        CMS.showConfirmMessage(messages.deleteRequestConfirm.format(requestId), function () {
             var parameters = {
                 RequestId: requestId
             };
@@ -452,17 +450,17 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
                     CMS.disableInput();
                 },
                 success: function () {
-                    CMS.showInlineInfoMsg(messages.deleteRequestSuccessfully);
+                    CMS.showInfoMessage(messages.deleteRequestSuccessfully);
                     getRequestList();
                 },
                 error: function (xhr) {
-                    CMS.showInlineAjaxErrorMsg(xhr);
+                    CMS.handleAjaxError(xhr);
                 },
                 complete: function () {
                     CMS.enableInput();
                 }
             });
-        }, { modal: true, closeBtn: false, header: true });
+        });
     };
 
     $this.InitPage = function () {

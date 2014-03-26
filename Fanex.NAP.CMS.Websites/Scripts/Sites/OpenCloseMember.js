@@ -23,7 +23,6 @@ Fanex.CMS.CloseOpenMember = function () {
         PageSize: null
     };
     var domElements = {
-        divSecondErrSucMsg: null,
         txtUsername: null,
         ddlStatus: null,
         btnSearch: null,
@@ -42,7 +41,6 @@ Fanex.CMS.CloseOpenMember = function () {
 
     // Cache DOM elements
     var cacheDOM = function () {
-        domElements.divSecondErrSucMsg = $('#divSecondErrSucMsg');
         domElements.txtUsername = $('#txtUsername');
         domElements.ddlStatus = $('#ddlStatus');
         domElements.btnSearch = $('#btnSearch');
@@ -99,9 +97,9 @@ Fanex.CMS.CloseOpenMember = function () {
                     UpdateType: updateType.open
                 };
 
-                CMS.headlineMsgBox.confirm(messages.openMemberConfirmationMsg.format(selectedMembers.length), function () {
+                CMS.showConfirmMessage(messages.openMemberConfirmationMsg.format(selectedMembers.length), function () {
                     updateMemberStatus(updatingParameters);
-                }, { modal: true, closeBtn: false, header: true });
+                });
             }
         });
 
@@ -114,9 +112,9 @@ Fanex.CMS.CloseOpenMember = function () {
                     UpdateType: updateType.close
                 };
 
-                CMS.headlineMsgBox.confirm(messages.closeMemberConfirmationMsg.format(selectedMembers.length), function () {
+                CMS.showConfirmMessage(messages.closeMemberConfirmationMsg.format(selectedMembers.length), function () {
                     updateMemberStatus(updatingParameters);
-                }, { modal: true, closeBtn: false, header: true });
+                });
             }
         });
 
@@ -351,7 +349,7 @@ Fanex.CMS.CloseOpenMember = function () {
 
     // Get member list.
     var getMemberList = function () {
-        hideErrorMsg();
+        CMS.closeMsgBox();
         CMS.disableInput();
         $.ajax({
             type: 'POST',
@@ -367,7 +365,7 @@ Fanex.CMS.CloseOpenMember = function () {
                 }
             },
             error: function (xhr) {
-                CMS.showInlineAjaxErrorMsg(xhr);
+                CMS.handleAjaxError(xhr);
             },
             complete: function () {
                 CMS.enableInput();
@@ -382,7 +380,7 @@ Fanex.CMS.CloseOpenMember = function () {
         updatingParameters.PageSize = parameters.PageSize;
         updatingParameters.PageIndex = parameters.PageIndex;
 
-        hideErrorMsg();
+        CMS.closeMsgBox();
         CMS.disableInput();
         $.ajax({
             type: 'POST',
@@ -392,32 +390,26 @@ Fanex.CMS.CloseOpenMember = function () {
             data: JSON.stringify(updatingParameters),
             success: function (result) {
                 if (result.ErrorCode > 0) {
-                    CMS.showInlineErrorMsg(result.ErrorMsg);
+                    CMS.showErrorMessage(result.ErrorMsg);
                 } else if (result.NumberOfUpdatedItems === result.TotalItems) {
-                    CMS.showInlineInfoMsg(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
+                    CMS.showInfoMessage(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
                 } else if (result.NumberOfFailedItems === result.TotalItems) {
-                    CMS.showInlineErrorMsg(messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
+                    CMS.showErrorMessage(messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
                 } else {
-                    CMS.showInlineInfoMsg(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
-                    CMS.showInlineErrorMsg(
-                                   messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems),
-                                   domElements.divSecondErrSucMsg);
+                    CMS.showMixMessage(
+                            messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems),
+                            messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
                 }
 
                 renderMemberList(result.MembersStatusResult);
             },
             error: function (xhr) {
-                CMS.showInlineAjaxErrorMsg(xhr);
+                CMS.handleAjaxError(xhr);
             },
             complete: function () {
                 CMS.enableInput();
             }
         });
-    };
-
-    var hideErrorMsg = function () {
-        CMS.hideInlineMsg();
-        CMS.hideInlineMsg(domElements.divSecondErrSucMsg);
     };
 
     $this.InitPage = function () {

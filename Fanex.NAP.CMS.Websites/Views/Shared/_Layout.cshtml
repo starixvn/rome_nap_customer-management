@@ -48,8 +48,6 @@
     </section>
     <section id="body">
         <div class="content">
-            @RenderSection("FilterForm", false)
-            <div id="divErrorSuccessMsg" class="message"></div>
             @RenderBody()
         </div>
     </section>
@@ -58,6 +56,7 @@
     @Html.Hidden("AccessDeniedError", Messages.AccessDenied)
     @Html.Hidden("NotFoundError", Messages.NotFoundMessage)
     @Html.Hidden("InternalError", Messages.InternalError)
+    @Html.Hidden("IsAccountingLogin", isAccountingLogin)
     @Scripts.Render("~/scripts/common")
     @if (ViewBag.ViewFlags != null && ViewBag.ViewFlags.IsReCheckin)
     {

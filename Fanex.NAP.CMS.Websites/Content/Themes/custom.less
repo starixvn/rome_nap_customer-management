@@ -2,7 +2,7 @@
 /*                  Msgbox custom style                 */
 /********************************************************/
 .msgbox {
-    &.confirm {
+    &.custom-confirm {
         font-weight: normal;
         background-color: @body_bg;
         border-color: @border;
@@ -54,6 +54,44 @@
                     .red-button;
                 }
             }
+        }
+    }
+
+    &.custom-msgbox {
+        background-color: @white;
+        border: @border solid 1px;
+        font-style: oblique;
+        font-weight: normal;
+        clear: both;
+
+        .msgbox-close {
+            border: none;
+
+            &:hover {
+                background-color: transparent;
+                background-position: -1px -35px;
+                cursor: pointer;
+            }
+        }
+
+        .mix-msg {
+            margin-top: 7px;
+
+            .info {
+                margin-bottom: 10px;
+            }
+        }
+
+        .error {
+            padding: 3px 0 3px 30px;
+            background: url(img/icon-error-message.png) no-repeat;
+            color: #db2c2c;
+        }
+
+        .info {
+            padding: 3px 0 3px 30px;
+            background: url(img/icon-success-message.png) no-repeat;
+            color: @msg_text;
         }
     }
 }

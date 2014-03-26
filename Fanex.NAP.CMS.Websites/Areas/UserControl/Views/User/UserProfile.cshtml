@@ -17,7 +17,6 @@
 @using (Html.BeginForm())
 {
     <div class="form w80 user-control" id="divProfile">
-        <div id="divErrorSuccessMsg" class="message margin-bottom"></div>
         <div id="divValidationSummary" class="display-none">
             @Html.ValidationSummary()
         </div>
@@ -64,9 +63,9 @@
 
         $(function () {
             if (isSuccess) {
-                CMS.showInlineInfoMsg('@ViewResources.Your_changes_were_saved!', $('#divErrorSuccessMsg', form));
+                CMS.showInfoMessage('@ViewResources.Your_changes_were_saved!');
             } else if (serverError.find('li:first').text() !== '') {
-                CMS.showInlineErrorMsg(serverError.html(), $('#divErrorSuccessMsg', form));
+                CMS.showErrorMessage(serverError.html());
             }
 
             form.find('#btnSubmit').click(function () {

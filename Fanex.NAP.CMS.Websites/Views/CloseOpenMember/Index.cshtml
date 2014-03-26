@@ -14,40 +14,36 @@
         </div>
     </div>
 }
-@section FilterForm
-{
-    <div class="filter-bar">
-        <span id="spnNote" class="note-info-message" title="@Messages.CloseOpenMemberNote"></span>
-        <div class="filter-form">
-            <div class="filter-row">
-                <div class="lbl-field col_9 align-right">
-                    <label for="txtUsername">
-                        <span class="level-label">@string.Format("{0} / {1} / {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
-                        <span>@ViewLang.Username</span>
-                    </label>
-                </div>
-                <div class="edit-field col_7 align-left">
-                    <input type="text" id="txtUsername" class="width-180" data-val-required="@Messages.RequiredFieldError"/>
-                </div>
-                <div class="lbl-field col_5 align-right">
-                    <label for="ddlStatus">@ViewLang.MembersStatus</label>
-                </div>
-                <div class="edit-field col_5 align-left">
-                    <select id="ddlStatus" class="combobox-autocomplete level-combobox">
-                        <option value="-1">@ViewLang.All</option>
-                        <option value="0">@ViewLang.Open</option>
-                        <option value="1">@ViewLang.Closed</option>
-                    </select>
-                </div>
-                <div class="submit width-auto col_3">
-                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
-                </div>
+<div class="filter-bar">
+    <span id="spnNote" class="note-info-message" title="@Messages.CloseOpenMemberNote"></span>
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_9 align-right">
+                <label for="txtUsername">
+                    <span class="level-label">@string.Format("{0} / {1} / {2} ", ViewLang.Super, ViewLang.Master, ViewLang.Agent)</span>
+                    <span>@ViewLang.Username</span>
+                </label>
             </div>
-            <div class="filter-row"></div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtUsername" class="width-180" data-val-required="@Messages.RequiredFieldError"/>
+            </div>
+            <div class="lbl-field col_5 align-right">
+                <label for="ddlStatus">@ViewLang.MembersStatus</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <select id="ddlStatus" class="combobox-autocomplete level-combobox">
+                    <option value="-1">@ViewLang.All</option>
+                    <option value="0">@ViewLang.Open</option>
+                    <option value="1">@ViewLang.Closed</option>
+                </select>
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
         </div>
+        <div class="filter-row"></div>
     </div>
-}
-<div id="divSecondErrSucMsg" class="message margin-top"></div>
+</div>
 <div class="display-none content-grid">
     <div id="divMemberList" class="freegrid"></div>
 </div>

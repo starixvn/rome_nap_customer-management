@@ -1011,18 +1011,14 @@ footer {
         }
     }
 
-    .form-row.summary {
-        min-height: 0;
-    }
-
-    .validation-summary-errors {
-        ul {
-            margin: 0;
-        }
-    }
-
     &.user-control {
         margin: 6px 0 0 10px;
+    }
+}
+
+.validation-summary-errors {
+    ul {
+        margin: 0;
     }
 }
 
@@ -1380,27 +1376,6 @@ h2 .title {
         padding: 2px;
         vertical-align: middle;
         white-space: normal;
-    }
-}
-
-/********************************************************/
-/*            Inline error/ success message             */
-/********************************************************/
-.message {
-    display: none;
-    margin: 0 0 15px 20px;
-    padding: 3px 15px 4px 30px;
-    font-style: oblique;
-    clear: both;
-
-    &.error {
-        background: url(img/icon-error-message.png) no-repeat;
-        color: #db2c2c;
-    }
-
-    &.success {
-        background: url(img/icon-success-message.png) no-repeat;
-        color: @msg_text;
     }
 }
 

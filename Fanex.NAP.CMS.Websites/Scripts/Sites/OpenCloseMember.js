@@ -304,7 +304,6 @@ Fanex.CMS.CloseOpenMember = function () {
         } else if (status === 0) {
             domElements.btnClose.show();
         } else {
-            domElements.btnClose.show();
             domElements.btnOpen.show();
         }
 

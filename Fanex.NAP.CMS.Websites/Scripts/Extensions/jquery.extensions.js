@@ -85,6 +85,8 @@
             };
 
         $this.change(function () {
+            $this.trigger('updatingGroup');
+
             if ($this.is(':checked')) {
                 childCheckboxes.prop('checked', true);
             } else {
@@ -92,6 +94,7 @@
             }
 
             childCheckboxes.trigger('change');
+            $this.trigger('updatedGroup');
         });
 
         $this.on('update', function (event, value) {

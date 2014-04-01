@@ -172,7 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\NAPMiscellanySPNames.xml" />
+    <Content Include="App_Data\NAPCMSSPNames.xml" />
     <Content Include="Areas\UserLogin\scripts\lib\jquery-1.8.0.min.js" />
     <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
     <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.svg" />

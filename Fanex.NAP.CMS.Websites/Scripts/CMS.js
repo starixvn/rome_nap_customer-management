@@ -99,6 +99,7 @@ var CMS = (function ($) {
                 duration: 3000
             };
 
+            callbackFunc = callbackFunc || function () { };
             CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
             setTimeout(callbackFunc, 3000);
         },
@@ -124,6 +125,7 @@ var CMS = (function ($) {
                 css: 'custom-confirm'
             };
 
+            callbackFunc = callbackFunc || function () { };
             CMS.headlineMsgBox.confirm(message, callbackFunc, options);
         },
         closeMsgBox: function () {

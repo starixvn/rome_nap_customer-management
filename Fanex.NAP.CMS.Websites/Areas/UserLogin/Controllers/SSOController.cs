@@ -131,7 +131,6 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="onlineUserId">The online user identifier.</param>
-        /// <param name="loginTime">The login time.</param>
         /// <param name="redirectUrl">The redirect URL.</param>
         /// <returns>The login result page.</returns>
         [HttpGet]

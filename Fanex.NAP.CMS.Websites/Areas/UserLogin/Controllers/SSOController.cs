@@ -136,7 +136,7 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
         /// <returns>The login result page.</returns>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult AccountingLogin(string username, string onlineUserId, string loginTime, string redirectUrl)
+        public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl)
         {
             TimeSpan expiration = new TimeSpan();
             string currentTime = this._userService.UserSSOGetTime();
@@ -145,8 +145,7 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
 
             username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
             onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
-            loginTime = Cryptography.CfsDeCrypt(loginTime.Replace(" ", "+"));
-            expiration = Converter.ToDateTime(currentTime) - Converter.ToDateTime(loginTime);
+            expiration = Converter.ToDateTime(currentTime) - DateTime.Now;
 
             if (expiration.TotalSeconds <= this._timeExipration)
             {

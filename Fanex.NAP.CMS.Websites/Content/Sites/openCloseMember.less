@@ -32,14 +32,15 @@
                 }
             }
 
-            .table-cell.status {
+            .table-cell.chk-column {
                 display: table;
 
                 .checkbox-status {
                     display: table-cell;
                     float: left;
                     text-align: right;
-                    width: 20px;
+                    width: 0;
+                    margin-left: 5px;
 
                     &.status-header {
                         margin-top: 5px;
@@ -52,11 +53,22 @@
                     width: 100px;
                     vertical-align: middle;
                 }
+
+                .agent-column {
+                    padding-left: 5px;
+
+                    label {
+                        margin: 0 5px;
+                    }
+                }
             }
 
-            .lbl-for-chk {
-                margin-left: 5px;
-                vertical-align: middle;
+            .table-cell.member-column {
+                display: table;
+
+                label {
+                    margin: 0 5px;
+                }
             }
         }
     }

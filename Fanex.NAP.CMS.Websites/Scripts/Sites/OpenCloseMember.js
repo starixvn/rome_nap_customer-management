@@ -163,7 +163,10 @@ Fanex.CMS.CloseOpenMember = function () {
         var masterChkId;
         var agentChkId;
 
-        var chkFormat = '<input type="checkbox" id="{0}" data-chk-group="{1}"/><label for="{0}" class="lbl-for-chk">{2}</label>';
+        var chkFormat = '<div class="agent-column">' +
+                            '<input type="checkbox" id="{0}" data-chk-group="{1}"/>' +
+                            '<label for="{0}">{2}</label>' +
+                        '</div>';
         var statusHeaderFormat = '<div class="checkbox-status status-header"><input type="checkbox" id="{0}"/></div>' +
                                  '<label for="{0}" class="lbl-for-chkStatus">{1}</label>';
         var statusFormat = '<div class="checkbox-status">' +
@@ -171,11 +174,12 @@ Fanex.CMS.CloseOpenMember = function () {
                            '</div>' +
                            '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
         var statusCol = statusHeaderFormat.format(statusChkColId, labels.status);
+        var memberFormat = '<label>{0}</label>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left', CssClass: 'status'}],
+                      { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left', CssClass: 'chk-column'}],
             showDistinctRow: false,
             showNumberColumn: true,
             showPager: true,
@@ -203,11 +207,11 @@ Fanex.CMS.CloseOpenMember = function () {
             downlineList = data.DownlineList;
 
             if (downlineList[0].AgentStatusList[0].Username) {
-                gridOptions.columns.splice(1, 0, { HeaderText: labels.agent, Width: 220, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'center' });
+                gridOptions.columns.splice(1, 0, { HeaderText: labels.agent, Width: 220, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'left' });
             }
 
             if (downlineList[0].Username) {
-                gridOptions.columns.splice(1, 0, { HeaderText: labels.master, Width: 220, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'center' });
+                gridOptions.columns.splice(1, 0, { HeaderText: labels.master, Width: 220, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'left' });
             }
 
             $.each(downlineList, function (masterIndex, master) {
@@ -230,8 +234,8 @@ Fanex.CMS.CloseOpenMember = function () {
                         highlightClass = (item.Closed ? 'highlight ' : '') + 'hover-column';
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
-                                      { Name: 'ColMember', Value: item.Username, TdClass: highlightClass },
-                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass, CssClass: 'status'}]
+                                      { Name: 'ColMember', Value: memberFormat.format(item.Username), TdClass: highlightClass, CssClass: 'member-column' },
+                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass, CssClass: 'chk-column'}]
                         };
 
                         bodyData.push(row);
@@ -244,7 +248,8 @@ Fanex.CMS.CloseOpenMember = function () {
                         row.Columns.splice(1, 0, {
                             Name: 'ColAgent',
                             Value: chkFormat.format(agentChkId, masterChkId, agent.Username),
-                            MergeRowNumber: agent.MemberStatusList.length
+                            MergeRowNumber: agent.MemberStatusList.length,
+                            CssClass: 'chk-column'
                         });
                     }
                 });
@@ -255,7 +260,8 @@ Fanex.CMS.CloseOpenMember = function () {
                     row.Columns.splice(1, 0, {
                         Name: 'ColMaster',
                         Value: chkFormat.format(masterChkId, 'chkStatus', master.Username),
-                        MergeRowNumber: masterChildren
+                        MergeRowNumber: masterChildren,
+                        CssClass: 'chk-column'
                     });
                 }
             });

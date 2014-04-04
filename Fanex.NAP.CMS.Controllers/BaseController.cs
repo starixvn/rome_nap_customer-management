@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Service.Impl;
@@ -58,8 +59,8 @@ namespace Fanex.NAP.CMS.Controllers
                 IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
 
-            ViewBag.IsAccountingLogin = this.IsAccountingLogin;
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
+            ViewBag.IsAccountingLogin = SessionManager.Get<bool>("IsAccountingLogin");
 
             this._userService = new UserService { ServiceContext = ServiceContext };
         }
@@ -89,8 +90,6 @@ namespace Fanex.NAP.CMS.Controllers
                 ViewBag.ViewFlags = value;
             }
         }
-
-        protected bool IsAccountingLogin { get; set; }
 
         /// <summary>
         /// Gets the server date.

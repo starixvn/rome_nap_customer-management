@@ -17,6 +17,7 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
     using System.Web.Security;
     using Fanex.Common;
     using Fanex.NAP.CMS.Controllers;
+    using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
@@ -141,6 +142,7 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
             string currentTime = this._userService.UserSSOGetTime();
 
             Session.Clear();
+            SessionManager.Set<bool>("IsAccountingLogin", true);
 
             username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
             onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
@@ -166,7 +168,6 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
                                                                                   true) as IList<MenuItem>;
                 }
 
-                this.IsAccountingLogin = true;
                 this.CreateAuthInfo(user);
 
                 return this.Redirect(redirectUrl);

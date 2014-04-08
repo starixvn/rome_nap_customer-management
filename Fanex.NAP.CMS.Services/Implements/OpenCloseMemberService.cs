@@ -12,6 +12,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using CasinoLibrary.SBAgent;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
@@ -149,6 +150,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 }
             }
 
+            Thread.Sleep(CommonConstants.RepDelayTime); // Delay 3s due to the replication of DB.
             result.MembersStatusResult = GetUpdatedStatusList(failedList, filter);
             result.NumberOfFailedItems = failedList.Count;
             result.TotalItems = filter.MemberStatusList.Count;

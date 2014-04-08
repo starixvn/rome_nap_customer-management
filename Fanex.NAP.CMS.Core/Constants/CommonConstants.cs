@@ -20,5 +20,7 @@ namespace Fanex.NAP.CMS.Core.Constants
         public const string CurrentUserRoleAcess = "Fanex.NAP.CMS.Core.AppSession.CurrentUserRoleAccess";
         public const string CurrentWorkingOnMenu = "Fanex.NAP.CMS.Core.AppSession.CurrentWorkingOnMenu";
         public const string CurrentActionName = "Fanex.NAP.CMS.Core.AppSession.CurrentActionName";
+
+        public const int RepDelayTime = 3000;
     }
 }

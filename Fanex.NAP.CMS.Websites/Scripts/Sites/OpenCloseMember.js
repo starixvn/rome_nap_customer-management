@@ -190,7 +190,7 @@ Fanex.CMS.CloseOpenMember = function () {
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: handleChangingPage
             },
-            gridExpandHeight: 240
+            gridExpandHeight: 200
         };
         var bodyData = [];
         var row;

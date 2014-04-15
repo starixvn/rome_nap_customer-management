@@ -5,20 +5,21 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Edward.Nguyen" date="2012.8.28">Add properties _currentContext</change>
+//   <change who="Jason.Ly" date="2014.4.14">Move out of User area.</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
+namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.Common;
     using Fanex.Common.Extensions;
-    using Fanex.NAP.CMS.Controllers;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
@@ -33,7 +34,9 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
     /// </summary>
     public class LoginController : BaseController
     {
-        #region members
+        #region Members
+
+        private const string LoginFormToken = "_SecureLoginFormToken";
 
         private IUserService _userService;
         private IGroupService _groupService;
@@ -41,10 +44,11 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
         private IMaintenanceService _maintenanceService;
+        private HashAlgorithm _hashAlgorithm;
 
-        #endregion members
+        #endregion Members
 
-        #region ctors
+        #region Constructors
 
         public LoginController()
             : this(null, null, null, null, null, null)
@@ -65,11 +69,34 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
             this._maintenanceService = maintenanceService ?? new MaintenanceService();
+            _hashAlgorithm = new SHA256Managed();
         }
 
-        #endregion ctors
+        #endregion Constructors
 
-        #region sign in
+        #region Properties
+
+        public string FormToken
+        {
+            get
+            {
+                if (Session[LoginFormToken] == null)
+                {
+                    return string.Empty;
+                }
+
+                return Session[LoginFormToken].ToString();
+            }
+
+            set
+            {
+                Session[LoginFormToken] = value;
+            }
+        }
+
+        #endregion Properties
+
+        #region Sign in
 
         /// <summary>
         /// Index page.
@@ -86,8 +113,10 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
 
             if (_maintenanceService.GetDowntimeInfo().IsDowntime)
             {
-                return RedirectToAction("Offline", "Common");
+                return RedirectToAction("Offline");
             }
+
+            GenerateToken();
 
             return View();
         }
@@ -97,24 +126,27 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
         /// </summary>
         /// <param name="username">The login username.</param>
         /// <param name="password">The login password.</param>
+        /// <param name="loginToken">Login token.</param>
         /// <returns>Action result.</returns>
         [HttpPost]
         [ValidateInput(false)]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult Index(string username, string password)
+        public ActionResult Index(string username, string password, string loginToken)
         {
-            if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty())
+            if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
             {
                 var user = this._userService.GetByUsername(username.Trim()) as User;
 
                 if (user != null)
                 {
-                    password = Cryptography.CfsEnCode(password);
+                    string hashPassword = GetHash(user.Password + loginToken);
 
-                    if (password == user.Password)
+                    if (password == hashPassword)
                     {
                         var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
                         var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
+
+                        ClearToken();
 
                         if ((group == null || group.IsActive) && siteLevelList.Where(x => x.IsActive).Any())
                         {
@@ -161,26 +193,6 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
                                 DoSignOut();
                                 ViewBag.Message = ViewResources.Your_account_was_suspended;
                             }
-                            else
-                            {
-                                // user has access to multiple sites
-                                if (siteLevelList.Where(s => s.IsActive).Count() > 1)
-                                {
-                                    return this.RedirectToAction("Site", "UserSite");
-                                }
-
-                                // user has acces to one site
-                                var site = siteLevelList.Where(s => s.IsActive).First().Site;
-
-                                var listSiteUrl = this._siteService.GetSiteUrlBySiteId(site.Id, this.Environment).Where(u => u.IsActive).ToList();
-
-                                if (listSiteUrl.Count() > 1)
-                                {
-                                    return this.RedirectToAction("Site", "UserSite");
-                                }
-
-                                return this.RedirectToAction("Forward", "UserSite", new { id = listSiteUrl.First().SiteUrlId });
-                            }
                         }
                         else
                         {
@@ -213,10 +225,14 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
                 ViewBag.Message = "Invalid input!";
             }
 
+            GenerateToken();
+
             return View();
         }
 
-        #endregion sign in
+        #endregion Sign in
+
+        #region Other Actions
 
         /// <summary>
         /// User log out.
@@ -261,7 +277,28 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
             return this.Json(criteria.IsKickedOut ? "1" : "0");
         }
 
-        #region helpers
+        /// <summary>
+        /// Offline this instance.
+        /// </summary>
+        /// <returns>Return status of maintenance.</returns>
+        public ActionResult Offline()
+        {
+            var downTime = this._maintenanceService.GetDowntimeInfo();
+
+            if (!downTime.IsDowntime)
+            {
+                FormsAuthentication.RedirectToLoginPage();
+            }
+
+            ViewBag.UmtFrom = downTime.From;
+            ViewBag.UmtTo = downTime.To;
+
+            return this.View();
+        }
+
+        #endregion Other Actions
+
+        #region Helpers
 
         /// <summary>
         /// Create user menu.
@@ -309,8 +346,6 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
             Response.Cookies.Add(authCookie);
         }
 
-        #endregion helpers
-
         /// <summary>
         /// Does the sign out.
         /// </summary>
@@ -324,5 +359,91 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
             Response.Cookies.Clear();
             this._currentSession.ClearAll();
         }
+
+        /// <summary>
+        /// Adds the login token to cookie.
+        /// </summary>
+        /// <param name="loginToken">The login token.</param>
+        private void AddTokenToCookie(string loginToken)
+        {
+            // Create the non-persistent secure form token cookie
+            var responseCookie = new HttpCookie(LoginFormToken)
+            {
+                HttpOnly = true,
+                Value = loginToken
+            };
+
+            // If we are using SSL, the cookie should be set to secure to
+            // prevent it from being sent over HTTP connections
+            if (FormsAuthentication.RequireSSL && Request.IsSecureConnection)
+            {
+                responseCookie.Secure = true;
+            }
+
+            // Add the cookie to the response
+            Response.Cookies.Set(responseCookie);
+        }
+
+        /// <summary>
+        /// Generates the token for login form.
+        /// </summary>
+        private void GenerateToken()
+        {
+            string loginToken = Guid.NewGuid().ToString("N");
+
+            FormToken = loginToken;
+            ViewBag.LoginToken = loginToken;
+            AddTokenToCookie(loginToken);
+        }
+
+        /// <summary>
+        /// Checks if the token is valid or not.
+        /// </summary>
+        /// <param name="loginToken">The login token.</param>
+        /// <returns>Boolean value indicates if the login token is valid or not.</returns>
+        private bool CheckValidToken(string loginToken)
+        {
+            return !string.IsNullOrWhiteSpace(loginToken)
+                && FormToken == loginToken
+                && Request.Cookies[LoginFormToken] != null
+                && loginToken == Request.Cookies[LoginFormToken].Value;
+        }
+
+        /// <summary>
+        /// Gets the hash value of input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>Hash value of input.</returns>
+        private string GetHash(string input)
+        {
+            var encrypted = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                var hashData = _hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
+            }
+
+            return encrypted;
+        }
+
+        /// <summary>
+        /// Clears the token.
+        /// </summary>
+        private void ClearToken()
+        {
+            Session.Remove(LoginFormToken);
+
+            if (Request.Cookies[LoginFormToken] != null)
+            {
+                HttpCookie cookie = new HttpCookie(LoginFormToken);
+
+                cookie.Expires = DateTime.Now.AddDays(-1d);
+                Response.Cookies.Add(cookie);
+            }
+        }
+
+        #endregion Helpers
     }
 }

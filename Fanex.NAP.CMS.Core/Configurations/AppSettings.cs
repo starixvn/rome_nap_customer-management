@@ -16,6 +16,21 @@ namespace Fanex.NAP.CMS.Core.Configurations
     /// </summary>
     public static class AppSettings
     {
+        private static string serverTimezone;
+
+        public static string ServerTimezone
+        {
+            get
+            {
+                if (serverTimezone == null)
+                {
+                    serverTimezone = GetValue("ServerTimezone");
+                }
+
+                return serverTimezone;
+            }
+        }
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

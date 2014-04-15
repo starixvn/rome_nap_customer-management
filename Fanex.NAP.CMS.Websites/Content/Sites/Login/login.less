@@ -21,7 +21,7 @@ body
             box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3);
             background-color: #3b5998 !important;
 
-            #msg {
+            .msg {
                 display: none;
                 position: absolute;
                 top: -60px;
@@ -65,7 +65,7 @@ body
                 border-radius: 0 0 5px 5px;
                 padding: 40px 46px 13px 46px;
 
-                #username, #password {
+                .username, .password {
                     position: relative;
                     display: block;
                     width: 304px;
@@ -93,15 +93,15 @@ body
                     }
                 }
 
-                #username {
+                .username {
                     background: #fff url(img/username.png) no-repeat left center;
                 }
 
-                #password {
+                .password {
                     background: #fff url(img/password.png) no-repeat left center;
                 }
 
-                #submit {
+                .submit {
                     display: block;
                     width: 366px;
                     height: 40px;
@@ -160,7 +160,7 @@ body
     }
 
     /* --- NOT SUPPORTED BROWSERS --- */
-    #not-supported-browser-panel {
+    .not-supported-browser-panel {
         position: absolute;
         right: 0px;
         top: 0px;
@@ -169,6 +169,7 @@ body
         text-align: center;
         padding: 20px;
         z-index: 9999;
+        display: none;
 
         a {
             font-size: 1.6em;
@@ -185,7 +186,7 @@ body
     }
 }
 
-.ie9 #username, .ie9 #password, .ie8 #username, .ie8 #password {
+.ie9 .username, .ie9 .password, .ie8 .username, .ie8 .password {
     text-transform: lowercase;
     line-height: 40px;
 }

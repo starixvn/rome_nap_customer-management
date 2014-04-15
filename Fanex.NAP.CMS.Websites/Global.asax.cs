@@ -46,15 +46,28 @@ namespace Fanex.NAP.CMS.Websites
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError().GetBaseException();
+            string exceptionFormat = "{0}\r\nType: {1}" +
+                                     "\r\nSource: {2}" +
+                                     "\r\nDomain: {3}" +
+                                     "\r\nReferrer: {4}" +
+                                     "\r\nIP: {5}" +
+                                     "\r\nUserAgent: {6}" +
+                                     "\r\nForm Variable: {7}" +
+                                     "\r\nQueryString: {8}" +
+                                     "\r\nTargetSite: {9}" +
+                                     "\r\nStackTrace: {10}";
 
             if (!Request.IsLocal)
             {
                 string message = string.Format(
-                                            "{0}\r\nType: {1}\r\nSource: {2}\r\nDomain: {3}\r\nForm Variable: {4}\r\nQueryString: {5}\r\nTargetSite: {6}\r\nStackTrace: {7}",
+                                            exceptionFormat,
                                             ex.Message,
                                             ex.GetType().ToString(),
                                             ex.Source,
                                             HttpContext.Current.Request.Headers["Host"],
+                                            HttpContext.Current.Request.UrlReferrer,
+                                            HttpContext.Current.Request.UserHostAddress,
+                                            HttpContext.Current.Request.UserAgent,
                                             Request.Form.ToString(),
                                             Request.QueryString.ToString(),
                                             ex.TargetSite,

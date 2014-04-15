@@ -40,10 +40,11 @@ namespace Fanex.NAP.CMS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/login",
-                "~/Areas/UserLogin/themes/login.less");
+                "~/Content/Sites/Login/login.less");
 
             bundles.Add(new ScriptBundle("~/scripts/loginJS").Include(
-                "~/Scripts/Libs/jQuery/jquery-1.8.2.js"));
+                "~/Scripts/Libs/Crypto/CryptoJS.js",
+                "~/Scripts/Sites/Login.js"));
         }
 
         /// <summary>
@@ -83,6 +84,9 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Validator.js",
                 "~/Scripts/CMS.js",
                 "~/Scripts/Layout.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/crypto").Include(
+                "~/Scripts/Libs/Crypto/CryptoJS.js"));
         }
 
         /// <summary>

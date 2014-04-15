@@ -5,9 +5,10 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Edward.Nguyen" date="2012.8.28">Add properties _currentContext</change>
+//   <change who="Jason.Ly" date="2014.4.14">Move out of User area.</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
+namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +17,6 @@ namespace Fanex.NAP.CMS.Areas.UserLogin.Controllers
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
-    using Fanex.NAP.CMS.Controllers;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;

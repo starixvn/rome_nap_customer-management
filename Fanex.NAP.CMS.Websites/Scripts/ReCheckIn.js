@@ -17,7 +17,7 @@ var Recheckin = (function ($) {
         reCheckin: function () {
 
             $.ajax({
-                url: Recheckin.root + 'UserLogin/Login/ReCheckLogin',
+                url: Recheckin.root + 'Login/ReCheckLogin',
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
@@ -25,7 +25,7 @@ var Recheckin = (function ($) {
                         Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
                     }
                     if (result === '-1') {
-                        window.location.href = Recheckin.root + 'UserLogin/Common/Offline';
+                        window.location.href = Recheckin.root + 'Login/Offline';
                     }
                 }
             });
@@ -57,7 +57,7 @@ $(document).ready(function () {
         duration: 2000,
         useAnimation: false,
         beforeClose: function () {
-            window.location.href = Recheckin.root + 'UserLogin/Login/LogOut';
+            window.location.href = Recheckin.root + 'Login/LogOut';
         }
     });
 

@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core.Configurations;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
@@ -34,8 +35,6 @@ namespace Fanex.NAP.CMS.Controllers
         protected readonly string Environment = NapSettings.Settings.Environment;
 
         protected readonly int SiteId = NapSettings.Settings.SiteId;
-
-        private const string ServerTimezone = "Atlantic Standard Time";
 
         private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
@@ -101,7 +100,7 @@ namespace Fanex.NAP.CMS.Controllers
         {
             get
             {
-                TimeZoneInfo serverTzi = TimeZoneInfo.FindSystemTimeZoneById(ServerTimezone);
+                TimeZoneInfo serverTzi = TimeZoneInfo.FindSystemTimeZoneById(AppSettings.ServerTimezone);
 
                 return TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, serverTzi);
             }

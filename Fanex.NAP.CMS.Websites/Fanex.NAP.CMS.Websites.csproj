@@ -158,13 +158,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\UserControl\Controllers\UserController.cs" />
-    <Compile Include="Areas\UserControl\UserControlAreaRegistration.cs" />
-    <Compile Include="Areas\UserLogin\Controllers\CommonController.cs" />
-    <Compile Include="Areas\UserLogin\Controllers\LoginController.cs" />
-    <Compile Include="Areas\UserLogin\Controllers\SSOController.cs" />
-    <Compile Include="Areas\UserLogin\Controllers\UserSiteController.cs" />
-    <Compile Include="Areas\UserLogin\UserLoginAreaRegistration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -173,23 +166,21 @@
   <ItemGroup>
     <Content Include="App_Data\NAPCommonSpNames.xml" />
     <Content Include="App_Data\NAPCMSSPNames.xml" />
-    <Content Include="Areas\UserLogin\scripts\lib\jquery-1.8.0.min.js" />
-    <Content Include="Areas\UserLogin\scripts\ReCheckIn.js" />
-    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.svg" />
-    <Content Include="Areas\UserLogin\themes\img\auth-bg.png" />
-    <Content Include="Areas\UserLogin\themes\img\bg.png" />
-    <Content Include="Areas\UserLogin\themes\img\bg_header.png" />
-    <Content Include="Areas\UserLogin\themes\img\down.png" />
-    <Content Include="Areas\UserLogin\themes\img\firefox_original.png" />
-    <Content Include="Areas\UserLogin\themes\img\ie.png" />
-    <Content Include="Areas\UserLogin\themes\img\lock.png" />
-    <Content Include="Areas\UserLogin\themes\img\password.png" />
-    <Content Include="Areas\UserLogin\themes\img\pattern6.png" />
-    <Content Include="Areas\UserLogin\themes\img\title-bg.jpg" />
-    <Content Include="Areas\UserLogin\themes\img\username.png" />
-    <Content Include="Areas\UserLogin\themes\img\warn.png" />
-    <Content Include="Areas\UserLogin\themes\img\logo.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
+    <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
+    <Content Include="Content\Sites\Login\img\auth-bg.png" />
+    <Content Include="Content\Sites\Login\img\bg.png" />
+    <Content Include="Content\Sites\Login\img\bg_header.png" />
+    <Content Include="Content\Sites\Login\img\down.png" />
+    <Content Include="Content\Sites\Login\img\firefox_original.png" />
+    <Content Include="Content\Sites\Login\img\ie.png" />
+    <Content Include="Content\Sites\Login\img\lock.png" />
+    <Content Include="Content\Sites\Login\img\logo.png" />
+    <Content Include="Content\Sites\Login\img\password.png" />
+    <Content Include="Content\Sites\Login\img\pattern6.png" />
+    <Content Include="Content\Sites\Login\img\title-bg.jpg" />
+    <Content Include="Content\Sites\Login\img\username.png" />
+    <Content Include="Content\Sites\Login\img\warn.png" />
     <Content Include="Content\Themes\img\actions\add-user.png" />
     <Content Include="Content\Themes\img\actions\chgpwd-ico.png" />
     <Content Include="Content\Themes\img\actions\dd\action-ico.png" />
@@ -249,7 +240,10 @@
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
+    <Content Include="Scripts\ReCheckIn.js" />
+    <Content Include="Scripts\Sites\Login.js" />
     <Content Include="Scripts\Validator.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Scripts\Libs\DatePicker\images\icon-calendar.png" />
@@ -355,25 +349,8 @@
     <Content Include="Web.AppSettings.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\UserControl\Views\User\ChangePassword.cshtml" />
-    <Content Include="Areas\UserControl\Views\User\UserProfile.cshtml" />
-    <Content Include="Areas\UserControl\Views\Web.config" />
-    <Content Include="Areas\UserLogin\Views\Common\Offline.cshtml" />
-    <Content Include="Areas\UserLogin\Views\Login\Index.cshtml" />
-    <Content Include="Areas\UserLogin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\UserLogin\Views\SSO\SSOIndex.cshtml" />
-    <Content Include="Areas\UserLogin\Views\UserSite\Site.cshtml" />
-    <Content Include="Areas\UserLogin\Views\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Areas\UserLogin\themes\fonts\Abel.woff" />
-    <Content Include="Areas\UserLogin\themes\fonts\OpenSans.woff" />
-    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.eot" />
-    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.otf" />
-    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.ttf" />
-    <Content Include="Areas\UserLogin\themes\fonts\YanoneKaffeesatz.woff" />
-    <Content Include="Areas\UserLogin\themes\login.less" />
-    <Content Include="Areas\UserLogin\themes\select-site.less" />
+    <Content Include="Views\UserInfo\ChangePassword.cshtml" />
+    <Content Include="Views\UserInfo\UserProfile.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -397,6 +374,15 @@
     <Content Include="Views\CloseOpenMember\Index.cshtml" />
     <Content Include="Views\ConfigureCustomerAccess\Index.cshtml" />
     <Content Include="Views\ConfigureCustomerAccess\RequestForm.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Offline.cshtml" />
+    <Content Include="Content\Sites\Login\login.less" />
+    <Content Include="Content\Sites\Login\fonts\Abel.woff" />
+    <Content Include="Content\Sites\Login\fonts\OpenSans.woff" />
+    <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.eot" />
+    <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.otf" />
+    <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.ttf" />
+    <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

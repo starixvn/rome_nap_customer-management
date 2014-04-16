@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = ViewLang.ConfigureTOBySMA;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/configureTOBySMA")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+@section Foot
+{
+    @Scripts.Render("~/scripts/configureTOBySMA")
+}

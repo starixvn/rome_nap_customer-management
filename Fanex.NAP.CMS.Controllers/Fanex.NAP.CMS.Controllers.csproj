@@ -61,11 +61,15 @@
     <Compile Include="ConfigureCustomerAccessController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CloseOpenMemberController.cs" />
+    <Compile Include="ConfigureSMATOByMatchController.cs" />
+    <Compile Include="ConfigureTOByEventController.cs" />
+    <Compile Include="ConfigureTOBySMAController.cs" />
     <Compile Include="ErrorController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="LoginController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SSOController.cs" />
+    <Compile Include="TurnoverMonitorController.cs" />
     <Compile Include="UserInfoController.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -243,6 +243,10 @@
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\ReCheckIn.js" />
+    <Content Include="Scripts\Sites\ConfigureTOByEvent\ConfigureTOByEvent.js" />
+    <Content Include="Scripts\Sites\ConfigureTOBySMA.js" />
+    <Content Include="Scripts\Sites\ConfigureSMATOByMatch.js" />
+    <Content Include="Scripts\Sites\TurnoverMonitor.js" />
     <Content Include="Scripts\Sites\Login.js" />
     <Content Include="Scripts\Validator.js" />
     <Content Include="Scripts\Layout.js" />
@@ -383,6 +387,14 @@
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.otf" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.ttf" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.woff" />
+    <Content Include="Views\ConfigureTOByEvent\Index.cshtml" />
+    <Content Include="Content\Sites\configureTOByEvent.less" />
+    <Content Include="Views\TurnoverMonitor\Index.cshtml" />
+    <Content Include="Content\Sites\turnoverMonitor.less" />
+    <Content Include="Views\ConfigureSMATOByMatch\Index.cshtml" />
+    <Content Include="Content\Sites\configureSMATOByMatch.less" />
+    <Content Include="Views\ConfigureTOBySMA\Index.cshtml" />
+    <Content Include="Content\Sites\configureTOBySMA.less" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

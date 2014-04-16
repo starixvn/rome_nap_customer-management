@@ -28,8 +28,8 @@ namespace Fanex.NAP.CMS.Websites
         {
             RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
-            RegisterOpenCloseMemberBundles(bundles);
-            RegisterConfigureCustomerAccessBundles(bundles);
+            RegisterCustomerBundles(bundles);
+            RegisterTurnoverControlBundles(bundles);
         }
 
         /// <summary>
@@ -90,31 +90,61 @@ namespace Fanex.NAP.CMS.Websites
         }
 
         /// <summary>
-        /// Registers the common bundles.
+        /// Registers the customer bundles.
         /// </summary>
         /// <param name="bundles">The bundle collection.</param>
-        public static void RegisterOpenCloseMemberBundles(BundleCollection bundles)
+        public static void RegisterCustomerBundles(BundleCollection bundles)
         {
+            // Open/Close Member.
             bundles.AddAndInclude(
                 "~/styles/openCloseMember",
                 "~/Content/Sites/openCloseMember.less");
 
             bundles.Add(new ScriptBundle("~/scripts/openCloseMember").Include(
                 "~/Scripts/Sites/OpenCloseMember.js"));
-        }
 
-        /// <summary>
-        /// Registers the common bundles.
-        /// </summary>
-        /// <param name="bundles">The bundle collection.</param>
-        public static void RegisterConfigureCustomerAccessBundles(BundleCollection bundles)
-        {
+            // Configure Customer Access.
             bundles.AddAndInclude(
                 "~/styles/configureCustomerAccess",
                 "~/Content/Sites/configureCustomerAccess.less");
 
             bundles.Add(new ScriptBundle("~/scripts/configureCustomerAccess").Include(
                 "~/Scripts/Sites/ConfigureCustomerAccess.js"));
+        }
+
+        /// <summary>
+        /// Registers the turnover control bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterTurnoverControlBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/configureTOByEvent",
+                "~/Content/Sites/configureTOByEvent.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/configureTOByEvent").Include(
+                "~/Scripts/Sites/ConfigureTOByEvent/ConfigureTOByEvent.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/configureTOBySMA",
+                "~/Content/Sites/configureTOBySMA.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/configureTOBySMA").Include(
+                "~/Scripts/Sites/ConfigureTOBySMA.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/configureSMATOByMatch",
+                "~/Content/Sites/configureSMATOByMatch.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/configureSMATOByMatch").Include(
+                "~/Scripts/Sites/ConfigureSMATOByMatch.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/turnoverMonitor",
+                "~/Content/Sites/turnoverMonitor.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/turnoverMonitor").Include(
+                "~/Scripts/Sites/TurnoverMonitor.js"));
         }
     }
 

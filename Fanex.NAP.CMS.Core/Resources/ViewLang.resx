@@ -231,4 +231,25 @@
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
+  <data name="ConfigureSMATOByMatch" xml:space="preserve">
+    <value>Configure SMA TO By Match</value>
+  </data>
+  <data name="ConfigureTOByEvent" xml:space="preserve">
+    <value>Configure TO By Event</value>
+  </data>
+  <data name="ConfigureTOBySMA" xml:space="preserve">
+    <value>Configure TO By SMA</value>
+  </data>
+  <data name="League" xml:space="preserve">
+    <value>League</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="TurnoverMonitor" xml:space="preserve">
+    <value>Turnover Monitor</value>
+  </data>
 </root>

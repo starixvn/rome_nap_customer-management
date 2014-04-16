@@ -57,6 +57,8 @@
                     closeBtn: '<a href="javascript:;" class="msgbox-close"></a>',
                     okBtn: '<a href="javascript:;" class="msgbox-btn ok">OK</a>',
                     cancelBtn: '<a href="javascript:;" class="msgbox-btn cancel">Cancel</a>',
+                    yesBtn: '<a href="javascript:;" class="msgbox-btn yes">Yes</a>',
+                    noBtn: '<a href="javascript:;" class="msgbox-btn no">No</a>',
                     textbox: '<input type="text" class="msgbox-txt" />'
                 },
 
@@ -277,6 +279,36 @@
             $this.find('.ok').click(function () {
                 _this.close();
                 if ($.isFunction(callback)) callback.apply($this.get(0), []);
+            });
+
+            $this.find('.cancel').click(function () { _this.close(); }).focus();
+        },
+
+        yesNoConfirm: function (title, msg, yesCallback, noCallback, options) {
+            var _this = this,
+                $this = _this.target,
+                header = $('<div class="msgbox-header">' + title + '</div>'),
+                cmdBtns = '<div class="msgbox-btn-wrap">' + _this.options.tpl.yesBtn + ' ' + +_this.options.tpl.noBtn + ' ' + _this.options.tpl.cancelBtn + '</div>';
+
+            _this.checkDomExistence();
+            _this.show(msg, $.extend(options, { type: 'confirm' }));
+            _this.target.append(cmdBtns);
+
+            if (options.header) {
+                $(_this.options.tpl.closeBtn).appendTo(header).click(function () { _this.close(); });
+                _this.target.prepend(header);
+            }
+
+            clearTimeout(_this.timeout);
+
+            $this.find('.yes').click(function () {
+                _this.close();
+                if ($.isFunction(yesCallback)) yesCallback.apply($this.get(0), []);
+            });
+
+            $this.find('.no').click(function () {
+                _this.close();
+                if ($.isFunction(noCallback)) noCallback.apply($this.get(0), []);
             });
 
             $this.find('.cancel').click(function () { _this.close(); }).focus();

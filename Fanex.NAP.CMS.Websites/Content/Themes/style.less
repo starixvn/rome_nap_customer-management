@@ -213,17 +213,13 @@ header {
     position: relative;
 
     .logo {
-        position: absolute;
-        top: 0px;
-        left: 0px;
         padding: 0px;
-        z-index:1;
+        float: left;
 
         a {
             display: block;
             background: url(img/logo.png) center left no-repeat;
-            margin-left: 10px;
-            margin-top:5px;
+            margin: 7px 0 5px 26px;
             height:28px;
             width:147px;
             border-right: 1px solid #7ea3e9;
@@ -236,7 +232,7 @@ header {
     }
 
     nav {
-        margin-left: 162px;
+        margin-left: 12px;
         float: left;
 
         .menu {
@@ -353,8 +349,8 @@ header {
     .user-info {
         float: right;
         position: absolute;
-        right:8px;
-        top:6px;
+        right: 8px;
+        top: 8px;
 
         .greeting {
             position: relative;
@@ -526,7 +522,7 @@ header {
         color: @headline_text;
         display: inline-block;
         float: left;
-        margin: 2px 0 2px 10px;
+        margin: 2px 5px 2px 26px;
         height: 32px;
         div {
             margin-left: 0px;
@@ -599,7 +595,7 @@ footer {
     .box_shadow(0px 0px 4px 1px rgba(0,0,0,0.1));
 
     .filter-form {
-        padding: 10px 0px 0 10px;
+        padding: 10px 0px 0 0;
         float: left;
         color: @text;
 
@@ -1392,4 +1388,19 @@ h2 .title {
 
 .green-button {
     .custom_button(@green_button_bg, @green_button_bg_light, @green_button_bg_hover, @green_button_border);
+
+    &.change-list {
+        padding: 0 18px 0 0;
+        margin-right: 7px;
+        min-width: 60px;
+
+        .icon-list {
+            background: url("img/sprites.png") no-repeat -86px -26px;
+            height: 13px;
+            width: 12px;
+            cursor: pointer;
+            float: left;
+            margin: 5px 5px 0 20px;
+        }
+    }
 }

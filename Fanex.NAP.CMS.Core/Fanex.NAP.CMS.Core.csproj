@@ -61,6 +61,9 @@
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
       <HintPath>..\Dependencies\Entlib\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
     </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\Dependencies\Others\RemotingRef.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -91,6 +94,7 @@
       <DependentUpon>ViewLang.resx</DependentUpon>
     </Compile>
     <Compile Include="Web\CacheManager.cs" />
+    <Compile Include="Web\CacheRef.cs" />
     <Compile Include="Web\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup />

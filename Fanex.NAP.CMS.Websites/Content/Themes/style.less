@@ -96,6 +96,7 @@
 .width-160				{ width: 160px !important; }
 .width-180				{ width: 180px !important; }
 .width-200				{ width: 200px !important; }
+.width-250				{ width: 250px !important; }
 
 /* Height */
 .auto-min-height		{ min-height: auto !important; }
@@ -1282,6 +1283,13 @@ h2 .title {
     color: @msg_text;
 }
 
+.link {
+    display: inline-block;
+    width: 100%;
+    color: @link;
+    cursor: pointer;
+}
+
 /********************************************************/
 /*                     Grid/ Table                      */
 /********************************************************/
@@ -1394,13 +1402,13 @@ h2 .title {
         margin-right: 7px;
         min-width: 60px;
 
-        &.current {
+        &:disabled, &.disabled {
             background: #C3E094;
             border-color: #809361 #A8C280 #A8C280;
             box-shadow: 1px 1px 1px 0 #A8C280 inset;
             color: #5D7731;
             text-shadow: none;
-            cursor: text;
+            cursor: default;
 
             .icon-list {
                 background-position: -105px -26px;

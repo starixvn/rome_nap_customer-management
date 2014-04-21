@@ -205,6 +205,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value!.
+        /// </summary>
+        public static string InvalidValueError {
+            get {
+                return ResourceManager.GetString("InvalidValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New password cannot be empty..
         /// </summary>
         public static string NewPasswordCannotEmpty {
@@ -228,6 +237,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string NotFoundMessage {
             get {
                 return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do not show again.
+        /// </summary>
+        public static string NotShowAgainMessage {
+            get {
+                return ResourceManager.GetString("NotShowAgainMessage", resourceCulture);
             }
         }
         
@@ -282,6 +300,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string RequiredStatusColumnError {
             get {
                 return ResourceManager.GetString("RequiredStatusColumnError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input \&apos;U\&apos; for unlimited setting.
+        /// </summary>
+        public static string TurnoverInputInstruction {
+            get {
+                return ResourceManager.GetString("TurnoverInputInstruction", resourceCulture);
             }
         }
         

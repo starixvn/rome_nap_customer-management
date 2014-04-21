@@ -30,6 +30,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureSMATOByMatchController(IConfigureSMATOByMatchService configureSMATOByMatchService)
         {
             this._configureSMATOByMatchService = configureSMATOByMatchService ?? new ConfigureSMATOByMatchService();
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ConfigureSMATOByMatch, Constant.Policy.Host);
         }
 
         /// <summary>

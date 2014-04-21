@@ -12,7 +12,7 @@ var Validator = (function ($) {
             $obj.tipsy({
                 trigger: 'manual',
                 gravity: gravity ? gravity : 'sw',
-                classStyle: 'error',
+                type: 'error',
                 inDocument: false,
                 opacity: 0.97
             });

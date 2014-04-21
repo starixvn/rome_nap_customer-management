@@ -14,13 +14,108 @@
         </div>
     </div>
     <div class="header-button">
-        <a href="#" class="green-button change-list current"><span class="icon-list"></span>@ViewLang.Sport</a>
-        <a href="#" class="green-button change-list"><span class="icon-list"></span>@ViewLang.League</a>
-        <a href="#" class="green-button change-list"><span class="icon-list"></span>@ViewLang.Match</a>
+        <a href="#" id="lnkSport" class="green-button change-list"><span class="icon-list"></span>@ViewLang.Sport</a>
+        <a href="#" id="lnkLeague" class="green-button change-list"><span class="icon-list"></span>@ViewLang.League</a>
+        <a href="#" id="lnkMatch" class="green-button change-list"><span class="icon-list"></span>@ViewLang.Match</a>
     </div>
 }
-
+<div id="divSportContent" class="display-none content-grid sport-content">
+    <div id="divSportTurnoverContainer" class="display-none">
+        <div id="divSportTurnover" class="freegrid"></div>
+    </div>
+    <div id="divLeagueTurnoverContainer" class="display-none">
+        <div id="divLeagueTurnover" class="freegrid"></div>
+    </div>
+    <div id="divMatchTurnoverContainer" class="display-none">
+        <div id="divMatchTurnover" class="freegrid"></div>
+    </div>
+</div>
+<div id="divLeagueContent" class="display-none">
+    <div class="filter-bar">
+        <div class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_3 align-right">
+                    <label for="ddlSport">@ViewLang.Sport</label>
+                </div>
+                <div class="edit-field col_5 align-left">
+                    <input type="text" id="ddlSport" />
+                </div>
+                <div class="lbl-field col_3 align-right">
+                    <label for="ddlLeague">@ViewLang.League</label>
+                </div>
+                <div class="edit-field col_10 align-left">
+                    <input type="text" id="ddlLeague" class="width-250" />
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+                </div>
+            </div>
+            <div class="filter-row"></div>
+        </div>
+    </div>
+    <div id="divLeagueTurnoverContainer" class="display-none">
+        <div id="divLeagueTurnover" class="freegrid"></div>
+    </div>
+    <div id="divMatchTurnoverContainer" class="display-none">
+        <div id="divMatchTurnover" class="freegrid"></div>
+    </div>
+</div>
+<div id="divMatchContent" class="display-none">
+    <div class="filter-bar">
+        <div class="filter-form">
+            <div class="filter-row">
+                <div class="lbl-field col_3 align-right">
+                    <label for="ddlSport">@ViewLang.Sport</label>
+                </div>
+                <div class="edit-field col_5 align-left">
+                    <input type="text" id="ddlSport" />
+                </div>
+                <div class="lbl-field col_3 align-right">
+                    <label for="ddlLeague">@ViewLang.League</label>
+                </div>
+                <div class="edit-field col_10 align-left">
+                    <input type="text" id="ddlLeague" class="width-250" />
+                </div>
+                <div class="lbl-field col_4 align-right">
+                    <label for="txtMatchCode">@ViewLang.MatchCode</label>
+                </div>
+                <div class="edit-field col_5 align-left">
+                    <input type="text" id="txtMatchCode" />
+                </div>
+                <div class="submit width-auto col_4">
+                    <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+                </div>
+            </div>
+            <div class="filter-row"></div>
+        </div>
+    </div>
+    <div id="divMatchTurnoverContainer" class="display-none">
+        <div id="divMatchTurnover" class="freegrid"></div>
+    </div>
+</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/configureTOByEvent")
+    <script type="text/javascript">
+        var labels = {
+            Sport: '@ViewLang.Sport',
+            Sports: '@ViewLang.Sports',
+            League: '@ViewLang.League',
+            Match: '@ViewLang.Match',
+            Code: '@ViewLang.Code',
+            Event: '@ViewLang.Event',
+            EventDate: '@ViewLang.EventDate',
+            Percentage: '@ViewLang.Percentage',
+            Exception: '@ViewLang.Exception',
+            RemoveException: '@ViewLang.RemoveException',
+            Unlimited: '@ViewLang.Unlimited',
+            OnlyShowExceptionSetting: '@ViewLang.OnlyShowExceptionSetting'
+        };
+        var messages = {
+            NotShowAgain: '@Html.Raw(Messages.NotShowAgainMessage)',
+            TurnoverInputInstruction: '@Messages.TurnoverInputInstruction',
+            InvalidValueError: '@Messages.InvalidValueError',
+        };
+        var hasEditRight = '@ViewBag.HasEditRight' === 'True';
+    </script>
 }

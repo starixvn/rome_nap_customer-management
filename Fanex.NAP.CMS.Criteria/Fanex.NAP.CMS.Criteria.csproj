@@ -56,6 +56,8 @@
     <Compile Include="ConfigureCustomerAccess\GetRequestInfoListCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\InsertRequestCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\UpdateRequestCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\GetEventTurnoverCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\GetSportsCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />

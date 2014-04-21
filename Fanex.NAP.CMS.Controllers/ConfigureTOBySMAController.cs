@@ -30,6 +30,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureTOBySMAController(IConfigureTOBySMAService configureTOBySMAService)
         {
             this._configureTOBySMAService = configureTOBySMAService ?? new ConfigureTOBySMAService();
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ConfigureTOBySMA, Constant.Policy.Host);
         }
 
         /// <summary>

@@ -49,6 +49,10 @@
   <ItemGroup>
     <Compile Include="Common\CountryInfo.cs" />
     <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
+    <Compile Include="ConfigureTOByEvent\LeagueTurnoverInfo.cs" />
+    <Compile Include="ConfigureTOByEvent\MatchTurnoverInfo.cs" />
+    <Compile Include="ConfigureTOByEvent\SportInfo.cs" />
+    <Compile Include="ConfigureTOByEvent\SportTurnoverInfo.cs" />
     <Compile Include="OpenCloseMember\MemberStatusInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

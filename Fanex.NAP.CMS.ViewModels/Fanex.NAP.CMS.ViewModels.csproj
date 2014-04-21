@@ -55,6 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureCustomerAccess\RequestItem.cs" />
+    <Compile Include="ConfigureTOByEvent\LeagueTurnover.cs" />
+    <Compile Include="ConfigureTOByEvent\MatchTurnover.cs" />
+    <Compile Include="ConfigureTOByEvent\SportTurnover.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />
@@ -66,6 +69,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">
+      <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
+      <Name>Fanex.NAP.CMS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.Models\Fanex.NAP.CMS.Models.csproj">
       <Project>{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59}</Project>
       <Name>Fanex.NAP.CMS.Models</Name>

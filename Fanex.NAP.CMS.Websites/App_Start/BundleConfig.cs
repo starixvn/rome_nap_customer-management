@@ -123,7 +123,13 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Content/Sites/configureTOByEvent.less");
 
             bundles.Add(new ScriptBundle("~/scripts/configureTOByEvent").Include(
-                "~/Scripts/Sites/ConfigureTOByEvent/ConfigureTOByEvent.js"));
+                "~/Scripts/Sites/ConfigureTOByEvent/SportTurnover.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/LeagueTurnover.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/MatchTurnover.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/SportPage.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/LeaguePage.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/MatchPage.js",
+                "~/Scripts/Sites/ConfigureTOByEvent/PageManager.js"));
 
             bundles.AddAndInclude(
                 "~/styles/configureTOBySMA",

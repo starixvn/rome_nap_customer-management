@@ -12,7 +12,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
     };
     var instructionOptions = {
         AllowShow: true,
-        IsShown: false,
         IsFocused: false,
         TimeoutID: null
     };
@@ -26,17 +25,18 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
                 var $input = domElements.divSportTurnover.find('input:focus');
                 var $link = $input.prev();
 
-                $input.addClass('display-none');
-                $link.removeClass('display-none');
-                $input.tipsy('hide');
-                instructionOptions.IsShown = false;
+                if ($input.hasClass('percentage')) {
+                    $input.addClass('display-none');
+                    $link.removeClass('display-none');
+                    $input.tipsy('hide');
+                }
             }
         });
     };
 
     // Render grid.
     var renderGrid = function (data) {
-        var sportFormat = '<span class="link sport-link" data-sport-id="{0}" data-sport-value="{1}">{2}</span>';
+        var sportFormat = '<span class="link sport-link" data-sport-id="{0}">{1}</span>';
         var percentageFormat = '<span class="percentage-link link" data-value="{0}" data-sport="{1}">{2}</span>' +
                                '<input type="text" maxlength="7" class="percentage display-none" />';
         var percentage = '';
@@ -53,7 +53,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
-                sportCol = sportFormat.format(item.SportID, percentage, item.SportName);
+                sportCol = sportFormat.format(item.SportID, item.SportName);
                 percentageCol = percentageFormat.format(percentage, item.SportID, item.Percentage === 0 ? labels.Unlimited : percentage);
 
                 row = {
@@ -87,7 +87,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
             // Disable other active fields.
             $.each(percentageLinks, function (index, link) {
                 $(link).removeClass('display-none').next().addClass('display-none').tipsy('hide');
-                instructionOptions.IsShown = false;
             });
 
             // Fill current value into text box.
@@ -96,7 +95,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
             $input.val(percentage).removeClass('display-none').clearfield().focus().select();
 
             // Show instruction if it is allowed.
-            if (instructionOptions.AllowShow && !instructionOptions.IsShown) {
+            if (instructionOptions.AllowShow) {
                 var instruction = '<div id="divInstruction">' +
                                       '{0}<br/>' +
                                       '<input type="checkbox" id="chkInstruction" class="instruction"/>' +
@@ -111,12 +110,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
                     opacity: 0.97,
                     gravity: 's'
                 }).tipsy('show');
-                instructionOptions.IsShown = true;
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
                         instructionOptions.AllowShow = false;
-                        instructionOptions.IsShown = false;
                         $input.tipsy('hide').focus();
                     }
                 });
@@ -124,7 +121,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
                 // Auto-hide after 5 seconds.
                 instructionOptions.TimeoutID = setTimeout(function () {
                     $input.tipsy('hide');
-                    instructionOptions.IsShown = false;
                 }, 5000);
             }
         });
@@ -146,14 +142,12 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
                         $input.addClass('display-none');
                         $link.removeClass('display-none');
                         $input.tipsy('hide');
-                        instructionOptions.IsShown = false;
                     }
                 });
             } else if (event.keyCode === 27) {
                 $input.addClass('display-none');
                 $link.removeClass('display-none');
                 $input.tipsy('hide');
-                instructionOptions.IsShown = false;
             }
         });
 
@@ -170,12 +164,20 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportTurnover = function () {
             leagueReport.GetReportData();
             domElements.divSportTurnoverContainer.addClass('display-none');
         });
+
+        domElements.divSportTurnover.find('div.grid-container').on('scroll', function () {
+            var $input = domElements.divSportTurnover.find('input:focus');
+
+            if ($input.hasClass('percentage')) {
+                $input.tipsy('hide');
+            }
+        });
     };
 
     // Validate input percentage.
     var validatePercentage = function ($input) {
         var value = $input.val().replace(/,/g, '');
-        var isValid = $.isNumeric(value) || (value.length === 1 && value[0].toLowerCase() === 'u');
+        var isValid = ($.isNumeric(value) && parseInt(value) > 0) || (value.length === 1 && value[0].toLowerCase() === 'u');
 
         // Remove previous instruction tooltip if there is any.
         Validator.clearError($input);

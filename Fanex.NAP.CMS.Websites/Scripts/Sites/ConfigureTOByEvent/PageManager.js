@@ -65,7 +65,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
                 domElements.divMatchContent.removeClass('display-none');
 
                 $this.CurrentPage = new Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage();
-                $this.CurrentPage.InitPage();
+                $this.CurrentPage.InitPage(domElements.divMatchContent);
             }
         });
     };

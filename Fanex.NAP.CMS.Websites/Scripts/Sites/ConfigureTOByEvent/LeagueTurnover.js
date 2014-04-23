@@ -14,7 +14,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
     var initialParameters = {};
     var instructionOptions = {
         AllowShow: true,
-        IsShown: false,
         IsFocused: false
     };
     var matchReport = null;
@@ -27,10 +26,11 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
                 var $input = domElements.divLeagueTurnover.find('input:focus');
                 var $link = $input.prev();
 
-                $input.addClass('display-none');
-                $link.removeClass('display-none');
-                $input.tipsy('hide');
-                instructionOptions.IsShown = false;
+                if ($input.hasClass('percentage')) {
+                    $input.addClass('display-none');
+                    $link.removeClass('display-none');
+                    $input.tipsy('hide');
+                }
             }
         });
 
@@ -39,7 +39,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var leagueFormat = '<span class="link league-link" data-league-id="{0}" data-league-value="{1}">{2}</span>';
+        var leagueFormat = '<span class="link league-link" data-league-id="{0}">{1}</span>';
         var percentageFormat = '<span class="percentage-link link" data-league-id="{0}" data-value="{1}">{2}</span>' +
                                '<input type="text" maxlength="7" class="percentage display-none" />';
         var exceptionFormat = '<span class="remove-exception ico-delete" data-league-id="{0}" title="{1}"></span>';
@@ -70,7 +70,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
-                leagueCol = leagueFormat.format(item.LeagueID, percentage, item.LeagueName);
+                leagueCol = leagueFormat.format(item.LeagueID, item.LeagueName);
                 percentageCol = percentageFormat.format(item.LeagueID, percentage, item.Percentage === 0 ? labels.Unlimited : percentage);
                 exceptionCol = item.IsException ? exceptionFormat.format(item.LeagueID, labels.RemoveException) : '';
 
@@ -89,6 +89,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
 
         gridOptions.bodyRows = bodyData;
         domElements.divLeagueTurnover.fanexGrid(gridOptions);
+        domElements.divLeagueTurnoverContainer.attr('data-current-sport', initialParameters.SportID);
         handleGridEvents();
     };
 
@@ -109,7 +110,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
             // Disable other active fields.
             $.each(percentageLinks, function (index, link) {
                 $(link).removeClass('display-none').next().addClass('display-none').tipsy('hide');
-                instructionOptions.IsShown = false;
             });
 
             // Fill current value into text box.
@@ -118,7 +118,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
             $input.val(percentage).removeClass('display-none').clearfield().focus().select();
 
             // Show instruction if it is allowed.
-            if (instructionOptions.AllowShow && !instructionOptions.IsShown) {
+            if (instructionOptions.AllowShow) {
                 var instruction = '<div id="divInstruction">' +
                                       '{0}<br/>' +
                                       '<input type="checkbox" id="chkInstruction" class="instruction"/>' +
@@ -133,12 +133,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
                     opacity: 0.97,
                     gravity: 's'
                 }).tipsy('show');
-                instructionOptions.IsShown = true;
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
                         instructionOptions.AllowShow = false;
-                        instructionOptions.IsShown = false;
                         $input.tipsy('hide').focus();
                     }
                 });
@@ -146,7 +144,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
                 // Auto-hide after 5 seconds.
                 instructionOptions.TimeoutID = setTimeout(function () {
                     $input.tipsy('hide');
-                    instructionOptions.IsShown = false;
                 }, 5000);
             }
         });
@@ -161,20 +158,19 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
             if (event.keyCode === 13 && validatePercentage($input)) {
                 CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
                     percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
-                    $link.attr('data-value', percentage);
-                    $link.text(formatedPercentage);
-                    $input.addClass('display-none');
-                    $link.removeClass('display-none');
-                    $input.tipsy('hide');
-                    instructionOptions.IsShown = false;
 
-                    updatePercentage($link.attr('data-league-id'), percentage.replace(/,/g, ''));
+                    if (updatePercentage($link.attr('data-league-id'), percentage.replace(/,/g, ''))) {
+                        $link.attr('data-value', percentage);
+                        $link.text(formatedPercentage);
+                        $input.addClass('display-none');
+                        $link.removeClass('display-none');
+                        $input.tipsy('hide');
+                    }
                 });
             } else if (event.keyCode === 27) {
                 $input.addClass('display-none');
                 $link.removeClass('display-none');
                 $input.tipsy('hide');
-                instructionOptions.IsShown = false;
             }
         });
 
@@ -203,6 +199,14 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
             });
         });
 
+        domElements.divLeagueTurnover.find('div.grid-container').on('scroll', function () {
+            var $input = domElements.divLeagueTurnover.find('input:focus');
+
+            if ($input.hasClass('percentage')) {
+                $input.tipsy('hide');
+            }
+        });
+
         domElements.divLeagueTurnoverContainer.find('span.breadCrumb').on('click', function () {
             var index = $(this).attr('data-index');
 
@@ -218,12 +222,14 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
 
     // Generate breadcrumb.
     var generateBreadCrumb = function () {
-        var breadCumbTemplate = '<span class="breadCrumb" data-index="{0}">{1}</span> >> ';
+        var breadCrumbTemplate = '<span class="{0}" data-index="{1}">{2}</span> >> ';
+        var breadCrumbClass = '';
         var breadCrumb = '<div id="divBreadCrumb">';
 
         if (initialParameters) {
             $.each(initialParameters.PreviousReportObjects, function (index, prevReport) {
-                breadCrumb += breadCumbTemplate.format(index, prevReport.ReportName);
+                breadCrumbClass = prevReport.ShowReport ? 'breadCrumb' : '';
+                breadCrumb += breadCrumbTemplate.format(breadCrumbClass, index, prevReport.ReportName);
             });
 
             breadCrumb += $this.ReportName;
@@ -235,7 +241,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
     // Validate input percentage.
     var validatePercentage = function ($input) {
         var value = $input.val().replace(/,/g, '');
-        var isValid = $.isNumeric(value) || (value.length === 1 && value[0].toLowerCase() === 'u');
+        var isValid = ($.isNumeric(value) && parseInt(value) > 0) || (value.length === 1 && value[0].toLowerCase() === 'u');
 
         // Remove previous instruction tooltip if there is any.
         Validator.clearError($input);
@@ -274,8 +280,12 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     renderGrid(result.Turnovers.LeagueTurnovers);
+
+                    return true;
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);
+
+                    return false;
                 }
             },
             error: function (xhr) {
@@ -324,7 +334,8 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
     $this.ShowReport = function (allowShowInstruction) {
         instructionOptions.AllowShow = allowShowInstruction;
 
-        if (domElements.divLeagueTurnover.html().length > 0) {
+        if (domElements.divLeagueTurnoverContainer.attr('data-current-sport') === initialParameters.SportID &&
+            domElements.divLeagueTurnover.html().length > 0) {
             domElements.divLeagueTurnoverContainer.removeClass('display-none');
         } else {
             $this.GetReportData();

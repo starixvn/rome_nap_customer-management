@@ -16,11 +16,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
     /// </summary>
     public class GetSportsCriteria : CriteriaBase
     {
-        public GetSportsCriteria()
-        {
-            this.Mode = 0;
-        }
-
         public byte Mode { get; set; }
 
         /// <summary>
@@ -38,7 +33,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>Whether this criteria is valid or not.</returns>
         public override bool IsValid()
         {
-            return this.Mode == 0;
+            return true;
         }
     }
 }

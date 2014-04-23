@@ -139,7 +139,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchTurnover(GetEventTurnoverCriteria criteria)
         {
-            GotMatchTurnoverResult result = this._configureTOByEventService.GetMatchTurnover(criteria);
+            GotMatchTurnoverResult result = null;
+
+            criteria.MatchCode = criteria.MatchCode ?? string.Empty;
+            result = this._configureTOByEventService.GetMatchTurnover(criteria);
 
             return Json(result);
         }
@@ -187,7 +190,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>List of JSON objects represents the sport list and league list.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
-        public JsonResult GetInitializedSportData(byte mode)
+        public JsonResult GetInitializedSportData(byte mode = 0)
         {
             IEnumerable<SportInfo> sports = this._configureTOByEventService.GetSportList(new GetSportsCriteria
             {

@@ -25,9 +25,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
+        // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divLeagueContent = domElements.divLeagueContent || $('#divLeagueContent');
-        domElements.ddlSport = domElements.divLeagueContent.find('#ddlSport');
-        domElements.ddlLeague = domElements.divLeagueContent.find('#ddlLeague');
+        domElements.ddlSport = domElements.divLeagueContent.find('select.sport');
+        domElements.ddlLeague = domElements.divLeagueContent.find('select.league');
         domElements.btnSearch = domElements.divLeagueContent.find('#btnSearch');
         domElements.divLeagueTurnoverContainer = domElements.divLeagueContent.find('#divLeagueTurnoverContainer');
         domElements.divLeagueTurnover = domElements.divLeagueContent.find('#divLeagueTurnover');

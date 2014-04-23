@@ -16,11 +16,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
     /// </summary>
     public class GetEventTurnoverCriteria : CriteriaBase
     {
-        public GetEventTurnoverCriteria()
-        {
-            this.MatchCode = string.Empty;
-        }
-
         public int SportID { get; set; }
 
         public int LeagueID { get; set; }

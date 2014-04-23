@@ -291,7 +291,9 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SportInfo object.</returns>
         public IEnumerable<SportInfo> GetSportList(GetSportsCriteria criteria)
         {
-            return this.GetData<SportInfo>(criteria);
+            IEnumerable<SportInfo> result = this.GetData<SportInfo>(criteria);
+
+            return result;
         }
 
         /// <summary>
@@ -301,7 +303,9 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of LeagueInfo objects.</returns>
         public IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            return this.GetData<LeagueInfo>(criteria);
+            IEnumerable<LeagueInfo> result = this.GetData<LeagueInfo>(criteria);
+
+            return result;
         }
     }
 }

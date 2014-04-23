@@ -15,7 +15,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
     var initialParameters = {};
     var instructionOptions = {
         AllowShow: true,
-        IsShown: false,
         IsFocused: false
     };
 
@@ -26,10 +25,11 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
                 var $input = domElements.divMatchTurnover.find('input:focus');
                 var $link = $input.prev();
 
-                $input.addClass('display-none');
-                $link.removeClass('display-none');
-                $input.tipsy('hide');
-                instructionOptions.IsShown = false;
+                if ($input.hasClass('percentage')) {
+                    $input.addClass('display-none');
+                    $link.removeClass('display-none');
+                    $input.tipsy('hide');
+                }
             }
         });
 
@@ -94,16 +94,18 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
 
     // Generate breadcrumb.
     var generateBreadCrumb = function () {
-        var breadCumbTemplate = '<span class="breadCrumb" data-index="{0}">{1}</span> >> ';
+        var breadCrumbTemplate = '<span class="{0}" data-index="{1}">{2}</span> >> ';
+        var breadCrumbClass = '';
         var breadCrumb = '<div id="divBreadCrumb">';
         var lastItem = '';
 
         if (initialParameters) {
             $.each(initialParameters.PreviousReportObjects, function (index, prevReport) {
-                breadCrumb += breadCumbTemplate.format(index, prevReport.ReportName);
+                breadCrumbClass = prevReport.ShowReport ? 'breadCrumb' : '';
+                breadCrumb += breadCrumbTemplate.format(breadCrumbClass, index, prevReport.ReportName);
             });
 
-            lastItem = $this.ReportName.length > 55 ? $this.ReportName.substring(0, 55) + '...' : $this.ReportName;
+            lastItem = $this.ReportName.length > 80 ? $this.ReportName.substring(0, 80) + '...' : $this.ReportName;
             breadCrumb += '<span title="{1}">{0}</span>'.format(lastItem, $this.ReportName);
         }
 
@@ -127,7 +129,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
             // Disable other active fields.
             $.each(percentageLinks, function (index, link) {
                 $(link).removeClass('display-none').next().addClass('display-none').tipsy('hide');
-                instructionOptions.IsShown = false;
             });
 
             // Fill current value into text box.
@@ -136,7 +137,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
             $input.val(percentage).removeClass('display-none').clearfield().focus().select();
 
             // Show instruction if it is allowed.
-            if (instructionOptions.AllowShow && !instructionOptions.IsShown) {
+            if (instructionOptions.AllowShow) {
                 var instruction = '<div id="divInstruction">' +
                                       '{0}<br/>' +
                                       '<input type="checkbox" id="chkInstruction" class="instruction"/>' +
@@ -151,12 +152,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
                     opacity: 0.97,
                     gravity: 's'
                 }).tipsy('show');
-                instructionOptions.IsShown = true;
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
                         instructionOptions.AllowShow = false;
-                        instructionOptions.IsShown = false;
                         $input.tipsy('hide').focus();
                     }
                 });
@@ -164,7 +163,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
                 // Auto-hide after 5 seconds.
                 instructionOptions.TimeoutID = setTimeout(function () {
                     $input.tipsy('hide');
-                    instructionOptions.IsShown = false;
                 }, 5000);
             }
         });
@@ -179,20 +177,19 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
             if (event.keyCode === 13 && validatePercentage($input)) {
                 CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
                     percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
-                    $link.attr('data-value', percentage);
-                    $link.text(formatedPercentage);
-                    $input.addClass('display-none');
-                    $link.removeClass('display-none');
-                    $input.tipsy('hide');
-                    instructionOptions.IsShown = false;
 
-                    updatePercentage($link.attr('data-match-id'), percentage.replace(/,/g, ''));
+                    if (updatePercentage($link.attr('data-match-id'), percentage.replace(/,/g, ''))) {
+                        $link.attr('data-value', percentage);
+                        $link.text(formatedPercentage);
+                        $input.addClass('display-none');
+                        $link.removeClass('display-none');
+                        $input.tipsy('hide');
+                    }
                 });
             } else if (event.keyCode === 27) {
                 $input.addClass('display-none');
                 $link.removeClass('display-none');
                 $input.tipsy('hide');
-                instructionOptions.IsShown = false;
             }
         });
 
@@ -202,6 +199,14 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
             CMS.showConfirmMessage(messages.RemoveTurnoverExceptionConfirmMessage, function () {
                 removeException($obj.attr('data-match-id'));
             });
+        });
+
+        domElements.divMatchTurnover.find('div.grid-container').on('scroll', function () {
+            var $input = domElements.divMatchTurnover.find('input:focus');
+
+            if ($input.hasClass('percentage')) {
+                $input.tipsy('hide');
+            }
         });
 
         domElements.divMatchTurnoverContainer.find('span.breadCrumb').on('click', function () {
@@ -220,7 +225,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
     // Validate input percentage.
     var validatePercentage = function ($input) {
         var value = $input.val().replace(/,/g, '');
-        var isValid = $.isNumeric(value) || (value.length === 1 && value[0].toLowerCase() === 'u');
+        var isValid = ($.isNumeric(value) && parseInt(value) > 0) || (value.length === 1 && value[0].toLowerCase() === 'u');
 
         // Remove previous instruction tooltip if there is any.
         Validator.clearError($input);
@@ -235,10 +240,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
     };
 
     // Generate report name.
-    var generateReportName = function (sportName, sportValue) {
-        var value = sportValue === 0 ? labels.Unlimited : sportValue;
+    var generateReportName = function (name, value) {
+        var fValue = value === 0 ? labels.Unlimited : value;
 
-        return '{0} ({1})'.format(sportName, value);
+        return '{0} ({1})'.format(name, fValue);
     };
 
     // Update percentage value of s sport.
@@ -261,8 +266,12 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     renderGrid(result.Turnovers.MatchTurnovers);
+
+                    return true;
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);
+
+                    return false;
                 }
             },
             error: function (xhr) {
@@ -312,9 +321,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
         var parameters = {
             SportID: initialParameters.SportID,
             LeagueID: initialParameters.LeagueID,
+            MatchCode: initialParameters.MatchCode,
             OnlyShowException: initialParameters.ShowExceptionOnly
         };
-        console.log(initialParameters.LeagueID, initialParameters.SportID);
+
         CMS.disableInput();
         $.ajax({
             type: 'POST',

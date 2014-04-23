@@ -194,7 +194,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeagueTurnover = function () {
         domElements.divLeagueTurnover.find('span.remove-exception').on('click', function () {
             var $obj = $(this);
 
-            CMS.showConfirmMessage(messages.RemoveTurnoverExceptionConfirmMessage, function () {
+            CMS.showConfirmMessage(messages.RemoveTOExceptionConfirmMessage, function () {
                 removeException($obj.attr('data-league-id'));
             });
         });

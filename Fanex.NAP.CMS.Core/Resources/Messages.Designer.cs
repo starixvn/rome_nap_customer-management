@@ -286,11 +286,20 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove this exception?.
+        /// </summary>
+        public static string RemoveMatchTOConfirmationMessage {
+            get {
+                return ResourceManager.GetString("RemoveMatchTOConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This change will not affect to other exception cases.  Are you sure you want to remove it?.
         /// </summary>
-        public static string RemoveTurnoverExceptionConfirmMessage {
+        public static string RemoveTOExceptionConfirmMessage {
             get {
-                return ResourceManager.GetString("RemoveTurnoverExceptionConfirmMessage", resourceCulture);
+                return ResourceManager.GetString("RemoveTOExceptionConfirmMessage", resourceCulture);
             }
         }
         
@@ -340,7 +349,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure to update the percentage value to {0}?.
+        ///   Looks up a localized string similar to Are you sure you want to update the percentage value to {0}?.
         /// </summary>
         public static string UpdatePercentageConfirmMessage {
             get {

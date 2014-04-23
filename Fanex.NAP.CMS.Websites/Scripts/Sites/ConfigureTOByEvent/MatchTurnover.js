@@ -196,7 +196,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover = function () {
         domElements.divMatchTurnover.find('span.remove-exception').on('click', function () {
             var $obj = $(this);
 
-            CMS.showConfirmMessage(messages.RemoveTurnoverExceptionConfirmMessage, function () {
+            CMS.showConfirmMessage(messages.RemoveMatchTOConfirmationMessage, function () {
                 removeException($obj.attr('data-match-id'));
             });
         });

@@ -8,6 +8,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
     var $this = this;
     var leagueReport = null;
     var matchReport = null;
+    var allowShowInstruction = true;
     var domElements = {
         divLeagueContent: null,
         ddlSport: null,
@@ -55,7 +56,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
                 leagueReport.Initialize(domElements, {
                     PreviousReportObjects: [],
                     SportID: sportID,
-                    AllowShowInstruction: true
+                    AllowShowInstruction: allowShowInstruction
                 });
                 leagueReport.GetReportData();
             } else {
@@ -63,17 +64,22 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
                 leagueReport.Initialize(domElements, {
                     PreviousReportObjects: [],
                     SportID: sportID,
-                    AllowShowInstruction: true
+                    AllowShowInstruction: allowShowInstruction
                 });
                 matchReport = matchReport || new Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover();
                 matchReport.Initialize(domElements, {
                     PreviousReportObjects: [leagueReport],
                     SportID: sportID,
                     LeagueID: leagueID,
-                    AllowShowInstruction: true
+                    AllowShowInstruction: allowShowInstruction
                 });
                 matchReport.GetReportData();
             }
+        });
+
+        // This hack is here for the purpose of disabling the instruction tooltip through 'League' and 'Match'.
+        $('#chkInstruction').live('change', function () {
+            allowShowInstruction = $(this).prop(':checked');
         });
     };
 
@@ -182,5 +188,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         hideGrids();
         intializeFilterData();
         bindEventHandlers();
+        allowShowInstruction = true;
     };
 };

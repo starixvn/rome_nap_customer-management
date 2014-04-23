@@ -192,7 +192,10 @@
   <data name="PasswordMinLengthError" xml:space="preserve">
     <value>The password must have at least 6 characters.</value>
   </data>
-  <data name="RemoveTurnoverExceptionConfirmMessage" xml:space="preserve">
+  <data name="RemoveMatchTOConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to remove this exception?</value>
+  </data>
+  <data name="RemoveTOExceptionConfirmMessage" xml:space="preserve">
     <value>This change will not affect to other exception cases.  Are you sure you want to remove it?</value>
   </data>
   <data name="RequiredFieldError" xml:space="preserve">
@@ -211,7 +214,7 @@
     <value>Successfully updated {0}/{1} Member accounts.</value>
   </data>
   <data name="UpdatePercentageConfirmMessage" xml:space="preserve">
-    <value>Are you sure to update the percentage value to {0}?</value>
+    <value>Are you sure you want to update the percentage value to {0}?</value>
   </data>
   <data name="UpdateRequestSuccessfully" xml:space="preserve">
     <value>The request has been updated successfully!</value>

@@ -13,6 +13,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
+    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Match turnover.
@@ -28,7 +29,8 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
                 this.LeagueID = rawData.LeagueID;
                 this.MatchID = rawData.MatchID;
                 this.MatchCode = rawData.MatchCode;
-                this.LeagueName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(rawData.HomeID), ViewLang.Vs, CacheRef.GetTeamName(rawData.AwayID));
+                this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(rawData.HomeID), ViewLang.Vs, CacheRef.GetTeamName(rawData.AwayID));
+                this.EventDate = rawData.EventDate.ToShortFormatedDate();
                 this.Percentage = rawData.MatchValue;
                 this.IsException = rawData.Exception;
             }
@@ -44,7 +46,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 
         public string MatchName { get; set; }
 
-        public string LeagueName { get; set; }
+        public string EventDate { get; set; }
 
         public int Percentage { get; set; }
 

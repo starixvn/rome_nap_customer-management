@@ -16,6 +16,11 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
     /// </summary>
     public class GetEventTurnoverCriteria : CriteriaBase
     {
+        public GetEventTurnoverCriteria()
+        {
+            this.MatchCode = string.Empty;
+        }
+
         public int SportID { get; set; }
 
         public int LeagueID { get; set; }
@@ -32,7 +37,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMATurnoverEventSel";
+            return "NAP_SMATurnover_EventSel";
         }
 
         /// <summary>

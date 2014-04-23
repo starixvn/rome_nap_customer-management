@@ -57,7 +57,13 @@
     <Compile Include="ConfigureCustomerAccess\InsertRequestCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\UpdateRequestCriteria.cs" />
     <Compile Include="ConfigureTOByEvent\GetEventTurnoverCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\GetLeaguesOfSportCriteria.cs" />
     <Compile Include="ConfigureTOByEvent\GetSportsCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\RemoveLeagueExceptionCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\RemoveMatchExceptionCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateLeagueTurnoverCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateMatchTurnoverCriteria.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateSportTurnoverCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />

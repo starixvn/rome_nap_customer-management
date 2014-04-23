@@ -12,12 +12,16 @@ var Validator = (function ($) {
             $obj.tipsy({
                 trigger: 'manual',
                 gravity: gravity ? gravity : 'sw',
-                type: 'error',
+                classStyle: 'error',
                 inDocument: false,
                 opacity: 0.97
             });
             $obj.tipsy('show').triggerHandler('raiseError');
-            $obj.focus();
+
+            // FireFox will not re-focus to the control until blur event finshes.
+            setTimeout(function () {
+                $obj.focus();
+            }, 0);
 
             // Hide error when changing the field.
             $obj.change(function () {

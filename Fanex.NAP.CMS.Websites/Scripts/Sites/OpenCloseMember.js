@@ -356,7 +356,7 @@ Fanex.CMS.CloseOpenMember = function () {
             chkStatus.attr('title', msg).tipsy({
                 trigger: 'manual',
                 gravity: 'sw',
-                type: 'error',
+                classStyle: 'error',
                 opacity: 0.97
             }).tipsy('show');
         } else {

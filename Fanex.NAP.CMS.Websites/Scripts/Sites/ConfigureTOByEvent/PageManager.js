@@ -37,7 +37,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
                 domElements.divMatchContent.addClass('display-none');
 
                 $this.CurrentPage = new Fanex.NAP.CMS.ConfigureTOByEvent.SportPage();
-                $this.CurrentPage.InitPage();
+                $this.CurrentPage.InitPage(domElements.divSportContent);
             }
         });
 
@@ -51,7 +51,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
                 domElements.divMatchContent.addClass('display-none');
 
                 $this.CurrentPage = new Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage();
-                $this.CurrentPage.InitPage();
+                $this.CurrentPage.InitPage(domElements.divLeagueContent);
             }
         });
 

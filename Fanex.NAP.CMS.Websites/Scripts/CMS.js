@@ -29,7 +29,8 @@ var CMS = (function ($) {
         pageSize: 50,
 
         formats: {
-            DateFormat: 'mm/dd/yy'
+            DateFormat: 'mm/dd/yy',
+            IntegerFormat: '0,0'
         },
 
         initCoreValues: function () {

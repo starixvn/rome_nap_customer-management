@@ -55,9 +55,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigureCustomerAccess\RequestItem.cs" />
+    <Compile Include="ConfigureTOByEvent\GotLeagueTurnoverResult.cs" />
+    <Compile Include="ConfigureTOByEvent\GotMatchTurnoverResult.cs" />
     <Compile Include="ConfigureTOByEvent\LeagueTurnover.cs" />
     <Compile Include="ConfigureTOByEvent\MatchTurnover.cs" />
+    <Compile Include="ConfigureTOByEvent\RemoveLeagueExceptionFilter.cs" />
+    <Compile Include="ConfigureTOByEvent\RemoveMatchExceptionFilter.cs" />
     <Compile Include="ConfigureTOByEvent\SportTurnover.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdatedTurnoverResult.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateLeagueTurnoverFilter.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateMatchTurnoverFilter.cs" />
+    <Compile Include="ConfigureTOByEvent\UpdateSportTurnoverFilter.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />

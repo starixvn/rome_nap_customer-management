@@ -15,7 +15,13 @@
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
   </Function>
   <Function Name="ConfigureTOByEvent">
-    <Setting Key="NAP_SMATurnoverEventSel" SpName="NAP_SMATurnoverEventSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
-    <Setting Key="NAP_SMATurnoverSportSel" SpName="NAP_SMATurnoverSportSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_EventSel" SpName="NAP_SMATurnover_EventSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SportSel" SpName="NAP_SMATurnover_SportSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueSel" SpName="NAP_SMATurnover_LeagueSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SportControlUpd" SpName="NAP_SMATurnover_SportControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueControlUpd" SpName="NAP_SMATurnover_LeagueControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MatchControlUpd" SpName="NAP_SMATurnover_MatchControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueControlDel" SpName="NAP_SMATurnover_LeagueControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MatchControlDel" SpName="NAP_SMATurnover_MatchControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
 </Functions>

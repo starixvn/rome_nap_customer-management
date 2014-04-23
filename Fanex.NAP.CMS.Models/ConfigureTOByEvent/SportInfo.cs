@@ -9,9 +9,12 @@
 
 namespace Fanex.NAP.CMS.Models.ConfigureTOByEvent
 {
+    using System;
+
     /// <summary>
     /// Sport information.
     /// </summary>
+    [Serializable]
     public class SportInfo
     {
         public byte SportType { get; set; }

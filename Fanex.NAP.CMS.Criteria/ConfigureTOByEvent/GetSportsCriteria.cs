@@ -29,7 +29,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMATurnoverSportSel";
+            return "NAP_SMATurnover_SportSel";
         }
 
         /// <summary>

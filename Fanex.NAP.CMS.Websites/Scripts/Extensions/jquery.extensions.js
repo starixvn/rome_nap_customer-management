@@ -33,6 +33,8 @@
             $(this).removeClass('x-icon');
             $(this).removeClass('on-x-icon');
         });
+
+        return $this;
     };
 
     // Mask input field to allow enter IP format only.
@@ -110,5 +112,139 @@
 
             updateGroupValue(groupId, value);
         });
+    };
+
+    $.fn.numberField = function (digits, allowNegative, firstChar) {
+        var $this = $(this);
+
+        // Get pointer position in the text box.
+        var getCaret = function (element) {
+            var position = 0;
+            var ctrl = element.get(0);
+            var ctrlSelStart = ctrl.selectionStart;
+            var selection = document.selection;
+            var selRange = null;
+
+            if (ctrlSelStart || ctrlSelStart === '0') {
+                position = ctrlSelStart;
+            } else if (selection) {
+                ctrl.focus();
+                selRange = selection.createRange();
+                selRange.moveStart('character', -ctrl.value.length);
+                position = selRange.text.length;
+            }
+
+            return position;
+        };
+
+        // Set pointer position in the text box.
+        var setCaret = function (element, position) {
+            var ctrl = element.get(0);
+            var selRange = null;
+
+            if (ctrl.setSelectionRange) {
+                ctrl.focus();
+                ctrl.setSelectionRange(position, position);
+            } else if (ctrl.createTextRange) {
+                selRange = ctrl.createTextRange();
+                selRange.collapse(true);
+                selRange.moveEnd('character', position);
+                selRange.moveStart('character', position);
+                selRange.select();
+            }
+        };
+
+        var getSelectedText = function(element) {
+            var ctrl = element.get(0);
+            var value = ctrl.value;
+
+            if (ctrl.selectionStart !== undefined) {
+                return value.substr(ctrl.selectionStart, ctrl.selectionEnd - ctrl.selectionStart);
+            } else if (document.selection) {
+                return document.selection.createRange().text;
+            } else {
+                return '';
+            }
+        };
+
+        $this.on('keypress', function (event) {
+            var $obj = $(this);
+            var value = $.trim($obj.val());
+            var decimalPos = value.indexOf('.');
+            var minusPos = value.indexOf('-');
+            var cursorPos = getCaret($obj);
+            var keyCode = event.which;
+
+            // Allow ctrl, shilf, alt, tab, enter, backspace, delete, home, end, escape, left, right, up, down keys.
+            if (event.ctrlKey || event.shilfKey || event.altkey ||
+                (event.keyCode >= 35 && event.keyCode <= 40) ||
+                ($.inArray(event.keyCode, [8, 9, 27, 13, 190]) !== -1)) {
+                return;
+            }
+
+            // Allow decimal character if there is no decimal character has been input yet
+            // and some digits have already been input before the decimal character.
+            if ((digits > 0) &&
+                (keyCode === 46) &&
+                ((decimalPos < 0) || (decimalPos > 0 && cursorPos <= decimalPos)) &&
+                (value.length > 0)) {
+                return;
+            }
+
+            // Allow only one minus character at the begining of the value.
+            if (allowNegative && (event.keyCode === 45) && (minusPos < 0) && (value.length === 0)) {
+                return;
+            }
+
+            // Allow digits.
+            if ((48 <= keyCode) && (keyCode <= 57)) {
+                // Check whether the number of digits after the decimal meets the requrement or not.
+                if ((decimalPos < 0) ||
+                    (decimalPos > 0 && cursorPos <= decimalPos) ||
+                    ((decimalPos >= 0) && (value.length - decimalPos <= digits))) {
+                    return;
+                }
+            }
+
+            // Allow an exception at the beginning of string.
+            if (firstChar &&
+                cursorPos === 0 &&
+                firstChar.length > 0 &&
+                (value.length === 0 || getSelectedText($obj).length === value.length) &&
+                firstChar.toLowerCase() === String.fromCharCode(keyCode).toLowerCase()) {
+                return;
+            }
+
+            return false;
+        }).on('keyup', function () {
+            var $obj = $(this);
+            var value = $.trim($obj.val());
+            var rawValue = value.replace(/,/g, '');
+
+            if ($.isNumeric(rawValue)) {
+                var decimalPos = rawValue.indexOf('.');
+                var cursorPos = getCaret($obj);
+                var cursorLastPos = cursorPos === value.length;
+
+                rawValue = rawValue === '' ? '0' : rawValue;
+
+                if (decimalPos < 0) {
+                    value = numeral(rawValue).format('0,0');
+                } else if (decimalPos < rawValue.length - 1) {
+                    value = numeral(rawValue).format('0,0.0[000]');
+                }
+
+                if ((48 <= event.keyCode && event.keyCode <= 57) ||
+                    (96 <= event.keyCode && event.keyCode <= 105) ||
+                    (event.keyCode === 45 || event.keyCode === 46) ||
+                    (event.keyCode === 109 || event.keyCode === 110)) {
+                    cursorPos = cursorLastPos ? value.length : cursorPos;
+                    $obj.val(value);
+                    setCaret($obj, cursorPos);
+                }
+            }
+        });
+
+        return $this;
     };
 })(jQuery);

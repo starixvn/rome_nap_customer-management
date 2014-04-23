@@ -286,6 +286,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This change will not affect to other exception cases.  Are you sure you want to remove it?.
+        /// </summary>
+        public static string RemoveTurnoverExceptionConfirmMessage {
+            get {
+                return ResourceManager.GetString("RemoveTurnoverExceptionConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Required field!.
         /// </summary>
         public static string RequiredFieldError {
@@ -327,6 +336,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string UpdateMemberStatusSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateMemberStatusSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure to update the percentage value to {0}?.
+        /// </summary>
+        public static string UpdatePercentageConfirmMessage {
+            get {
+                return ResourceManager.GetString("UpdatePercentageConfirmMessage", resourceCulture);
             }
         }
         

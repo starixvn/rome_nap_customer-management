@@ -18,7 +18,11 @@ namespace Fanex.NAP.CMS.Models.ConfigureTOByEvent
     {
         public int SportID { get; set; }
 
+        public int SportValue { get; set; }
+
         public int LeagueID { get; set; }
+
+        public int LeagueValue { get; set; }
 
         public int MatchID { get; set; }
 

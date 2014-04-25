@@ -192,7 +192,10 @@
             }
 
             // Allow only one minus character at the begining of the value.
-            if (allowNegative && (event.keyCode === 45) && (minusPos < 0) && (value.length === 0)) {
+            if (allowNegative &&
+                (cursorPos === 0 || (cursorPos > 0 && minusPos < 0)) &&
+                (value.length === 0 || getSelectedText($obj).length === value.length) &&
+                event.keyCode === 45) {
                 return;
             }
 

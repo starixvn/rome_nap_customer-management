@@ -88,6 +88,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The new SMA TO has been added successfully!.
+        /// </summary>
+        public static string AddSMATOSuccessfully {
+            get {
+                return ResourceManager.GetString("AddSMATOSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The password has been changed successfully!.
         /// </summary>
         public static string ChangedPassword {
@@ -286,11 +295,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to proceed?.
+        /// </summary>
+        public static string ProceedConfirmMessage {
+            get {
+                return ResourceManager.GetString("ProceedConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to remove this exception?.
         /// </summary>
         public static string RemoveMatchTOConfirmationMessage {
             get {
                 return ResourceManager.GetString("RemoveMatchTOConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input 0 to remove offset.
+        /// </summary>
+        public static string RemoveOffsetInstruction {
+            get {
+                return ResourceManager.GetString("RemoveOffsetInstruction", resourceCulture);
             }
         }
         
@@ -349,11 +376,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The offset value has been updated successfully!.
+        /// </summary>
+        public static string UpdateOffsetSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateOffsetSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to update the percentage value to {0}?.
         /// </summary>
         public static string UpdatePercentageConfirmMessage {
             get {
                 return ResourceManager.GetString("UpdatePercentageConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The percentage value has been updated successfully!.
+        /// </summary>
+        public static string UpdatePercentageSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatePercentageSuccessfully", resourceCulture);
             }
         }
         

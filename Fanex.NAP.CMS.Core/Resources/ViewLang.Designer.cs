@@ -88,6 +88,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add SMA.
+        /// </summary>
+        public static string AddSMA {
+            get {
+                return ResourceManager.GetString("AddSMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
@@ -106,11 +115,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Countries.
+        /// </summary>
+        public static string AllCountries {
+            get {
+                return ResourceManager.GetString("AllCountries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Leagues.
         /// </summary>
         public static string AllLeagues {
             get {
                 return ResourceManager.GetString("AllLeagues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Markets.
+        /// </summary>
+        public static string AllMarkets {
+            get {
+                return ResourceManager.GetString("AllMarkets", resourceCulture);
             }
         }
         
@@ -250,6 +277,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer.
         /// </summary>
         public static string Customer {
@@ -322,6 +358,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Given Credit.
+        /// </summary>
+        public static string GivenCredit {
+            get {
+                return ResourceManager.GetString("GivenCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GMT-4.
         /// </summary>
         public static string GMTMinus4 {
@@ -376,6 +421,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Main Markets.
+        /// </summary>
+        public static string MainMarkets {
+            get {
+                return ResourceManager.GetString("MainMarkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Market.
+        /// </summary>
+        public static string Market {
+            get {
+                return ResourceManager.GetString("Market", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Master {
@@ -417,6 +489,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string MembersStatus {
             get {
                 return ResourceManager.GetString("MembersStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New SMA TO Control.
+        /// </summary>
+        public static string NewSMATOControl {
+            get {
+                return ResourceManager.GetString("NewSMATOControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        public static string Offset {
+            get {
+                return ResourceManager.GetString("Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olympic.
+        /// </summary>
+        public static string Olympic {
+            get {
+                return ResourceManager.GetString("Olympic", resourceCulture);
             }
         }
         
@@ -502,6 +601,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SMA Name.
+        /// </summary>
+        public static string SMAName {
+            get {
+                return ResourceManager.GetString("SMAName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special League.
+        /// </summary>
+        public static string SpecialLeague {
+            get {
+                return ResourceManager.GetString("SpecialLeague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sport.
         /// </summary>
         public static string Sport {
@@ -570,6 +687,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Vs {
             get {
                 return ResourceManager.GetString("Vs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World Cup.
+        /// </summary>
+        public static string WorldCup {
+            get {
+                return ResourceManager.GetString("WorldCup", resourceCulture);
             }
         }
     }

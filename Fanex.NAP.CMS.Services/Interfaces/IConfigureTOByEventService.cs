@@ -11,8 +11,11 @@ namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
     using Fanex.NAP.CMS.Criteria.ConfigureTOByEvent;
+    using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
     using Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent;
+    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     public interface IConfigureTOByEventService
     {
@@ -21,56 +24,28 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of SportTurnover objects.</returns>
-        IEnumerable<SportTurnover> GetSportTurnover(GetEventTurnoverCriteria criteria);
+        IEnumerable<SportTurnover> GetSportTurnover(GetSportTurnoverCriteria criteria);
 
         /// <summary>
         /// Gets the league turnover.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>GotLeagueTurnoverResult object.</returns>
-        GotLeagueTurnoverResult GetLeagueTurnover(GetEventTurnoverCriteria criteria);
+        GotLeagueTurnoverResult GetLeagueTurnover(GetLeagueTurnoverCriteria criteria);
 
         /// <summary>
         /// Gets the match turnover.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>GotMatchTurnoverResult object.</returns>
-        GotMatchTurnoverResult GetMatchTurnover(GetEventTurnoverCriteria criteria);
+        GotMatchTurnoverResult GetMatchTurnover(GetMatchTurnoverCriteria criteria);
 
         /// <summary>
-        /// Updates sport maximum turnover and get the list of sport turnovers after updating.
+        /// Updates the turnover.
         /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        UpdatedTurnoverResult UpdateSportTurnover(UpdateSportTurnoverFilter filter);
-
-        /// <summary>
-        /// Updates league maximum turnover and get the list of league turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        UpdatedTurnoverResult UpdateLeagueTurnover(UpdateLeagueTurnoverFilter filter);
-
-        /// <summary>
-        /// Updates match maximum turnover and get the list of match turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        UpdatedTurnoverResult UpdateMatchTurnover(UpdateMatchTurnoverFilter filter);
-
-        /// <summary>
-        /// Remove league exception and get the list of league turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        UpdatedTurnoverResult RemoveLeagueException(RemoveLeagueExceptionFilter filter);
-
-        /// <summary>
-        /// Remove match exception and get the list of match turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        UpdatedTurnoverResult RemoveMatchException(RemoveMatchExceptionFilter filter);
+        /// <param name="criteria">The criteria contain updated data.</param>
+        /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
+        ICommandResult UpdateTurnover(ICriteria criteria);
 
         /// <summary>
         /// Gets the sport list.
@@ -85,5 +60,17 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of LeagueInfo objects.</returns>
         IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria);
+
+        /// <summary>
+        /// Gets the list of countries which have active leagues.
+        /// </summary>
+        /// <returns>List of CountryInfo objects.</returns>
+        IEnumerable<CountryInfo> GetCountryList();
+
+        /// <summary>
+        /// Gets the list of special leagues.
+        /// </summary>
+        /// <returns>List of CountryInfo objects.</returns>
+        IEnumerable<SpecialLeagueInfo> GetSpecialLeagueList();
     }
 }

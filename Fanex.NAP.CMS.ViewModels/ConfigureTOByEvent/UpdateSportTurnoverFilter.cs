@@ -17,9 +17,5 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         public int SportID { get; set; }
 
         public int Value { get; set; }
-
-        public int UserID { get; set; }
-
-        public string IP { get; set; }
     }
 }

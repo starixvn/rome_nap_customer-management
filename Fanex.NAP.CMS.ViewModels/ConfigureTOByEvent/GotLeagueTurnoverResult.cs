@@ -19,6 +19,11 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
     [Serializable]
     public class GotLeagueTurnoverResult
     {
+        public GotLeagueTurnoverResult()
+        {
+            this.SportName = string.Empty;
+        }
+
         public GotLeagueTurnoverResult(int sportID, int sportValue, IEnumerable<LeagueTurnover> leagueTurnovers)
         {
             this.SportID = sportID;

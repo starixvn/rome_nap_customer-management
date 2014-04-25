@@ -288,4 +288,46 @@
   <data name="OnlyShowExceptionSetting" xml:space="preserve">
     <value>Only show exception setting</value>
   </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="GivenCredit" xml:space="preserve">
+    <value>Given Credit</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Offset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="SMAName" xml:space="preserve">
+    <value>SMA Name</value>
+  </data>
+  <data name="SpecialLeague" xml:space="preserve">
+    <value>Special League</value>
+  </data>
+  <data name="AllMarkets" xml:space="preserve">
+    <value>All Markets</value>
+  </data>
+  <data name="MainMarkets" xml:space="preserve">
+    <value>Main Markets</value>
+  </data>
+  <data name="Market" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="NewSMATOControl" xml:space="preserve">
+    <value>New SMA TO Control</value>
+  </data>
+  <data name="AddSMA" xml:space="preserve">
+    <value>Add SMA</value>
+  </data>
+  <data name="Olympic" xml:space="preserve">
+    <value>Olympic</value>
+  </data>
+  <data name="WorldCup" xml:space="preserve">
+    <value>World Cup</value>
+  </data>
+  <data name="AllCountries" xml:space="preserve">
+    <value>All Countries</value>
+  </data>
 </root>

@@ -243,13 +243,10 @@
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\ReCheckIn.js" />
-    <Content Include="Scripts\Sites\ConfigureTOByEvent\MatchTurnover.js" />
-    <Content Include="Scripts\Sites\ConfigureTOByEvent\LeagueTurnover.js" />
-    <Content Include="Scripts\Sites\ConfigureTOByEvent\SportTurnover.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\MatchPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\LeaguePage.js" />
-    <Content Include="Scripts\Sites\ConfigureTOByEvent\SportPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\PageManager.js" />
+    <Content Include="Scripts\Sites\ConfigureTOByEvent\SportPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOBySMA.js" />
     <Content Include="Scripts\Sites\ConfigureSMATOByMatch.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />

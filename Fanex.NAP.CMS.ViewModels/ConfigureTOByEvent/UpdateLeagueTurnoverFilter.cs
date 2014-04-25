@@ -20,9 +20,15 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 
         public int Value { get; set; }
 
-        public int UserID { get; set; }
+        public string ProgramID { get; set; }
 
-        public string IP { get; set; }
+        public byte DisplayMode { get; set; }
+
+        public string CountryCode { get; set; }
+
+        public bool IsMainMarket { get; set; }
+
+        public string LeagueName { get; set; }
 
         public bool OnlyShowException { get; set; }
     }

@@ -11,32 +11,34 @@ namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.CMS.Core.Resources;
+    using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.ConfigureTOByEvent;
+    using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent;
     using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Configure turnover by event service.
     /// </summary>
     public class ConfigureTOByEventService : CMSBaseService, IConfigureTOByEventService
     {
-        private const int SportMode = 1;
-        private const int LeagueMode = 2;
-        private const int MatchMode = 3;
+        private const int OlympicMode = 1;
+        private const int WorldCupMode = 2;
 
         /// <summary>
         /// Gets the sport turnover.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of SportTurnover objects.</returns>
-        public IEnumerable<SportTurnover> GetSportTurnover(GetEventTurnoverCriteria criteria)
+        public IEnumerable<SportTurnover> GetSportTurnover(GetSportTurnoverCriteria criteria)
         {
             IEnumerable<SportTurnoverInfo> rawData = null;
             IEnumerable<SportTurnover> result = null;
 
-            criteria.ViewMode = SportMode;
             rawData = this.GetData<SportTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
@@ -52,14 +54,13 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>GotLeagueTurnoverResult object.</returns>
-        public GotLeagueTurnoverResult GetLeagueTurnover(GetEventTurnoverCriteria criteria)
+        public GotLeagueTurnoverResult GetLeagueTurnover(GetLeagueTurnoverCriteria criteria)
         {
             IEnumerable<LeagueTurnoverInfo> rawData = null;
             IEnumerable<LeagueTurnover> turnovers = null;
             LeagueTurnoverInfo firstItem = null;
             GotLeagueTurnoverResult result = null;
 
-            criteria.ViewMode = LeagueMode;
             rawData = this.GetData<LeagueTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
@@ -67,6 +68,10 @@ namespace Fanex.NAP.CMS.Services.Implements
                 turnovers = rawData.Select(obj => new LeagueTurnover(obj)).OrderBy(obj => obj.LeagueName).ToList();
                 firstItem = rawData.ElementAt<LeagueTurnoverInfo>(0);
                 result = new GotLeagueTurnoverResult(firstItem.SportID, firstItem.SportValue, turnovers);
+            }
+            else
+            {
+                result = new GotLeagueTurnoverResult();
             }
 
             return result;
@@ -77,14 +82,13 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>GotMatchTurnoverResult object.</returns>
-        public GotMatchTurnoverResult GetMatchTurnover(GetEventTurnoverCriteria criteria)
+        public GotMatchTurnoverResult GetMatchTurnover(GetMatchTurnoverCriteria criteria)
         {
             IEnumerable<MatchTurnoverInfo> rawData = null;
             IEnumerable<MatchTurnover> turnovers = null;
             MatchTurnoverInfo firstItem = null;
             GotMatchTurnoverResult result = null;
 
-            criteria.ViewMode = MatchMode;
             rawData = this.GetData<MatchTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
@@ -95,193 +99,20 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
             else
             {
-                // Get league information to generate the breadcrumd in the case the league has no match.
-                LeagueTurnoverInfo leagueInfo = null;
-
-                // Set the ViewMode to LeagueMode and OnlyShowException to false to get the information of current and its sport.
-                criteria.ViewMode = LeagueMode;
-                criteria.OnlyShowException = false;
-
-                leagueInfo = this.GetItem<LeagueTurnoverInfo>(criteria);
-                result = new GotMatchTurnoverResult(leagueInfo.SportID, leagueInfo.SportValue, leagueInfo.LeagueID, leagueInfo.LeagueValue, turnovers);
+                result = new GotMatchTurnoverResult();
             }
 
             return result;
         }
 
         /// <summary>
-        /// Updates sport maximum turnover and get the list of sport turnovers after updating.
+        /// Updates the turnover.
         /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        public UpdatedTurnoverResult UpdateSportTurnover(UpdateSportTurnoverFilter filter)
+        /// <param name="criteria">The criteria contain updated data.</param>
+        /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
+        public ICommandResult UpdateTurnover(ICriteria criteria)
         {
-            var updatingCriteria = new UpdateSportTurnoverCriteria
-            {
-                SportID = filter.SportID,
-                Value = filter.Value,
-                UserID = filter.UserID,
-                IP = filter.IP
-            };
-            ICommandResult updatingResult = this.UpdateData(updatingCriteria);
-            IEnumerable<SportTurnover> turnovers = null;
-
-            // Get up-to-date data after updating.
-            if (updatingResult.Code == 0)
-            {
-                turnovers = GetSportTurnover(new GetEventTurnoverCriteria());
-            }
-
-            return new UpdatedTurnoverResult
-            {
-                ErrorCode = updatingResult.Code,
-                ErrorMessage = updatingResult.Message,
-                Turnovers = turnovers
-            };
-        }
-
-        /// <summary>
-        /// Updates league maximum turnover and get the list of league turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        public UpdatedTurnoverResult UpdateLeagueTurnover(UpdateLeagueTurnoverFilter filter)
-        {
-            var updatingCriteria = new UpdateLeagueTurnoverCriteria
-            {
-                LeagueID = filter.LeagueID,
-                Value = filter.Value,
-                UserID = filter.UserID,
-                IP = filter.IP
-            };
-            var gettingCriteria = new GetEventTurnoverCriteria
-            {
-                SportID = filter.SportID,
-                OnlyShowException = filter.OnlyShowException
-            };
-            ICommandResult updatingResult = this.UpdateData(updatingCriteria);
-            GotLeagueTurnoverResult turnovers = null;
-
-            // Get up-to-date data after updating.
-            if (updatingResult.Code == 0)
-            {
-                turnovers = GetLeagueTurnover(gettingCriteria);
-            }
-
-            return new UpdatedTurnoverResult
-            {
-                ErrorCode = updatingResult.Code,
-                ErrorMessage = updatingResult.Message,
-                Turnovers = turnovers
-            };
-        }
-
-        /// <summary>
-        /// Updates match maximum turnover and get the list of match turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        public UpdatedTurnoverResult UpdateMatchTurnover(UpdateMatchTurnoverFilter filter)
-        {
-            var updatingCriteria = new UpdateMatchTurnoverCriteria
-            {
-                MatchID = filter.MatchID,
-                Value = filter.Value,
-                UserID = filter.UserID,
-                IP = filter.IP
-            };
-            var gettingCriteria = new GetEventTurnoverCriteria
-            {
-                SportID = filter.SportID,
-                LeagueID = filter.LeagueID,
-                OnlyShowException = filter.OnlyShowException
-            };
-            ICommandResult updatingResult = this.UpdateData(updatingCriteria);
-            GotMatchTurnoverResult turnovers = null;
-
-            // Get up-to-date data after updating.
-            if (updatingResult.Code == 0)
-            {
-                turnovers = GetMatchTurnover(gettingCriteria);
-            }
-
-            return new UpdatedTurnoverResult
-            {
-                ErrorCode = updatingResult.Code,
-                ErrorMessage = updatingResult.Message,
-                Turnovers = turnovers
-            };
-        }
-
-        /// <summary>
-        /// Remove league exception and get the list of league turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        public UpdatedTurnoverResult RemoveLeagueException(RemoveLeagueExceptionFilter filter)
-        {
-            var updatingCriteria = new RemoveLeagueExceptionCriteria
-            {
-                LeagueID = filter.LeagueID,
-                UserID = filter.UserID,
-                IP = filter.IP
-            };
-            var gettingCriteria = new GetEventTurnoverCriteria
-            {
-                SportID = filter.SportID,
-                OnlyShowException = filter.OnlyShowException
-            };
-            ICommandResult updatingResult = this.UpdateData(updatingCriteria);
-            GotLeagueTurnoverResult turnovers = null;
-
-            // Get up-to-date data after updating.
-            if (updatingResult.Code == 0)
-            {
-                turnovers = GetLeagueTurnover(gettingCriteria);
-            }
-
-            return new UpdatedTurnoverResult
-            {
-                ErrorCode = updatingResult.Code,
-                ErrorMessage = updatingResult.Message,
-                Turnovers = turnovers
-            };
-        }
-
-        /// <summary>
-        /// Remove match exception and get the list of match turnovers after updating.
-        /// </summary>
-        /// <param name="filter">The filter that is used to update and query data.</param>
-        /// <returns>UpdatedTurnoverResult objects.</returns>
-        public UpdatedTurnoverResult RemoveMatchException(RemoveMatchExceptionFilter filter)
-        {
-            var updatingCriteria = new RemoveMatchExceptionCriteria
-            {
-                MatchID = filter.MatchID,
-                UserID = filter.UserID,
-                IP = filter.IP
-            };
-            var gettingCriteria = new GetEventTurnoverCriteria
-            {
-                SportID = filter.SportID,
-                LeagueID = filter.LeagueID,
-                OnlyShowException = filter.OnlyShowException
-            };
-            ICommandResult updatingResult = this.UpdateData(updatingCriteria);
-            GotMatchTurnoverResult turnovers = null;
-
-            // Get up-to-date data after updating.
-            if (updatingResult.Code == 0)
-            {
-                turnovers = GetMatchTurnover(gettingCriteria);
-            }
-
-            return new UpdatedTurnoverResult
-            {
-                ErrorCode = updatingResult.Code,
-                ErrorMessage = updatingResult.Message,
-                Turnovers = turnovers
-            };
+            return this.UpdateData(criteria);
         }
 
         /// <summary>
@@ -304,6 +135,63 @@ namespace Fanex.NAP.CMS.Services.Implements
         public IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
             IEnumerable<LeagueInfo> result = this.GetData<LeagueInfo>(criteria);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the list of countries which have active leagues.
+        /// </summary>
+        /// <returns>List of CountryInfo objects.</returns>
+        public IEnumerable<CountryInfo> GetCountryList()
+        {
+            IEnumerable<CountryInfo> result = this.GetData<CountryInfo>(new GetCountryListCriteria());
+
+            foreach (CountryInfo item in result)
+            {
+                item.CountryName = CacheRef.GetCountryName(item.CountryCode);
+
+                if (string.IsNullOrEmpty(item.CountryName))
+                {
+                    item.CountryName = item.CountryCode;
+                }
+            }
+
+            result = result.OrderBy(obj => obj.CountryName);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the list of special leagues.
+        /// </summary>
+        /// <returns>List of CountryInfo objects.</returns>
+        public IEnumerable<SpecialLeagueInfo> GetSpecialLeagueList()
+        {
+            IEnumerable<SpecialLeagueInfo> result = this.GetData<SpecialLeagueInfo>(new GetSpecialLeaguesCriteria());
+            string specialLeague;
+
+            foreach (SpecialLeagueInfo item in result)
+            {
+                switch (item.DisplayMode)
+                {
+                    case OlympicMode:
+                        specialLeague = ViewLang.Olympic;
+                        break;
+
+                    case WorldCupMode:
+                        specialLeague = ViewLang.WorldCup;
+                        break;
+
+                    default:
+                        specialLeague = string.Empty;
+                        break;
+                }
+
+                item.DisplayName = string.Format("{0} {1}", specialLeague, item.ProgramID);
+            }
+
+            result = result.OrderBy(obj => obj.DisplayName);
 
             return result;
         }

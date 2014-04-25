@@ -66,6 +66,11 @@
     <Compile Include="ConfigureTOByEvent\UpdateLeagueTurnoverFilter.cs" />
     <Compile Include="ConfigureTOByEvent\UpdateMatchTurnoverFilter.cs" />
     <Compile Include="ConfigureTOByEvent\UpdateSportTurnoverFilter.cs" />
+    <Compile Include="ConfigureTOBySMA\DeleteSMAOffsetFilter.cs" />
+    <Compile Include="ConfigureTOBySMA\InsertSMAOffsetFilter.cs" />
+    <Compile Include="ConfigureTOBySMA\SMAOffset.cs" />
+    <Compile Include="ConfigureTOBySMA\UpdatedSMAOffsetResult.cs" />
+    <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetFilter.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />

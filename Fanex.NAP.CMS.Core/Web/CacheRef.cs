@@ -86,6 +86,16 @@ namespace Fanex.NAP.CMS.Core.Web
         }
 
         /// <summary>
+        /// Gets the name of the country.
+        /// </summary>
+        /// <param name="countryCode">The country code.</param>
+        /// <returns>The country name.</returns>
+        public static string GetCountryName(string countryCode)
+        {
+            return RefData.GetCountryName(countryCode, TWLang("en-US"));
+        }
+
+        /// <summary>
         /// Gets combination name.
         /// </summary>
         /// <param name="betteam">Bet team name.</param>

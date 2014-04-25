@@ -20,10 +20,10 @@
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_3 align-right">
-                <label for="txtSearchUserName">@ViewLang.Username</label>
+                <label for="txtSearchUserName">@ViewLang.SMAName</label>
             </div>
-            <div class="edit-field col_5 align-left">
-                <input type="text" id="txtSearchUserName" />
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtSMAName" class="width-160" />
             </div>
             <div class="submit width-auto col_4">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
@@ -31,7 +31,7 @@
             @if (hasEditAccessRight)
             {
                 <div class="submit width-auto col_4">
-                    <input id="btnAddRequest" type="button" class="submit width-120" value="@ViewLang.AddRequest" />
+                    <input id="btnAddSMA" type="button" class="submit width-100" value="@ViewLang.AddSMA" />
                 </div>
             }
         </div>
@@ -39,9 +39,62 @@
     </div>
 </div>
 <div class="display-none content-grid">
-    <div id="divMemberList" class="freegrid"></div>
+    <div id="divSMAOffset" class="freegrid"></div>
 </div>
+@if (hasEditAccessRight)
+{
+    <div id="divPopupContent" class="display-none">
+        <div id="divNewSMAOffsetForm" class="form expand-form">
+            <div id="divErrorSuccessMsg" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtNewSMAName">@ViewLang.SMAName</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" id="txtNewSMAName" class="width-200" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtOffset">@ViewLang.Offset</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" id="txtOffset" class="width-200" maxlength="7" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+                <div class="insert-instruction">@Messages.TurnoverInputInstruction.Replace("\\", string.Empty)</div>
+            </div>
+            <div class="form-row button-row">
+                <div class="lbl-field  normal-label"></div>
+                <div class="edit-field">
+                    <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Save" />
+                    <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
 @section Foot
 {
     @Scripts.Render("~/scripts/configureTOBySMA")
+    <script type="text/javascript">
+        var labels = {
+            SMAName: '@ViewLang.SMAName',
+            Level: '@ViewLang.Level',
+            Currency: '@ViewLang.Currency',
+            GivenCredit: '@ViewLang.GivenCredit',
+            Offset: '@ViewLang.Offset',
+            Unlimited: '@ViewLang.Unlimited',
+            NewSMATOControl: '@ViewLang.NewSMATOControl'
+        };
+        var messages = {
+            NotShowAgain: '@Html.Raw(Messages.NotShowAgainMessage)',
+            TurnoverInputInstruction: '@Messages.TurnoverInputInstruction',
+            InvalidValueError: '@Messages.InvalidValueError',
+            RemoveOffsetInstruction: '@Messages.RemoveOffsetInstruction',
+            ProceedConfirmMessage: '@Messages.ProceedConfirmMessage',
+            UpdateOffsetSuccessfully: '@Messages.UpdateOffsetSuccessfully',
+            AddSMATOSuccessfully: '@Messages.AddSMATOSuccessfully'
+        };
+        var hasEditRight = '@ViewBag.hasEditAccessRight' === 'True';
+    </script>
 }

@@ -20,9 +20,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 
         public int MatchID { get; set; }
 
-        public int UserID { get; set; }
-
-        public string IP { get; set; }
+        public string MatchCode { get; set; }
 
         public bool OnlyShowException { get; set; }
     }

@@ -1,12 +1,22 @@
 ﻿/* File Created: April 17, 2014 */
-/* global Namespace, Fanex, CMS */
+/* global Namespace, numeral, Fanex, CMS, Validator, labels, messages, hasEditRight */
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage');
 Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
     'use strict';
 
     var $this = this;
-    var matchReport = null;
+    var urls = {
+        GetMatchTurnover: CMS.resolveRootUrl('ConfigureTOByEvent/GetMatchTurnover'),
+        UpdateMatchTurnover: CMS.resolveRootUrl('ConfigureTOByEvent/UpdateMatchTurnover'),
+        RemoveMatchException: CMS.resolveRootUrl('ConfigureTOByEvent/RemoveMatchException'),
+        GetInitializedMatchData: CMS.resolveRootUrl('ConfigureTOByEvent/GetInitializedMatchData'),
+        GetLeaguesOfSport: CMS.resolveRootUrl('ConfigureTOByEvent/GetLeaguesOfSport')
+    };
+    var instructionOptions = {
+        AllowShow: true,
+        IsFocused: false
+    };
     var domElements = {
         divMatchContent: null,
         ddlSport: null,
@@ -16,10 +26,13 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         divMatchTurnoverContainer: null,
         divMatchTurnover: null
     };
-    var urls = {
-        GetInitializedSportData: CMS.resolveRootUrl('ConfigureTOByEvent/GetInitializedSportData'),
-        GetLeaguesOfSport: CMS.resolveRootUrl('ConfigureTOByEvent/GetLeaguesOfSport')
+    var parameters = {
+        SportID: null,
+        LeagueID: null,
+        MatchCode: null,
+        OnlyShowException: false
     };
+    var gridTitle = '';
 
     // Cache DOM Elements.
     var cacheDOMElements = function () {
@@ -48,22 +61,218 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         });
 
         domElements.btnSearch.on('click', function () {
-            var sportID = domElements.ddlSport.val();
-            var leagueID = domElements.ddlLeague.val();
-            var matchCode = domElements.txtMatchCode.val();
+            parameters.SportID = domElements.ddlSport.val();
+            parameters.LeagueID = domElements.ddlLeague.val();
+            parameters.MatchCode = domElements.txtMatchCode.val();
+            parameters.OnlyShowException = false;
 
-            hideGrids();
-
-            matchReport = matchReport || new Fanex.NAP.CMS.ConfigureTOByEvent.MatchTurnover();
-            matchReport.Initialize(domElements, {
-                PreviousReportObjects: [{}],
-                SportID: sportID,
-                LeagueID: leagueID,
-                MatchCode: matchCode,
-                AllowShowInstruction: true
-            });
-            matchReport.GetReportData();
+            getReportData();
         });
+
+        $('html').on('mousedown', function (event) {
+            if ($(event.target).closest('div.tipsy').length === 0 && !$(event.target).hasClass('percentage')) {
+                var $input = domElements.divMatchTurnover.find('input:focus');
+                var $link = $input.prev();
+
+                if ($input.hasClass('percentage')) {
+                    $input.addClass('display-none');
+                    $link.removeClass('display-none');
+                    $input.tipsy('hide');
+                }
+            }
+        });
+
+        domElements.divMatchTurnoverContainer.addClass('display-none');
+        intializeFilterData();
+    };
+
+    // Render grid.
+    var renderGrid = function (data) {
+        var percentageFormat = '<span class="percentage-link link" data-match-id="{0}" data-value="{1}">{2}</span>' +
+                               '<input type="text" maxlength="7" class="percentage display-none" />';
+        var exceptionFormat = '<span class="remove-exception ico-delete" data-match-id="{0}" title="{1}"></span>';
+        var showExceptionChk = '<input type="checkbox" id="chkShowExceptionOnly" /><label for="chkShowExceptionOnly">{0}</label>';
+        var percentage = '';
+        var percentageCol = '';
+        var exceptionCol = '';
+
+        var gridOptions = {
+            columns: [{ HeaderText: labels.Code, Width: 100, Name: 'ColCode', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Event, Width: 400, Name: 'ColEvent', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Percentage, Width: 120, Name: 'ColPercentage', HeaderAlign: 'center', CellAlign: 'right'}],
+            gridExpandHeight: 200,
+            showTitle: true,
+            titleInfo: {
+                showButtonsWhenNoData: true,
+                text: gridTitle,
+                customButtons: showExceptionChk.format(labels.OnlyShowExceptionSetting)
+            },
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: CMS.pageSize,
+                itemsPerPageArray: CMS.pagerRanges
+            }
+        };
+        var bodyData = [];
+        var row;
+
+        if (hasEditRight) {
+            gridOptions.columns.push({ HeaderText: labels.Exception, Width: 100, Name: 'ColException', HeaderAlign: 'center', CellAlign: 'center' });
+        }
+
+        if (data && data.length > 0) {
+            $.each(data, function (index, item) {
+                percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
+                percentageCol = percentageFormat.format(item.MatchID, percentage, item.Percentage === 0 ? labels.Unlimited : percentage);
+                exceptionCol = item.IsException ? exceptionFormat.format(item.MatchID, labels.RemoveException) : '';
+
+                row = {
+                    Columns: [{ Name: 'ColCode', Value: item.MatchCode },
+                              { Name: 'ColEvent', Value: item.MatchName },
+                              { Name: 'ColEventDate', Value: item.EventDate },
+                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : percentage}]
+                };
+
+                if (hasEditRight) {
+                    row.Columns.push({ Name: 'ColException', Value: exceptionCol });
+                }
+
+                bodyData.push(row);
+            });
+        }
+
+        gridOptions.bodyRows = bodyData;
+        domElements.divMatchTurnover.fanexGrid(gridOptions);
+        handleGridEvents();
+    };
+
+    // Handle grid's events.
+    var handleGridEvents = function () {
+        var percentageLinks = domElements.divMatchTurnover.find('span.percentage-link');
+        var percentageInputs = domElements.divMatchTurnover.find('input.percentage');
+
+        // Format the parcentage value which is input into the text box.
+        percentageInputs.numberField(0, false, 'u');
+
+        // When user clicks on Percentage link.
+        percentageLinks.on('click', function () {
+            var $link = $(this);
+            var $input = $link.next();
+            var percentage = $link.attr('data-value');
+
+            // Disable other active fields.
+            $.each(percentageLinks, function (index, link) {
+                $(link).removeClass('display-none').next().addClass('display-none').tipsy('hide');
+            });
+
+            // Fill current value into text box.
+            percentage = percentage === '0' ? 'U' : percentage;
+            $link.addClass('display-none');
+            $input.val(percentage).removeClass('display-none').clearfield().focus().select();
+
+            // Show instruction if it is allowed.
+            if (instructionOptions.AllowShow) {
+                var instruction = '<div id="divInstruction">' +
+                                      '{0}<br/>' +
+                                      '<input type="checkbox" id="chkInstruction" class="instruction"/>' +
+                                      '<label for="chkInstruction">{1}</label>' +
+                                  '</div>';
+
+                instruction = instruction.format(messages.TurnoverInputInstruction, messages.NotShowAgain);
+
+                $input.attr('title', instruction).tipsy({
+                    trigger: 'manual',
+                    html: true,
+                    opacity: 0.97,
+                    gravity: 's'
+                }).tipsy('show');
+
+                $('#chkInstruction').on('change', function () {
+                    if ($(this).is(':checked')) {
+                        instructionOptions.AllowShow = false;
+                        $input.tipsy('hide').focus();
+                    }
+                });
+
+                // Auto-hide after 5 seconds.
+                instructionOptions.TimeoutID = setTimeout(function () {
+                    $input.tipsy('hide');
+                }, 5000);
+            }
+        });
+
+        // Handle key up event.
+        percentageInputs.on('keyup', function (event) {
+            var $input = $(this);
+            var $link = $input.prev();
+            var percentage = $input.val();
+            var formatedPercentage = percentage.toLowerCase() === 'u' ? labels.Unlimited : percentage;
+
+            if (event.keyCode === 13 && validatePercentage($input)) {
+                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
+                    percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
+
+                    if (updatePercentage($link.attr('data-match-id'), percentage.replace(/,/g, ''))) {
+                        $link.attr('data-value', percentage);
+                        $link.text(formatedPercentage);
+                        $input.addClass('display-none');
+                        $link.removeClass('display-none');
+                        $input.tipsy('hide');
+                    }
+                });
+            } else if (event.keyCode === 27) {
+                $input.addClass('display-none');
+                $link.removeClass('display-none');
+                $input.tipsy('hide');
+            }
+        });
+
+        domElements.divMatchTurnover.find('span.remove-exception').on('click', function () {
+            var $obj = $(this);
+
+            CMS.showConfirmMessage(messages.RemoveMatchTOConfirmationMessage, function () {
+                removeException($obj.attr('data-match-id'));
+            });
+        });
+
+        domElements.divMatchTurnover.find('div.grid-container').on('scroll', function () {
+            var $input = domElements.divMatchTurnover.find('input:focus');
+
+            if ($input.hasClass('percentage')) {
+                $input.tipsy('hide');
+            }
+        });
+
+        domElements.divMatchTurnoverContainer.find('#chkShowExceptionOnly').on('click', function () {
+            parameters.OnlyShowException = $(this).is(':checked');
+            getReportData();
+        }).prop('checked', parameters.OnlyShowException);
+    };
+
+    var generateTitle = function (data) {
+        var sportValue = data.SportValue === 0 ? labels.Unlimited : data.SportValue + '%';
+        var leagueValue = data.LeagueValue === 0 ? labels.Unlimited : data.LeagueValue + '%';
+
+        return '{0} ({1}) >> {2} ({3})'.format(data.SportName, sportValue, data.LeagueName, leagueValue);
+    };
+
+    // Validate input percentage.
+    var validatePercentage = function ($input) {
+        var value = $input.val().replace(/,/g, '');
+        var isValid = ($.isNumeric(value) && parseInt(value) > 0) || (value.length === 1 && value[0].toLowerCase() === 'u');
+
+        // Remove previous instruction tooltip if there is any.
+        Validator.clearError($input);
+        $.data($input.get(0), 'tipsy', null);
+        clearTimeout(instructionOptions.TimeoutID);
+
+        if (!isValid) {
+            Validator.showError($input, messages.InvalidValueError, 'e');
+        }
+
+        return isValid;
     };
 
     // Initialize filter form data.
@@ -71,7 +280,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         CMS.disableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetInitializedSportData,
+            url: urls.GetInitializedMatchData,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) {
@@ -81,6 +290,100 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
 
                 if (result.Leagues) {
                     updateLeagueDropdown(result.Leagues);
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    // Get report data.
+    var getReportData = function () {
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.GetMatchTurnover,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(parameters),
+            success: function (result) {
+                if (result) {
+                    gridTitle = generateTitle(result);
+                    renderGrid(result.MatchTurnovers);
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    // Update percentage value of s sport.
+    var updatePercentage = function (matchID, value) {
+        var updateParameters = {
+            SportID: parameters.SportID,
+            LeagueID: parameters.LeagueID,
+            MatchID: matchID,
+            MatchCode: parameters.MatchCode,
+            Value: value,
+            OnlyShowException: parameters.OnlyShowException
+        };
+
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.UpdateMatchTurnover,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(updateParameters),
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    renderGrid(result.Turnovers.MatchTurnovers);
+
+                    return true;
+                } else {
+                    CMS.showErrorMessage(result.ErrorMessage);
+
+                    return false;
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    var removeException = function (matchID) {
+        var removeParameters = {
+            SportID: parameters.SportID,
+            LeagueID: parameters.LeagueID,
+            MatchID: matchID,
+            MatchCode: parameters.MatchCode,
+            OnlyShowException: parameters.OnlyShowException
+        };
+
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: urls.RemoveMatchException,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(removeParameters),
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    renderGrid(result.Turnovers.MatchTurnovers);
+                } else {
+                    CMS.showErrorMessage(result.ErrorMessage);
                 }
             },
             error: function (xhr) {
@@ -130,11 +433,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         }
     };
 
-    // Hide grids.
-    var hideGrids = function () {
-        domElements.divMatchTurnoverContainer.addClass('display-none');
-    };
-
     // Get list of leagues of a specific sport.
     var getLeaguesOfSport = function (sportID) {
         var parameters = {
@@ -164,7 +462,5 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         domElements.divMatchContent = divContent;
         cacheDOMElements();
         bindEventHandlers();
-        hideGrids();
-        intializeFilterData();
     };
 };

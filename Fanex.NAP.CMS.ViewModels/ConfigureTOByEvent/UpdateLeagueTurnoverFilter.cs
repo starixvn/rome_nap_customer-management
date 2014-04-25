@@ -26,7 +26,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 
         public string CountryCode { get; set; }
 
-        public bool IsMainMarket { get; set; }
+        public bool AllMarket { get; set; }
 
         public string LeagueName { get; set; }
 

@@ -30,7 +30,8 @@ var CMS = (function ($) {
 
         formats: {
             DateFormat: 'mm/dd/yy',
-            IntegerFormat: '0,0'
+            IntegerFormat: '0,0',
+            DecimalFormat: '0,0.00'
         },
 
         initCoreValues: function () {

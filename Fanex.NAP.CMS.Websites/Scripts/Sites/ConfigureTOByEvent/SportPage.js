@@ -12,7 +12,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
     };
     var instructionOptions = {
         AllowShow: true,
-        IsFocused: false,
         TimeoutID: null
     };
     var domElements = {
@@ -127,6 +126,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
+                        localStorage.setItem('sportTOShowInstruction', 'false');
                         instructionOptions.AllowShow = false;
                         $input.tipsy('hide').focus();
                     }
@@ -147,7 +147,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
             var formatedPercentage = percentage.toLowerCase() === 'u' ? labels.Unlimited : percentage;
 
             if (event.keyCode === 13 && validatePercentage($input)) {
-                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
+                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage, function () {
                     percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
 
                     if (updatePercentage($link.attr('data-sport'), percentage.replace(/,/g, ''))) {
@@ -250,7 +250,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
     $this.CurrentReport = null;
 
     $this.InitPage = function (divContent) {
+        var allowShowInstruction = localStorage.sportTOShowInstruction === undefined ? 'true' : localStorage.sportTOShowInstruction;
+
         domElements.divSportContent = divContent;
+        instructionOptions.AllowShow = allowShowInstruction !== 'false';
         cacheDOMElements();
         handleEvents();
         getReportData();

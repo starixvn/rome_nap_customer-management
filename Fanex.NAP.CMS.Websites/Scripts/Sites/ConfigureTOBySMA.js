@@ -36,7 +36,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
     };
     var instructionOptions = {
         AllowShow: true,
-        IsFocused: false
+        TimeoutID: false
     };
     var searchedName = '';
 
@@ -63,6 +63,10 @@ Fanex.CMS.ConfigureTOBySMA = function () {
 
     // Initialize fields and handle events.
     var initializeFields = function () {
+        var allowShowInstruction = localStorage.smaTOShowInstruction === undefined ? 'true' : localStorage.smaTOShowInstruction;
+
+        instructionOptions.AllowShow = allowShowInstruction !== 'false';
+
         domElements.txtSMAName.on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
@@ -146,10 +150,10 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Level, Width: 100, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Currency, Width: 100, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Currency, Width: 100, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.GivenCredit, Width: 150, Name: 'ColGivenCredit', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: CMS.formats.IntegerFormat
+                          FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.Offset, Width: 120, Name: 'ColOffset', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 150,
@@ -230,6 +234,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
+                        localStorage.setItem('smaTOShowInstruction', 'false');
                         instructionOptions.AllowShow = false;
                         $input.tipsy('hide').focus();
                     }

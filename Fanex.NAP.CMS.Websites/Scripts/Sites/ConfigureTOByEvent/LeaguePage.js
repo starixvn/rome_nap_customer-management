@@ -28,7 +28,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         ProgramID: null,
         DisplayMode: null,
         CountryCode: null,
-        IsMainMarket: null,
+        AllMarket: null,
         LeagueName: null,
         OnlyShowException: null
     };
@@ -73,7 +73,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             parameters.SportID = domElements.ddlSport.val();
             parameters.CountryCode = domElements.ddlCountry.val();
             parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
-            parameters.IsMainMarket = domElements.ddlMarket.val();
+            parameters.AllMarket = domElements.ddlMarket.val();
             parameters.LeagueName = domElements.txtLeague.val();
             parameters.DisplayMode = displayMode;
             parameters.ProgramID = programID;
@@ -190,14 +190,14 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         var exceptionCol = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: labels.League, Width: 600, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
+            columns: [{ HeaderText: labels.League, Width: 650, Name: 'ColLeague', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Percentage, Width: 120, Name: 'ColPercentage', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 220,
             showTitle: true,
             titleInfo: {
                 showButtonsWhenNoData: true,
                 text: gridTitle,
-                customButtons: showExceptionChk.format(labels.OnlyShowExceptionSetting)
+                customButtons: showExceptionChk.format(labels.OnlyShowException)
             },
             showPager: true,
             pagerOption: {
@@ -210,7 +210,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         var row;
 
         if (hasEditRight) {
-            gridOptions.columns.push({ HeaderText: labels.Exception, Width: 100, Name: 'ColException', HeaderAlign: 'center', CellAlign: 'center' });
+            gridOptions.columns.push({ HeaderText: labels.Exception, Width: 70, Name: 'ColException', HeaderAlign: 'center', CellAlign: 'center' });
         }
 
         if (data && data.length > 0) {
@@ -280,6 +280,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
+                        localStorage.setItem('leagueTOShowInstruction', 'false');
                         instructionOptions.AllowShow = false;
                         $input.tipsy('hide').focus();
                     }
@@ -300,7 +301,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             var formatedPercentage = percentage.toLowerCase() === 'u' ? labels.Unlimited : percentage;
 
             if (event.keyCode === 13 && validatePercentage($input)) {
-                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
+                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage, function () {
                     percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
 
                     if (updatePercentage($link.attr('data-league-id'), percentage.replace(/,/g, ''))) {
@@ -377,7 +378,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             ProgramID: parameters.ProgramID,
             DisplayMode: parameters.DisplayMode,
             CountryCode: parameters.CountryCode,
-            IsMainMarket: parameters.IsMainMarket,
+            AllMarket: parameters.AllMarket,
             LeagueName: parameters.LeagueName,
             OnlyShowException: parameters.OnlyShowException
         };
@@ -418,7 +419,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             ProgramID: parameters.ProgramID,
             DisplayMode: parameters.DisplayMode,
             CountryCode: parameters.CountryCode,
-            IsMainMarket: parameters.IsMainMarket,
+            AllMarket: parameters.AllMarket,
             LeagueName: parameters.LeagueName,
             OnlyShowException: parameters.OnlyShowException
         };
@@ -472,7 +473,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
     };
 
     $this.InitPage = function (divContent) {
+        var allowShowInstruction = localStorage.leagueTOShowInstruction === undefined ? 'true' : localStorage.leagueTOShowInstruction;
+
         domElements.divLeagueContent = divContent;
+        instructionOptions.AllowShow = allowShowInstruction !== 'false';
         cacheDOMElements();
         intializeFilterData();
         bindEventHandlers();

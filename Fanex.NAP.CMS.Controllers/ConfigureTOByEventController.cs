@@ -138,7 +138,7 @@ namespace Fanex.NAP.CMS.Controllers
                 DisplayMode = filter.DisplayMode,
                 ProgramID = filter.ProgramID,
                 CountryCode = filter.CountryCode,
-                IsMainMarket = filter.IsMainMarket,
+                AllMarket = filter.AllMarket,
                 LeagueName = filter.LeagueName,
                 OnlyShowException = filter.OnlyShowException
             };
@@ -183,7 +183,7 @@ namespace Fanex.NAP.CMS.Controllers
                 DisplayMode = filter.DisplayMode,
                 ProgramID = filter.ProgramID,
                 CountryCode = filter.CountryCode,
-                IsMainMarket = filter.IsMainMarket,
+                AllMarket = filter.AllMarket,
                 LeagueName = filter.LeagueName,
                 OnlyShowException = filter.OnlyShowException
             };

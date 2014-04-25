@@ -219,6 +219,9 @@
   <data name="TurnoverInputInstruction" xml:space="preserve">
     <value>Input \'U\' for unlimited setting</value>
   </data>
+  <data name="UpdateMatchPercentageConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to proceed?</value>
+  </data>
   <data name="UpdateMemberStatusFailed" xml:space="preserve">
     <value>Failed to update {0}/{1} Member accounts. Please retry with Member accounts that are checked in the list.</value>
   </data>
@@ -229,7 +232,7 @@
     <value>The offset value has been updated successfully!</value>
   </data>
   <data name="UpdatePercentageConfirmMessage" xml:space="preserve">
-    <value>Are you sure you want to update the percentage value to {0}?</value>
+    <value>The change will not affect to exception cases. Are you sure you want to proceed?</value>
   </data>
   <data name="UpdatePercentageSuccessfully" xml:space="preserve">
     <value>The percentage value has been updated successfully!</value>

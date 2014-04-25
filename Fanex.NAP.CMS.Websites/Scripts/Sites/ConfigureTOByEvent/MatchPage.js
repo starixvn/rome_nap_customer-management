@@ -98,7 +98,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
 
         var gridOptions = {
             columns: [{ HeaderText: labels.Code, Width: 100, Name: 'ColCode', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Event, Width: 400, Name: 'ColEvent', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Event, Width: 450, Name: 'ColEvent', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.EventDate, Width: 100, Name: 'ColEventDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Percentage, Width: 120, Name: 'ColPercentage', HeaderAlign: 'center', CellAlign: 'right'}],
             gridExpandHeight: 200,
@@ -106,7 +106,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             titleInfo: {
                 showButtonsWhenNoData: true,
                 text: gridTitle,
-                customButtons: showExceptionChk.format(labels.OnlyShowExceptionSetting)
+                customButtons: showExceptionChk.format(labels.OnlyShowException)
             },
             showPager: true,
             pagerOption: {
@@ -119,7 +119,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         var row;
 
         if (hasEditRight) {
-            gridOptions.columns.push({ HeaderText: labels.Exception, Width: 100, Name: 'ColException', HeaderAlign: 'center', CellAlign: 'center' });
+            gridOptions.columns.push({ HeaderText: labels.Exception, Width: 70, Name: 'ColException', HeaderAlign: 'center', CellAlign: 'center' });
         }
 
         if (data && data.length > 0) {
@@ -191,6 +191,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
 
                 $('#chkInstruction').on('change', function () {
                     if ($(this).is(':checked')) {
+                        localStorage.setItem('matchTOShowInstruction', 'false');
                         instructionOptions.AllowShow = false;
                         $input.tipsy('hide').focus();
                     }
@@ -211,7 +212,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             var formatedPercentage = percentage.toLowerCase() === 'u' ? labels.Unlimited : percentage;
 
             if (event.keyCode === 13 && validatePercentage($input)) {
-                CMS.showConfirmMessage(messages.UpdatePercentageConfirmMessage.format('<b>' + formatedPercentage + '</b>'), function () {
+                CMS.showConfirmMessage(messages.UpdateMatchPercentageConfirmMessage, function () {
                     percentage = percentage.toLowerCase() === 'u' ? '0' : percentage;
 
                     if (updatePercentage($link.attr('data-match-id'), percentage.replace(/,/g, ''))) {
@@ -254,8 +255,13 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
     var generateTitle = function (data) {
         var sportValue = data.SportValue === 0 ? labels.Unlimited : data.SportValue + '%';
         var leagueValue = data.LeagueValue === 0 ? labels.Unlimited : data.LeagueValue + '%';
+        var leagueName = data.LeagueName;
 
-        return '{0} ({1}) >> {2} ({3})'.format(data.SportName, sportValue, data.LeagueName, leagueValue);
+        if (leagueName.length > 60) {
+            leagueName = leagueName.substring(0, 60) + '...';
+        }
+
+        return '{0} ({1}) >> <span title="{2}">{3}</span> ({4})'.format(data.SportName, sportValue, data.LeagueName, leagueName, leagueValue);
     };
 
     // Validate input percentage.
@@ -461,7 +467,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
     };
 
     $this.InitPage = function (divContent) {
+        var allowShowInstruction = localStorage.matchTOShowInstruction === undefined ? 'true' : localStorage.matchTOShowInstruction;
+
         domElements.divMatchContent = divContent;
+        instructionOptions.AllowShow = allowShowInstruction !== 'false';
         cacheDOMElements();
         bindEventHandlers();
     };

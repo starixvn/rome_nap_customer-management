@@ -367,6 +367,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to proceed?.
+        /// </summary>
+        public static string UpdateMatchPercentageConfirmMessage {
+            get {
+                return ResourceManager.GetString("UpdateMatchPercentageConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to update {0}/{1} Member accounts. Please retry with Member accounts that are checked in the list..
         /// </summary>
         public static string UpdateMemberStatusFailed {
@@ -394,7 +403,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to update the percentage value to {0}?.
+        ///   Looks up a localized string similar to The change will not affect to exception cases. Are you sure you want to proceed?.
         /// </summary>
         public static string UpdatePercentageConfirmMessage {
             get {

@@ -520,11 +520,11 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only show exception setting.
+        ///   Looks up a localized string similar to Only show exception.
         /// </summary>
-        public static string OnlyShowExceptionSetting {
+        public static string OnlyShowException {
             get {
-                return ResourceManager.GetString("OnlyShowExceptionSetting", resourceCulture);
+                return ResourceManager.GetString("OnlyShowException", resourceCulture);
             }
         }
         

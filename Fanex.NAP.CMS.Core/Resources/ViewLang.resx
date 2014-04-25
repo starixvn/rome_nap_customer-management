@@ -285,8 +285,8 @@
   <data name="Exception" xml:space="preserve">
     <value>Exception</value>
   </data>
-  <data name="OnlyShowExceptionSetting" xml:space="preserve">
-    <value>Only show exception setting</value>
+  <data name="OnlyShowException" xml:space="preserve">
+    <value>Only show exception</value>
   </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>

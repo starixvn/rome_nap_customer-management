@@ -54,7 +54,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             getLeaguesOfSport(sportID);
         });
 
-        domElements.txtMatchCode.on('keydown', function (event) {
+        domElements.txtMatchCode.on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }
@@ -345,6 +345,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             data: JSON.stringify(updateParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
+                    CMS.showInfoMessage(messages.UpdatePercentageSuccessfully);
                     renderGrid(result.Turnovers.MatchTurnovers);
 
                     return true;
@@ -381,6 +382,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             data: JSON.stringify(removeParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
+                    CMS.showInfoMessage(messages.RemoveTOExceptionSuccessfully);
                     renderGrid(result.Turnovers.MatchTurnovers);
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);

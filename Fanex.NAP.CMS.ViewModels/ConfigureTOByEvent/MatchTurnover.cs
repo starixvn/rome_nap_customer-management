@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 {
     using System;
+    using Fanex.Common;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
@@ -27,11 +28,11 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
             {
                 this.SportID = rawData.SportID;
                 this.LeagueID = rawData.LeagueID;
-                this.MatchID = rawData.MatchID;
+                this.MatchID = Converter.ToInt(rawData.MatchID);
                 this.MatchCode = rawData.MatchCode;
                 this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(rawData.HomeID), ViewLang.Vs, CacheRef.GetTeamName(rawData.AwayID));
                 this.EventDate = rawData.EventDate.ToShortFormatedDate();
-                this.Percentage = rawData.MatchValue;
+                this.Percentage = Converter.ToInt(rawData.MatchValue);
                 this.IsException = rawData.Exception;
             }
         }

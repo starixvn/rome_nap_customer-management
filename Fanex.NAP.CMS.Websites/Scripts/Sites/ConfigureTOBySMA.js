@@ -98,6 +98,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
     var displayAddNewForm = function () {
         var form = domElements.divNewSMAOffsetForm.clone();
 
+        CMS.closeMsgBox();
         CMS.modal(labels.NewSMATOControl, form);
         cachePopupElements();
 

@@ -24,7 +24,7 @@ namespace Fanex.NAP.CMS.Models.ConfigureTOByEvent
 
         public int LeagueValue { get; set; }
 
-        public int MatchID { get; set; }
+        public int? MatchID { get; set; }
 
         public string MatchCode { get; set; }
 
@@ -34,7 +34,7 @@ namespace Fanex.NAP.CMS.Models.ConfigureTOByEvent
 
         public DateTime EventDate { get; set; }
 
-        public int MatchValue { get; set; }
+        public int? MatchValue { get; set; }
 
         public bool Exception { get; set; }
     }

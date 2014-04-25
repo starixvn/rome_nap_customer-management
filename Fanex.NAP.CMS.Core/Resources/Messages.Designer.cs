@@ -331,6 +331,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The TO Exception has been removed successfully!.
+        /// </summary>
+        public static string RemoveTOExceptionSuccessfully {
+            get {
+                return ResourceManager.GetString("RemoveTOExceptionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Required field!.
         /// </summary>
         public static string RequiredFieldError {

@@ -65,8 +65,13 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             if (rawData != null && rawData.Any())
             {
-                turnovers = rawData.Select(obj => new LeagueTurnover(obj)).OrderBy(obj => obj.LeagueName).ToList();
                 firstItem = rawData.ElementAt<LeagueTurnoverInfo>(0);
+
+                if (firstItem.LeagueID.HasValue)
+                {
+                    turnovers = rawData.Select(obj => new LeagueTurnover(obj)).OrderBy(obj => obj.LeagueName).ToList();
+                }
+
                 result = new GotLeagueTurnoverResult(firstItem.SportID, firstItem.SportValue, turnovers);
             }
             else
@@ -93,8 +98,13 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             if (rawData != null && rawData.Any())
             {
-                turnovers = rawData.Select(obj => new MatchTurnover(obj)).OrderBy(obj => obj.MatchName).ToList();
                 firstItem = rawData.ElementAt<MatchTurnoverInfo>(0);
+
+                if (firstItem.MatchID.HasValue)
+                {
+                    turnovers = rawData.Select(obj => new MatchTurnover(obj)).OrderBy(obj => obj.MatchName).ToList();
+                }
+
                 result = new GotMatchTurnoverResult(firstItem.SportID, firstItem.SportValue, firstItem.LeagueID, firstItem.LeagueValue, turnovers);
             }
             else

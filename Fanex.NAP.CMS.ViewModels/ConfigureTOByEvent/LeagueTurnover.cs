@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 {
     using System;
+    using Fanex.Common;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
 
@@ -24,9 +25,9 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
             if (rawData != null)
             {
                 this.SportID = rawData.SportID;
-                this.LeagueID = rawData.LeagueID;
+                this.LeagueID = Converter.ToInt(rawData.LeagueID);
                 this.LeagueName = CacheRef.GetLeagueName(this.LeagueID);
-                this.Percentage = rawData.LeagueValue;
+                this.Percentage = Converter.ToInt(rawData.LeagueValue);
                 this.IsException = rawData.Exception;
             }
         }

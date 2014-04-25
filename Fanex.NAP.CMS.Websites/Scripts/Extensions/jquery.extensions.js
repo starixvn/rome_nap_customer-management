@@ -174,11 +174,12 @@
             var minusPos = value.indexOf('-');
             var cursorPos = getCaret($obj);
             var keyCode = event.which;
+            var selectedText = getSelectedText($obj);
 
             // Allow ctrl, shilf, alt, tab, enter, backspace, delete, home, end, escape, left, right, up, down keys.
             if (event.ctrlKey || event.shilfKey || event.altkey ||
                 (event.keyCode >= 35 && event.keyCode <= 40) ||
-                ($.inArray(event.keyCode, [8, 9, 27, 13, 190]) !== -1)) {
+                ($.inArray(event.keyCode, [8, 9, 27, 13, 46, 190]) !== -1)) {
                 return;
             }
 
@@ -192,15 +193,20 @@
             }
 
             // Allow only one minus character at the begining of the value.
-            if (allowNegative &&
-                (cursorPos === 0 || (cursorPos > 0 && minusPos < 0)) &&
-                (value.length === 0 || getSelectedText($obj).length === value.length) &&
-                event.keyCode === 45) {
+            if (allowNegative && keyCode === 45 &&
+                ((cursorPos === 0 && minusPos < 0) || (selectedText.length === value.length))) {
                 return;
             }
 
             // Allow digits.
             if ((48 <= keyCode) && (keyCode <= 57)) {
+                // Prevent any digit if there is a alphabet character input.
+                if (value.length > 0 && firstChar && firstChar.length > 0 &&
+                    value[0].toLowerCase() === firstChar[0].toLowerCase() &&
+                    selectedText.length !== value.length) {
+                    return false;
+                }
+
                 // Check whether the number of digits after the decimal meets the requrement or not.
                 if ((decimalPos < 0) ||
                     (decimalPos > 0 && cursorPos <= decimalPos) ||
@@ -210,16 +216,14 @@
             }
 
             // Allow an exception at the beginning of string.
-            if (firstChar &&
-                cursorPos === 0 &&
-                firstChar.length > 0 &&
-                (value.length === 0 || getSelectedText($obj).length === value.length) &&
-                firstChar.toLowerCase() === String.fromCharCode(keyCode).toLowerCase()) {
+            if (firstChar && firstChar.length > 0 &&
+                (value.length === 0 || selectedText.length === value.length) &&
+                firstChar[0].toLowerCase() === String.fromCharCode(keyCode).toLowerCase()) {
                 return;
             }
 
             return false;
-        }).on('keyup', function () {
+        }).on('keyup', function (event) {
             var $obj = $(this);
             var value = $.trim($obj.val());
             var rawValue = value.replace(/,/g, '');

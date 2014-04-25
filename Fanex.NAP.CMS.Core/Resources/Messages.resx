@@ -207,6 +207,9 @@
   <data name="RemoveTOExceptionConfirmMessage" xml:space="preserve">
     <value>This change will not affect to other exception cases.  Are you sure you want to remove it?</value>
   </data>
+  <data name="RemoveTOExceptionSuccessfully" xml:space="preserve">
+    <value>The TO Exception has been removed successfully!</value>
+  </data>
   <data name="RequiredFieldError" xml:space="preserve">
     <value>Required field!</value>
   </data>

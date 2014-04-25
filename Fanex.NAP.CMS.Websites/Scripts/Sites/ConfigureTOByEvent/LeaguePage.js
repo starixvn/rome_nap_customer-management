@@ -54,6 +54,12 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
 
     // Bind event handlers.
     var bindEventHandlers = function () {
+        domElements.txtLeague.on('keyup', function (event) {
+            if (event.keyCode === 13) {
+                domElements.btnSearch.click();
+            }
+        });
+
         domElements.btnSearch.on('click', function () {
             var specialLeagueValues = domElements.ddlSpecialLeague.val().split(';');
             var displayMode = 0;
@@ -385,6 +391,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             data: JSON.stringify(gettingParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
+                    CMS.showInfoMessage(messages.UpdatePercentageSuccessfully);
                     renderGrid(result.Turnovers.LeagueTurnovers);
 
                     return true;
@@ -425,6 +432,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             data: JSON.stringify(removeParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
+                    CMS.showInfoMessage(messages.RemoveTOExceptionSuccessfully);
                     renderGrid(result.Turnovers.LeagueTurnovers);
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);

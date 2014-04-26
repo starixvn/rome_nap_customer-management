@@ -116,7 +116,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be updated.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult InsertSMATurnoverByEvent(InsertSMATurnoverByEventFilter filter)
         {
             var insertingCriteria = new InsertSMATurnoverByEventCriteria
@@ -155,7 +155,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be updated.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult UpdateSMATurnoverByEvent(UpdateSMATurnoverByEventFilter filter)
         {
             var updatingCriteria = new UpdateSMATurnoverByEventCriteria
@@ -194,7 +194,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be removed from DB.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureSMATOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult RemoveSMATurnoverByEvent(RemoveSMATurnoverByEventFilter filter)
         {
             var deletingCriteria = new DeleteSMATurnoverByEventCriteria

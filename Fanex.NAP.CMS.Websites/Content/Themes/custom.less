@@ -239,11 +239,11 @@ input.ui-multiselect-state-default{
     }
 }
 
-
 .ui-dialog {
     .box_shadow(0 3px 9px rgba(0, 0, 0, 0.5));
     .border_radius(0);
     padding: 0;
+    z-index: 9999 !important;
 
     .ui-widget-header {
         .border_radius(0);
@@ -290,4 +290,10 @@ input.ui-multiselect-state-default{
             }
         }
     }
+}
+
+.ui-widget-overlay {
+    background: #000;
+    overflow: hidden;
+    z-index: 9998 !important;
 }

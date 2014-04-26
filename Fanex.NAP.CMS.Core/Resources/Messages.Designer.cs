@@ -322,6 +322,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove this setting?.
+        /// </summary>
+        public static string RemoveSettingConfirmMessage {
+            get {
+                return ResourceManager.GetString("RemoveSettingConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting has been removed successfully!.
+        /// </summary>
+        public static string RemoveSettingSuccessfully {
+            get {
+                return ResourceManager.GetString("RemoveSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This change will not affect to other exception cases.  Are you sure you want to remove it?.
         /// </summary>
         public static string RemoveTOExceptionConfirmMessage {
@@ -426,6 +444,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string UpdateRequestSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateRequestSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting has been updated successfully!.
+        /// </summary>
+        public static string UpdateSettingSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateSettingSuccessfully", resourceCulture);
             }
         }
         

@@ -186,6 +186,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         var exceptionFormat = '<span class="remove-exception ico-delete" data-league-id="{0}" title="{1}"></span>';
         var showExceptionChk = '<input type="checkbox" id="chkShowException" /><label for="chkShowException">{0}</label>';
         var percentage = '';
+        var formattedPercentage = '';
         var percentageCol = '';
         var exceptionCol = '';
 
@@ -216,12 +217,13 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
-                percentageCol = percentageFormat.format(item.LeagueID, percentage, item.Percentage === 0 ? labels.Unlimited : percentage);
+                formattedPercentage = item.Percentage === 0 ? labels.Unlimited : percentage;
+                percentageCol = percentageFormat.format(item.LeagueID, percentage, formattedPercentage);
                 exceptionCol = item.IsException ? exceptionFormat.format(item.LeagueID, labels.RemoveException) : '';
 
                 row = {
                     Columns: [{ Name: 'ColLeague', Value: item.LeagueName },
-                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : percentage}]
+                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : formattedPercentage}]
                 };
 
                 if (hasEditRight) {

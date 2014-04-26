@@ -136,11 +136,11 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Sites/ConfigureTOBySMA.js"));
 
             bundles.AddAndInclude(
-                "~/styles/configureSMATOByMatch",
-                "~/Content/Sites/configureSMATOByMatch.less");
+                "~/styles/configureSMATOByEvent",
+                "~/Content/Sites/configureSMATOByEvent.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/configureSMATOByMatch").Include(
-                "~/Scripts/Sites/ConfigureSMATOByMatch.js"));
+            bundles.Add(new ScriptBundle("~/scripts/configureSMATOByEvent").Include(
+                "~/Scripts/Sites/ConfigureSMATOByEvent.js"));
 
             bundles.AddAndInclude(
                 "~/styles/turnoverMonitor",

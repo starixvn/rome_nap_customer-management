@@ -4,9 +4,9 @@
 'use strict';
 
 $(document).ready(function () {
-    var memberList = new Fanex.CMS.ConfigureTOBySMA();
+    var report = new Fanex.CMS.ConfigureTOBySMA();
 
-    memberList.InitPage();
+    report.InitPage();
 });
 
 Namespace.Register("Fanex.CMS.ConfigureTOBySMA");
@@ -49,6 +49,8 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         domElements.divSMAOffset = $('#divSMAOffset');
         domElements.divNewSMAOffsetForm = $('#divNewSMAOffsetForm').clone();
         domElements.divPopup = $('#dialog-popup');
+
+        $('#divNewSMAOffsetForm').empty();
     };
 
     // Cache popup elements
@@ -84,7 +86,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         });
 
         // Hide instruction tooltip.
-        $('body').on('mousedown', function (event) {
+        $('html').on('mousedown', function (event) {
             if ($(event.target).closest('div.tipsy').length === 0 && !$(event.target).hasClass('offset')) {
                 var $input = domElements.divSMAOffset.find('input:focus');
                 var $link = $input.prev();
@@ -145,6 +147,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         var offsetFormat = '<span class="offset-link link" data-cust-id="{0}" data-value="{1}">{2}</span>' +
                            '<input type="text" maxlength="7" class="offset display-none" />';
         var offset = '';
+        var formattedOffset = '';
         var offsetCol = '';
 
         var gridOptions = {
@@ -171,7 +174,8 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 offset = numeral(item.Offset).format(CMS.formats.IntegerFormat);
-                offsetCol = offsetFormat.format(item.CustID, offset, item.Offset === 0 ? labels.Unlimited : offset);
+                formattedOffset = item.Offset === 0 ? labels.Unlimited : offset;
+                offsetCol = offsetFormat.format(item.CustID, offset, formattedOffset);
 
                 row = {
                     Columns: [{ Name: 'ColOrder', Value: index },
@@ -179,7 +183,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
                               { Name: 'ColLevel', Value: item.Level },
                               { Name: 'ColCurrency', Value: item.Currency },
                               { Name: 'ColGivenCredit', Value: item.GivenCredit },
-                              { Name: 'ColOffset', Value: hasEditRight ? offsetCol : offset}]
+                              { Name: 'ColOffset', Value: hasEditRight ? offsetCol : formattedOffset}]
                 };
                 bodyData.push(row);
             });

@@ -48,6 +48,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
         var percentageFormat = '<span class="percentage-link link" data-value="{0}" data-sport="{1}">{2}</span>' +
                                '<input type="text" maxlength="7" class="percentage display-none" />';
         var percentage = '';
+        var formattedPercentage = '';
         var percentageCol = '';
 
         var gridOptions = {
@@ -67,11 +68,12 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
-                percentageCol = percentageFormat.format(percentage, item.SportID, item.Percentage === 0 ? labels.Unlimited : percentage);
+                formattedPercentage = item.Percentage === 0 ? labels.Unlimited : percentage;
+                percentageCol = percentageFormat.format(percentage, item.SportID, formattedPercentage);
 
                 row = {
                     Columns: [{ Name: 'ColSport', Value: item.SportName },
-                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : percentage}]
+                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : formattedPercentage}]
                 };
 
                 bodyData.push(row);

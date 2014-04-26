@@ -93,6 +93,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         var exceptionFormat = '<span class="remove-exception ico-delete" data-match-id="{0}" title="{1}"></span>';
         var showExceptionChk = '<input type="checkbox" id="chkShowExceptionOnly" /><label for="chkShowExceptionOnly">{0}</label>';
         var percentage = '';
+        var formattedPercentage = '';
         var percentageCol = '';
         var exceptionCol = '';
 
@@ -125,14 +126,15 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
                 percentage = numeral(item.Percentage).format(CMS.formats.IntegerFormat);
-                percentageCol = percentageFormat.format(item.MatchID, percentage, item.Percentage === 0 ? labels.Unlimited : percentage);
+                formattedPercentage = item.Percentage === 0 ? labels.Unlimited : percentage;
+                percentageCol = percentageFormat.format(item.MatchID, percentage, formattedPercentage);
                 exceptionCol = item.IsException ? exceptionFormat.format(item.MatchID, labels.RemoveException) : '';
 
                 row = {
                     Columns: [{ Name: 'ColCode', Value: item.MatchCode },
                               { Name: 'ColEvent', Value: item.MatchName },
                               { Name: 'ColEventDate', Value: item.EventDate },
-                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : percentage}]
+                              { Name: 'ColPercentage', Value: hasEditRight ? percentageCol : formattedPercentage}]
                 };
 
                 if (hasEditRight) {

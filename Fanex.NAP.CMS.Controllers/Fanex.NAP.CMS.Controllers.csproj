@@ -61,7 +61,7 @@
     <Compile Include="ConfigureCustomerAccessController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CloseOpenMemberController.cs" />
-    <Compile Include="ConfigureSMATOByMatchController.cs" />
+    <Compile Include="ConfigureSMATOByEventController.cs" />
     <Compile Include="ConfigureTOByEventController.cs" />
     <Compile Include="ConfigureTOBySMAController.cs" />
     <Compile Include="ErrorController.cs" />

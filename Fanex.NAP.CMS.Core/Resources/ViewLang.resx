@@ -231,9 +231,6 @@
   <data name="Closed" xml:space="preserve">
     <value>Closed</value>
   </data>
-  <data name="ConfigureSMATOByMatch" xml:space="preserve">
-    <value>Configure SMA TO By Match</value>
-  </data>
   <data name="ConfigureTOByEvent" xml:space="preserve">
     <value>Configure TO By Event</value>
   </data>
@@ -329,5 +326,20 @@
   </data>
   <data name="AllCountries" xml:space="preserve">
     <value>All Countries</value>
+  </data>
+  <data name="ConfigureSMATOByEvent" xml:space="preserve">
+    <value>Configure SMA TO By Event</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="MaxTOAmount" xml:space="preserve">
+    <value>Max TO Amount</value>
+  </data>
+  <data name="MaxTORate" xml:space="preserve">
+    <value>Max TO Rate (%)</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
 </root>

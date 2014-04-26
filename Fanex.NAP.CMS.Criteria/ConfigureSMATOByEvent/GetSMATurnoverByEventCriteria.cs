@@ -1,22 +1,24 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetSportsCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="GetSMATurnoverByEventCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Jason.Ly" date="2014.4.17">Created</change>
+//   <change who="Jason.Ly" date="2014.4.26">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
+namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that are used to get the list of sports of sport-book.
+    /// The criteria that are used to get SMA turnover by event.
     /// </summary>
-    public class GetSportsCriteria : CriteriaBase
+    public class GetSMATurnoverByEventCriteria : CriteriaBase
     {
-        public byte Mode { get; set; }
+        public int SportID { get; set; }
+
+        public int LeagueID { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -24,7 +26,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMATurnover_SportSel";
+            return "NAP_SMATurnover_SMAControlByEventSel";
         }
 
         /// <summary>

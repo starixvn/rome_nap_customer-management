@@ -1,0 +1,47 @@
+@import "../Themes/colors.less";
+
+.freegrid {
+    .group-title {
+        display: inline-block;
+        width: 94%;
+    }
+
+    .add-new-link {
+        color: @link;
+        cursor: pointer;
+        font-weight: normal;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .rate {
+        width: 110px;
+        padding: 2px;
+        border: 1px solid #c4c4c4;
+        font-size: 0.9em;
+        color: #000000;
+    }
+}
+
+.instruction {
+    margin: 3px 3px 0 0;
+}
+
+.form {
+    .form-row {
+        .insert-instruction {
+            color: #f00;
+        }
+
+        &.button-row {
+            margin-top: 10px;
+            min-height: 25px;
+        }
+    }
+
+    &.expand-form {
+        min-width: 430px;
+    }
+}

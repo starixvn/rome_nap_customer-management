@@ -214,11 +214,11 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure SMA TO By Match.
+        ///   Looks up a localized string similar to Configure SMA TO By Event.
         /// </summary>
-        public static string ConfigureSMATOByMatch {
+        public static string ConfigureSMATOByEvent {
             get {
-                return ResourceManager.GetString("ConfigureSMATOByMatch", resourceCulture);
+                return ResourceManager.GetString("ConfigureSMATOByEvent", resourceCulture);
             }
         }
         
@@ -291,6 +291,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Customer {
             get {
                 return ResourceManager.GetString("Customer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -475,6 +484,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max TO Amount.
+        /// </summary>
+        public static string MaxTOAmount {
+            get {
+                return ResourceManager.GetString("MaxTOAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max TO Rate (%).
+        /// </summary>
+        public static string MaxTORate {
+            get {
+                return ResourceManager.GetString("MaxTORate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member.
         /// </summary>
         public static string Member {
@@ -561,6 +588,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Remark {
             get {
                 return ResourceManager.GetString("Remark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
             }
         }
         

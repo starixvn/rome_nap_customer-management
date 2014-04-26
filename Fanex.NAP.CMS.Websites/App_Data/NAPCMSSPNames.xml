@@ -34,4 +34,10 @@
     <Setting Key="NAP_SMATurnover_SMAControlUpd" SpName="NAP_SMATurnover_SMAControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
     <Setting Key="NAP_SMATurnover_SMAControlDel" SpName="NAP_SMATurnover_SMAControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="ConfigureSMATOByEvent">
+    <Setting Key="NAP_SMATurnover_SMAControlByEventSel" SpName="NAP_SMATurnover_SMAControlByEventSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventIns" SpName="NAP_SMATurnover_SMAControlByEventIns" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventUpd" SpName="NAP_SMATurnover_SMAControlByEventUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventDel" SpName="NAP_SMATurnover_SMAControlByEventDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

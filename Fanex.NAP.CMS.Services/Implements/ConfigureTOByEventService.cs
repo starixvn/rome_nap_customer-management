@@ -13,6 +13,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Linq;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
+    using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureTOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
@@ -155,7 +156,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of CountryInfo objects.</returns>
         public IEnumerable<CountryInfo> GetCountryList()
         {
-            IEnumerable<CountryInfo> result = this.GetData<CountryInfo>(new GetCountryListCriteria());
+            IEnumerable<CountryInfo> result = this.GetData<CountryInfo>(new GetHaveLeagueCountryCriteria());
 
             foreach (CountryInfo item in result)
             {

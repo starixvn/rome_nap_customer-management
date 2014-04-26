@@ -1,24 +1,34 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GetLeaguesOfSportCriteria.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="InsertSMATurnoverByEventCriteria.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>
-//   <change who="Jason.Ly" date="2014.4.21">Created</change>
+//   <change who="Jason.Ly" date="2014.4.26">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
+namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
 {
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
-    /// The criteria that are used to get the list of leagues belong to a specific sport.
+    /// The criteria that contain the data of new SMA turnover.
     /// </summary>
-    public class GetLeaguesOfSportCriteria : CriteriaBase
+    public class InsertSMATurnoverByEventCriteria : CriteriaBase
     {
-        public int SportID { get; set; }
+        public string SMAName { get; set; }
 
-        public byte Mode { get; set; }
+        public int MatchID { get; set; }
+
+        public int Value { get; set; }
+
+        public int UserID { get; set; }
+
+        public string IP { get; set; }
+
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.
@@ -26,7 +36,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMATurnover_LeagueSel";
+            return "NAP_SMATurnover_SMAControlByEventIns";
         }
 
         /// <summary>
@@ -35,7 +45,7 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         /// <returns>Whether this criteria is valid or not.</returns>
         public override bool IsValid()
         {
-            return true;
+            return !string.IsNullOrEmpty(this.SMAName);
         }
     }
 }

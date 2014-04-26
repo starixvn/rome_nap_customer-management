@@ -49,16 +49,18 @@
   <ItemGroup>
     <Compile Include="Common\CountryInfo.cs" />
     <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
-    <Compile Include="ConfigureTOByEvent\LeagueInfo.cs" />
+    <Compile Include="Common\LeagueInfo.cs" />
+    <Compile Include="ConfigureSMATOByEvent\SMATurnoverByEventInfo.cs" />
     <Compile Include="ConfigureTOByEvent\LeagueTurnoverInfo.cs" />
     <Compile Include="ConfigureTOByEvent\MatchTurnoverInfo.cs" />
     <Compile Include="ConfigureTOByEvent\SpecialLeagueInfo.cs" />
-    <Compile Include="ConfigureTOByEvent\SportInfo.cs" />
+    <Compile Include="Common\SportInfo.cs" />
     <Compile Include="ConfigureTOByEvent\SportTurnoverInfo.cs" />
     <Compile Include="ConfigureTOBySMA\SMAOffsetInfo.cs" />
     <Compile Include="OpenCloseMember\MemberStatusInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

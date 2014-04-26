@@ -81,14 +81,14 @@
     <Compile Include="ApiLogers\CasinoApiLogger.cs" />
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\CMSBaseService.cs" />
-    <Compile Include="Implements\ConfigureSMATOByMatchService.cs" />
+    <Compile Include="Implements\ConfigureSMATOByEventService.cs" />
     <Compile Include="Implements\ConfigureTOByEventService.cs" />
     <Compile Include="Implements\ConfigureTOBySMAService.cs" />
     <Compile Include="Implements\OpenCloseMemberService.cs" />
     <Compile Include="Implements\TurnoverMonitorService.cs" />
     <Compile Include="Implements\WriteLogsService.cs" />
     <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
-    <Compile Include="Interfaces\IConfigureSMATOByMatchService.cs" />
+    <Compile Include="Interfaces\IConfigureSMATOByEventService.cs" />
     <Compile Include="Interfaces\IConfigureTOByEventService.cs" />
     <Compile Include="Interfaces\IConfigureTOBySMAService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />

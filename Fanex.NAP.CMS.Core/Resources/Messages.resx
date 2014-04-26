@@ -204,6 +204,12 @@
   <data name="RemoveOffsetInstruction" xml:space="preserve">
     <value>Input 0 to remove offset</value>
   </data>
+  <data name="RemoveSettingConfirmMessage" xml:space="preserve">
+    <value>Are you sure you want to remove this setting?</value>
+  </data>
+  <data name="RemoveSettingSuccessfully" xml:space="preserve">
+    <value>The setting has been removed successfully!</value>
+  </data>
   <data name="RemoveTOExceptionConfirmMessage" xml:space="preserve">
     <value>This change will not affect to other exception cases.  Are you sure you want to remove it?</value>
   </data>
@@ -239,6 +245,9 @@
   </data>
   <data name="UpdateRequestSuccessfully" xml:space="preserve">
     <value>The request has been updated successfully!</value>
+  </data>
+  <data name="UpdateSettingSuccessfully" xml:space="preserve">
+    <value>The setting has been updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Customer Management!</value>

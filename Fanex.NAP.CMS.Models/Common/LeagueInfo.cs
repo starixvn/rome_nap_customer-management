@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.4.21">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Models.ConfigureTOByEvent
+namespace Fanex.NAP.CMS.Models.Common
 {
     using System;
 

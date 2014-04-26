@@ -78,10 +78,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
     };
 };
 
-
-var tunoverPageManager = new Fanex.NAP.CMS.ConfigureTOByEvent.PageManager();
 $(document).ready(function () {
     'use strict';
+
+    var tunoverPageManager = new Fanex.NAP.CMS.ConfigureTOByEvent.PageManager();
 
     tunoverPageManager.InitPage();
 });

@@ -65,16 +65,21 @@ namespace Fanex.NAP.CMS.Services.Implements
             {
                 IEnumerable<IGrouping<int, SMATurnoverByEventInfo>> groups = rawData.GroupBy(obj => obj.MatchID);
                 SMATurnoverByEventGroup turnoverGroup = null;
+                SMATurnoverByEventInfo firstItem = null;
 
                 result = new List<SMATurnoverByEventGroup>();
 
                 foreach (IGrouping<int, SMATurnoverByEventInfo> group in groups)
                 {
-                    turnoverGroup = new SMATurnoverByEventGroup(group.ElementAt(0));
+                    firstItem = group.ElementAt(0);
+                    turnoverGroup = new SMATurnoverByEventGroup(firstItem);
 
-                    foreach (SMATurnoverByEventInfo item in group)
+                    if (firstItem.CustID.HasValue)
                     {
-                        turnoverGroup.SMAItems.Add(new SMATurnoverByEvent(item));
+                        foreach (SMATurnoverByEventInfo item in group)
+                        {
+                            turnoverGroup.SMAItems.Add(new SMATurnoverByEvent(item));
+                        }
                     }
 
                     result.Add(turnoverGroup);

@@ -342,4 +342,22 @@
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="MemberTO" xml:space="preserve">
+    <value>Member TO</value>
+  </data>
+  <data name="PercentageUsed" xml:space="preserve">
+    <value>Percentage Used</value>
+  </data>
+  <data name="SelectTop" xml:space="preserve">
+    <value>Select Top</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>Used</value>
+  </data>
 </root>

@@ -25,7 +25,24 @@ namespace Fanex.NAP.CMS.Services.Implements
     /// </summary>
     public class CMSBaseService : BaseService
     {
+        public const string CacheBalanceUp = "Fanex.CMS.Service.Common.BalanceUp";
         private const string CachedCountryList = "Fanex.CMS.Service.Common.CountryList";
+
+        public BalanceUpDayInfo BalanceUpDate
+        {
+            get
+            {
+                BalanceUpDayInfo balanceUp = CacheManager.Get<BalanceUpDayInfo>(CacheBalanceUp);
+
+                if (balanceUp == null)
+                {
+                    balanceUp = GetItem<BalanceUpDayInfo>(new GetBalanceUpDayCriteria());
+                    CacheManager.Set<BalanceUpDayInfo>(CacheBalanceUp, balanceUp, new TimeSpan(0, 0, 5, 0));
+                }
+
+                return balanceUp;
+            }
+        }
 
         public Dictionary<string, string> CountryList
         {

@@ -87,7 +87,6 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         domElements.btnSearch.on('click', function () {
             parameters.SportID = domElements.ddlSport.val();
             parameters.LeagueID = domElements.ddlLeague.val();
-            itemCounter = 0;
 
             getSMATurnoverByEvent();
         });
@@ -237,6 +236,8 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         }
 
         if (data && data.length > 0) {
+            itemCounter = 0;
+
             $.each(data, function (groupIndex, group) {
                 groupRow = groupFormat.format(group.MatchName, labels.MatchCode, group.MatchCode, labels.Date, group.EventDate);
                 subRows = [];
@@ -347,9 +348,8 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
 
             if (event.keyCode === 13 && validateRate($input)) {
                 CMS.showConfirmMessage(messages.ProceedConfirmMessage, function () {
-                    var $obj = $(this);
-                    var matchID = $obj.attr('data-match-id');
-                    var custID = $obj.attr('data-sma-id');
+                    var matchID = $link.attr('data-match-id');
+                    var custID = $link.attr('data-sma-id');
 
                     rate = rate.toLowerCase() === 'u' ? '0' : rate;
 

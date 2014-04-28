@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\BalanceUpDayInfo.cs" />
     <Compile Include="Common\CountryInfo.cs" />
     <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
     <Compile Include="Common\LeagueInfo.cs" />

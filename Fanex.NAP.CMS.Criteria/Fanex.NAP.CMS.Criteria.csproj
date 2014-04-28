@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GetBalanceUpDayCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\DeleteRequestCriteria.cs" />
     <Compile Include="Common\GetCountryListCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\GetRequestInfoCriteria.cs" />

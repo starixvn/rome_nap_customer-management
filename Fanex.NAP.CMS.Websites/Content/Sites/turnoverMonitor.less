@@ -1,0 +1,44 @@
+@import "../Themes/colors.less";
+
+.filter-bar {
+    .filter-form {
+        .edit-field {
+            input.ui_nexdatepicker_fromdate, input.ui_nexdatepicker_todate {
+                width: 175px;
+            }
+
+            input.sma-name, input.percentage-used {
+                width: 175px;
+            }
+
+            input.sport {
+                width: 141px;
+            }
+
+            .select-top {
+                width: 60px;
+            }
+        }
+
+        .submit {
+            margin-left: 7px;
+        }
+    }
+}
+
+.freegrid {
+    .percentage-used {
+        height: 18px;
+        position: relative;
+
+        .percentage-label {
+            position: absolute;
+            left: 50%;
+            color: @white;
+        }
+
+        .ui-progressbar-value {
+            border-color: @border;
+        }
+    }
+}

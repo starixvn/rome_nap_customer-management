@@ -9,11 +9,13 @@
 
 namespace Fanex.NAP.CMS.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
 
     /// <summary>
     /// Configure turnover by event controller.
@@ -40,7 +42,53 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.SelectTop = GetSelectTopList();
+            ViewBag.MoveBetsDay = (this._turnoverMonitorService as TurnoverMonitorService).BalanceUpDate.MoveBetsDay;
+
             return View();
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetTurnoverReport()
+        {
+            var test = new SMATurnover
+            {
+                Username = "Supertest1",
+                Level = "Super",
+                Currency = "UUS",
+                GivenCredit = 100000,
+                MaxTORate = 90,
+                MaxTOAmount = 90000,
+                MemberTO = 63000,
+                PercentageUsed = 70
+            };
+            var list = new List<SMATurnover>();
+
+            list.Add(test);
+
+            return Json(list);
+        }
+
+        /// <summary>
+        /// Gets the select top list.
+        /// </summary>
+        /// <returns>List of SelectListItem objects.</returns>
+        private IEnumerable<SelectListItem> GetSelectTopList()
+        {
+            string[] selectTopValues = new string[4] { "20", "50", "100", "200" };
+            var selectTopOptions = new List<SelectListItem>();
+
+            foreach (string option in selectTopValues)
+            {
+                selectTopOptions.Add(new SelectListItem
+                    {
+                        Text = option,
+                        Value = option
+                    });
+            }
+
+            return selectTopOptions;
         }
     }
 }

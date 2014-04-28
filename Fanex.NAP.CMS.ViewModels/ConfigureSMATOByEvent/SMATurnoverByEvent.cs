@@ -26,7 +26,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent
             if (rawData != null)
             {
                 this.MatchID = rawData.MatchID;
-                this.CustID = rawData.CustID;
+                this.CustID = rawData.CustID.Value;
                 this.Username = rawData.Username;
                 this.Level = GetLevel(rawData.RoleID);
                 this.Currency = rawData.Currency;
@@ -44,7 +44,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent
 
         public string Level { get; set; }
 
-        public int Currency { get; set; }
+        public string Currency { get; set; }
 
         public decimal GivenCredit { get; set; }
 

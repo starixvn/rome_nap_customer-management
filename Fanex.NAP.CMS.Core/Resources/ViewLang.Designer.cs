@@ -214,29 +214,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure SMA TO By Event.
+        ///   Looks up a localized string similar to Control SMA TO By Event.
         /// </summary>
-        public static string ConfigureSMATOByEvent {
+        public static string ControlSMATOByEvent {
             get {
-                return ResourceManager.GetString("ConfigureSMATOByEvent", resourceCulture);
+                return ResourceManager.GetString("ControlSMATOByEvent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure TO By Event.
+        ///   Looks up a localized string similar to Control TO By Event.
         /// </summary>
-        public static string ConfigureTOByEvent {
+        public static string ControlTOByEvent {
             get {
-                return ResourceManager.GetString("ConfigureTOByEvent", resourceCulture);
+                return ResourceManager.GetString("ControlTOByEvent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configure TO By SMA.
+        ///   Looks up a localized string similar to Control TO By SMA.
         /// </summary>
-        public static string ConfigureTOBySMA {
+        public static string ControlTOBySMA {
             get {
-                return ResourceManager.GetString("ConfigureTOBySMA", resourceCulture);
+                return ResourceManager.GetString("ControlTOBySMA", resourceCulture);
             }
         }
         

@@ -34,7 +34,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureTOBySMAController(IConfigureTOBySMAService configureTOBySMAService)
         {
             this._configureTOBySMAService = configureTOBySMAService ?? new ConfigureTOBySMAService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ConfigureTOBySMA, Constant.Policy.Host);
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ControlTOBySMA, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOBySMA, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
@@ -54,7 +54,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">The criteria that are used to get SMA offset.</param>
         /// <returns>List of JSON objects represents the SMA offset.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOBySMA, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA, Policy = Constant.Policy.Read)]
         public JsonResult GetSMAOffset(GetSMAOffsetCriteria criteria)
         {
             IEnumerable<SMAOffset> result = null;
@@ -71,7 +71,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to insert SMA offset.</param>
         /// <returns>List of JSON objects represents the updated SMA offset.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOBySMA, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA, Policy = Constant.Policy.Host)]
         public JsonResult InsertSMAOffset(InsertSMAOffsetFilter filter)
         {
             var insertCriteria = new InsertSMAOffsetCriteria
@@ -107,7 +107,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update SMA offset.</param>
         /// <returns>List of JSON objects represents the updated SMA offset.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOBySMA, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA, Policy = Constant.Policy.Host)]
         public JsonResult UpdateSMAOffset(UpdateSMAOffsetFilter filter)
         {
             var updateCriteria = new UpdateSMAOffsetCriteria
@@ -143,7 +143,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to delete SMA offset.</param>
         /// <returns>List of JSON objects represents the updated SMA offset.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOBySMA, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA, Policy = Constant.Policy.Host)]
         public JsonResult DeleteSMAOffset(DeleteSMAOffsetFilter filter)
         {
             var deleteCriteria = new DeleteSMAOffsetCriteria

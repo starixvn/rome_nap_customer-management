@@ -137,7 +137,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var form = domElements.divNewSMATOForm.clone();
 
         CMS.closeMsgBox();
-        CMS.modal(labels.ConfigureSMATOByEvent, form);
+        CMS.modal(labels.ControlSMATOByEvent, form);
         cachePopupElements();
         bindPopupEventhandlers();
 
@@ -199,7 +199,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var groupFormat = '<span class="group-title">' +
                               '<span class="event-date">{0}: {1}</span> -- ' +
                               '<span>{2}: {3}</span> -- ' +
-                              '<span class="match-name">{4}</span>' +
+                              '<span class="match-name" title="{4}">{5}</span>' +
                           '</span>';
         var addNewLink = '<span class="add-new-link" data-match-name="{0}" data-match-id="{1}"><span class="ico-add"></span>{2}</span>';
         var rate = '';
@@ -207,6 +207,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var rateCol = '';
         var actionCol = '';
         var groupRow = '';
+        var matchName = '';
 
         var gridOptions = {
             columns: [{ HeaderText: '#', Width: 70, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
@@ -243,7 +244,8 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             itemCounter = 0;
 
             $.each(data, function (groupIndex, group) {
-                groupRow = groupFormat.format(labels.Date, group.EventDate, labels.MatchCode, group.MatchCode, group.MatchName);
+                matchName = group.MatchName.length > 85 ? group.MatchName.substring(0, 80) + '...' : group.MatchName;
+                groupRow = groupFormat.format(labels.Date, group.EventDate, labels.MatchCode, group.MatchCode, group.MatchName, matchName);
                 subRows = [];
 
                 $.each(group.SMAItems, function (index, item) {
@@ -260,7 +262,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                                   { Name: 'ColCurrency', Value: item.Currency },
                                   { Name: 'ColGivenCredit', Value: item.GivenCredit },
                                   { Name: 'ColMaxTORate', Value: hasEditRight ? rateCol : formattedRate },
-                                  { Name: 'ColMaxTOAmount', Value: item.MaxTOAmount}]
+                                  { Name: 'ColMaxTOAmount', Value: item.MaxTOAmount === 0 ? labels.Unlimited : item.MaxTOAmount}]
                     };
 
                     if (hasEditRight) {

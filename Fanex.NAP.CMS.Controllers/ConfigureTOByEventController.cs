@@ -38,7 +38,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureTOByEventController(IConfigureTOByEventService configureTOByEventService)
         {
             this._configureTOByEventService = configureTOByEventService ?? new ConfigureTOByEventService();
-            ViewBag.HasEditRight = this.HasRight(CMSFunctionKeys.ConfigureTOByEvent, Constant.Policy.Host);
+            ViewBag.HasEditRight = this.HasRight(CMSFunctionKeys.ControlTOByEvent, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
@@ -57,7 +57,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>List of JSON objects represents the sport turnovers.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetSportTurnover()
         {
             IEnumerable<SportTurnover> result = this._configureTOByEventService.GetSportTurnover(new GetSportTurnoverCriteria());
@@ -71,7 +71,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update and query data.</param>
         /// <returns>List of JSON objects represents the sport turnovers after updating.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult UpdateSportTurnover(UpdateSportTurnoverFilter filter)
         {
             var updatingCriteria = new UpdateSportTurnoverCriteria
@@ -104,7 +104,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of JSON objects represents the sport turnovers.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetLeagueTurnover(GetLeagueTurnoverCriteria criteria)
         {
             GotLeagueTurnoverResult result = null;
@@ -123,7 +123,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update and query data.</param>
         /// <returns>List of JSON objects represents the league turnovers after updating.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult UpdateLeagueTurnover(UpdateLeagueTurnoverFilter filter)
         {
             var updatingCriteria = new UpdateLeagueTurnoverCriteria
@@ -169,7 +169,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update and query data.</param>
         /// <returns>List of JSON objects represents the league turnovers after updating.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult RemoveLeagueException(RemoveLeagueExceptionFilter filter)
         {
             var deletingCriteria = new RemoveLeagueExceptionCriteria
@@ -214,7 +214,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of JSON objects represents the match turnovers.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetMatchTurnover(GetMatchTurnoverCriteria criteria)
         {
             GotMatchTurnoverResult result = null;
@@ -231,7 +231,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update and query data.</param>
         /// <returns>List of JSON objects represents the match turnovers after updating.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult UpdateMatchTurnover(UpdateMatchTurnoverFilter filter)
         {
             var updatingCriteria = new UpdateMatchTurnoverCriteria
@@ -272,7 +272,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">The filter that is used to update and query data.</param>
         /// <returns>List of JSON objects represents the match turnovers after updating.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult RemoveMatchException(RemoveMatchExceptionFilter filter)
         {
             var updatingCriteria = new RemoveMatchExceptionCriteria
@@ -312,7 +312,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="mode">View mode.</param>
         /// <returns>List of JSON objects represents the sport list and league list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetInitializedMatchData(byte mode = 0)
         {
             IEnumerable<SportInfo> sports = this._configureTOByEventService.GetSportList(new GetSportsCriteria
@@ -343,7 +343,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">Criteria that are used to query data.</param>
         /// <returns>List of JSON objects represents the sport list and league list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
             IEnumerable<LeagueInfo> leagues = this._configureTOByEventService.GetLeaguesOfSport(criteria);
@@ -357,7 +357,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="mode">View mode.</param>
         /// <returns>List of JSON objects represents the sport list and country list, and special league list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureTOByEvent, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetInitializedLeagueData(byte mode = 1)
         {
             IEnumerable<SportInfo> sports = this._configureTOByEventService.GetSportList(new GetSportsCriteria

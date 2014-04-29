@@ -13,9 +13,9 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
+    using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
 
     /// <summary>
     /// Configure turnover by event controller.
@@ -48,6 +48,10 @@ namespace Fanex.NAP.CMS.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Gets the turnover report.
+        /// </summary>
+        /// <returns>JSON result indicates the turnover report data.</returns>
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetTurnoverReport()

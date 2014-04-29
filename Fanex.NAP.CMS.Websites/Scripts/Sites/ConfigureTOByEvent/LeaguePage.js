@@ -273,6 +273,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
 
                 instruction = instruction.format(messages.TurnoverInputInstruction, messages.NotShowAgain);
 
+                // Clear previous error tooltip data if there is any.
+                $input.removeAttr('original-title').tipsy('hide');
+                $.data($input.get(0), 'tipsy', null);
+
                 $input.attr('title', instruction).tipsy({
                     trigger: 'manual',
                     html: true,

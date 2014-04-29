@@ -114,7 +114,7 @@ Fanex.CMS.TurnoverMonitor = function () {
         var gridOptions = {
             columns: [{ HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Currency, Width: 100, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Currency, Width: 70, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.GivenCredit, Width: 150, Name: 'ColGivenCredit', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: CMS.formats.DecimalFormat
                       },
@@ -161,7 +161,7 @@ Fanex.CMS.TurnoverMonitor = function () {
             var percentage = $obj.attr('data-value');
 
             $obj.progressbar({
-                value: 70
+                value: parseInt(percentage)
             });
         });
     };

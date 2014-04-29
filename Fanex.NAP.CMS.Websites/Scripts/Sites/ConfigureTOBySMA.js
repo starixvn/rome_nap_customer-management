@@ -229,6 +229,10 @@ Fanex.CMS.ConfigureTOBySMA = function () {
 
                 instruction = instruction.format(messages.TurnoverInputInstruction, messages.RemoveOffsetInstruction, messages.NotShowAgain);
 
+                // Clear previous error tooltip data if there is any.
+                $input.removeAttr('original-title').tipsy('hide');
+                $.data($input.get(0), 'tipsy', null);
+
                 $input.attr('title', instruction).tipsy({
                     trigger: 'manual',
                     html: true,

@@ -1,4 +1,5 @@
 @import "../Themes/colors.less";
+@import "../Themes/common.less";
 
 .filter-bar {
     .filter-form {
@@ -34,11 +35,13 @@
         .percentage-label {
             position: absolute;
             left: 50%;
-            color: @white;
+            color: #514F5B;
+            font-weight: bold;
         }
 
-        .ui-progressbar-value {
+        .ui-widget-header {
             border-color: @border;
+            .bg_linear_gradient(#90B6FF, #A9C7FF);
         }
     }
 }

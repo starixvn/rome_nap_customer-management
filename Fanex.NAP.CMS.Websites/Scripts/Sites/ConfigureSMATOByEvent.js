@@ -196,8 +196,12 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var rateFormat = '<span class="rate-link link" data-match-id="{0}" data-sma-id="{1}" data-value="{2}">{3}</span>' +
                            '<input type="text" maxlength="7" class="rate display-none" />';
         var actionFormat = '<span class="remove ico-delete" data-match-id="{0}" data-sma-id="{1}" title="{2}"></span>';
-        var groupFormat = '<span class="group-title">{0} -- {1}: {2} -- {3}: {4}</span>';
-        var addNewLink = '<span class="add-new-link" data-match-name="{0}" data-match-id="{1}">{2}</span>';
+        var groupFormat = '<span class="group-title">' +
+                              '<span class="event-date">{0}: {1}</span> -- ' +
+                              '<span>{2}: {3}</span> -- ' +
+                              '<span class="match-name">{4}</span>' +
+                          '</span>';
+        var addNewLink = '<span class="add-new-link" data-match-name="{0}" data-match-id="{1}"><span class="ico-add"></span>{2}</span>';
         var rate = '';
         var formattedRate = '';
         var rateCol = '';
@@ -239,7 +243,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             itemCounter = 0;
 
             $.each(data, function (groupIndex, group) {
-                groupRow = groupFormat.format(group.MatchName, labels.MatchCode, group.MatchCode, labels.Date, group.EventDate);
+                groupRow = groupFormat.format(labels.Date, group.EventDate, labels.MatchCode, group.MatchCode, group.MatchName);
                 subRows = [];
 
                 $.each(group.SMAItems, function (index, item) {
@@ -316,6 +320,10 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                                   '</div>';
 
                 instruction = instruction.format(messages.TurnoverInputInstruction, messages.NotShowAgain);
+
+                // Clear previous error tooltip data if there is any.
+                $input.removeAttr('original-title').tipsy('hide');
+                $.data($input.get(0), 'tipsy', null);
 
                 $input.attr('title', instruction).tipsy({
                     trigger: 'manual',

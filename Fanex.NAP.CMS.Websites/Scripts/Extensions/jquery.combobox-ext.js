@@ -68,6 +68,9 @@
                         }
                     }
                 })
+                .focus(function () {
+                    $(this).select();
+                })
                 .addClass('ui-widget ui-widget-content');
 
             input.data('autocomplete')._renderItem = function (ul, item) {

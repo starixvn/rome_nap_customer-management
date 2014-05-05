@@ -69,24 +69,25 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             var displayMode = 0;
             var programID = '';
 
-            if (specialLeagueValues.length > 1) {
-                displayMode = specialLeagueValues[0];
-                programID = specialLeagueValues[1];
-            }
+            // Delay 70ms for jQuery-UI combo-box to verify its state.
+            setTimeout(function () {
+                if (specialLeagueValues.length > 1) {
+                    displayMode = specialLeagueValues[0];
+                    programID = specialLeagueValues[1];
+                }
 
-            if (Validator.countErrors(domElements.divLeagueForm) === 0) {
-                parameters.SportID = domElements.ddlSport.val();
-                parameters.CountryCode = domElements.ddlCountry.val();
-                parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
-                parameters.AllMarket = domElements.ddlMarket.val();
-                parameters.LeagueName = domElements.txtLeague.val();
-                parameters.DisplayMode = displayMode;
-                parameters.ProgramID = programID;
+                if (Validator.countErrors(domElements.divLeagueForm) === 0) {
+                    parameters.SportID = domElements.ddlSport.val();
+                    parameters.CountryCode = domElements.ddlCountry.val();
+                    parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
+                    parameters.AllMarket = domElements.ddlMarket.val();
+                    parameters.LeagueName = domElements.txtLeague.val();
+                    parameters.DisplayMode = displayMode;
+                    parameters.ProgramID = programID;
 
-                getReportData();
-            } else {
-                return false;
-            }
+                    getReportData();
+                }
+            }, 70);
         });
 
         // Hide instruction tipsy when clicking on document.

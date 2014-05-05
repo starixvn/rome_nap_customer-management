@@ -65,14 +65,17 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         });
 
         domElements.btnSearch.off('click').on('click', function () {
-            if (Validator.countErrors(domElements.divMatchForm) === 0) {
-                parameters.SportID = domElements.ddlSport.val();
-                parameters.LeagueID = domElements.ddlLeague.val();
-                parameters.MatchCode = domElements.txtMatchCode.val();
-                parameters.OnlyShowException = false;
+            // Delay 70ms for jQuery-UI combo-box to verify its state.
+            setTimeout(function () {
+                if (Validator.countErrors(domElements.divMatchForm) === 0) {
+                    parameters.SportID = domElements.ddlSport.val();
+                    parameters.LeagueID = domElements.ddlLeague.val();
+                    parameters.MatchCode = domElements.txtMatchCode.val();
+                    parameters.OnlyShowException = false;
 
-                getReportData();
-            }
+                    getReportData();
+                }
+            }, 70);
         });
 
         $('html').off('mousedown').on('mousedown', function (event) {

@@ -21,6 +21,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         RemoveSMATurnoverByEvent: CMS.resolveRootUrl('ConfigureSMATOByEvent/RemoveSMATurnoverByEvent')
     };
     var domElements = {
+        divSMAByEventForm: null,
         ddlSport: null,
         ddlLeague: null,
         btnSearch: null,
@@ -50,6 +51,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
 
     // Cache DOM elements
     var cacheDOM = function () {
+        domElements.divSMAByEventForm = $('#divSMAByEventForm');
         domElements.ddlSport = $('#ddlSport');
         domElements.ddlLeague = $('#ddlLeague');
         domElements.btnSearch = $('#btnSearch');
@@ -85,10 +87,15 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         });
 
         domElements.btnSearch.on('click', function () {
-            parameters.SportID = domElements.ddlSport.val();
-            parameters.LeagueID = domElements.ddlLeague.val();
+            // Delay 70ms for jQuery-UI combo-box to verify its state.
+            setTimeout(function () {
+                if (Validator.countErrors(domElements.divSMAByEventForm) === 0) {
+                    parameters.SportID = domElements.ddlSport.val();
+                    parameters.LeagueID = domElements.ddlLeague.val();
 
-            getSMATurnoverByEvent();
+                    getSMATurnoverByEvent();
+                }
+            }, 70);
         });
 
         // Hide instruction tooltip.

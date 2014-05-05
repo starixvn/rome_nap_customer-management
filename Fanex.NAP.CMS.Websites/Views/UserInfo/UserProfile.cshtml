@@ -26,7 +26,7 @@
                 @Html.LabelFor(c => c.FirstName)
             </div>
             <div class="edit-field">
-                @Html.TextBoxFor(c => c.FirstName, new { @class = "userprofile" })
+                @Html.TextBoxFor(c => c.FirstName)
             </div>
         </div>
         <div class="form-row">
@@ -34,7 +34,7 @@
                 @Html.LabelFor(c => c.LastName)
             </div>
             <div class="edit-field">
-                @Html.TextBoxFor(c => c.LastName, new { @class = "userprofile" })
+                @Html.TextBoxFor(c => c.LastName)
             </div>
         </div>
         <div class="form-row">
@@ -42,7 +42,7 @@
                 @Html.LabelFor(c => c.Email)
             </div>
             <div class="edit-field">
-                @Html.TextBoxFor(c => c.Email, new { @class = "userprofile" })
+                @Html.TextBoxFor(c => c.Email)
             </div>
         </div>
         <div class="form-row">
@@ -50,7 +50,7 @@
             </div>
             <div class="edit-field">
                 <input type="submit" id="btnSubmit" value="@ViewResources.Save" class="blue-button" />
-                <input type="button" value="Cancel" onclick="CMS.navigateToRoot('', 0); return false;" class="red-button"/>
+                <input type="button" value="@ViewResources.Cancel" onclick="CMS.navigateToRoot('', 0); return false;" class="red-button"/>
             </div>
         </div>
     </div>

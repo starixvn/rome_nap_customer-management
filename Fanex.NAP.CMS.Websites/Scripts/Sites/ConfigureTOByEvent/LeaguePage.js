@@ -8,6 +8,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
     var $this = this;
     var domElements = {
         divLeagueContent: null,
+        divLeagueForm: null,
         ddlSport: null,
         ddlSpecialLeague: null,
         txtLeague: null,
@@ -42,6 +43,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divLeagueContent = domElements.divLeagueContent || $('#divLeagueContent');
+        domElements.divLeagueForm = domElements.divLeagueContent.find('#divLeagueForm');
         domElements.ddlSport = domElements.divLeagueContent.find('select.sport');
         domElements.ddlSpecialLeague = domElements.divLeagueContent.find('select.special-league');
         domElements.txtLeague = domElements.divLeagueContent.find('#txtLeague');
@@ -54,13 +56,15 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
 
     // Bind event handlers.
     var bindEventHandlers = function () {
-        domElements.txtLeague.on('keyup', function (event) {
+        Validator.clearErrors(domElements.divLeagueForm);
+
+        domElements.txtLeague.off('keyup').on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }
         });
 
-        domElements.btnSearch.on('click', function () {
+        domElements.btnSearch.off('click').on('click', function () {
             var specialLeagueValues = domElements.ddlSpecialLeague.val().split(';');
             var displayMode = 0;
             var programID = '';
@@ -70,19 +74,23 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
                 programID = specialLeagueValues[1];
             }
 
-            parameters.SportID = domElements.ddlSport.val();
-            parameters.CountryCode = domElements.ddlCountry.val();
-            parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
-            parameters.AllMarket = domElements.ddlMarket.val();
-            parameters.LeagueName = domElements.txtLeague.val();
-            parameters.DisplayMode = displayMode;
-            parameters.ProgramID = programID;
+            if (Validator.countErrors(domElements.divLeagueForm) === 0) {
+                parameters.SportID = domElements.ddlSport.val();
+                parameters.CountryCode = domElements.ddlCountry.val();
+                parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
+                parameters.AllMarket = domElements.ddlMarket.val();
+                parameters.LeagueName = domElements.txtLeague.val();
+                parameters.DisplayMode = displayMode;
+                parameters.ProgramID = programID;
 
-            getReportData();
+                getReportData();
+            } else {
+                return false;
+            }
         });
 
         // Hide instruction tipsy when clicking on document.
-        $('html').on('mousedown', function (event) {
+        $('html').off('mousedown').on('mousedown', function (event) {
             if ($(event.target).closest('div.tipsy').length === 0 && !$(event.target).hasClass('percentage')) {
                 var $input = domElements.divLeagueTurnover.find('input:focus');
                 var $link = $input.prev();
@@ -94,6 +102,8 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
                 }
             }
         });
+
+        domElements.divLeagueTurnoverContainer.addClass('display-none');
     };
 
     // Update Sport drop-down list.

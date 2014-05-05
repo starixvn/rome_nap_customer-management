@@ -19,6 +19,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
     };
     var domElements = {
         divMatchContent: null,
+        divMatchForm: null,
         ddlSport: null,
         ddlLeague: null,
         txtMatchCode: null,
@@ -38,6 +39,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
     var cacheDOMElements = function () {
         // Use class selector for Sport and League to overcome the duplication issue caused by jquery.combobox.
         domElements.divMatchContent = domElements.divMatchContent || $('#divMatchContent');
+        domElements.divMatchForm = domElements.divMatchContent.find('#divMatchForm');
         domElements.ddlSport = domElements.divMatchContent.find('select.sport');
         domElements.ddlLeague = domElements.divMatchContent.find('select.league');
         domElements.txtMatchCode = domElements.divMatchContent.find('#txtMatchCode');
@@ -48,28 +50,32 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
 
     // Bind event handlers.
     var bindEventHandlers = function () {
-        domElements.ddlSport.on('change', function () {
+        Validator.clearErrors(domElements.divMatchForm);
+
+        domElements.ddlSport.off('change').on('change', function () {
             var sportID = $(this).val();
 
             getLeaguesOfSport(sportID);
         });
 
-        domElements.txtMatchCode.on('keyup', function (event) {
+        domElements.txtMatchCode.off('keyup').on('keyup', function (event) {
             if (event.keyCode === 13) {
                 domElements.btnSearch.click();
             }
         });
 
-        domElements.btnSearch.on('click', function () {
-            parameters.SportID = domElements.ddlSport.val();
-            parameters.LeagueID = domElements.ddlLeague.val();
-            parameters.MatchCode = domElements.txtMatchCode.val();
-            parameters.OnlyShowException = false;
+        domElements.btnSearch.off('click').on('click', function () {
+            if (Validator.countErrors(domElements.divMatchForm) === 0) {
+                parameters.SportID = domElements.ddlSport.val();
+                parameters.LeagueID = domElements.ddlLeague.val();
+                parameters.MatchCode = domElements.txtMatchCode.val();
+                parameters.OnlyShowException = false;
 
-            getReportData();
+                getReportData();
+            }
         });
 
-        $('html').on('mousedown', function (event) {
+        $('html').off('mousedown').on('mousedown', function (event) {
             if ($(event.target).closest('div.tipsy').length === 0 && !$(event.target).hasClass('percentage')) {
                 var $input = domElements.divMatchTurnover.find('input:focus');
                 var $link = $input.prev();
@@ -83,7 +89,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         });
 
         domElements.divMatchTurnoverContainer.addClass('display-none');
-        intializeFilterData();
     };
 
     // Render grid.
@@ -478,6 +483,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         domElements.divMatchContent = divContent;
         instructionOptions.AllowShow = allowShowInstruction !== 'false';
         cacheDOMElements();
+        intializeFilterData();
         bindEventHandlers();
     };
 };

@@ -376,6 +376,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select one option!.
+        /// </summary>
+        public static string SelectOneOptionMessage {
+            get {
+                return ResourceManager.GetString("SelectOneOptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input \&apos;U\&apos; for unlimited setting.
         /// </summary>
         public static string TurnoverInputInstruction {

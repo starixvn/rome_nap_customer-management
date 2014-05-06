@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Common\BalanceUpDayInfo.cs" />
     <Compile Include="Common\CountryInfo.cs" />
+    <Compile Include="Common\MatchInfo.cs" />
     <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
     <Compile Include="Common\LeagueInfo.cs" />
     <Compile Include="ConfigureSMATOByEvent\SMATurnoverByEventInfo.cs" />
@@ -60,8 +61,11 @@
     <Compile Include="ConfigureTOBySMA\SMAOffsetInfo.cs" />
     <Compile Include="OpenCloseMember\MemberStatusInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurnoverUsage\TurnoverUsageInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TurnoverMonitor\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 4/29/2014 9:03:45 AM
+// Lasted generated date: 5/6/2014 5:30:31 PM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -35,11 +35,11 @@ public static class CMSFunctionKeys
 
         public const string ConfigureCustomerAccess = "ConfigureCustomerAccess";
 
-        public const string ControlSMATOByEvent = "ControlSMATOByEvent";
-
         public const string ControlTOByEvent = "ControlTOByEvent";
 
         public const string ControlTOBySMA = "ControlTOBySMA";
+
+        public const string ControlTOBySMA_Event = "ControlTOBySMA_Event";
 
         public const string ManageFunction = "ManageFunction";
 
@@ -54,5 +54,7 @@ public static class CMSFunctionKeys
         public const string TurnoverControl = "TurnoverControl";
 
         public const string TurnoverMonitor = "TurnoverMonitor";
+
+        public const string TurnoverUsage = "TurnoverUsage";
 
     }

@@ -249,6 +249,7 @@
     <Content Include="Scripts\Sites\ConfigureTOByEvent\SportPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOBySMA.js" />
     <Content Include="Scripts\Sites\ConfigureSMATOByEvent.js" />
+    <Content Include="Scripts\Sites\TurnoverUsage.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />
     <Content Include="Scripts\Sites\Login.js" />
     <Content Include="Scripts\Validator.js" />
@@ -398,6 +399,8 @@
     <Content Include="Content\Sites\configureSMATOByEvent.less" />
     <Content Include="Views\ConfigureTOBySMA\Index.cshtml" />
     <Content Include="Content\Sites\configureTOBySMA.less" />
+    <Content Include="Views\TurnoverUsage\Index.cshtml" />
+    <Content Include="Content\Sites\turnoverUsage.less" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.Common
 {
+    using System;
     using Fanex.NAP.Framework.Data;
 
     /// <summary>
@@ -17,6 +18,10 @@ namespace Fanex.NAP.CMS.Criteria.Common
     public class GetSportsCriteria : CriteriaBase
     {
         public byte Mode { get; set; }
+
+        public DateTime? FromDate { get; set; }
+
+        public DateTime? ToDate { get; set; }
 
         /// <summary>
         /// Gets the setting key.

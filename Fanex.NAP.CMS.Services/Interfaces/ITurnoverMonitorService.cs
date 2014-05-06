@@ -9,7 +9,31 @@
 
 namespace Fanex.NAP.CMS.Services.Interfaces
 {
+    using System.Collections.Generic;
+    using Fanex.NAP.CMS.Criteria.Common;
+    using Fanex.NAP.CMS.Models.Common;
+
     public interface ITurnoverMonitorService
     {
+        /// <summary>
+        /// Gets the sport list.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of SportInfo object.</returns>
+        IEnumerable<SportInfo> GetSportList(GetSportsCriteria criteria);
+
+        /// <summary>
+        /// Gets the leagues of sport.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of LeagueInfo objects.</returns>
+        IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria);
+
+        /// <summary>
+        /// Gets the matches of league.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of MatchInfo objects.</returns>
+        IEnumerable<MatchInfo> GetMatchesOfLeague(GetMatchesOfLeagueCriteria criteria);
     }
 }

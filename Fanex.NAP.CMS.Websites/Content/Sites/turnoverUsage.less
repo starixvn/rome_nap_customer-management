@@ -1,0 +1,59 @@
+@import "../Themes/colors.less";
+@import "../Themes/common.less";
+
+.filter-bar {
+    .filter-form {
+        .edit-field {
+            input.ui_nexdatepicker_fromdate, input.ui_nexdatepicker_todate {
+                //width: 175px;
+            }
+
+            input.sma-name {
+                width: 175px;
+            }
+
+            input.sport {
+                width: 141px;
+            }
+        }
+
+        .submit {
+            //margin-left: 7px;
+        }
+    }
+}
+
+.freegrid {
+    .percentage-used {
+        height: 18px;
+        position: relative;
+
+        .percentage-label {
+            position: absolute;
+            color: #514F5B;
+            font-weight: bold;
+
+            span {
+                display: inline-block;
+                width: 148px;
+                text-align: center;
+                padding-top: 1px;
+            }
+        }
+
+        .ui-widget-header {
+            border-color: @border;
+            .bg_linear_gradient(#90B6FF, #A9C7FF);
+        }
+
+        &.full-percents {
+            .percentage-label {
+                color: @white;
+            }
+
+            .ui-widget-header {
+                .bg_linear_gradient(#FF530D, #E86500);
+            }
+        }
+    }
+}

@@ -1,0 +1,94 @@
+﻿@using Fanex.NAP.Core.Web
+@{
+    ViewBag.Title = ViewLang.TurnoverUsage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/turnoverUsage")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divTurnoverMonitorForm" class="filter-form">
+        <div class="filter-row">
+            <div id="divDatepickerPlugin" class="lbl-field col_7 align-right"></div>
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlSport">@ViewLang.Sport</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <select id="ddlSport" class="combobox-autocomplete sport"></select>
+            </div>
+            <div class="lbl-field col_2 align-right">
+                <label for="ddlLeague">@ViewLang.League</label>
+            </div>
+            <div class="edit-field col_12 align-left">
+                <select id="ddlLeague" class="combobox-autocomplete width-180"></select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlMatch">@ViewLang.Match</label>
+            </div>
+            <div class="edit-field col_9 align-left">
+                <select id="ddlMatch" class="combobox-autocomplete width-180"></select>
+            </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtPercentageUsed">% @ViewLang.Used</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <input type="text" id="txtPercentageUsed" maxlength="5" class="percentage-used" />
+            </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="txtSMAName">@ViewLang.SMAName</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <input type="text" id="txtSMAName" class="sma-name" />
+            </div>
+            <div class="submit width-auto col_4">
+                <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+        </div>
+        <div class="filter-row">
+            
+        </div>
+        <div class="filter-row"></div>
+    </div>
+</div>
+<div class="display-none content-grid">
+    <div id="divTurnoverMonitor" class="freegrid"></div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/turnoverUsage")
+    <script type="text/javascript">
+        var labels = {
+            FromDate: '@ViewLang.FromDate',
+            ToDate: '@ViewLang.ToDate',
+            SMAName: '@ViewLang.SMAName',
+            Level: '@ViewLang.Level',
+            Currency: '@ViewLang.Currency',
+            GivenCredit: '@ViewLang.GivenCredit',
+            MaxTORate: '@ViewLang.MaxTORate',
+            MaxTOAmount: '@ViewLang.MaxTOAmount',
+            MemberTO: '@ViewLang.MemberTO',
+            PercentageUsed: '@ViewLang.PercentageUsed',
+            SelectSport: '@ViewLang.SelectSport',
+            SelectLeague: '@ViewLang.SelectLeague',
+            SelectMatch: '@ViewLang.SelectMatch'
+        };
+        var datepickerSetting = {
+            MoveBetsDay: '@(((DateTime)ViewBag.MoveBetsDay).ToShortFormatedDate())',
+            Today: '@DateTime.Today.ToShortFormatedDate()'
+        };
+        var messages = {
+            SelectOneOptionMessage: '@Messages.SelectOneOptionMessage'
+        };
+    </script>
+}

@@ -86,6 +86,7 @@
     <Compile Include="OpenCloseMember\UpdatedMemberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TurnoverMonitor\SMATurnover.cs" />
+    <Compile Include="TurnoverUsage\TurnoverUsageItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">

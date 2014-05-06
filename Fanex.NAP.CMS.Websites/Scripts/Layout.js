@@ -35,22 +35,28 @@ var Layout = (function () {
 
             return $obj.nexDatePicker(configObj);
         },
-        createDateRange: function ($obj, fromLabel, toLabel, defaultDate, minDate, maxDate) {
-            var configObj = {
+        createDateRange: function ($obj, fromLabel, fromCss, toLabel, toCss, defaultDate, minDate, maxDate, onChangeHandler) {
+            var configObj = null;
+
+            fromCss = fromCss || 'col_6 width-auto';
+            toCss = toCss || 'col_6 width-auto';
+            onChangeHandler = onChangeHandler || function () { };
+
+            configObj = {
                 nexDatePickerType: 'daterange',
                 firstDatePicker: {
                     Id: 'dpkFromDate',
                     Label: fromLabel,
                     InitDate: defaultDate,
-                    LabelCss: 'lbl-field col_2',
-                    TextboxCss: 'edit-field col_6 width-auto'
+                    LabelCss: 'lbl-field col_3',
+                    TextboxCss: 'edit-field' + ' ' + fromCss
                 },
                 secondDatePicker: {
                     Id: 'dpkToDate',
                     Label: toLabel,
                     InitDate: defaultDate,
-                    LabelCss: 'lbl-field col_2',
-                    TextboxCss: 'edit-field col_6 width-auto'
+                    LabelCss: 'lbl-field col_3',
+                    TextboxCss: 'edit-field' + ' ' + toCss
                 },
 
                 datePickerFormat: {
@@ -59,7 +65,9 @@ var Layout = (function () {
                     changeYear: true,
                     showOtherMonths: true,
                     selectOtherMonths: true
-                }
+                },
+
+                onSelectDatePicker: onChangeHandler
             };
 
             if (minDate) {

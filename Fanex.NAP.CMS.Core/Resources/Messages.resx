@@ -222,6 +222,9 @@
   <data name="RequiredStatusColumnError" xml:space="preserve">
     <value>At least one \'{0}\' Member account must be selected!</value>
   </data>
+  <data name="SelectOneOptionMessage" xml:space="preserve">
+    <value>Please select one option!</value>
+  </data>
   <data name="TurnoverInputInstruction" xml:space="preserve">
     <value>Input \'U\' for unlimited setting</value>
   </data>

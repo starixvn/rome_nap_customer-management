@@ -11,6 +11,8 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Criteria.Common;
+    using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
@@ -18,7 +20,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Web.Attribute;
 
     /// <summary>
-    /// Configure turnover by event controller.
+    /// Turnover monitor controller.
     /// </summary>
     public class TurnoverMonitorController : BaseController
     {
@@ -46,6 +48,48 @@ namespace Fanex.NAP.CMS.Controllers
             ViewBag.MoveBetsDay = (this._turnoverMonitorService as TurnoverMonitorService).BalanceUpDate.MoveBetsDay;
 
             return View();
+        }
+
+        /// <summary>
+        /// Gets the list of leagues of a specific sport.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects represents the list of leagues of a specific sport.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetSportList(GetSportsCriteria criteria)
+        {
+            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(criteria);
+
+            return Json(sports);
+        }
+
+        /// <summary>
+        /// Gets the list of leagues of a specific sport.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects represents the list of leagues of a specific sport.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
+        {
+            IEnumerable<LeagueInfo> leagues = this._turnoverMonitorService.GetLeaguesOfSport(criteria);
+
+            return Json(leagues);
+        }
+
+        /// <summary>
+        /// Gets the list of matches of a specific league.
+        /// </summary>
+        /// <param name="criteria">Criteria that are used to query data.</param>
+        /// <returns>List of JSON objects represents the list of matches of a specific league.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetMatchesOfLeague(GetMatchesOfLeagueCriteria criteria)
+        {
+            IEnumerable<MatchInfo> matches = this._turnoverMonitorService.GetMatchesOfLeague(criteria);
+
+            return Json(matches);
         }
 
         /// <summary>

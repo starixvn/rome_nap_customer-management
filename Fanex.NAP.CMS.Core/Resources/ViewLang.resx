@@ -327,8 +327,8 @@
   <data name="AllCountries" xml:space="preserve">
     <value>All Countries</value>
   </data>
-  <data name="ControlSMATOByEvent" xml:space="preserve">
-    <value>Control SMA TO By Event</value>
+  <data name="ControlTOBySMAEvent" xml:space="preserve">
+    <value>Control TO By SMA &amp; Event</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -359,5 +359,17 @@
   </data>
   <data name="Used" xml:space="preserve">
     <value>Used</value>
+  </data>
+  <data name="SelectLeague" xml:space="preserve">
+    <value>Select League</value>
+  </data>
+  <data name="SelectMatch" xml:space="preserve">
+    <value>Select Match</value>
+  </data>
+  <data name="SelectSport" xml:space="preserve">
+    <value>Select Sport</value>
+  </data>
+  <data name="TurnoverUsage" xml:space="preserve">
+    <value>Turnover Usage</value>
   </data>
 </root>

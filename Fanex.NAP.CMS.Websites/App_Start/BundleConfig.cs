@@ -143,6 +143,13 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Sites/ConfigureSMATOByEvent.js"));
 
             bundles.AddAndInclude(
+                "~/styles/turnoverUsage",
+                "~/Content/Sites/turnoverUsage.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/turnoverUsage").Include(
+                "~/Scripts/Sites/TurnoverUsage.js"));
+
+            bundles.AddAndInclude(
                 "~/styles/turnoverMonitor",
                 "~/Content/Sites/turnoverMonitor.less");
 

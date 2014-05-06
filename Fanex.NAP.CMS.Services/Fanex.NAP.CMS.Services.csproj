@@ -86,6 +86,7 @@
     <Compile Include="Implements\ConfigureTOBySMAService.cs" />
     <Compile Include="Implements\OpenCloseMemberService.cs" />
     <Compile Include="Implements\TurnoverMonitorService.cs" />
+    <Compile Include="Implements\TurnoverUsageService.cs" />
     <Compile Include="Implements\WriteLogsService.cs" />
     <Compile Include="Interfaces\IConfigureCustomerAccessService.cs" />
     <Compile Include="Interfaces\IConfigureSMATOByEventService.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Interfaces\IConfigureTOBySMAService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
     <Compile Include="Interfaces\ITurnoverMonitorService.cs" />
+    <Compile Include="Interfaces\ITurnoverUsageService.cs" />
     <Compile Include="Interfaces\IWriteLogsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -16,7 +16,7 @@
     </div>
 }
 <div class="filter-bar">
-    <div class="filter-form">
+    <div id="divTurnoverMonitorForm" class="filter-form">
         <div class="filter-row">
             <div id="divDatepickerPlugin" class="lbl-field col_7 align-right"></div>
             <div class="lbl-field col_3 align-right">
@@ -36,7 +36,7 @@
                 <label for="ddlSport">@ViewLang.Sport</label>
             </div>
             <div class="edit-field col_8 align-left">
-                <select id="ddlSport" class="combobox-autocomplete sport"></select>
+                <select id="ddlSport" class="combobox-autocomplete"></select>
             </div>
             <div class="lbl-field col_2 align-right">
                 <label for="ddlLeague">@ViewLang.League</label>
@@ -88,11 +88,17 @@
             MaxTORate: '@ViewLang.MaxTORate',
             MaxTOAmount: '@ViewLang.MaxTOAmount',
             MemberTO: '@ViewLang.MemberTO',
-            PercentageUsed: '@ViewLang.PercentageUsed'
+            PercentageUsed: '@ViewLang.PercentageUsed',
+            SelectSport: '@ViewLang.SelectSport',
+            SelectLeague: '@ViewLang.SelectLeague',
+            SelectMatch: '@ViewLang.SelectMatch'
         };
         var datepickerSetting = {
             MoveBetsDay: '@(((DateTime)ViewBag.MoveBetsDay).ToShortFormatedDate())',
             Today: '@DateTime.Today.ToShortFormatedDate()'
+        };
+        var messages = {
+            RequiredFieldError: '@Messages.RequiredFieldError'
         };
     </script>
 }

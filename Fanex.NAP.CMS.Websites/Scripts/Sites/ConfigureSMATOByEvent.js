@@ -144,7 +144,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var form = domElements.divNewSMATOForm.clone();
 
         CMS.closeMsgBox();
-        CMS.modal(labels.ControlSMATOByEvent, form);
+        CMS.modal(labels.ControlTOBySMAEvent, form);
         cachePopupElements();
         bindPopupEventhandlers();
 

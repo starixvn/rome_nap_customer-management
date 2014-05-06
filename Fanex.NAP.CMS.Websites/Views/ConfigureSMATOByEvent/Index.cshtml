@@ -1,7 +1,7 @@
 ﻿@{
     var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
 
-    ViewBag.Title = ViewLang.ControlSMATOByEvent;
+    ViewBag.Title = ViewLang.ControlTOBySMAEvent;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head
@@ -99,7 +99,7 @@
             AddSMA: '@ViewLang.AddSMA',
             MatchCode: '@ViewLang.MatchCode',
             Date: '@ViewLang.Date',
-            ControlSMATOByEvent: '@ViewLang.ControlSMATOByEvent'
+            ControlTOBySMAEvent: '@ViewLang.ControlTOBySMAEvent'
         };
         var messages = {
             NotShowAgain: '@Html.Raw(Messages.NotShowAgainMessage)',

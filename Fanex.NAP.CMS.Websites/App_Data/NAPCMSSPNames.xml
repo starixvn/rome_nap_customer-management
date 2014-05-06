@@ -43,4 +43,8 @@
     <Setting Key="NAP_SMATurnover_SMAControlByEventUpd" SpName="NAP_SMATurnover_SMAControlByEventUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
     <Setting Key="NAP_SMATurnover_SMAControlByEventDel" SpName="NAP_SMATurnover_SMAControlByEventDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="TurnoverMonitor">
+    <Setting Key="NAP_SMATurnover_MatchSel" SpName="NAP_SMATurnover_MatchSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MonitorList" SpName="NAP_SMATurnover_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

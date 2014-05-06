@@ -214,15 +214,6 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Control SMA TO By Event.
-        /// </summary>
-        public static string ControlSMATOByEvent {
-            get {
-                return ResourceManager.GetString("ControlSMATOByEvent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Control TO By Event.
         /// </summary>
         public static string ControlTOByEvent {
@@ -237,6 +228,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ControlTOBySMA {
             get {
                 return ResourceManager.GetString("ControlTOBySMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Control TO By SMA &amp; Event.
+        /// </summary>
+        public static string ControlTOBySMAEvent {
+            get {
+                return ResourceManager.GetString("ControlTOBySMAEvent", resourceCulture);
             }
         }
         
@@ -664,6 +664,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select League.
+        /// </summary>
+        public static string SelectLeague {
+            get {
+                return ResourceManager.GetString("SelectLeague", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Match.
+        /// </summary>
+        public static string SelectMatch {
+            get {
+                return ResourceManager.GetString("SelectMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Sport.
+        /// </summary>
+        public static string SelectSport {
+            get {
+                return ResourceManager.GetString("SelectSport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Top.
         /// </summary>
         public static string SelectTop {
@@ -741,6 +768,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string TurnoverMonitor {
             get {
                 return ResourceManager.GetString("TurnoverMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turnover Usage.
+        /// </summary>
+        public static string TurnoverUsage {
+            get {
+                return ResourceManager.GetString("TurnoverUsage", resourceCulture);
             }
         }
         

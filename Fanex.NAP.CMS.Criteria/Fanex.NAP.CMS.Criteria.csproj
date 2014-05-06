@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\GetBalanceUpDayCriteria.cs" />
+    <Compile Include="Common\GetMatchesOfLeagueCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\DeleteRequestCriteria.cs" />
     <Compile Include="Common\GetCountryListCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\GetRequestInfoCriteria.cs" />
@@ -79,10 +80,13 @@
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
+    <Compile Include="TurnoverUsage\GetTurnoverUsageCriteria.cs" />
     <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TurnoverMonitor\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

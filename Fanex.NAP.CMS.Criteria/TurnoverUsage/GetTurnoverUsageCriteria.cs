@@ -37,7 +37,7 @@ namespace Fanex.NAP.CMS.Criteria.TurnoverUsage
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMATurnover_MonitorList";
+            return "NAP_SMATurnover_UsageList";
         }
 
         /// <summary>

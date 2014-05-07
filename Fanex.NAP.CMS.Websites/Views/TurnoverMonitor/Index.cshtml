@@ -18,25 +18,11 @@
 <div class="filter-bar">
     <div id="divTurnoverMonitorForm" class="filter-form">
         <div class="filter-row">
-            <div id="divDatepickerPlugin" class="lbl-field col_7 align-right"></div>
-            <div class="lbl-field col_3 align-right">
-                <label for="ddlSelectTop">@ViewLang.SelectTop</label>
-            </div>
-            <div class="edit-field col_10 align-left">
-                <select id="ddlSelectTop" class="combobox-autocomplete select-top">
-                @foreach (SelectListItem item in (IEnumerable<SelectListItem>)ViewBag.SelectTop)
-                {
-                    <option value="@item.Value">@item.Text</option>
-                }
-                </select>
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_3 align-right">
+            <div class="lbl-field col_2 align-right">
                 <label for="ddlSport">@ViewLang.Sport</label>
             </div>
             <div class="edit-field col_8 align-left">
-                <select id="ddlSport" class="combobox-autocomplete"></select>
+                <select id="ddlSport" class="combobox-autocomplete sport"></select>
             </div>
             <div class="lbl-field col_2 align-right">
                 <label for="ddlLeague">@ViewLang.League</label>
@@ -44,25 +30,11 @@
             <div class="edit-field col_12 align-left">
                 <select id="ddlLeague" class="combobox-autocomplete width-250"></select>
             </div>
-            <div class="lbl-field col_3 align-right">
-                <label for="ddlMatch">@ViewLang.Match</label>
-            </div>
-            <div class="edit-field col_10 align-left">
-                <select id="ddlMatch" class="combobox-autocomplete width-200"></select>
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_3 align-right">
-                <label for="txtSMAName">@ViewLang.SMAName</label>
-            </div>
-            <div class="edit-field col_8 align-left">
-                <input type="text" id="txtSMAName" class="sma-name" />
-            </div>
             <div class="lbl-field col_2 align-right">
                 <label for="txtPercentageUsed">% @ViewLang.Used</label>
             </div>
-            <div class="edit-field col_12 align-left">
-                <input type="text" id="txtPercentageUsed" maxlength="5" class="percentage-used" />
+            <div class="edit-field col_6 align-left">
+                <input type="text" id="txtPercentageUsed" maxlength="5" />
             </div>
             <div class="submit width-auto col_4">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
@@ -79,8 +51,6 @@
     @Scripts.Render("~/scripts/turnoverMonitor")
     <script type="text/javascript">
         var labels = {
-            FromDate: '@ViewLang.FromDate',
-            ToDate: '@ViewLang.ToDate',
             SMAName: '@ViewLang.SMAName',
             Level: '@ViewLang.Level',
             Currency: '@ViewLang.Currency',
@@ -89,16 +59,8 @@
             MaxTOAmount: '@ViewLang.MaxTOAmount',
             MemberTO: '@ViewLang.MemberTO',
             PercentageUsed: '@ViewLang.PercentageUsed',
-            SelectSport: '@ViewLang.SelectSport',
-            SelectLeague: '@ViewLang.SelectLeague',
-            SelectMatch: '@ViewLang.SelectMatch'
-        };
-        var datepickerSetting = {
-            MoveBetsDay: '@(((DateTime)ViewBag.MoveBetsDay).ToShortFormatedDate())',
-            Today: '@DateTime.Today.ToShortFormatedDate()'
-        };
-        var messages = {
-            RequiredFieldError: '@Messages.RequiredFieldError'
+            AllLeagues: '@ViewLang.AllLeagues',
+            MatchCode: '@ViewLang.MatchCode'
         };
     </script>
 }

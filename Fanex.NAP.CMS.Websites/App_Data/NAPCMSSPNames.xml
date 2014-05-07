@@ -47,4 +47,7 @@
     <Setting Key="NAP_SMATurnover_MatchSel" SpName="NAP_SMATurnover_MatchSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
     <Setting Key="NAP_SMATurnover_UsageList" SpName="NAP_SMATurnover_UsageList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="TurnoverMonitor">
+    <Setting Key="NAP_SMATurnover_MonitorList" SpName="NAP_SMATurnover_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

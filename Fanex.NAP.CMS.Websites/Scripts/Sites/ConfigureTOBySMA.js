@@ -119,7 +119,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             if (Validator.validateForm(popupElements.divNewSMAOffsetForm, 'w')) {
                 var username = popupElements.txtNewSMAName.val();
                 var offset = popupElements.txtOffset.val().replace(/,/g, '');
-                var isValid = $.isNumeric(offset) || (offset.length === 1 && offset[0].toLowerCase() === 'u');
+                var isValid = ($.isNumeric(offset) && parseInt(offset) !== 0) || (offset.length === 1 && offset[0].toLowerCase() === 'u');
 
                 if (!isValid) {
                     Validator.showError(popupElements.txtOffset, messages.InvalidValueError, 'w');
@@ -428,7 +428,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdateOffsetSuccessfully);
+                    CMS.showInfoMessage(messages.RemoveOffsetSuccessfully);
                     renderGrid(result.OffsetItems);
 
                     return true;

@@ -47,6 +47,12 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         SportID: null,
         LeagueID: null
     };
+    var cachedData = {
+        Data: null,
+        Length: 0,
+        PageSize: CMS.pageSize,
+        PageIndex: 0
+    };
     var itemCounter;
 
     // Cache DOM elements
@@ -87,6 +93,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         });
 
         domElements.btnSearch.on('click', function () {
+            cachedData.PageIndex = 0;
+            cachedData.PageSize = CMS.pageSize;
+
             // Delay 70ms for jQuery-UI combo-box to verify its state.
             setTimeout(function () {
                 if (Validator.countErrors(domElements.divSMAByEventForm) === 0) {
@@ -232,11 +241,13 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             showTree: true,
             showPager: true,
             showDistinctRow: false,
-            //showNumberColumn: true,
+            customPager: true,
             pagerOption: {
-                currentPage: 0,
-                itemsPerPage: CMS.pageSize,
-                itemsPerPageArray: CMS.pagerRanges
+                currentPage: cachedData.PageIndex,
+                itemsPerPage: cachedData.PageSize,
+                itemsPerPageArray: CMS.pagerRanges,
+                totalItem: cachedData.Length,
+                pagerSelectCallBack: reloadPage
             }
         };
         var bodyData = [];
@@ -432,6 +443,67 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         return isValid;
     };
 
+    // Customize reloading page.
+    var reloadPage = function (pageIndex, pageSize) {
+        var pageData = [];
+        var startIndex = 0;
+        var endIndex = 0;
+        var counter = 0;
+
+        if (cachedData.Data && cachedData.Data.length > 0) {
+            pageIndex = parseInt(pageIndex);
+            pageSize = parseInt(pageSize);
+            startIndex = pageIndex * pageSize;
+            endIndex = startIndex + pageSize - 1;
+
+            $.each(cachedData.Data, function (groupIndex, group) {
+                var temCounter = counter + group.SMAItems.length - 1;
+                var currentGroup = null;
+
+                if (temCounter < startIndex || counter > endIndex) {
+                    counter = temCounter + 1;
+                } else {
+                    currentGroup = {
+                        EventDate: group.EventDate,
+                        MatchID: group.MatchID,
+                        MatchCode: group.MatchCode,
+                        MatchName: group.MatchName,
+                        SMAItems: []
+                    };
+
+                    $.each(group.SMAItems, function (index, item) {
+                        if (counter >= startIndex && counter <= endIndex) {
+                            currentGroup.SMAItems.push(item);
+                        }
+
+                        counter++;
+                    });
+
+                    pageData.push(currentGroup);
+                }
+            });
+        }
+
+        cachedData.PageIndex = pageIndex;
+        cachedData.PageSize = pageSize;
+        renderGrid(pageData);
+    };
+
+    // Count number of sub-items of cached data.
+    var countSubItems = function () {
+        var counter = 0;
+
+        if (cachedData.Data && cachedData.Data.length > 0) {
+            $.each(cachedData.Data, function (groupIndex, group) {
+                if (group.SMAItems) {
+                    counter += group.SMAItems.length;
+                }
+            });
+        }
+        console.log('count');
+        return counter;
+    };
+
     // Get list of leagues of a specific sport.
     var getLeaguesOfSport = function (sportID) {
         var parameters = {
@@ -493,7 +565,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             dataType: 'json',
             data: JSON.stringify(parameters),
             success: function (result) {
-                renderGrid(result);
+                cachedData.Data = result;
+                cachedData.Length = countSubItems();
+                reloadPage(cachedData.PageIndex, cachedData.PageSize);
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -523,7 +597,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     CMS.showInfoMessage(messages.RemoveSettingSuccessfully);
-                    renderGrid(result.SMATurnovers);
+                    cachedData.Data = result.SMATurnovers;
+                    cachedData.Length = countSubItems();
+                    reloadPage(cachedData.PageIndex, cachedData.PageSize);
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);
                 }
@@ -557,7 +633,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             success: function (result) {
                 if (result.ErrorCode === 0) {
                     CMS.showInfoMessage(messages.UpdateSettingSuccessfully);
-                    renderGrid(result.SMATurnovers);
+                    cachedData.Data = result.SMATurnovers;
+                    cachedData.Length = countSubItems();
+                    reloadPage(cachedData.PageIndex, cachedData.PageSize);
 
                     return true;
                 } else {
@@ -598,7 +676,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disableAddNewSMAForm();
-                    renderGrid(result.SMATurnovers);
+                    cachedData.Data = result.SMATurnovers;
+                    cachedData.Length = countSubItems();
+                    reloadPage(cachedData.PageIndex, cachedData.PageSize);
                 } else {
                     CMS.showInlineErrorMsg(result.ErrorMessage, popupElements.divErrorSuccessMsg);
 

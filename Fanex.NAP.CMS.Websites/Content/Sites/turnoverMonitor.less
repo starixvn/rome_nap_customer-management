@@ -4,30 +4,39 @@
 .filter-bar {
     .filter-form {
         .edit-field {
-            input.ui_nexdatepicker_fromdate, input.ui_nexdatepicker_todate {
-                width: 175px;
-            }
-
-            input.sma-name, input.percentage-used {
-                width: 175px;
-            }
-
             input.sport {
                 width: 141px;
             }
-
-            .select-top {
-                width: 60px;
-            }
-        }
-
-        .submit {
-            margin-left: 7px;
         }
     }
 }
 
 .freegrid {
+    .parent-row {
+        .group-title {
+            display: inline-block;
+            font-weight: normal;
+
+            .match-name {
+                color: #4363a5;
+            }
+
+            .league-name {
+                color: #666565;
+            }
+        }
+
+        .add-new-link {
+            display: inline-block;
+            color: #424141;
+            cursor: pointer;
+            font-weight: normal;
+            border: 1px solid #7A98B1;
+            padding: 0 2px;
+            .border_radius();
+        }
+    }
+
     .percentage-used {
         height: 18px;
         position: relative;

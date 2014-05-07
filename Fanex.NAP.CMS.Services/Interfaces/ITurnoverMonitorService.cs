@@ -11,7 +11,9 @@ namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
     using Fanex.NAP.CMS.Criteria.Common;
+    using Fanex.NAP.CMS.Criteria.TurnoverMonitor;
     using Fanex.NAP.CMS.Models.Common;
+    using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
 
     public interface ITurnoverMonitorService
     {
@@ -30,10 +32,10 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria);
 
         /// <summary>
-        /// Gets the matches of league.
+        /// Gets the SMA turnover monitor list.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of MatchInfo objects.</returns>
-        IEnumerable<MatchInfo> GetMatchesOfLeague(GetMatchesOfLeagueCriteria criteria);
+        /// <returns>List of SMATurnoverGroup objects.</returns>
+        IEnumerable<SMATurnoverGroup> GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria);
     }
 }

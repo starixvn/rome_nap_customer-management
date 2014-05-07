@@ -40,7 +40,6 @@ Fanex.CMS.TurnoverUsage = function () {
         SMAName: null,
         UsedPercent: null
     };
-    var runningMode = 2;
 
     // Cache DOM elements
     var cacheDOM = function () {
@@ -188,8 +187,7 @@ Fanex.CMS.TurnoverUsage = function () {
     var getSportList = function (fromDate, toDate) {
         var gettingSportsParameters = {
             FromDate: fromDate,
-            ToDate: toDate,
-            Mode: runningMode
+            ToDate: toDate
         };
 
         CMS.disableInput();
@@ -233,8 +231,7 @@ Fanex.CMS.TurnoverUsage = function () {
         var gettingLeaguesParameters = {
             SportID: sportType,
             FromDate: fromDate,
-            ToDate: toDate,
-            Mode: runningMode
+            ToDate: toDate
         };
 
         CMS.disableInput();
@@ -282,8 +279,7 @@ Fanex.CMS.TurnoverUsage = function () {
         var gettingMatchesParameters = {
             LeagueID: leagueID,
             FromDate: fromDate,
-            ToDate: toDate,
-            Mode: runningMode
+            ToDate: toDate
         };
 
         CMS.disableInput();

@@ -61,11 +61,10 @@
     <Compile Include="ConfigureTOBySMA\SMAOffsetInfo.cs" />
     <Compile Include="OpenCloseMember\MemberStatusInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TurnoverMonitor\SMATurnoverInfo.cs" />
     <Compile Include="TurnoverUsage\TurnoverUsageInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TurnoverMonitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -85,7 +85,8 @@
     <Compile Include="OpenCloseMember\UpdatedMembersStatusResult.cs" />
     <Compile Include="OpenCloseMember\UpdatedMemberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TurnoverMonitor\SMATurnover.cs" />
+    <Compile Include="TurnoverMonitor\SMATurnoverItem.cs" />
+    <Compile Include="TurnoverMonitor\SMATurnoverGroup.cs" />
     <Compile Include="TurnoverUsage\TurnoverUsageItem.cs" />
   </ItemGroup>
   <ItemGroup>

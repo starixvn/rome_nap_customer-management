@@ -25,6 +25,7 @@ namespace Fanex.NAP.CMS.Controllers
     /// </summary>
     public class TurnoverUsageController : BaseController
     {
+        private const byte MonitoredMode = 2;
         private readonly ITurnoverUsageService _turnoverUsageService;
 
         public TurnoverUsageController() :
@@ -59,7 +60,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverUsage, Policy = Constant.Policy.Read)]
         public JsonResult GetSportList(GetSportsCriteria criteria)
         {
-            IEnumerable<SportInfo> sports = this._turnoverUsageService.GetSportList(criteria);
+            IEnumerable<SportInfo> sports = null;
+
+            criteria.Mode = MonitoredMode;
+            sports = this._turnoverUsageService.GetSportList(criteria);
 
             return Json(sports);
         }
@@ -73,7 +77,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverUsage, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            IEnumerable<LeagueInfo> leagues = this._turnoverUsageService.GetLeaguesOfSport(criteria);
+            IEnumerable<LeagueInfo> leagues = null;
+
+            criteria.Mode = MonitoredMode;
+            leagues = this._turnoverUsageService.GetLeaguesOfSport(criteria);
 
             return Json(leagues);
         }

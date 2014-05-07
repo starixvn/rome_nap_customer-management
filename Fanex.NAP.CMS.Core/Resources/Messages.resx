@@ -204,6 +204,9 @@
   <data name="RemoveOffsetInstruction" xml:space="preserve">
     <value>Input 0 to remove offset</value>
   </data>
+  <data name="RemoveOffsetSuccessfully" xml:space="preserve">
+    <value>The offset value has been removed successfully!</value>
+  </data>
   <data name="RemoveSettingConfirmMessage" xml:space="preserve">
     <value>Are you sure you want to remove this setting?</value>
   </data>

@@ -322,6 +322,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The offset value has been removed successfully!.
+        /// </summary>
+        public static string RemoveOffsetSuccessfully {
+            get {
+                return ResourceManager.GetString("RemoveOffsetSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to remove this setting?.
         /// </summary>
         public static string RemoveSettingConfirmMessage {

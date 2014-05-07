@@ -10,11 +10,13 @@
 namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
-    using Fanex.NAP.CMS.Core.Resources;
-    using Fanex.NAP.CMS.Core.Web;
+    using System.Linq;
     using Fanex.NAP.CMS.Criteria.Common;
+    using Fanex.NAP.CMS.Criteria.TurnoverMonitor;
     using Fanex.NAP.CMS.Models.Common;
+    using Fanex.NAP.CMS.Models.TurnoverMonitor;
     using Fanex.NAP.CMS.Services.Interfaces;
+    using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
 
     /// <summary>
     /// Turnover monitor service.
@@ -46,17 +48,39 @@ namespace Fanex.NAP.CMS.Services.Implements
         }
 
         /// <summary>
-        /// Gets the matches of league.
+        /// Gets the SMA turnover monitor list.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of MatchInfo objects.</returns>
-        public IEnumerable<MatchInfo> GetMatchesOfLeague(GetMatchesOfLeagueCriteria criteria)
+        /// <returns>List of SMATurnoverGroup objects.</returns>
+        public IEnumerable<SMATurnoverGroup> GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria)
         {
-            IEnumerable<MatchInfo> result = this.GetData<MatchInfo>(criteria);
+            IEnumerable<SMATurnoverInfo> rawData = null;
+            List<SMATurnoverGroup> result = null;
 
-            foreach (MatchInfo match in result)
+            rawData = this.GetData<SMATurnoverInfo>(criteria);
+
+            if (rawData != null && rawData.Any())
             {
-                match.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(match.HomeID), ViewLang.Vs, CacheRef.GetTeamName(match.AwayID));
+                IEnumerable<IGrouping<int, SMATurnoverInfo>> groups = rawData.GroupBy(obj => obj.MatchID);
+                SMATurnoverGroup turnoverGroup = null;
+                SMATurnoverInfo firstItem = null;
+
+                result = new List<SMATurnoverGroup>();
+
+                foreach (IGrouping<int, SMATurnoverInfo> group in groups)
+                {
+                    firstItem = group.ElementAt(0);
+                    turnoverGroup = new SMATurnoverGroup(firstItem);
+
+                    foreach (SMATurnoverInfo item in group)
+                    {
+                        turnoverGroup.SMAItems.Add(new SMATurnoverItem(item));
+                    }
+
+                    result.Add(turnoverGroup);
+                }
+
+                result = result.OrderBy(obj => obj.MatchName).ToList();
             }
 
             return result;

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="SMATurnover.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="SMATurnoverItem.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -10,15 +10,32 @@
 namespace Fanex.NAP.CMS.ViewModels.TurnoverMonitor
 {
     using System;
+    using Fanex.Common;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Core.Resources;
+    using Fanex.NAP.CMS.Models.TurnoverMonitor;
 
     /// <summary>
     /// SMA turnover view model.
     /// </summary>
     [Serializable]
-    public class SMATurnover
+    public class SMATurnoverItem
     {
+        public SMATurnoverItem(SMATurnoverInfo rawData)
+        {
+            if (rawData != null)
+            {
+                this.Username = rawData.Username;
+                this.Level = GetLevel(rawData.RoleID);
+                this.Currency = rawData.Currency;
+                this.GivenCredit = Converter.ToDecimal(rawData.Credit);
+                this.MaxTORate = Converter.ToInt(rawData.Value);
+                this.MaxTOAmount = Converter.ToDecimal(rawData.MaxTurnover);
+                this.MemberTO = Converter.ToDecimal(rawData.TotalTurnover);
+                this.PercentageUsed = Converter.ToInt(rawData.PercentageUsed);
+            }
+        }
+
         public string Username { get; set; }
 
         public string Level { get; set; }

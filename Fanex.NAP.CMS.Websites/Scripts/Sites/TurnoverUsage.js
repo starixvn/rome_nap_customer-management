@@ -119,7 +119,7 @@ Fanex.CMS.TurnoverUsage = function () {
                           FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.PercentageUsed, Width: 150, Name: 'ColPercentageUsed', HeaderAlign: 'center', CellAlign: 'center'}],
-            gridExpandHeight: 150,
+            gridExpandHeight: 200,
             showDistinctRow: false,
             showPager: true,
             pagerOption: {
@@ -178,6 +178,8 @@ Fanex.CMS.TurnoverUsage = function () {
         // Reset Match dropdown list.
         domElements.ddlLeague.html('');
         domElements.txtLeague.val('');
+        domElements.ddlMatch.html('');
+        domElements.txtMatch.val('');
 
         getSportList(parameters.FromDate, parameters.ToDate);
     };

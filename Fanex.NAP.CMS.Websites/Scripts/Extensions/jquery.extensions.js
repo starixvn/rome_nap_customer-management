@@ -179,7 +179,8 @@
             // Allow ctrl, shilf, alt, tab, enter, backspace, delete, home, end, escape, left, right, up, down keys.
             if (event.ctrlKey || event.shilfKey || event.altkey ||
                 (event.keyCode >= 35 && event.keyCode <= 40) ||
-                ($.inArray(event.keyCode, [8, 9, 27, 13, 46, 190]) !== -1)) {
+                ($.inArray(event.keyCode, [8, 9, 27, 13, 190]) !== -1) ||
+                (keyCode === 0 && event.keyCode === 46)) {
                 return;
             }
 

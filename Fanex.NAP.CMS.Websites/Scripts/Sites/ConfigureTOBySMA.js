@@ -77,7 +77,8 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         domElements.txtSMAName.focus();
 
         domElements.btnSearch.on('click', function () {
-            searchedName = domElements.txtSMAName.val();
+            searchedName = $.trim(domElements.txtSMAName.val());
+            domElements.txtSMAName.val(searchedName);
             getSMAOffset();
         });
 
@@ -117,9 +118,11 @@ Fanex.CMS.ConfigureTOBySMA = function () {
 
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(popupElements.divNewSMAOffsetForm, 'w')) {
-                var username = popupElements.txtNewSMAName.val();
+                var username = $.trim(popupElements.txtNewSMAName.val());
                 var offset = popupElements.txtOffset.val().replace(/,/g, '');
                 var isValid = ($.isNumeric(offset) && parseInt(offset) !== 0) || (offset.length === 1 && offset[0].toLowerCase() === 'u');
+
+                popupElements.txtNewSMAName.val(username);
 
                 if (!isValid) {
                     Validator.showError(popupElements.txtOffset, messages.InvalidValueError, 'w');

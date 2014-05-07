@@ -81,9 +81,10 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
                     parameters.CountryCode = domElements.ddlCountry.val();
                     parameters.CountryCode = parameters.CountryCode === 'null' ? '' : parameters.CountryCode;
                     parameters.AllMarket = domElements.ddlMarket.val();
-                    parameters.LeagueName = domElements.txtLeague.val();
+                    parameters.LeagueName = $.trim(domElements.txtLeague.val());
                     parameters.DisplayMode = displayMode;
                     parameters.ProgramID = programID;
+                    domElements.txtLeague.val(parameters.LeagueName);
 
                     getReportData();
                 }

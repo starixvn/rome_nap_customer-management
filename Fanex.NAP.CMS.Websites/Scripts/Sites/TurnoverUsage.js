@@ -87,8 +87,9 @@ Fanex.CMS.TurnoverUsage = function () {
             setTimeout(function () {
                 if (Validator.countErrors(domElements.divSMAByEventForm) === 0 && validateFilterForm()) {
                     parameters.MatchID = domElements.ddlMatch.val();
-                    parameters.SMAName = domElements.txtSMAName.val();
+                    parameters.SMAName = $.trim(domElements.txtSMAName.val());
                     parameters.UsedPercent = domElements.txtPercentageUsed.val().replace(/,/g, '');
+                    domElements.txtSMAName.val(parameters.SMAName);
 
                     getTurnoverReport();
                 }

@@ -70,8 +70,9 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
                 if (Validator.countErrors(domElements.divMatchForm) === 0) {
                     parameters.SportID = domElements.ddlSport.val();
                     parameters.LeagueID = domElements.ddlLeague.val();
-                    parameters.MatchCode = domElements.txtMatchCode.val();
+                    parameters.MatchCode = $.trim(domElements.txtMatchCode.val());
                     parameters.OnlyShowException = false;
+                    domElements.txtMatchCode.val(parameters.MatchCode);
 
                     getReportData();
                 }

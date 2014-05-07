@@ -131,9 +131,11 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(popupElements.divNewSMATOForm, 'w')) {
                 var matchID = popupElements.hdnEvent.val();
-                var username = popupElements.txtNewSMAName.val();
+                var username = $.trim(popupElements.txtNewSMAName.val());
                 var rate = popupElements.txtMaxTORate.val().replace(/,/g, '');
                 var isValid = ($.isNumeric(rate) && parseInt(rate) > 0) || (rate.length === 1 && rate[0].toLowerCase() === 'u');
+
+                popupElements.txtNewSMAName.val(username);
 
                 if (!isValid) {
                     Validator.showError(popupElements.txtMaxTORate, messages.InvalidValueError, 'w');
@@ -226,7 +228,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var matchName = '';
 
         var gridOptions = {
-            columns: [{ HeaderText: '#', Width: 70, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
+            columns: [{ HeaderText: '#', Width: 70, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
                       { HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Currency, Width: 100, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
@@ -247,7 +249,8 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 itemsPerPage: cachedData.PageSize,
                 itemsPerPageArray: CMS.pagerRanges,
                 totalItem: cachedData.Length,
-                pagerSelectCallBack: reloadPage
+                pagerSelectCallBack: reloadPage,
+                showDetail: cachedData.Length > 0
             }
         };
         var bodyData = [];
@@ -460,6 +463,9 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 var temCounter = counter + group.SMAItems.length - 1;
                 var currentGroup = null;
 
+                temCounter = temCounter < 0 ? 0 : temCounter;
+
+                console.log(startIndex, endIndex, counter, temCounter, temCounter < startIndex || counter > endIndex);
                 if (temCounter < startIndex || counter > endIndex) {
                     counter = temCounter + 1;
                 } else {
@@ -483,7 +489,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 }
             });
         }
-
+        console.log(pageData, pageIndex, pageSize);
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
         renderGrid(pageData);
@@ -500,7 +506,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 }
             });
         }
-        console.log('count');
+
         return counter;
     };
 

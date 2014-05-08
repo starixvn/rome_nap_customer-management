@@ -114,6 +114,7 @@
         });
     };
 
+    // Input field allows digits and on exceptional character at the beginning of the input value.
     $.fn.numberField = function (digits, allowNegative, firstChar) {
         var $this = $(this);
 
@@ -254,5 +255,74 @@
         });
 
         return $this;
+    };
+
+    // Auto-refresh control.
+    $.fn.autoRefresh = function (values, defaultValue, callbackFunction, auto) {
+        var $obj = $(this);
+        var $refreshIcon = $('<span id="spanRefreshIcon" class="refresh-icon"></span>');
+        var $dropdownIcon = $('<span class="dropdown-icon"></span>');
+        var $options = $('<ul class="refresh-options"></ul>');
+        var refreshTime = 0;
+        var timeout;
+
+        // Count down timer.
+        var runTimer = function () {
+            var counter = refreshTime;
+
+            clearInterval(timeout);
+
+            if (counter > 0) {
+                timeout = setInterval(function () {
+                    counter--;
+                    $refreshIcon.text(counter);
+
+                    if (counter === 0) {
+                        callbackFunction();
+                        
+                        if (auto) {
+                            counter = refreshTime;
+                        } else {
+                            clearInterval(timeout);
+                        }
+                    }
+                }, 1000);
+            }
+        };
+
+        defaultValue = defaultValue || 'Not Refresh';
+        refreshTime = defaultValue || 0;
+        callbackFunction = callbackFunction || function () {};
+        auto = auto === undefined ? true : auto;
+
+        // Add not refresh value.
+        $options.append($('<li class="option" data-value="0">Not Refresh</li>'));
+
+        $.each(values, function (index, item) {
+            $options.append($('<li class="option" data-value="' + item + '">' + item + 'sec</li>'));
+        });
+
+        $refreshIcon.text(defaultValue);
+        $refreshIcon.click(callbackFunction);
+        $dropdownIcon.click(function () {
+            $options.toggle();
+        });
+
+        $options.find('li').click(function () {
+            var selectedValue = parseInt($(this).attr('data-value'));
+
+            refreshTime = selectedValue;
+            $refreshIcon.text(selectedValue);
+            runTimer();
+        });
+
+        $('html').click(function (event) {
+            if (!$(event.target).hasClass('dropdown-icon')) {
+                $options.hide();
+            }
+        });
+
+        $obj.addClass('auto-refresh').append($refreshIcon).append($dropdownIcon).append($options);
+        runTimer();
     };
 })(jQuery);

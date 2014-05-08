@@ -166,6 +166,8 @@
   <ItemGroup>
     <Content Include="App_Data\NAPCommonSpNames.xml" />
     <Content Include="App_Data\NAPCMSSPNames.xml" />
+    <Content Include="Content\Extensions\images\expand-small.png" />
+    <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />

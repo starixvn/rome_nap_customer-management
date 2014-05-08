@@ -25,7 +25,8 @@ Fanex.CMS.TurnoverMonitor = function () {
         txtLeague: null,
         txtPercentageUsed: null,
         btnSearch: null,
-        divTurnoverMonitor: null
+        divTurnoverMonitor: null,
+        divTurnoverMonitorContainer: null
     };
     var parameters = {
         SportType: null,
@@ -48,6 +49,7 @@ Fanex.CMS.TurnoverMonitor = function () {
         domElements.txtPercentageUsed = $('#txtPercentageUsed');
         domElements.btnSearch = $('#btnSearch');
         domElements.divTurnoverMonitor = $('#divTurnoverMonitor');
+        domElements.divTurnoverMonitorContainer = $('#divTurnoverMonitorContainer');
     };
 
     // Initialize fields and handle events.
@@ -115,7 +117,7 @@ Fanex.CMS.TurnoverMonitor = function () {
             showTitle: true,
             titleInfo: {
                 showButtonsWhenNoData: true,
-                customButtons: '<input type="button" value="Auto Refresh" />'
+                customButtons: '<div id="divAutoRefresh"></div>'
             },
             showTree: true,
             showPager: true,
@@ -180,6 +182,8 @@ Fanex.CMS.TurnoverMonitor = function () {
                 $obj.addClass('full-percents');
             }
         });
+
+        domElements.divTurnoverMonitorContainer.find('#divAutoRefresh').autoRefresh([10, 20, 30], 10, null, false); //getTurnoverReport
     };
 
     // Customize reloading page.
@@ -238,7 +242,7 @@ Fanex.CMS.TurnoverMonitor = function () {
                 }
             });
         }
-        console.log('count');
+
         return counter;
     };
 

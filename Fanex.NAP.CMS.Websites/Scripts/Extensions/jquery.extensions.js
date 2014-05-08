@@ -328,6 +328,14 @@
         $obj.addClass('auto-refresh').append($refreshIcon).append($dropdownIcon).append($options);
         runTimer();
 
+        $obj.run = function () {
+            runTimer();
+        };
+
+        $obj.stop = function () {
+            clearInterval(timeout);
+        };
+
         return $obj;
     };
 })(jQuery);

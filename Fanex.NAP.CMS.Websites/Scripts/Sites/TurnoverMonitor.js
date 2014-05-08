@@ -26,7 +26,8 @@ Fanex.CMS.TurnoverMonitor = function () {
         txtPercentageUsed: null,
         btnSearch: null,
         divTurnoverMonitor: null,
-        divTurnoverMonitorContainer: null
+        divTurnoverMonitorContainer: null,
+        divRefresh: null
     };
     var parameters = {
         SportType: null,
@@ -192,13 +193,13 @@ Fanex.CMS.TurnoverMonitor = function () {
             }
         });
 
-        domElements.divTurnoverMonitorContainer.find('#divAutoRefresh')
-            .autoRefresh(refreshTimer.Interval, cachedData.RefreshTime, getTurnoverReport, false)
-            .find('li').on('click', function () {
-                var selectedValue = parseInt($(this).attr('data-value'));
+        domElements.divRefresh = domElements.divTurnoverMonitorContainer.find('#divAutoRefresh')
+            .autoRefresh(refreshTimer.Interval, cachedData.RefreshTime, getTurnoverReport, false);
+        domElements.divRefresh.find('li').on('click', function () {
+            var selectedValue = parseInt($(this).attr('data-value'));
 
-                cachedData.RefreshTime = parseInt(selectedValue);
-            });
+            cachedData.RefreshTime = parseInt(selectedValue);
+        });
     };
 
     // Customize reloading page.
@@ -351,6 +352,11 @@ Fanex.CMS.TurnoverMonitor = function () {
     // Get SMA turnover report.
     var getTurnoverReport = function () {
         CMS.disableInput();
+
+        if (domElements.divRefresh && domElements.divRefresh.stop) {
+            domElements.divRefresh.stop();
+        }
+
         $.ajax({
             type: 'POST',
             url: urls.GetTurnoverReport,

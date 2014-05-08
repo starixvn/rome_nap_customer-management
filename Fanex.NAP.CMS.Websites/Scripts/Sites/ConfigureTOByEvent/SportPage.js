@@ -46,7 +46,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
     // Render grid.
     var renderGrid = function (data) {
         var percentageFormat = '<span class="percentage-link link" data-value="{0}" data-sport="{1}">{2}</span>' +
-                               '<input type="text" maxlength="7" class="percentage display-none" />';
+                               '<input type="text" maxlength="3" class="percentage display-none" />';
         var percentage = '';
         var formattedPercentage = '';
         var percentageCol = '';

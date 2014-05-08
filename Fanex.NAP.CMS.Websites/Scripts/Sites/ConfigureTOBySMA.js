@@ -120,7 +120,14 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             if (Validator.validateForm(popupElements.divNewSMAOffsetForm, 'w')) {
                 var username = $.trim(popupElements.txtNewSMAName.val());
                 var offset = popupElements.txtOffset.val().replace(/,/g, '');
-                var isValid = ($.isNumeric(offset) && parseInt(offset) !== 0) || (offset.length === 1 && offset[0].toLowerCase() === 'u');
+                var isValid = false;
+
+                if ($.isNumeric(offset)) {
+                    offset = parseInt(offset);
+                    isValid = offset < 1000 && offset !== 0;
+                } else {
+                    isValid = offset.length === 1 && offset[0].toLowerCase() === 'u';
+                }
 
                 popupElements.txtNewSMAName.val(username);
 
@@ -148,7 +155,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
     // Render grid.
     var renderGrid = function (data) {
         var offsetFormat = '<span class="offset-link link" data-cust-id="{0}" data-value="{1}">{2}</span>' +
-                           '<input type="text" maxlength="7" class="offset display-none" />';
+                           '<input type="text" maxlength="4" class="offset display-none" />';
         var offset = '';
         var formattedOffset = '';
         var offsetCol = '';
@@ -303,7 +310,14 @@ Fanex.CMS.ConfigureTOBySMA = function () {
     // Validate input offset.
     var validateOffset = function ($input) {
         var value = $input.val().replace(/,/g, '');
-        var isValid = $.isNumeric(value) || (value.length === 1 && value[0].toLowerCase() === 'u');
+        var isValid = false;
+
+        if ($.isNumeric(value)) {
+            value = parseInt(value);
+            isValid = value < 1000;
+        } else {
+            isValid = value.length === 1 && value[0].toLowerCase() === 'u';
+        }
 
         // Remove previous instruction tooltip if there is any.
         Validator.clearError($input);

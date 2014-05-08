@@ -212,7 +212,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
     // Render grid.
     var renderGrid = function (data) {
         var rateFormat = '<span class="rate-link link" data-match-id="{0}" data-sma-id="{1}" data-value="{2}">{3}</span>' +
-                           '<input type="text" maxlength="7" class="rate display-none" />';
+                           '<input type="text" maxlength="3" class="rate display-none" />';
         var actionFormat = '<span class="remove ico-delete" data-match-id="{0}" data-sma-id="{1}" title="{2}"></span>';
         var groupFormat = '<span class="group-title">' +
                               '<span class="event-date">{0}: {1}</span> -- ' +

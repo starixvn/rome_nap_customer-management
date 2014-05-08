@@ -194,7 +194,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
     // Render grid.
     var renderGrid = function (data) {
         var percentageFormat = '<span class="percentage-link link" data-league-id="{0}" data-value="{1}">{2}</span>' +
-                               '<input type="text" maxlength="7" class="percentage display-none" />';
+                               '<input type="text" maxlength="3" class="percentage display-none" />';
         var exceptionFormat = '<span class="remove-exception ico-delete" data-league-id="{0}" title="{1}"></span>';
         var showExceptionChk = '<input type="checkbox" id="chkShowException" class="show-exception" /><label for="chkShowException">{0}</label>';
         var percentage = '';

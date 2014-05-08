@@ -252,6 +252,24 @@
                     setCaret($obj, cursorPos);
                 }
             }
+        }).on('blur', function (event) {
+            var $obj = $(this);
+            var value = $.trim($obj.val());
+            var rawValue = value.replace(/,/g, '');
+
+            if ($.isNumeric(rawValue)) {
+                var decimalPos = rawValue.indexOf('.');
+
+                rawValue = rawValue === '' ? '0' : rawValue;
+
+                if (decimalPos < 0) {
+                    value = numeral(rawValue).format('0,0');
+                } else if (decimalPos < rawValue.length - 1) {
+                    value = numeral(rawValue).format('0,0.0[000]');
+                }
+
+                $obj.val(value);
+            }
         });
 
         return $this;

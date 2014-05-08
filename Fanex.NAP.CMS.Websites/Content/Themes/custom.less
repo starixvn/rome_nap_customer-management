@@ -184,6 +184,28 @@ input.ui-multiselect-state-default{
     margin-left: 10px;
     min-width: 99%;
 
+    .grid-title {
+        /* Formating for Refresh button */
+        .auto-refresh {
+            background-color: #fff;
+            border-color: #a4a4a3;
+
+            .refresh-options .option {
+                padding: 3px 5px;
+
+                &:hover {
+                    background: #e1e1e1 !important;
+                }
+            }
+
+            .refresh-icon {
+                padding-right: 16px;
+                width: 76px;
+                color: #000;
+            }
+        }
+    }
+
     .freegrid {
         thead th, .grid-fixed-table thead th {
             font-weight: normal;
@@ -300,4 +322,11 @@ input.ui-multiselect-state-default{
 .ui-widget-overlay {
     background: #000;
     overflow: hidden;
+}
+
+/* combobox */
+.ui-combobox {
+    .ui-corner-right {
+        .border_radius(0);
+    }
 }

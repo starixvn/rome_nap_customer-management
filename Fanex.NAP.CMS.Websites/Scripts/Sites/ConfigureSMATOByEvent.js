@@ -294,7 +294,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 });
 
                 if (hasEditRight) {
-                    groupRow += addNewLink.format(group.MatchName, group.MatchID, labels.AddSMA);
+                    groupRow += addNewLink.format(group.MatchName, group.MatchID, labels.SMA);
                 }
 
                 row = {
@@ -465,7 +465,6 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
 
                 temCounter = temCounter < 0 ? 0 : temCounter;
 
-                console.log(startIndex, endIndex, counter, temCounter, temCounter < startIndex || counter > endIndex);
                 if (temCounter < startIndex || counter > endIndex) {
                     counter = temCounter + 1;
                 } else {
@@ -489,7 +488,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                 }
             });
         }
-        console.log(pageData, pageIndex, pageSize);
+
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
         renderGrid(pageData);

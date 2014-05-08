@@ -260,6 +260,7 @@
     // Auto-refresh control.
     $.fn.autoRefresh = function (values, defaultValue, callbackFunction, auto) {
         var $obj = $(this);
+        var $refreshValue = $('<span class="refresh-value"></span>');
         var $refreshIcon = $('<span id="spanRefreshIcon" class="refresh-icon"></span>');
         var $dropdownIcon = $('<span class="dropdown-icon"></span>');
         var $options = $('<ul class="refresh-options"></ul>');
@@ -275,7 +276,7 @@
             if (counter > 0) {
                 timeout = setInterval(function () {
                     counter--;
-                    $refreshIcon.text(counter);
+                    $refreshValue.text(counter);
 
                     if (counter === 0) {
                         callbackFunction();
@@ -289,9 +290,9 @@
                 }, 1000);
             }
         };
-
-        defaultValue = defaultValue || 'Not Refresh';
+        
         refreshTime = defaultValue || 0;
+        defaultValue = refreshTime === 0 ? 'Not Refresh' : refreshTime;
         callbackFunction = callbackFunction || function () {};
         auto = auto === undefined ? true : auto;
 
@@ -299,10 +300,10 @@
         $options.append($('<li class="option" data-value="0">Not Refresh</li>'));
 
         $.each(values, function (index, item) {
-            $options.append($('<li class="option" data-value="' + item + '">' + item + 'sec</li>'));
+            $options.append($('<li class="option" data-value="' + item + '">' + item + ' sec</li>'));
         });
 
-        $refreshIcon.text(defaultValue);
+        $refreshValue.text(defaultValue);
         $refreshIcon.click(callbackFunction);
         $dropdownIcon.click(function () {
             $options.toggle();
@@ -312,7 +313,8 @@
             var selectedValue = parseInt($(this).attr('data-value'));
 
             refreshTime = selectedValue;
-            $refreshIcon.text(selectedValue);
+            selectedValue = selectedValue === 0 ? 'Not Refresh' : selectedValue;
+            $refreshValue.text(selectedValue);
             runTimer();
         });
 
@@ -322,7 +324,10 @@
             }
         });
 
+        $refreshIcon.append($refreshValue);
         $obj.addClass('auto-refresh').append($refreshIcon).append($dropdownIcon).append($options);
         runTimer();
+
+        return $obj;
     };
 })(jQuery);

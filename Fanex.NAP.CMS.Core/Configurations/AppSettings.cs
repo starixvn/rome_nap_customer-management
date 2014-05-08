@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.Core.Configurations
 {
     using System.Configuration;
+    using Fanex.Common;
 
     /// <summary>
     /// Application settings.
@@ -17,6 +18,7 @@ namespace Fanex.NAP.CMS.Core.Configurations
     public static class AppSettings
     {
         private static string serverTimezone;
+        private static int? turnoverPercentageUsed;
 
         public static string ServerTimezone
         {
@@ -28,6 +30,19 @@ namespace Fanex.NAP.CMS.Core.Configurations
                 }
 
                 return serverTimezone;
+            }
+        }
+
+        public static int? TurnoverPercentageUsed
+        {
+            get
+            {
+                if (turnoverPercentageUsed == null)
+                {
+                    turnoverPercentageUsed = Converter.ToInt(GetValue("TOControlPercentageUsed"));
+                }
+
+                return turnoverPercentageUsed;
             }
         }
 

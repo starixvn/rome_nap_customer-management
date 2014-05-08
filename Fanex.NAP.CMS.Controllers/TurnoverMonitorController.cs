@@ -12,6 +12,7 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core.Configurations;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.TurnoverMonitor;
     using Fanex.NAP.CMS.Models.Common;
@@ -19,6 +20,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.TurnoverMonitor;
     using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Attribute;
 
     /// <summary>
@@ -47,6 +49,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.DefautPercentageUsed = AppSettings.TurnoverPercentageUsed.Format();
+
             return View();
         }
 

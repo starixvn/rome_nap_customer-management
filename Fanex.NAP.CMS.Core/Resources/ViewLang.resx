@@ -372,4 +372,7 @@
   <data name="TurnoverUsage" xml:space="preserve">
     <value>Turnover Usage</value>
   </data>
+  <data name="SMA" xml:space="preserve">
+    <value>SMA</value>
+  </data>
 </root>

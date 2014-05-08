@@ -700,6 +700,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SMA.
+        /// </summary>
+        public static string SMA {
+            get {
+                return ResourceManager.GetString("SMA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SMA Name.
         /// </summary>
         public static string SMAName {

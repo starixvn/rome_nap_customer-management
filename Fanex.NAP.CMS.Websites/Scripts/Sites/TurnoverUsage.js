@@ -99,7 +99,7 @@ Fanex.CMS.TurnoverUsage = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}<span></div></div>';
+        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var percentageCol = '';
 
         var gridOptions = {
@@ -326,7 +326,6 @@ Fanex.CMS.TurnoverUsage = function () {
         var selectedMatch = domElements.ddlMatch.val();
 
         if (!selectedSport) {
-            console.log(!selectedSport);
             Validator.showError(domElements.txtSport.parent(), messages.SelectOneOptionMessage, 'w');
 
             return false;

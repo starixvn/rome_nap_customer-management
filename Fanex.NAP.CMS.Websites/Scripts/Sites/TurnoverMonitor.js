@@ -37,7 +37,12 @@ Fanex.CMS.TurnoverMonitor = function () {
         Data: null,
         Length: 0,
         PageSize: CMS.pageSize,
-        PageIndex: 0
+        PageIndex: 0,
+        RefreshTime: null
+    };
+    var refreshTimer = {
+        Interval: [10, 20, 30],
+        Default: 10
     };
 
     // Cache DOM elements
@@ -69,6 +74,10 @@ Fanex.CMS.TurnoverMonitor = function () {
         });
 
         domElements.btnSearch.on('click', function () {
+            cachedData.PageIndex = 0;
+            cachedData.PageSize = CMS.pageSize;
+            cachedData.RefreshTime = refreshTimer.Default;
+
             // Delay 70ms for jQuery-UI combo-box to verify its state.
             setTimeout(function () {
                 if (Validator.countErrors(domElements.divSMAByEventForm) === 0) {
@@ -89,7 +98,7 @@ Fanex.CMS.TurnoverMonitor = function () {
                               '<span>{2}: {3}</span> -- ' +
                               '<span class="match-name" title="{4}">{5}</span>' +
                           '</span>';
-        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}<span></div></div>';
+        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var percentageCol = '';
         var groupRow = '';
         var leagueName = '';
@@ -183,7 +192,13 @@ Fanex.CMS.TurnoverMonitor = function () {
             }
         });
 
-        domElements.divTurnoverMonitorContainer.find('#divAutoRefresh').autoRefresh([10, 20, 30], 10, null, false); //getTurnoverReport
+        domElements.divTurnoverMonitorContainer.find('#divAutoRefresh')
+            .autoRefresh(refreshTimer.Interval, cachedData.RefreshTime, getTurnoverReport, false)
+            .find('li').on('click', function () {
+                var selectedValue = parseInt($(this).attr('data-value'));
+
+                cachedData.RefreshTime = parseInt(selectedValue);
+            });
     };
 
     // Customize reloading page.

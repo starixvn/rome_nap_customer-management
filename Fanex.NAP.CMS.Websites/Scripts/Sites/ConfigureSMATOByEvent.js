@@ -225,6 +225,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
         var rateCol = '';
         var actionCol = '';
         var groupRow = '';
+        var addLink = '';
         var matchName = '';
 
         var gridOptions = {
@@ -293,14 +294,16 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                     subRows.push(row);
                 });
 
-                if (hasEditRight) {
-                    groupRow += addNewLink.format(group.MatchName, group.MatchID, labels.SMA);
-                }
-
                 row = {
-                    Columns: [{ Name: 'ColOrder', Value: groupRow, CellAlign: 'left', MergeColNumber: 8}],
+                    Columns: [{ Name: 'ColOrder', Value: groupRow, CellAlign: 'left', MergeColNumber: hasEditRight ? 7 : 8 }],
                     SubRows: subRows
                 };
+
+                if (hasEditRight) {
+                    addLink = addNewLink.format(group.MatchName, group.MatchID, labels.SMA);
+                    row.Columns.push({ Name: 'ColAction', Value: addLink, CellAlign: 'right' });
+                }
+
                 bodyData.push(row);
             });
         }

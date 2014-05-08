@@ -105,7 +105,7 @@
                     text: false
                 })
                 .removeClass('ui-corner-all')
-                .addClass('ui-corner-right ui-combobox-toggle')
+                .addClass('ui-combobox-toggle') //.addClass('ui-corner-right ui-combobox-toggle')
                 .click(function () {
                     // close if already visible
                     if (input.autocomplete('widget').is(':visible')) {

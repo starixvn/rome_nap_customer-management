@@ -1,31 +1,33 @@
+@import "../Themes/colors.less";
 @import "../Themes/common.less";
 
 .freegrid {
     .parent-row {
-        .group-title {
-            display: inline-block;
-            font-weight: normal;
-            width: 88%;
+        .tr-grid-collapse-expand {
+            border-right: none;
 
-            .match-name {
-                color: #4363a5;
-            }
+            .group-title {
+                display: inline-block;
+                font-weight: normal;
+                width: 92%;
 
-            .event-date {
-                color: #666565;
+                .match-name {
+                    color: #4363a5;
+                }
+
+                .event-date {
+                    color: #666565;
+                }
             }
         }
 
         .add-new-link {
-            display: inline-block;
-            color: #424141;
-            cursor: pointer;
-            font-weight: normal;
-            border: 1px solid #7A98B1;
-            padding: 0 8px;
+            .custom_button();
+            min-width: 0;
+            height: 16px;
+            padding: 0 4px;
             float: right;
-            font-size: 12px;
-            .border_radius();
+            font-weight: normal;
         }
     }
 

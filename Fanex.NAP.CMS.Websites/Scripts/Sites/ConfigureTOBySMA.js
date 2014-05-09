@@ -114,9 +114,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
 
     // Bind event handlers to elements on the popup.
     var bindPopupEventhandlers = function () {
-        popupElements.txtOffset.numberField(0, true, 'u').on('keypress', function (event) {
-            return handleNagativeInput(event, $(this));
-        });
+        popupElements.txtOffset.numberField(0, true, 'u');
 
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(popupElements.divNewSMAOffsetForm, 'w')) {
@@ -154,28 +152,10 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         popupElements.btnCancel.prop('disabled', true);
     };
 
-    var handleNagativeInput = function (event, $input) {
-        var value = $.trim($input.val());
-        var minusPos = value.indexOf('-');
-
-        // Ignore some special keys in the case of FireFox.
-        if (event.ctrlKey || event.shilfKey || event.altkey ||
-            (event.keyCode >= 35 && event.keyCode <= 40) ||
-            ($.inArray(event.keyCode, [8, 9, 27, 13, 190]) !== -1) ||
-            (event.which === 0 && event.keyCode === 46)) {
-            return;
-        }
-
-        if (minusPos < 0 && value.length >= 3) {
-            console.log(minusPos, value);
-            return false;
-        }
-    };
-
     // Render grid.
     var renderGrid = function (data) {
         var offsetFormat = '<span class="offset-link link" data-cust-id="{0}" data-value="{1}">{2}</span>' +
-                           '<input type="text" maxlength="4" class="offset display-none" />';
+                           '<input type="text" maxlength="3" class="offset display-none" />';
         var offset = '';
         var formattedOffset = '';
         var offsetCol = '';
@@ -230,9 +210,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
         var offsetInputs = domElements.divSMAOffset.find('input.offset');
 
         // Format the offset value which is input into the text box.
-        offsetInputs.numberField(0, true, 'u').on('keypress', function (event) {
-            return handleNagativeInput(event, $(this));
-        });
+        offsetInputs.numberField(0, true, 'u');
 
         // When user clicks on Offset link.
         offsetLinks.on('click', function () {

@@ -168,6 +168,10 @@
             }
         };
 
+        if ($this.attr('maxlength')) {
+            $this.attr('original-maxlength', $this.attr('maxlength'));
+        }
+
         $this.on('keypress', function (event) {
             var $obj = $(this);
             var value = $.trim($obj.val());
@@ -176,6 +180,16 @@
             var cursorPos = getCaret($obj);
             var keyCode = event.which;
             var selectedText = getSelectedText($obj);
+            var originalMaxlength = parseInt($this.attr('original-maxlength'));
+            var maxlength = parseInt($obj.attr('maxlength'));
+
+            if (minusPos >= 0) {
+                if (originalMaxlength === maxlength) {
+                    $obj.attr('maxlength', maxlength + 1);
+                }
+            } else if (originalMaxlength !== maxlength) {
+                $obj.attr('maxlength', originalMaxlength);
+            }
 
             // Allow ctrl, shilf, alt, tab, enter, backspace, delete, home, end, escape, left, right, up, down keys.
             if (event.ctrlKey || event.shilfKey || event.altkey ||

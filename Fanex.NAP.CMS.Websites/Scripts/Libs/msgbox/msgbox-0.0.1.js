@@ -279,9 +279,9 @@
             $this.find('.ok').click(function () {
                 _this.close();
                 if ($.isFunction(callback)) callback.apply($this.get(0), []);
-            });
+            }).focus();
 
-            $this.find('.cancel').click(function () { _this.close(); }).focus();
+            $this.find('.cancel').click(function () { _this.close(); });
         },
 
         yesNoConfirm: function (title, msg, yesCallback, noCallback, options) {

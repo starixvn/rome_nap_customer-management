@@ -125,7 +125,8 @@ Fanex.CMS.TurnoverUsage = function () {
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: CMS.pageSize,
-                itemsPerPageArray: CMS.pagerRanges
+                itemsPerPageArray: CMS.pagerRanges,
+                afterPagedFunction: handleGridEvents
             }
         };
         var bodyData = [];
@@ -178,8 +179,11 @@ Fanex.CMS.TurnoverUsage = function () {
         // Reset Match dropdown list.
         domElements.ddlLeague.html('');
         domElements.txtLeague.val('');
+        Validator.clearError(domElements.txtLeague.parent());
         domElements.ddlMatch.html('');
         domElements.txtMatch.val('');
+        Validator.clearError(domElements.txtMatch.parent());
+        Validator.clearError(domElements.txtSport.parent());
 
         getSportList(parameters.FromDate, parameters.ToDate);
     };
@@ -266,6 +270,8 @@ Fanex.CMS.TurnoverUsage = function () {
         // Reset Match dropdown list.
         domElements.ddlMatch.html('');
         domElements.txtMatch.val('');
+        Validator.clearError(domElements.txtLeague.parent());
+        Validator.clearError(domElements.txtMatch.parent());
 
         // Add new values.
         if (data && data.length > 0) {
@@ -306,6 +312,7 @@ Fanex.CMS.TurnoverUsage = function () {
     var updateMatchDropdown = function (data) {
         // Clear old values.
         domElements.ddlMatch.html('');
+        Validator.clearError(domElements.txtMatch.parent());
 
         // Add new values.
         if (data && data.length > 0) {

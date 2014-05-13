@@ -84,8 +84,6 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                     result.Add(turnoverGroup);
                 }
-
-                result = result.OrderBy(obj => obj.MatchName).ToList();
             }
 
             return result;

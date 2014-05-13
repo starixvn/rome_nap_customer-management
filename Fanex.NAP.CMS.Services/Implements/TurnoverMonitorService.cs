@@ -80,7 +80,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                     result.Add(turnoverGroup);
                 }
 
-                result = result.OrderBy(obj => obj.MatchName).ToList();
+                result = result.OrderBy(obj => obj.LeagueName).ThenBy(obj => obj.MatchCode).ToList();
             }
 
             return result;

@@ -284,7 +284,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
                                   { Name: 'ColCurrency', Value: item.Currency },
                                   { Name: 'ColGivenCredit', Value: item.GivenCredit },
                                   { Name: 'ColMaxTORate', Value: hasEditRight ? rateCol : formattedRate },
-                                  { Name: 'ColMaxTOAmount', Value: item.MaxTOAmount === 0 ? labels.Unlimited : item.MaxTOAmount}]
+                                  { Name: 'ColMaxTOAmount', Value: item.MaxTORate === 0 ? labels.Unlimited : item.MaxTOAmount}]
                     };
 
                     if (hasEditRight) {

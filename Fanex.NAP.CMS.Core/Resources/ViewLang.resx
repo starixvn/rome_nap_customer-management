@@ -375,4 +375,7 @@
   <data name="SMA" xml:space="preserve">
     <value>SMA</value>
   </data>
+  <data name="MinimumPercentageUsed" xml:space="preserve">
+    <value>Minimum % Used</value>
+  </data>
 </root>

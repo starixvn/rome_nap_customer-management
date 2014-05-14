@@ -28,10 +28,10 @@
                 <label for="ddlLeague">@ViewLang.League</label>
             </div>
             <div class="edit-field col_12 align-left">
-                <select id="ddlLeague" class="combobox-autocomplete width-250"></select>
+                <select id="ddlLeague" class="combobox-autocomplete league"></select>
             </div>
-            <div class="lbl-field col_2 align-right">
-                <label for="txtPercentageUsed">% @ViewLang.Used</label>
+            <div class="lbl-field col_5 align-right">
+                <label for="txtPercentageUsed">@ViewLang.MinimumPercentageUsed</label>
             </div>
             <div class="edit-field col_6 align-left">
                 <input type="text" id="txtPercentageUsed" maxlength="5" value="@ViewBag.DefautPercentageUsed" />

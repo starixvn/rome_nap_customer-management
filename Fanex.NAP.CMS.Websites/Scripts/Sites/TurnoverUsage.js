@@ -61,8 +61,10 @@ Fanex.CMS.TurnoverUsage = function () {
         Layout.createDateRange(
             domElements.divDatepickerPlugin,
             labels.FromDate,
+            null,
             'col_9',
             labels.ToDate,
+            'col_5',
             'col_5',
             datepickerSetting.Today,
             datepickerSetting.MoveBetsDay,

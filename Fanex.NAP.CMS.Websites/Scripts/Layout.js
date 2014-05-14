@@ -35,9 +35,11 @@ var Layout = (function () {
 
             return $obj.nexDatePicker(configObj);
         },
-        createDateRange: function ($obj, fromLabel, fromCss, toLabel, toCss, defaultDate, minDate, maxDate, onChangeHandler) {
+        createDateRange: function ($obj, fromLabel, fromLabelCss, fromCss, toLabel, toLabelCss, toCss, defaultDate, minDate, maxDate, onChangeHandler) {
             var configObj = null;
 
+            fromLabelCss = fromLabelCss || 'col_3';
+            toLabelCss = toLabelCss || 'col_3';
             fromCss = fromCss || 'col_6 width-auto';
             toCss = toCss || 'col_6 width-auto';
             onChangeHandler = onChangeHandler || function () { };
@@ -48,14 +50,14 @@ var Layout = (function () {
                     Id: 'dpkFromDate',
                     Label: fromLabel,
                     InitDate: defaultDate,
-                    LabelCss: 'lbl-field col_3',
+                    LabelCss: 'lbl-field' + ' ' + fromLabelCss,
                     TextboxCss: 'edit-field' + ' ' + fromCss
                 },
                 secondDatePicker: {
                     Id: 'dpkToDate',
                     Label: toLabel,
                     InitDate: defaultDate,
-                    LabelCss: 'lbl-field col_3',
+                    LabelCss: 'lbl-field' + ' ' + toLabelCss,
                     TextboxCss: 'edit-field' + ' ' + toCss
                 },
 

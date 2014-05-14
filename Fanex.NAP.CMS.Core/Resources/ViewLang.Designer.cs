@@ -538,6 +538,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum % Used.
+        /// </summary>
+        public static string MinimumPercentageUsed {
+            get {
+                return ResourceManager.GetString("MinimumPercentageUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New SMA TO Control.
         /// </summary>
         public static string NewSMATOControl {

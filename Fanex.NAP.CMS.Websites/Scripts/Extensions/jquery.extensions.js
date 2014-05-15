@@ -312,6 +312,7 @@
             var counter = refreshTime;
 
             clearInterval(timeout);
+            $refreshValue.text(counter);
 
             if (counter > 0) {
                 timeout = setInterval(function () {
@@ -320,7 +321,7 @@
 
                     if (counter === 0) {
                         callbackFunction();
-                        counter = refreshTime + 1;
+                        counter = refreshTime;
                     }
                 }, 1000);
             }

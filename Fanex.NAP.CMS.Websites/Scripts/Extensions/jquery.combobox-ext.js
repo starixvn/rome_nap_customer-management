@@ -41,33 +41,38 @@
                             item: ui.item.option
                         });
                         select.trigger('change');
-                    },
-                    change: function (event, ui) {
-                        console.log('changed');
-                        if (!ui.item) {
-                            var txt = $(this),
-                                value = txt.val(),
-                                matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
-                                valid = false;
-
-                            Validator.clearError(wrapper);
-                            select.children('option').each(function () {
-                                if ($(this).text().match(matcher)) {
-                                    this.selected = valid = true;
-                                    return false;
-                                }
-                            });
-
-                            if (!valid) {
-                                // remove invalid value, as it didn't match anything
-                                //txt.val('');
-                                Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
-                                select.val('');
-                                input.data('autocomplete').term = '';
-                                return false;
-                            }
-                        }
                     }
+                })
+                .change(function (event) {
+                    var txt = $(this),
+                        value = $.trim(txt.val()),
+                        matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
+                        valid = false;
+                        console.log(value);
+                    Validator.clearError(wrapper);
+                    select.children('option').each(function () {
+                        if ($(this).text().match(matcher)) {
+                            this.selected = valid = true;
+                            self._trigger('selected', event, {
+                                item: this
+                            });
+                            select.trigger('change');
+
+                            return false;
+                        }
+                    });
+
+                    if (!valid) {
+                        Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
+                        select.val('');
+                        input.data('autocomplete').term = '';
+                        return false;
+                    }
+                })
+                .focusout(function () {
+                    var txt = $(this);
+
+                    txt.val($.trim(txt.val()));
                 })
                 .focus(function () {
                     $(this).select();

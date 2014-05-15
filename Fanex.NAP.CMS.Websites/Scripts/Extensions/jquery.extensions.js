@@ -299,6 +299,14 @@
         var refreshTime = 0;
         var timeout;
 
+        // Set interval
+        setRefreshTime = function (value) {
+            refreshTime = value;
+            value = value === 0 ? 'Not Refresh' : value;
+            $refreshValue.text(value);
+            clearInterval(timeout);
+        };
+
         // Count down timer.
         var runTimer = function () {
             var counter = refreshTime;
@@ -312,19 +320,12 @@
 
                     if (counter === 0) {
                         callbackFunction();
-                        
-                        if (auto) {
-                            counter = refreshTime;
-                        } else {
-                            clearInterval(timeout);
-                        }
+                        counter = refreshTime + 1;
                     }
                 }, 1000);
             }
         };
-        
-        refreshTime = defaultValue || 0;
-        defaultValue = refreshTime === 0 ? 'Not Refresh' : refreshTime;
+
         callbackFunction = callbackFunction || function () {};
         auto = auto === undefined ? true : auto;
 
@@ -335,8 +336,12 @@
             $options.append($('<li class="option" data-value="' + item + '">' + item + ' sec</li>'));
         });
 
-        $refreshValue.text(defaultValue);
-        $refreshIcon.click(callbackFunction);
+        setRefreshTime(defaultValue);
+        $refreshIcon.click(function () {
+            if (!$obj.hasClass('disabled')) {
+                callbackFunction();
+            }
+        });
         $dropdownIcon.click(function () {
             $options.toggle();
         });
@@ -344,10 +349,11 @@
         $options.find('li').click(function () {
             var selectedValue = parseInt($(this).attr('data-value'));
 
-            refreshTime = selectedValue;
-            selectedValue = selectedValue === 0 ? 'Not Refresh' : selectedValue;
-            $refreshValue.text(selectedValue);
-            runTimer();
+            setRefreshTime(selectedValue);
+
+            if (auto && !$obj.hasClass('disabled')) {
+                runTimer();
+            }
         });
 
         $('html').click(function (event) {
@@ -358,7 +364,11 @@
 
         $refreshIcon.append($refreshValue);
         $obj.addClass('auto-refresh').append($refreshIcon).append($dropdownIcon).append($options);
-        runTimer();
+        ////runTimer();
+
+        $obj.setInterval = function (value) {
+            setRefreshTime(value);
+        };
 
         $obj.run = function () {
             runTimer();

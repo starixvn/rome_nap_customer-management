@@ -378,4 +378,7 @@
   <data name="MinimumPercentageUsed" xml:space="preserve">
     <value>Minimum % Used</value>
   </data>
+  <data name="AutoRefresh" xml:space="preserve">
+    <value>Auto Refresh</value>
+  </data>
 </root>

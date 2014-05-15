@@ -110,9 +110,39 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetTurnoverReport(GetSMATurnoverMonitorListCriteria criteria)
         {
+            int currentSportType = criteria.SportType;
+            int currentLeagueID = criteria.LeagueID;
             IEnumerable<SMATurnoverGroup> result = this._turnoverMonitorService.GetSMATurnoverMonitorList(criteria);
+            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(new GetSportsCriteria
+            {
+                Mode = RunningMode
+            });
+            IEnumerable<LeagueInfo> leagues = null;
 
-            return Json(result);
+            if (sports.Any() && !sports.Any(obj => obj.SportType == criteria.SportType))
+            {
+                currentSportType = sports.ElementAt<SportInfo>(0).SportType;
+            }
+
+            leagues = this._turnoverMonitorService.GetLeaguesOfSport(new GetLeaguesOfSportCriteria
+            {
+                SportID = currentSportType,
+                Mode = RunningMode
+            });
+
+            if (leagues.Any() && !leagues.Any(obj => obj.LeagueID == currentLeagueID))
+            {
+                currentLeagueID = 0;
+            }
+
+            return Json(new
+            {
+                Report = result,
+                Sports = sports,
+                Leagues = leagues,
+                SportType = currentSportType,
+                LeagueID = currentLeagueID
+            });
         }
     }
 }

@@ -33,8 +33,14 @@
             <div class="lbl-field col_5 align-right">
                 <label for="txtPercentageUsed">@ViewLang.MinimumPercentageUsed</label>
             </div>
-            <div class="edit-field col_6 align-left">
-                <input type="text" id="txtPercentageUsed" maxlength="5" value="@ViewBag.DefautPercentageUsed" />
+            <div class="edit-field col_4 align-left">
+                <input type="text" id="txtPercentageUsed" maxlength="5" value="@ViewBag.DefautPercentageUsed" class="width-80"/>
+            </div>
+            <div class="lbl-field col_4 align-right">
+                <label for="txtPercentageUsed">@ViewLang.AutoRefresh</label>
+            </div>
+            <div class="edit-field col_6">
+                <div id="divAutoRefresh" class="float-left disabled"></div>
             </div>
             <div class="submit width-auto col_4">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />

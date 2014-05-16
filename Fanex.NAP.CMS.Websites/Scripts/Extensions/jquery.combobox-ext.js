@@ -48,7 +48,7 @@
                         value = $.trim(txt.val()),
                         matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
                         valid = false;
-                        console.log(value);
+
                     Validator.clearError(wrapper);
                     select.children('option').each(function () {
                         if ($(this).text().match(matcher)) {

@@ -1,5 +1,5 @@
 ﻿/* File Created: April 16, 2014 */
-/* global Namespace, numeral, Fanex, CMS, Validator, labels */
+/* global Namespace, numeral, Fanex, CMS, Validator, labels, messages */
 
 'use strict';
 
@@ -19,6 +19,7 @@ Fanex.CMS.TurnoverMonitor = function () {
         GetTurnoverReport: CMS.resolveRootUrl('TurnoverMonitor/GetTurnoverReport')
     };
     var domElements = {
+        divTurnoverMonitorForm: null,
         ddlSport: null,
         txtSport: null,
         ddlLeague: null,
@@ -47,6 +48,7 @@ Fanex.CMS.TurnoverMonitor = function () {
 
     // Cache DOM elements
     var cacheDOM = function () {
+        domElements.divTurnoverMonitorForm = $('#divTurnoverMonitorForm');
         domElements.ddlSport = $('#ddlSport');
         domElements.txtSport = domElements.ddlSport.next().children('input');
         domElements.ddlLeague = $('#ddlLeague');
@@ -60,7 +62,12 @@ Fanex.CMS.TurnoverMonitor = function () {
 
     // Initialize fields and handle events.
     var initializeFields = function () {
-        domElements.txtPercentageUsed.numberField(0, false, null);
+        domElements.txtPercentageUsed.numberField(0, false, null).on('focusout', function () {
+            var value = $.trim(domElements.txtPercentageUsed.val());
+
+            domElements.txtPercentageUsed.val(value);
+            Validator.clearError(domElements.txtPercentageUsed);
+        });
 
         domElements.ddlSport.on('change', function () {
             var sportID = domElements.ddlSport.val();
@@ -84,7 +91,7 @@ Fanex.CMS.TurnoverMonitor = function () {
 
             // Delay 70ms for jQuery-UI combo-box to verify its state.
             setTimeout(function () {
-                if (Validator.countErrors(domElements.divSMAByEventForm) === 0) {
+                if (Validator.countErrors(domElements.divTurnoverMonitorForm) === 0 && validateFilterForm()) {
                     parameters.SportType = domElements.ddlSport.val();
                     parameters.LeagueID = domElements.ddlLeague.val();
                     parameters.UsedPercent = domElements.txtPercentageUsed.val().replace(/,/g, '');
@@ -93,6 +100,19 @@ Fanex.CMS.TurnoverMonitor = function () {
                 }
             }, 70);
         });
+    };
+
+    // Validate filter form.
+    var validateFilterForm = function () {
+        var percentageUsed = domElements.txtPercentageUsed.val();
+
+        if (percentageUsed !== '' && (!$.isNumeric(percentageUsed) || parseInt(percentageUsed) < 0)) {
+            Validator.showError(domElements.txtPercentageUsed, messages.InvalidValueError, 'w');
+
+            return false;
+        } else {
+            return true;
+        }
     };
 
     // Render grid.
@@ -310,6 +330,9 @@ Fanex.CMS.TurnoverMonitor = function () {
         // Clear old values.
         domElements.ddlSport.html('');
 
+        // Remove old error.
+        Validator.clearError(domElements.txtSport.parent());
+
         // Add new values.
         if (data && data.length > 0) {
             $.each(data, function (index, item) {
@@ -330,6 +353,9 @@ Fanex.CMS.TurnoverMonitor = function () {
 
         // Clear old values.
         domElements.ddlLeague.html('');
+
+        // Remove old error.
+        Validator.clearError(domElements.txtLeague.parent());
 
         // Add a default value.
         domElements.ddlLeague.append($('<option>').attr('value', '0').text(labels.AllLeagues));

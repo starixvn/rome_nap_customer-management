@@ -340,7 +340,7 @@ Fanex.CMS.TurnoverUsage = function () {
         var selectedSport = domElements.ddlSport.val();
         var selectedLeague = domElements.ddlLeague.val();
         var selectedMatch = domElements.ddlMatch.val();
-        var percentageUsed = domElements.txtPercentageUsed.val();
+        var percentageUsed = domElements.txtPercentageUsed.val().replace(/,/g, '');
 
         if (!selectedSport) {
             Validator.showError(domElements.txtSport.parent(), messages.SelectOneOptionMessage, 'w');

@@ -104,7 +104,7 @@ Fanex.CMS.TurnoverMonitor = function () {
 
     // Validate filter form.
     var validateFilterForm = function () {
-        var percentageUsed = domElements.txtPercentageUsed.val();
+        var percentageUsed = domElements.txtPercentageUsed.val().replace(/,/g, '');
 
         if (percentageUsed !== '' && (!$.isNumeric(percentageUsed) || parseInt(percentageUsed) < 0)) {
             Validator.showError(domElements.txtPercentageUsed, messages.InvalidValueError, 'w');

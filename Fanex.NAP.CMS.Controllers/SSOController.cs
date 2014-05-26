@@ -138,7 +138,7 @@ namespace Fanex.NAP.CMS.Controllers
         [AllowAnonymous]
         public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl)
         {
-            TimeSpan expiration = new TimeSpan();
+            ////TimeSpan expiration = new TimeSpan();
             string currentTime = this._userService.UserSSOGetTime();
 
             Session.Clear();
@@ -146,34 +146,44 @@ namespace Fanex.NAP.CMS.Controllers
 
             username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
             onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
-            expiration = Converter.ToDateTime(currentTime) - DateTime.Now;
+            ////expiration = Converter.ToDateTime(currentTime) - DateTime.Now;
 
-            if (expiration.TotalSeconds <= this._timeExipration)
+            var user = this._userService.GetByUsername(username) as User;
+            var criteria = new UserCheckInUserCriteria
             {
-                var user = this._userService.GetByUsername(username) as User;
+                UserId = user.Id,
+                SiteId = this.SiteId,
+                NetSessionId = Session.SessionID,
+                Ip = CurrentContext.IP,
+                LoginDate = DateTime.Now,
+                BrowserName = CurrentContext.BrowserName,
+                CountryCode = CurrentContext.CountryCode,
+                Domain = CurrentContext.DomainName,
+                Platform = CurrentContext.Platform
+            };
 
-                // saves user session & auth info
-                this._currentSession.UserId = user.Id;
-                this._currentSession.Username = user.Username;
-                this._currentSession.OnUserId = Convert.ToInt32(onlineUserId);
-                this._currentSession.SessionId = Session.SessionID.ToString();
-                this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+            // check-in user
+            this._userService.UserCheckIn(ref criteria);
 
-                if (this.SiteId != 0)
-                {
-                    this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                  user.Id,
-                                                                                  SiteId,
-                                                                                  this.Environment,
-                                                                                  true) as IList<MenuItem>;
-                }
+            // saves user session & auth info
+            this._currentSession.UserId = user.Id;
+            this._currentSession.Username = user.Username;
+            this._currentSession.OnUserId = criteria.OnUserId; ////Convert.ToInt32(onlineUserId);
+            this._currentSession.SessionId = Session.SessionID.ToString();
+            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
 
-                this.CreateAuthInfo(user);
-
-                return this.Redirect(redirectUrl);
+            if (this.SiteId != 0)
+            {
+                this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
+                                                                              user.Id,
+                                                                              SiteId,
+                                                                              this.Environment,
+                                                                              true) as IList<MenuItem>;
             }
 
-            return Redirect(FormsAuthentication.LoginUrl);
+            this.CreateAuthInfo(user);
+
+            return this.Redirect(redirectUrl);
         }
 
         #region utilities

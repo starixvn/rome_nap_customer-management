@@ -129,7 +129,7 @@ Fanex.CMS.SMALossMonitor = function () {
 
     var handleGridEvents = function () {
         domElements.divSMALossMonitorContainer.find('#divAutoRefresh').each(function () {
-            domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport);
+            domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport, true, false);
 
             if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
                 domElements.divAutoRefresh.run();

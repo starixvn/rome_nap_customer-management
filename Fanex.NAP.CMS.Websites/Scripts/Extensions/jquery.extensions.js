@@ -266,7 +266,7 @@
                     setCaret($obj, cursorPos);
                 }
             }
-        }).on('blur', function (event) {
+        }).on('blur', function () {
             var $obj = $(this);
             var value = $.trim($obj.val());
             var rawValue = value.replace(/,/g, '');
@@ -290,7 +290,7 @@
     };
 
     // Auto-refresh control.
-    $.fn.autoRefresh = function (values, defaultValue, callbackFunction, auto) {
+    $.fn.autoRefresh = function (values, defaultValue, callbackFunction, auto, hasNotRefresh) {
         var $obj = $(this);
         var $refreshValue = $('<span class="refresh-value"></span>');
         var $refreshIcon = $('<span id="spanRefreshIcon" class="refresh-icon"></span>');
@@ -312,9 +312,9 @@
             var counter = refreshTime;
 
             clearInterval(timeout);
-            $refreshValue.text(counter);
 
             if (counter > 0) {
+                $refreshValue.text(counter);
                 timeout = setInterval(function () {
                     counter--;
                     $refreshValue.text(counter);
@@ -329,9 +329,12 @@
 
         callbackFunction = callbackFunction || function () {};
         auto = auto === undefined ? true : auto;
+        hasNotRefresh = hasNotRefresh === undefined ? true : hasNotRefresh;
 
-        // Add not refresh value.
-        $options.append($('<li class="option" data-value="0">Not Refresh</li>'));
+        if (hasNotRefresh) {
+            // Add not refresh value.
+            $options.append($('<li class="option" data-value="0">Not Refresh</li>'));
+        }
 
         $.each(values, function (index, item) {
             $options.append($('<li class="option" data-value="' + item + '">' + item + ' sec</li>'));

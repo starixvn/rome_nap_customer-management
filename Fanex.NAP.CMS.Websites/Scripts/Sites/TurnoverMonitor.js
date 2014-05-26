@@ -122,7 +122,7 @@ Fanex.CMS.TurnoverMonitor = function () {
                               '<span>{2}: {3}</span> -- ' +
                               '<span class="match-name" title="{4}">{5}</span>' +
                           '</span>';
-        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
+        var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var percentageCol = '';
         var groupRow = '';
         var leagueName = '';
@@ -198,7 +198,7 @@ Fanex.CMS.TurnoverMonitor = function () {
     };
 
     var handleGridEvents = function () {
-        domElements.divTurnoverMonitor.find('div.percentage-used').each(function () {
+        domElements.divTurnoverMonitor.find('div.percentage-bar').each(function () {
             var $obj = $(this);
             var percentage = parseInt($obj.attr('data-value'));
 

@@ -108,7 +108,7 @@ Fanex.CMS.TurnoverUsage = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
+        var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var percentageCol = '';
 
         var gridOptions = {
@@ -164,7 +164,7 @@ Fanex.CMS.TurnoverUsage = function () {
     };
 
     var handleGridEvents = function () {
-        domElements.divTurnoverMonitor.find('div.percentage-used').each(function () {
+        domElements.divTurnoverMonitor.find('div.percentage-bar').each(function () {
             var $obj = $(this);
             var percentage = parseInt($obj.attr('data-value'));
 

@@ -85,6 +85,8 @@
     <Compile Include="OpenCloseMember\UpdatedMembersStatusResult.cs" />
     <Compile Include="OpenCloseMember\UpdatedMemberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMALossMonitor\SMALossGroup.cs" />
+    <Compile Include="SMALossMonitor\SMALossItem.cs" />
     <Compile Include="TurnoverMonitor\SMATurnoverItem.cs" />
     <Compile Include="TurnoverMonitor\SMATurnoverGroup.cs" />
     <Compile Include="TurnoverUsage\TurnoverUsageItem.cs" />
@@ -99,9 +101,7 @@
       <Name>Fanex.NAP.CMS.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SMALossMonitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

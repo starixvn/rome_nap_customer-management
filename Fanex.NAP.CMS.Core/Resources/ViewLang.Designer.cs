@@ -151,6 +151,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Canadian.
+        /// </summary>
+        public static string Canadian {
+            get {
+                return ResourceManager.GetString("Canadian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -399,6 +408,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string GMTMinus4 {
             get {
                 return ResourceManager.GetString("GMTMinus4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goliath.
+        /// </summary>
+        public static string Goliath {
+            get {
+                return ResourceManager.GetString("Goliath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Heinz.
+        /// </summary>
+        public static string Heinz {
+            get {
+                return ResourceManager.GetString("Heinz", resourceCulture);
             }
         }
         
@@ -808,6 +835,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Super Heinz.
+        /// </summary>
+        public static string SuperHeinz {
+            get {
+                return ResourceManager.GetString("SuperHeinz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To Date.
         /// </summary>
         public static string ToDate {
@@ -822,6 +858,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string TotalBalance {
             get {
                 return ResourceManager.GetString("TotalBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trixie.
+        /// </summary>
+        public static string Trixie {
+            get {
+                return ResourceManager.GetString("Trixie", resourceCulture);
             }
         }
         
@@ -885,6 +930,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string WorldCup {
             get {
                 return ResourceManager.GetString("WorldCup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yankee.
+        /// </summary>
+        public static string Yankee {
+            get {
+                return ResourceManager.GetString("Yankee", resourceCulture);
             }
         }
     }

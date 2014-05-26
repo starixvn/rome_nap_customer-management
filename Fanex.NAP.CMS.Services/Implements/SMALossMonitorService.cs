@@ -9,12 +9,56 @@
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.NAP.CMS.Criteria.SMALossMonitor;
+    using Fanex.NAP.CMS.Models.SMALossMonitor;
     using Fanex.NAP.CMS.Services.Interfaces;
+    using Fanex.NAP.CMS.ViewModels.SMALossMonitor;
 
     /// <summary>
     /// Loss monitor service.
     /// </summary>
     public class SMALossMonitorService : CMSBaseService, ISMALossMonitorService
     {
+        /// <summary>
+        /// Gets the SMA loss report.
+        /// </summary>
+        /// <param name="criteria">The criteria that are used to query data.</param>
+        /// <returns>List of SMALossGroup objects.</returns>
+        public List<SMALossGroup> GetSMALoss(GetSMALossMonitorListCriteria criteria)
+        {
+            IEnumerable<SMALossInfo> rawData = null;
+            List<SMALossGroup> result = null;
+
+            rawData = this.GetData<SMALossInfo>(criteria);
+
+            if (rawData != null && rawData.Any())
+            {
+                IEnumerable<IGrouping<byte, SMALossInfo>> groups = rawData.GroupBy(obj => obj.Level);
+                SMALossGroup lossGroup = null;
+                SMALossInfo firstItem = null;
+
+                result = new List<SMALossGroup>();
+
+                foreach (IGrouping<byte, SMALossInfo> group in groups)
+                {
+                    firstItem = group.ElementAt(0);
+                    lossGroup = new SMALossGroup(firstItem);
+
+                    foreach (SMALossInfo item in group)
+                    {
+                        lossGroup.SMALossItems.Add(new SMALossItem(item));
+                    }
+
+                    if (lossGroup.SMALossItems.Count > 0)
+                    {
+                        result.Add(lossGroup);
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 }

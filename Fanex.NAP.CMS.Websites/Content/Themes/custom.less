@@ -184,6 +184,27 @@ input.ui-multiselect-state-default{
     margin-left: 10px;
     min-width: 99%;
 
+    .grid-title {
+        .grid-toolbox {
+            .auto-refresh {
+                height: 18px;
+
+                .refresh-icon {
+                    line-height: 14px;
+                }
+
+                .dropdown-icon {
+                    height: 19px;
+                    line-height: 14px;
+                }
+
+                .refresh-options {
+                    top: 19px;
+                }
+            }
+        }
+    }
+
     .freegrid {
         thead th, .grid-fixed-table thead th {
             font-weight: normal;
@@ -206,6 +227,39 @@ input.ui-multiselect-state-default{
         .parent-row {
             td {
                 background-color: #F1F1F1;
+            }
+        }
+
+        .percentage-bar {
+            height: 18px;
+            position: relative;
+
+            .percentage-label {
+                position: absolute;
+                color: #514F5B;
+                font-weight: bold;
+
+                span {
+                    display: inline-block;
+                    width: 148px;
+                    text-align: center;
+                    padding-top: 1px;
+                }
+            }
+
+            .ui-widget-header {
+                border-color: @border;
+                .bg_linear_gradient(#90B6FF, #A9C7FF);
+            }
+
+            &.full-percents {
+                .percentage-label {
+                    color: @white;
+                }
+
+                .ui-widget-header {
+                    .bg_linear_gradient(#FF530D, #E86500);
+                }
             }
         }
     }

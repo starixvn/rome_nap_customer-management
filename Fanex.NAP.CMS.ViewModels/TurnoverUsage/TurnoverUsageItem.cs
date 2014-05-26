@@ -11,8 +11,7 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverUsage
 {
     using System;
     using Fanex.Common;
-    using Fanex.NAP.CMS.Core.Constants;
-    using Fanex.NAP.CMS.Core.Resources;
+    using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.TurnoverUsage;
 
     /// <summary>
@@ -26,7 +25,7 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverUsage
             if (rawData != null)
             {
                 this.Username = rawData.Username;
-                this.Level = GetLevel(rawData.RoleID);
+                this.Level = CacheRef.GetLevel(rawData.RoleID);
                 this.Currency = rawData.Currency;
                 this.GivenCredit = Converter.ToDecimal(rawData.Credit);
                 this.MaxTORate = Converter.ToInt(rawData.Value);
@@ -51,35 +50,5 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverUsage
         public decimal MemberTO { get; set; }
 
         public int PercentageUsed { get; set; }
-
-        /// <summary>
-        /// Gets the level.
-        /// </summary>
-        /// <param name="roleID">The role identifier.</param>
-        /// <returns>The level name.</returns>
-        private string GetLevel(byte? roleID)
-        {
-            var level = string.Empty;
-
-            if (roleID.HasValue)
-            {
-                switch (roleID.Value)
-                {
-                    case CustomerLevels.Super:
-                        level = ViewLang.Super;
-                        break;
-
-                    case CustomerLevels.Master:
-                        level = ViewLang.Master;
-                        break;
-
-                    case CustomerLevels.Agent:
-                        level = ViewLang.Agent;
-                        break;
-                }
-            }
-
-            return level;
-        }
     }
 }

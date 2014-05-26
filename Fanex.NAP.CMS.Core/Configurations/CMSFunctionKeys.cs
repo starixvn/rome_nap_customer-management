@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 5/6/2014 5:30:31 PM
+// Lasted generated date: 5/26/2014 8:19:13 AM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -41,6 +41,10 @@ public static class CMSFunctionKeys
 
         public const string ControlTOBySMA_Event = "ControlTOBySMA_Event";
 
+        public const string ControlTurnover = "ControlTurnover";
+
+        public const string LimitLossControl = "LimitLossControl";
+
         public const string ManageFunction = "ManageFunction";
 
         public const string ManageGroup = "ManageGroup";
@@ -49,9 +53,9 @@ public static class CMSFunctionKeys
 
         public const string ManageUser = "ManageUser";
 
-        public const string SystemConfiguration = "SystemConfiguration";
+        public const string SMALossMonitor = "SMALossMonitor";
 
-        public const string TurnoverControl = "TurnoverControl";
+        public const string SystemConfiguration = "SystemConfiguration";
 
         public const string TurnoverMonitor = "TurnoverMonitor";
 

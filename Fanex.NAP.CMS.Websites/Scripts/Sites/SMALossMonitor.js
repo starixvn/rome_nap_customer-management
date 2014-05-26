@@ -32,11 +32,6 @@ Fanex.CMS.SMALossMonitor = function () {
         domElements.divSMALossMonitorContainer = $('#divSMALossMonitorContainer');
     };
 
-    // Initialize fields.
-    var initializeFields = function () {
-        domElements.divAutoRefresh = domElements.divAutoRefresh.autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport);
-    };
-
     // Get SMA turnover report.
     var getSMALossReport = function () {
         CMS.disableInput();
@@ -52,10 +47,6 @@ Fanex.CMS.SMALossMonitor = function () {
             dataType: 'json',
             ////data: JSON.stringify(parameters),
             success: function (result) {
-                if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
-                    domElements.divAutoRefresh.run();
-                }
-
                 renderGrid(result);
             },
             error: function (xhr) {
@@ -69,12 +60,13 @@ Fanex.CMS.SMALossMonitor = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var progressBarFormat = '<div class="percentage-used" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
+        var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var percentageCol = '';
 
+        var counter = 0;
         var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.SMAName, Width: 200, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left', ShowCollapseExpand: true },
+            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
+                      { HeaderText: labels.SMAName, Width: 200, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Currency, Width: 70, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.TotalBalance, Width: 150, Name: 'ColTotalBalance', HeaderAlign: 'center', CellAlign: 'right',
@@ -87,7 +79,11 @@ Fanex.CMS.SMALossMonitor = function () {
             gridExpandHeight: 70,
             showDistinctRow: false,
             showTree: true,
-            showNumberColumn: true
+            showTitle: true,
+            titleInfo: {
+                showButtonsWhenNoData: true,
+                customButtons: '<div id="divAutoRefresh"></div>'
+            }
         };
         var bodyData = [];
         var row;
@@ -97,10 +93,11 @@ Fanex.CMS.SMALossMonitor = function () {
             $.each(data, function (groupIndex, group) {
                 subRows = [];
 
-                $.each(group.SMAItems, function (index, item) {
+                $.each(group.SMALossItems, function (index, item) {
+                    counter++;
                     percentageCol = progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat));
                     row = {
-                        Columns: [{ Name: 'ColNo', Value: index },
+                        Columns: [{ Name: 'ColNo', Value: counter },
                                   { Name: 'ColSMAName', Value: item.Username },
                                   { Name: 'ColLevel', Value: item.Level },
                                   { Name: 'ColCurrency', Value: item.Currency },
@@ -110,9 +107,15 @@ Fanex.CMS.SMALossMonitor = function () {
                     };
                     subRows.push(row);
                 });
-
+                console.log(group.LossLevelRange);
                 row = {
-                    Columns: [{ Name: 'ColNo', Value: group.Range, CellAlign: 'left', MergeColNumber: 7, TdClass: 'loss-level-' + group.Level}],
+                    Columns: [{
+                        Name: 'ColNo',
+                        Value: '{0} ({1})'.format(group.LossLevelRange, group.SMALossItems.length),
+                        CellAlign: 'left',
+                        MergeColNumber: 7,
+                        TdClass: 'loss-level-' + group.Level
+                    }],
                     SubRows: subRows
                 };
                 bodyData.push(row);
@@ -125,7 +128,15 @@ Fanex.CMS.SMALossMonitor = function () {
     };
 
     var handleGridEvents = function () {
-        domElements.divTurnoverMonitor.find('div.percentage-used').each(function () {
+        domElements.divSMALossMonitorContainer.find('#divAutoRefresh').each(function () {
+            domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport);
+
+            if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
+                domElements.divAutoRefresh.run();
+            }
+        });
+
+        domElements.divSMALossMonitor.find('div.percentage-bar').each(function () {
             var $obj = $(this);
             var percentage = parseInt($obj.attr('data-value'));
 
@@ -141,6 +152,6 @@ Fanex.CMS.SMALossMonitor = function () {
 
     $this.InitPage = function () {
         cacheDOM();
-        initializeFields();
+        getSMALossReport();
     };
 };

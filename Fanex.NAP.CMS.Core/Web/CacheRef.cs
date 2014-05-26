@@ -10,6 +10,8 @@
 namespace Fanex.NAP.CMS.Core.Web
 {
     using Fanex.Common;
+    using Fanex.NAP.CMS.Core.Constants;
+    using Fanex.NAP.CMS.Core.Resources;
     using RemotingRef;
 
     /// <summary>
@@ -106,31 +108,61 @@ namespace Fanex.NAP.CMS.Core.Web
             switch (betteam)
             {
                 case "110":
-                    name = "Trixie";
+                    name = ViewLang.Trixie;
                     break;
 
                 case "1110":
-                    name = "Yankee";
+                    name = ViewLang.Yankee;
                     break;
 
                 case "11110":
-                    name = "Canadian";
+                    name = ViewLang.Canadian;
                     break;
 
                 case "111110":
-                    name = "Heinz";
+                    name = ViewLang.Heinz;
                     break;
 
                 case "1111110":
-                    name = "Super Heinz";
+                    name = ViewLang.SuperHeinz;
                     break;
 
                 case "11111110":
-                    name = "Goliath";
+                    name = ViewLang.Goliath;
                     break;
             }
 
             return name;
+        }
+
+        /// <summary>
+        /// Gets the level.
+        /// </summary>
+        /// <param name="roleID">The role identifier.</param>
+        /// <returns>The level name.</returns>
+        public static string GetLevel(byte? roleID)
+        {
+            var level = string.Empty;
+
+            if (roleID.HasValue)
+            {
+                switch (roleID.Value)
+                {
+                    case CustomerLevels.Super:
+                        level = ViewLang.Super;
+                        break;
+
+                    case CustomerLevels.Master:
+                        level = ViewLang.Master;
+                        break;
+
+                    case CustomerLevels.Agent:
+                        level = ViewLang.Agent;
+                        break;
+                }
+            }
+
+            return level;
         }
 
         /// <summary>

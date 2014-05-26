@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ISMALossMonitorService.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="ILossMonitorService.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -10,10 +10,10 @@
 namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
-    using Fanex.NAP.CMS.Criteria.SMALossMonitor;
-    using Fanex.NAP.CMS.ViewModels.SMALossMonitor;
+    using Fanex.NAP.CMS.Criteria.LossMonitor;
+    using Fanex.NAP.CMS.ViewModels.LossMonitor;
 
-    public interface ISMALossMonitorService
+    public interface ILossMonitorService
     {
         /// <summary>
         /// Gets the SMA loss report.

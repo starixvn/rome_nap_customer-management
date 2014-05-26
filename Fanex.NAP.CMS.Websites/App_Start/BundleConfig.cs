@@ -165,11 +165,11 @@ namespace Fanex.NAP.CMS.Websites
         public static void RegisterLossControlBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
-                "~/styles/smaLossMonitor",
-                "~/Content/Sites/smaLossMonitor.less");
+                "~/styles/lossMonitor",
+                "~/Content/Sites/lossMonitor.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/smaLossMonitor").Include(
-                "~/Scripts/Sites/SMALossMonitor.js"));
+            bundles.Add(new ScriptBundle("~/scripts/lossMonitor").Include(
+                "~/Scripts/Sites/LossMonitor.js"));
         }
     }
 

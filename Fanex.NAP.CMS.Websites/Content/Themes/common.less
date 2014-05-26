@@ -4,6 +4,7 @@
 
 .bg_linear_gradient (@value, @value_light) {
     background: @value;
+    background: linear-gradient(@value_light, @value) @value;
     background: -moz-linear-gradient(@value_light, @value) @value;
     background: -webkit-linear-gradient(@value_light, @value) @value;
 }
@@ -11,6 +12,7 @@
 .bg_linear_gradient_bt (@value, @value1)
 {
     background: @value;
+    background: linear-gradient(@value1) repeat scroll 0 0 transparent;
     background: -moz-linear-gradient(@value1) repeat scroll 0 0 transparent;
     background: -webkit-linear-gradient(@value1) repeat scroll 0 0 transparent;
 }

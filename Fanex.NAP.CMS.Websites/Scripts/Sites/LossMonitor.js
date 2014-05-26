@@ -4,16 +4,16 @@
 'use strict';
 
 $(document).ready(function () {
-    var report = new Fanex.CMS.SMALossMonitor();
+    var report = new Fanex.CMS.LossMonitor();
 
     report.InitPage();
 });
 
-Namespace.Register("Fanex.CMS.SMALossMonitor");
-Fanex.CMS.SMALossMonitor = function () {
+Namespace.Register("Fanex.CMS.LossMonitor");
+Fanex.CMS.LossMonitor = function () {
     var $this = this;
     var urls = {
-        GetSMALossReport: CMS.resolveRootUrl('SMALossMonitor/GetSMALossReport')
+        GetSMALossReport: CMS.resolveRootUrl('LossMonitor/GetSMALossReport')
     };
     var domElements = {
         divSMALossMonitor: null,
@@ -45,7 +45,6 @@ Fanex.CMS.SMALossMonitor = function () {
             url: urls.GetSMALossReport,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            ////data: JSON.stringify(parameters),
             success: function (result) {
                 renderGrid(result);
             },
@@ -97,7 +96,7 @@ Fanex.CMS.SMALossMonitor = function () {
                     counter++;
                     percentageCol = progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat));
                     row = {
-                        Columns: [{ Name: 'ColNo', Value: counter },
+                        Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
                                   { Name: 'ColSMAName', Value: item.Username },
                                   { Name: 'ColLevel', Value: item.Level },
                                   { Name: 'ColCurrency', Value: item.Currency },
@@ -113,10 +112,10 @@ Fanex.CMS.SMALossMonitor = function () {
                         Name: 'ColNo',
                         Value: '{0} ({1})'.format(group.LossLevelRange, group.SMALossItems.length),
                         CellAlign: 'left',
-                        MergeColNumber: 7,
-                        TdClass: 'loss-level-' + group.Level
+                        MergeColNumber: 7
                     }],
-                    SubRows: subRows
+                    SubRows: subRows,
+                    CssClass: 'loss-level-' + group.LossLevel
                 };
                 bodyData.push(row);
             });

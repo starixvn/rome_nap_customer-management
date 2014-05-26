@@ -484,6 +484,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loss Monitor.
+        /// </summary>
+        public static string LossMonitor {
+            get {
+                return ResourceManager.GetString("LossMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loss Percentage.
         /// </summary>
         public static string LossPercentage {
@@ -768,15 +777,6 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string SMA {
             get {
                 return ResourceManager.GetString("SMA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SMA Loss Monitor.
-        /// </summary>
-        public static string SMALossMonitor {
-            get {
-                return ResourceManager.GetString("SMALossMonitor", resourceCulture);
             }
         }
         

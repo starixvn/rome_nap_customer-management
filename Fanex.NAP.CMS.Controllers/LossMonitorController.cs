@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="SMALossMonitorController.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="LossMonitorController.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -11,28 +11,28 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.NAP.CMS.Models.SMALossMonitor;
+    using Fanex.NAP.CMS.Models.LossMonitor;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
-    using Fanex.NAP.CMS.ViewModels.SMALossMonitor;
+    using Fanex.NAP.CMS.ViewModels.LossMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
     /// <summary>
     /// Turnover monitor controller.
     /// </summary>
-    public class SMALossMonitorController : BaseController
+    public class LossMonitorController : BaseController
     {
-        private readonly ISMALossMonitorService _lossMonitorService;
+        private readonly ILossMonitorService _lossMonitorService;
 
-        public SMALossMonitorController() :
+        public LossMonitorController() :
             this(null)
         {
         }
 
-        public SMALossMonitorController(ISMALossMonitorService lossMonitorService)
+        public LossMonitorController(ILossMonitorService lossMonitorService)
         {
-            this._lossMonitorService = lossMonitorService ?? new SMALossMonitorService();
+            this._lossMonitorService = lossMonitorService ?? new LossMonitorService();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SMALossMonitor, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
@@ -51,7 +51,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>JSON result represents the SMA loss report.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SMALossMonitor, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetSMALossReport()
         {
             List<SMALossGroup> result = GetSampleSMALoss();

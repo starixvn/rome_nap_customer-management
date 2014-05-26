@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.5.26">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Models.SMALossMonitor
+namespace Fanex.NAP.CMS.Models.LossMonitor
 {
     /// <summary>
     /// SMA loss model.

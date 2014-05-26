@@ -209,8 +209,9 @@ header {
     border:solid 1px @menu_border;
     border-width:1px 0;
     background: @menu_bg_light;
+    background: linear-gradient(top, #7a97d1 1px, @menu_bg_light 1px , @menu_bg 100%) repeat scroll 0 0 transparent;
     background: -moz-linear-gradient(center top, #7a97d1 1px, @menu_bg_light 1px, @menu_bg 100%) repeat scroll 0 0 transparent;
-    background: -webkit-linear-gradient(center top, #7a97d1 1px, @menu_bg_light 1px , @menu_bg 100%) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(top, #7a97d1 1px, @menu_bg_light 1px , @menu_bg 100%) repeat scroll 0 0 transparent;
     .font_tahoma ;
     position: relative;
 
@@ -310,8 +311,9 @@ header {
                         border:solid 1px @menu_border;
                         border-bottom:solid 1px transparent;
                         background:@menu_bg_o;
+                        background: linear-gradient(top, @menu_bg_o, @menu_bg_o 20%) repeat scroll 0 0 transparent;
                         background: -moz-linear-gradient(center top, @menu_bg_o, @menu_bg_o 20%) repeat scroll 0 0 transparent;
-                        background: -webkit-linear-gradient(center top, @menu_bg_o, @menu_bg_o 20%) repeat scroll 0 0 transparent;
+                        background: -webkit-linear-gradient(top, @menu_bg_o, @menu_bg_o 20%) repeat scroll 0 0 transparent;
                         text-decoration: none;
                         color: @menu_text_o;
                     }

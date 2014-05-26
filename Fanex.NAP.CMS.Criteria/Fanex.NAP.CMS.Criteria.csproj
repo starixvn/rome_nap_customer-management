@@ -80,7 +80,7 @@
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
-    <Compile Include="SMALossMonitor\GetSMALossMonitorListCriteria.cs" />
+    <Compile Include="LossMonitor\GetSMALossMonitorListCriteria.cs" />
     <Compile Include="TurnoverMonitor\GetSMATurnoverMonitorListCriteria.cs" />
     <Compile Include="TurnoverUsage\GetTurnoverUsageCriteria.cs" />
     <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />

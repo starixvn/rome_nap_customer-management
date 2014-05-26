@@ -7,12 +7,12 @@
 //   <change who="Jason.Ly" date="2014.5.26">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.ViewModels.SMALossMonitor
+namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 {
     using System;
     using Fanex.Common;
     using Fanex.NAP.CMS.Core.Web;
-    using Fanex.NAP.CMS.Models.SMALossMonitor;
+    using Fanex.NAP.CMS.Models.LossMonitor;
 
     /// <summary>
     /// SMA loss item view model.

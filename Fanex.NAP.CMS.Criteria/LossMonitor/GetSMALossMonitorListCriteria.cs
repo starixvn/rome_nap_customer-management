@@ -7,7 +7,7 @@
 //   <change who="Jason.Ly" date="2014.5.7">Created</change>
 // </history>
 
-namespace Fanex.NAP.CMS.Criteria.SMALossMonitor
+namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
     using Fanex.NAP.Framework.Data;
 
@@ -22,7 +22,7 @@ namespace Fanex.NAP.CMS.Criteria.SMALossMonitor
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_SMALoss_MonitorList";
+            return "NAP_LimitLoss_MonitorList";
         }
 
         /// <summary>

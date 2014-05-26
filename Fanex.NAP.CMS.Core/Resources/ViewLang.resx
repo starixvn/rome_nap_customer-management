@@ -381,8 +381,8 @@
   <data name="AutoRefresh" xml:space="preserve">
     <value>Auto Refresh</value>
   </data>
-  <data name="SMALossMonitor" xml:space="preserve">
-    <value>SMA Loss Monitor</value>
+  <data name="LossMonitor" xml:space="preserve">
+    <value>Loss Monitor</value>
   </data>
   <data name="LossPercentage" xml:space="preserve">
     <value>Loss Percentage</value>

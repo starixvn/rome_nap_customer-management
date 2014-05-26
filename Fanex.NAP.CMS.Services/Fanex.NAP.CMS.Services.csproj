@@ -85,7 +85,7 @@
     <Compile Include="Implements\ConfigureTOByEventService.cs" />
     <Compile Include="Implements\ConfigureTOBySMAService.cs" />
     <Compile Include="Implements\OpenCloseMemberService.cs" />
-    <Compile Include="Implements\SMALossMonitorService.cs" />
+    <Compile Include="Implements\LossMonitorService.cs" />
     <Compile Include="Implements\TurnoverMonitorService.cs" />
     <Compile Include="Implements\TurnoverUsageService.cs" />
     <Compile Include="Implements\WriteLogsService.cs" />
@@ -94,7 +94,7 @@
     <Compile Include="Interfaces\IConfigureTOByEventService.cs" />
     <Compile Include="Interfaces\IConfigureTOBySMAService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
-    <Compile Include="Interfaces\ISMALossMonitorService.cs" />
+    <Compile Include="Interfaces\ILossMonitorService.cs" />
     <Compile Include="Interfaces\ITurnoverMonitorService.cs" />
     <Compile Include="Interfaces\ITurnoverUsageService.cs" />
     <Compile Include="Interfaces\IWriteLogsService.cs" />

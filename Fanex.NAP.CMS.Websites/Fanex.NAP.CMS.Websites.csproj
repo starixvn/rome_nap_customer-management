@@ -245,6 +245,7 @@
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\ReCheckIn.js" />
+    <Content Include="Scripts\Sites\SMALossMonitor.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\MatchPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\LeaguePage.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\PageManager.js" />
@@ -403,7 +404,10 @@
     <Content Include="Content\Sites\configureTOBySMA.less" />
     <Content Include="Views\TurnoverUsage\Index.cshtml" />
     <Content Include="Content\Sites\turnoverUsage.less" />
+    <Content Include="Content\Sites\smaLossMonitor.less" />
+    <Content Include="Views\SMALossMonitor\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

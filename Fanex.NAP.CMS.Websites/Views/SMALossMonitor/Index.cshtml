@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = ViewLang.SMALossMonitor;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/smaLossMonitor")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div>
+    <label>@ViewLang.AutoRefresh</label>
+    <div id="divAutoRefresh" class="float-right disabled"></div>
+</div>
+<div id="divSMALossMonitorContainer" class="display-none content-grid">
+    <div id="divSMALossMonitor" class="freegrid"></div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/smaLossMonitor")
+    <script type="text/javascript">
+        var labels = {
+            No: '#',
+            SMAName: '@ViewLang.SMAName',
+            Level: '@ViewLang.Level',
+            Currency: '@ViewLang.Currency',
+            TotalBalance: '@ViewLang.TotalBalance',
+            MaxLoss: '@ViewLang.MaxLoss',
+            LossPercentage: '@ViewLang.LossPercentage'
+        };
+    </script>
+}

@@ -457,6 +457,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loss Percentage.
+        /// </summary>
+        public static string LossPercentage {
+            get {
+                return ResourceManager.GetString("LossPercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Main Markets.
         /// </summary>
         public static string MainMarkets {
@@ -498,6 +507,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string MatchCode {
             get {
                 return ResourceManager.GetString("MatchCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Loss.
+        /// </summary>
+        public static string MaxLoss {
+            get {
+                return ResourceManager.GetString("MaxLoss", resourceCulture);
             }
         }
         
@@ -727,6 +745,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SMA Loss Monitor.
+        /// </summary>
+        public static string SMALossMonitor {
+            get {
+                return ResourceManager.GetString("SMALossMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SMA Name.
         /// </summary>
         public static string SMAName {
@@ -786,6 +813,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ToDate {
             get {
                 return ResourceManager.GetString("ToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Balance.
+        /// </summary>
+        public static string TotalBalance {
+            get {
+                return ResourceManager.GetString("TotalBalance", resourceCulture);
             }
         }
         

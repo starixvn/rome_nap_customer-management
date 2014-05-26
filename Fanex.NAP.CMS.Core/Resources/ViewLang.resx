@@ -381,4 +381,16 @@
   <data name="AutoRefresh" xml:space="preserve">
     <value>Auto Refresh</value>
   </data>
+  <data name="SMALossMonitor" xml:space="preserve">
+    <value>SMA Loss Monitor</value>
+  </data>
+  <data name="LossPercentage" xml:space="preserve">
+    <value>Loss Percentage</value>
+  </data>
+  <data name="MaxLoss" xml:space="preserve">
+    <value>Max Loss</value>
+  </data>
+  <data name="TotalBalance" xml:space="preserve">
+    <value>Total Balance</value>
+  </data>
 </root>

@@ -30,6 +30,7 @@ namespace Fanex.NAP.CMS.Websites
             RegisterCommonBundles(bundles);
             RegisterCustomerBundles(bundles);
             RegisterTurnoverControlBundles(bundles);
+            RegisterLossControlBundles(bundles);
         }
 
         /// <summary>
@@ -155,6 +156,20 @@ namespace Fanex.NAP.CMS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/turnoverMonitor").Include(
                 "~/Scripts/Sites/TurnoverMonitor.js"));
+        }
+
+        /// <summary>
+        /// Registers the loss control bundles.
+        /// </summary>
+        /// <param name="bundles">The bundle collection.</param>
+        public static void RegisterLossControlBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/smaLossMonitor",
+                "~/Content/Sites/smaLossMonitor.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/smaLossMonitor").Include(
+                "~/Scripts/Sites/SMALossMonitor.js"));
         }
     }
 

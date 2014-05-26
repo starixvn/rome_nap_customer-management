@@ -14,11 +14,9 @@ namespace Fanex.NAP.CMS.Models.LossMonitor
     /// </summary>
     public class SMALossInfo
     {
-        public byte Level { get; set; }
+        public byte LevelID { get; set; }
 
-        public string LevelRange { get; set; }
-
-        public int CustID { get; set; }
+        public int Value { get; set; }
 
         public string Username { get; set; }
 
@@ -30,6 +28,6 @@ namespace Fanex.NAP.CMS.Models.LossMonitor
 
         public decimal? MaxLoss { get; set; }
 
-        public int? LossPercentage { get; set; }
+        public int? PercentageLoss { get; set; }
     }
 }

@@ -106,7 +106,7 @@ Fanex.CMS.LossMonitor = function () {
                     };
                     subRows.push(row);
                 });
-                console.log(group.LossLevelRange);
+
                 row = {
                     Columns: [{
                         Name: 'ColNo',

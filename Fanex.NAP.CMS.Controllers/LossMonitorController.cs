@@ -11,7 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.NAP.CMS.Models.LossMonitor;
+    using Fanex.NAP.CMS.Criteria.LossMonitor;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.LossMonitor;
@@ -54,37 +54,9 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetSMALossReport()
         {
-            List<SMALossGroup> result = GetSampleSMALoss();
+            List<SMALossGroup> result = this._lossMonitorService.GetSMALoss(new GetSMALossMonitorListCriteria());
 
             return Json(result);
-        }
-
-        /// <summary>
-        /// Gets the sample SMA loss.
-        /// </summary>
-        /// <returns>List of SMALossGroup objects.</returns>
-        private List<SMALossGroup> GetSampleSMALoss()
-        {
-            SMALossInfo rawData = new SMALossInfo
-            {
-                Level = 1,
-                LevelRange = "90% & About",
-                CustID = 1,
-                Username = "Test",
-                RoleID = 4,
-                Currency = "UUS",
-                TotalBalance = -900000,
-                MaxLoss = -1000000,
-                LossPercentage = 95
-            };
-            SMALossItem item = new SMALossItem(rawData);
-            SMALossGroup group = new SMALossGroup(rawData);
-            List<SMALossGroup> result = new List<SMALossGroup>();
-
-            group.SMALossItems.Add(item);
-            result.Add(group);
-
-            return result;
         }
     }
 }

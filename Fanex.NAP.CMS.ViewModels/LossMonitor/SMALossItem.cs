@@ -29,7 +29,7 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
                 this.Currency = rawData.Currency;
                 this.TotalBalance = Converter.ToDecimal(rawData.TotalBalance);
                 this.MaxLoss = Converter.ToDecimal(rawData.MaxLoss);
-                this.LossPercentage = Converter.ToInt(rawData.LossPercentage);
+                this.LossPercentage = Converter.ToInt(rawData.PercentageLoss);
             }
         }
 

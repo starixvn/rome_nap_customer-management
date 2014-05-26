@@ -23,8 +23,7 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
         {
             if (rawData != null)
             {
-                this.LossLevel = rawData.Level;
-                this.LossLevelRange = rawData.LevelRange;
+                this.LossLevel = rawData.LevelID;
                 this.SMALossItems = new List<SMALossItem>();
             }
         }

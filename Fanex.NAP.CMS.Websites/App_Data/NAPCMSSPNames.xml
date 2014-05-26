@@ -51,6 +51,6 @@
     <Setting Key="NAP_SMATurnover_MonitorList" SpName="NAP_SMATurnover_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
   </Function>
   <Function Name="LossMonitor">
-    <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
 </Functions>

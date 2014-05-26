@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Criteria.LossMonitor;
     using Fanex.NAP.CMS.Models.LossMonitor;
     using Fanex.NAP.CMS.Services.Interfaces;
@@ -35,9 +36,10 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             if (rawData != null && rawData.Any())
             {
-                IEnumerable<IGrouping<byte, SMALossInfo>> groups = rawData.GroupBy(obj => obj.Level);
+                IEnumerable<IGrouping<byte, SMALossInfo>> groups = rawData.GroupBy(obj => obj.LevelID);
                 SMALossGroup lossGroup = null;
                 SMALossInfo firstItem = null;
+                SMALossInfo previousGroupFirstItem = null;
 
                 result = new List<SMALossGroup>();
 
@@ -53,8 +55,19 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                     if (lossGroup.SMALossItems.Count > 0)
                     {
+                        if (previousGroupFirstItem != null)
+                        {
+                            lossGroup.LossLevelRange = string.Format("{0}% - {1}%", firstItem.Value, previousGroupFirstItem.Value - 1);
+                        }
+                        else
+                        {
+                            lossGroup.LossLevelRange = string.Format("{0}% & {1}", firstItem.Value, ViewLang.Above);
+                        }
+
                         result.Add(lossGroup);
                     }
+
+                    previousGroupFirstItem = firstItem;
                 }
             }
 

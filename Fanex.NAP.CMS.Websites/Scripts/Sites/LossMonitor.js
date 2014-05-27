@@ -22,7 +22,7 @@ Fanex.CMS.LossMonitor = function () {
     };
     var refreshTimer = {
         Interval: [90, 120, 160, 180],
-        Default: 90
+        Default: 120
     };
 
     // Cache DOM elements

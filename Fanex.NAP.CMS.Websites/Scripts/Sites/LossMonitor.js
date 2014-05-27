@@ -21,7 +21,7 @@ Fanex.CMS.LossMonitor = function () {
         divAutoRefresh: null
     };
     var refreshTimer = {
-        Interval: [90, 120, 160, 180],
+        Interval: [90, 120, 150, 180],
         Default: 90
     };
 
@@ -72,7 +72,7 @@ Fanex.CMS.LossMonitor = function () {
                           FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.MaxLoss, Width: 120, Name: 'ColMaxLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: CMS.formats.IntegerFormat
+                          FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.LossPercentage, Width: 150, Name: 'ColLossPercentage', HeaderAlign: 'center', CellAlign: 'center'}],
             gridExpandHeight: 70,
@@ -133,6 +133,12 @@ Fanex.CMS.LossMonitor = function () {
             if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
                 domElements.divAutoRefresh.run();
             }
+        });
+
+        domElements.divAutoRefresh.find('li.option').click(function () {
+            var selectedValue = parseInt($(this).attr('data-value'));
+
+            refreshTimer.Default = selectedValue;
         });
 
         domElements.divSMALossMonitor.find('div.percentage-bar').each(function () {

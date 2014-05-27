@@ -42,8 +42,8 @@ Fanex.CMS.TurnoverMonitor = function () {
         PageIndex: 0
     };
     var refreshTimer = {
-        Interval: [10, 20, 30],
-        Default: 10
+        Interval: [30, 60, 90, 120],
+        Default: 30
     };
 
     // Cache DOM elements

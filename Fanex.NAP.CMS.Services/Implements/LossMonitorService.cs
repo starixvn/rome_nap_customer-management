@@ -11,7 +11,6 @@ namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Criteria.LossMonitor;
     using Fanex.NAP.CMS.Models.LossMonitor;
     using Fanex.NAP.CMS.Services.Interfaces;
@@ -29,24 +28,24 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SMALossGroup objects.</returns>
         public List<SMALossGroup> GetSMALoss(GetSMALossMonitorListCriteria criteria)
         {
-            IEnumerable<SMALossInfo> rawData = null;
+            IEnumerable<SMALossInfo> rawData = this.GetData<SMALossInfo>(criteria);
+            List<SMALossLevelItem> levels = this.GetSMALossLevels();
             List<SMALossGroup> result = null;
 
-            rawData = this.GetData<SMALossInfo>(criteria);
-
-            if (rawData != null && rawData.Any())
+            if (rawData != null && rawData.Any() && levels != null && levels.Count > 0)
             {
                 IEnumerable<IGrouping<byte, SMALossInfo>> groups = rawData.GroupBy(obj => obj.LevelID);
                 SMALossGroup lossGroup = null;
                 SMALossInfo firstItem = null;
-                SMALossInfo previousGroupFirstItem = null;
+                SMALossLevelItem level = null;
 
                 result = new List<SMALossGroup>();
 
                 foreach (IGrouping<byte, SMALossInfo> group in groups)
                 {
                     firstItem = group.ElementAt(0);
-                    lossGroup = new SMALossGroup(firstItem);
+                    level = levels.FirstOrDefault(obj => obj.LevelID == firstItem.LevelID);
+                    lossGroup = new SMALossGroup(firstItem, level.Value);
 
                     foreach (SMALossInfo item in group)
                     {
@@ -55,19 +54,34 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                     if (lossGroup.SMALossItems.Count > 0)
                     {
-                        if (previousGroupFirstItem != null)
-                        {
-                            lossGroup.LossLevelRange = string.Format("{0}% - {1}%", firstItem.Value, previousGroupFirstItem.Value - 1);
-                        }
-                        else
-                        {
-                            lossGroup.LossLevelRange = string.Format("{0}% & {1}", firstItem.Value, ViewLang.Above);
-                        }
-
                         result.Add(lossGroup);
                     }
+                }
+            }
 
-                    previousGroupFirstItem = firstItem;
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the SMA loss levels.
+        /// </summary>
+        /// <returns>List of SMALossLevelItem objects.</returns>
+        private List<SMALossLevelItem> GetSMALossLevels()
+        {
+            IEnumerable<SMALossLevel> rawData = this.GetData<SMALossLevel>(new GetSMALossLevelsCriteria());
+            List<SMALossLevelItem> result = null;
+
+            if (rawData.Any())
+            {
+                SMALossLevel higherLevel = null;
+
+                rawData = rawData.OrderByDescending(obj => obj.LevelID);
+                result = new List<SMALossLevelItem>();
+
+                foreach (SMALossLevel level in rawData)
+                {
+                    result.Add(new SMALossLevelItem(level, higherLevel));
+                    higherLevel = level;
                 }
             }
 

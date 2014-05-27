@@ -59,6 +59,7 @@
     <Compile Include="Common\SportInfo.cs" />
     <Compile Include="ConfigureTOByEvent\SportTurnoverInfo.cs" />
     <Compile Include="ConfigureTOBySMA\SMAOffsetInfo.cs" />
+    <Compile Include="LossMonitor\SMALossLevel.cs" />
     <Compile Include="OpenCloseMember\MemberStatusInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LossMonitor\SMALossInfo.cs" />

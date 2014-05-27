@@ -103,7 +103,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                 if (firstItem.MatchID.HasValue)
                 {
-                    turnovers = rawData.Select(obj => new MatchTurnover(obj)).OrderBy(obj => obj.MatchName).ToList();
+                    turnovers = rawData.Select(obj => new MatchTurnover(obj));
                 }
 
                 result = new GotMatchTurnoverResult(firstItem.SportID, firstItem.SportValue, firstItem.LeagueID, firstItem.LeagueValue, turnovers);

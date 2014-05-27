@@ -19,11 +19,12 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
     [Serializable]
     public class SMALossGroup
     {
-        public SMALossGroup(SMALossInfo rawData)
+        public SMALossGroup(SMALossInfo rawData, string levelRange)
         {
             if (rawData != null)
             {
                 this.LossLevel = rawData.LevelID;
+                this.LossLevelRange = levelRange;
                 this.SMALossItems = new List<SMALossItem>();
             }
         }

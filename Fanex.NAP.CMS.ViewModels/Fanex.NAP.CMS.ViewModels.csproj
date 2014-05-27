@@ -76,6 +76,7 @@
     <Compile Include="ConfigureTOBySMA\SMAOffset.cs" />
     <Compile Include="ConfigureTOBySMA\UpdatedSMAOffsetResult.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetFilter.cs" />
+    <Compile Include="LossMonitor\SMALossLevelItem.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />

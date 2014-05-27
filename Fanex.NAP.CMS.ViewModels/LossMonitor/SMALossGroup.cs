@@ -14,7 +14,7 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
     using Fanex.NAP.CMS.Models.LossMonitor;
 
     /// <summary>
-    /// SMA turnover group view model.
+    /// SMA loss group view model.
     /// </summary>
     [Serializable]
     public class SMALossGroup

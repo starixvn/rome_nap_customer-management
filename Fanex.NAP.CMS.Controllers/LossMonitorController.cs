@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Web.Attribute;
 
     /// <summary>
-    /// Turnover monitor controller.
+    /// Loss monitor controller.
     /// </summary>
     public class LossMonitorController : BaseController
     {

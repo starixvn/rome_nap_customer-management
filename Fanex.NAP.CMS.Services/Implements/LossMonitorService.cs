@@ -23,7 +23,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     public class LossMonitorService : CMSBaseService, ILossMonitorService
     {
         /// <summary>
-        /// Gets the SMA loss report.
+        /// Gets the list of SMA who reached the max loss limit.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
         /// <returns>List of SMALossGroup objects.</returns>

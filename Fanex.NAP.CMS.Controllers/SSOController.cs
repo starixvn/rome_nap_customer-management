@@ -136,54 +136,64 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>The login result page.</returns>
         [HttpGet]
         [AllowAnonymous]
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl)
         {
-            ////TimeSpan expiration = new TimeSpan();
             string currentTime = this._userService.UserSSOGetTime();
 
             Session.Clear();
-            SessionManager.Set<bool>("IsAccountingLogin", true);
-
             username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
             onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
-            ////expiration = Converter.ToDateTime(currentTime) - DateTime.Now;
 
             var user = this._userService.GetByUsername(username) as User;
-            var criteria = new UserCheckInUserCriteria
+
+            if (user != null)
             {
-                UserId = user.Id,
-                SiteId = this.SiteId,
-                NetSessionId = Session.SessionID,
-                Ip = CurrentContext.IP,
-                LoginDate = DateTime.Now,
-                BrowserName = CurrentContext.BrowserName,
-                CountryCode = CurrentContext.CountryCode,
-                Domain = CurrentContext.DomainName,
-                Platform = CurrentContext.Platform
-            };
+                var criteria = new UserCheckInUserCriteria
+                {
+                    UserId = user.Id,
+                    SiteId = this.SiteId,
+                    NetSessionId = Session.SessionID,
+                    Ip = CurrentContext.IP,
+                    LoginDate = DateTime.Now,
+                    BrowserName = CurrentContext.BrowserName,
+                    CountryCode = CurrentContext.CountryCode,
+                    Domain = CurrentContext.DomainName,
+                    Platform = CurrentContext.Platform
+                };
 
-            // check-in user
-            this._userService.UserCheckIn(ref criteria);
+                // check-in user
+                this._userService.UserCheckIn(ref criteria);
 
-            // saves user session & auth info
-            this._currentSession.UserId = user.Id;
-            this._currentSession.Username = user.Username;
-            this._currentSession.OnUserId = criteria.OnUserId; ////Convert.ToInt32(onlineUserId);
-            this._currentSession.SessionId = Session.SessionID.ToString();
-            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+                // saves user session & auth info
+                this._currentSession.UserId = user.Id;
+                this._currentSession.Username = user.Username;
+                this._currentSession.OnUserId = criteria.OnUserId; ////Convert.ToInt32(onlineUserId);
+                this._currentSession.SessionId = Session.SessionID.ToString();
+                this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
 
-            if (this.SiteId != 0)
-            {
-                this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                              user.Id,
-                                                                              SiteId,
-                                                                              this.Environment,
-                                                                              true) as IList<MenuItem>;
+                if (this.SiteId != 0)
+                {
+                    this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
+                                                                                  user.Id,
+                                                                                  SiteId,
+                                                                                  this.Environment,
+                                                                                  true) as IList<MenuItem>;
+                }
+
+                this.CreateAuthInfo(user);
+
+                if (string.IsNullOrEmpty(redirectUrl) || redirectUrl != "~/")
+                {
+                    SessionManager.Set<bool>("IsAccountingLogin", true);
+                }
+
+                return this.Redirect(redirectUrl);
             }
-
-            this.CreateAuthInfo(user);
-
-            return this.Redirect(redirectUrl);
+            else
+            {
+                return this.Redirect(FormsAuthentication.LoginUrl);
+            }
         }
 
         #region utilities

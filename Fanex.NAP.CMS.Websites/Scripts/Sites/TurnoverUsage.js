@@ -64,7 +64,7 @@ Fanex.CMS.TurnoverUsage = function () {
             domElements.divDatepickerPlugin,
             labels.FromDate,
             null,
-            'col_9',
+            'col_8',
             labels.ToDate,
             'col_5',
             'col_5',

@@ -35,7 +35,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// Gets the SMA turnover monitor list.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of SMATurnoverGroup objects.</returns>
-        IEnumerable<SMATurnoverGroup> GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria);
+        /// <returns>SMATurnoverReport object contains live and non-live data.</returns>
+        SMATurnoverReport GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria);
     }
 }

@@ -493,6 +493,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live Events.
+        /// </summary>
+        public static string LiveEvents {
+            get {
+                return ResourceManager.GetString("LiveEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loss Monitor.
         /// </summary>
         public static string LossMonitor {
@@ -624,6 +633,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string NewSMATOControl {
             get {
                 return ResourceManager.GetString("NewSMATOControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-Live Events.
+        /// </summary>
+        public static string NonLiveEvents {
+            get {
+                return ResourceManager.GetString("NonLiveEvents", resourceCulture);
             }
         }
         

@@ -153,6 +153,7 @@ Fanex.CMS.LossMonitor = function () {
                 $obj.addClass('full-percents');
             }
         });
+        domElements.divSMALossMonitor.fanexGrid('resizeGrid');
     };
 
     $this.InitPage = function () {

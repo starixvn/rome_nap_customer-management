@@ -90,6 +90,7 @@
     <Compile Include="LossMonitor\SMALossItem.cs" />
     <Compile Include="TurnoverMonitor\SMATurnoverItem.cs" />
     <Compile Include="TurnoverMonitor\SMATurnoverGroup.cs" />
+    <Compile Include="TurnoverMonitor\SMATurnoverReport.cs" />
     <Compile Include="TurnoverUsage\TurnoverUsageItem.cs" />
   </ItemGroup>
   <ItemGroup>

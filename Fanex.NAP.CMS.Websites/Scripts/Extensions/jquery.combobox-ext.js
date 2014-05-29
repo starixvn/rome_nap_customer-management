@@ -41,32 +41,35 @@
                             item: ui.item.option
                         });
                         select.trigger('change');
-                    }
-                })
-                .change(function (event) {
-                    var txt = $(this),
-                        value = $.trim(txt.val()),
-                        matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
-                        valid = false;
+                    },
+                    change: function (event, ui) {
+                        console.log('change');
+                        if (!ui.item) {
+                            var txt = $(this),
+                                value = txt.val(),
+                                matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
+                                valid = false;
 
-                    Validator.clearError(wrapper);
-                    select.children('option').each(function () {
-                        if ($(this).text().match(matcher)) {
-                            this.selected = valid = true;
-                            self._trigger('selected', event, {
-                                item: this
+                            Validator.clearError(wrapper);
+                            select.children('option').each(function () {
+                                if ($(this).text().match(matcher)) {
+                                    this.selected = valid = true;
+                                    self._trigger('selected', event, {
+                                        item: this
+                                    });
+                                    select.trigger('change');
+
+                                    return false;
+                                }
                             });
-                            select.trigger('change');
 
-                            return false;
+                            if (!valid) {
+                                Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
+                                select.val('');
+                                input.data('autocomplete').term = '';
+                                return false;
+                            }
                         }
-                    });
-
-                    if (!valid) {
-                        Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
-                        select.val('');
-                        input.data('autocomplete').term = '';
-                        return false;
                     }
                 })
                 .focusout(function () {
@@ -76,6 +79,11 @@
                 })
                 .focus(function () {
                     $(this).select();
+                })
+                .on('paste', function () {
+                     var txt = $(this);
+
+                     txt.autocomplete('search');
                 })
                 .addClass('ui-widget ui-widget-content');
 

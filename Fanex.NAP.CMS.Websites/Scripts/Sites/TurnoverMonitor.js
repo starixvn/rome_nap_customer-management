@@ -26,8 +26,10 @@ Fanex.CMS.TurnoverMonitor = function () {
         txtLeague: null,
         txtPercentageUsed: null,
         btnSearch: null,
-        divTurnoverMonitor: null,
-        divTurnoverMonitorContainer: null,
+        divLiveTurnoverMonitor: null,
+        divLiveTurnoverMonitorContainer: null,
+        divNoneLiveTurnoverMonitor: null,
+        divNoneLiveTurnoverMonitorContainer: null,
         divRefresh: null
     };
     var parameters = {
@@ -36,7 +38,10 @@ Fanex.CMS.TurnoverMonitor = function () {
         UsedPercent: null
     };
     var cachedData = {
-        Data: null,
+        LiveData: null,
+        NonLiveData: null,
+        LiveDataLength: null,
+        NonLiveDataLength: null,
         Length: 0,
         PageSize: CMS.pageSize,
         PageIndex: 0
@@ -56,8 +61,10 @@ Fanex.CMS.TurnoverMonitor = function () {
         domElements.txtPercentageUsed = $('#txtPercentageUsed');
         domElements.divRefresh = $('#divAutoRefresh');
         domElements.btnSearch = $('#btnSearch');
-        domElements.divTurnoverMonitor = $('#divTurnoverMonitor');
-        domElements.divTurnoverMonitorContainer = $('#divTurnoverMonitorContainer');
+        domElements.divLiveTurnoverMonitor = $('#divLiveTurnoverMonitor');
+        domElements.divLiveTurnoverMonitorContainer = $('#divLiveTurnoverMonitorContainer');
+        domElements.divNoneLiveTurnoverMonitor = $('#divNoneLiveTurnoverMonitor');
+        domElements.divNoneLiveTurnoverMonitorContainer = $('#divNoneLiveTurnoverMonitorContainer');
     };
 
     // Initialize fields and handle events.
@@ -116,7 +123,7 @@ Fanex.CMS.TurnoverMonitor = function () {
     };
 
     // Render grid.
-    var renderGrid = function (data) {
+    var renderGrid = function (isLive, data, totalItems, container) {
         var groupFormat = '<span class="group-title">' +
                               '<span class="league" title="{0}">{1}</span> -- ' +
                               '<span>{2}: {3}</span> -- ' +
@@ -145,17 +152,25 @@ Fanex.CMS.TurnoverMonitor = function () {
                           FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.PercentageUsed, Width: 150, Name: 'ColPercentageUsed', HeaderAlign: 'center', CellAlign: 'center'}],
-            gridExpandHeight: 200,
+            //gridExpandHeight: 520,
+            fullHeight: false,
+            gridHeight: 350,
             showDistinctRow: false,
             showTree: true,
+            showTitle: true,
+            titleInfo: {
+                text: isLive ? labels.LiveEvents : labels.NonLiveEvents
+            },
             showPager: true,
             customPager: true,
             pagerOption: {
                 currentPage: cachedData.PageIndex,
                 itemsPerPage: cachedData.PageSize,
                 itemsPerPageArray: CMS.pagerRanges,
-                totalItem: cachedData.Length,
-                pagerSelectCallBack: reloadPage
+                totalItem: totalItems,
+                pagerSelectCallBack: function (pageSize, pageIndex) {
+                    reloadPage(isLive, pageSize, pageIndex, container);
+                }
             }
         };
         var bodyData = [];
@@ -193,12 +208,12 @@ Fanex.CMS.TurnoverMonitor = function () {
         }
 
         gridOptions.bodyRows = bodyData;
-        domElements.divTurnoverMonitor.fanexGrid(gridOptions);
-        handleGridEvents();
+        container.fanexGrid(gridOptions);
+        handleGridEvents(container);
     };
 
-    var handleGridEvents = function () {
-        domElements.divTurnoverMonitor.find('div.percentage-bar').each(function () {
+    var handleGridEvents = function (container) {
+        container.find('div.percentage-bar').each(function () {
             var $obj = $(this);
             var percentage = parseInt($obj.attr('data-value'));
 
@@ -210,22 +225,25 @@ Fanex.CMS.TurnoverMonitor = function () {
                 $obj.addClass('full-percents');
             }
         });
+        container.fanexGrid('resizeGrid');
     };
 
     // Customize reloading page.
-    var reloadPage = function (pageIndex, pageSize) {
+    var reloadPage = function (isLive, pageIndex, pageSize, container) {
         var pageData = [];
         var startIndex = 0;
         var endIndex = 0;
         var counter = 0;
+        var data = isLive ? cachedData.LiveData : cachedData.NonLiveData;
+        var totalItems = isLive ? cachedData.NoneLive : cachedData.NoneLiveLength;
 
-        if (cachedData.Data && cachedData.Data.length > 0) {
+        if (data && data.length > 0) {
             pageIndex = parseInt(pageIndex);
             pageSize = parseInt(pageSize);
             startIndex = pageIndex * pageSize;
             endIndex = startIndex + pageSize - 1;
 
-            $.each(cachedData.Data, function (groupIndex, group) {
+            $.each(data, function (groupIndex, group) {
                 var temCounter = counter + group.SMAItems.length - 1;
                 var currentGroup = null;
 
@@ -254,15 +272,15 @@ Fanex.CMS.TurnoverMonitor = function () {
 
         cachedData.PageIndex = pageIndex;
         cachedData.PageSize = pageSize;
-        renderGrid(pageData);
+        renderGrid(isLive, pageData, totalItems, container);
     };
 
     // Count number of sub-items of cached data.
-    var countSubItems = function () {
+    var countSubItems = function (data) {
         var counter = 0;
 
-        if (cachedData.Data && cachedData.Data.length > 0) {
-            $.each(cachedData.Data, function (groupIndex, group) {
+        if (data && data.length > 0) {
+            $.each(data, function (groupIndex, group) {
                 if (group.SMAItems) {
                     counter += group.SMAItems.length;
                 }
@@ -394,9 +412,12 @@ Fanex.CMS.TurnoverMonitor = function () {
                     domElements.divRefresh.run();
                 }
 
-                cachedData.Data = result.Report;
-                cachedData.Length = countSubItems();
-                reloadPage(cachedData.PageIndex, cachedData.PageSize);
+                cachedData.LiveData = result.Report.Live;
+                cachedData.NonLiveData = result.Report.NonLive;
+                cachedData.LiveLength = countSubItems(cachedData.LiveData);
+                cachedData.NoneLiveLength = countSubItems(cachedData.NonLiveData);
+                reloadPage(true, cachedData.PageIndex, cachedData.PageSize, domElements.divLiveTurnoverMonitor);
+                reloadPage(false, cachedData.PageIndex, cachedData.PageSize, domElements.divNoneLiveTurnoverMonitor);
                 parameters.SportType = result.SportType;
                 parameters.LeagueID = result.LeagueID;
 

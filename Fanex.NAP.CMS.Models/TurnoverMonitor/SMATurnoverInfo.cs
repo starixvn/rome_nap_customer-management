@@ -41,5 +41,7 @@ namespace Fanex.NAP.CMS.Models.TurnoverMonitor
         public decimal? TotalTurnover { get; set; }
 
         public int? PercentageUsed { get; set; }
+
+        public bool Live { get; set; }
     }
 }

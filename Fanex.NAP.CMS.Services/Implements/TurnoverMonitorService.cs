@@ -51,13 +51,37 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// Gets the SMA turnover monitor list.
         /// </summary>
         /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of SMATurnoverGroup objects.</returns>
-        public IEnumerable<SMATurnoverGroup> GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria)
+        /// <returns>SMATurnoverReport object contains live and non-live data.</returns>
+        public SMATurnoverReport GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria)
         {
             IEnumerable<SMATurnoverInfo> rawData = null;
-            List<SMATurnoverGroup> result = null;
+            SMATurnoverReport result = null;
 
             rawData = this.GetData<SMATurnoverInfo>(criteria);
+
+            if (rawData != null && rawData.Any())
+            {
+                IEnumerable<SMATurnoverInfo> liveData = rawData.Where(obj => obj.Live);
+                IEnumerable<SMATurnoverInfo> nonLiveData = rawData.Where(obj => !obj.Live);
+
+                result = new SMATurnoverReport
+                {
+                    Live = GroupTurnoverIntoLeague(liveData),
+                    NonLive = GroupTurnoverIntoLeague(nonLiveData)
+                };
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Groups the turnover into league.
+        /// </summary>
+        /// <param name="rawData">The raw data.</param>
+        /// <returns>List of SMATurnoverGroup objects.</returns>
+        private IEnumerable<SMATurnoverGroup> GroupTurnoverIntoLeague(IEnumerable<SMATurnoverInfo> rawData)
+        {
+            List<SMATurnoverGroup> result = null;
 
             if (rawData != null && rawData.Any())
             {

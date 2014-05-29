@@ -414,4 +414,10 @@
   <data name="Above" xml:space="preserve">
     <value>Above</value>
   </data>
+  <data name="LiveEvents" xml:space="preserve">
+    <value>Live Events</value>
+  </data>
+  <data name="NonLiveEvents" xml:space="preserve">
+    <value>Non-Live Events</value>
+  </data>
 </root>

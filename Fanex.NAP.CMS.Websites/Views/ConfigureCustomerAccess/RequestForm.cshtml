@@ -7,12 +7,12 @@
         <div class="edit-field">
             @Html.Hidden("hdnCustId", string.Empty)
             @Html.Hidden("hdnRequestId", string.Empty)
-            @Html.TextBox("txtUsername", string.Empty, new { @class = "width-200", data_val_required = @Messages.RequiredFieldError })
+            @Html.TextBox("txtUsername", string.Empty, new { @class = "width-200", data_val_required = Messages.RequiredFieldError })
         </div>
     </div>
     <div class="form-row">
         <div class="lbl-field radio-button">
-            @Html.RadioButton("Restriction", "Country", true, new { id = "lblCountry", @for = "ddlCountry" })
+            @Html.RadioButton("Restriction", "Country", true, new { id = "lblCountry" })
         </div>
         <div class="lbl-field">
             @Html.Label("lblCountry", ViewLang.Country)
@@ -22,12 +22,12 @@
                 "ddlCountry",
                 (IEnumerable<SelectListItem>)ViewBag.CountryList,
                 ViewLang.SelectACountry,
-                new { @class = "country-width", data_val_required = @Messages.RequiredFieldError })
+                new { @class = "country-width", data_val_required = Messages.RequiredFieldError })
         </div>
     </div>
     <div class="form-row">
         <div class="lbl-field radio-button">
-            @Html.RadioButton("Restriction", "IP", true, new { id = "lblIP", @for = "txtIP" })
+            @Html.RadioButton("Restriction", "IP", true, new { id = "lblIP" })
         </div>
         <div class="lbl-field">
             @Html.Label("lblIP", ViewLang.IP)
@@ -39,7 +39,7 @@
                 new 
                 { 
                     data_val_ip = Messages.InvalidIPError,
-                    data_val_required = @Messages.RequiredFieldError,
+                    data_val_required = Messages.RequiredFieldError,
                     @class = "width-200"
                 })
         </div>
@@ -61,7 +61,7 @@
                 string.Empty,
                 5,
                 65,
-                new { data_val_required = @Messages.RequiredFieldError, @class = "width-200", maxlength = 200 })
+                new { data_val_required = Messages.RequiredFieldError, @class = "width-200", maxlength = 200 })
         </div>
     </div>
     <div class="form-row button-row">

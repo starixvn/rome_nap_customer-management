@@ -43,7 +43,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
         domElements.ddlSport = domElements.divMatchContent.find('select.sport');
         domElements.ddlLeague = domElements.divMatchContent.find('select.league');
         domElements.txtMatchCode = domElements.divMatchContent.find('#txtMatchCode');
-        domElements.btnSearch = domElements.divMatchContent.find('#btnSearch');
+        domElements.btnSearch = domElements.divMatchContent.find('#btnMatchSearch');
         domElements.divMatchTurnoverContainer = domElements.divMatchContent.find('#divMatchTurnoverContainer');
         domElements.divMatchTurnover = domElements.divMatchContent.find('#divMatchTurnover');
     };

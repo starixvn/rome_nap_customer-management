@@ -55,7 +55,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         public SMATurnoverReport GetSMATurnoverMonitorList(GetSMATurnoverMonitorListCriteria criteria)
         {
             IEnumerable<SMATurnoverInfo> rawData = null;
-            SMATurnoverReport result = null;
+            SMATurnoverReport result = new SMATurnoverReport();
 
             rawData = this.GetData<SMATurnoverInfo>(criteria);
 
@@ -64,11 +64,8 @@ namespace Fanex.NAP.CMS.Services.Implements
                 IEnumerable<SMATurnoverInfo> liveData = rawData.Where(obj => obj.Live);
                 IEnumerable<SMATurnoverInfo> nonLiveData = rawData.Where(obj => !obj.Live);
 
-                result = new SMATurnoverReport
-                {
-                    Live = GroupTurnoverIntoLeague(liveData),
-                    NonLive = GroupTurnoverIntoLeague(nonLiveData)
-                };
+                result.Live = GroupTurnoverIntoLeague(liveData);
+                result.NonLive = GroupTurnoverIntoLeague(nonLiveData);
             }
 
             return result;

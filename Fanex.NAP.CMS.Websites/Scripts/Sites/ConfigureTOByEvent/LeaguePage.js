@@ -49,7 +49,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
         domElements.txtLeague = domElements.divLeagueContent.find('#txtLeague');
         domElements.ddlCountry = domElements.divLeagueContent.find('select.country');
         domElements.ddlMarket = domElements.divLeagueContent.find('select.market');
-        domElements.btnSearch = domElements.divLeagueContent.find('#btnSearch');
+        domElements.btnSearch = domElements.divLeagueContent.find('#btnLeagueSearch');
         domElements.divLeagueTurnoverContainer = domElements.divLeagueContent.find('#divLeagueTurnoverContainer');
         domElements.divLeagueTurnover = domElements.divLeagueContent.find('#divLeagueTurnover');
     };

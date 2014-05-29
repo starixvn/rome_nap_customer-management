@@ -28,6 +28,7 @@ namespace Fanex.NAP.CMS.Controllers
     /// </summary>
     public class TurnoverMonitorController : BaseController
     {
+        private const byte RunningMode = 3;
         private readonly ITurnoverMonitorService _turnoverMonitorService;
 
         public TurnoverMonitorController() :
@@ -61,14 +62,18 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetInitializedData()
         {
-            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(new GetSportsCriteria());
+            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(new GetSportsCriteria
+            {
+                Mode = RunningMode
+            });
             IEnumerable<LeagueInfo> leagues = null;
 
             if (sports.Any())
             {
                 leagues = this._turnoverMonitorService.GetLeaguesOfSport(new GetLeaguesOfSportCriteria
                 {
-                    SportID = sports.ElementAt<SportInfo>(0).SportType
+                    SportID = sports.ElementAt<SportInfo>(0).SportType,
+                    Mode = RunningMode
                 });
             }
 
@@ -88,7 +93,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            IEnumerable<LeagueInfo> leagues = this._turnoverMonitorService.GetLeaguesOfSport(criteria);
+            IEnumerable<LeagueInfo> leagues = null;
+
+            criteria.Mode = RunningMode;
+            leagues = this._turnoverMonitorService.GetLeaguesOfSport(criteria);
 
             return Json(leagues);
         }
@@ -105,7 +113,10 @@ namespace Fanex.NAP.CMS.Controllers
             int currentSportType = criteria.SportType;
             int currentLeagueID = criteria.LeagueID;
             SMATurnoverReport result = this._turnoverMonitorService.GetSMATurnoverMonitorList(criteria);
-            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(new GetSportsCriteria());
+            IEnumerable<SportInfo> sports = this._turnoverMonitorService.GetSportList(new GetSportsCriteria
+            {
+                Mode = RunningMode
+            });
             IEnumerable<LeagueInfo> leagues = null;
 
             if (sports.Any() && !sports.Any(obj => obj.SportType == criteria.SportType))
@@ -115,7 +126,8 @@ namespace Fanex.NAP.CMS.Controllers
 
             leagues = this._turnoverMonitorService.GetLeaguesOfSport(new GetLeaguesOfSportCriteria
             {
-                SportID = currentSportType
+                SportID = currentSportType,
+                Mode = RunningMode
             });
 
             if (leagues.Any() && !leagues.Any(obj => obj.LeagueID == currentLeagueID))

@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 5/26/2014 1:06:09 PM
+// Lasted generated date: 6/2/2014 11:27:45 AM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -31,8 +31,6 @@ public static class CMSFunctionKeys
 
         public const string Close_OpenMembers = "Close_OpenMembers";
 
-        public const string ConfigureCustomer = "ConfigureCustomer";
-
         public const string ConfigureCustomerAccess = "ConfigureCustomerAccess";
 
         public const string ControlTOByEvent = "ControlTOByEvent";
@@ -43,6 +41,8 @@ public static class CMSFunctionKeys
 
         public const string ControlTurnover = "ControlTurnover";
 
+        public const string Customer = "Customer";
+
         public const string LossControl = "LossControl";
 
         public const string LossMonitor = "LossMonitor";
@@ -52,6 +52,8 @@ public static class CMSFunctionKeys
         public const string ManageGroup = "ManageGroup";
 
         public const string ManageMenu = "ManageMenu";
+
+        public const string ManageRobots = "ManageRobots";
 
         public const string ManageUser = "ManageUser";
 

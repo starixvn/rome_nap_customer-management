@@ -79,11 +79,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to ACTIVATE {0} selected Robot(s)?.
+        /// </summary>
+        public static string ActivateRobotsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("ActivateRobotsConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The request has been saved successfully!.
         /// </summary>
         public static string AddRequestSuccessfully {
             get {
                 return ResourceManager.GetString("AddRequestSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The robot(s) have been saved successfully!.
+        /// </summary>
+        public static string AddRobotsSuccessfully {
+            get {
+                return ResourceManager.GetString("AddRobotsSuccessfully", resourceCulture);
             }
         }
         
@@ -138,6 +156,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ConfirmPasswordCannotEmpty {
             get {
                 return ResourceManager.GetString("ConfirmPasswordCannotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to DEACTIVATE {0} selected Robot(s)?.
+        /// </summary>
+        public static string DeactivateRobotsConfirmationMessage {
+            get {
+                return ResourceManager.GetString("DeactivateRobotsConfirmationMessage", resourceCulture);
             }
         }
         
@@ -394,6 +421,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no change.
+        /// </summary>
+        public static string ThereIsNoChange {
+            get {
+                return ResourceManager.GetString("ThereIsNoChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input \&apos;U\&apos; for unlimited setting.
         /// </summary>
         public static string TurnoverInputInstruction {
@@ -462,6 +498,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string UpdateRequestSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateRequestSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The robot information has been updated successfully!.
+        /// </summary>
+        public static string UpdateRobotInfoSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateRobotInfoSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The status of selected robot(s) have been updated successfully!.
+        /// </summary>
+        public static string UpdateRobotStatusSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateRobotStatusSuccessfully", resourceCulture);
             }
         }
         

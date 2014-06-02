@@ -54,4 +54,10 @@
     <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
     <Setting Key="NAP_LimitLoss_ActionConfigSel" SpName="NAP_LimitLoss_ActionConfigSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="RobotMonitor">
+    <Setting Key="Acc_CustomerSelRobotAccounts" SpName="Acc_CustomerSelRobotAccounts" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_CustomerUpdInfoRobotAccount" SpName="Acc_CustomerUpdInfoRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_CustomerInsRobotAccount" SpName="Acc_CustomerInsRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_CustomerUpdStatusRobotAccount" SpName="Acc_CustomerUpdStatusRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+  </Function>
 </Functions>

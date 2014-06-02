@@ -1,0 +1,126 @@
+﻿@{
+    var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
+
+    ViewBag.Title = ViewLang.ManageRobots;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/manageRobots")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div id="divFilterForm" class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3 align-right">
+                <label for="txtUsername">@ViewLang.Username</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtUsername" class="width-180" />
+            </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="ddlStatus">@ViewLang.Status</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <select id="ddlStatus" class="combobox-autocomplete status-combobox">
+                    <option value="null">@ViewLang.All</option>
+                    <option value="true">@ViewLang.Active</option>
+                    <option value="false">@ViewLang.Inactive</option>
+                </select>
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+            @if (hasEditAccessRight)
+            {
+                <div class="submit width-auto col_4">
+                    <input id="btnAddRobot" type="button" class="submit width-100" value="@ViewLang.AddRobot" />
+                </div>
+            }
+        </div>
+        <div class="filter-row"></div>
+    </div>
+</div>
+<div class="display-none content-grid">
+    <div id="divRobotList" class="freegrid"></div>
+</div>
+@if (hasEditAccessRight)
+{
+    <div id="divButtons" class="button-div display-none">
+        <input id="btnActivate" type="button" class="green-button" data-value="@ViewLang.ActivateSelectedAccounts" value="@ViewLang.ActivateSelectedAccounts"/>
+        <input id="btnDeactivate" type="button" class="red-button" data-value="@ViewLang.DeactivateSelectedAccounts" value="@ViewLang.DeactivateSelectedAccounts"/>
+    </div>
+    <div class="display-none">
+        <div id="divRobotForm" class="form expand-form">
+            <div id="divErrorSuccessMsg" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtNewUsername">@ViewLang.Username</label>
+                </div>
+                <div class="edit-field">
+                    <input type="hidden" id="hdnCustID" />
+                    <input type="text" id="txtNewUsername" class="width-200" maxlength="4000" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtRemark">@ViewLang.Remark<br /><span class="optional">(@ViewLang.Optional)</span></label>
+                </div>
+                <div class="edit-field">
+                    <textarea id="txtRemark" class="width-200" maxlength="20" rows="5" cols="65"></textarea>
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <div class="lbl-field  normal-label"></div>
+                <div class="edit-field">
+                    <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Save" />
+                    <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Foot
+{
+    @Scripts.Render("~/scripts/manageRobots")
+    <script type="text/javascript">
+        var labels = {
+            Order: '#',
+            Username: '@ViewLang.Username',
+            Status: '@ViewLang.Status',
+            Currency: '@ViewLang.Currency',
+            Site: '@ViewLang.Site',
+            Super: '@ViewLang.Super',
+            Master: '@ViewLang.Master',
+            Agent: '@ViewLang.Agent',
+            AddedBy: '@ViewLang.AddedBy',
+            AddedDate: '@ViewLang.AddedDate',
+            ModifiedBy: '@ViewLang.ModifiedBy',
+            ModifiedDate: '@ViewLang.ModifiedDate',
+            Remark: '@ViewLang.Remark',
+            Edit: '@ViewLang.Edit',
+            Active: '@ViewLang.Active',
+            Inactive: '@ViewLang.Inactive',
+            AddRobot: '@ViewLang.AddRobot',
+            EditRobot: '@ViewLang.EditRobot'
+        };
+        var messages = {
+            RequiredStatusCol: '@Html.Raw(Messages.RequiredStatusColumnError)',
+            InvalidValueError: '@Messages.InvalidValueError',
+            UpdateRobotStatusSuccessfully: '@Messages.UpdateRobotStatusSuccessfully',
+            UpdateRobotInfoSuccessfully: '@Messages.UpdateRobotInfoSuccessfully',
+            AddRobotsSuccessfully: '@Messages.AddRobotsSuccessfully',
+            ActivateRobotsConfirmationMessage: '@Messages.ActivateRobotsConfirmationMessage',
+            DeactivateRobotsConfirmationMessage: '@Messages.DeactivateRobotsConfirmationMessage',
+            ThereIsNoChange: '@Messages.ThereIsNoChange'
+        };
+        var hasEditRight = '@hasEditAccessRight' === 'True';
+    </script>
+}

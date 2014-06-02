@@ -84,6 +84,7 @@
     <Compile Include="Implements\ConfigureSMATOByEventService.cs" />
     <Compile Include="Implements\ConfigureTOByEventService.cs" />
     <Compile Include="Implements\ConfigureTOBySMAService.cs" />
+    <Compile Include="Implements\ManageRobotsService.cs" />
     <Compile Include="Implements\OpenCloseMemberService.cs" />
     <Compile Include="Implements\LossMonitorService.cs" />
     <Compile Include="Implements\TurnoverMonitorService.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Interfaces\IConfigureSMATOByEventService.cs" />
     <Compile Include="Interfaces\IConfigureTOByEventService.cs" />
     <Compile Include="Interfaces\IConfigureTOBySMAService.cs" />
+    <Compile Include="Interfaces\IManageRobotsService.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberService.cs" />
     <Compile Include="Interfaces\ILossMonitorService.cs" />
     <Compile Include="Interfaces\ITurnoverMonitorService.cs" />

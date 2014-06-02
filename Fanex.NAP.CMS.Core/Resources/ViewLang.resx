@@ -420,4 +420,43 @@
   <data name="NonLiveEvents" xml:space="preserve">
     <value>Non-Live Events</value>
   </data>
+  <data name="ActivateSelectedAccounts" xml:space="preserve">
+    <value>ACTIVATE {0} selected account(s)</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="AddedBy" xml:space="preserve">
+    <value>Added By</value>
+  </data>
+  <data name="AddedDate" xml:space="preserve">
+    <value>Added Date</value>
+  </data>
+  <data name="AddRobot" xml:space="preserve">
+    <value>Add Robot</value>
+  </data>
+  <data name="DeactivateSelectedAccounts" xml:space="preserve">
+    <value>DEACTIVATE {0} selected account(s)</value>
+  </data>
+  <data name="EditRobot" xml:space="preserve">
+    <value>Edit Robot</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="ManageRobots" xml:space="preserve">
+    <value>Manage Robots</value>
+  </data>
+  <data name="ModifiedBy" xml:space="preserve">
+    <value>Modified By</value>
+  </data>
+  <data name="ModifiedDate" xml:space="preserve">
+    <value>Modified Date</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+  </data>
 </root>

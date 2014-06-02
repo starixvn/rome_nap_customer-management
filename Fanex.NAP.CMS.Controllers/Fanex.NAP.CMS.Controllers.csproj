@@ -67,6 +67,7 @@
     <Compile Include="ErrorController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="LoginController.cs" />
+    <Compile Include="ManageRobotsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LossMonitorController.cs" />
     <Compile Include="SSOController.cs" />

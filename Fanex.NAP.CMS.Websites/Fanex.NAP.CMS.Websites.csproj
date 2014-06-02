@@ -245,6 +245,7 @@
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\ReCheckIn.js" />
+    <Content Include="Scripts\Sites\ManageRobots.js" />
     <Content Include="Scripts\Sites\LossMonitor.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\MatchPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\LeaguePage.js" />
@@ -406,6 +407,8 @@
     <Content Include="Content\Sites\turnoverUsage.less" />
     <Content Include="Content\Sites\lossMonitor.less" />
     <Content Include="Views\LossMonitor\Index.cshtml" />
+    <Content Include="Views\ManageRobots\Index.cshtml" />
+    <Content Include="Content\Sites\manageRobots.less" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

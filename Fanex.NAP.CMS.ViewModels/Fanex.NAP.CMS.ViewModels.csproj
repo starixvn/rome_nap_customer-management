@@ -77,6 +77,11 @@
     <Compile Include="ConfigureTOBySMA\UpdatedSMAOffsetResult.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetFilter.cs" />
     <Compile Include="LossMonitor\SMALossLevelItem.cs" />
+    <Compile Include="ManageRobots\AddRobotInfoFilter.cs" />
+    <Compile Include="ManageRobots\GettingRobotAccountResult.cs" />
+    <Compile Include="ManageRobots\RobotAccountItem.cs" />
+    <Compile Include="ManageRobots\UpdateRobotInfoFilter.cs" />
+    <Compile Include="ManageRobots\UpdateRobotStatusFilter.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />

@@ -79,6 +79,42 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACTIVATE {0} selected account(s).
+        /// </summary>
+        public static string ActivateSelectedAccounts {
+            get {
+                return ResourceManager.GetString("ActivateSelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added By.
+        /// </summary>
+        public static string AddedBy {
+            get {
+                return ResourceManager.GetString("AddedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Added Date.
+        /// </summary>
+        public static string AddedDate {
+            get {
+                return ResourceManager.GetString("AddedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Request.
         /// </summary>
         public static string AddNewRequest {
@@ -93,6 +129,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string AddRequest {
             get {
                 return ResourceManager.GetString("AddRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Robot.
+        /// </summary>
+        public static string AddRobot {
+            get {
+                return ResourceManager.GetString("AddRobot", resourceCulture);
             }
         }
         
@@ -331,6 +376,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DEACTIVATE {0} selected account(s).
+        /// </summary>
+        public static string DeactivateSelectedAccounts {
+            get {
+                return ResourceManager.GetString("DeactivateSelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -354,6 +408,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string EditRequest {
             get {
                 return ResourceManager.GetString("EditRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Robot.
+        /// </summary>
+        public static string EditRobot {
+            get {
+                return ResourceManager.GetString("EditRobot", resourceCulture);
             }
         }
         
@@ -448,6 +511,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inactive.
+        /// </summary>
+        public static string Inactive {
+            get {
+                return ResourceManager.GetString("Inactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP.
         /// </summary>
         public static string IP {
@@ -525,6 +597,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string MainMarkets {
             get {
                 return ResourceManager.GetString("MainMarkets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Robots.
+        /// </summary>
+        public static string ManageRobots {
+            get {
+                return ResourceManager.GetString("ManageRobots", resourceCulture);
             }
         }
         
@@ -628,6 +709,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modified By.
+        /// </summary>
+        public static string ModifiedBy {
+            get {
+                return ResourceManager.GetString("ModifiedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modified Date.
+        /// </summary>
+        public static string ModifiedDate {
+            get {
+                return ResourceManager.GetString("ModifiedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New SMA TO Control.
         /// </summary>
         public static string NewSMATOControl {
@@ -687,6 +786,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string OpenSelectedAccounts {
             get {
                 return ResourceManager.GetString("OpenSelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Optional.
+        /// </summary>
+        public static string Optional {
+            get {
+                return ResourceManager.GetString("Optional", resourceCulture);
             }
         }
         
@@ -795,6 +903,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string SelectTop {
             get {
                 return ResourceManager.GetString("SelectTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string Site {
+            get {
+                return ResourceManager.GetString("Site", resourceCulture);
             }
         }
         

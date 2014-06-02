@@ -43,7 +43,6 @@
                         select.trigger('change');
                     },
                     change: function (event, ui) {
-                        console.log('change');
                         if (!ui.item) {
                             var txt = $(this),
                                 value = txt.val(),

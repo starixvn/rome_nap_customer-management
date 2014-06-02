@@ -79,6 +79,10 @@
     <Compile Include="ConfigureTOBySMA\InsertSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
     <Compile Include="LossMonitor\GetSMALossLevelsCriteria.cs" />
+    <Compile Include="ManageRobots\GetRobotAccountsCriteria.cs" />
+    <Compile Include="ManageRobots\InsertRobotAccountCriteria.cs" />
+    <Compile Include="ManageRobots\UpdateRobotInfoCriteria.cs" />
+    <Compile Include="ManageRobots\UpdateRobotStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="LossMonitor\GetSMALossMonitorListCriteria.cs" />

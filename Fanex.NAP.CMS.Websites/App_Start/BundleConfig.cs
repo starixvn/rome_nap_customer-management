@@ -111,6 +111,14 @@ namespace Fanex.NAP.CMS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/configureCustomerAccess").Include(
                 "~/Scripts/Sites/ConfigureCustomerAccess.js"));
+
+            // Open/Close Member.
+            bundles.AddAndInclude(
+                "~/styles/manageRobots",
+                "~/Content/Sites/manageRobots.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/manageRobots").Include(
+                "~/Scripts/Sites/ManageRobots.js"));
         }
 
         /// <summary>

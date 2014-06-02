@@ -123,8 +123,14 @@
   <data name="AccessDeniedMessage" xml:space="preserve">
     <value>You are not authorized to access this link.</value>
   </data>
+  <data name="ActivateRobotsConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to ACTIVATE {0} selected Robot(s)?</value>
+  </data>
   <data name="AddRequestSuccessfully" xml:space="preserve">
     <value>The request has been saved successfully!</value>
+  </data>
+  <data name="AddRobotsSuccessfully" xml:space="preserve">
+    <value>The robot(s) have been saved successfully!</value>
   </data>
   <data name="AddSMATOSuccessfully" xml:space="preserve">
     <value>The new SMA TO has been added successfully!</value>
@@ -143,6 +149,9 @@
   </data>
   <data name="ConfirmPasswordCannotEmpty" xml:space="preserve">
     <value>Confirm password cannot be empty.</value>
+  </data>
+  <data name="DeactivateRobotsConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to DEACTIVATE {0} selected Robot(s)?</value>
   </data>
   <data name="DeleteRequestConfirm" xml:space="preserve">
     <value>Are you sure you to want to delete the request: &lt;b&gt;[{0}]&lt;/b&gt;?</value>
@@ -228,6 +237,9 @@
   <data name="SelectOneOptionMessage" xml:space="preserve">
     <value>Please select one option!</value>
   </data>
+  <data name="ThereIsNoChange" xml:space="preserve">
+    <value>There is no change</value>
+  </data>
   <data name="TurnoverInputInstruction" xml:space="preserve">
     <value>Input \'U\' for unlimited setting</value>
   </data>
@@ -251,6 +263,12 @@
   </data>
   <data name="UpdateRequestSuccessfully" xml:space="preserve">
     <value>The request has been updated successfully!</value>
+  </data>
+  <data name="UpdateRobotInfoSuccessfully" xml:space="preserve">
+    <value>The robot information has been updated successfully!</value>
+  </data>
+  <data name="UpdateRobotStatusSuccessfully" xml:space="preserve">
+    <value>The status of selected robot(s) have been updated successfully!</value>
   </data>
   <data name="UpdateSettingSuccessfully" xml:space="preserve">
     <value>The setting has been updated successfully!</value>

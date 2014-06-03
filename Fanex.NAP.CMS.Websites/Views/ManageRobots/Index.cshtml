@@ -23,7 +23,7 @@
                 <label for="txtUsername">@ViewLang.Username</label>
             </div>
             <div class="edit-field col_7 align-left">
-                <input type="text" id="txtUsername" class="width-180" />
+                <input type="text" id="txtUsername" class="width-180" maxlength="4000" />
             </div>
             <div class="lbl-field col_3 align-right">
                 <label for="ddlStatus">@ViewLang.Status</label>
@@ -74,7 +74,7 @@
                     <label for="txtRemark">@ViewLang.Remark<br /><span class="optional">(@ViewLang.Optional)</span></label>
                 </div>
                 <div class="edit-field">
-                    <textarea id="txtRemark" class="width-200" maxlength="20" rows="5" cols="65"></textarea>
+                    <textarea id="txtRemark" class="width-200" maxlength="200" rows="5" cols="65"></textarea>
                 </div>
             </div>
             <div class="form-row button-row">

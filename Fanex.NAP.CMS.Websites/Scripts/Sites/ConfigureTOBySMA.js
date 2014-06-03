@@ -373,7 +373,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInlineInfoMsg(messages.AddSMATOSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.AddSMATOSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disableAddNewSMAForm();
@@ -410,7 +410,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdateOffsetSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdateOffsetSuccessfully);
                     renderGrid(result.OffsetItems);
 
                     return true;
@@ -445,7 +445,7 @@ Fanex.CMS.ConfigureTOBySMA = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.RemoveOffsetSuccessfully);
+                    CMS.showSuccessMessage(messages.RemoveOffsetSuccessfully);
                     renderGrid(result.OffsetItems);
 
                     return true;

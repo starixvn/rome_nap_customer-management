@@ -65,7 +65,7 @@
 
         $(function () {
             if (isSuccess) {
-                CMS.showInlineInfoMsg('@ViewResources.Your_changes_were_saved!', msgArea);
+                CMS.showInlineSuccessMsg('@ViewResources.Your_changes_were_saved!', msgArea);
             } else if (serverError.find('li:first').text() !== '') {
                 CMS.showInlineErrorMsg(serverError.html(), msgArea);
             }

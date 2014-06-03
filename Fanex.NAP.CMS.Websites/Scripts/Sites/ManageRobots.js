@@ -60,13 +60,16 @@ Fanex.CMS.ManageRobots = function () {
         domElements.divRobotList = $('#divRobotList');
         domElements.divButtons = $('#divButtons');
         domElements.btnActivate = $('#btnActivate');
-        domElements.btnActivateValue = domElements.btnActivate.attr('data-value');
         domElements.btnDeactivate = $('#btnDeactivate');
-        domElements.btnDeactivateValue = domElements.btnDeactivate.attr('data-value');
         domElements.divRobotForm = $('#divRobotForm').clone();
         domElements.divPopup = $('#dialog-popup');
 
         $('#divRobotForm').empty();
+
+        if (hasEditRight) {
+            domElements.btnActivateValue = domElements.btnActivate.attr('data-value');
+            domElements.btnDeactivateValue = domElements.btnDeactivate.attr('data-value');
+        }
     };
 
     // Cache popup elements
@@ -90,6 +93,7 @@ Fanex.CMS.ManageRobots = function () {
     // Initialize fields and handle events.
     var initFields = function () {
         parameters.PageSize = CMS.pageSize;
+        parameters.PageIndex = 1;
 
         domElements.txtUsername.keyup(function (event) {
             if (event.keyCode === 13) {
@@ -103,7 +107,6 @@ Fanex.CMS.ManageRobots = function () {
                 var errors = Validator.countErrors(domElements.divFilterForm);
 
                 clearStatusColError();
-                console.log(errors);
 
                 if (errors === 0) {
                     getParameters();
@@ -157,6 +160,12 @@ Fanex.CMS.ManageRobots = function () {
 
     // Bind event handlers to elements on the popup.
     var bindPopupEventHandlers = function (isEdit) {
+        popupElements.txtNewUsername.keyup(function (event) {
+            if (event.keyCode === 13) {
+                popupElements.btnSave.click();
+            }
+        });
+
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(popupElements.divRobotForm, 'w')) {
                 var custID = popupElements.hdnCustID.val();
@@ -235,7 +244,11 @@ Fanex.CMS.ManageRobots = function () {
                 username = $.trim(username);
 
                 if (username !== '') {
-                    result += username + ',';
+                    result += username;
+
+                    if (index !== usernames.length - 1) {
+                        result += ',';
+                    }
                 } else if (index !== usernames.length - 1) {
                     isValid = false;
                 }
@@ -298,19 +311,19 @@ Fanex.CMS.ManageRobots = function () {
         var statusCol = hasEditRight ? statusHeaderFormat.format(labels.Status) : labels.Status;
         var gridOptions = {
             columns: [{ HeaderText: labels.Order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Username, Width: 150, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Username, Width: 140, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: statusCol, Width: 80, Name: 'ColStatus', HeaderAlign: hasEditRight ? 'left' : 'center',
                           CellAlign: hasEditRight ? 'left' : 'center', CssClass: hasEditRight ? 'chk-column' : ''
                       },
                       { HeaderText: labels.Currency, Width: 60, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Site, Width: 100, Name: 'ColSite', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Super, Width: 150, Name: 'ColSuper', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Master, Width: 150, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Agent, Width: 150, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AddedBy, Width: 100, Name: 'ColAddedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.AddedDate, Width: 90, Name: 'ColAddedDate', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.ModifiedBy, Width: 100, Name: 'ColModifiedBy', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.ModifiedDate, Width: 90, Name: 'ColModifiedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Site, Width: 100, Name: 'ColSite', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.Super, Width: 120, Name: 'ColSuper', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.Master, Width: 120, Name: 'ColMaster', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.Agent, Width: 120, Name: 'ColAgent', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.AddedBy, Width: 75, Name: 'ColAddedBy', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.AddedDate, Width: 70, Name: 'ColAddedDate', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.ModifiedBy, Width: 75, Name: 'ColModifiedBy', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                      { HeaderText: labels.ModifiedDate, Width: 80, Name: 'ColModifiedDate', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Remark, Width: 50, Name: 'ColRemark', HeaderAlign: 'center', CellAlign: 'center'}],
             showDistinctRow: false,
             showNumberColumn: true,
@@ -343,13 +356,13 @@ Fanex.CMS.ManageRobots = function () {
                               { Name: 'ColCurrency', Value: item.Currency },
                               { Name: 'ColSite', Value: item.Site },
                               { Name: 'ColSuper', Value: item.Super },
-                              { Name: 'ColMaster', Value: item.Agent },
-                              { Name: 'ColAgent', Value: item.Site },
+                              { Name: 'ColMaster', Value: item.Master },
+                              { Name: 'ColAgent', Value: item.Agent },
                               { Name: 'ColAddedBy', Value: item.AddedBy },
                               { Name: 'ColAddedDate', Value: item.AddedDate },
                               { Name: 'ColModifiedBy', Value: item.ModifiedBy },
                               { Name: 'ColModifiedDate', Value: item.ModifiedDate },
-                              { Name: 'ColRemark', Value: remarkFormat.format(item.Remark)}]
+                              { Name: 'ColRemark', Value: remarkFormat.format(item.Remark || ' ')}]
                 };
 
                 if (hasEditRight) {
@@ -364,7 +377,10 @@ Fanex.CMS.ManageRobots = function () {
         gridOptions.pagerOption.totalItem = data.TotalItems;
         gridOptions.bodyRows = bodyData;
         domElements.divRobotList.fanexGrid(gridOptions);
-        showHideButtons(bodyData.length > 0);
+
+        if (hasEditRight) {
+            showHideButtons(bodyData.length > 0);
+        }
 
         if (bodyData.length > 0) {
             handleGridEvents();
@@ -409,7 +425,7 @@ Fanex.CMS.ManageRobots = function () {
         bindMemberCounterHandler();
 
         domElements.divRobotList.find('span.ico-remark').each(function () {
-            $(this).tipsy({ opacity: 0.9 });
+            $(this).tipsy({ opacity: 0.9, gravity: 'ne', decodeTitle: false });
         });
 
         domElements.divRobotList.find('span.ico-edit').click(function () {
@@ -511,7 +527,7 @@ Fanex.CMS.ManageRobots = function () {
         });
     };
 
-    // Update members' status.
+    // Update robots' status.
     var updateMemberStatus = function (updatingParameters) {
         updatingParameters.SearchedUsername = parameters.Username;
         updatingParameters.Status = parameters.Status;
@@ -530,7 +546,7 @@ Fanex.CMS.ManageRobots = function () {
                 if (result.ErrorCode > 0) {
                     CMS.showErrorMessage(result.ErrorMsg);
                 } else {
-                    CMS.showInfoMessage(messages.UpdateRobotStatusSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdateRobotStatusSuccessfully);
                     renderRobotList(result);
                 }
             },
@@ -556,13 +572,15 @@ Fanex.CMS.ManageRobots = function () {
             },
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInlineInfoMsg(messages.AddRobotsSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.AddRobotsSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disablePopupForm();
                     renderRobotList(result);
+                } else if (result.ErrorCode < 0) {
+                    CMS.showInlineInfoMsg(result.ErrorMsg.replace(/,$/, ''), popupElements.divErrorSuccessMsg);
                 } else {
-                    CMS.showInlineErrorMsg(result.ErrorMsg, popupElements.divErrorSuccessMsg);
+                    CMS.showInlineErrorMsg(result.ErrorMsg.replace(/,$/, ''), popupElements.divErrorSuccessMsg);
                 }
             },
             error: function (xhr) {
@@ -587,7 +605,7 @@ Fanex.CMS.ManageRobots = function () {
             },
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInlineInfoMsg(messages.UpdateRobotInfoSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.UpdateRobotInfoSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disablePopupForm();

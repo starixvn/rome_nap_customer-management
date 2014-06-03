@@ -63,7 +63,7 @@
                             });
 
                             if (!valid) {
-                                Validator.showError(wrapper, value + ' didn\'t match any item', 'w');
+                                Validator.showError(wrapper, value + ' didn\'t match any item.', 'w');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;

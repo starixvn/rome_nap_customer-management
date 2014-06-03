@@ -93,8 +93,8 @@ var CMS = (function ($) {
 
             CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
         },
-        showInfoMessage: function (message, callbackFunc) {
-            var msgWrapper = '<div id="divError" class="info">' + message + '</div>';
+        showSuccessMessage: function (message, callbackFunc) {
+            var msgWrapper = '<div id="divError" class="success">' + message + '</div>';
             var options = {
                 position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
                 css: 'custom-msgbox',
@@ -106,7 +106,7 @@ var CMS = (function ($) {
             setTimeout(callbackFunc, 3000);
         },
         showMixMessage: function (infoMsg, errorMsg) {
-            var msgWrapper = '<div class="mix-msg"><div id="divInfo" class="info">' + infoMsg + '</div>' +
+            var msgWrapper = '<div class="mix-msg"><div id="divInfo" class="success">' + infoMsg + '</div>' +
                              '<div id="divError" class="error">' + errorMsg + '</div></div>';
             var options = {
                 sticky: true,
@@ -139,15 +139,28 @@ var CMS = (function ($) {
             $obj.html(message);
             $obj.removeClass('success').addClass('error').slideDown();
         },
-        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
+        showInlineSuccessMsg: function (message, $obj, autoHide, callbackFunc) {
             autoHide = autoHide === undefined ? true : autoHide;
             $obj.html(message);
-            $obj.removeClass('error').addClass('info').slideDown();
+            $obj.removeClass('error').removeClass('info').addClass('success').slideDown();
 
             if (autoHide) {
                 setTimeout(function () {
                     CMS.hideInlineMsg($obj, callbackFunc);
                 }, 3000);
+            } else if (callbackFunc) {
+                callbackFunc();
+            }
+        },
+        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
+            autoHide = autoHide === undefined ? true : autoHide;
+            $obj.html(message);
+            $obj.removeClass('error').removeClass('success').addClass('info').slideDown();
+
+            if (autoHide) {
+                setTimeout(function () {
+                    CMS.hideInlineMsg($obj, callbackFunc);
+                }, 5000);
             } else if (callbackFunc) {
                 callbackFunc();
             }

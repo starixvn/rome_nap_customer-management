@@ -410,7 +410,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             data: JSON.stringify(gettingParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdatePercentageSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdatePercentageSuccessfully);
                     renderGrid(result.Turnovers.LeagueTurnovers);
 
                     return true;
@@ -451,7 +451,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
             data: JSON.stringify(removeParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.RemoveTOExceptionSuccessfully);
+                    CMS.showSuccessMessage(messages.RemoveTOExceptionSuccessfully);
                     renderGrid(result.Turnovers.LeagueTurnovers);
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);

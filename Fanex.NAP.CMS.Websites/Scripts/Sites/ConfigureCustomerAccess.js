@@ -386,7 +386,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInlineInfoMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.addRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disableRequestForm();
@@ -417,7 +417,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             },
             success: function (result) {
                 if (result.IsSuccessful) {
-                    CMS.showInlineInfoMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.updateRequestSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disableRequestForm();
@@ -452,7 +452,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
                     CMS.disableInput();
                 },
                 success: function () {
-                    CMS.showInfoMessage(messages.deleteRequestSuccessfully);
+                    CMS.showSuccessMessage(messages.deleteRequestSuccessfully);
                     getRequestList();
                 },
                 error: function (xhr) {

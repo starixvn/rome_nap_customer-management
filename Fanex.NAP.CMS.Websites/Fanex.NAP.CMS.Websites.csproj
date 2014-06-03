@@ -209,6 +209,7 @@
     <Content Include="Content\Themes\img\icn-expand.png" />
     <Content Include="Content\Themes\img\icon-calendar.png" />
     <Content Include="Content\Themes\img\icon-error-message.png" />
+    <Content Include="Content\Themes\img\icon-info-message.png" />
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />

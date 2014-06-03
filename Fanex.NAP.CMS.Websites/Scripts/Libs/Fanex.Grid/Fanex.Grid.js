@@ -15,12 +15,12 @@
 // </copyright>
 // --------------------------------------------------------------------------
 /*jshint maxdepth:false, maxstatements:false*/
-/*global fanexGridCurrentLanguage:true,fanexGridLanguage, moment,numeral*/
+/*global fanexGridLanguage, moment,numeral*/
 
+var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
 
 (function ($) {
     'use strict';
-
 
     //// Method expose for user use
     var methods =
@@ -1645,7 +1645,7 @@
                             currentHeight = $trTable.height();
 
                         $(currentFrozenHeader[index]).css('height', currentHeight + 'px');
-                        $(currentFrozenBody[index]).css('height', currentHeight + 'px');s
+                        $(currentFrozenBody[index]).css('height', currentHeight + 'px');
                     });
                 }
                 // Footer
@@ -2423,8 +2423,8 @@
             container.css("height", containerHeight + "px");
             rowHeaderWarpper.css("height", containerHeight + "px");
             yscrollbar.css("height", (containerHeight - freezeHeight - (ub.chrome || ub.msie ? 1 : 0) - options.heightScrollYAdd) + "px");
-            o.find(".free-cell-top-right")
-             .css("height", (freezeHeight - ((ub.msie || ub.chrome || ff16) ? (options.padding * 2 + 1) : 0) + (ub.chrome ? 1 : 0)) + "px");
+            o.find(".free-cell-top-right").css("height", (freezeHeight - ((ub.msie || ub.chrome || ff16) ? (options.padding * 2 + 1) : 0) + (ub.chrome ? 1 : 0)) + "px");
+             
             if (isShowFooter) {
                 o.find(".free-cell-bottom-right").css("height", (freezeFooterHeight + (isScrollX ? bar : 0) + 1) + "px");
             }

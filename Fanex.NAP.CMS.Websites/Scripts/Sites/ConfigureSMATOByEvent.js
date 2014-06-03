@@ -604,7 +604,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             data: JSON.stringify(removingParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.RemoveSettingSuccessfully);
+                    CMS.showSuccessMessage(messages.RemoveSettingSuccessfully);
                     cachedData.Data = result.SMATurnovers;
                     cachedData.Length = countSubItems();
                     reloadPage(cachedData.PageIndex, cachedData.PageSize);
@@ -640,7 +640,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             data: JSON.stringify(updatingParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdateSettingSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdateSettingSuccessfully);
                     cachedData.Data = result.SMATurnovers;
                     cachedData.Length = countSubItems();
                     reloadPage(cachedData.PageIndex, cachedData.PageSize);
@@ -680,7 +680,7 @@ Fanex.CMS.ConfigureSMATOByEvent = function () {
             data: JSON.stringify(isertingParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInlineInfoMsg(messages.AddSMATOSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                    CMS.showInlineSuccessMsg(messages.AddSMATOSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
                     });
                     disableAddNewSMAForm();

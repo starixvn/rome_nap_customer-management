@@ -366,7 +366,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             data: JSON.stringify(updateParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdatePercentageSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdatePercentageSuccessfully);
                     renderGrid(result.Turnovers.MatchTurnovers);
 
                     return true;
@@ -403,7 +403,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
             data: JSON.stringify(removeParameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.RemoveTOExceptionSuccessfully);
+                    CMS.showSuccessMessage(messages.RemoveTOExceptionSuccessfully);
                     renderGrid(result.Turnovers.MatchTurnovers);
                 } else {
                     CMS.showErrorMessage(result.ErrorMessage);

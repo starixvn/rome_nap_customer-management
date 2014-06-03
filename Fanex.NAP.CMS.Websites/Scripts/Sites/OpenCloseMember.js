@@ -424,7 +424,7 @@ Fanex.CMS.CloseOpenMember = function () {
                 if (result.ErrorCode > 0) {
                     CMS.showErrorMessage(result.ErrorMsg);
                 } else if (result.NumberOfUpdatedItems === result.TotalItems) {
-                    CMS.showInfoMessage(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
+                    CMS.showSuccessMessage(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
                 } else if (result.NumberOfFailedItems === result.TotalItems) {
                     CMS.showErrorMessage(messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
                 } else {

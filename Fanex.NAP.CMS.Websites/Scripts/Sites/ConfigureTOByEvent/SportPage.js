@@ -234,7 +234,7 @@ Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
             data: JSON.stringify(parameters),
             success: function (result) {
                 if (result.ErrorCode === 0) {
-                    CMS.showInfoMessage(messages.UpdatePercentageSuccessfully);
+                    CMS.showSuccessMessage(messages.UpdatePercentageSuccessfully);
                     renderGrid(result.Turnovers);
 
                     return false;

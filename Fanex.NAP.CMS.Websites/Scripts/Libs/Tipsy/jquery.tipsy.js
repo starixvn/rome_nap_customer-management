@@ -119,7 +119,9 @@
             } else if (typeof o.title == 'function') {
                 title = o.title.call($e[0]);
             }
-            title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            if (o.decodeTitle) {
+                title = ('' + title).replace(/(^\s*|\s*$)/, "");
+            }
             return title || o.fallback;
         },
 
@@ -213,6 +215,7 @@
         title: 'title',
         trigger: 'hover',
         classStyle: '',
+        decodeTitle: true,
         inDocument: true
     };
 

@@ -66,7 +66,8 @@
                 </div>
                 <div class="edit-field">
                     <input type="hidden" id="hdnCustID" />
-                    <input type="text" id="txtNewUsername" class="width-200" maxlength="4000" data-val-required="@Messages.RequiredFieldError" />
+                    <textarea id="txtNewUsername" class="new-username width-200" maxlength="4000" rows="1" cols="65" data-val-required="@Messages.RequiredFieldError"></textarea>
+                    <div id="divInstruction" class="add-instruction">@Messages.AddRobotInstruction</div>
                 </div>
             </div>
             <div class="form-row">

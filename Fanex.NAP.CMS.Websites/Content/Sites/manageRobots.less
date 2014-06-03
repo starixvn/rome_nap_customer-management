@@ -55,6 +55,10 @@
                         margin: 0 5px;
                     }
                 }
+
+                .active {
+                    color: #db2c2c;
+                }
             }
 
             .table-cell.member-column {
@@ -69,6 +73,11 @@
 }
 
 .form {
+    .inline-message {
+        word-wrap: break-word;
+        max-width: 350px;
+    }
+
     .form-row {
         .lbl-field {
             width: 60px;
@@ -76,6 +85,23 @@
             .optional {
                 font-size: 11px;
                 text-transform: lowercase;
+            }
+        }
+
+        .edit-field {
+            .new-username {
+                height: 20px;
+                //padding-top: 5px;
+
+                &:disabled {
+                    resize: none;
+                    line-height: 20px;
+                }
+            }
+
+            .add-instruction {
+                color: #f00;
+                margin-bottom: 5px;
             }
         }
 

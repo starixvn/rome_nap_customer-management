@@ -129,6 +129,9 @@
   <data name="AddRequestSuccessfully" xml:space="preserve">
     <value>The request has been saved successfully!</value>
   </data>
+  <data name="AddRobotInstruction" xml:space="preserve">
+    <value>Enter usernames, separated by ','</value>
+  </data>
   <data name="AddRobotsSuccessfully" xml:space="preserve">
     <value>The robot(s) have been saved successfully!</value>
   </data>

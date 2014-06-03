@@ -44,6 +44,7 @@ Fanex.CMS.ManageRobots = function () {
         divRobotForm: null,
         hdnCustID: null,
         txtNewUsername: null,
+        divInstruction: null,
         txtRemark: null,
         btnSave: null,
         btnCancel: null
@@ -78,6 +79,7 @@ Fanex.CMS.ManageRobots = function () {
         popupElements.divRobotForm = $('#divRobotForm', domElements.divPopup);
         popupElements.hdnCustID = $('#hdnCustID', domElements.divPopup);
         popupElements.txtNewUsername = $('#txtNewUsername', domElements.divPopup);
+        popupElements.divInstruction = $('#divInstruction', domElements.divPopup);
         popupElements.txtRemark = $('#txtRemark', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
@@ -220,6 +222,7 @@ Fanex.CMS.ManageRobots = function () {
             popupElements.txtNewUsername.val(robot.Username);
             popupElements.txtRemark.val(robot.Remark).focus();
             popupElements.txtNewUsername.prop('disabled', true);
+            popupElements.divInstruction.addClass('display-none');
         }
 
         bindPopupEventHandlers(isEdit);
@@ -235,7 +238,7 @@ Fanex.CMS.ManageRobots = function () {
 
     // Validate username in the adding new robot popup.
     var validateNewUsername = function (usernameStr) {
-        var usernames = CMS.htmlDecode(usernameStr).split(',');
+        var usernames = CMS.htmlDecode(usernameStr).split(/[\r\n\s,]+/);
         var isValid = true;
         var result = '';
 
@@ -305,7 +308,8 @@ Fanex.CMS.ManageRobots = function () {
         var statusFormat = '<div class="checkbox-status">' +
                                '<input type="checkbox" id="{0}" data-active="{1}" data-chk-group="chkStatus"/>' +
                            '</div>' +
-                           '<label for="{0}" class="lbl-for-chkStatus">{2}</label>';
+                           '<label for="{0}" class="lbl-for-chkStatus {2}">{3}</label>';
+        var plainStatusFormat = '<span class="{0}">{1}</span>';
         var remarkFormat = '<span class="ico-remark" title="{0}"></span>';
         var editFormat = '<span class="ico-edit" data-cust-id="{0}" title="{1}"></span>';
         var statusCol = hasEditRight ? statusHeaderFormat.format(labels.Status) : labels.Status;
@@ -347,8 +351,11 @@ Fanex.CMS.ManageRobots = function () {
         if (data.RobotAccounts && data.RobotAccounts.length > 0) {
             $.each(data.RobotAccounts, function (index, item) {
                 var status = item.IsActive ? labels.Active : labels.Inactive;
+                var statusClass = item.IsActive ? 'active' : '';
 
-                statusCol = hasEditRight ? statusFormat.format(item.CustID, item.IsActive, status) : status;
+                statusCol = hasEditRight ?
+                            statusFormat.format(item.CustID, item.IsActive, statusClass, status) :
+                            plainStatusFormat.format(statusClass, status);
                 row = {
                     Columns: [{ Name: 'ColOrder', Value: index },
                               { Name: 'ColUsername', Value: item.Username, CssClass: 'username-column' },

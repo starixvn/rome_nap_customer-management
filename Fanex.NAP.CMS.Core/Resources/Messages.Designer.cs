@@ -97,6 +97,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter usernames, separated by &apos;,&apos;.
+        /// </summary>
+        public static string AddRobotInstruction {
+            get {
+                return ResourceManager.GetString("AddRobotInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The robot(s) have been saved successfully!.
         /// </summary>
         public static string AddRobotsSuccessfully {

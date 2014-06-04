@@ -85,13 +85,6 @@ Fanex.CMS.ManageRobots = function () {
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
     };
 
-    // Get parameters.
-    var getParameters = function () {
-        parameters.Username = domElements.txtUsername.val();
-        parameters.Status = domElements.ddlStatus.val();
-        parameters.PageIndex = 1;
-    };
-
     // Initialize fields and handle events.
     var initFields = function () {
         parameters.PageSize = CMS.pageSize;
@@ -111,7 +104,12 @@ Fanex.CMS.ManageRobots = function () {
                 clearStatusColError();
 
                 if (errors === 0) {
-                    getParameters();
+                    parameters.Username = $.trim(domElements.txtUsername.val());
+                    parameters.Status = domElements.ddlStatus.val();
+                    parameters.PageIndex = 1;
+
+                    domElements.txtUsername.val(parameters.Username);
+
                     getRobotList();
                 }
             }, 70);
@@ -162,12 +160,6 @@ Fanex.CMS.ManageRobots = function () {
 
     // Bind event handlers to elements on the popup.
     var bindPopupEventHandlers = function (isEdit) {
-        popupElements.txtNewUsername.keyup(function (event) {
-            if (event.keyCode === 13) {
-                popupElements.btnSave.click();
-            }
-        });
-
         popupElements.btnSave.click(function () {
             if (Validator.validateForm(popupElements.divRobotForm, 'w')) {
                 var custID = popupElements.hdnCustID.val();
@@ -585,7 +577,7 @@ Fanex.CMS.ManageRobots = function () {
                     disablePopupForm();
                     renderRobotList(result);
                 } else if (result.ErrorCode < 0) {
-                    CMS.showInlineInfoMsg(result.ErrorMsg.replace(/,$/, ''), popupElements.divErrorSuccessMsg);
+                    CMS.showInlineInfoMsg(result.ErrorMsg.replace(/,$/, ''), popupElements.divErrorSuccessMsg, false, 15000);
                 } else {
                     CMS.showInlineErrorMsg(result.ErrorMsg.replace(/,$/, ''), popupElements.divErrorSuccessMsg);
                 }

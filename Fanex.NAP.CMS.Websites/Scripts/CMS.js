@@ -152,15 +152,16 @@ var CMS = (function ($) {
                 callbackFunc();
             }
         },
-        showInlineInfoMsg: function (message, $obj, autoHide, callbackFunc) {
+        showInlineInfoMsg: function (message, $obj, autoHide, timespan, callbackFunc) {
             autoHide = autoHide === undefined ? true : autoHide;
             $obj.html(message);
             $obj.removeClass('error').removeClass('success').addClass('info').slideDown();
 
             if (autoHide) {
+                timespan = timespan || 5000;
                 setTimeout(function () {
                     CMS.hideInlineMsg($obj, callbackFunc);
-                }, 5000);
+                }, timespan);
             } else if (callbackFunc) {
                 callbackFunc();
             }

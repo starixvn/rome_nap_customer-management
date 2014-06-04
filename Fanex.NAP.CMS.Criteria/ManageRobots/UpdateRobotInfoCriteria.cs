@@ -34,7 +34,7 @@ namespace Fanex.NAP.CMS.Criteria.ManageRobots
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "Acc_CustomerUpdInfoRobotAccount";
+            return "NAP_CustomerUpdInfoRobotAccount";
         }
 
         /// <summary>

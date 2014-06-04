@@ -26,6 +26,8 @@
                     $this.removeClass('on-x-icon');
                 }
             }
+        }).focusout(function () {
+            $this.removeClass('on-x-icon');
         });
 
         $(document).on('click', '.on-x-icon', function () {

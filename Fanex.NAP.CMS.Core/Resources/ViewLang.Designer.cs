@@ -151,6 +151,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Smart Punter.
+        /// </summary>
+        public static string AddSmartPunter {
+            get {
+                return ResourceManager.GetString("AddSmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
@@ -421,6 +430,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Smart Punter.
+        /// </summary>
+        public static string EditSmartPunter {
+            get {
+                return ResourceManager.GetString("EditSmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event.
         /// </summary>
         public static string Event {
@@ -610,6 +628,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Smart Punters.
+        /// </summary>
+        public static string ManageSmartPunters {
+            get {
+                return ResourceManager.GetString("ManageSmartPunters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Market.
         /// </summary>
         public static string Market {
@@ -732,6 +759,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string NewSMATOControl {
             get {
                 return ResourceManager.GetString("NewSMATOControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nickname.
+        /// </summary>
+        public static string Nickname {
+            get {
+                return ResourceManager.GetString("Nickname", resourceCulture);
             }
         }
         
@@ -984,6 +1020,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string SuperHeinz {
             get {
                 return ResourceManager.GetString("SuperHeinz", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspended.
+        /// </summary>
+        public static string Suspended {
+            get {
+                return ResourceManager.GetString("Suspended", resourceCulture);
             }
         }
         

@@ -75,7 +75,7 @@ Fanex.CMS.LossMonitor = function () {
                           FormatNumber: CMS.formats.DecimalFormat
                       },
                       { HeaderText: labels.LossPercentage, Width: 150, Name: 'ColLossPercentage', HeaderAlign: 'center', CellAlign: 'center'}],
-            gridExpandHeight: 70,
+            gridExpandHeight: 110,
             showDistinctRow: false,
             showTree: true,
             showTitle: true,

@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 6/2/2014 11:27:45 AM
+// Lasted generated date: 6/5/2014 9:37:15 AM
 // </history>
 
 using System.Diagnostics.CodeAnalysis;
@@ -54,6 +54,8 @@ public static class CMSFunctionKeys
         public const string ManageMenu = "ManageMenu";
 
         public const string ManageRobots = "ManageRobots";
+
+        public const string ManageSmartPunters = "ManageSmartPunters";
 
         public const string ManageUser = "ManageUser";
 

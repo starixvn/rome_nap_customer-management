@@ -254,6 +254,7 @@
     <Content Include="Scripts\Sites\ConfigureTOByEvent\SportPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOBySMA.js" />
     <Content Include="Scripts\Sites\ConfigureSMATOByEvent.js" />
+    <Content Include="Scripts\Sites\ManageSmartPunters.js" />
     <Content Include="Scripts\Sites\TurnoverUsage.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />
     <Content Include="Scripts\Sites\Login.js" />
@@ -410,6 +411,8 @@
     <Content Include="Views\LossMonitor\Index.cshtml" />
     <Content Include="Views\ManageRobots\Index.cshtml" />
     <Content Include="Content\Sites\manageRobots.less" />
+    <Content Include="Content\Sites\manageSmartPunters.less" />
+    <Content Include="Views\ManageSmartPunters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
@@ -428,7 +431,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50121</DevelopmentServerPort>
+          <DevelopmentServerPort>52239</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

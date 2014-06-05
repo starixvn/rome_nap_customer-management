@@ -83,6 +83,7 @@
     <Compile Include="ManageRobots\InsertRobotAccountCriteria.cs" />
     <Compile Include="ManageRobots\UpdateRobotInfoCriteria.cs" />
     <Compile Include="ManageRobots\UpdateRobotStatusCriteria.cs" />
+    <Compile Include="ManageSmartPunters\GetSmartPuntersCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="LossMonitor\GetSMALossMonitorListCriteria.cs" />

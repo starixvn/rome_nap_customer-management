@@ -115,6 +115,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The smart punter has been saved successfully!.
+        /// </summary>
+        public static string AddSmartPunterSuccessfully {
+            get {
+                return ResourceManager.GetString("AddSmartPunterSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The new SMA TO has been added successfully!.
         /// </summary>
         public static string AddSMATOSuccessfully {
@@ -259,6 +268,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This function is to enhance security regarding Smart Punter betting information by restricting access to Smart Punters&apos; accounts and information to a group of specified back-office users..
+        /// </summary>
+        public static string ManageSmartPunterNote {
+            get {
+                return ResourceManager.GetString("ManageSmartPunterNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New password cannot be empty..
         /// </summary>
         public static string NewPasswordCannotEmpty {
@@ -381,6 +399,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string RemoveSettingSuccessfully {
             get {
                 return ResourceManager.GetString("RemoveSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to REMOVE the selected smart punter?.
+        /// </summary>
+        public static string RemoveSmartPunterConfirmationMessage {
+            get {
+                return ResourceManager.GetString("RemoveSmartPunterConfirmationMessage", resourceCulture);
             }
         }
         
@@ -534,6 +561,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string UpdateSettingSuccessfully {
             get {
                 return ResourceManager.GetString("UpdateSettingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The smart punter has been updated successfully!.
+        /// </summary>
+        public static string UpdateSmartPunterSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateSmartPunterSuccessfully", resourceCulture);
             }
         }
         

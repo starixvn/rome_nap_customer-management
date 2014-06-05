@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Framework.Command;
 
     /// <summary>
-    /// Loss monitor controller.
+    /// Manage robots controller.
     /// </summary>
     public class ManageRobotsController : BaseController
     {

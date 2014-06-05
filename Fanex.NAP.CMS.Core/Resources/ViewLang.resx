@@ -459,4 +459,19 @@
   <data name="Optional" xml:space="preserve">
     <value>Optional</value>
   </data>
+  <data name="AddSmartPunter" xml:space="preserve">
+    <value>Add Smart Punter</value>
+  </data>
+  <data name="EditSmartPunter" xml:space="preserve">
+    <value>Edit Smart Punter</value>
+  </data>
+  <data name="ManageSmartPunters" xml:space="preserve">
+    <value>Manage Smart Punters</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>Nickname</value>
+  </data>
+  <data name="Suspended" xml:space="preserve">
+    <value>Suspended</value>
+  </data>
 </root>

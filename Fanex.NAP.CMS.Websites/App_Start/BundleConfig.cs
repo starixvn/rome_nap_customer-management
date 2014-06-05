@@ -112,13 +112,21 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/configureCustomerAccess").Include(
                 "~/Scripts/Sites/ConfigureCustomerAccess.js"));
 
-            // Open/Close Member.
+            // Manage Robots.
             bundles.AddAndInclude(
                 "~/styles/manageRobots",
                 "~/Content/Sites/manageRobots.less");
 
             bundles.Add(new ScriptBundle("~/scripts/manageRobots").Include(
                 "~/Scripts/Sites/ManageRobots.js"));
+
+            // Manage Smart Punters.
+            bundles.AddAndInclude(
+                "~/styles/manageSmartPunters",
+                "~/Content/Sites/manageSmartPunters.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/manageSmartPunters").Include(
+                "~/Scripts/Sites/ManageSmartPunters.js"));
         }
 
         /// <summary>
@@ -127,6 +135,7 @@ namespace Fanex.NAP.CMS.Websites
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterTurnoverControlBundles(BundleCollection bundles)
         {
+            // Configure TO By Event.
             bundles.AddAndInclude(
                 "~/styles/configureTOByEvent",
                 "~/Content/Sites/configureTOByEvent.less");
@@ -137,6 +146,7 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Sites/ConfigureTOByEvent/MatchPage.js",
                 "~/Scripts/Sites/ConfigureTOByEvent/PageManager.js"));
 
+            // Configure TO By SMA.
             bundles.AddAndInclude(
                 "~/styles/configureTOBySMA",
                 "~/Content/Sites/configureTOBySMA.less");
@@ -144,6 +154,7 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/configureTOBySMA").Include(
                 "~/Scripts/Sites/ConfigureTOBySMA.js"));
 
+            // Configure SMA TO By Event.
             bundles.AddAndInclude(
                 "~/styles/configureSMATOByEvent",
                 "~/Content/Sites/configureSMATOByEvent.less");
@@ -151,6 +162,7 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/configureSMATOByEvent").Include(
                 "~/Scripts/Sites/ConfigureSMATOByEvent.js"));
 
+            // Turnover Usage.
             bundles.AddAndInclude(
                 "~/styles/turnoverUsage",
                 "~/Content/Sites/turnoverUsage.less");
@@ -158,6 +170,7 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/turnoverUsage").Include(
                 "~/Scripts/Sites/TurnoverUsage.js"));
 
+            // Turnover Monitor.
             bundles.AddAndInclude(
                 "~/styles/turnoverMonitor",
                 "~/Content/Sites/turnoverMonitor.less");
@@ -172,6 +185,7 @@ namespace Fanex.NAP.CMS.Websites
         /// <param name="bundles">The bundle collection.</param>
         public static void RegisterLossControlBundles(BundleCollection bundles)
         {
+            // Loss Monitor.
             bundles.AddAndInclude(
                 "~/styles/lossMonitor",
                 "~/Content/Sites/lossMonitor.less");

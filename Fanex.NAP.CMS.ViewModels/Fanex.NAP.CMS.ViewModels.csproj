@@ -82,6 +82,7 @@
     <Compile Include="ManageRobots\RobotAccountItem.cs" />
     <Compile Include="ManageRobots\UpdateRobotInfoFilter.cs" />
     <Compile Include="ManageRobots\UpdateRobotStatusFilter.cs" />
+    <Compile Include="ManageSmartPunters\SmartPunterItem.cs" />
     <Compile Include="OpenCloseMember\AgentDownlineStatus.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusFilter.cs" />
     <Compile Include="OpenCloseMember\GettingMembersStatusResult.cs" />

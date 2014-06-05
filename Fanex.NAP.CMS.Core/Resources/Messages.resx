@@ -138,6 +138,9 @@
   <data name="AddSMATOSuccessfully" xml:space="preserve">
     <value>The new SMA TO has been added successfully!</value>
   </data>
+  <data name="AddSmartPunterSuccessfully" xml:space="preserve">
+    <value>The smart punter has been saved successfully!</value>
+  </data>
   <data name="ChangedPassword" xml:space="preserve">
     <value>The password has been changed successfully!</value>
   </data>
@@ -183,6 +186,9 @@
   <data name="InvalidValueError" xml:space="preserve">
     <value>Invalid value!</value>
   </data>
+  <data name="ManageSmartPunterNote" xml:space="preserve">
+    <value>This function is to enhance security regarding Smart Punter betting information by restricting access to Smart Punters' accounts and information to a group of specified back-office users.</value>
+  </data>
   <data name="NewPasswordCannotEmpty" xml:space="preserve">
     <value>New password cannot be empty.</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="RemoveSettingSuccessfully" xml:space="preserve">
     <value>The setting has been removed successfully!</value>
+  </data>
+  <data name="RemoveSmartPunterConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to REMOVE the selected smart punter?</value>
   </data>
   <data name="RemoveTOExceptionConfirmMessage" xml:space="preserve">
     <value>This change will not affect to other exception cases.  Are you sure you want to remove it?</value>
@@ -275,6 +284,9 @@
   </data>
   <data name="UpdateSettingSuccessfully" xml:space="preserve">
     <value>The setting has been updated successfully!</value>
+  </data>
+  <data name="UpdateSmartPunterSuccessfully" xml:space="preserve">
+    <value>The smart punter has been updated successfully!</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Customer Management!</value>

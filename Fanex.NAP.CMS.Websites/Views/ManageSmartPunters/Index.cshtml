@@ -1,0 +1,133 @@
+﻿@{
+    var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
+
+    ViewBag.Title = ViewLang.ManageSmartPunters;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/styles/manageSmartPunters")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <span id="spnNote" class="note-info-message" title="@Messages.ManageSmartPunterNote"></span>
+    <div id="divFilterForm" class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_5 align-right">
+                <label for="txtUsername">@ViewLang.Username/@ViewLang.Nickname</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <input type="text" id="txtUsername" class="width-180" maxlength="4000" />
+            </div>
+            <div class="lbl-field col_2 align-right">
+                <label for="ddlSite">@ViewLang.Site</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <select id="ddlSite" class="combobox-autocomplete site-combobox"></select>
+            </div>
+            <div class="lbl-field col_2 align-right">
+                <label for="ddlStatus">@ViewLang.Status</label>
+            </div>
+            <div class="edit-field col_5 align-left">
+                <select id="ddlStatus" class="combobox-autocomplete status-combobox">
+                    <option value="null">@ViewLang.All</option>
+                    <option value="1">@ViewLang.Open</option>
+                    <option value="2">@ViewLang.Suspended</option>
+                    <option value="3">@ViewLang.Closed</option>
+                </select>
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+            @if (hasEditAccessRight)
+            {
+                <div class="submit width-auto col_4">
+                    <input id="btnAddSmartPunter" type="button" class="submit width-140" value="@ViewLang.AddSmartPunter" />
+                </div>
+            }
+        </div>
+        <div class="filter-row"></div>
+    </div>
+</div>
+<div class="display-none content-grid">
+    <div id="divSmartPunterList" class="freegrid"></div>
+</div>
+@if (hasEditAccessRight)
+{
+    <div class="display-none">
+        <div id="divSmartPunterForm" class="form expand-form">
+            <div id="divErrorSuccessMsg" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtNewUsername">@ViewLang.Username/@ViewLang.Nickname</label>
+                </div>
+                <div class="edit-field">
+                    <input type="hidden" id="hdnCustID" />
+                    <input type="text" id="txtNewUsername" class="width-200" maxlength="4000" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="ddlNewSite">@ViewLang.Site</label>
+                </div>
+                <div class="edit-field">
+                    <select id="ddlNewSite" class="combobox-autocomplete site-combobox"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txtRemark">@ViewLang.Remark<br /><span class="optional">(@ViewLang.Optional)</span></label>
+                </div>
+                <div class="edit-field">
+                    <textarea id="txtRemark" class="width-200" maxlength="200" rows="5" cols="65"></textarea>
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <div class="lbl-field  normal-label"></div>
+                <div class="edit-field">
+                    <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Save" />
+                    <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Cancel" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Foot
+{
+    @Scripts.Render("~/scripts/manageSmartPunters")
+    <script type="text/javascript">
+        var labels = {
+            Order: '#',
+            Username: '@ViewLang.Username',
+            Nickname: '@ViewLang.Nickname',
+            Status: '@ViewLang.Status',
+            Currency: '@ViewLang.Currency',
+            Site: '@ViewLang.Site',
+            Super: '@ViewLang.Super',
+            Master: '@ViewLang.Master',
+            Agent: '@ViewLang.Agent',
+            AddedBy: '@ViewLang.AddedBy',
+            AddedDate: '@ViewLang.AddedDate',
+            Remark: '@ViewLang.Remark',
+            Edit: '@ViewLang.Edit',
+            Remove: '@ViewLang.Remove',
+            AddSmartPunter: '@ViewLang.AddSmartPunter',
+            EditSmartPunter: '@ViewLang.EditSmartPunter'
+        };
+        var messages = {
+            InvalidValueError: '@Messages.InvalidValueError',
+            UpdateSmartPunterSuccessfully: '@Messages.UpdateSmartPunterSuccessfully',
+            AddSmartPunterSuccessfully: '@Messages.AddSmartPunterSuccessfully',
+            RemoveSmartPunterConfirmationMessage: '@Messages.RemoveSmartPunterConfirmationMessage',
+            ThereIsNoChange: '@Messages.ThereIsNoChange'
+        };
+        var hasEditRight = '@hasEditAccessRight' === 'True';
+    </script>
+}

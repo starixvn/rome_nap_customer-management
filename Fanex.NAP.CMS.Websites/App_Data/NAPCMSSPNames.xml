@@ -54,10 +54,16 @@
     <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
     <Setting Key="NAP_LimitLoss_ActionConfigSel" SpName="NAP_LimitLoss_ActionConfigSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
   </Function>
-  <Function Name="RobotMonitor">
+  <Function Name="ManageRobots">
     <Setting Key="NAP_CustomerSelRobotAccounts" SpName="NAP_CustomerSelRobotAccounts" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_CustomerUpdInfoRobotAccount" SpName="NAP_CustomerUpdInfoRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_CustomerInsRobotAccount" SpName="NAP_CustomerInsRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_CustomerUpdStatusRobotAccount" SpName="NAP_CustomerUpdStatusRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ManageSmartPunters">
+    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerUpdSmartPunter" SpName="NAP_CustomerUpdSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Nap_CustomerDelSmartPunter" SpName="Nap_CustomerDelSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
   </Function>
 </Functions>

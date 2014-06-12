@@ -20,9 +20,11 @@ namespace Fanex.NAP.CMS.Models.ManageSmartPunters
 
         public string Username { get; set; }
 
-        public string Nickname { get; set; }
+        public string Username2 { get; set; }
 
-        public byte StatusID { get; set; }
+        public bool Closed { get; set; }
+
+        public bool Reject { get; set; }
 
         public string Currency { get; set; }
 

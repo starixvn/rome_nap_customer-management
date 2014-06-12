@@ -20,7 +20,6 @@ Fanex.CMS.ManageSmartPunters = function () {
     };
     var parameters = {
         Username: null,
-        SiteID: null,
         Status: null,
         PageIndex: null,
         PageSize: null
@@ -29,7 +28,6 @@ Fanex.CMS.ManageSmartPunters = function () {
         spnNote: null,
         divFilterForm: null,
         txtUsername: null,
-        ddlSite: null,
         ddlStatus: null,
         btnSearch: null,
         btnAddSmartPunter: null,
@@ -42,7 +40,6 @@ Fanex.CMS.ManageSmartPunters = function () {
         divSmartPunterForm: null,
         hdnCustID: null,
         txtNewUsername: null,
-        ddlNewSite: null,
         txtRemark: null,
         btnSave: null,
         btnCancel: null
@@ -54,7 +51,6 @@ Fanex.CMS.ManageSmartPunters = function () {
         domElements.spnNote = $('#spnNote');
         domElements.divFilterForm = $('#divFilterForm');
         domElements.txtUsername = $('#txtUsername');
-        domElements.ddlSite = $('#ddlSite');
         domElements.ddlStatus = $('#ddlStatus');
         domElements.btnSearch = $('#btnSearch');
         domElements.btnAddSmartPunter = $('#btnAddSmartPunter');
@@ -71,7 +67,6 @@ Fanex.CMS.ManageSmartPunters = function () {
         popupElements.divSmartPunterForm = $('#divSmartPunterForm', domElements.divPopup);
         popupElements.hdnCustID = $('#hdnCustID', domElements.divPopup);
         popupElements.txtNewUsername = $('#txtNewUsername', domElements.divPopup);
-        popupElements.ddlNewSite = $('#ddlNewSite', domElements.divPopup);
         popupElements.txtRemark = $('#txtRemark', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
@@ -95,7 +90,6 @@ Fanex.CMS.ManageSmartPunters = function () {
 
                 if (errors === 0) {
                     parameters.Username = $.trim(domElements.txtUsername.val());
-                    parameters.Site = domElements.ddlSite.val();
                     parameters.Status = domElements.ddlStatus.val();
                     parameters.PageIndex = 1;
 
@@ -123,13 +117,10 @@ Fanex.CMS.ManageSmartPunters = function () {
             if (Validator.validateForm(popupElements.divSmartPunterForm, 'w')) {
                 var custID = popupElements.hdnCustID.val();
                 var username = $.trim(popupElements.txtNewUsername.val());
-                var siteID = parseInt(popupElements.ddlNewSite.val());
                 var remark = popupElements.txtRemark.val();
                 var params = {
-                    SiteID: siteID,
                     Remark: remark,
                     SearchedUsername: parameters.Username,
-                    SearchedSiteID: parameters.SiteID,
                     Status: parameters.Status,
                     PageIndex: parameters.PageIndex,
                     PageSize: parameters.PageSize
@@ -137,22 +128,16 @@ Fanex.CMS.ManageSmartPunters = function () {
 
                 if (isEdit) {
 
-                    if (editBackupData.SiteID !== siteID || editBackupData.Remark !== remark) {
+                    if (editBackupData.Remark !== remark) {
                         params.CustID = custID;
-                        disablePopupForm();
-                        //@@TODO: Update
+                        updateSmartPunter(params);
                     } else {
-                        if (editBackupData.SiteID === siteID) {
-                            Validator.showError(popupElements.ddlNewSite, messages.ThereIsNoChange, 'w');
-                        } else {
-                            Validator.showError(popupElements.txtRemark, messages.ThereIsNoChange, 'w');
-                        }
+                        Validator.showError(popupElements.txtRemark, messages.ThereIsNoChange, 'w');
                     }
                 } else {
                     popupElements.txtNewUsername.val(username);
                     params.Username = username;
-                    disablePopupForm();
-                    // @@TODO: Add new.
+                    addNewSmartPunter(params);
                 }
             }
         });
@@ -176,7 +161,6 @@ Fanex.CMS.ManageSmartPunters = function () {
             editBackupData = punter;
             popupElements.hdnCustID.val(punter.CustID);
             popupElements.txtNewUsername.val(punter.Username);
-            popupElements.ddlNewSite.val(punter.Site);
             popupElements.txtRemark.val(punter.Remark).focus();
             popupElements.txtNewUsername.prop('disabled', true);
         }
@@ -187,7 +171,6 @@ Fanex.CMS.ManageSmartPunters = function () {
     // Disable popup form.
     var disablePopupForm = function () {
         popupElements.txtNewUsername.prop('disabled', true);
-        popupElements.ddlNewSite.combobox('disable');
         popupElements.txtRemark.prop('disabled', true);
         popupElements.btnSave.prop('disabled', true);
         popupElements.btnCancel.prop('disabled', true);
@@ -240,7 +223,7 @@ Fanex.CMS.ManageSmartPunters = function () {
 
                 row = {
                     Columns: [{ Name: 'ColOrder', Value: index },
-                              { Name: 'ColUsername', Value: item.Username },
+                              { Name: 'ColUsername', Value: item.Username, CssClass: 'username-column' },
                               { Name: 'ColNickname', Value: item.Nickname },
                               { Name: 'ColStatus', Value: statusFormat.format(statusClass, item.Status) },
                               { Name: 'ColCurrency', Value: item.Currency },
@@ -287,16 +270,27 @@ Fanex.CMS.ManageSmartPunters = function () {
         domElements.divSmartPunterList.find('span.ico-edit').click(function () {
             var cell = $(this);
             var row = cell.closest('tr');
+            var usernameCell = row.find('div.username-column');
             var custID = cell.attr('data-cust-id');
-            var username = row.find('div.username-column').text();
             var remark = row.find('span.ico-remark').attr('original-title');
+            var username = usernameCell.attr('title');
+
+            username = username || usernameCell.text();
 
             displayPopupForm({
                 CustID: custID,
                 Username: username,
                 Remark: remark
             });
+        });
 
+        domElements.divSmartPunterList.find('span.ico-delete').click(function () {
+            var cell = $(this);
+            var custID = cell.attr('data-cust-id');
+
+            CMS.showConfirmMessage(messages.RemoveSmartPunterConfirmationMessage, function () {
+                removeSmartPunter(custID);
+            });
         });
     };
 
@@ -315,6 +309,104 @@ Fanex.CMS.ManageSmartPunters = function () {
                     Validator.showError(domElements.txtUsername, result.ErrorMsg, 'n');
                 } else {
                     renderSmartPunterList(result);
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    // Add new smart punter.
+    var addNewSmartPunter = function (addNewSmartPunterParameters) {
+        $.ajax({
+            type: 'POST',
+            url: urls.AddSmartPunter,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(addNewSmartPunterParameters),
+            beforeSend: function () {
+                CMS.disableInput();
+            },
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    CMS.showInlineSuccessMsg(messages.AddSmartPunterSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(CMS.closePopup, 3000);
+                    });
+                    disablePopupForm();
+                    renderSmartPunterList(result);
+                } else {
+                    CMS.showInlineErrorMsg(result.ErrorMsg, popupElements.divErrorSuccessMsg);
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    // Update smart punter information.
+    var updateSmartPunter = function (updateSmartPunterParameters) {
+        $.ajax({
+            type: 'POST',
+            url: urls.UpdateSmartPunter,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(updateSmartPunterParameters),
+            beforeSend: function () {
+                CMS.disableInput();
+            },
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    CMS.showInlineSuccessMsg(messages.UpdateSmartPunterSuccessfully, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(CMS.closePopup, 3000);
+                    });
+                    disablePopupForm();
+                    renderSmartPunterList(result);
+                } else {
+                    CMS.showInlineErrorMsg(result.ErrorMsg, popupElements.divErrorSuccessMsg);
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
+    };
+
+    // Delete smart punter information.
+    var removeSmartPunter = function (custID) {
+        var removeParameters = {
+            CustID: custID,
+            SearchedUsername: parameters.Username,
+            Status: parameters.Status,
+            PageIndex: parameters.PageIndex,
+            PageSize: parameters.PageSize
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: urls.RemoveSmartPunter,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            data: JSON.stringify(removeParameters),
+            beforeSend: function () {
+                CMS.disableInput();
+            },
+            success: function (result) {
+                if (result.ErrorCode === 0) {
+                    CMS.showSuccessMessage(messages.RemoveSmartPunterSuccessfully);
+                    renderSmartPunterList(result);
+                } else {
+                    CMS.showErrorMessage(result.ErrorMsg);
                 }
             },
             error: function (xhr) {

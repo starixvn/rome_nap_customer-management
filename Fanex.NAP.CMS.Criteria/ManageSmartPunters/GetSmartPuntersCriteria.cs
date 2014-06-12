@@ -18,9 +18,7 @@ namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
     {
         public string Username { get; set; }
 
-        public byte? Status { get; set; }
-
-        public int? SiteID { get; set; }
+        public byte Status { get; set; }
 
         public int PageIndex { get; set; }
 
@@ -34,7 +32,7 @@ namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
         /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_CustomerSelSmartPunters";
+            return "NAP_CustomerSelSmartPunter";
         }
 
         /// <summary>

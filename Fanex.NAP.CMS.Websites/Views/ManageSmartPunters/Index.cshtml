@@ -24,20 +24,14 @@
                 <label for="txtUsername">@ViewLang.Username/@ViewLang.Nickname</label>
             </div>
             <div class="edit-field col_7 align-left">
-                <input type="text" id="txtUsername" class="width-180" maxlength="4000" />
-            </div>
-            <div class="lbl-field col_2 align-right">
-                <label for="ddlSite">@ViewLang.Site</label>
-            </div>
-            <div class="edit-field col_8 align-left">
-                <select id="ddlSite" class="combobox-autocomplete site-combobox"></select>
+                <input type="text" id="txtUsername" class="width-180" maxlength="30" />
             </div>
             <div class="lbl-field col_2 align-right">
                 <label for="ddlStatus">@ViewLang.Status</label>
             </div>
             <div class="edit-field col_5 align-left">
                 <select id="ddlStatus" class="combobox-autocomplete status-combobox">
-                    <option value="null">@ViewLang.All</option>
+                    <option value="0">@ViewLang.All</option>
                     <option value="1">@ViewLang.Open</option>
                     <option value="2">@ViewLang.Suspended</option>
                     <option value="3">@ViewLang.Closed</option>
@@ -70,15 +64,7 @@
                 </div>
                 <div class="edit-field">
                     <input type="hidden" id="hdnCustID" />
-                    <input type="text" id="txtNewUsername" class="width-200" maxlength="4000" data-val-required="@Messages.RequiredFieldError" />
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="lbl-field">
-                    <label for="ddlNewSite">@ViewLang.Site</label>
-                </div>
-                <div class="edit-field">
-                    <select id="ddlNewSite" class="combobox-autocomplete site-combobox"></select>
+                    <input type="text" id="txtNewUsername" class="width-200" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
                 </div>
             </div>
             <div class="form-row">
@@ -126,6 +112,7 @@
             UpdateSmartPunterSuccessfully: '@Messages.UpdateSmartPunterSuccessfully',
             AddSmartPunterSuccessfully: '@Messages.AddSmartPunterSuccessfully',
             RemoveSmartPunterConfirmationMessage: '@Messages.RemoveSmartPunterConfirmationMessage',
+            RemoveSmartPunterSuccessfully: '@Messages.RemoveSmartPunterSuccessfully',
             ThereIsNoChange: '@Messages.ThereIsNoChange'
         };
         var hasEditRight = '@hasEditAccessRight' === 'True';

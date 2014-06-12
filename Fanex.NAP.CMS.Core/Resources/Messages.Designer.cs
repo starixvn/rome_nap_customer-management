@@ -412,6 +412,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The smart punter has been removed successfully!.
+        /// </summary>
+        public static string RemoveSmartPunterSuccessfully {
+            get {
+                return ResourceManager.GetString("RemoveSmartPunterSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This change will not affect to other exception cases.  Are you sure you want to remove it?.
         /// </summary>
         public static string RemoveTOExceptionConfirmMessage {

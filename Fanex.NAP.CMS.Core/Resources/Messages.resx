@@ -135,11 +135,11 @@
   <data name="AddRobotsSuccessfully" xml:space="preserve">
     <value>The robot(s) have been saved successfully!</value>
   </data>
-  <data name="AddSMATOSuccessfully" xml:space="preserve">
-    <value>The new SMA TO has been added successfully!</value>
-  </data>
   <data name="AddSmartPunterSuccessfully" xml:space="preserve">
     <value>The smart punter has been saved successfully!</value>
+  </data>
+  <data name="AddSMATOSuccessfully" xml:space="preserve">
+    <value>The new SMA TO has been added successfully!</value>
   </data>
   <data name="ChangedPassword" xml:space="preserve">
     <value>The password has been changed successfully!</value>
@@ -233,6 +233,9 @@
   </data>
   <data name="RemoveSmartPunterConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to REMOVE the selected smart punter?</value>
+  </data>
+  <data name="RemoveSmartPunterSuccessfully" xml:space="preserve">
+    <value>The smart punter has been removed successfully!</value>
   </data>
   <data name="RemoveTOExceptionConfirmMessage" xml:space="preserve">
     <value>This change will not affect to other exception cases.  Are you sure you want to remove it?</value>

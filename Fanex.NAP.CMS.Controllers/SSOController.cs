@@ -187,6 +187,10 @@ namespace Fanex.NAP.CMS.Controllers
                 {
                     SessionManager.Set<bool>("IsAccountingLogin", true);
                 }
+                else
+                {
+                    redirectUrl = "~/LossMonitor";
+                }
 
                 return this.Redirect(redirectUrl);
             }

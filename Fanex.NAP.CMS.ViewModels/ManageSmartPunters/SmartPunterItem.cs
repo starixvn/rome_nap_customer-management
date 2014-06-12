@@ -26,11 +26,11 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
             {
                 this.CustID = rawData.CustID;
                 this.Username = rawData.Username;
-                this.Nickname = rawData.Nickname;
+                this.Nickname = rawData.Username2;
                 this.Super = rawData.Super;
                 this.Master = rawData.Master;
                 this.Agent = rawData.Agent;
-                this.Status = ConvertStatus(rawData.StatusID);
+                this.Status = ConvertStatus(rawData.Reject, rawData.Closed);
                 this.Currency = rawData.Currency;
                 this.Site = rawData.Site;
                 this.AddedBy = rawData.Creator;
@@ -66,28 +66,24 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
         /// <summary>
         /// Converts the status ID to status name.
         /// </summary>
-        /// <param name="statusID">The status identifier.</param>
+        /// <param name="reject">The suspended status.</param>
+        /// <param name="closed">The closed status.</param>
         /// <returns>The status name.</returns>
-        private string ConvertStatus(byte? statusID)
+        private string ConvertStatus(bool reject, bool closed)
         {
             var status = string.Empty;
 
-            if (statusID.HasValue)
+            if (closed)
             {
-                switch (statusID)
-                {
-                    case 0:
-                        status = ViewLang.Open;
-                        break;
-
-                    case 1:
-                        status = ViewLang.Suspended;
-                        break;
-
-                    case 2:
-                        status = ViewLang.Closed;
-                        break;
-                }
+                status = ViewLang.Closed;
+            }
+            else if (reject)
+            {
+                status = ViewLang.Suspended;
+            }
+            else
+            {
+                status = ViewLang.Open;
             }
 
             return status;

@@ -9,11 +9,9 @@
 
 namespace Fanex.NAP.CMS.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.NAP.CMS.Criteria.ManageSmartPunters;
-    using Fanex.NAP.CMS.Models.ManageSmartPunters;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
@@ -55,46 +53,76 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">The criteria that are used to queried data.</param>
         /// <returns>Smart punter list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageRobots, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public JsonResult GetSmartPunterList(GetSmartPuntersCriteria criteria)
         {
             IEnumerable<SmartPunterItem> result = null;
 
             criteria.Username = criteria.Username ?? string.Empty;
-            result = this.GenerateTestingData();
+            result = this._manageSmartPuntersService.GetSmartPunters(criteria);
 
             return Json(new
             {
                 SmartPunters = result,
-                TotalItem = 1
+                TotalItems = criteria.TotalItems
             });
         }
 
         /// <summary>
-        /// Generates the testing data.
+        /// Adds new smart punter and gets up-to-date smart punter list.
         /// </summary>
-        /// <returns>List of SmartPunterItem object.</returns>
-        private IEnumerable<SmartPunterItem> GenerateTestingData()
+        /// <param name="filter">Filter conditions.</param>
+        /// <returns>Smart punter list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
+        public JsonResult AddSmartPunter(AddSmartPunterFilter filter)
         {
-            List<SmartPunterItem> data = new List<SmartPunterItem>();
+            UpdatingSmartPunterResult smartPunters = null;
 
-            data.Add(new SmartPunterItem(new SmartPunterInfo
-                {
-                    CustID = 1,
-                    Username = "Test",
-                    Nickname = "test",
-                    StatusID = 1,
-                    Currency = "UUS",
-                    Site = "12Bet",
-                    Super = "Supertest",
-                    Master = "MasterTest",
-                    Agent = "Agenttest",
-                    Creator = "sa",
-                    CreateDate = DateTime.Now,
-                    Remark = "JS Test"
-                }));
+            filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
+            filter.UserID = this.CurrentSession.UserId;
+            filter.IP = this.CurrentContext.IP;
+            smartPunters = this._manageSmartPuntersService.AddSmartPunter(filter);
 
-            return data;
+            return Json(smartPunters);
+        }
+
+        /// <summary>
+        /// Updates smart punter and gets up-to-date smart punter list.
+        /// </summary>
+        /// <param name="filter">Filter conditions.</param>
+        /// <returns>Smart punter list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
+        public JsonResult UpdateSmartPunter(UpdateSmartPunterFilter filter)
+        {
+            UpdatingSmartPunterResult smartPunters = new UpdatingSmartPunterResult();
+
+            filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
+            filter.UserID = this.CurrentSession.UserId;
+            filter.IP = this.CurrentContext.IP;
+            smartPunters = this._manageSmartPuntersService.UpdateSmartPunter(filter);
+
+            return Json(smartPunters);
+        }
+
+        /// <summary>
+        /// Deletes an existing smart punter and gets up-to-date smart punter list.
+        /// </summary>
+        /// <param name="filter">Filter conditions.</param>
+        /// <returns>Smart punter list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
+        public JsonResult RemoveSmartPunter(DeleteSmartPunterFilter filter)
+        {
+            UpdatingSmartPunterResult smartPunters = new UpdatingSmartPunterResult();
+
+            filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
+            filter.UserID = this.CurrentSession.UserId;
+            filter.IP = this.CurrentContext.IP;
+            smartPunters = this._manageSmartPuntersService.DeleteSmartPunter(filter);
+
+            return Json(smartPunters);
         }
     }
 }

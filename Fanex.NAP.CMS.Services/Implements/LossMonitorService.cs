@@ -57,6 +57,8 @@ namespace Fanex.NAP.CMS.Services.Implements
                         result.Add(lossGroup);
                     }
                 }
+
+                result = result.OrderByDescending(obj => obj.LossLevel).ToList();
             }
 
             return result;

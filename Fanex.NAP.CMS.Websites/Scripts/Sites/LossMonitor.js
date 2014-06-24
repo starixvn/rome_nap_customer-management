@@ -59,15 +59,21 @@ Fanex.CMS.LossMonitor = function () {
 
     // Render grid.
     var renderGrid = function (data) {
+        var smaNameFormat = '<span class="{0} level-indicator"></span><span>{1}</span>';
         var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
+        var smaNameCol = '';
         var percentageCol = '';
+        var smaCssClass = '';
 
         var counter = 0;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
-                      { HeaderText: labels.SMAName, Width: 200, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Currency, Width: 70, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.YesterdayBalance, Width: 150, Name: 'ColYesterdayBalance', HeaderAlign: 'center', CellAlign: 'right',
+                          FormatNumber: CMS.formats.DecimalFormat
+                      },
                       { HeaderText: labels.TotalBalance, Width: 150, Name: 'ColTotalBalance', HeaderAlign: 'center', CellAlign: 'right',
                           FormatNumber: CMS.formats.DecimalFormat
                       },
@@ -93,13 +99,24 @@ Fanex.CMS.LossMonitor = function () {
                 subRows = [];
 
                 $.each(group.SMALossItems, function (index, item) {
+                    if (item.ChangedLevel > 0) {
+                        smaCssClass = 'ico-upward-arrow';
+                    } else if (item.ChangedLevel < 0) {
+                        smaCssClass = 'ico-downward-arrow';
+                    } else {
+                        smaCssClass = 'ico-horizontal-line';
+                    }
+
                     counter++;
+                    smaNameCol = smaNameFormat.format(smaCssClass, item.Username);
                     percentageCol = progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat));
+
                     row = {
                         Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
-                                  { Name: 'ColSMAName', Value: item.Username },
+                                  { Name: 'ColSMAName', Value: smaNameCol },
                                   { Name: 'ColLevel', Value: item.Level },
                                   { Name: 'ColCurrency', Value: item.Currency },
+                                  { Name: 'ColYesterdayBalance', Value: item.YesterdayBalance },
                                   { Name: 'ColTotalBalance', Value: item.TotalBalance },
                                   { Name: 'ColMaxLoss', Value: item.MaxLoss },
                                   { Name: 'ColLossPercentage', Value: percentageCol}]
@@ -112,7 +129,7 @@ Fanex.CMS.LossMonitor = function () {
                         Name: 'ColNo',
                         Value: '{0} ({1})'.format(group.LossLevelRange, group.SMALossItems.length),
                         CellAlign: 'left',
-                        MergeColNumber: 7
+                        MergeColNumber: 8
                     }],
                     SubRows: subRows,
                     CssClass: 'loss-level-' + group.LossLevel

@@ -27,9 +27,11 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
                 this.Username = rawData.Username;
                 this.Level = CacheRef.GetLevel(rawData.RoleID);
                 this.Currency = rawData.Currency;
+                this.YesterdayBalance = Converter.ToDecimal(rawData.YesterdayBalance);
                 this.TotalBalance = Converter.ToDecimal(rawData.TotalBalance);
                 this.MaxLoss = Converter.ToDecimal(rawData.MaxLoss);
                 this.LossPercentage = Converter.ToInt(rawData.PercentageLoss);
+                this.ChangedLevel = Converter.ToInt(rawData.Movement);
             }
         }
 
@@ -39,6 +41,8 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 
         public string Currency { get; set; }
 
+        public decimal YesterdayBalance { get; set; }
+
         public decimal TotalBalance { get; set; }
 
         public decimal MaxLoss { get; set; }
@@ -46,5 +50,7 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
         public int LossPercentage { get; set; }
 
         public int PercentageUsed { get; set; }
+
+        public int ChangedLevel { get; set; }
     }
 }

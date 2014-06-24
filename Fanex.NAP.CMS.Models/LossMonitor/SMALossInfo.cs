@@ -22,10 +22,14 @@ namespace Fanex.NAP.CMS.Models.LossMonitor
 
         public string Currency { get; set; }
 
+        public decimal? YesterdayBalance { get; set; }
+
         public decimal? TotalBalance { get; set; }
 
         public decimal? MaxLoss { get; set; }
 
         public int? PercentageLoss { get; set; }
+
+        public int? Movement { get; set; }
     }
 }

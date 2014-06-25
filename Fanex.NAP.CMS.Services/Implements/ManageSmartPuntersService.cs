@@ -203,7 +203,6 @@ namespace Fanex.NAP.CMS.Services.Implements
         {
             GettingSmartPunterLogsResult logResult = new GettingSmartPunterLogsResult();
             IEnumerable<SmartPunterLogInfo> rawLogs = null;
-            GetSmartPunterLogsCriteria gettingLogsCriteria = null;
             GetCustIDByUsernameNicknameCriteria gettingCustIDCriteria = new GetCustIDByUsernameNicknameCriteria
             {
                 Username = filter.Username
@@ -212,15 +211,8 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             if (custID > 0)
             {
-                gettingLogsCriteria = new GetSmartPunterLogsCriteria
-                {
-                    CustId = custID,
-                    FromDate = filter.FromDate,
-                    ToDate = filter.ToDate,
-                    PageIndex = filter.PageIndex,
-                    PageSize = filter.PageSize
-                };
-                rawLogs = this.GetData<SmartPunterLogInfo>(gettingLogsCriteria);
+                rawLogs = QuerySmartPunterLogs(filter, custID);
+                logResult.TotalItems = QueryTotalItems(filter, custID);
 
                 if (rawLogs != null && rawLogs.Any())
                 {
@@ -244,6 +236,46 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
 
             return logResult;
+        }
+
+        /// <summary>
+        /// Queries the number of smart punters that satisfy the filter.
+        /// </summary>
+        /// <param name="filter">The filter conditions.</param>
+        /// <param name="custID">The customer identifier.</param>
+        /// <returns>Number of smart punters that satisfy the filter.</returns>
+        private int QueryTotalItems(GetSmartPunterLogsFilter filter, int custID)
+        {
+            var criteria = new GetTotalSmartPunterLogsCriteria
+            {
+                CustId = custID,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate
+            };
+            int totalItems = this.GetItem<int>(criteria);
+
+            return totalItems;
+        }
+
+        /// <summary>
+        /// Queries the smart punter logs.
+        /// </summary>
+        /// <param name="filter">The filter conditions.</param>
+        /// <param name="custID">The customer identifier.</param>
+        /// <returns>List of SmartPunterLogItem items.</returns>
+        private IEnumerable<SmartPunterLogInfo> QuerySmartPunterLogs(GetSmartPunterLogsFilter filter, int custID)
+        {
+            var criteria = new GetSmartPunterLogsCriteria
+            {
+                CustId = custID,
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize
+            };
+            IEnumerable<SmartPunterLogInfo> rawLogs = this.GetData<SmartPunterLogInfo>(criteria);
+
+            return rawLogs;
         }
 
         /// <summary>

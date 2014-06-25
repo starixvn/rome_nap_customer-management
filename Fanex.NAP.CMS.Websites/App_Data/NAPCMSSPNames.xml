@@ -66,6 +66,7 @@
     <Setting Key="NAP_CustomerUpdSmartPunter" SpName="NAP_CustomerUpdSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Nap_CustomerDelSmartPunter" SpName="Nap_CustomerDelSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="Acc_UserLog_RunSPSel" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+    <Setting Key="Acc_UserLog_RunSPSelTotalRecords" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
     <Setting Key="Nap_CustomerSelIDByUserNameNickName" SpName="Nap_CustomerSelIDByUserNameNickName" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
   </Function>
 </Functions>

@@ -110,6 +110,7 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
 
         var bodyData = [];
         var columns = [];
+        var row = null;
         var gridOptions = {
             showDistinctRow: false,
             showPager: true,
@@ -117,12 +118,13 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
             pagerOption: {
                 itemsPerPage: parameters.PageSize,
                 currentPage: parameters.PageIndex,
-                //totalItem: data.TotalItems,
+                totalItem: data.TotalItems,
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: handleChangingPage
             },
             gridExpandHeight: 200
         };
+        var detail = '';
 
         columns = [{ HeaderText: labels.LogID, Width: 80, Name: 'ColLogID', HeaderAlign: 'center', CellAlign: 'center' },
                    { HeaderText: labels.LogDate, Width: 80, Name: 'ColLogDate', HeaderAlign: 'center', CellAlign: 'center' },
@@ -132,12 +134,14 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
 
         if (data && data.Logs.length > 0) {
             $.each(data.Logs, function (index, item) {
-                var row = {
+                detail = fillLogDetail(item);
+
+                row = {
                     Columns: [{ Name: 'ColLogID', Value: item.LogID },
                               { Name: 'ColLogDate', Value: item.LogDate },
                               { Name: 'ColEditedBy', Value: editColumn.format(item.EditedBy, item.UserID) },
                               { Name: 'ColAction', Value: actionColumn.format(item.Action, item.SPName) },
-                              { Name: 'ColDetails', Value: domElements.divDetailTemplate}]
+                              { Name: 'ColDetails', Value: detail, TdClass: 'detail-column'}]
                 };
 
                 bodyData.push(row);
@@ -156,6 +160,31 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
         getSmartPuntersLogList();
     };
 
+    // Fill log detail to the template.
+    var fillLogDetail = function (data) {
+        var remarkTemplate = '<span class="remark {0}">{1}</span>';
+        var empty = '---';
+        var detail = '';
+        var remark = '';
+
+        if (data.Detail.OldRemark) {
+            remark += remarkTemplate.format('new-remark', data.Detail.NewRemark || empty);
+            remark += remarkTemplate.format('', data.Detail.OldRemark);
+        } else {
+            remark += remarkTemplate.format('', data.Detail.NewRemark || empty);
+        }
+
+        detail = domElements.divDetailTemplate.format(
+                                                   data.Action,
+                                                   data.Detail.CustID,
+                                                   remark,
+                                                   data.Detail.IP || empty,
+                                                   data.Detail.ErrCode > 0 ? data.Detail.ErrCode : empty,
+                                                   data.Detail.ErrMsg || empty);
+
+        return detail;
+    };
+
     // Reset date pickers.
     var resetDatepikers = function () {
         domElements.dpkFromDate.datepicker('option', 'maxDate', datepickerSetting.Today);
@@ -170,6 +199,7 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
     $this.ResetForm = function () {
         resetDatepikers();
         domElements.txtLogUsername.val('');
+        Validator.clearError(domElements.txtLogUsername);
     };
 
     $this.InitPage = function () {

@@ -138,7 +138,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public JsonResult GetSmartPunterLogs(GetSmartPunterLogsFilter filter)
         {
-            GettingSmartPunterLogsResult result = this._manageSmartPuntersService.GetSmartPunterLogs(filter);
+            GettingSmartPunterLogsResult result = null;
+
+            filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);
+            result = this._manageSmartPuntersService.GetSmartPunterLogs(filter);
 
             return Json(result);
         }

@@ -76,29 +76,25 @@
     <div id="divSmartPunterLogList" class="freegrid"></div>
 </div>
 <div id="divDetailTemplate" class="display-none">
-    <table>
-        <tbody>
-            <tr>
-                <td colspan="8">{0}</td>
-            </tr>
-            <tr>
-                <td>CustID</td>
-                <td>{1}</td>
-                <td>Remark</td>
-                <td>{2}</td>
-                <td>IP</td>
-                <td>{3}</td>
-            </tr>
-            <tr>
-                <td>ErrCode</td>
-                <td>{4}</td>
-                <td>ErrMsg</td>
-                <td>{5}</td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="detail-title">{0}</div>
+    <div class="detail-table">
+        <div class="row">
+            <div class="detail-label first-cell">CustID</div>
+            <div class="cust-cell">{1}</div>
+            <div class="detail-label">@ViewLang.Remark</div>
+            <div class="remark-cell">{2}</div>
+            <div class="detail-label">@ViewLang.IP</div>
+            <div class="ip-cell">{3}</div>
+        </div>
+        <div class="row last-row">
+            <div class="detail-label first-cell">ErrCode</div>
+            <div class="cust-cell">{4}</div>
+            <div class="detail-label">ErrMsg</div>
+            <div class="remark-cell">{5}</div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 </div>
 @if (hasEditAccessRight)
 {

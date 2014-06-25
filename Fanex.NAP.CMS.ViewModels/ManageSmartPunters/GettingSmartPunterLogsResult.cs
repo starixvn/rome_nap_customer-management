@@ -25,6 +25,8 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 
         public List<SmartPunterLogItem> Logs { get; set; }
 
+        public int TotalItems { get; set; }
+
         public int ErrorCode { get; set; }
 
         public string ErrorMsg { get; set; }

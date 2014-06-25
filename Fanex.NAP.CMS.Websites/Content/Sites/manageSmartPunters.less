@@ -75,5 +75,66 @@
             display: inline-block;
             width: 100%;
         }
+
+        .detail-column {
+            padding: 0;
+
+            .detail-title {
+                background-color: #EDECEA;
+                color: #db2c2c;
+                height: 22px;
+                padding: 2px;
+                line-height: 20px;
+            }
+
+            div.detail-table {
+                display: table;
+                width: 654px;
+
+                div.row {
+                    display: table-row;
+
+                    div {
+                        display: table-cell;
+                        height: 22px;
+                        vertical-align: middle;
+                        padding: 2px;
+                        border-left: 1px solid #C1C1C1;
+                        border-top: 1px solid #C1C1C1;
+
+                        &.detail-label {
+                            background-color: #F1F1F1;
+                            width: 50px;
+
+                            &.first-cell {
+                                border-left: none;
+                            }
+                        }
+
+                        &.cust-cell {
+                            width: 100px;
+                            text-align: center;
+                        }
+
+                        &.remark-cell {
+                            width: 280px;
+
+                            .remark {
+                                display: inline-block;
+                                width: 100%;
+
+                                &.new-remark {
+                                    color: #db2c2c;
+                                }
+                            }
+                        }
+
+                        &.ip-cell {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

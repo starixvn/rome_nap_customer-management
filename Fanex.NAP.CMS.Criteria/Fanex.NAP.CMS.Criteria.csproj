@@ -87,6 +87,7 @@
     <Compile Include="ManageSmartPunters\GetCustIDByUsernameNicknameCriteria.cs" />
     <Compile Include="ManageSmartPunters\GetSmartPuntersCriteria.cs" />
     <Compile Include="ManageSmartPunters\GetSmartPunterLogsCriteria.cs" />
+    <Compile Include="ManageSmartPunters\GetTotalSmartPunterLogsCriteria.cs" />
     <Compile Include="ManageSmartPunters\InsertSmartPunterCriteria.cs" />
     <Compile Include="ManageSmartPunters\UpdateSmartPunterCriteria.cs" />
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />

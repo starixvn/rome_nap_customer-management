@@ -3,14 +3,8 @@
 
 'use strict';
 
-$(document).ready(function () {
-    var manageSmartPunters = new Fanex.CMS.ManageSmartPunters();
-
-    manageSmartPunters.InitPage();
-});
-
-Namespace.Register("Fanex.CMS.ManageSmartPunters");
-Fanex.CMS.ManageSmartPunters = function () {
+Namespace.Register("Fanex.CMS.ManageSmartPunters.ManageSmartPunters");
+Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
     var $this = this;
     var urls = {
         GetSmartPunterList: CMS.resolveRootUrl('ManageSmartPunters/GetSmartPunterList'),
@@ -25,7 +19,6 @@ Fanex.CMS.ManageSmartPunters = function () {
         PageSize: null
     };
     var domElements = {
-        spnNote: null,
         divFilterForm: null,
         txtUsername: null,
         ddlStatus: null,
@@ -48,7 +41,6 @@ Fanex.CMS.ManageSmartPunters = function () {
 
     // Cache DOM elements
     var cacheDOM = function () {
-        domElements.spnNote = $('#spnNote');
         domElements.divFilterForm = $('#divFilterForm');
         domElements.txtUsername = $('#txtUsername');
         domElements.ddlStatus = $('#ddlStatus');
@@ -102,12 +94,6 @@ Fanex.CMS.ManageSmartPunters = function () {
 
         domElements.btnAddSmartPunter.on('click', function () {
             displayPopupForm();
-        });
-
-        domElements.spnNote.tipsy({
-            html: true,
-            opacity: 0.9,
-            gravity: 'ne'
         });
     };
 
@@ -416,6 +402,11 @@ Fanex.CMS.ManageSmartPunters = function () {
                 CMS.enableInput();
             }
         });
+    };
+
+    $this.ResetForm = function () {
+        domElements.txtUsername.val('');
+        domElements.ddlStatus.val(0).combobox('refresh');
     };
 
     $this.InitPage = function () {

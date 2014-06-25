@@ -12,9 +12,14 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Xml.Linq;
+    using Fanex.Common;
     using Fanex.NAP.CMS.Core.Constants;
+    using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Criteria.ManageSmartPunters;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
+    using Fanex.NAP.CMS.Repositories.Implements;
+    using Fanex.NAP.CMS.Repositories.Interfaces;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
     using Fanex.NAP.Framework.Command;
@@ -24,6 +29,20 @@ namespace Fanex.NAP.CMS.Services.Implements
     /// </summary>
     public class ManageSmartPuntersService : CMSBaseService, IManageSmartPuntersService
     {
+        private const int InvalidUsernameErrorCode = 100;
+
+        private readonly IManageSmartPuntersRepository _manageSmartPuntersRepository;
+
+        public ManageSmartPuntersService() :
+            this(null)
+        {
+        }
+
+        public ManageSmartPuntersService(IManageSmartPuntersRepository manageSmartPuntersRepository)
+        {
+            this._manageSmartPuntersRepository = manageSmartPuntersRepository ?? new ManageSmartPuntersRepository();
+        }
+
         /// <summary>
         /// Gets the smart punter list.
         /// </summary>
@@ -173,6 +192,107 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
 
             return smartPunters;
+        }
+
+        /// <summary>
+        /// Gets the smart punter logs.
+        /// </summary>
+        /// <param name="filter">The filter object that is used to get logs related to a specific smart punter.</param>
+        /// <returns>List of SmartPunterLogItem items.</returns>
+        public GettingSmartPunterLogsResult GetSmartPunterLogs(GetSmartPunterLogsFilter filter)
+        {
+            GettingSmartPunterLogsResult logResult = new GettingSmartPunterLogsResult();
+            IEnumerable<SmartPunterLogInfo> rawLogs = null;
+            GetSmartPunterLogsCriteria gettingLogsCriteria = null;
+            GetCustIDByUsernameNicknameCriteria gettingCustIDCriteria = new GetCustIDByUsernameNicknameCriteria
+            {
+                Username = filter.Username
+            };
+            int custID = this._manageSmartPuntersRepository.GetCustIDByUsernameNickname(gettingCustIDCriteria);
+
+            if (custID > 0)
+            {
+                gettingLogsCriteria = new GetSmartPunterLogsCriteria
+                {
+                    CustId = custID,
+                    FromDate = filter.FromDate,
+                    ToDate = filter.ToDate,
+                    PageIndex = filter.PageIndex,
+                    PageSize = filter.PageSize
+                };
+                rawLogs = this.GetData<SmartPunterLogInfo>(gettingLogsCriteria);
+
+                if (rawLogs != null && rawLogs.Any())
+                {
+                    SmartPunterDetailLogInfo detail = null;
+                    SmartPunterDetailLogInfo oldDetail = null;
+                    SmartPunterLogItem logItem = null;
+
+                    foreach (SmartPunterLogInfo rawLog in rawLogs)
+                    {
+                        detail = ConvertTrackingValue(rawLog.TrackingValue);
+                        oldDetail = ConvertTrackingValue(rawLog.TrackingValueOld);
+                        logItem = new SmartPunterLogItem(rawLog, detail, oldDetail);
+                        logResult.Logs.Add(logItem);
+                    }
+                }
+            }
+            else
+            {
+                logResult.ErrorCode = InvalidUsernameErrorCode;
+                logResult.ErrorMsg = Messages.InvalidUsername;
+            }
+
+            return logResult;
+        }
+
+        /// <summary>
+        /// Converts the tracking value into SmartPunterDetailLogInfo object.
+        /// </summary>
+        /// <param name="trackingValue">The tracking value.</param>
+        /// <returns>SmartPunterDetailLogInfo object.</returns>
+        private SmartPunterDetailLogInfo ConvertTrackingValue(string trackingValue)
+        {
+            SmartPunterDetailLogInfo detail = null;
+
+            if (!string.IsNullOrEmpty(trackingValue))
+            {
+                XElement trackingElement = XElement.Parse(trackingValue);
+
+                if (trackingElement.HasAttributes)
+                {
+                    IEnumerable<XAttribute> attributes = trackingElement.Attributes();
+
+                    detail = new SmartPunterDetailLogInfo();
+                    foreach (XAttribute attribute in attributes)
+                    {
+                        switch (attribute.Name.LocalName)
+                        {
+                            case "CustID":
+                                detail.CustID = Converter.ToInt(attribute.Value);
+                                break;
+
+                            case "Remark":
+                                detail.Remark = attribute.Value;
+                                break;
+
+                            case "ErrCode":
+                                detail.ErrCode = !string.IsNullOrEmpty(attribute.Value) ? Converter.ToInt(attribute.Value) : detail.ErrCode;
+                                break;
+
+                            case "ErrMsg":
+                                detail.ErrMsg = attribute.Value;
+                                break;
+
+                            case "IP":
+                                detail.IP = attribute.Value;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            return detail;
         }
     }
 }

@@ -42,5 +42,12 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// <param name="filter">The filter that contains the data of an existing smart punter.</param>
         /// <returns>UpdatingSmartPunterResult object.</returns>
         UpdatingSmartPunterResult DeleteSmartPunter(DeleteSmartPunterFilter filter);
+
+        /// <summary>
+        /// Gets the smart punter logs.
+        /// </summary>
+        /// <param name="filter">The filter object that is used to get logs related to a specific smart punter.</param>
+        /// <returns>List of SmartPunterLogItem items.</returns>
+        GettingSmartPunterLogsResult GetSmartPunterLogs(GetSmartPunterLogsFilter filter);
     }
 }

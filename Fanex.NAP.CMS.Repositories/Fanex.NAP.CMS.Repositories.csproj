@@ -62,8 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Implements\ManageRobotsRepository.cs" />
+    <Compile Include="Implements\ManageSmartPuntersRepository.cs" />
     <Compile Include="Implements\OpenCloseMemberRepository.cs" />
     <Compile Include="Interfaces\IManageRobotsRepository.cs" />
+    <Compile Include="Interfaces\IManageSmartPuntersRepository.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

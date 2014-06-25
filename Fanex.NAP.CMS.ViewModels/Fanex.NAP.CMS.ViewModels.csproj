@@ -84,6 +84,10 @@
     <Compile Include="ManageRobots\UpdateRobotStatusFilter.cs" />
     <Compile Include="ManageSmartPunters\AddSmartPunterFilter.cs" />
     <Compile Include="ManageSmartPunters\DeleteSmartPunterFilter.cs" />
+    <Compile Include="ManageSmartPunters\GetSmartPunterLogsFilter.cs" />
+    <Compile Include="ManageSmartPunters\GettingSmartPunterLogsResult.cs" />
+    <Compile Include="ManageSmartPunters\SmartPunterDetailLogItem.cs" />
+    <Compile Include="ManageSmartPunters\SmartPunterLogItem.cs" />
     <Compile Include="ManageSmartPunters\UpdateSmartPunterFilter.cs" />
     <Compile Include="ManageSmartPunters\UpdatingSmartPunterResult.cs" />
     <Compile Include="ManageSmartPunters\SmartPunterItem.cs" />

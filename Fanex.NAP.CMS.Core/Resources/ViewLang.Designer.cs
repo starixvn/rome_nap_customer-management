@@ -403,11 +403,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edited By.
+        /// </summary>
+        public static string EditedBy {
+            get {
+                return ResourceManager.GetString("EditedBy", resourceCulture);
             }
         }
         
@@ -588,6 +606,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string LiveEvents {
             get {
                 return ResourceManager.GetString("LiveEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Date.
+        /// </summary>
+        public static string LogDate {
+            get {
+                return ResourceManager.GetString("LogDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log ID.
+        /// </summary>
+        public static string LogID {
+            get {
+                return ResourceManager.GetString("LogID", resourceCulture);
             }
         }
         
@@ -1128,6 +1164,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Yankee {
             get {
                 return ResourceManager.GetString("Yankee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yesterday Balance.
+        /// </summary>
+        public static string YesterdayBalance {
+            get {
+                return ResourceManager.GetString("YesterdayBalance", resourceCulture);
             }
         }
     }

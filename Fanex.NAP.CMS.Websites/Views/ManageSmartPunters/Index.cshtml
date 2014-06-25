@@ -17,19 +17,23 @@
     </div>
 }
 <div class="filter-bar">
-    <span id="spnNote" class="note-info-message" title="@Messages.ManageSmartPunterNote"></span>
+    <div class="tabs-area">
+        <div id="divFilterFormTag" class="tab first active">@ViewLang.ManageSmartPunters</div>
+        <div id="divLogFormTag" class="tab">Smart Punter Control Log</div>
+        <span id="spnNote" class="note-info-message" title="@Messages.ManageSmartPunterNote"></span>
+    </div>
     <div id="divFilterForm" class="filter-form">
         <div class="filter-row">
-            <div class="lbl-field col_5 align-right">
+            <div class="lbl-field col_5">
                 <label for="txtUsername">@ViewLang.Username/@ViewLang.Nickname</label>
             </div>
-            <div class="edit-field col_7 align-left">
-                <input type="text" id="txtUsername" class="width-180" maxlength="30" />
+            <div class="edit-field col_7">
+                <input type="text" id="txtUsername" class="width-170" maxlength="30" />
             </div>
-            <div class="lbl-field col_2 align-right">
+            <div class="lbl-field col_2">
                 <label for="ddlStatus">@ViewLang.Status</label>
             </div>
-            <div class="edit-field col_5 align-left">
+            <div class="edit-field col_5">
                 <select id="ddlStatus" class="combobox-autocomplete status-combobox">
                     <option value="0">@ViewLang.All</option>
                     <option value="1">@ViewLang.Open</option>
@@ -49,9 +53,52 @@
         </div>
         <div class="filter-row"></div>
     </div>
+    <div id="divLogForm" class="filter-form display-none">
+        <div class="filter-row">
+            <div id="divDatepickerPlugin"></div>
+            <div class="lbl-field col_5">
+                <label for="txtLogUsername">@ViewLang.Username/@ViewLang.Nickname</label>
+            </div>
+            <div class="edit-field col_7">
+                <input type="text" id="txtLogUsername" class="width-170" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btnLogSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    </div>
 </div>
-<div class="display-none content-grid">
+<div id="divSmartPunterListContainer" class="display-none content-grid">
     <div id="divSmartPunterList" class="freegrid"></div>
+</div>
+<div id="divSmartPunterLogListContainer" class="display-none log-list content-grid">
+    <div id="divSmartPunterLogList" class="freegrid"></div>
+</div>
+<div id="divDetailTemplate" class="display-none">
+    <table>
+        <tbody>
+            <tr>
+                <td colspan="8">{0}</td>
+            </tr>
+            <tr>
+                <td>CustID</td>
+                <td>{1}</td>
+                <td>Remark</td>
+                <td>{2}</td>
+                <td>IP</td>
+                <td>{3}</td>
+            </tr>
+            <tr>
+                <td>ErrCode</td>
+                <td>{4}</td>
+                <td>ErrMsg</td>
+                <td>{5}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 @if (hasEditAccessRight)
 {
@@ -105,7 +152,14 @@
             Edit: '@ViewLang.Edit',
             Remove: '@ViewLang.Remove',
             AddSmartPunter: '@ViewLang.AddSmartPunter',
-            EditSmartPunter: '@ViewLang.EditSmartPunter'
+            EditSmartPunter: '@ViewLang.EditSmartPunter',
+            FromDate: '@ViewLang.FromDate',
+            ToDate: '@ViewLang.ToDate',
+            LogID: '@ViewLang.LogID',
+            LogDate: '@ViewLang.LogDate',
+            EditedBy: '@ViewLang.EditedBy',
+            Action: '@ViewLang.Action',
+            Details: '@ViewLang.Details'
         };
         var messages = {
             InvalidValueError: '@Messages.InvalidValueError',
@@ -114,6 +168,10 @@
             RemoveSmartPunterConfirmationMessage: '@Messages.RemoveSmartPunterConfirmationMessage',
             RemoveSmartPunterSuccessfully: '@Messages.RemoveSmartPunterSuccessfully',
             ThereIsNoChange: '@Messages.ThereIsNoChange'
+        };
+        var datepickerSetting = {
+            MinDate: '@(((DateTime)ViewBag.MinDate).ToShortFormatedDate())',
+            Today: '@DateTime.Today.ToShortFormatedDate()'
         };
         var hasEditRight = '@hasEditAccessRight' === 'True';
     </script>

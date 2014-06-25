@@ -165,7 +165,7 @@
   <data name="DeleteRequestSuccessfully" xml:space="preserve">
     <value>The request was deleted successfully!</value>
   </data>
-  <data name="ExistingUserNameError" xml:space="preserve">
+  <data name="ExistingUsernameError" xml:space="preserve">
     <value>Username is already exists!</value>
   </data>
   <data name="InternalError" xml:space="preserve">
@@ -180,7 +180,7 @@
   <data name="InvalidIPError" xml:space="preserve">
     <value>Invalid IP address!</value>
   </data>
-  <data name="InvalidUserName" xml:space="preserve">
+  <data name="InvalidUsername" xml:space="preserve">
     <value>Invalid username!</value>
   </data>
   <data name="InvalidValueError" xml:space="preserve">

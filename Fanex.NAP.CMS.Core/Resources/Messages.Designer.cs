@@ -207,9 +207,9 @@ namespace Fanex.NAP.CMS.Core.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Username is already exists!.
         /// </summary>
-        public static string ExistingUserNameError {
+        public static string ExistingUsernameError {
             get {
-                return ResourceManager.GetString("ExistingUserNameError", resourceCulture);
+                return ResourceManager.GetString("ExistingUsernameError", resourceCulture);
             }
         }
         
@@ -252,9 +252,9 @@ namespace Fanex.NAP.CMS.Core.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Invalid username!.
         /// </summary>
-        public static string InvalidUserName {
+        public static string InvalidUsername {
             get {
-                return ResourceManager.GetString("InvalidUserName", resourceCulture);
+                return ResourceManager.GetString("InvalidUsername", resourceCulture);
             }
         }
         

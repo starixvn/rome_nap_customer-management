@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.CMS.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.NAP.CMS.Criteria.ManageSmartPunters;
@@ -32,8 +33,11 @@ namespace Fanex.NAP.CMS.Controllers
 
         public ManageSmartPuntersController(IManageSmartPuntersService manageSmartPuntersService)
         {
+            int lastYear = DateTime.Today.AddYears(-1).Year;
+
             this._manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
             ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
+            ViewBag.MinDate = new DateTime(lastYear, 1, 1);
         }
 
         /// <summary>
@@ -123,6 +127,20 @@ namespace Fanex.NAP.CMS.Controllers
             smartPunters = this._manageSmartPuntersService.DeleteSmartPunter(filter);
 
             return Json(smartPunters);
+        }
+
+        /// <summary>
+        /// Gets smart punter logs list.
+        /// </summary>
+        /// <param name="filter">The filter object that is used to queried data.</param>
+        /// <returns>Smart punter logs list.</returns>
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
+        public JsonResult GetSmartPunterLogs(GetSmartPunterLogsFilter filter)
+        {
+            GettingSmartPunterLogsResult result = this._manageSmartPuntersService.GetSmartPunterLogs(filter);
+
+            return Json(result);
         }
     }
 }

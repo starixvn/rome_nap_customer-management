@@ -143,6 +143,13 @@
             });
         },
 
+        refresh: function () {
+            var selected = this.element.children(':selected'),
+                value = selected.val() ? selected.text() : '';
+
+            this.input.val(value);
+        },
+
         disable: function () {
             this.element.prop('disabled', true);
             this.input.prop('disabled', true);

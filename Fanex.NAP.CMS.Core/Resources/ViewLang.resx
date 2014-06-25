@@ -474,4 +474,19 @@
   <data name="Suspended" xml:space="preserve">
     <value>Suspended</value>
   </data>
+  <data name="YesterdayBalance" xml:space="preserve">
+    <value>Yesterday Balance</value>
+  </data>
+  <data name="Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="EditedBy" xml:space="preserve">
+    <value>Edited By</value>
+  </data>
+  <data name="LogDate" xml:space="preserve">
+    <value>Log Date</value>
+  </data>
+  <data name="LogID" xml:space="preserve">
+    <value>Log ID</value>
+  </data>
 </root>

@@ -96,6 +96,7 @@
 .width-120				{ width: 120px !important; }
 .width-140				{ width: 140px !important; }
 .width-160				{ width: 160px !important; }
+.width-170				{ width: 170px !important; }
 .width-180				{ width: 180px !important; }
 .width-200				{ width: 200px !important; }
 .width-250				{ width: 250px !important; }
@@ -862,6 +863,46 @@ footer {
             cursor: default;
         }
     }
+
+    .tabs-area {
+        display: block;
+        width: 100%;
+        float: left;
+        border-bottom: 2px solid @white;
+        margin-top: 5px;
+
+        .tab {
+            display: inline-block;
+            float: left;
+            height: 25px;
+            line-height: 25px;
+            background: @menu_bg;
+            color: @white;
+            text-align: center;
+            font-weight: normal;
+            margin-left: 2px;
+            padding: 0 20px;
+            border: 1px solid @menu_border;
+            border-bottom: none;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+
+            &.first {
+                margin-left: 5px;
+            }
+
+            &.active {
+                background: @white;
+                color: @text;
+                border: 1px solid @filter_border;
+                border-bottom: none;
+            }
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 @media screen and (max-width: 640px) {
@@ -1288,6 +1329,30 @@ h2 .title {
     background: url("img/sprites.png") no-repeat -105px 1px;
     height: 13px;
     width: 15px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ico-upward-arrow {
+    background: url("img/sprites.png") no-repeat -3px -47px;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ico-downward-arrow {
+    background: url("img/sprites.png") no-repeat -18px -47px;
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ico-horizontal-line {
+    background: url("img/sprites.png") no-repeat -32px -47px;
+    height: 10px;
+    width: 10px;
     display: inline-block;
     cursor: pointer;
 }

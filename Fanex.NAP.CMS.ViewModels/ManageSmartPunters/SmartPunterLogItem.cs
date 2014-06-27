@@ -37,7 +37,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 
                 this.Detail = new SmartPunterDetailLogItem
                 {
-                    CustID = Converter.ToInt(rawDetail.CustID),
+                    CustID = Converter.ToInt(rawLog.CustID), ////Converter.ToInt(rawDetail.CustID),
                     NewRemark = rawDetail.Remark,
                     ErrCode = rawDetail.ErrCode,
                     ErrMsg = rawDetail.ErrMsg,

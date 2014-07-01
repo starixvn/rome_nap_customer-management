@@ -198,8 +198,15 @@ Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog = function () {
 
     $this.ResetForm = function () {
         resetDatepikers();
-        domElements.txtLogUsername.val('');
+        domElements.txtLogUsername.val('').focus();
         Validator.clearError(domElements.txtLogUsername);
+
+        // Reset cached parameters.
+        parameters.Username = null;
+        parameters.FromDate = null;
+        parameters.ToDate = null;
+        parameters.PageSize = CMS.pageSize;
+        parameters.PageIndex = 0;
     };
 
     $this.InitPage = function () {

@@ -166,7 +166,7 @@ Fanex.CMS.ManageRobots = function () {
                 var usernames = $.trim(popupElements.txtNewUsername.val());
                 var remark = popupElements.txtRemark.val();
                 var params = {
-                    Remark: remark,
+                    Remark: remark.encode(),
                     SearchedUsername: parameters.Username,
                     Status: parameters.Status,
                     PageIndex: parameters.PageIndex,
@@ -437,7 +437,7 @@ Fanex.CMS.ManageRobots = function () {
             displayPopupForm({
                 CustID: custID,
                 Username: username,
-                Remark: remark
+                Remark: remark.decode()
             });
 
         });

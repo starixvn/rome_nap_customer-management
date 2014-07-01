@@ -105,7 +105,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
                 var username = $.trim(popupElements.txtNewUsername.val());
                 var remark = popupElements.txtRemark.val();
                 var params = {
-                    Remark: remark,
+                    Remark: remark.encode(),
                     SearchedUsername: parameters.Username,
                     Status: parameters.Status,
                     PageIndex: parameters.PageIndex,
@@ -130,6 +130,10 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
 
         popupElements.btnCancel.click(function () {
             CMS.closePopup();
+        });
+
+        popupElements.divSmartPunterForm.find('input[type=text]').each(function () {
+            $(this).clearfield();
         });
     };
 
@@ -266,7 +270,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
             displayPopupForm({
                 CustID: custID,
                 Username: username,
-                Remark: remark
+                Remark: remark.decode()
             });
         });
 
@@ -405,8 +409,14 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
     };
 
     $this.ResetForm = function () {
-        domElements.txtUsername.val('');
+        domElements.txtUsername.val('').focus();
         domElements.ddlStatus.val(0).combobox('refresh');
+
+        // Reset cached parameters.
+        parameters.Username = null;
+        parameters.Status = null;
+        parameters.PageSize = CMS.pageSize;
+        parameters.PageIndex = 1;
     };
 
     $this.InitPage = function () {

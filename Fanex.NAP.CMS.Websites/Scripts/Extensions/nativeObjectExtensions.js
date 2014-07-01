@@ -10,6 +10,16 @@ String.prototype.format = function () {
     });
 };
 
+// Encode string: replace special characters by their codes.
+String.prototype.encode = function () {
+    return this.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+};
+
+// Decode string: replace special characters' codes by their real values.
+String.prototype.decode = function () {
+    return this.replace(/&amp;/g, '&').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&quot;/g, '"');
+};
+
 // Array Remove - By John Resig (MIT Licensed)
 Array.prototype.remove = function (from, to) {
     var rest = this.slice((to || from) + 1 || this.length);

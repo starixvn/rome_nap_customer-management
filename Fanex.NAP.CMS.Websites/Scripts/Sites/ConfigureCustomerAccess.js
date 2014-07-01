@@ -134,7 +134,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
                     Username: popupElements.txtUsername.val(),
                     CountryCode: '',
                     IPRequest: '',
-                    Remark: popupElements.txtRemark.val()
+                    Remark: popupElements.txtRemark.val().encode()
                 };
 
                 if ($(popupElements.rdbRestriction[0]).is(':checked')) {
@@ -345,13 +345,15 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
         popupElements.divForm.find('#txtExpiredDate').prop('disabled', true);
         popupElements.chkUnlimited.prop('disabled', true);
         popupElements.txtRemark.prop('disabled', true);
+        popupElements.btnSave.prop('disabled', true);
+        popupElements.btnCancel.prop('disabled', true);
     };
 
     // Fill request data into edit form.
     var fillRequestInfo = function (request) {
         if (request) {
             popupElements.txtUsername.val(request.Username);
-            popupElements.txtRemark.val(request.Remark);
+            popupElements.txtRemark.val(request.Remark.decode());
             popupElements.hdnCustId.val(request.CustId);
             popupElements.hdnRequestId.val(request.RequestId);
 

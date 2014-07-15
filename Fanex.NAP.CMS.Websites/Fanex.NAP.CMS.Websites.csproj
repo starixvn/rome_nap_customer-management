@@ -419,14 +419,26 @@
     <Content Include="Content\Sites\manageRobots.less" />
     <Content Include="Content\Sites\manageSmartPunters.less" />
     <Content Include="Views\ManageSmartPunters\Index.cshtml" />
-    <Content Include="Web.AppSettings.prod.config" />
-    <Content Include="Web.AppSettings.uat.config" />
-    <Content Include="Web.ConnectionString.prod.config" />
-    <Content Include="Web.ConnectionString.uat.config" />
+    <Content Include="Web.AppSettings.prod.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.uat.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.prod.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.uat.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config" />
-    <Content Include="Web.AppSettings.local.config" />
-    <Content Include="Web.ConnectionString.local.config" />
+    <Content Include="Web.AppSettings.local.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.local.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
     <Content Include="Web.local.config" />
   </ItemGroup>
   <ItemGroup />

@@ -59,7 +59,7 @@ namespace Fanex.NAP.CMS.Controllers
             };
 
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
-            ViewBag.IsAccountingLogin = SessionManager.Get<bool>("IsAccountingLogin");
+            ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
 
             this._userService = new UserService { ServiceContext = ServiceContext };
         }

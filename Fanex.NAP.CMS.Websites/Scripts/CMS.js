@@ -15,7 +15,7 @@ var CMS = (function ($) {
         notFoundError: null,
         internalError: null,
 
-        isAccountingLogin: null,
+        showMenus: null,
         popupTopMargin: null, // Used for re-position popups when re-direct from accounting site.
 
         msieVersion: null,
@@ -41,8 +41,8 @@ var CMS = (function ($) {
             CMS.notFoundError = $('#NotFoundError').val();
             CMS.internalError = $('#InternalError').val();
 
-            CMS.isAccountingLogin = $('#IsAccountingLogin').val() === 'True';
-            CMS.popupTopMargin = CMS.isAccountingLogin ? 40 : 0;
+            CMS.showMenus = $('#ShowMenus').val() === 'True';
+            CMS.popupTopMargin = !CMS.showMenus ? 40 : 0;
 
             CMS.msieVersion = CMS.getIeVersion();
             CMS.agentIsOldIe = CMS.msieVersion !== -1 && CMS.msieVersion < 9.0;

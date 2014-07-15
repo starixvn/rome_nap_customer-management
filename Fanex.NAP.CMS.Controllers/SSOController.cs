@@ -133,11 +133,12 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="username">The username.</param>
         /// <param name="onlineUserId">The online user identifier.</param>
         /// <param name="redirectUrl">The redirect URL.</param>
+        /// <param name="newTab">Open in new tab and show menus or not.</param>
         /// <returns>The login result page.</returns>
         [HttpGet]
         [AllowAnonymous]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl)
+        public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl, bool newTab = false)
         {
             string currentTime = this._userService.UserSSOGetTime();
 
@@ -182,15 +183,7 @@ namespace Fanex.NAP.CMS.Controllers
                 }
 
                 this.CreateAuthInfo(user);
-
-                if (string.IsNullOrEmpty(redirectUrl) || redirectUrl != "~/")
-                {
-                    SessionManager.Set<bool>("IsAccountingLogin", true);
-                }
-                else
-                {
-                    redirectUrl = "~/LossMonitor";
-                }
+                SessionManager.Set<bool>("ShowMenus", newTab);
 
                 return this.Redirect(redirectUrl);
             }

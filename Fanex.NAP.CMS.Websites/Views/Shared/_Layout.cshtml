@@ -1,5 +1,5 @@
 ﻿@{
-    var isAccountingLogin = (bool)ViewBag.IsAccountingLogin;
+    var showMenus = ViewBag.ShowMenus != null ? (bool)ViewBag.ShowMenus : true;
 }
 <!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
@@ -19,7 +19,7 @@
     @RenderSection("Head", false)
 </head>
 <body>
-    @if (!isAccountingLogin)
+    @if (showMenus)
     {
         <header>
             <div class="logo">
@@ -39,7 +39,7 @@
         </header>
     }
     <section id="headline">
-        @if (!isAccountingLogin)
+        @if (showMenus)
         {
             <span class="server-time">@string.Format("{0} {1}", ViewBag.ServerDate, ViewLang.GMTMinus4)</span>
         }
@@ -55,7 +55,7 @@
     @Html.Hidden("AccessDeniedError", Messages.AccessDenied)
     @Html.Hidden("NotFoundError", Messages.NotFoundMessage)
     @Html.Hidden("InternalError", Messages.InternalError)
-    @Html.Hidden("IsAccountingLogin", isAccountingLogin)
+    @Html.Hidden("ShowMenus", showMenus)
     @Scripts.Render("~/scripts/common")
     @if (ViewBag.ViewFlags != null && ViewBag.ViewFlags.IsReCheckin)
     {

@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to get request information.

@@ -9,7 +9,10 @@
 
 namespace Fanex.NAP.CMS.Core.Constants
 {
-    public struct UpdateStatusType
+    /// <summary>
+    /// Update status types.
+    /// </summary>
+    public static class UpdateStatusType
     {
         public const int All = -1;
         public const int Close = 0;

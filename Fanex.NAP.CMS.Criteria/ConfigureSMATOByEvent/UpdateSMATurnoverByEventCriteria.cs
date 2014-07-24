@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria contain the updated data of a SMA turnover.

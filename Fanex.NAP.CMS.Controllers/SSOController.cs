@@ -138,10 +138,8 @@ namespace Fanex.NAP.CMS.Controllers
         [HttpGet]
         [AllowAnonymous]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult AccountingLogin(string username, string onlineUserId, string redirectUrl, bool newTab = false)
+        public ActionResult AccountingLogin(string username, string onlineUserId, Uri redirectUrl, bool newTab = false)
         {
-            string currentTime = this._userService.UserSSOGetTime();
-
             Session.Clear();
             username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
             onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
@@ -185,7 +183,7 @@ namespace Fanex.NAP.CMS.Controllers
                 this.CreateAuthInfo(user);
                 SessionManager.Set<bool>("ShowMenus", newTab);
 
-                return this.Redirect(redirectUrl);
+                return this.Redirect(redirectUrl.ToString());
             }
             else
             {

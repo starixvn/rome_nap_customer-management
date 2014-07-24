@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.ConfigureTOBySMA;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;

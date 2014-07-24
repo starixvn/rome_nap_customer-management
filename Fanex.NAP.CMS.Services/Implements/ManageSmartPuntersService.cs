@@ -18,8 +18,6 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Criteria.ManageSmartPunters;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
-    using Fanex.NAP.CMS.Repositories.Implements;
-    using Fanex.NAP.CMS.Repositories.Interfaces;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
     using Fanex.NAP.Framework.Command;
@@ -31,18 +29,6 @@ namespace Fanex.NAP.CMS.Services.Implements
     {
         private const int InvalidUsernameErrorCode = 100;
 
-        private readonly IManageSmartPuntersRepository _manageSmartPuntersRepository;
-
-        public ManageSmartPuntersService() :
-            this(null)
-        {
-        }
-
-        public ManageSmartPuntersService(IManageSmartPuntersRepository manageSmartPuntersRepository)
-        {
-            this._manageSmartPuntersRepository = manageSmartPuntersRepository ?? new ManageSmartPuntersRepository();
-        }
-
         /// <summary>
         /// Gets the smart punter list.
         /// </summary>
@@ -51,7 +37,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         public IEnumerable<SmartPunterItem> GetSmartPunters(GetSmartPuntersCriteria criteria)
         {
             int totalItems = 0;
-            IEnumerable<SmartPunterInfo> rawData = this.GetData<SmartPunterInfo>(criteria, out totalItems);
+            IEnumerable<SmartPunterInfo> rawData = this.Repository.Fetch<SmartPunterInfo>(criteria);
             IEnumerable<SmartPunterItem> result = null;
 
             if (rawData != null && rawData.Any())
@@ -207,12 +193,12 @@ namespace Fanex.NAP.CMS.Services.Implements
             {
                 Username = filter.Username
             };
-            int custID = this._manageSmartPuntersRepository.GetCustIDByUsernameNickname(gettingCustIDCriteria);
+            this.Repository.Get<int>(gettingCustIDCriteria);
 
-            if (custID > 0)
+            if (gettingCustIDCriteria.CustID > 0)
             {
-                rawLogs = QuerySmartPunterLogs(filter, custID);
-                logResult.TotalItems = QueryTotalItems(filter, custID);
+                rawLogs = QuerySmartPunterLogs(filter, gettingCustIDCriteria.CustID);
+                logResult.TotalItems = QueryTotalItems(filter, gettingCustIDCriteria.CustID);
 
                 if (rawLogs != null && rawLogs.Any())
                 {
@@ -252,7 +238,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 FromDate = filter.FromDate,
                 ToDate = filter.ToDate
             };
-            int totalItems = this.GetItem<int>(criteria);
+            int totalItems = this.Repository.Get<int>(criteria);
 
             return totalItems;
         }
@@ -273,7 +259,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 PageIndex = filter.PageIndex,
                 PageSize = filter.PageSize
             };
-            IEnumerable<SmartPunterLogInfo> rawLogs = this.GetData<SmartPunterLogInfo>(criteria);
+            IEnumerable<SmartPunterLogInfo> rawLogs = this.Repository.Fetch<SmartPunterLogInfo>(criteria);
 
             return rawLogs;
         }

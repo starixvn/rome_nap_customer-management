@@ -11,8 +11,8 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Models.ConfigureCustomerAccess;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// View model for new/updated request.
@@ -35,6 +35,9 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess
                 this.Remark = rawData.Remark;
                 this.CreatedBy = rawData.CreatedBy;
                 this.LastModifiedBy = rawData.UpdatedBy;
+                this.ExpiredDate = rawData.ExpiryDate.ToShortFormatedDate();
+                this.CreatedDate = rawData.CreatedDate.ToShortFormatedDate();
+                this.LastModifiedDate = rawData.UpdatedDate.ToShortFormatedDate();
 
                 if (!string.IsNullOrEmpty(rawData.CountryCode) && countryList.ContainsKey(rawData.CountryCode))
                 {
@@ -43,18 +46,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess
 
                 if (rawData.ExpiryDate.HasValue)
                 {
-                    this.ExpiredDate = rawData.ExpiryDate.Value.ToShortFormatedDate();
                     this.IsExpired = rawData.ExpiryDate.Value < DateTime.Now;
-                }
-
-                if (rawData.CreatedDate.HasValue)
-                {
-                    this.CreatedDate = rawData.CreatedDate.Value.ToShortFormatedDate();
-                }
-
-                if (rawData.UpdatedDate.HasValue)
-                {
-                    this.LastModifiedDate = rawData.UpdatedDate.Value.ToShortFormatedDate();
                 }
             }
         }

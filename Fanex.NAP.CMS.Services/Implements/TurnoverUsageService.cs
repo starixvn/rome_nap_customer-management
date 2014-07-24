@@ -32,7 +32,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SportInfo object.</returns>
         public IEnumerable<SportInfo> GetSportList(GetSportsCriteria criteria)
         {
-            IEnumerable<SportInfo> result = this.GetData<SportInfo>(criteria);
+            IEnumerable<SportInfo> result = this.Repository.Fetch<SportInfo>(criteria);
 
             return result;
         }
@@ -44,7 +44,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of LeagueInfo objects.</returns>
         public IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            IEnumerable<LeagueInfo> result = this.GetData<LeagueInfo>(criteria);
+            IEnumerable<LeagueInfo> result = this.Repository.Fetch<LeagueInfo>(criteria);
 
             return result;
         }
@@ -56,7 +56,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of MatchInfo objects.</returns>
         public IEnumerable<MatchInfo> GetMatchesOfLeague(GetMatchesOfLeagueCriteria criteria)
         {
-            IEnumerable<MatchInfo> result = this.GetData<MatchInfo>(criteria);
+            IEnumerable<MatchInfo> result = this.Repository.Fetch<MatchInfo>(criteria);
 
             foreach (MatchInfo match in result)
             {
@@ -73,7 +73,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of TurnoverUsageItem objects.</returns>
         public IEnumerable<TurnoverUsageItem> GetTurnoverUsageReport(GetTurnoverUsageCriteria criteria)
         {
-            IEnumerable<TurnoverUsageInfo> rawData = this.GetData<TurnoverUsageInfo>(criteria);
+            IEnumerable<TurnoverUsageInfo> rawData = this.Repository.Fetch<TurnoverUsageInfo>(criteria);
             IEnumerable<TurnoverUsageItem> result = null;
 
             if (rawData.Any())

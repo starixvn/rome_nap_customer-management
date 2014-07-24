@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.WriteLogs
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to write log of an Casino API call.

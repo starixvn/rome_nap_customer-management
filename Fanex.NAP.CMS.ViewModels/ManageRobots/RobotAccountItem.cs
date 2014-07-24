@@ -10,8 +10,8 @@
 namespace Fanex.NAP.CMS.ViewModels.ManageRobots
 {
     using System;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Models.ManageRobots;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Robot status item.
@@ -34,7 +34,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageRobots
                 this.AddedBy = rawData.Creator;
                 this.AddedDate = rawData.CreateDate.ToShortFormatedDate();
                 this.ModifiedBy = rawData.ModifyUser;
-                this.ModifiedDate = rawData.LastModifyTime.HasValue ? rawData.LastModifyTime.ToShortFormatedDate() : string.Empty;
+                this.ModifiedDate = rawData.LastModifyTime.ToShortFormatedDate();
                 this.Remark = rawData.Remark ?? string.Empty;
             }
         }

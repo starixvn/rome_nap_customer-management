@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that contain the updated data of sport turnover.

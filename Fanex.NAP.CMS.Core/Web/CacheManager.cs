@@ -17,12 +17,7 @@ namespace Fanex.NAP.CMS.Core.Web
     /// </summary>
     public static class CacheManager
     {
-        private static readonly ICache CacheManagerInstance;
-
-        static CacheManager()
-        {
-            CacheManagerInstance = CacheService.CreateInstance(CacheType.MemoryCache);
-        }
+        private static readonly ICache CacheManagerInstance = CacheService.CreateInstance(CacheType.MemoryCache);
 
         /// <summary>
         /// Gets cached value associated with the passed key.

@@ -29,14 +29,12 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of RequestItem objects.</returns>
         public IEnumerable<RequestItem> GetRequestList(GetRequestInfoListCriteria criteria)
         {
-            int totalItems = 0;
-            IEnumerable<RequestInfo> rawData = this.GetData<RequestInfo>(criteria, out totalItems);
+            IEnumerable<RequestInfo> rawData = this.Repository.Fetch<RequestInfo>(criteria);
             IEnumerable<RequestItem> result = null;
 
             if (rawData != null && rawData.Any())
             {
                 result = rawData.Select(obj => new RequestItem(obj, this.CountryList));
-                criteria.TotalItems = totalItems;
             }
 
             return result;
@@ -49,7 +47,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>RequestItem objects.</returns>
         public RequestItem GetRequest(GetRequestInfoCriteria criteria)
         {
-            RequestInfo rawData = this.GetItem<RequestInfo>(criteria);
+            RequestInfo rawData = this.Repository.Get<RequestInfo>(criteria);
             RequestItem result = null;
 
             if (rawData != null)

@@ -10,12 +10,12 @@
 namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
+    using Fanex.Data.Repository;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
 
     public interface IConfigureSMATOByEventService
     {

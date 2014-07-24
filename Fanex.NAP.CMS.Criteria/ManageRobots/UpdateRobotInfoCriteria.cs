@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ManageRobots
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that contain the updated data of a robot account.

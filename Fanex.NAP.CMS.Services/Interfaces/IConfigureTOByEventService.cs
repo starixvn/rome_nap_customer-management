@@ -10,13 +10,13 @@
 namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
+    using Fanex.Data.Repository;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureTOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
     using Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
 
     public interface IConfigureTOByEventService
     {

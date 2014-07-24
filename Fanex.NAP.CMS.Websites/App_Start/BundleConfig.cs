@@ -9,16 +9,12 @@
 
 namespace Fanex.NAP.CMS.Websites
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Web;
     using System.Web.Optimization;
-    using BundleTransformer.Core.Orderers;
-    using BundleTransformer.Core.Transformers;
 
     /// <summary>
     /// Bundle Configuration.
     /// </summary>
-    public class BundleConfig
+    public static class BundleConfig
     {
         /// <summary>
         /// Registers the bundles.
@@ -194,47 +190,6 @@ namespace Fanex.NAP.CMS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/lossMonitor").Include(
                 "~/Scripts/Sites/LossMonitor.js"));
-        }
-    }
-
-    /// <summary>
-    /// Bundle Collection extension.
-    /// </summary>
-    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Need to review here.")]
-    internal static class BundleExtensions
-    {
-        /// <summary>
-        /// Creates a bundle, include the virtual paths to the created bundle,
-        /// and add it to the bundle collection.
-        /// </summary>
-        /// <param name="bundles">The bundle collection which the virtual paths are included.</param>
-        /// <param name="bundleVirtualPath">Virtual path of the created bundle.</param>
-        /// <param name="virtualPaths">The virtual paths that needed to add to bundle collection.</param>
-        public static void AddAndInclude(
-            this BundleCollection bundles,
-            string bundleVirtualPath,
-            params string[] virtualPaths)
-        {
-            bundles.Add(new Bundle(bundleVirtualPath)
-            {
-                Transforms = { new CssTransformer(), new CssMinify() },
-                Orderer = new NullOrderer()
-            }.Include(virtualPaths));
-        }
-
-        /// <summary>
-        /// Gets relative path from absolute path.
-        /// </summary>
-        /// <param name="context">The context using to get the path.</param>
-        /// <param name="path">The absolute path.</param>
-        /// <returns>The relative path.</returns>
-        public static string RelativeFromAbsolutePath(this HttpContextBase context, string path)
-        {
-            var request = context.Request;
-            var applicationPath = request.PhysicalApplicationPath;
-            var virtualDir = request.ApplicationPath;
-            virtualDir = virtualDir == "/" ? virtualDir : (virtualDir + "/");
-            return path.Replace(applicationPath, virtualDir).Replace(@"\", "/");
         }
     }
 }

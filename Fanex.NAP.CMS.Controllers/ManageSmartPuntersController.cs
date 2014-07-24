@@ -12,6 +12,7 @@ namespace Fanex.NAP.CMS.Controllers
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.ManageSmartPunters;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;

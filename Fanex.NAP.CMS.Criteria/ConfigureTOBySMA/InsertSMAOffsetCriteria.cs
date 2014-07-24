@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOBySMA
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Criteria contain data to insert new SMA offset exception.

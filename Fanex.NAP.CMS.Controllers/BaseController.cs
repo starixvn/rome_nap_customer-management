@@ -26,30 +26,35 @@ namespace Fanex.NAP.CMS.Controllers
     /// </summary>
     public class BaseController : Controller
     {
-        protected readonly ICurrentContext CurrentContext;
+        private readonly ICurrentContext _currentContext;
 
-        protected readonly ICurrentSession CurrentSession;
+        private readonly ICurrentSession _currentSession;
 
-        protected readonly IServiceContext ServiceContext;
+        private readonly IServiceContext _serviceContext;
 
-        protected readonly string Environment = NapSettings.Settings.Environment;
+        private readonly string _environment;
 
-        protected readonly int SiteId = NapSettings.Settings.SiteId;
+        private readonly int _siteId;
 
-        private bool _enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+        private readonly bool _enableDirectLogin;
 
         private IUserService _userService;
 
         public BaseController()
         {
-            this.CurrentContext = new CurrentContext();
-            ViewBag.Session = this.CurrentSession = new CurrentSession();
-            this.ServiceContext = new ServiceContext
+            this._currentContext = new CurrentContext();
+            this._currentSession = new CurrentSession();
+            this._serviceContext = new ServiceContext
             {
                 UserId = this.CurrentSession.UserId,
                 SiteId = this.SiteId,
                 Ip = this.CurrentContext.IP
             };
+            this._environment = NapSettings.Settings.Environment;
+            this._siteId = NapSettings.Settings.SiteId;
+            this._enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+
+            ViewBag.Session = this.CurrentSession;
 
             ViewFlags = new ViewFlags
             {
@@ -61,7 +66,7 @@ namespace Fanex.NAP.CMS.Controllers
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
 
-            this._userService = new UserService { ServiceContext = ServiceContext };
+            this._userService = new UserService { ServiceContext = this.ServiceContext };
         }
 
         /// <summary>
@@ -74,6 +79,46 @@ namespace Fanex.NAP.CMS.Controllers
             get
             {
                 return this._enableDirectLogin;
+            }
+        }
+
+        public ICurrentContext CurrentContext
+        {
+            get
+            {
+                return this._currentContext;
+            }
+        }
+
+        public ICurrentSession CurrentSession
+        {
+            get
+            {
+                return this._currentSession;
+            }
+        }
+
+        public IServiceContext ServiceContext
+        {
+            get
+            {
+                return this._serviceContext;
+            }
+        }
+
+        public string Environment
+        {
+            get
+            {
+                return this._environment;
+            }
+        }
+
+        public int SiteId
+        {
+            get
+            {
+                return this._siteId;
             }
         }
 

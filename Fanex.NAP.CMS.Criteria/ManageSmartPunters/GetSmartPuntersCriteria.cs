@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to get smart punters.

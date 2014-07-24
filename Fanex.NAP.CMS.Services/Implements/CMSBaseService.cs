@@ -13,20 +13,32 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections;
     using System.Collections.Generic;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Models.Common;
-    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Base Service.
     /// </summary>
-    public class CMSBaseService : BaseService
+    public class CMSBaseService
     {
         public const string CacheBalanceUp = "Fanex.CMS.Service.Common.BalanceUp";
         private const string CachedCountryList = "Fanex.CMS.Service.Common.CountryList";
+
+        private readonly IDynamicRepository _repository = new DynamicRepository();
+
+        public IServiceContext ServiceContext { get; set; }
+
+        public IDynamicRepository Repository
+        {
+            get
+            {
+                return this._repository;
+            }
+        }
 
         public BalanceUpDayInfo BalanceUpDate
         {
@@ -36,7 +48,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                 if (balanceUp == null)
                 {
-                    balanceUp = GetItem<BalanceUpDayInfo>(new GetBalanceUpDayCriteria());
+                    balanceUp = this.Repository.Get<BalanceUpDayInfo>(new GetBalanceUpDayCriteria());
                     CacheManager.Set<BalanceUpDayInfo>(CacheBalanceUp, balanceUp, new TimeSpan(0, 0, 5, 0));
                 }
 
@@ -53,7 +65,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 if (countryList == null)
                 {
                     var criteria = new GetCountryListCriteria();
-                    IEnumerable<CountryInfo> rawCountryList = GetData<CountryInfo>(criteria);
+                    IEnumerable<CountryInfo> rawCountryList = this.Repository.Fetch<CountryInfo>(criteria);
 
                     countryList = new Dictionary<string, string>();
 

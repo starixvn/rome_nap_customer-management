@@ -28,7 +28,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SMALossGroup objects.</returns>
         public List<SMALossGroup> GetSMALoss(GetSMALossMonitorListCriteria criteria)
         {
-            IEnumerable<SMALossInfo> rawData = this.GetData<SMALossInfo>(criteria);
+            IEnumerable<SMALossInfo> rawData = this.Repository.Fetch<SMALossInfo>(criteria);
             List<SMALossLevelItem> levels = this.GetSMALossLevels();
             List<SMALossGroup> result = null;
 
@@ -70,7 +70,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SMALossLevelItem objects.</returns>
         private List<SMALossLevelItem> GetSMALossLevels()
         {
-            IEnumerable<SMALossLevel> rawData = this.GetData<SMALossLevel>(new GetSMALossLevelsCriteria());
+            IEnumerable<SMALossLevel> rawData = this.Repository.Fetch<SMALossLevel>(new GetSMALossLevelsCriteria());
             List<SMALossLevelItem> result = null;
 
             if (rawData.Any())

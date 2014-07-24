@@ -11,11 +11,10 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.Common;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureSMATOByEvent;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Group of SMA turnover by event view model.
@@ -29,7 +28,7 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent
             {
                 this.MatchID = rawData.MatchID;
                 this.MatchCode = rawData.MatchCode;
-                this.EventDate = Converter.ToDateTime(rawData.EventDate).ToShortFormatedDate();
+                this.EventDate = rawData.EventDate.ToShortFormatedDate();
                 this.MatchName = string.Format("{0} {1} {2}", CacheRef.GetTeamName(rawData.HomeID), ViewLang.Vs, CacheRef.GetTeamName(rawData.AwayID));
                 this.SMAItems = new List<SMATurnoverByEvent>();
             }

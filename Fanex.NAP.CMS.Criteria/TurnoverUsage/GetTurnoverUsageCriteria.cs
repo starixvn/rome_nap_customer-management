@@ -10,7 +10,7 @@
 namespace Fanex.NAP.CMS.Criteria.TurnoverUsage
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to get turnover usage.

@@ -10,9 +10,9 @@
 namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 {
     using System;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Smart punter item.

@@ -29,7 +29,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SMAOffset objects.</returns>
         public IEnumerable<SMAOffset> GetSMAOffset(GetSMAOffsetCriteria criteria)
         {
-            IEnumerable<SMAOffsetInfo> rawData = this.GetData<SMAOffsetInfo>(criteria);
+            IEnumerable<SMAOffsetInfo> rawData = this.Repository.Fetch<SMAOffsetInfo>(criteria);
             IEnumerable<SMAOffset> offset = null;
 
             if (rawData.Any())

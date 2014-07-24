@@ -21,17 +21,15 @@
 // <history>
 // Lasted generated date: <#=        DateTime.Now.ToString() #>
 // </history>
-
-using System.Diagnostics.CodeAnalysis;
-
-/// <summary>
-/// Function keys.
-/// </summary>
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.LayoutRules", "SA1508:ClosingCurlyBracketsMustNotBePrecededByBlankLine", Justification = "Generated code")] 
-public static class CMSFunctionKeys
+namespace Fanex.NAP.CMS.Core
 {
+    using System.Diagnostics.CodeAnalysis;
+
+    /// <summary>
+    /// Function keys.
+    /// </summary>
+    public static class CMSFunctionKeys
+    {
 <#
     SqlConnection conn = new SqlConnection(connectionString);
 
@@ -44,12 +42,15 @@ public static class CMSFunctionKeys
     SqlDataReader reader = comm.ExecuteReader();
 
     while(reader.Read())
-    {#>
-    public const string <#= reader["FunctionKey"].ToString() #> = "<#= reader["FunctionKey"].ToString() #>";
+    {
+        string functionKey = reader["FunctionKey"].ToString();
+#>
+        public const string <#= functionKey.Replace("_", string.Empty) #> = "<#= functionKey #>";
 
-    <#}#>
+<#}#>
+    }
 }
-<#  
+<#
     reader.Close();
     conn.Close();
 #>

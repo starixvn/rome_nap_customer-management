@@ -15,7 +15,7 @@ namespace Fanex.NAP.CMS.Websites
     /// <summary>
     /// Register custom route configurations.
     /// </summary>
-    public class RouteConfig
+    public static class RouteConfig
     {
         /// <summary>
         /// Registers the routes.

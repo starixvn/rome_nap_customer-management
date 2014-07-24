@@ -15,7 +15,7 @@ namespace Fanex.NAP.CMS.Core.Web
     /// <summary>
     /// Gets and sets data to session.
     /// </summary>
-    public class SessionManager
+    public static class SessionManager
     {
         /// <summary>
         /// Sets a value to session.
@@ -29,7 +29,7 @@ namespace Fanex.NAP.CMS.Core.Web
             {
                 HttpContext.Current.Session[sessionKey] = value;
             }
-            catch (Exception)
+            catch (IndexOutOfRangeException)
             {
             }
         }
@@ -47,7 +47,7 @@ namespace Fanex.NAP.CMS.Core.Web
                 T value = (T)HttpContext.Current.Session[sessionKey];
                 return value;
             }
-            catch (Exception)
+            catch (IndexOutOfRangeException)
             {
                 return default(T);
             }

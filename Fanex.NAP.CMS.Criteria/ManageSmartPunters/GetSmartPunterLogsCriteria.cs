@@ -10,7 +10,7 @@
 namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Getting logs of smart punter.

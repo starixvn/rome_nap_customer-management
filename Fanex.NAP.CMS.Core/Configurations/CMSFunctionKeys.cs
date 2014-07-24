@@ -8,20 +8,18 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 6/5/2014 9:37:15 AM
+// Lasted generated date: 7/25/2014 11:53:48 AM
 // </history>
-
-using System.Diagnostics.CodeAnalysis;
-
-/// <summary>
-/// Function keys.
-/// </summary>
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1602:EnumerationItemsMustBeDocumented", Justification = "Generated code")] 
-[SuppressMessage("Microsoft.StyleCop.CSharp.LayoutRules", "SA1508:ClosingCurlyBracketsMustNotBePrecededByBlankLine", Justification = "Generated code")] 
-public static class CMSFunctionKeys
+namespace Fanex.NAP.CMS.Core
 {
-    public const string Administration = "Administration";
+    using System.Diagnostics.CodeAnalysis;
+
+    /// <summary>
+    /// Function keys.
+    /// </summary>
+    public static class CMSFunctionKeys
+    {
+        public const string Administration = "Administration";
 
         public const string AssignFunctionToGroup = "AssignFunctionToGroup";
 
@@ -29,7 +27,7 @@ public static class CMSFunctionKeys
 
         public const string AssignSiteToUser = "AssignSiteToUser";
 
-        public const string Close_OpenMembers = "Close_OpenMembers";
+        public const string CloseOpenMembers = "Close_OpenMembers";
 
         public const string ConfigureCustomerAccess = "ConfigureCustomerAccess";
 
@@ -37,7 +35,7 @@ public static class CMSFunctionKeys
 
         public const string ControlTOBySMA = "ControlTOBySMA";
 
-        public const string ControlTOBySMA_Event = "ControlTOBySMA_Event";
+        public const string ControlTOBySMAEvent = "ControlTOBySMA_Event";
 
         public const string ControlTurnover = "ControlTurnover";
 
@@ -66,3 +64,4 @@ public static class CMSFunctionKeys
         public const string TurnoverUsage = "TurnoverUsage";
 
     }
+}

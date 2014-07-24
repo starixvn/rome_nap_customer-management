@@ -9,7 +9,10 @@
 
 namespace Fanex.NAP.CMS.Core.Constants
 {
-    public struct CustomerLevels
+    /// <summary>
+    /// Customer levels.
+    /// </summary>
+    public static class CustomerLevels
     {
         public const int Super = 4;
         public const int Master = 3;

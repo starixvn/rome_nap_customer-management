@@ -11,10 +11,10 @@ namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 {
     using System;
     using Fanex.Common;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Match turnover.

@@ -30,7 +30,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SportInfo object.</returns>
         public IEnumerable<SportInfo> GetSportList(GetSportsCriteria criteria)
         {
-            IEnumerable<SportInfo> result = this.GetData<SportInfo>(criteria);
+            IEnumerable<SportInfo> result = this.Repository.Fetch<SportInfo>(criteria);
 
             return result;
         }
@@ -42,7 +42,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of LeagueInfo objects.</returns>
         public IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            IEnumerable<LeagueInfo> result = this.GetData<LeagueInfo>(criteria);
+            IEnumerable<LeagueInfo> result = this.Repository.Fetch<LeagueInfo>(criteria);
 
             return result;
         }
@@ -57,7 +57,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             IEnumerable<SMATurnoverInfo> rawData = null;
             SMATurnoverReport result = new SMATurnoverReport();
 
-            rawData = this.GetData<SMATurnoverInfo>(criteria);
+            rawData = this.Repository.Fetch<SMATurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
             {

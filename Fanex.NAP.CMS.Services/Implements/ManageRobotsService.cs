@@ -13,12 +13,8 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Linq;
     using Fanex.NAP.CMS.Criteria.ManageRobots;
     using Fanex.NAP.CMS.Models.ManageRobots;
-    using Fanex.NAP.CMS.Repositories.Implements;
-    using Fanex.NAP.CMS.Repositories.Interfaces;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageRobots;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Command;
 
     /// <summary>
@@ -26,24 +22,6 @@ namespace Fanex.NAP.CMS.Services.Implements
     /// </summary>
     public class ManageRobotsService : CMSBaseService, IManageRobotsService
     {
-        private readonly IManageRobotsRepository _manageRobotRepository;
-
-        public ManageRobotsService() :
-            this(null, null)
-        {
-        }
-
-        public ManageRobotsService(IServiceContext serviceContext) :
-            this(serviceContext, null)
-        {
-        }
-
-        public ManageRobotsService(IServiceContext serviceContext, IManageRobotsRepository manageRobotRepository)
-        {
-            this.ServiceContext = serviceContext ?? new ServiceContext();
-            this._manageRobotRepository = manageRobotRepository ?? new ManageRobotsRepository();
-        }
-
         /// <summary>
         /// Gets the robot accounts.
         /// </summary>
@@ -51,7 +29,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>GettingRobotAccountResult objects.</returns>
         public GettingRobotAccountResult GetRobotAccounts(GetRobotAccountsCriteria criteria)
         {
-            IEnumerable<RobotAccountInfo> rawData = this._manageRobotRepository.GetRobotAccountData(criteria);
+            IEnumerable<RobotAccountInfo> rawData = this.Repository.Fetch<RobotAccountInfo>(criteria);
             GettingRobotAccountResult result = new GettingRobotAccountResult
             {
                 TotalItems = criteria.TotalItems,

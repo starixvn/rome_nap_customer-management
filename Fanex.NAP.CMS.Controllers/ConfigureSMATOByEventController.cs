@@ -12,6 +12,7 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Models.Common;
@@ -37,7 +38,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureSMATOByEventController(IConfigureSMATOByEventService configureSMATOByMatchService)
         {
             this._configureSMATOByMatchService = configureSMATOByMatchService ?? new ConfigureSMATOByEventService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ControlTOBySMA_Event, Constant.Policy.Host);
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ControlTOBySMAEvent, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             return View();
@@ -57,7 +58,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="mode">View mode.</param>
         /// <returns>List of JSON objects represents the sport list and league list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetInitializedData(byte mode = 0)
         {
             IEnumerable<SportInfo> sports = this._configureSMATOByMatchService.GetSportList(new GetSportsCriteria
@@ -88,7 +89,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">Criteria that are used to query data.</param>
         /// <returns>List of JSON objects represents the sport list and league list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
             IEnumerable<LeagueInfo> leagues = this._configureSMATOByMatchService.GetLeaguesOfSport(criteria);
@@ -102,7 +103,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="criteria">Criteria that are used to query data.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Read)]
         public JsonResult GetSMATurnoverByEvent(GetSMATurnoverByEventCriteria criteria)
         {
             IEnumerable<SMATurnoverByEventGroup> result = this._configureSMATOByMatchService.GetSMATurnoverByEvent(criteria);
@@ -116,7 +117,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be updated.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Host)]
         public JsonResult InsertSMATurnoverByEvent(InsertSMATurnoverByEventFilter filter)
         {
             var insertingCriteria = new InsertSMATurnoverByEventCriteria
@@ -155,7 +156,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be updated.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Host)]
         public JsonResult UpdateSMATurnoverByEvent(UpdateSMATurnoverByEventFilter filter)
         {
             var updatingCriteria = new UpdateSMATurnoverByEventCriteria
@@ -194,7 +195,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Criteria contain the data that need to be removed from DB.</param>
         /// <returns>List of JSON objects represents the SMA turnover list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMA_Event, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Host)]
         public JsonResult RemoveSMATurnoverByEvent(RemoveSMATurnoverByEventFilter filter)
         {
             var deletingCriteria = new DeleteSMATurnoverByEventCriteria

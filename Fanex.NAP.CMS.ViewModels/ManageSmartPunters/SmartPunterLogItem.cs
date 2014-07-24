@@ -11,8 +11,8 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 {
     using System;
     using Fanex.Common;
+    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
-    using Fanex.NAP.Core.Web;
 
     /// <summary>
     /// Smart punter's logs view model.
@@ -29,7 +29,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
             if (rawLog != null && rawDetail != null)
             {
                 this.LogID = rawLog.LogID;
-                this.LogDate = Converter.ToDateTime(rawLog.LogDate).ToFullFormatedDate();
+                this.LogDate = rawLog.LogDate.ToFullFormatedDate();
                 this.UserID = Converter.ToInt(rawLog.UserID);
                 this.EditedBy = rawLog.Username;
                 this.Action = rawLog.ActionName;
@@ -37,7 +37,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 
                 this.Detail = new SmartPunterDetailLogItem
                 {
-                    CustID = Converter.ToInt(rawLog.CustID), ////Converter.ToInt(rawDetail.CustID),
+                    CustID = Converter.ToInt(rawLog.CustID),
                     NewRemark = rawDetail.Remark,
                     ErrCode = rawDetail.ErrCode,
                     ErrMsg = rawDetail.ErrMsg,

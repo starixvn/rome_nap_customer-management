@@ -12,7 +12,7 @@ namespace Fanex.NAP.CMS.Core.Constants
     /// <summary>
     /// Common constants.
     /// </summary>
-    public class CommonConstants
+    public static class CommonConstants
     {
         public const string ViewIPVN = "ViewIPVN";
         public const string CurrentLogInUser = "Fanex.NAP.CMS.Core.AppSession.CurrentLogInUser";

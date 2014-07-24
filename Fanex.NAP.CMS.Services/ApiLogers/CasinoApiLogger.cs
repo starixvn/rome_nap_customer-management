@@ -14,6 +14,10 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
     using Fanex.NAP.CMS.Services.Interfaces;
     using Sunplus.Libraries.APILogger;
 
+    public delegate int GetUserId();
+
+    public delegate int GetCustId();
+
     /// <summary>
     /// Casino API Logger.
     /// </summary>
@@ -29,10 +33,6 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
             this._userIdDelegate = userIdDelegate;
             this._custIdDelegate = custIdDelegate;
         }
-
-        public delegate int GetUserId();
-
-        public delegate int GetCustId();
 
         /// <summary>
         /// Writes logs for Casino API calls.

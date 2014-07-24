@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Data.Repository;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.Common;
@@ -20,7 +21,6 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent;
     using Fanex.NAP.Framework.Command;
-    using Fanex.NAP.Framework.Data;
 
     /// <summary>
     /// Configure turnover by event service.
@@ -40,7 +40,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             IEnumerable<SportTurnoverInfo> rawData = null;
             IEnumerable<SportTurnover> result = null;
 
-            rawData = this.GetData<SportTurnoverInfo>(criteria);
+            rawData = this.Repository.Fetch<SportTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
             {
@@ -62,7 +62,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             LeagueTurnoverInfo firstItem = null;
             GotLeagueTurnoverResult result = null;
 
-            rawData = this.GetData<LeagueTurnoverInfo>(criteria);
+            rawData = this.Repository.Fetch<LeagueTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
             {
@@ -95,7 +95,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             MatchTurnoverInfo firstItem = null;
             GotMatchTurnoverResult result = null;
 
-            rawData = this.GetData<MatchTurnoverInfo>(criteria);
+            rawData = this.Repository.Fetch<MatchTurnoverInfo>(criteria);
 
             if (rawData != null && rawData.Any())
             {
@@ -133,7 +133,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SportInfo object.</returns>
         public IEnumerable<SportInfo> GetSportList(GetSportsCriteria criteria)
         {
-            IEnumerable<SportInfo> result = this.GetData<SportInfo>(criteria);
+            IEnumerable<SportInfo> result = this.Repository.Fetch<SportInfo>(criteria);
 
             return result;
         }
@@ -145,7 +145,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of LeagueInfo objects.</returns>
         public IEnumerable<LeagueInfo> GetLeaguesOfSport(GetLeaguesOfSportCriteria criteria)
         {
-            IEnumerable<LeagueInfo> result = this.GetData<LeagueInfo>(criteria);
+            IEnumerable<LeagueInfo> result = this.Repository.Fetch<LeagueInfo>(criteria);
 
             return result;
         }
@@ -156,7 +156,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of CountryInfo objects.</returns>
         public IEnumerable<CountryInfo> GetCountryList()
         {
-            IEnumerable<CountryInfo> result = this.GetData<CountryInfo>(new GetHaveLeagueCountryCriteria());
+            IEnumerable<CountryInfo> result = this.Repository.Fetch<CountryInfo>(new GetHaveLeagueCountryCriteria());
 
             foreach (CountryInfo item in result)
             {
@@ -179,7 +179,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of CountryInfo objects.</returns>
         public IEnumerable<SpecialLeagueInfo> GetSpecialLeagueList()
         {
-            IEnumerable<SpecialLeagueInfo> result = this.GetData<SpecialLeagueInfo>(new GetSpecialLeaguesCriteria());
+            IEnumerable<SpecialLeagueInfo> result = this.Repository.Fetch<SpecialLeagueInfo>(new GetSpecialLeaguesCriteria());
             string specialLeague;
 
             foreach (SpecialLeagueInfo item in result)

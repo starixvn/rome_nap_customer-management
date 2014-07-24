@@ -10,13 +10,13 @@
 namespace Fanex.NAP.CMS.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.ManageRobots;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageRobots;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Manage robots controller.

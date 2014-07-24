@@ -10,7 +10,7 @@
 namespace Fanex.NAP.CMS.Criteria.Common
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that are used to get the list of leagues belong to a specific sport.

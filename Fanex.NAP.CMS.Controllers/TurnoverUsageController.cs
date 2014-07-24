@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.TurnoverUsage;
     using Fanex.NAP.CMS.Models.Common;

@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.Controllers
 {
     using System.Web.Mvc;
+    using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
@@ -31,7 +32,7 @@ namespace Fanex.NAP.CMS.Controllers
         public CloseOpenMemberController(IOpenCloseMemberService openCloseMemberService)
         {
             this._openCloseMemberService = openCloseMemberService ?? new OpenCloseMemberService(this.ServiceContext);
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.Close_OpenMembers, Constant.Policy.Host);
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.CloseOpenMembers, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <returns>Index view.</returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.CloseOpenMembers, Policy = Constant.Policy.Host)]
         public ActionResult Index()
         {
             return View();
@@ -51,7 +52,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Filter conditions.</param>
         /// <returns>Member list.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.CloseOpenMembers, Policy = Constant.Policy.Host)]
         public JsonResult GetMemberList(GettingMembersStatusFilter filter)
         {
             GettingMembersStatusResult result = this._openCloseMemberService.GetMembersStatus(filter);
@@ -65,7 +66,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="filter">Filter conditions.</param>
         /// <returns>JSON object indicates the result of updating process.</returns>
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.Close_OpenMembers, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.CloseOpenMembers, Policy = Constant.Policy.Host)]
         public JsonResult UpdateMembers(UpdatedMembersStatusFilter filter)
         {
             UpdatedMembersStatusResult result = null;

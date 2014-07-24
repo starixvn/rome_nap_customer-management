@@ -9,7 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.OpenCloseMember
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// The criteria that contain the list of members that needed to update.

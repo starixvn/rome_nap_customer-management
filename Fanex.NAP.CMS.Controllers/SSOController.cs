@@ -65,18 +65,21 @@ namespace Fanex.NAP.CMS.Controllers
         /// <param name="userId">The user ID.</param>
         /// <param name="onuserId">The online user ID.</param>
         /// <param name="time">The SSO time.</param>
+        /// <param name="redirectUrl">Redirected URL after SSO.</param>
         /// <returns>Action result.</returns>
         [AllowAnonymous]
         [HttpGet]
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult Index(string userId, string onuserId, string time)
+        public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
+            string currentTime = this._userService.UserSSOGetTime();
+            string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
+            TimeSpan expiration = new TimeSpan();
+
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));
             onuserId = Cryptography.CfsDeCrypt(onuserId.Replace(" ", "+"));
             time = Cryptography.CfsDeCrypt(time.Replace(" ", "+"));
-            string currentTime = this._userService.UserSSOGetTime();
-
-            var expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
+            expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
 
             if (expiration.TotalSeconds <= this._timeExipration)
             {
@@ -120,7 +123,7 @@ namespace Fanex.NAP.CMS.Controllers
 
                     this.CreateAuthInfo(user);
 
-                    return this.Redirect(FormsAuthentication.DefaultUrl);
+                    return this.Redirect(forwardLink);
                 }
             }
 

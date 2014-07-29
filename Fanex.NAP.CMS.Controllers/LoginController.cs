@@ -6,13 +6,13 @@
 // <history>
 //   <change who="Edward.Nguyen" date="2012.8.28">Add properties _currentContext</change>
 //   <change who="Jason.Ly" date="2014.4.14">Move out of User area.</change>
+//   <change who="Jason.Ly" date="2014.7.29">Separate Login action into some private functions.</change>
 // </history>
 
 namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -130,7 +130,6 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>Action result.</returns>
         [HttpPost]
         [ValidateInput(false)]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string username, string password, string loginToken)
         {
             if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
@@ -143,69 +142,21 @@ namespace Fanex.NAP.CMS.Controllers
 
                     if (password == hashPassword)
                     {
-                        var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
-                        var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
-
                         ClearToken();
 
-                        if ((group == null || group.IsActive) && siteLevelList.Where(x => x.IsActive).Any())
+                        if (CheckUserSitePermission(user))
                         {
-                            // check-in user
-                            var criteria = new UserCheckInUserCriteria
-                            {
-                                UserId = user.Id,
-                                SiteId = this.SiteId,
-                                NetSessionId = Session.SessionID,
-                                Ip = CurrentContext.IP,
-                                LoginDate = DateTime.Now,
-                                BrowserName = CurrentContext.BrowserName,
-                                CountryCode = CurrentContext.CountryCode,
-                                Domain = CurrentContext.DomainName,
-                                Platform = CurrentContext.Platform
-                            };
-
-                            this._userService.UserCheckIn(ref criteria);
-
-                            // saves user session
-                            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
-                            this._currentSession.UserId = user.Id;
-                            this._currentSession.Username = username;
-                            this._currentSession.OnUserId = criteria.OnUserId;
-                            this._currentSession.SessionId = Session.SessionID.ToString();
-
-                            // current site is not NAP Hub
-                            if (this.SiteId != 0)
-                            {
-                                this.CreateUserMenu(user);
-                            }
-
+                            // Check in user.
+                            this.CheckIn(user);
+                            this.CreateUserMenu(user);
                             this.CreateAuthInfo(user);
 
-                            // if the user login directly, not through NAP Hub
-                            if (this.EnableDirectLogin)
-                            {
-                                // checks if logging-in user is active on this site
-                                if (siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any())
-                                {
-                                    return Redirect(FormsAuthentication.DefaultUrl);
-                                }
-
-                                DoSignOut();
-                                ViewBag.Message = ViewResources.Your_account_was_suspended;
-                            }
+                            return Redirect(FormsAuthentication.DefaultUrl);
                         }
                         else
                         {
-                            // user account was suspended on all sites
-                            if (siteLevelList.Count() > 0)
-                            {
-                                ViewBag.Message = ViewResources.Your_account_was_suspended;
-                            }
-                            else
-                            {
-                                // logging-in user belongs to no site
-                                ViewBag.Message = ViewResources.You_have_no_authorization;
-                            }
+                            // logging-in user belongs to no site
+                            ViewBag.Message = ViewResources.You_have_no_authorization;
                         }
                     }
                     else
@@ -344,6 +295,49 @@ namespace Fanex.NAP.CMS.Controllers
             };
 
             Response.Cookies.Add(authCookie);
+        }
+
+        /// <summary>
+        /// Checks in an user.
+        /// </summary>
+        /// <param name="user">The user information.</param>
+        private void CheckIn(User user)
+        {
+            // check-in user
+            var criteria = new UserCheckInUserCriteria
+            {
+                UserId = user.Id,
+                SiteId = this.SiteId,
+                NetSessionId = Session.SessionID,
+                Ip = CurrentContext.IP,
+                LoginDate = DateTime.Now,
+                BrowserName = CurrentContext.BrowserName,
+                CountryCode = CurrentContext.CountryCode,
+                Domain = CurrentContext.DomainName,
+                Platform = CurrentContext.Platform
+            };
+
+            this._userService.UserCheckIn(ref criteria);
+
+            // saves user session
+            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+            this._currentSession.UserId = user.Id;
+            this._currentSession.Username = user.Username;
+            this._currentSession.OnUserId = criteria.OnUserId;
+            this._currentSession.SessionId = Session.SessionID.ToString();
+        }
+
+        /// <summary>
+        /// Checks the user permission on specific site.
+        /// </summary>
+        /// <param name="user">The user information.</param>
+        /// <returns>If an user has permission on a specific site or not.</returns>
+        private bool CheckUserSitePermission(User user)
+        {
+            var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
+            var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
+
+            return (group == null || group.IsActive) && siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any();
         }
 
         /// <summary>

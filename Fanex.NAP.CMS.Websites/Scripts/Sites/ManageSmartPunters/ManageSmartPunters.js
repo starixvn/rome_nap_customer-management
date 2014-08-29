@@ -1,7 +1,7 @@
 ﻿/* File Created: June 4, 2014 */
 /* global Namespace, Fanex, CMS, Validator, labels, messages, hasEditRight */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 Namespace.Register("Fanex.CMS.ManageSmartPunters.ManageSmartPunters");
 Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {

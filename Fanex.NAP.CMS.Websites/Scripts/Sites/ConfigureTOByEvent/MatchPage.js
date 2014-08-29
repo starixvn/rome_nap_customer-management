@@ -1,10 +1,10 @@
 ﻿/* File Created: April 17, 2014 */
 /* global Namespace, numeral, Fanex, CMS, Validator, labels, messages, hasEditRight */
+/* jshint strict: false */
+// 'use strict';
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage');
 Fanex.NAP.CMS.ConfigureTOByEvent.MatchPage = function () {
-    'use strict';
-
     var $this = this;
     var urls = {
         GetMatchTurnover: CMS.resolveRootUrl('ConfigureTOByEvent/GetMatchTurnover'),

@@ -1,4 +1,5 @@
-﻿'use strict';
+﻿/* jshint strict: false */
+// 'use strict';
 
 var Recheckin = (function ($) {
 

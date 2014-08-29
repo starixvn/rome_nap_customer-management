@@ -1,7 +1,7 @@
 ﻿/* File Created: March 4, 2014 */
 /* global Namespace, Fanex, CMS, Validator, labels, messages */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
     var memberList = new Fanex.CMS.CloseOpenMember();

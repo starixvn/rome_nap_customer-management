@@ -1,7 +1,7 @@
 ﻿/* File Created: May 30, 2014 */
 /* global Namespace, Fanex, CMS, Validator, labels, messages, hasEditRight */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
     var manageRobots = new Fanex.CMS.ManageRobots();

@@ -1,7 +1,7 @@
 ﻿/* File Created: May 23, 2014 */
 /* global Namespace, numeral, Fanex, CMS, labels */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
     var report = new Fanex.CMS.LossMonitor();

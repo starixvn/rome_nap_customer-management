@@ -1,7 +1,7 @@
 ﻿/* File Created: April 16, 2014 */
 /* global Namespace, numeral, Fanex, CMS, Layout, Validator, labels, datepickerSetting, messages */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
     var report = new Fanex.CMS.TurnoverUsage();

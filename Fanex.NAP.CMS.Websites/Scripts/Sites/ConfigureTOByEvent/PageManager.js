@@ -1,10 +1,10 @@
 ﻿/* File Created: April 16, 2014 */
 /* global Namespace, Fanex */
+/* jshint strict: false */
+// 'use strict';
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureTOByEvent.PageManager');
 Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
-    'use strict';
-
     var $this = this;
     var domElements = {
         lnkSport: null,
@@ -79,8 +79,6 @@ Fanex.NAP.CMS.ConfigureTOByEvent.PageManager = function () {
 };
 
 $(document).ready(function () {
-    'use strict';
-
     var tunoverPageManager = new Fanex.NAP.CMS.ConfigureTOByEvent.PageManager();
 
     tunoverPageManager.InitPage();

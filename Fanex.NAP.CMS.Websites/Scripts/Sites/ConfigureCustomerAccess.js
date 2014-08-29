@@ -1,8 +1,9 @@
 ﻿/* File Created: March 6, 2014 */
 /* global Namespace, Fanex, Validator, CMS, Layout, labels, messages, hasEditAccessRight, minDate */
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
-    'use strict';
     var manager = new Fanex.NAP.CMS.ConfigureCustomerAccess();
 
     manager.InitPage();
@@ -10,8 +11,6 @@ $(document).ready(function () {
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureCustomerAccess');
 Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
-    'use strict';
-
     var $this = this;
     var urls = {
         GetRequestList: CMS.resolveRootUrl('ConfigureCustomerAccess/GetRequestList'),

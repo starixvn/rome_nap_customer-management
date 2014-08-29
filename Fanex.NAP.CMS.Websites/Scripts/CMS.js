@@ -1,5 +1,6 @@
 ﻿/* File Created: March 3, 2014 */
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 var CMS = (function ($) {
 

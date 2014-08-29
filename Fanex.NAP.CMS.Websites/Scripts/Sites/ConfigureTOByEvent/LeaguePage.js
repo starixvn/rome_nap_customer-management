@@ -1,10 +1,10 @@
 ﻿/* File Created: April 17, 2014 */
 /* global Namespace, numeral, Fanex, CMS, Validator, labels, messages, hasEditRight */
+/* jshint strict: false */
+// 'use strict';
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage');
 Fanex.NAP.CMS.ConfigureTOByEvent.LeaguePage = function () {
-    'use strict';
-
     var $this = this;
     var domElements = {
         divLeagueContent: null,

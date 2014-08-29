@@ -1,8 +1,8 @@
 ﻿/* File Created: March 3, 2014 */
 /* global CMS */
 /* exported Layout */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 var Layout = (function () {
     return {

@@ -1,10 +1,10 @@
 ﻿/* File Created: April 17, 2014 */
 /* global Namespace, numeral, Fanex, CMS, Validator, labels, messages, hasEditRight */
+/* jshint strict: false */
+// 'use strict';
 
 Namespace.Register('Fanex.NAP.CMS.ConfigureTOByEvent.SportPage');
 Fanex.NAP.CMS.ConfigureTOByEvent.SportPage = function () {
-    'use strict';
-
     var $this = this;
     var urls = {
         GetSportTurnover: CMS.resolveRootUrl('ConfigureTOByEvent/GetSportTurnover'),

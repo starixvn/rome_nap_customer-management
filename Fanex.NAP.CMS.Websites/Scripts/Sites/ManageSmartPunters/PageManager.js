@@ -1,7 +1,7 @@
 ﻿/* File Created: June 20, 2014 */
 /* global Namespace, Fanex */
-
-'use strict';
+/* jshint strict: false */
+// 'use strict';
 
 $(document).ready(function () {
     var manageSmartPunters = new Fanex.CMS.ManageSmartPunters.PageManager();

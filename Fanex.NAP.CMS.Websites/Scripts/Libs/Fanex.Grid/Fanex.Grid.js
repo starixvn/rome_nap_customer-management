@@ -20,7 +20,7 @@
 var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
 
 (function ($) {
-    'use strict';
+    //'use strict';
 
     //// Method expose for user use
     var methods =

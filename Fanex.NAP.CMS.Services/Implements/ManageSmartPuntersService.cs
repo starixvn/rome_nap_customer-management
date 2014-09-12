@@ -36,14 +36,12 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of SmartPunterItem objects.</returns>
         public IEnumerable<SmartPunterItem> GetSmartPunters(GetSmartPuntersCriteria criteria)
         {
-            int totalItems = 0;
             IEnumerable<SmartPunterInfo> rawData = this.Repository.Fetch<SmartPunterInfo>(criteria);
             IEnumerable<SmartPunterItem> result = null;
 
             if (rawData != null && rawData.Any())
             {
                 result = rawData.Select(obj => new SmartPunterItem(obj));
-                criteria.TotalItems = totalItems;
             }
 
             return result;

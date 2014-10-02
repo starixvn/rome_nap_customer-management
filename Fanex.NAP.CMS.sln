@@ -23,7 +23,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysi
 		CodeAnalysis\FxCopDictionary.xml = CodeAnalysis\FxCopDictionary.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{CF456BE6-696C-4102-B161-7F35F34FD4A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{AC68E51B-75F0-473C-9153-67AC782E4825}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.TurnoverControl", "Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj", "{254A702A-C370-4BF6-B200-2DEDE2D58AC5}"
+EndProject
 Global
+	GlobalSection(JSLint) = preSolution
+		SolutionConfigurationLocation = JSLintOptions.xml
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -61,8 +70,22 @@ Global
 		{2C4A415A-8958-443C-A2FA-A82B3E001B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C4A415A-8958-443C-A2FA-A82B3E001B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C4A415A-8958-443C-A2FA-A82B3E001B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{254A702A-C370-4BF6-B200-2DEDE2D58AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{254A702A-C370-4BF6-B200-2DEDE2D58AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{254A702A-C370-4BF6-B200-2DEDE2D58AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{254A702A-C370-4BF6-B200-2DEDE2D58AC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{254A702A-C370-4BF6-B200-2DEDE2D58AC5} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{2C4A415A-8958-443C-A2FA-A82B3E001B25} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{88808F97-D8C0-45BE-80D8-9C814A5CFDE6} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{85B0833C-4389-4F0F-80D4-02D49DB7906E} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{7FBEED0D-8FC5-4A37-B458-2D5D85A17EF1} = {AC68E51B-75F0-473C-9153-67AC782E4825}
+		{DEA81795-9434-49DE-A2F4-84FCF7544F36} = {AC68E51B-75F0-473C-9153-67AC782E4825}
 	EndGlobalSection
 EndGlobal

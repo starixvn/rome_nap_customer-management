@@ -28,10 +28,14 @@
 /Fanex.NAP.CMS.ViewModels/Fanex.NAP.CMS.ViewModels.csproj.user
 /Fanex.NAP.CMS.Websites/bin
 /Fanex.NAP.CMS.Websites/obj
+
+
 /Fanex.NAP.CMS.Websites/Fanex.NAP.CMS.Websites.csproj.user
 /Fanex.NAP.CMS.Websites/StyleCop.Cache
 /Fanex.NAP.CMS.suo
 /Fanex.NAP.CMS.sln.docstates.suo
 
+/Modules/Fanex.Nap.CMS.Infrastructure/bin
+/Modules/Fanex.Nap.CMS.Infrastructure/obj
 /Modules/Fanex.Nap.CMS.TurnoverControl/obj
 /Modules/Fanex.Nap.CMS.TurnoverControl/bin

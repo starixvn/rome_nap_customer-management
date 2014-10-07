@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.Websites
 {
     using System.Web.Optimization;
+    using Fanex.Nap.CMS.TurnoverControl.AppStart;
 
     /// <summary>
     /// Bundle Configuration.
@@ -27,6 +28,8 @@ namespace Fanex.NAP.CMS.Websites
             RegisterCustomerBundles(bundles);
             RegisterTurnoverControlBundles(bundles);
             RegisterLossControlBundles(bundles);
+
+            TurnoverControlBundleConfig.RegisterAll(bundles);
         }
 
         /// <summary>
@@ -79,7 +82,9 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Extensions/jquery.combobox-ext.js",
                 "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Scripts/Validator.js",
+                "~/Scripts/KeyboardManager.js",
                 "~/Scripts/CMS.js",
+                "~/Scripts/CMSConstants.js",
                 "~/Scripts/Layout.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/crypto").Include(

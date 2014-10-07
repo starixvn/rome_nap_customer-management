@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="TurnoverControl-GlobalSetting">
+    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Acc_SMATurnoverGlobalSettingList" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="Acc_SMATurnoverGlobalSettingUpd" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="Acc_SMATurnoverGlobalSettingIns" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="Acc_SMATurnoverGlobalSettingDel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+  <Function Name="TurnoverControl-TurnoverMonitor">
+    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="Acc_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="Acc_SMATurnoverLeagueSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="Acc_SMATurnoverListSel" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="Acc_SMATurnoverBalanceInfoSel" DbName="DBAGE.bodb02.bodbAdminNet"  >
+      <Mapping DataField="bettype" ObjectProperty="BetType" />
+    </Setting>
+    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Acc_SMATurnoverUpd" DbName="DBAGE.bodb02.bodbAdminNet"  />
+  </Function>
+</Functions>

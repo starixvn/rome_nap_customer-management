@@ -151,6 +151,7 @@ namespace Fanex.NAP.CMS.Controllers
                             this.CreateUserMenu(user);
                             this.CreateAuthInfo(user);
 
+                            Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
                             return Redirect(FormsAuthentication.DefaultUrl);
                         }
                         else

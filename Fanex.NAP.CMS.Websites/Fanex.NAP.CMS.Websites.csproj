@@ -125,12 +125,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -199,12 +199,31 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Scripts\AddSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\TurnoverMonitorManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\countdownCheck.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\dropdown.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentageUsed.jpg" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
@@ -282,8 +301,11 @@
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\CMSConstants.js" />
+    <Content Include="Scripts\KeyboardManager.js" />
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
+    <Content Include="Scripts\Libs\Popup\dialogbox.js" />
     <Content Include="Scripts\ReCheckIn.js" />
     <Content Include="Scripts\Sites\ManageRobots.js" />
     <Content Include="Scripts\Sites\LossMonitor.js" />
@@ -391,6 +413,10 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
+      <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
+      <Name>Fanex.Nap.CMS.TurnoverControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -474,10 +500,22 @@
     <Content Include="Web.local.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\Web.config" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Index.cshtml" />
+    <None Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Styles\AddSetting.less" />
+    <None Include="Areas\TurnoverControl\Views\GlobalSetting\Styles\GlobalSetting.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\SMATurnoverContent.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Index.cshtml" />
+    <None Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
+    <None Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Content\Themes\PopupCustomStyle.less" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -494,7 +532,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52239</DevelopmentServerPort>
+          <DevelopmentServerPort>60809</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

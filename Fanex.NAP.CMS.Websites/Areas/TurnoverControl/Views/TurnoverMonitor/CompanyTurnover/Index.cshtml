@@ -1,0 +1,41 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.NAP.Core.Business;
+@using Fanex.Nap.CMS.Infrastructure;
+@using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+@using Newtonsoft.Json;
+@model List<TurnoverBalance>
+@{
+    ViewBag.Title = Labels.TurnoverMonitor_CompanyTurnover_Title;
+    var companyTurnover = JsonConvert.SerializeObject(Model);
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/styles/common")
+    @Styles.Render("~/areas/turnovercontrol/turnovermonitor/companyturnoverstyles")
+</head>
+<body>
+    <div class="form expand-form">
+        <div id="div-result-message" class="inline-message">
+        </div>
+        <div class="form-row">
+            <div id="turnover-balance-container" class="content-grid">
+                <div id="turnover-balance" class="freegrid display-none">
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/scripts/common")
+    @Scripts.Render("~/areas/turnovercontrol/turnovermonitor/companyturnoverscripts")
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+       var companyTurnover =  @Html.Raw(companyTurnover); 
+        var viewResources = {
+            Bet_Type: '@Labels.Bet_Type',
+            Balance: '@Labels.Balance',
+            Balance_Info: '@Labels.Balance_Info'
+        };       
+    </script>
+</body>
+</html>

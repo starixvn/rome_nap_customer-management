@@ -1,5 +1,7 @@
 ﻿/* File Created: March 3, 2014 */
-/* jshint strict: false */
+/* global keyboardManager */
+/* jshint strict: false,
+camelcase: false */
 // 'use strict';
 
 var CMS = (function ($) {
@@ -274,6 +276,120 @@ var CMS = (function ($) {
         encodeURI: function (str) {
             // ref: https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/encodeURI
             return encodeURI(str).replace(/%5B/g, '[').replace(/%5D/g, ']');
+        },
+
+        callAjax: function (reportHandler,
+            url,
+            requestParams,
+            successFunction,
+            errorFunction,
+            completeFunction) {
+            $.ajax({
+                type: 'POST',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify(requestParams),
+                success: function (result) {
+                    if (successFunction && typeof (successFunction) === 'function') {
+                        successFunction.call(reportHandler, result);
+                    }
+                },
+                error: function (xhr) {
+                    if (errorFunction && typeof (errorFunction) === 'function') {
+                        errorFunction.call(reportHandler, xhr);
+                    } else {
+                        CMS.handleAjaxError(xhr);
+                    }
+                },
+                complete: function () {
+                    if (completeFunction && typeof (completeFunction) === 'function') {
+                        completeFunction();
+                    } else {
+                        CMS.enableInput();
+                    }
+                }
+            });
+        },
+        forceNumberInput: function (e) {
+            var code = "";
+            if (e.which) {
+                code = e.which;
+            }
+            else if (e.keyCode) {
+                code = e.keyCode;
+            }
+
+            if (code === keyboardManager.Enums.KeyCode.End ||
+                code === keyboardManager.Enums.KeyCode.Home ||
+                code === keyboardManager.Enums.KeyCode.LeftArrow ||
+                code === keyboardManager.Enums.KeyCode.RightArrow ||
+                CMS.isCtrlCombine(e, code)) {
+                return true;
+            }
+
+            if ((code < keyboardManager.Enums.KeyCode.Number_0 || keyboardManager.Enums.KeyCode.Number_9 < code) &&
+                code !== keyboardManager.Enums.KeyCode.Backspace &&
+                code !== keyboardManager.Enums.KeyCode.Enter &&
+                code !== keyboardManager.Enums.KeyCode.None &&
+                (code !== keyboardManager.Enums.KeyCode.Delete || e.which) &&
+                code !== keyboardManager.Enums.KeyCode.Tab) {
+                return false;
+            }
+
+            return true;
+        },
+        isCtrlCombine: function (e, code) {
+            var charFromCode = String.fromCharCode(code).toLowerCase();
+            return e.ctrlKey &&
+                (charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_v).toLowerCase() ||
+                charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_c).toLowerCase() ||
+                charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_a).toLowerCase());
+        },
+        showTipsyError: function ($obj, message, gravity) {
+            if ($obj.is(':hidden')) {
+                return;
+            }
+
+            $obj.attr('title', message);
+            $obj.tipsy({
+                trigger: 'manual',
+                gravity: gravity ? gravity : 'sw',
+                classStyle: 'error',
+                inDocument: false,
+                opacity: 0.97
+            });
+            $obj.tipsy('show').triggerHandler('raiseError');
+
+            // FireFox will not re-focus to the control until blur event finshes.
+            setTimeout(function () {
+                $obj.focus();
+            }, 0);
+
+            // Hide error when changing the field.
+            $obj.change(function () {
+                CMS.clearTipsyError($obj);
+            });
+        },
+        clearTipsyError: function ($obj) {
+            $obj.tipsy('hide');
+            $obj.removeAttr('original-title').triggerHandler('clearError');
+        },
+
+        findPosition: function (oElement) {
+            if (typeof (oElement.offsetParent()) !== 'undefined') {
+                for (var posX = 0, posY = 0; oElement && oElement.length; oElement = oElement.offsetParent()) {
+                    posX += oElement.offset().left;
+                    posY += oElement.offset().top;
+                    if (oElement[0].nodeName.toLowerCase() === 'body') {
+                        break;
+                    }
+                }
+
+                return [posX, posY];
+            } else {
+                return [oElement.x, oElement.y];
+            }
         }
     };
 

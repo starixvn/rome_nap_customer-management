@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Global_Setting" xml:space="preserve">
+    <value>Global Setting</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SMA_Name" xml:space="preserve">
+    <value>SMA Name</value>
+  </data>
+  <data name="Turnover_Monitor" xml:space="preserve">
+    <value>Turnover Monitor</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Max_Turnover" xml:space="preserve">
+    <value>Max Turnover</value>
+  </data>
+  <data name="Symbol_No" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="GlobalSetting_SheetName" xml:space="preserve">
+    <value>Turnover Control - Global Setting</value>
+  </data>
+  <data name="GlobalSetting_ExcelFileName" xml:space="preserve">
+    <value>Turnover Control - Global Setting {0}</value>
+  </data>
+  <data name="GlobalSetting_ExcelTitle" xml:space="preserve">
+    <value>Turnover Control - Global Setting</value>
+  </data>
+  <data name="GlobalSetting_EditMaxTurnover_Confirm" xml:space="preserve">
+    <value>Are you sure you want to update max turnover of {0}?</value>
+  </data>
+  <data name="GlobalSetting_EditMaxTurnover_Success" xml:space="preserve">
+    <value>Update Max Turnover Successfully!</value>
+  </data>
+  <data name="GlobalSetting_DeleteMaxTurnover_Confirm" xml:space="preserve">
+    <value>Are you sure you want to remove this customer?</value>
+  </data>
+  <data name="GlobalSetting_DeleteMaxTurnover_Success" xml:space="preserve">
+    <value>Delete Customer Global Setting Successfully!</value>
+  </data>
+  <data name="GlobalSetting_AddNewSMA_Title" xml:space="preserve">
+    <value>Add New SMA</value>
+  </data>
+  <data name="Error_RequiredField" xml:space="preserve">
+    <value>Required field!</value>
+  </data>
+  <data name="GlobalSetting_MaxTurnover_ExceedMaxTurnover" xml:space="preserve">
+    <value>Max Turnover Is Exceeded!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="GlobalSetting_AddMaxTurnover_Success" xml:space="preserve">
+    <value>SMA {0} has been added successfully!</value>
+  </data>
+  <data name="Invalid_value" xml:space="preserve">
+    <value>Invalid value!</value>
+  </data>
+  <data name="From_Date" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="League" xml:space="preserve">
+    <value>League</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Symbol_PercentageUsedFilter" xml:space="preserve">
+    <value>% Used &gt;=</value>
+  </data>
+  <data name="To_Date" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="All_Leagues" xml:space="preserve">
+    <value>All Leagues</value>
+  </data>
+  <data name="TurnoverMonitor_SMATurnoverList_Title" xml:space="preserve">
+    <value>SMA Turnover List</value>
+  </data>
+  <data name="Company_Turnover" xml:space="preserve">
+    <value>Company Turnover</value>
+  </data>
+  <data name="Member_Turnover" xml:space="preserve">
+    <value>Member Turnover</value>
+  </data>
+  <data name="Percentage_Used" xml:space="preserve">
+    <value>Percentage Used</value>
+  </data>
+  <data name="TurnoverMonitor_MaxLevelReachedMessage" xml:space="preserve">
+    <value>Number of SMA reached to 100%</value>
+  </data>
+  <data name="Not_Refresh" xml:space="preserve">
+    <value>Not Refresh</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Symbol_Second" xml:space="preserve">
+    <value>sec</value>
+  </data>
+  <data name="Message_NoReportData" xml:space="preserve">
+    <value>There is no data</value>
+  </data>
+  <data name="Event_Date" xml:space="preserve">
+    <value>Event Date</value>
+  </data>
+  <data name="Match_Id" xml:space="preserve">
+    <value>Match Id</value>
+  </data>
+  <data name="TurnoverMonitor_CompanyTurnover_Title" xml:space="preserve">
+    <value>Company Turnover</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_1H1X2" xml:space="preserve">
+    <value>[1] - [X] - [2]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_1HHandicap" xml:space="preserve">
+    <value>[home] - [away]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_1HOverUnder" xml:space="preserve">
+    <value>[over] - [under]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_1X2" xml:space="preserve">
+    <value>[1] - [X] - [2]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_Handicap" xml:space="preserve">
+    <value>[home] - [away]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_Others" xml:space="preserve">
+    <value>[amount]</value>
+  </data>
+  <data name="TurnoverMonitor_BalanceFormat_OverUnder" xml:space="preserve">
+    <value>[over] - [under]</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Balance</value>
+  </data>
+  <data name="Bet_Type" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="Balance_Info" xml:space="preserve">
+    <value>Balance Info</value>
+  </data>
+  <data name="Others" xml:space="preserve">
+    <value>Others</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="GlobalSetting_UpdateMaxTurnover_Success" xml:space="preserve">
+    <value>Update Max Turnover Successfully!</value>
+  </data>
+</root>

@@ -1,0 +1,41 @@
+.form {
+    background-color: transparent;
+    border: medium none;
+    box-shadow: none;
+    padding: 10px 0;
+    
+    .form-row {
+        .lbl-field {
+            width: 75px;
+        }
+
+        .radio-button {
+            width: 20px;
+            padding-right: 0px;
+        }
+
+        .normal-label {
+            margin-left: 20px;
+        }
+
+        &.button-row {
+            margin-top: 10px;
+            min-height: 25px;
+        }
+
+        &.padding-left-20 {
+            padding-left: 20px;
+        }
+    }
+
+    &.expand-form {
+        min-width: 430px;
+    }
+        
+    .form-row .edit-field input[type="text"], 
+    .form-row .edit-field input[type="password"],
+    .form-row .edit-field select
+    {
+        height: 26px;
+    }    
+}

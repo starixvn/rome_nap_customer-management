@@ -1,5 +1,6 @@
 ﻿/* File Created: March 7, 2014 */
-'use strict';
+/* jshint strict: false */
+//'use strict';
 
 (function ($) {
     // Add clear field icon to textbox which will have the same functionality with the IE9's native textbox.
@@ -302,7 +303,7 @@
         var timeout;
 
         // Set interval
-        setRefreshTime = function (value) {
+        var setRefreshTime = function (value) {
             refreshTime = value;
             value = value === 0 ? 'Not Refresh' : value;
             $refreshValue.text(value);

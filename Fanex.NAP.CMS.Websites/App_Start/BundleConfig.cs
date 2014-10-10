@@ -67,7 +67,9 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Content/Themes/style.less");
 
             bundles.Add(new ScriptBundle("~/scripts/common").Include(
-                "~/Scripts/Libs/jQuery/jquery-*",
+                "~/Scripts/Libs/jQuery/jquery-1.8.2.min.js",
+                "~/Scripts/Libs/jQuery/jquery-migrate-1.2.1.js",
+                "~/Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js",
                 "~/Scripts/Libs/jQuery/jquery.mask.min.js",
                 "~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js",

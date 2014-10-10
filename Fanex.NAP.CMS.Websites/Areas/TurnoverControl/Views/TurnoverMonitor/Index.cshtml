@@ -66,35 +66,37 @@
 <div class="content-box">
     <div id="div-result-message" class="inline-message">
     </div>
-    <div class="max-level-used-box display-none">
-        <table cellspacing="0">
-            <tr>
-                <th class="lbl-max-level-used">
-                    @Labels.TurnoverMonitor_MaxLevelReachedMessage
-                </th>
-                <th class="lbl-max-level-used-counter">
-                </th>
-            </tr>
-        </table>
-    </div>
-    <div class="refreshBox display-none">
-        <div class="refreshIcon" title="@Labels.Refresh">
-            @Labels.Not_Refresh
+    <div id="div-smaturnover-grid-title" class="grid-title display-none">
+        <div class="max-level-used-box">
+            <table cellspacing="0">
+                <tr>
+                    <th class="lbl-max-level-used">
+                        @Labels.TurnoverMonitor_MaxLevelReachedMessage
+                    </th>
+                    <th class="lbl-max-level-used-counter">
+                    </th>
+                </tr>
+            </table>
         </div>
-        <div class="refreshDropdownIcon">
+        <div class="refreshBox">
+            <div class="refreshIcon" title="@Labels.Refresh">
+                @Labels.Not_Refresh
+            </div>
+            <div class="refreshDropdownIcon">
+            </div>
         </div>
-    </div>
-    <div class="countDownOptionContainer">
-        <div class="countDownOption countDownOptionCheck" val="@Labels.Not_Refresh">
-            @Labels.Not_Refresh</div>
-        <div class="countDownOption" val="30">
-            30 @Labels.Symbol_Second</div>
-        <div class="countDownOption" val="60">
-            60 @Labels.Symbol_Second</div>
-        <div class="countDownOption" val="90">
-            90 @Labels.Symbol_Second</div>
-        <div class="countDownOption" val="120">
-            120 @Labels.Symbol_Second</div>
+        <div class="countDownOptionContainer">
+            <div class="countDownOption countDownOptionCheck" val="@Labels.Not_Refresh">
+                @Labels.Not_Refresh</div>
+            <div class="countDownOption" val="30">
+                30 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="60">
+                60 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="90">
+                90 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="120">
+                120 @Labels.Symbol_Second</div>
+        </div>
     </div>
     @Html.Partial("~/Areas/TurnoverControl/Views/TurnoverMonitor/SMATurnoverContent.cshtml")
 </div>

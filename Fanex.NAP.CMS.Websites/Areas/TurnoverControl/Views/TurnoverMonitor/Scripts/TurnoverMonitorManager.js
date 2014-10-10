@@ -66,8 +66,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
         countdownTime: 0,
         refreshIntervalEvent: null,
         smaTurnoverList: null,
-        editingRowIndex: null,
-        isFirstLoad: true
+        editingRowIndex: null
     };
 
     self.initPage = function () {
@@ -93,6 +92,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
         self.domElements.maxLevelUsedBox = $('.max-level-used-box');
         self.domElements.lblMaxLevelUsedCounter = $('.lbl-max-level-used-counter');
         self.domElements.refreshBox = $('.refreshBox');
+        self.domElements.gridTitle = $('#div-smaturnover-grid-title');
     };
     self.initElements = function () {
         $("#fromtodate-picker").nexDatePicker({
@@ -212,11 +212,6 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
 
         self.domElements.ddlLeague.empty().append(options);
         $("#ddl-league.ui-combobox input").val(viewResources.All_Leagues);
-
-        if (self.cachedData.isFirstLoad) {
-            self.btnSearchClick();
-            self.cachedData.isFirstLoad = false;
-        }
     };
     self.btnSearchClick = function () {
         CMS.disableInput();
@@ -253,8 +248,8 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
             }
         }
 
-        self.showReachedMaxPercentageUsedBox(reachedMaxPercentageCount);
-        self.domElements.refreshBox.removeClass(self.configurations.css.displayNone);
+        self.domElements.lblMaxLevelUsedCounter.html(numeral(reachedMaxPercentageCount).format(CMSConstants.NumberFormat.IntNumber));
+        self.domElements.gridTitle.removeClass(self.configurations.css.displayNone);
 
         self.domElements.tblSMATurnoverBody.empty().append(html);
         self.renderSMATurnoverList_ApplyOptions();
@@ -352,7 +347,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
                         </td>';
             }
 
-            var percentageUsed = customerTurnoverInfo.PercentageUsed;
+            var percentageUsed = Math.round(customerTurnoverInfo.PercentageUsed);
             if (percentageUsed === self.configurations.maxTurnoverPercentage) {
                 html += '<td>\
                             <div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + percentageUsed + '%</div>\
@@ -549,6 +544,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     self.completeUpdateMaxTurnover = function (result) {
         if (result.Code) {
             CMS.showInlineErrorMsg(result.Message, self.domElements.divResult);
+            CMS.enableInput();
             return;
         }
 

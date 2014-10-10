@@ -494,6 +494,9 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+	<Content Include="Web.ConnectionString.dev.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config" />
     <Content Include="Web.AppSettings.local.config">

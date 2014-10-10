@@ -507,16 +507,16 @@
     <Content Include="Areas\TurnoverControl\Views\Web.config" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Index.cshtml" />
-    <None Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Styles\AddSetting.less" />
-    <None Include="Areas\TurnoverControl\Views\GlobalSetting\Styles\GlobalSetting.less" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Styles\AddSetting.less" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Styles\GlobalSetting.less" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\SMATurnoverContent.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Index.cshtml" />
-    <None Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
-    <None Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Content\Themes\PopupCustomStyle.less" />
+    <Content Include="Content\Themes\PopupCustomStyle.less" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

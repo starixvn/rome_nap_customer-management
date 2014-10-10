@@ -221,6 +221,8 @@
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\TurnoverMonitorManager.js" />
+	<Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\1.jpg" />
+	<Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\arrow.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\countdownCheck.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\dropdown.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentageUsed.jpg" />

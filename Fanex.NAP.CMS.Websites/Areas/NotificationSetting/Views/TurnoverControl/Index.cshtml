@@ -1,0 +1,65 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.Nap.CMS.NotificationSetting.Resources;
+@using Fanex.Common;
+@{
+    ViewBag.Title = Labels.TurnoverControl_Notification;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    System.Web.Script.Serialization.JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+}
+@section Head
+{
+    @Styles.Render("~/areas/notificationsetting/turnovercontrol/turnovercontrolstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div id="div-result-message" class="inline-message">
+</div>
+<div id="mailingListContent" class="mailingListContent">
+    <div class="row">
+        <div class="title-field"><b>@Labels.ToList</b></div>
+        <div id="toList" class="value-field">
+            <select id="txtToList" name="txtToList">
+            </select>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <div class="title-field"><b>@Labels.CcList</b></div>
+        <div id="ccList" class="value-field">
+            <select id="txtCcList" name="txtCcList">
+            </select>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="row">
+        <div class="title-field"><b>@Labels.BccList</b></div>
+        <div id="bccList" class="value-field">
+            <select id="txtBccList" name="txtBccList">
+            </select>
+        </div>
+        <div class="clear"></div>
+    </div>
+    @if (ViewBag.HasHostPermission)
+    {
+        <div class="row">
+            <div class="btnWrapper"><input class="btn btnSubmit" type="button" id="btnSubmit" value="Submit"/></div>
+        </div>
+    }
+</div>
+@section Foot
+{
+    @Scripts.Render("~/areas/notificationsetting/turnovercontrol/turnovercontrolscripts")
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var model = @Html.Raw(serializer.Serialize(Model)); 
+        var userGroupId = @Converter.ToInt(ViewBag.UserGroupId);
+        var viewResources = {
+        };       
+    </script>
+}

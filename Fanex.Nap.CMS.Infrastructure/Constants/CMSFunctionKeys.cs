@@ -61,5 +61,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string TurnoverUsage = "TurnoverUsage";
 
         public const string GlobalSetting = "GlobalSetting";
+
+        public const string TurnoverControlNotification = "TurnoverControlNotification";
     }
 }

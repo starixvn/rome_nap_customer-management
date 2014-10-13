@@ -30,9 +30,9 @@
                 <div class="greeting">
                     <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
                     <ul>
-                        <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo")</li>
-                        <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo")</li>
-                        <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login")</li>
+                        <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { area = ""}, null)</li>
                     </ul>
                 </div>
             </div>

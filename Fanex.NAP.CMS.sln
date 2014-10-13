@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.TurnoverContr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.Infrastructure", "Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj", "{468362D3-46E5-43E2-AE63-8C8827F5CA55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.NotificationSetting", "Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj", "{91147E01-1591-4BC1-852E-0A9FA06B8475}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{468362D3-46E5-43E2-AE63-8C8827F5CA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{468362D3-46E5-43E2-AE63-8C8827F5CA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{468362D3-46E5-43E2-AE63-8C8827F5CA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91147E01-1591-4BC1-852E-0A9FA06B8475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91147E01-1591-4BC1-852E-0A9FA06B8475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91147E01-1591-4BC1-852E-0A9FA06B8475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91147E01-1591-4BC1-852E-0A9FA06B8475}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +97,6 @@ Global
 		{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B} = {AC68E51B-75F0-473C-9153-67AC782E4825}
 		{254A702A-C370-4BF6-B200-2DEDE2D58AC5} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{468362D3-46E5-43E2-AE63-8C8827F5CA55} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{91147E01-1591-4BC1-852E-0A9FA06B8475} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 	EndGlobalSection
 EndGlobal

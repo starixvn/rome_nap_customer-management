@@ -202,14 +202,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -217,6 +224,11 @@
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-mac.css" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input.css" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Scripts\AddSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
@@ -418,6 +430,10 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
+      <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
+      <Name>Fanex.Nap.CMS.NotificationSetting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>
@@ -530,6 +546,9 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
+    <Content Include="Areas\NotificationSetting\Views\Web.config" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

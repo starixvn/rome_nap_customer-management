@@ -74,7 +74,6 @@
   <ItemGroup>
     <Compile Include="AppStart\TurnoverControlBundleConfig.cs" />
     <Compile Include="Controllers\GlobalSettingController.cs" />
-    <Compile Include="Controllers\TurnoverControlNotificationController.cs" />
     <Compile Include="Controllers\TurnoverMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\DeleteGlobalSettingCriteria.cs" />

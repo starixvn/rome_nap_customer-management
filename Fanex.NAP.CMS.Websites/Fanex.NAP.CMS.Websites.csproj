@@ -221,8 +221,8 @@
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\TurnoverMonitorManager.js" />
-	<Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\1.jpg" />
-	<Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\arrow.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\1.jpg" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\arrow.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\countdownCheck.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\dropdown.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentageUsed.jpg" />
@@ -488,13 +488,25 @@
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.local.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.dev.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.master.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionString.dev.config">
+    <Content Include="Web.ConnectionString.dev.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.prod.config" />
@@ -522,6 +534,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
+    <Content Include="Web.master.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

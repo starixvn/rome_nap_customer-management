@@ -202,6 +202,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />

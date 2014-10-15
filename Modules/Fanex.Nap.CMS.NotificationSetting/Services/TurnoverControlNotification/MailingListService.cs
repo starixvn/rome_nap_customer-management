@@ -37,8 +37,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
         /// <returns>The email list.</returns>
         public MailingList MailingList()
         {
-            var mailingList = _repository.GetMailingList(new GetMailingCriteria());
-            return mailingList;
+            return _repository.GetMailingList(new GetMailingCriteria());
         }
 
         /// <summary>
@@ -78,10 +77,12 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
 
         public int UserGroupId()
         {
-            GetUserGroupCriteria criteria = new GetUserGroupCriteria();
-            criteria.UserId = AppSession.CurrentUser.Id;
-            int userGroupdId = _repository.GetUserGroup(criteria);
-            return userGroupdId;
+            GetUserGroupCriteria criteria = new GetUserGroupCriteria()
+            {
+                UserId = AppSession.CurrentUser.Id
+            };
+
+            return _repository.GetUserGroup(criteria);
         }
     }
 }

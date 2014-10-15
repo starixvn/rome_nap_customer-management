@@ -51,7 +51,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Repositories.TurnoverControlNotifica
                     {
                         mailingList.NonMailingList += index == 0 ?
                             mailInfo.SiteName :
-                            string.Format("{0} {1}", ",", mailInfo.SiteName);
+                            string.Format(", {0}", mailInfo.SiteName);
                         index++;
                     }
                 }

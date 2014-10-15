@@ -38,13 +38,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    var sport = new IdNameModel
+                    result.Add(new IdNameModel()
                     {
                         Id = Converter.ToInt(reader["sporttype"]),
                         Name = Converter.ToString2(reader["sportname"])
-                    };
-
-                    result.Add(sport);
+                    });
                 }
             }
 
@@ -65,13 +63,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    var sport = new IdNameModel
+                    result.Add(new IdNameModel()
                     {
                         Id = Converter.ToInt(reader["leagueid"]),
                         Name = Converter.ToString2(reader["leaguename"])
-                    };
-
-                    result.Add(sport);
+                    });
                 }
             }
 

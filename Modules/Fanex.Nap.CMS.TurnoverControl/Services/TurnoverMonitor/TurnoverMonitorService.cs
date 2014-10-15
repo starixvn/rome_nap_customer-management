@@ -78,14 +78,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
             foreach (var leagueGroup in leagueGroups)
             {
-                var leagueTurnover = new TurnoverInfoByGroup
+                result.ChildTurnoverInfo.Add(new TurnoverInfoByGroup()
                 {
                     Id = leagueGroup.Key.Id,
                     Name = leagueGroup.Key.Name,
                     ChildTurnoverInfo = SMATurnoverListByLeague(leagueGroup)
-                };
-
-                result.ChildTurnoverInfo.Add(leagueTurnover);
+                });
             }
 
             return result;

@@ -29,8 +29,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
     /// </summary>
     public class GlobalSettingService : IGlobalSettingService
     {
-        private static readonly string GlobalSettingListSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.ListSessionKey" +
-           (AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0);
+        private static readonly string GlobalSettingListSessionKey = 
+            string.Format("Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.ListSessionKey.{0}", AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0);
 
         private IGlobalSettingRepository _globalSettingRepository;
 

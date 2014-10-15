@@ -99,7 +99,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         /// Index view.
         /// </returns>
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public ActionResult OpenCompanyTurnoverView(int custId, int matchId)
         {
             var companyTurnover = _turnoverMonitorService.CompanyTurnover(new GetCompanyTurnoverCriteria

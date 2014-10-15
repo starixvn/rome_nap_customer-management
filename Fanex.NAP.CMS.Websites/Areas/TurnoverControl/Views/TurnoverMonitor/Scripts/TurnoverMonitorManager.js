@@ -327,7 +327,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
                             </div>\
                         </td>';
 
-            var canEditMaxTurnover = viewResources.hasHostPermission ||
+            var canEditMaxTurnover = viewResources.hasHostPermission &&
                 match.TurnoverInfo.MatchInfo.EventStatus !== "completed";
             if (canEditMaxTurnover) {
                 html += '<td class="td-company-turnover-body"' + rowIndex + '>\
@@ -341,7 +341,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
             }
             else {
                 html += '<td class="td-maxturnover">\
-                            <div class="col-max-turnover-body align-right">' +
+                            <div class="col-max-turnover-body align-right table-cell">' +
                                 numeral(customerTurnoverInfo.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber) +
                             '</div>\
                         </td>';
@@ -428,12 +428,15 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
             ChildTurnoverInfo[customerIndex].TurnoverInfo;
         colMaxTurnover.find("a").addClass(self.configurations.css.displayNone);
         colMaxTurnover.find(".ico-edit").addClass(self.configurations.css.displayNone);
-        colMaxTurnover.find(".col-max-turnover-body").append('<input type="text"' + rowIndex +
+
+        var divMaxTurnover = colMaxTurnover.find(".col-max-turnover-body");
+        divMaxTurnover.removeClass("align-right").addClass("align-center");
+        divMaxTurnover.append('<input type="text"' + rowIndex +
             ' value="' +
                 numeral(customerTurnoverInfo.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber) + '"' +
             ' maxlength="16" class="align-right textbox-maxturnover" />');
 
-        var textboxMaxTurnover = colMaxTurnover.find(".col-max-turnover-body input");
+        var textboxMaxTurnover = divMaxTurnover.find("input");
         self.bindTextboxMaxTurnoverEvents(textboxMaxTurnover, customerTurnoverInfo, leagueIndex, matchIndex, customerIndex);
     };
     self.bindTextboxMaxTurnoverEvents = function (textboxMaxTurnover, customerTurnoverInfo,
@@ -508,7 +511,9 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
 
         var colMaxTurnover = self.domElements.smaTurnoverContainer.find(".td-company-turnover-body" + cssRowFilter);
 
-        colMaxTurnover.find(".col-max-turnover-body input").remove();
+        var divMaxTurnover = colMaxTurnover.find(".col-max-turnover-body");
+        divMaxTurnover.removeClass("align-center").addClass("align-right");
+        divMaxTurnover.find("input").remove();
         colMaxTurnover.find("a").removeClass(self.configurations.css.displayNone);
         colMaxTurnover.find(".ico-edit").removeClass(self.configurations.css.displayNone);
     };

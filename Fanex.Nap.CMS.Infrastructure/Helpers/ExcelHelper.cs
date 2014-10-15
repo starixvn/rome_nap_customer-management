@@ -35,7 +35,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Helpers
         {
             return string.IsNullOrEmpty(fileName) ?
                 string.Empty :
-                fileName.Replace("/", "_");
+                fileName.Replace("/", "_").Replace(" ", "_");
         }
     }
 }

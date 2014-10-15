@@ -17,7 +17,6 @@ var popUpManager = {
         position,
         beforeCloseEvent) {
         $("#dialog-modal").dialog("destroy").remove();
-
         var dialoghtml = $('<div id="dialog-modal" title="' + title + '" style=" overflow:hidden"></div>');
         if (url !== "") {
             $('<iframe id="innerFrame" allowtransparency="true" style="width: ' + width + 'px;" />')
@@ -34,19 +33,43 @@ var popUpManager = {
             autoOpen: false,
             position: position || ['center', 'center'],
             open: function (event, ui) {
-                $("#innerFrame").attr({ "src": url }).css({ "height": $(this).css("height"), "width": $(this).css("width") });
+                if ($(this).width()) {
+                    $("#innerFrame").css({ "width": $(this).css("width") }).show();
+                }
+
+                if ($(this).height()) {
+                    $("#innerFrame").css({ "height": $(this).css("height") }).show();
+                }
+
+                $("#innerFrame").attr({ "src": url });
             },
             dragStart: function (event, ui) {
                 $("#innerFrame").hide();
             },
             dragStop: function (event, ui) {
-                $("#innerFrame").css({ "height": $(this).css("height"), "width": $(this).css("width") }).show();
+                if ($(this).width()) {
+                    $("#innerFrame").css({ "width": $(this).css("width") }).show();
+                }
+
+                if ($(this).height()) {
+                    $("#innerFrame").css({ "height": $(this).css("height") }).show();
+                }
+
+                $("#innerFrame").show();
             },
             resizeStart: function (event, ui) {
                 $("#innerFrame").hide();
             },
             resizeStop: function (event, ui) {
-                $("#innerFrame").css({ "height": $(this).css("height"), "width": $(this).css("width") }).show();
+                if ($(this).width()) {
+                    $("#innerFrame").css({ "width": $(this).css("width") }).show();
+                }
+
+                if ($(this).height()) {
+                    $("#innerFrame").css({ "height": $(this).css("height") }).show();
+                }
+
+                $("#innerFrame").show();
             },
             beforeClose: function () {
                 if (beforeCloseEvent && typeof (beforeCloseEvent) === "function") {
@@ -56,6 +79,7 @@ var popUpManager = {
                 return true;
             },
             close: function (event, ui) {
+                $(this).find("#innerFrame").attr("src", "");
                 if (currentExecFrame != null && currentExecFrame.onclose) {
                     currentExecFrame.onclose();
                     try {

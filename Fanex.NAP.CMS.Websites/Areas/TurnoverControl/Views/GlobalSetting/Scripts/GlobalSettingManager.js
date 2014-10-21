@@ -41,8 +41,8 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
     };
     self.params = {
         getGlobalSettingList: {
-            SortField: '',
-            SortDirection: '',
+            SortField: "Name",
+            SortDirection: "asc",
             SMAName: ''
         },
         updateGlobalSetting: null,
@@ -94,8 +94,6 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
         CMS.disableInput();
         CMS.hideInlineMsg(self.domElements.divResult);
         self.params.getGlobalSettingList.SMAName = self.domElements.textboxSMAName.val();
-        self.params.getGlobalSettingList.SortField = "";
-        self.params.getGlobalSettingList.SortDirection = "";
         CMS.callAjax(self,
              self.configurations.getGlobalSettingLink,
              self.params.getGlobalSettingList,
@@ -113,7 +111,8 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
     self.renderGlobalSettingList_Host = function (result) {
         var bodyData = [];
         var customerLength = result ? result.length : 0;
-        for (var i = 0; i < customerLength; i++) {
+        var i;
+        for (i = 0; i < customerLength; i++) {
             var customerInfo = result[i];
             bodyData.push({
                 Columns: [
@@ -176,8 +175,13 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                 SortDirection: 'desc'
             },
             { HeaderText: viewResources.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center"}];
-        if (sortColumnIndex !== -1) {
-            headerColumns[sortColumnIndex].SortDirection = self.params.getGlobalSettingList.SortDirection;
+
+        for (i = 0; i < 6; i++) {
+            if (i === sortColumnIndex) {
+                headerColumns[i].SortDirection = self.params.getGlobalSettingList.SortDirection;
+            } else {
+                headerColumns[i].SortDirection = "";
+            }
         }
 
         var gridOptions = {
@@ -270,8 +274,13 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                 Sort: true,
                 SortDirection: 'desc'
             }];
-        if (sortColumnIndex !== -1) {
-            headerColumns[sortColumnIndex].SortDirection = self.params.getGlobalSettingList.SortDirection;
+
+        for (i = 0; i < 6; i++) {
+            if (i === sortColumnIndex) {
+                headerColumns[i].SortDirection = self.params.getGlobalSettingList.SortDirection;
+            } else {
+                headerColumns[i].SortDirection = "";
+            }
         }
 
         var gridOptions = {

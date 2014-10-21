@@ -87,15 +87,14 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSetting.AddSettingManager = function () {
         }
     };
     self.btnAddClick = function () {
-        CMS.disableInput();
         self.params.addGlobalSetting.Name = self.domElements.textboxSMAName.val();
         self.params.addGlobalSetting.MaxTurnover = parseFloat(self.domElements.textboxMaxTurnover.val().replace(/,/g, ""));
 
         if (!self.checkAddSettingParam(self.params.addGlobalSetting)) {
-            CMS.enableInput();
             return;
         }
 
+        CMS.disableInput();
         CMS.callAjax(self,
              self.configurations.addGlobalSettingLink,
              self.params.addGlobalSetting,

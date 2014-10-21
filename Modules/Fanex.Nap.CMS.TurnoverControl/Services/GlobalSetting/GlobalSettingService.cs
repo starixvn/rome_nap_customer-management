@@ -29,7 +29,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
     /// </summary>
     public class GlobalSettingService : IGlobalSettingService
     {
-        private static readonly string GlobalSettingListSessionKey = 
+        private static readonly string GlobalSettingListSessionKey =
             string.Format("Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.ListSessionKey.{0}", AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0);
 
         private IGlobalSettingRepository _globalSettingRepository;
@@ -54,13 +54,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         public List<CustomerInfo> GlobalSettingList(GlobalSettingListCriteria criteria)
         {
             List<CustomerInfo> result = _globalSettingRepository.GlobalSettingList(criteria);
-            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
-
             if (!string.IsNullOrEmpty(criteria.SortField))
             {
-                SortGlobalSettingList(criteria);
+                result = SortGlobalSettingList(criteria);
             }
 
+            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
             return result;
         }
 
@@ -75,14 +74,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
                 GlobalSettingList(criteria);
             if (string.Equals(criteria.SortDirection, SortDirectionConstants.Asc, StringComparison.OrdinalIgnoreCase))
             {
-                return SortGlobalSettingListByAscending(result, criteria);
+                result = SortGlobalSettingListByAscending(result, criteria);
             }
 
             if (string.Equals(criteria.SortDirection, SortDirectionConstants.Desc, StringComparison.OrdinalIgnoreCase))
             {
-                return SortGlobalSettingListByDescending(result, criteria);
+                result = SortGlobalSettingListByDescending(result, criteria);
             }
 
+            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
             return result;
         }
 

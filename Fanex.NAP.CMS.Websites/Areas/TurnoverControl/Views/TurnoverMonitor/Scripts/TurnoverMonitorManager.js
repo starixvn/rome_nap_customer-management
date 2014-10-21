@@ -66,7 +66,14 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
         countdownTime: 0,
         refreshIntervalEvent: null,
         smaTurnoverList: null,
-        editingRowIndex: null
+        editingRowIndex: null,
+        isResetScroller: true,
+        isFirstRenderSports: true,
+        selectedSportId: 0,
+        isFirstRenderLeagues: true,
+        selectedLeagueId: 0,
+
+        renderInterval: 0
     };
 
     self.initPage = function () {
@@ -171,21 +178,37 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     self.renderSportList = function (result) {
         var options = '';
         var sportLength = result ? result.length : 0;
+        self.cachedData.selectedSportId = parseInt(self.domElements.ddlSport.val());
+        var selectedValue = '';
         for (var i = 0; i < sportLength; i++) {
             var sport = result[i];
+            var isSelected = (self.cachedData.isFirstRenderSports && i === 0) ||
+                (!self.cachedData.isFirstRenderSports && sport.Id === self.cachedData.selectedSportId);
+            if (isSelected) {
+                selectedValue = sport.Name;
+                self.cachedData.selectedSportId = sport.Id;
+            }
+
             options += '<option value="' + sport.Id + '"' +
-                (i === 0 ? ' selected="selected"' : '') +
+                (isSelected ? ' selected="selected"' : '') +
                 ' >' + sport.Name + '</option>';
         }
 
         self.domElements.ddlSport.empty().append(options);
+        self.domElements.ddlSport.val(self.cachedData.selectedSportId);
+        self.cachedData.isFirstRenderSports = false;
         if (sportLength) {
-            $("#ddl-sport.ui-combobox input").val(result[0].Name);
+            $("#ddl-sport.ui-combobox input").val(selectedValue);
         }
 
         self.domElements.ddlSport.change(function () {
             self.loadLeagues();
         });
+
+        if (self.cachedData.selectedSportId !== parseInt(self.domElements.ddlSport.val())) {
+            self.cachedData.isFirstRenderLeagues = true;
+        }
+
         self.loadLeagues();
     };
     self.loadLeagues = function () {
@@ -202,19 +225,30 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     self.renderLeagueList = function (result) {
         var options = '';
         var leagueLength = result ? result.length : 0;
+        var selectedLeagueId = parseInt(self.domElements.ddlLeague.val());
+        var selectedLeagueName = viewResources.All_Leagues;
         options += '<option value="' + CMSConstants.LeagueId.All + '" selected="selected" >' +
                 viewResources.All_Leagues +
             '</option>';
         for (var i = 0; i < leagueLength; i++) {
             var league = result[i];
+            var isSelected = !self.cachedData.isFirstRenderLeagues && league.Id === selectedLeagueId;
+            if (isSelected) {
+                selectedLeagueName = league.Name;
+                self.cachedData.selectedLeagueId = league.Id;
+            }
+
             options += '<option value="' + league.Id + '">' + league.Name + '</option>';
         }
 
         self.domElements.ddlLeague.empty().append(options);
-        $("#ddl-league.ui-combobox input").val(viewResources.All_Leagues);
+        self.domElements.ddlLeague.val(self.cachedData.selectedLeagueId);
+        self.cachedData.isFirstRenderLeagues = false;
+        $("#ddl-league.ui-combobox input").val(selectedLeagueName);
     };
     self.btnSearchClick = function () {
         CMS.disableInput();
+        CMS.hideInlineMsg(self.domElements.divResult);
         self.params.getSMATurnoverList = {
             FromDate: self.params.getLeagues.FromDate,
             PercentageUsed: self.domElements.txtPercentageUsed.val(),
@@ -225,7 +259,14 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
             //PercentageUsed: 0
         };
 
-        CMS.callAjax(self, self.configurations.getSMATurnoverListLink, self.params.getSMATurnoverList, self.renderSMATurnoverList);
+        self.cachedData.isResetScroller = true;
+        CMS.callAjax(
+            self,
+            self.configurations.getSMATurnoverListLink,
+            self.params.getSMATurnoverList,
+            self.renderSMATurnoverList,
+            null,
+            function () { });
     };
     self.renderSMATurnoverList = function (result) {
         self.cachedData.smaTurnoverList = result;
@@ -234,51 +275,73 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
         var reachedMaxPercentageCount = 0;
         if (leagueLength === 0) {
             html += self.renderSMATurnoverList_NoData();
-        } else {
-            for (var i = 0; i < leagueLength; i++) {
-                var league = result.ChildTurnoverInfo[i];
-                var matchLength = league.ChildTurnoverInfo.length;
+            self.domElements.tblSMATurnoverBody.empty().append(html);
+            self.renderSMATurnoverList_AfterCreateHTML(reachedMaxPercentageCount, html);
+            CMS.enableInput();
+            return;
+        }
+
+        var i = 0;
+        var maxRenderLeague = 20;
+        self.domElements.tblSMATurnoverBody.empty();
+        self.cachedData.renderInterval = setInterval(function () {
+            var league;
+            var matchLength;
+            var match;
+            var renderResult;
+            html = '';
+            var renderCounter = 0;
+            for (; i < leagueLength && renderCounter < maxRenderLeague; i++, renderCounter++) {
+                league = result.ChildTurnoverInfo[i];
+                html += self.renderSMATurnoverList_LeagueHeadline(league);
+                matchLength = league.ChildTurnoverInfo.length;
                 for (var j = 0; j < matchLength; j++) {
-                    var match = league.ChildTurnoverInfo[j];
-                    html += self.renderSMATurnoverList_MatchHeadline(league, match);
-                    var renderResult = self.renderSMATurnoverList_Match(i, j, match);
+                    match = league.ChildTurnoverInfo[j];
+                    html += self.renderSMATurnoverList_MatchHeadline(match);
+                    renderResult = self.renderSMATurnoverList_Match(i, j, match);
                     reachedMaxPercentageCount += renderResult.reachedMaxPercentageCount;
                     html += renderResult.html;
                 }
             }
-        }
 
+            self.domElements.tblSMATurnoverBody.append(html);
+            if (i === leagueLength) {
+                self.renderSMATurnoverList_AfterCreateHTML(reachedMaxPercentageCount, html);
+                CMS.enableInput();
+                clearInterval(self.cachedData.renderInterval);
+            }
+        }, 10);
+    };
+
+    self.renderSMATurnoverList_AfterCreateHTML = function (reachedMaxPercentageCount, html) {
         self.domElements.lblMaxLevelUsedCounter.html(numeral(reachedMaxPercentageCount).format(CMSConstants.NumberFormat.IntNumber));
         self.domElements.gridTitle.removeClass(self.configurations.css.displayNone);
 
-        self.domElements.tblSMATurnoverBody.empty().append(html);
         self.renderSMATurnoverList_ApplyOptions();
         self.renderSMATurnoverList_BindEvent();
     };
 
-    self.renderSMATurnoverList_MatchHeadline = function (league, match) {
+    self.renderSMATurnoverList_LeagueHeadline = function (league) {
         var html = '<tr>\
                         <td class="rowLeague" colspan="7">\
-                            <table class="normalTable">\
-                                <tr>\
-                                    <td>\
-                                        <div class="lblLeagueHeadline">' + league.Name + '</div>\
-                                        <div class="lblTeamInfo">' +
-                                            match.TurnoverInfo.MatchInfo.HomeTeam.Name +
-                                            ' -vs- ' +
-                                            match.TurnoverInfo.MatchInfo.AwayTeam.Name +
-                                        '</div>\
-                                        <div class="rightArrow_LeagueInfo"></div>\
-                                        <div class="eventDate_LeagueInfo">' +
-                                            viewResources.Event_Date + ': ' +
-                                            match.TurnoverInfo.MatchInfo.EventDateString +
-                                        '</div>\
-                                    </td>\
-                                    <td class="width-160">\
-                                        <div>&nbsp;</div>\
-                                    </td>\
-                                </tr>\
-                            </table>\
+                            <div class="lblLeagueHeadline">' + league.Name + '</div>\
+                        </td>\
+                    </tr>';
+        return html;
+    };
+    self.renderSMATurnoverList_MatchHeadline = function (match) {
+        var html = '<tr>\
+                        <td class="rowmatch" colspan="7">\
+                            <div class="lblTeamInfo">' +
+                                match.TurnoverInfo.MatchInfo.HomeTeam.Name +
+                                ' -vs- ' +
+                                match.TurnoverInfo.MatchInfo.AwayTeam.Name +
+                            '</div>\
+                            <div class="rightArrow_MatchInfo"></div>\
+                            <div class="eventDate_MatchInfo">' +
+                                viewResources.Event_Date + ': ' +
+                                match.TurnoverInfo.MatchInfo.EventDateString +
+                            '</div>\
                         </td>\
                     </tr>';
         return html;
@@ -380,7 +443,8 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
             gridWidth: 925,
             gridHeight: 250,
             freezeWidth: 10,
-            numberFreezeCol: 0
+            numberFreezeCol: 0,
+            isResetScroller: self.cachedData.isResetScroller
         };
 
         self.domElements.smaTurnoverContainer.removeClass(self.configurations.css.displayNone)
@@ -591,6 +655,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     };
     self.refreshSMATurnoverList = function () {
         CMS.disableInput();
+        self.cachedData.isResetScroller = false;
         CMS.callAjax(self, self.configurations.getSMATurnoverListLink, self.params.getSMATurnoverList, self.renderSMATurnoverList);
     };
     self.showCountDownOptions = function (btnDown) {

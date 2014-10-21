@@ -77,9 +77,6 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitor.CompanyTurnoverManager = function 
         };
 
         self.domElements.turnoverBalance.removeClass(self.configurations.css.displayNone).fanexGrid(gridOptions);
-        self.domElements.turnoverBalance.find(".column-balance").each(function () {
-
-        });
 
         var balanceColumns = self.domElements.turnoverBalance.find(".column-balance");
         balanceColumns.hover(function () {

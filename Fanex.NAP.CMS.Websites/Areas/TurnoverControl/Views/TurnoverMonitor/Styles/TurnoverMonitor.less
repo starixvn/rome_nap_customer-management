@@ -184,49 +184,14 @@
     }
 }
 
-.normalTable {
+.rowLeague {
     width: 949px;    
-    line-height: 20px;
     .lblLeagueHeadline {
-        color: #a74c00;
+        color: #AD4E54;
         font-family: Tahoma,Geneva,sans-serif;
         font-size: 12px;
         font-weight: bold;
-    }
-    .lblTeamInfo {
-        display: inline-block;
-        font-size: 12px;
-        font-weight: bold;
-    }
-
-    .rightArrow_LeagueInfo {
-        background: url("Images/arrow.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
-        display: inline-block;
-        height: 8px;
-        margin-left: 5px;
-        margin-right: 5px;
-        width: 5px;
-    }
-        
-    .eventDate_LeagueInfo {
-        display: inline-block;
-        font-size: 12px;
-        font-weight: normal;
-        margin-right: 5px;
-    }
-        
-    .matchIdBox_LeagueInfo {
-        background-color: #ffb981;
-        border: 1px solid #f99e55;
-        display: inline-block;
-        float: right;
-        font-size: 10px;
-        line-height: 17px;
-        min-width: 120px;
-        padding: 0 3px;
-        text-align: center;
-        font-weight: bold;
-    }    
+    }   
 }
 
 .normalTable td,
@@ -307,8 +272,52 @@
 
 .freegrid td.rowLeague, 
 .freegrid .grid-fixed-table td.rowLeague,
-.freegrid td.rowLeague td, 
-.freegrid .grid-fixed-table td.rowLeague td
+.freegrid td.rowLeague, 
+.freegrid .grid-fixed-table td.rowLeague 
 {
+    line-height: 20px;
+    background-color: #C2D9EC;
+}
+
+.freegrid td.rowmatch, 
+.freegrid .grid-fixed-table td.rowmatch,
+.freegrid td.rowmatch, 
+.freegrid .grid-fixed-table td.rowmatch 
+{
+    line-height: 20px;
     background-color: #F1F1F1;
+    .lblTeamInfo {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .rightArrow_MatchInfo {
+        background: url("Images/arrow.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        display: inline-block;
+        height: 8px;
+        margin-left: 5px;
+        margin-right: 5px;
+        width: 5px;
+    }
+        
+    .eventDate_MatchInfo {
+        display: inline-block;
+        font-size: 12px;
+        font-weight: normal;
+        margin-right: 5px;
+    }
+        
+    .matchIdBox_MatchInfo {
+        background-color: #ffb981;
+        border: 1px solid #f99e55;
+        display: inline-block;
+        float: right;
+        font-size: 10px;
+        line-height: 17px;
+        min-width: 120px;
+        padding: 0 3px;
+        text-align: center;
+        font-weight: bold;
+    }    
 }

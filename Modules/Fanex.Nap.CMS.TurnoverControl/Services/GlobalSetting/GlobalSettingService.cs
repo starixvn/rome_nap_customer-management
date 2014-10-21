@@ -54,13 +54,13 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         public List<CustomerInfo> GlobalSettingList(GlobalSettingListCriteria criteria)
         {
             List<CustomerInfo> result = _globalSettingRepository.GlobalSettingList(criteria);
-
             SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
             if (!string.IsNullOrEmpty(criteria.SortField))
             {
                 result = SortGlobalSettingList(criteria);
             }
-            
+
+            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
             return result;
         }
 
@@ -117,6 +117,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
             if (result.Code == ErrorCodeConstants.NoneError)
             {
                 result.Message = Labels.GlobalSetting_EditMaxTurnover_Success;
+                SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, null);
             }
 
             return result;
@@ -256,7 +257,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
                     exportExcelInfo.RenderCurrentCell(customerInfo.Name, _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(customerInfo.RoleInfo.Name, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(customerInfo.Currency.Name, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(customerInfo.MaxTurnover, _excelStyleTemplate.IntStyle);
+                    exportExcelInfo.RenderCurrentCell(customerInfo.MaxTurnover, _excelStyleTemplate.DecimalStyle);
                     exportExcelInfo.CurrentRow++;
                 }
             }

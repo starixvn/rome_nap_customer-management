@@ -77,18 +77,19 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
     self.bindEvents = function () {
         self.domElements.btnSearch.unbind("click");
         self.domElements.btnSearch.click(self.btnSearchClick);
-        if (!viewResources.hasHostPermission) {
-            return;
-        }
-
-        self.domElements.btnAdd.unbind("click");
-        self.domElements.btnAdd.click(self.btnAddClick);
 
         self.domElements.textboxSMAName.keyup(function (event) {
             if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
                 self.btnSearchClick();
             }
         });
+
+        if (!viewResources.hasHostPermission) {
+            return;
+        }
+
+        self.domElements.btnAdd.unbind("click");
+        self.domElements.btnAdd.click(self.btnAddClick);
     };
     self.btnSearchClick = function () {
         CMS.disableInput();
@@ -123,7 +124,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                     {
                         Name: "ColMaxTurnover",
                         Value: '<a class="c hand edit-setting" href="JavaScript:void(0);" data-row-index="' + i + '">' +
-                                numeral(customerInfo.MaxTurnover).format(CMSConstants.NumberFormat.IntNumber) +
+                                numeral(customerInfo.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber) +
                             '</a>',
                         CssClass: 'edit-setting-column row-index-' + i
                     },
@@ -238,7 +239,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                     { Name: "ColUsername", Value: customerInfo.Name },
                     { Name: "ColRoleName", Value: customerInfo.RoleInfo.Name },
                     { Name: "ColCurrency", Value: customerInfo.Currency.Name },
-                    { Name: "ColMaxTurnover", Value: numeral(customerInfo.MaxTurnover).format(CMSConstants.NumberFormat.IntNumber)}],
+                    { Name: "ColMaxTurnover", Value: numeral(customerInfo.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber)}],
                 CssClass: 'customer-row row-index-' + i
             });
         }
@@ -275,7 +276,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                 SortDirection: 'desc'
             }];
 
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < 5; i++) {
             if (i === sortColumnIndex) {
                 headerColumns[i].SortDirection = self.params.getGlobalSettingList.SortDirection;
             } else {

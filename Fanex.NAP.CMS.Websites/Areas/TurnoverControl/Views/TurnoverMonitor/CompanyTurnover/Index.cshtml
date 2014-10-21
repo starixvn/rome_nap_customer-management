@@ -9,7 +9,13 @@
     ViewBag.Title = Labels.TurnoverMonitor_CompanyTurnover_Title;
     var companyTurnover = JsonConvert.SerializeObject(Model);
 }
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if IEMobile 7]><html class="no-js iem7 oldie" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie" lang="en" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie" lang="en" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
+<!--[if (IE 9)&!(IEMobile)]><html class="no-js ie9" lang="en" xmlns="http://www.w3.org/1999/xhtml"><![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)]><!-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<!--<![endif]-->
 <head>
     <title>@ViewBag.Title</title>
     @Styles.Render("~/styles/common")

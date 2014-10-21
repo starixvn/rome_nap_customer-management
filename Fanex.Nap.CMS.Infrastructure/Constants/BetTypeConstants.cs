@@ -21,7 +21,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
 
         public const int OverUnder = 3;
 
-        public const int _1x2 = 1205;
+        public const int _1x2 = 5;
 
         public const int _1HHandicap = 7;
 

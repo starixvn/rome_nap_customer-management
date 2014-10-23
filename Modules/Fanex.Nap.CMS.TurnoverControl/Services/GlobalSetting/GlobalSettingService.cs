@@ -54,12 +54,13 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         public List<CustomerInfo> GlobalSettingList(GlobalSettingListCriteria criteria)
         {
             List<CustomerInfo> result = _globalSettingRepository.GlobalSettingList(criteria);
+
+            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
             if (!string.IsNullOrEmpty(criteria.SortField))
             {
                 result = SortGlobalSettingList(criteria);
             }
-
-            SessionManager.AddSession(HttpContext.Current.Session, GlobalSettingListSessionKey, result);
+            
             return result;
         }
 

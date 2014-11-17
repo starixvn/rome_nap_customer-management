@@ -43,3 +43,6 @@
 /Fanex.Nap.CMS.Infrastructure/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/bin
+
+/StyleCop.Cache
+/Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache

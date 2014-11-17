@@ -150,7 +150,8 @@ Fanex.Nap.CMS.NotificationSetting.TurnoverControl = function () {
     };
 
     var validateEmail = function (emailAddress) {
-        var emailRegex = new RegExp(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/i);
+        /*jslint maxlen: 200 */
+        var emailRegex = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
         var valid = emailRegex.test($.trim(emailAddress));
 
         return valid;

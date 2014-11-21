@@ -24,12 +24,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSetting.AddSettingManager = function () {
         textboxMaxTurnover: null,
         divResult: null
     };
-    self.configurations = {
-        addGlobalSettingLink: CMS.resolveRootUrl('/../AddGlobalSetting'),
-        css: {
-            displayNone: 'display-none'
-        }
-    };
+    self.configurations = null;
     self.params = {
         addGlobalSetting: {
         }
@@ -37,6 +32,12 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSetting.AddSettingManager = function () {
     self.initPage = function () {
         self.cacheDOMElements();
         self.intElements();
+        self.configurations = {
+            addGlobalSettingLink: window.rootUrl + 'AddGlobalSetting',
+            css: {
+                displayNone: 'display-none'
+            }
+        };
         self.bindEvents();
     };
     self.cacheDOMElements = function () {

@@ -68,23 +68,23 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Content/Themes/reset.css",
                 "~/Content/Themes/style.less");
 
-            bundles.Add(new ScriptBundle("~/scripts/common").Include(
-                "~/Scripts/Libs/jQuery/jquery-1.8.2.min.js",
-                "~/Scripts/Libs/jQuery/jquery-migrate-1.2.1.js",
-                "~/Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js",
-                "~/Scripts/Libs/jQuery/jquery.mask.min.js",
-                "~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js",
-                "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js",
-                "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js",
-                "~/Scripts/Libs/Fanex.Grid/moment.js",
-                "~/Scripts/Libs/Fanex.Grid/numeral.js",
-                "~/Scripts/Libs/DatePicker/jquery.nexDatePicker.js",
-                "~/Scripts/Libs/msgbox/msgbox-0.0.1.js",
-                "~/Scripts/Libs/Tipsy/jquery.tipsy.js",
-                "~/Scripts/Libs/others/Namespace.js",
-                "~/Scripts/Extensions/nativeObjectExtensions.js",
-                "~/Scripts/Extensions/jquery.combobox-ext.js",
-                "~/Scripts/Extensions/jquery.extensions.js",
+            bundles.Add(new ScriptBundle("~/scripts/common")
+                .Include("~/Scripts/Libs/jQuery/jquery-1.8.2.min.js")
+                .Include("~/Scripts/Libs/jQuery/jquery-migrate-1.2.1.js")
+                .Include("~/Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js")
+                .Include("~/Scripts/Libs/jQuery/jquery.mask.min.js")
+                .Include("~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js")
+                .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js",
+                    "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js",
+                    "~/Scripts/Libs/Fanex.Grid/moment.js",
+                    "~/Scripts/Libs/Fanex.Grid/numeral.js")
+                .Include("~/Scripts/Libs/DatePicker/jquery.nexDatePicker.js",
+                    "~/Scripts/Libs/msgbox/msgbox-0.0.1.js",
+                    "~/Scripts/Libs/Tipsy/jquery.tipsy.js",
+                    "~/Scripts/Libs/others/Namespace.js")
+                .Include("~/Scripts/Extensions/nativeObjectExtensions.js",
+                    "~/Scripts/Extensions/jquery.combobox-ext.js",
+                    "~/Scripts/Extensions/jquery.extensions.js",
                 "~/Scripts/Validator.js",
                 "~/Scripts/KeyboardManager.js",
                 "~/Scripts/CMS.js",

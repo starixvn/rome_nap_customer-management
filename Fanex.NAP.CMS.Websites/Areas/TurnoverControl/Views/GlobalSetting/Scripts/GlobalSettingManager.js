@@ -28,17 +28,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
         tableGlobalSettingList: null,
         divResult: null
     };
-    self.configurations = {
-        getGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/GlobalSettingList'),
-        sortGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/SortGlobalSettingList'),
-        exportGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/ExportGlobalSettingList'),
-        updateGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/EditGlobalSetting'),
-        deleteGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/DeleteGlobalSetting'),
-        addGlobalSettingLink: CMS.resolveRootUrl('/../GlobalSetting/OpenAddGlobalSettingView'),
-        css: {
-            displayNone: 'display-none'
-        }
-    };
+    self.configurations = null;
     self.params = {
         getGlobalSettingList: {
             SortField: "Name",
@@ -57,6 +47,17 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
     self.initPage = function () {
         self.cacheDOMElements();
         self.initElements();
+        self.configurations = {
+            getGlobalSettingLink: window.rootUrl + 'GlobalSetting/GlobalSettingList',
+            sortGlobalSettingLink: window.rootUrl + 'GlobalSetting/SortGlobalSettingList',
+            exportGlobalSettingLink: window.rootUrl + 'GlobalSetting/ExportGlobalSettingList',
+            updateGlobalSettingLink: window.rootUrl + 'GlobalSetting/EditGlobalSetting',
+            deleteGlobalSettingLink: window.rootUrl + 'GlobalSetting/DeleteGlobalSetting',
+            addGlobalSettingLink: window.rootUrl + 'GlobalSetting/OpenAddGlobalSettingView',
+            css: {
+                displayNone: 'display-none'
+            }
+        };
         self.bindEvents();
         self.btnSearchClick();
     };

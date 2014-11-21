@@ -208,7 +208,7 @@
     </Content>
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-     <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
@@ -420,7 +420,9 @@
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
     <Content Include="Scripts\Sites\ConfigureCustomerAccess.js" />
     <Content Include="Scripts\Sites\OpenCloseMember.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -514,6 +516,7 @@
     </Content>
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -537,7 +540,9 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config" />    
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>

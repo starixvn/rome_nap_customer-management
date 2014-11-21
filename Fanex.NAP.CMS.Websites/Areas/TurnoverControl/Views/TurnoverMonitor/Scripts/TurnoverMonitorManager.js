@@ -27,21 +27,10 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
         ddlSport: null,
         ddlLeague: null,
         txtPercentageUsed: null,
-
         dpkFromDate: null,
         dpkToDate: null
     };
-    self.configurations = {
-        loadSportsLink: CMS.resolveRootUrl('/../../TurnoverMonitor/Sports'),
-        loadLeaguesLink: CMS.resolveRootUrl('/../../TurnoverMonitor/Leagues'),
-        getSMATurnoverListLink: CMS.resolveRootUrl('/../../TurnoverMonitor/SMATurnoverList'),
-        viewCompanyTurnoverBalanceLink: CMS.resolveRootUrl('/../../TurnoverMonitor/OpenCompanyTurnoverView'),
-        updateMaxTurnoverLink: CMS.resolveRootUrl('/../../TurnoverMonitor/UpdateCustomerMaxTurnoverByMatch'),
-        css: {
-            displayNone: 'display-none'
-        },
-        maxTurnoverPercentage: 100
-    };
+    self.configurations = null;
     self.params = {
         getLeagues: {
             FromDate: null,
@@ -79,6 +68,17 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     self.initPage = function () {
         self.cacheDOMElements();
         self.initElements();
+        self.configurations = {
+            loadSportsLink: window.rootUrl + 'TurnoverControl/TurnoverMonitor/Sports',
+            loadLeaguesLink: window.rootUrl + 'TurnoverControl/TurnoverMonitor/Leagues',
+            getSMATurnoverListLink: window.rootUrl + 'TurnoverControl/TurnoverMonitor/SMATurnoverList',
+            viewCompanyTurnoverBalanceLink: window.rootUrl + 'TurnoverControl/TurnoverMonitor/OpenCompanyTurnoverView',
+            updateMaxTurnoverLink: window.rootUrl + 'TurnoverControl/TurnoverMonitor/UpdateCustomerMaxTurnoverByMatch',
+            css: {
+                displayNone: 'display-none'
+            },
+            maxTurnoverPercentage: 100
+        };
         self.bindEvents();
         self.loadSports();
     };
@@ -173,7 +173,7 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
     };
     self.loadSports = function () {
         CMS.disableInput();
-        CMS.callAjax(self, self.configurations.loadSportsLink, {}, self.renderSportList);
+        CMS.callAjax(self, self.configurations.loadSportsLink, null, self.renderSportList);
     };
     self.renderSportList = function (result) {
         var options = '';

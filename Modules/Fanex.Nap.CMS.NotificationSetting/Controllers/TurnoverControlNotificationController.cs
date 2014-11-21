@@ -41,6 +41,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Controllers
             return View("~/Areas/NotificationSetting/Views/TurnoverControl/Index.cshtml", model);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverControlNotification, Policy = Constant.Policy.Host)]
         public ActionResult UpdateMailingList(MailInfo mailInfo, bool isUpdate)
         {
             Result result = this._service.UpdateMailingList(mailInfo, isUpdate);

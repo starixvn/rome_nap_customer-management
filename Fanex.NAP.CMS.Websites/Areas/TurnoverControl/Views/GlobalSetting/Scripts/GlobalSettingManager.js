@@ -46,7 +46,6 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
 
     self.initPage = function () {
         self.cacheDOMElements();
-        self.initElements();
         self.configurations = {
             getGlobalSettingLink: window.rootUrl + 'GlobalSetting/GlobalSettingList',
             sortGlobalSettingLink: window.rootUrl + 'GlobalSetting/SortGlobalSettingList',
@@ -58,6 +57,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                 displayNone: 'display-none'
             }
         };
+        self.initElements();
         self.bindEvents();
         self.btnSearchClick();
     };

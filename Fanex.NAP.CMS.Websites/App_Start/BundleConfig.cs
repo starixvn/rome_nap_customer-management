@@ -74,22 +74,22 @@ namespace Fanex.NAP.CMS.Websites
                 .Include("~/Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js")
                 .Include("~/Scripts/Libs/jQuery/jquery.mask.min.js")
                 .Include("~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js")
-                .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js",
-                    "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js",
-                    "~/Scripts/Libs/Fanex.Grid/moment.js",
-                    "~/Scripts/Libs/Fanex.Grid/numeral.js")
-                .Include("~/Scripts/Libs/DatePicker/jquery.nexDatePicker.js",
-                    "~/Scripts/Libs/msgbox/msgbox-0.0.1.js",
-                    "~/Scripts/Libs/Tipsy/jquery.tipsy.js",
-                    "~/Scripts/Libs/others/Namespace.js")
-                .Include("~/Scripts/Extensions/nativeObjectExtensions.js",
-                    "~/Scripts/Extensions/jquery.combobox-ext.js",
-                    "~/Scripts/Extensions/jquery.extensions.js",
-                "~/Scripts/Validator.js",
-                "~/Scripts/KeyboardManager.js",
-                "~/Scripts/CMS.js",
-                "~/Scripts/CMSConstants.js",
-                "~/Scripts/Layout.js"));
+                .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js")
+                .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js")
+                .Include("~/Scripts/Libs/Fanex.Grid/moment.js")
+                .Include("~/Scripts/Libs/Fanex.Grid/numeral.js")
+                .Include("~/Scripts/Libs/DatePicker/jquery.nexDatePicker.js")
+                .Include("~/Scripts/Libs/msgbox/msgbox-0.0.1.js")
+                .Include("~/Scripts/Libs/Tipsy/jquery.tipsy.js")
+                .Include("~/Scripts/Libs/others/Namespace.js")
+                .Include("~/Scripts/Extensions/nativeObjectExtensions.js")
+                .Include("~/Scripts/Extensions/jquery.combobox-ext.js")
+                .Include("~/Scripts/Extensions/jquery.extensions.js")
+                .Include("~/Scripts/Validator.js")
+                .Include("~/Scripts/KeyboardManager.js")
+                .Include("~/Scripts/CMS.js")
+                .Include("~/Scripts/CMSConstants.js")
+                .Include("~/Scripts/Layout.js"));
 
             bundles.Add(new ScriptBundle("~/scripts/crypto").Include(
                 "~/Scripts/Libs/Crypto/CryptoJS.js"));

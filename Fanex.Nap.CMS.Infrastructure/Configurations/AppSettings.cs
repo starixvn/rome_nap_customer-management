@@ -56,6 +56,14 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
             }
         }
 
+        public static string SMATurnoverMailFunctionName
+        {
+            get
+            {
+                return Converter.ToString2(GetValue("Admin_SMATurnover_FunctionName"));
+            }
+        }
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

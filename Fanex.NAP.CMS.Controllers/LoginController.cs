@@ -350,9 +350,9 @@ namespace Fanex.NAP.CMS.Controllers
             {
                 OnUserId = this._currentSession.OnUserId
             });
-            FormsAuthentication.SignOut();
+            Session.Clear();
             Response.Cookies.Clear();
-            this._currentSession.ClearAll();
+            FormsAuthentication.SignOut();
         }
 
         /// <summary>

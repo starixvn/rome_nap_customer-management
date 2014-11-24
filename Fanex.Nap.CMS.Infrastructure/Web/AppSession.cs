@@ -23,6 +23,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
     public static class AppSession
     {
         public const string BalanceUpSessionKey = "Fanex.Nap.CMS.Infrastructure.Web.BalanceUpSessionKey";
+        public const string CurrentActionNameKey = "Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentActionName";
 
         public static IDynamicRepository Repository
         {

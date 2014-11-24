@@ -20,31 +20,33 @@ namespace Fanex.Nap.CMS.NotificationSetting.Controllers
     /// </summary>
     public class TurnoverControlNotificationController : BaseController
     {
-        private readonly IMailingListService _service;
+        private IMailingListService _mailingListService;
 
         public TurnoverControlNotificationController()
             : this(null)
         {
         }
 
-        public TurnoverControlNotificationController(IMailingListService service)
+        public TurnoverControlNotificationController(IMailingListService mailingListService)
         {
-            _service = service ?? new MailingListService();
+            _mailingListService = mailingListService ?? new MailingListService();
         }
 
+        [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverControlNotification, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var model = this._service.MailingList();
+            var model = this._mailingListService.MailingList();
             ViewBag.HasHostPermission = this.HasRight(CMSFunctionKeys.TurnoverControlNotification, Constant.Policy.Host);
-            ViewBag.UserGroupId = _service.UserGroupId();
+            ViewBag.UserGroupId = _mailingListService.UserGroupId();
             return View("~/Areas/NotificationSetting/Views/TurnoverControl/Index.cshtml", model);
         }
 
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverControlNotification, Policy = Constant.Policy.Host)]
         public ActionResult UpdateMailingList(MailInfo mailInfo, bool isUpdate)
         {
-            Result result = this._service.UpdateMailingList(mailInfo, isUpdate);
+            Result result = this._mailingListService.UpdateMailingList(mailInfo, isUpdate);
             var jsonResult = Json(result);
             return jsonResult;
         }

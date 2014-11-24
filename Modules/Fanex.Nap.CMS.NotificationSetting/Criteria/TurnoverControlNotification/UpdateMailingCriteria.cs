@@ -31,7 +31,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Criteria.TurnoverControlNotification
         {
             get
             {
-                return "[SMATurnoverMailingList]";
+                return AppSettings.SMATurnoverMailFunctionName;
             }
         }
 

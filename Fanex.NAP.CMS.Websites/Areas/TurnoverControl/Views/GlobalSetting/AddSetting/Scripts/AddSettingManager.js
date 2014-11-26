@@ -33,7 +33,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSetting.AddSettingManager = function () {
         self.cacheDOMElements();
         self.intElements();
         self.configurations = {
-            addGlobalSettingLink: window.rootUrl + 'AddGlobalSetting',
+            addGlobalSettingLink: window.rootUrl + 'GlobalSetting/AddGlobalSetting',
             css: {
                 displayNone: 'display-none'
             }

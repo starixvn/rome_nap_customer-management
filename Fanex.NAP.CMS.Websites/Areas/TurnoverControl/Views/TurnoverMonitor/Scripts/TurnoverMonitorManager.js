@@ -390,8 +390,8 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
                             </div>\
                         </td>';
 
-            var canEditMaxTurnover = viewResources.hasHostPermission &&
-                match.TurnoverInfo.MatchInfo.EventStatus !== "completed";
+            var eventStatus = match.TurnoverInfo.MatchInfo.EventStatus.toLowerCase();
+            var canEditMaxTurnover = viewResources.hasHostPermission && eventStatus !== "completed";
             if (canEditMaxTurnover) {
                 html += '<td class="td-company-turnover-body"' + rowIndex + '>\
                             <div class="col-max-turnover-body align-right">' +

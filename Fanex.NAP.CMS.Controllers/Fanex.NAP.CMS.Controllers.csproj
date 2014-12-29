@@ -141,6 +141,10 @@
       <Project>{85B0833C-4389-4F0F-80D4-02D49DB7906E}</Project>
       <Name>Fanex.NAP.CMS.Criteria</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
+      <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
+      <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.Models\Fanex.NAP.CMS.Models.csproj">
       <Project>{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59}</Project>
       <Name>Fanex.NAP.CMS.Models</Name>

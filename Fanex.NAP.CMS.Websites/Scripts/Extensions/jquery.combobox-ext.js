@@ -1,6 +1,7 @@
 ﻿/* File Created: March 6, 2014 */
 /* global Validator */
-'use strict';
+/* jshint strict: false */
+//'use strict';
 
 (function ($) {
     $.widget('ui.combobox', {

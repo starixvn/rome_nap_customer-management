@@ -151,6 +151,7 @@ namespace Fanex.NAP.CMS.Controllers
                             this.CreateUserMenu(user);
                             this.CreateAuthInfo(user);
 
+                            Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
                             return Redirect(FormsAuthentication.DefaultUrl);
                         }
                         else
@@ -349,9 +350,9 @@ namespace Fanex.NAP.CMS.Controllers
             {
                 OnUserId = this._currentSession.OnUserId
             });
-            FormsAuthentication.SignOut();
+            Session.Clear();
             Response.Cookies.Clear();
-            this._currentSession.ClearAll();
+            FormsAuthentication.SignOut();
         }
 
         /// <summary>

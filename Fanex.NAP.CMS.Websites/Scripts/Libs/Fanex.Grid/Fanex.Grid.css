@@ -1,4 +1,9 @@
-﻿
+﻿body {
+    overflow:hidden;
+    margin:0;
+    padding:0;
+}
+
 .freegrid
 {
     overflow: hidden;
@@ -305,9 +310,9 @@
     background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
     background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
     color: #fff;
-    -webkit-box-sizing: content-box;
+    /*-webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
-    box-sizing: content-box;
+    box-sizing: content-box;*/
 }
 
 .freegrid .row_footer table thead th, .freegrid .col_footer table thead th
@@ -316,7 +321,7 @@
     background: -moz-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
     background: -webkit-linear-gradient(#dce2bc, #dbe1bb) #dbe1bb !important;
     color: #4F4F4F;
-    -webkit-box-sizing: content-box;
+     -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
     box-sizing: content-box;
 }
@@ -348,9 +353,9 @@
     padding: 2px;
     /*height: 21px;*/
     font-size: 1.0em;
-    /*-webkit-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
     -moz-box-sizing: content-box;
-    box-sizing: content-box;*/
+    box-sizing: content-box;
 }
 
 .freegrid div.row-headers-background

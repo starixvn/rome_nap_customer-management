@@ -51,6 +51,9 @@
     <Reference Include="Couchbase, Version=1.0.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Couchbase.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.4.1.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Enyim.Caching, Version=2.12.0.0, Culture=neutral, PublicKeyToken=81137140da4e57ef, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Caching.1.0.404.95\lib\net40\Enyim.Caching.dll</HintPath>
     </Reference>
@@ -125,12 +128,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -199,12 +202,56 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-mac.css" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input.css" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Scripts\AddSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\TurnoverMonitorManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\1.jpg" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\arrow.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\countdownCheck.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\dropdown.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentageUsed.jpg" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
@@ -282,8 +329,12 @@
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\CMSConstants.js" />
+    <Content Include="Scripts\KeyboardManager.js" />
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
+    <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
+    <Content Include="Scripts\Libs\Popup\dialogbox.js" />
     <Content Include="Scripts\ReCheckIn.js" />
     <Content Include="Scripts\Sites\ManageRobots.js" />
     <Content Include="Scripts\Sites\LossMonitor.js" />
@@ -351,7 +402,6 @@
     <Content Include="Scripts\Libs\html5-libs\head.js" />
     <Content Include="Scripts\Libs\html5-libs\html5shiv.min.js" />
     <Content Include="Scripts\Libs\html5-libs\modernizr-2.6.2.min.js" />
-    <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-migrate-1.2.1.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.cookie.min.js" />
@@ -370,7 +420,9 @@
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
     <Content Include="Scripts\Sites\ConfigureCustomerAccess.js" />
     <Content Include="Scripts\Sites\OpenCloseMember.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -390,6 +442,14 @@
     <ProjectReference Include="..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
+      <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
+      <Name>Fanex.Nap.CMS.NotificationSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
+      <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
+      <Name>Fanex.Nap.CMS.TurnoverControl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -456,6 +516,16 @@
     </Content>
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.AppSettings.local.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.dev.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.master.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -463,10 +533,15 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+    <Content Include="Web.ConnectionString.dev.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.master.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
     <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config" />
-    <Content Include="Web.AppSettings.local.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -474,10 +549,27 @@
     <Content Include="Web.local.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\Web.config" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Styles\AddSetting.less" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Styles\GlobalSetting.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\SMATurnoverContent.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
+    <Content Include="Areas\NotificationSetting\Views\Web.config" />
+    <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\Themes\PopupCustomStyle.less" />
+    <Content Include="Web.master.config" />
+    <Content Include="Web.dev.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -494,7 +586,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52239</DevelopmentServerPort>
+          <DevelopmentServerPort>60809</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

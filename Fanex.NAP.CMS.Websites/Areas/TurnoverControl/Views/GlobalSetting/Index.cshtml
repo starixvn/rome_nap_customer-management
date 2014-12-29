@@ -1,0 +1,68 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.NAP.Core.Business;
+@using Fanex.Nap.CMS.Infrastructure;
+@{
+    ViewBag.Title = Labels.Global_Setting;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.GlobalSetting, Constant.Policy.Host);
+}
+@section Head
+{
+    @Styles.Render("~/areas/turnovercontrol/globalsettingstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">
+                    <span>@Labels.SMA_Name</span>
+                </label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="width-180" maxlength="30" />
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btn-search" type="button" class="submit" value="@Labels.Search" />
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btn-add" type="button" class="submit display-none" value="@Labels.Add" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div-result-message" class="inline-message">
+</div>
+<div id="globalsetting-list-container" class="content-grid">
+    <div id="globalsetting-list" class="freegrid display-none">
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/areas/turnovercontrol/globalsettingscripts")
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var maxTurnoverValue = @int.MaxValue;
+        var viewResources = {
+            hasHostPermission: @(hasHostPermission ? 1 : 0),
+            Symbol_No: '@Labels.Symbol_No',
+            SMA_Name: '@Labels.SMA_Name',
+            Level: '@Labels.Level',
+            Currency: '@Labels.Currency',
+            Max_Turnover: '@Labels.Max_Turnover',
+            Delete: '@Labels.Delete',
+            GlobalSetting_EditMaxTurnover_Confirm: '@Labels.GlobalSetting_EditMaxTurnover_Confirm',
+            GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover',
+            GlobalSetting_DeleteMaxTurnover_Confirm:'@Labels.GlobalSetting_DeleteMaxTurnover_Confirm',
+            GlobalSetting_AddNewSMA_Title: '@Labels.GlobalSetting_AddNewSMA_Title'
+        };       
+    </script>
+}

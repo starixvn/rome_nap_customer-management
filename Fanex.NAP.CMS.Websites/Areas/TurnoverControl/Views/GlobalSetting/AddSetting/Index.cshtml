@@ -1,0 +1,61 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.NAP.Core.Business;
+@using Fanex.Nap.CMS.Infrastructure;
+@{
+    ViewBag.Title = Labels.GlobalSetting_AddNewSMA_Title;
+    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.GlobalSetting, Constant.Policy.Host);
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/styles/common")
+    @Styles.Render("~/areas/turnovercontrol/globalsetting/addsettingstyles")
+</head>
+<body>
+    <div class="form expand-form">
+        <div id="div-result-message" class="inline-message">
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-100">
+                <label for="txt-username">
+                    @Labels.SMA_Name</label>
+            </div>
+            <div class="edit-field">
+                <input id="txt-username" class="width-230 clearable" type="text" value="" name="txt-username"
+               maxlength="30" data-val-required="@Labels.Error_RequiredField" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-100">
+                <label for="txt-maxturnover">
+                    @Labels.Max_Turnover</label>
+            </div>
+            <div class="edit-field">
+                <input id="txt-maxturnover" class="width-230 clearable" type="text" value="" name="txt-maxturnover"
+               maxlength="13" data-val-required="@Labels.Error_RequiredField" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field normal-label width-100">
+            </div>
+            <div class="edit-field">
+                <input id="btn-add" class="blue-button" type="button" value="@Labels.Add">
+                <input id="btn-cancel" class="red-button" type="button" value="@Labels.Cancel">
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/scripts/common")
+    @Scripts.Render("~/areas/turnovercontrol/globalsetting/addsettingscripts")
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var maxTurnoverValue = @int.MaxValue;
+        var viewResources = {
+            hasHostPermission: @(hasHostPermission ? 1 : 0)    ,
+            GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.Invalid_value',       
+            Error_RequiredField: '@Labels.Error_RequiredField'
+        };       
+    </script>
+</body>
+</html>

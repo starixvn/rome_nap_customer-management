@@ -1,0 +1,127 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.NAP.CMS.Services.Implements;
+@using Fanex.Nap.CMS.Infrastructure.Web;
+@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.Nap.CMS.Infrastructure;
+@using Fanex.NAP.Core.Business;
+@{
+    ViewBag.Title = Labels.Turnover_Monitor;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.TurnoverMonitor, Constant.Policy.Host);
+}
+@section Head
+{
+    @Styles.Render("~/areas/turnovercontrol/turnovermonitor/turnovermonitorstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div id="fromtodate-picker">
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">
+                    <span>@Labels.Sport</span>
+                </label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-sport" class="combobox-autocomplete ddl-sport">
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="txt-username">
+                    <span>@Labels.League</span>
+                </label>
+            </div>
+            <div class="edit-field col_18">
+                <select id="ddl-league" class="combobox-autocomplete ddl-league">
+                </select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">
+                    <span>@Labels.Symbol_PercentageUsedFilter</span>
+                </label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-percentageused" class="width-120" maxlength="3" value="60" />
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btn-search" type="button" class="submit" value="@Labels.Submit" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-box">
+    <div id="div-result-message" class="inline-message">
+    </div>
+    <div id="div-smaturnover-grid-title" class="grid-title display-none">
+        <div class="max-level-used-box">
+            <table cellspacing="0">
+                <tr>
+                    <th class="lbl-max-level-used">
+                        @Labels.TurnoverMonitor_MaxLevelReachedMessage
+                    </th>
+                    <th class="lbl-max-level-used-counter">
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div class="refreshBox">
+            <div class="refreshIcon" title="@Labels.Refresh">
+                @Labels.Not_Refresh
+            </div>
+            <div class="refreshDropdownIcon">
+            </div>
+        </div>
+        <div class="countDownOptionContainer">
+            <div class="countDownOption countDownOptionCheck" val="@Labels.Not_Refresh">
+                @Labels.Not_Refresh</div>
+            <div class="countDownOption" val="30">
+                30 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="60">
+                60 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="90">
+                90 @Labels.Symbol_Second</div>
+            <div class="countDownOption" val="120">
+                120 @Labels.Symbol_Second</div>
+        </div>
+    </div>
+    @Html.Partial("~/Areas/TurnoverControl/Views/TurnoverMonitor/SMATurnoverContent.cshtml")
+</div>
+@section Foot
+{
+    @Scripts.Render("~/areas/turnovercontrol/turnovermonitor/turnovermonitorscripts")
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var currentDate = '@DateTime.Today.ToShortFormatedDate()';
+        var maxTurnoverValue = @int.MaxValue;
+        var minDate = '@(AppSession.BalanceUpDate.BalanceUpDay.ToShortFormatedDate())';
+        var defaultPercentageUsed = 60;
+        var viewResources = {
+            hasHostPermission: @(hasHostPermission ? 1 : 0),
+            From_Date: '@Labels.From_Date',
+            To_Date: '@Labels.To_Date',
+            All_Leagues: '@Labels.All_Leagues',
+            Not_Refresh:'@Labels.Not_Refresh',
+            Message_NoReportData:'@Labels.Message_NoReportData',
+            Event_Date: '@Labels.Event_Date',
+            Match_Id:'@Labels.Match_Id',
+            Company_Turnover: '@Labels.Company_Turnover',
+            Edit: '@Labels.Edit',
+            GlobalSetting_EditMaxTurnover_Confirm:'@Labels.GlobalSetting_EditMaxTurnover_Confirm',
+            GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover'
+         };       
+    </script>
+}

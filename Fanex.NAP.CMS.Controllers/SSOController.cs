@@ -122,7 +122,7 @@ namespace Fanex.NAP.CMS.Controllers
                     }
 
                     this.CreateAuthInfo(user);
-
+                    Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
                     return this.Redirect(forwardLink);
                 }
             }

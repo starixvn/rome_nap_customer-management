@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Common">
+    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="AccessManagement">
+    <Setting Key="Member_LoginVerifySel" SpName="Member_LoginVerifySel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyIns" SpName="Member_LoginVerifyIns" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyUpd" SpName="Member_LoginVerifyUpd" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifyDel" SpName="Member_LoginVerifyDel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifySelList" SpName="Member_LoginVerifySelList" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_LoginVerifySelReqById" SpName="Member_LoginVerifySelReqById" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBTXN.IPDB.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="OpenCloseMember">
+    <Setting Key="NAP_Misc_OpenCloseMembers_List" SpName="NAP_Misc_OpenCloseMembers_List" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_Misc_OpenCloseMembers_UPD" SpName="NAP_Misc_OpenCloseMembers_UPD" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ConfigureTOByEvent">
+    <Setting Key="NAP_SMATurnover_SportControlSel" SpName="NAP_SMATurnover_SportControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SportControlUpd" SpName="NAP_SMATurnover_SportControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SportSel" SpName="NAP_SMATurnover_SportSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_CountrySel" SpName="NAP_SMATurnover_CountrySel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SpecialLeagueSel" SpName="NAP_SMATurnover_SpecialLeagueSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueControlSel" SpName="NAP_SMATurnover_LeagueControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueControlUpd" SpName="NAP_SMATurnover_LeagueControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueControlDel" SpName="NAP_SMATurnover_LeagueControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_LeagueSel" SpName="NAP_SMATurnover_LeagueSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MatchControlSel" SpName="NAP_SMATurnover_MatchControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MatchControlUpd" SpName="NAP_SMATurnover_MatchControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_MatchControlDel" SpName="NAP_SMATurnover_MatchControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ConfigureTOBySMA">
+    <Setting Key="NAP_SMATurnover_SMAControlSel" SpName="NAP_SMATurnover_SMAControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlIns" SpName="NAP_SMATurnover_SMAControlIns" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlUpd" SpName="NAP_SMATurnover_SMAControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlDel" SpName="NAP_SMATurnover_SMAControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ConfigureSMATOByEvent">
+    <Setting Key="NAP_SMATurnover_SMAControlByEventSel" SpName="NAP_SMATurnover_SMAControlByEventSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventIns" SpName="NAP_SMATurnover_SMAControlByEventIns" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventUpd" SpName="NAP_SMATurnover_SMAControlByEventUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_SMAControlByEventDel" SpName="NAP_SMATurnover_SMAControlByEventDel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="TurnoverUsage">
+    <Setting Key="NAP_SMATurnover_MatchSel" SpName="NAP_SMATurnover_MatchSel" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_SMATurnover_UsageList" SpName="NAP_SMATurnover_UsageList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="TurnoverMonitor">
+    <Setting Key="NAP_SMATurnover_MonitorList" SpName="NAP_SMATurnover_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="LossMonitor">
+    <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_LimitLoss_ActionConfigSel" SpName="NAP_LimitLoss_ActionConfigSel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ManageRobots">
+    <Setting Key="NAP_CustomerSelRobotAccounts" SpName="NAP_CustomerSelRobotAccounts" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerUpdInfoRobotAccount" SpName="NAP_CustomerUpdInfoRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerInsRobotAccount" SpName="NAP_CustomerInsRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerUpdStatusRobotAccount" SpName="NAP_CustomerUpdStatusRobotAccount" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="ManageSmartPunters">
+    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_CustomerUpdSmartPunter" SpName="NAP_CustomerUpdSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Nap_CustomerDelSmartPunter" SpName="Nap_CustomerDelSmartPunter" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="Acc_UserLog_RunSPSel" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+    <Setting Key="Acc_UserLog_RunSPSelTotalRecords" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+    <Setting Key="Nap_CustomerSelIDByUserNameNickName" SpName="Nap_CustomerSelIDByUserNameNickName" DbName="DBACC.bodb02.bodbAdminNet"></Setting>
+  </Function>
+</Functions>

@@ -202,6 +202,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -433,6 +439,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="WhoamI.aspx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.Controllers\Fanex.NAP.CMS.Controllers.csproj">
@@ -527,6 +534,9 @@
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.backupMNL.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
@@ -538,6 +548,10 @@
     </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.backupMNL.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.prod.config" />
     <Content Include="Web.uat.config">
@@ -568,6 +582,7 @@
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Web.master.config" />
     <Content Include="Web.dev.config" />
+    <Content Include="Web.backupMNL.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

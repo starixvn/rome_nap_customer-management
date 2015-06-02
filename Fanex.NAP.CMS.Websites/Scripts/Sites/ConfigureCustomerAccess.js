@@ -67,6 +67,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
         popupElements.divForm = $('#divRequestForm', mainDOMElements.divPopup);
         popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
         popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
+        popupElements.hdnExpiredDate = $('#hdnExpiredDate', mainDOMElements.divPopup);
         popupElements.txtUsername = $('#txtUsername', mainDOMElements.divPopup);
         popupElements.rdbRestriction = $('[name=Restriction]', mainDOMElements.divPopup);
         popupElements.ddlCountry = $('#ddlCountry', mainDOMElements.divPopup);
@@ -166,7 +167,15 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             $(this).clearfield();
         });
 
-        Layout.createDatepicker(popupElements.dpkExpiredDate, 'txtExpiredDate', labels.expiredDate, minDate, minDate, null);
+        var expiredDate = Date.parse(popupElements.hdnExpiredDate.val());
+        Layout.createDatepicker(
+            popupElements.dpkExpiredDate,
+            'txtExpiredDate',
+            labels.expiredDate,
+            expiredDate,
+            new Date(minDate) > new Date(expiredDate) ? expiredDate : minDate,
+            null);
+
         popupElements.divForm.find('#txtExpiredDate').addClass('width-120');
         popupElements.txtIP.ipAddress();
 
@@ -354,6 +363,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             popupElements.txtUsername.val(request.Username);
             popupElements.txtRemark.val(request.Remark.decode());
             popupElements.hdnCustId.val(request.CustId);
+            popupElements.hdnExpiredDate.val(request.ExpiredDate);
             popupElements.hdnRequestId.val(request.RequestId);
 
             if (request.IP) {

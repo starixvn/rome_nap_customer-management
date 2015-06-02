@@ -5,6 +5,7 @@
             @Html.Label("txtUsername", ViewLang.Username)
         </div>
         <div class="edit-field">
+            @Html.Hidden("hdnExpiredDate", string.Empty)
             @Html.Hidden("hdnCustId", string.Empty)
             @Html.Hidden("hdnRequestId", string.Empty)
             @Html.TextBox("txtUsername", string.Empty, new { @class = "width-200", data_val_required = Messages.RequiredFieldError })

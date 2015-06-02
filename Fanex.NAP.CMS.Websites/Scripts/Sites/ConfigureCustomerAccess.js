@@ -167,7 +167,7 @@ Fanex.NAP.CMS.ConfigureCustomerAccess = function () {
             $(this).clearfield();
         });
 
-        var expiredDate = Date.parse(popupElements.hdnExpiredDate.val());
+        var expiredDate = popupElements.hdnExpiredDate.val();
         Layout.createDatepicker(
             popupElements.dpkExpiredDate,
             'txtExpiredDate',

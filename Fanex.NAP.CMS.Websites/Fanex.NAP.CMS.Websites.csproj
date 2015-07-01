@@ -566,6 +566,7 @@
     </Content>
     <Content Include="Web.ConnectionString.local2.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.local.config" />
   </ItemGroup>

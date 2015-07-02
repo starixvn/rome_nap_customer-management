@@ -17,7 +17,7 @@
     </Setting>
     <Setting Key="Member_LoginVerifySelReqById" SpName="Member_LoginVerifySelReqById" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
-    <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBTXN.IPDB.bodbAdminNet">
+    <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBCust.IPDB.bodbAdminNet">
     </Setting>
   </Function>
   <Function Name="OpenCloseMember">

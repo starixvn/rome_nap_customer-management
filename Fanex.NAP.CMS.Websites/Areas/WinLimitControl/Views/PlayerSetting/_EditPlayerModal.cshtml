@@ -1,0 +1,25 @@
+﻿@using (Html.BeginForm("Update", "PlayerSetting", FormMethod.Post, new { id = "form-editplayer", @class = "form expand-form", area = "WinLimitControl" }))
+{
+    <div class="inline-message"></div>
+    <div class="form-row">
+        <table class="tblWinLimit">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@WinLimitControlLabels.Game</th>
+                    <th>@WinLimitControlLabels.PlayerWinLimit</th>
+                    <th>@WinLimitControlLabels.CurrencyWinLimit</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="form-row winlimit-note">
+        <p class="wltitle">@WinLimitControlLabels.Note:</p>
+        <p class="wlcontent">@WinLimitControlLabels.WinLimitNote</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@WinLimitControlLabels.Save</button>
+        <button type="button" class="red-button">@WinLimitControlLabels.Cancel</button>
+    </div>
+}

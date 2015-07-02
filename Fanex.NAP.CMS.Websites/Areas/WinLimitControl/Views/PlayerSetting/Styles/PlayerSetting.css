@@ -1,0 +1,27 @@
+﻿.filter-bar .filter-form { padding-bottom: 5px; }
+.filter-bar .filter-form #username { width: 100%; }
+.content-box { float: left; margin-left: 10px; width: 1005px; }
+
+.freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th { font-weight: normal; }
+
+.custom-buttons-container { margin-right: 13px; }
+.custom-buttons-container a { color: #333; margin-right: 5px; text-decoration: none; }
+.custom-buttons-container a:hover { color: #000; }
+.custom-buttons-container .ico-plus { position: relative; top: 2px; }
+
+.tblWinLimit { border-collapse: separate; border-spacing: 0; }
+.tblWinLimit th, .tblWinLimit td { padding: 7px 15px; }
+.tblWinLimit thead { background: #3c5ea5; background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; color: #fff; }
+.tblWinLimit th { font-weight: normal; border-right: 1px solid #aaa; }
+.tblWinLimit td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
+.tblWinLimit td:first-child { border-left: 1px solid #c5c5c5; }
+
+.form .form-row.button-row { margin-top: 10px; }
+.text-right { text-align: right; }
+
+.search-button { margin-left: 20px; }
+
+.winlimit-note { margin-top: 15px; }
+.winlimit-note p { color: #8b0000; margin: 0; line-height: 1.5; }
+
+#form-addplayer { padding-top: 20px; }

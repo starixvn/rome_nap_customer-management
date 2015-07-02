@@ -210,6 +210,8 @@
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -258,6 +260,16 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\Common.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\AddGame.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\AddCurrency.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\EditPlayerModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
@@ -478,6 +490,10 @@
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj">
+      <Project>{946B264B-145F-41F8-9C21-24B4C2B79B07}</Project>
+      <Name>Fanex.Nap.CMS.WinLimitControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -600,6 +616,8 @@
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_EditPlayerModal.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -607,7 +625,9 @@
     <Content Include="Web.master.config" />
     <Content Include="Web.backupMNL.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\WinLimitControl\Views\WinLimitMonitor\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

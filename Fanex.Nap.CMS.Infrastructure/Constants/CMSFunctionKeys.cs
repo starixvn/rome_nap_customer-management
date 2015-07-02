@@ -64,6 +64,12 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         public const string TurnoverControlNotification = "TurnoverControlNotification";
 
+        // Win Limit Control
+        public const string CurrencyWinLimitSetting = "CurrencyWinLimitSetting";
+        public const string PlayerWinLimitManagement = "PlayerWinLimitManagement";
+        public const string WinLimitMonitor = "WinLimitMonitor";
+        
+        // Payout Management
         public const string PayoutManagement = "PayoutManagement";
         public const string PayoutForBopingLicensees = "PayoutForBopingLicensees";
         public const string PayoutForONEworksLicensees = "PayoutForONEworksLicensees";

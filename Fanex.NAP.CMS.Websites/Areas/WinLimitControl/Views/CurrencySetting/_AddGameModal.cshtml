@@ -1,0 +1,28 @@
+﻿@using (Html.BeginForm("AddGame", "CurrencySetting", FormMethod.Post, new { id = "form-addgame", @class = "form expand-form", area = "WinLimitControl" }))
+{
+    <div class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field width-30">
+            <label>@WinLimitControlLabels.Game</label></div>
+        <div class="edit-field">
+            <select class="combobox-autocomplete width-140" id="ddlGame"></select>
+        </div>
+    </div>
+    <div class="form-row">
+        <table class="tblWinLimit">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@WinLimitControlLabels.Currency</th>
+                    <th>@WinLimitControlLabels.WinLimit</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@WinLimitControlLabels.Save</button>
+        <button type="button" class="red-button">@WinLimitControlLabels.Cancel</button>
+    </div>
+}

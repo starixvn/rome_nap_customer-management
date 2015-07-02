@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = WinLimitControlLabels.GlobalSetting;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/winlimitcontrol/currencysettingstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("Search", "CurrencySetting", FormMethod.Get, new { id = "form-globalsetting", @class = "filter-bar", area = "WinLimitControl" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label>@WinLimitControlLabels.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@WinLimitControlLabels.Game</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@WinLimitControlLabels.Search</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+<div id="divModals" class="display-none">
+@{
+    if (hostPermission)
+    {
+        Html.RenderPartial("~/Areas/WinLimitControl/Views/CurrencySetting/_AddCurrencyModal.cshtml");
+        Html.RenderPartial("~/Areas/WinLimitControl/Views/CurrencySetting/_AddGameModal.cshtml");
+    }
+}
+</div>
+@section Foot
+{
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        window.hostPermission = @(hostPermission ? 1 : 0);
+        var winLimitControlLabels = {
+            AddGame: '@WinLimitControlLabels.AddGame',
+            AddCurrency: '@WinLimitControlLabels.AddCurrency',
+            Currency: '@WinLimitControlLabels.Currency',
+            Game: '@WinLimitControlLabels.Game',
+            WinLimit: '@WinLimitControlLabels.WinLimit',
+            Edit: '@WinLimitControlLabels.Edit',
+            AddCurrencyModalTitle: '@WinLimitControlLabels.AddCurrencyModalTitle',
+            AddGameModalTitle: '@WinLimitControlLabels.AddGameModalTitle',
+            AddMoreGame: '@WinLimitControlLabels.AddMoreGame',
+            AddMoreCurrency: '@WinLimitControlLabels.AddMoreCurrency',
+            AddCurrencySuccess: '@WinLimitControlLabels.AddCurrencySuccess',
+            AddGameSuccess: '@WinLimitControlLabels.AddGameSuccess',
+            InvalidWinLimit: '@WinLimitControlLabels.InvalidWinLimit',
+            EditWinLimitConfirm: '@WinLimitControlLabels.EditWinLimitConfirm',
+            EditWinLimitMessage: '@WinLimitControlLabels.EditWinLimitMessage',
+            ViewDetails: '@WinLimitControlLabels.ViewDetails',
+            Username: '@WinLimitControlLabels.Username',
+            CurrentWinLimit: '@WinLimitControlLabels.CurrentWinLimit',
+            NewWinLimit: '@WinLimitControlLabels.NewWinLimit'
+        };       
+    </script>
+    @Scripts.Render("~/bundles/winlimitcontrol/currencysettingscripts")
+}

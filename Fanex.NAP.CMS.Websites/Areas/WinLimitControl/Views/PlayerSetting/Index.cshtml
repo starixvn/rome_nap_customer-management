@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = WinLimitControlLabels.PlayerWinLimitManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/bundles/winlimitcontrol/playersettingstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("Search", "PlayerSetting", FormMethod.Get, new { id = "form-filterWinLimit", @class = "filter-bar", area = "WinLimitControl" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txtUsername">@WinLimitControlLabels.Username</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.TextBox("username", string.Empty, new { maxlength = "100" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@WinLimitControlLabels.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@WinLimitControlLabels.Game</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@WinLimitControlLabels.Search</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+    <div class="winlimit-note">
+        <p class="wltitle">@WinLimitControlLabels.Note:</p>
+        <p class="wlcontent">@WinLimitControlLabels.WinLimitNote</p>
+    </div>
+</div>
+<div id="divModals" class="display-none">
+@{ 
+    Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_AddPlayerModal.cshtml");
+    Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_EditPlayerModal.cshtml");
+}
+</div>
+@section Foot
+{
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var winLimitControlLabels = {
+            AddPlayer: '@WinLimitControlLabels.AddPlayer',
+            Username: '@WinLimitControlLabels.Username',
+            Currency: '@WinLimitControlLabels.Currency',
+            Game: '@WinLimitControlLabels.Game',
+            WinLimit: '@WinLimitControlLabels.WinLimit',
+            Delete: '@WinLimitControlLabels.Delete',
+            Edit: '@WinLimitControlLabels.Edit',
+            AddPlayerModalTitle: '@WinLimitControlLabels.AddPlayerModalTitle',
+            AddMoreGame: '@WinLimitControlLabels.AddMoreGame',
+            InvalidWinLimit: '@WinLimitControlLabels.InvalidWinLimit',
+            NoMoreGameToSetPlayerError: '@WinLimitControlLabels.NoMoreGameToSetPlayerError',
+            PlayerWinLimitConfirmDelete: '@WinLimitControlLabels.PlayerWinLimitConfirmDelete',
+            EditPlayerModalTitle: '@WinLimitControlLabels.EditPlayerModalTitle'
+        };       
+    </script>
+    @Scripts.Render("~/bundles/winlimitcontrol/playersettingscripts")
+}

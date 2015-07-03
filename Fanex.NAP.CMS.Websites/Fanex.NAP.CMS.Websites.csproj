@@ -270,6 +270,9 @@
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\EditPlayerModal.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
@@ -618,6 +621,8 @@
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_EditPlayerModal.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
+    <None Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -625,9 +630,7 @@
     <Content Include="Web.master.config" />
     <Content Include="Web.backupMNL.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\WinLimitControl\Views\WinLimitMonitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

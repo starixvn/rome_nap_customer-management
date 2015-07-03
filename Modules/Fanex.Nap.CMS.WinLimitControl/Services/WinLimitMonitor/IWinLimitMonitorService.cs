@@ -1,0 +1,14 @@
+﻿namespace Fanex.Nap.CMS.WinLimitControl.Services.WinLimitMonitor
+{
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
+    using Fanex.Nap.CMS.WinLimitControl.Models.WinLimitMonitor;
+
+    public interface IWinLimitMonitorService
+    {
+        PlayerWinLimitMonitorView GetWinLimitMonitor(ICriteria criteria);
+
+        Result UnblockAccounts(UnblockAccountsCriteria criteria);
+    }
+}

@@ -9,6 +9,7 @@
         {
             RegisterGlobalSettingBundles(bundles);
             RegisterPlayerSettingBundles(bundles);
+            RegisterWinLimitMonitorBundles(bundles);
         }
 
         private static void RegisterGlobalSettingBundles(BundleCollection bundles)
@@ -35,6 +36,16 @@
             bundles.AddAndInclude(
                 "~/bundles/winlimitcontrol/playersettingstyles",
                 "~/Areas/WinLimitControl/Views/PlayerSetting/Styles/PlayerSetting.css");
+        }
+
+        private static void RegisterWinLimitMonitorBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/winlimitcontrol/winlimitmonitor-scripts").Include(
+                "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/WinLimitMonitor.js"));
+
+            bundles.AddAndInclude(
+                "~/bundles/winlimitcontrol/winlimitmonitor-styles",
+                "~/Areas/WinLimitControl/Views/WinLimitMonitor/Styles/WinLimitMonitor.less");
         }
     }
 }

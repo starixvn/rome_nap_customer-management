@@ -4,18 +4,18 @@
     <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
   </Function>
-    
+
   <Function Name="Settings">
     <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel" DbName="DBTXN.CustDB.bodbAdminNet">
-        <Mapping DataField="ExchangeID" ObjectProperty="Id" />
-        <Mapping DataField="ExchangeName" ObjectProperty="Name" />
+      <Mapping DataField="ExchangeID" ObjectProperty="Id" />
+      <Mapping DataField="ExchangeName" ObjectProperty="Name" />
     </Setting>
     <Setting Key="NAP_WinLimit_ProductSel" SpName="NAP_WinLimit_ProductSel" DbName="DBTXN.BODB02.bodbAdminNet">
-        <Mapping DataField="ProductID" ObjectProperty="Id" />
-        <Mapping DataField="ProductName" ObjectProperty="Name" />
+      <Mapping DataField="ProductID" ObjectProperty="Id" />
+      <Mapping DataField="ProductName" ObjectProperty="Name" />
     </Setting>
   </Function>
-    
+
   <Function Name="AccessManagement">
     <Setting Key="Member_LoginVerifySel" SpName="Member_LoginVerifySel" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
@@ -151,5 +151,9 @@
     <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+  </Function>
+  <Function Name="Win Limit Control - Win Limit Monitor">
+    <Setting Key="NAP_WinLimitControl_WinLimitMonitorSel" SpName="NAP_WinLimit_BlockedCustSel" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimitControl_WinLimitMonitorUnblockAccounts" SpName="NAP_WinLimit_UnblockCustUpd" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
   </Function>
 </Functions>

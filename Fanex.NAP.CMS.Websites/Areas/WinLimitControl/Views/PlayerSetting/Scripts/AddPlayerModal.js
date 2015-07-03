@@ -1,4 +1,5 @@
 ﻿/* global winLimitControlLabels, numeral, CMS, CMSConstants */
+/* exported AddPlayerModal */
 function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
     'use strict';
     var self = this;

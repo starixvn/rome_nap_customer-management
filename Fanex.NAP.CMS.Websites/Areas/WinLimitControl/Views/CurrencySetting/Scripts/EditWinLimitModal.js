@@ -1,4 +1,5 @@
 ﻿/* global winLimitControlLabels, CMS */
+/* exported EditWinLimitModal */
 function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc) {
     'use strict';
     var self = this;

@@ -1,4 +1,6 @@
 ﻿/* global CMS, winLimitControlLabels */
+/* jshint strict: false,
+camelcase: false */
 var winLimitMonitor;
 $(document).ready(function () {
     winLimitMonitor.initPage();
@@ -73,7 +75,7 @@ var WinLimitMonitor = function () {
                 pagerSelectCallBack: self.handleChangingPage
             }
         };
-    }
+    };
 
     self.getPlayerSettings = function () {
         CMS.hideInlineMsg(self.documentElements.divResult);
@@ -202,7 +204,7 @@ var WinLimitMonitor = function () {
             }
         });
 
-        if (numberUnblock == 0) {
+        if (numberUnblock === 0) {
             CMS.showTipsyError(self.documentElements.btnUnblocked, winLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock, "w");
             self.documentElements.btnUnblocked.unbind("click");
         } else {

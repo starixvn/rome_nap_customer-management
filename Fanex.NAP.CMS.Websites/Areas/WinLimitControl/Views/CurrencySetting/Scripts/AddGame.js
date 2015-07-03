@@ -1,4 +1,6 @@
-﻿/* global winLimitControlLabels, CMS */
+﻿/* global winLimitControlLabels, CMS,
+winlimitctrl */
+/* exported AddGame */
 function AddGame(formContainer, renderGlobalSettingFunc) {
     'use strict';
     var self = this;

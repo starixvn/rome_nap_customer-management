@@ -1,4 +1,6 @@
-﻿var winlimitctrl = winlimitctrl || {};
+﻿/* global CMS */
+
+var winlimitctrl = winlimitctrl || {};
 (function ($) {
     'use strict';
 
@@ -14,14 +16,14 @@
         }
 
         return html.join('');
-    }
+    };
 
     winlimitctrl.renderNumber = function(tblWinLimit) {
         var spanNumbers = tblWinLimit.find('.spanNumber');
         $.each(spanNumbers, function (index, value) {
             value.innerHTML = index + 1;
         });
-    }
+    };
    
     winlimitctrl.showAddedResults = function(formContainer, results, callbackFunc) {
         var failed = false;

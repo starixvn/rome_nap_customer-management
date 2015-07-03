@@ -1,9 +1,11 @@
 ﻿/* global winLimitControlLabels, numeral, CMS, CMSConstants */
+/* exported EditPlayerModal */
+/* jshint strict: false */
 function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
     'use strict';
     var self = this;
     var tblWinLimit = formContainer.find('.tblWinLimit > tbody'),
-        messageContainer = formContainer.find('.inline-message'); ;
+        messageContainer = formContainer.find('.inline-message');
     var playerWinLimit = null, formData = null;
 
     function formatNumber(number) {
@@ -84,11 +86,11 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
 
     function getPlayerWinLimit() {
         /*CMS.getJson(
-            window.rootUrl + 'WinLimitControl/PlayerSetting/GetPlayerWinLimit?username=' + query,
-            function (result) {
-                playerWinLimit = result;
-                renderWinLimit(playerWinLimit.WinLimits);
-            });*/
+        window.rootUrl + 'WinLimitControl/PlayerSetting/GetPlayerWinLimit?username=' + query,
+        function (result) {
+        playerWinLimit = result;
+        renderWinLimit(playerWinLimit.WinLimits);
+        });*/
 
         playerWinLimit = {
             Player: { Id: 1, Name: 'member01' },
@@ -128,6 +130,6 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
     }
 
     self.initialize = function () {
-        getPlayerWinLimit();       
+        getPlayerWinLimit();
     };
 }

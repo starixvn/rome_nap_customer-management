@@ -184,13 +184,13 @@
     <value>Edit</value>
   </data>
   <data name="EditGlobalWinLimitSuccesss" xml:space="preserve">
-    <value>The Win Limit of {0} for {1} has been updated successfully!</value>
+    <value>The Win Limit of {0} currency per {1} has been updated successfully!</value>
   </data>
   <data name="EditPlayerModalTitle" xml:space="preserve">
     <value>Edit Win Limit of {0}</value>
   </data>
   <data name="EditWinLimitConfirm" xml:space="preserve">
-    <value>Are you sure want to change Win Limit of {0} for {1}?</value>
+    <value>Are you sure want to change Win Limit of {0} currency per {1}?</value>
   </data>
   <data name="EditWinLimitMessage" xml:space="preserve">
     <value>The action could lead to a lowered Player Win Limit of the following customers: {0}</value>
@@ -241,7 +241,7 @@
     <value>Unblock account(s)</value>
   </data>
   <data name="UnsetGlobalWinLimitError" xml:space="preserve">
-    <value>The Win Limit of {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href="{1}"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+    <value>The Win Limit on Keno of {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href="{1}"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
   </data>
   <data name="UpdatePlayerWinLimitSuccess" xml:space="preserve">
     <value>The Player Win Limit(s) have been save successfully!</value>

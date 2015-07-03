@@ -1,13 +1,18 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerWinLimitManagement;
     using Fanex.Nap.CMS.WinLimitControl.Models.PlayerWinLimitManagement;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
     using Fanex.Nap.CMS.WinLimitControl.Services.PlayerWinLimitManagement;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Data;
 
     public class PlayerSettingController : BaseController
     {
@@ -25,39 +30,53 @@
             _playerSettingService = playerSettingService ?? new PlayerSettingService();
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             PopulateCurrencyAndGame();
+            ViewBag.HostPermission = HasRight(CMSFunctionKeys.PlayerWinLimitManagement, Constant.Policy.Host);
             return View("~/Areas/WinLimitControl/Views/PlayerSetting/Index.cshtml");
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetPlayerWinLimitCriteria criteria)
         {
             var playerWinLimits = _playerSettingService.GetPlayerWinLimits(criteria);
             return Json(playerWinLimits, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
         public ActionResult SearchPlayer(GetUnsetGameByPlayerCriteria criteria)
         {
             var unsetGames = _playerSettingService.GetUnsetGameByPlayer(criteria);
             return Json(unsetGames, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
+        public ActionResult GetPlayerWinLimits(GetPlayerWinLimitForUpdateCriteria criteria)
+        {
+            var winlimits = _playerSettingService.GetPlayerWinLimitsForUpdate(criteria);
+            return Json(winlimits, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddOrUpdatePlayerWinLimit model)
         {
-            var result = new Fanex.Nap.CMS.Infrastructure.Models.Result(0, "Success!!!");
+            var result = _playerSettingService.AddPlayerWinLimit(ToAddPlayerWinLimitCriteria(model));
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
         public ActionResult Update(AddOrUpdatePlayerWinLimit model)
         {
-            var result = new Fanex.Nap.CMS.Infrastructure.Models.Result(0, "Success!!!");
+            var result = _playerSettingService.UpdatePlayerWinLimit(ToUpdatePlayerWinLimitCriteria(model));
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(DeletePlayerWinLimitCriteria criteria)
         {
             var result = _playerSettingService.DeletePlayerWinLimit(criteria);
@@ -79,6 +98,40 @@
 
             ViewBag.Currencies = selectListCurrencies;
             ViewBag.Games = selectListGames;
+        }
+
+        [NonAction]
+        private IList<AddPlayerWinLimitCriteria> ToAddPlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
+        {
+            IList<AddPlayerWinLimitCriteria> criteria = new List<AddPlayerWinLimitCriteria>();
+            foreach (var winlimit in model.WinLimits)
+            {
+                criteria.Add(new AddPlayerWinLimitCriteria 
+                {
+                    Player = model.Player.Id,
+                    Game = winlimit.Id,
+                    PlayerWinLimit = winlimit.PlayerWinLimit
+                });    
+            }
+
+            return criteria;
+        }
+
+        [NonAction]
+        private IList<UpdatePlayerWinLimitCriteria> ToUpdatePlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
+        {
+            IList<UpdatePlayerWinLimitCriteria> criteria = new List<UpdatePlayerWinLimitCriteria>();
+            foreach (var winlimit in model.WinLimits)
+            {
+                criteria.Add(new UpdatePlayerWinLimitCriteria
+                {
+                    Player = model.Player.Id,
+                    Game = winlimit.Id,
+                    PlayerWinLimit = winlimit.PlayerWinLimit
+                });
+            }
+
+            return criteria;
         }
     }
 }

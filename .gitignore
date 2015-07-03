@@ -45,6 +45,10 @@
 /Modules/Fanex.Nap.CMS.NotificationSetting/bin
 /Modules/Fanex.Nap.CMS.PayoutManagement/obj
 /Modules/Fanex.Nap.CMS.PayoutManagement/bin
+/Modules/Fanex.Nap.CMS.WinLimitControl/bin
+/Modules/Fanex.Nap.CMS.WinLimitControl/obj
+/Modules/Fanex.Nap.CMS.Settings/bin
+/Modules/Fanex.Nap.CMS.Settings/obj
 
 /StyleCop.Cache
 /Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache

@@ -4,6 +4,14 @@ var winlimitctrl = winlimitctrl || {};
 (function ($) {
     'use strict';
 
+    winlimitctrl.parseFloat = function(value) {
+        if (isNaN(value)) {
+            return -1;
+        }
+
+        return parseFloat(value);
+    };
+
     winlimitctrl.renderSelectHtml = function(data) {
         var item, html = [];
         for (var i = 0, max = data.length; i < max; i++) {

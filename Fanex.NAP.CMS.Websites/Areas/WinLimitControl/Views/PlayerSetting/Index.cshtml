@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = WinLimitControlLabels.PlayerWinLimitManagement;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var hostPermission = (bool)ViewBag.HostPermission;
 }
 @section Head
 {
@@ -48,15 +49,19 @@
     </div>
 </div>
 <div id="divModals" class="display-none">
-@{ 
-    Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_AddPlayerModal.cshtml");
-    Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_EditPlayerModal.cshtml");
+@{
+    if (hostPermission) 
+    {
+        Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_AddPlayerModal.cshtml");
+        Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_EditPlayerModal.cshtml");
+    }
 }
 </div>
 @section Foot
 {
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
+        window.hostPermission = @(hostPermission ? 1 : 0);
         var winLimitControlLabels = {
             AddPlayer: '@WinLimitControlLabels.AddPlayer',
             Username: '@WinLimitControlLabels.Username',

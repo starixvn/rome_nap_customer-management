@@ -7,6 +7,7 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Models;
+    using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerWinLimitManagement;
     using Fanex.Nap.CMS.WinLimitControl.Models.PlayerWinLimitManagement;
 
     public class PlayerSettingRepository : IPlayerSettingRepository
@@ -63,12 +64,50 @@
             return unsetGames;
         }
 
+        public IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria)
+        {
+            var gameWinLimits = new List<GameWinLimit>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        gameWinLimits.Add(ToAddOrEditPlayerWinLimitForUpdate(reader));
+                    }
+                }
+            }
+
+            return gameWinLimits;
+        }
+
+        public Result AddPlayerWinLimit(AddPlayerWinLimitCriteria criteria)
+        {
+            return ExecuteNonQuery(criteria);
+        }
+
+        public Result UpdatePlayerWinLimit(UpdatePlayerWinLimitCriteria criteria)
+        {
+            return ExecuteNonQuery(criteria);
+        }
+
         public Result DeletePlayerWinLimit(ICriteria criteria)
         {
             return ExecuteNonQuery(criteria);
         }
 
         private Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+                return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
+            }
+        }
+
+        private Result ExecuteNonQuery(AddPlayerWinLimitCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -107,6 +146,14 @@
                 Id = Converter.ToInt(reader["ProductId"]),
                 GlobalWinLimit = Converter.ToDecimal(reader["CurrencyMaxWinLimit"])
             };
+        }
+
+        private GameWinLimit ToAddOrEditPlayerWinLimitForUpdate(IDataReader reader)
+        {
+            GameWinLimit winlimit = ToAddOrEditPlayerWinLimit(reader);
+            winlimit.PlayerWinLimit = Converter.ToDecimal(reader["PlayerWinLimit"]);
+            
+            return winlimit;
         }
     }
 }

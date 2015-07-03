@@ -72,7 +72,7 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
             row = $(winLimitRows[i]);
             dataIdentity = row.data('identity');
             inputWinLimit = row.find('#inputWinLimit' + dataIdentity);
-            winlimit = parseFloat(inputWinLimit.val());
+            winlimit = winlimitctrl.parseFloat(inputWinLimit.val());
             if (winlimit > 0) {
                 ddlCurrency = row.find('#ddlCurrency' + dataIdentity);
                 ddlCurrency.combobox('disable');

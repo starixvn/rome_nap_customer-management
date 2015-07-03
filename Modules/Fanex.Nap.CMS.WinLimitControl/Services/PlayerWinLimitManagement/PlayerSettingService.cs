@@ -61,6 +61,21 @@
             return playerWinLimits;
         }
 
+        public IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria)
+        {
+            var winlimits = _playerSettingRepository.GetPlayerWinLimitsForUpdate(criteria);
+            if (winlimits.Count > 0)
+            {
+                var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
+                foreach (var winlimit in winlimits)
+                {
+                    winlimit.Name = gameHash[winlimit.Id];    
+                }
+            }
+
+            return winlimits;
+        }
+
         public AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(GetUnsetGameByPlayerCriteria criteria)
         {
             var unsetGames = _playerSettingRepository.GetUnsetGameByPlayer(criteria);
@@ -88,6 +103,44 @@
             }
             
             return unsetGames;
+        }
+
+        public Result AddPlayerWinLimit(IList<AddPlayerWinLimitCriteria> criterias)
+        {
+            Result dbresult = null, returnResult = null;
+            foreach (AddPlayerWinLimitCriteria criteria in criterias)
+            {
+                dbresult = _playerSettingRepository.AddPlayerWinLimit(criteria);
+                if (dbresult.Code == ErrorCodeConstants.NoneError)
+                {
+                    dbresult.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
+                }
+                else
+                {
+                    returnResult = dbresult;
+                }
+            }
+
+            return returnResult ?? dbresult;
+        }
+
+        public Result UpdatePlayerWinLimit(IList<UpdatePlayerWinLimitCriteria> criterias)
+        {
+            Result dbresult = null, returnResult = null;
+            foreach (UpdatePlayerWinLimitCriteria criteria in criterias)
+            {
+                dbresult = _playerSettingRepository.UpdatePlayerWinLimit(criteria);
+                if (dbresult.Code == ErrorCodeConstants.NoneError)
+                {
+                    dbresult.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
+                }
+                else
+                {
+                    returnResult = dbresult;
+                }
+            }
+
+            return returnResult ?? dbresult;
         }
 
         public Result DeletePlayerWinLimit(ICriteria criteria)

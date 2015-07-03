@@ -147,6 +147,7 @@
 
   <Function Name="Game Win Limit - Player Management">
     <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingListSel" SpName="NAP_WinLimit_CustSettingListSel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting> 
     <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>

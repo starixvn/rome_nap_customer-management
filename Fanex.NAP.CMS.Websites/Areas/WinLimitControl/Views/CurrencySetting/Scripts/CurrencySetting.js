@@ -1,4 +1,4 @@
-﻿/* global winLimitControlLabels, hostPermission, keyboardManager, numeral,
+﻿/* global winLimitControlLabels, hostPermission, keyboardManager, numeral, winlimitctrl,
     CMSConstants, CMS, AddCurrency, AddGame, EditWinLimitModal */
 (function () {
     'use strict';
@@ -29,8 +29,7 @@
                 winLimitControlLabels.AddCurrency,
                 '</a>',
                 '<span class="ico-plus"></span>',
-                '</div>'
-            ];
+                '</div>'];
         }
 
         var columns = [
@@ -119,11 +118,13 @@
         var successFunc = function (result) {
             gridOptions.bodyRows = buildBodyRows(result);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
-            if (isHost && gridOptions.bodyRows.length > 0) {
-                $('.linkEdit').unbind('click').bind('click', function () { inlineEditWinLimit($(this)); });
-            }
+            if (isHost) {
+                if (gridOptions.bodyRows.length > 0) {
+                    $('.linkEdit').unbind('click').bind('click', function () { inlineEditWinLimit($(this)); });
+                }
 
-            bindCustomButtons();
+                bindCustomButtons();
+            }
         };
 
         CMS.getJson(url, successFunc);
@@ -151,7 +152,7 @@
         isEditting = true;
         var currency = { Id: editLink.data('currencyid'), Name: editLink.data('currency') };
         var game = { Id: editLink.data('gameid'), Name: editLink.data('game') };
-        var winlimit = parseFloat(editLink.text().replace(/\,/g, ''));
+        var winlimit = winlimitctrl.parseFloat(editLink.text().replace(/\,/g, ''));
 
         var tdContainer = editLink.parent()
             .html('<input type="text" maxlength="20" autocomplete="off" class="text-right width-160" id="inputWinLimit" value="' + winlimit + '"/>');
@@ -164,7 +165,7 @@
                     var code = e.which || e.keyCode;
                     if (code === keyboardManager.Enums.KeyCode.Enter) {
                         var $this = $(this);
-                        var newWinLimit = parseFloat($this.val());
+                        var newWinLimit = winlimitctrl.parseFloat($this.val());
                         if (newWinLimit > 0) {
                             if (winlimit !== newWinLimit) {
                                 var editConfirmation = new EditWinLimitModal(currency, game, newWinLimit, renderGlobalSettings);

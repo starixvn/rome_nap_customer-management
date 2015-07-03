@@ -6,7 +6,15 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
     var self = this;
     var tblWinLimit = formContainer.find('.tblWinLimit > tbody'),
         messageContainer = formContainer.find('.inline-message');
-    var playerWinLimit = null, formData = null;
+    var playerWinLimit = { Player: player }, formData = null;
+
+    function checkParseFloat(value) {
+        if (isNaN(value)) {
+            return -1;
+        }
+
+        return parseFloat(value);
+    }
 
     function formatNumber(number) {
         return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
@@ -64,9 +72,9 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
             tblWinLimit.find('.edit-field > input[type="text"]'),
             function (index, value) {
                 var inputWinLimit = $(value);
-                var playerWinLimit = parseFloat(inputWinLimit.val().replace(/\,/g, ''));
+                var playerWinLimit = checkParseFloat(inputWinLimit.val().replace(/\,/g, ''));
                 if (playerWinLimit >= 0) {
-                    var globalWinLimit = parseFloat(inputWinLimit.data('global'));
+                    var globalWinLimit = checkParseFloat(inputWinLimit.data('global'));
                     if (playerWinLimit <= globalWinLimit) {
                         formData.push({ Id: inputWinLimit.data('game'), PlayerWinLimit: playerWinLimit });
                     }
@@ -85,26 +93,15 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
     }
 
     function getPlayerWinLimit() {
-        /*CMS.getJson(
-        window.rootUrl + 'WinLimitControl/PlayerSetting/GetPlayerWinLimit?username=' + query,
-        function (result) {
-        playerWinLimit = result;
-        renderWinLimit(playerWinLimit.WinLimits);
-        });*/
-
-        playerWinLimit = {
-            Player: { Id: 1, Name: 'member01' },
-            WinLimits: [
-                { Id: 3, Name: 'Keno', PlayerWinLimit: 7000, GlobalWinLimit: 10000 },
-                { Id: 5, Name: 'Virtual Sport', PlayerWinLimit: 8000, GlobalWinLimit: 20000 },
-                { Id: 8, Name: 'Number Game', PlayerWinLimit: 9000, GlobalWinLimit: 30000 }
-            ]
-        };
-
+        CMS.getJson(
+            window.rootUrl + 'WinLimitControl/PlayerSetting/GetPlayerWinLimits?player=' + playerWinLimit.Player.Id,
+            function (results) {
+                playerWinLimit.WinLimits = results;
         renderWinLimit(playerWinLimit.WinLimits);
 
-        CMS.modal(winLimitControlLabels.EditPlayerModalTitle.replace('{0}', player.Name), formContainer);
-        bindEvents();
+                CMS.modal(winLimitControlLabels.EditPlayerModalTitle.replace('{0}', player.Name), formContainer);
+                bindEvents();
+            }); 
     }
 
     function bindEvents() {

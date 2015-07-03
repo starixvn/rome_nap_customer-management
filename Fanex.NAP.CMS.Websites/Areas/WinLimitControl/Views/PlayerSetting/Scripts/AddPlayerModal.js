@@ -10,6 +10,14 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
     var identity = -1;
     var playerWinLimit = {}, formData = null;
 
+    function checkParseFloat(value) {
+        if (isNaN(value)) {
+            return -1;
+        }
+
+        return parseFloat(value);
+    };
+
     function formatNumber(number) {
         return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
     }
@@ -141,12 +149,12 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
             row = $(winLimitRows[i]);
             dataIdentity = row.data('identity');
             inputWinLimit = row.find('#inputWinLimit' + dataIdentity);
-            winlimit = parseFloat(inputWinLimit.val());
+            winlimit = checkParseFloat(inputWinLimit.val());
             if (winlimit >= 0) {
                 ddlGame = row.find('#ddlGame' + dataIdentity);
                 selectedGame = ddlGame.find('option:selected');
 
-                var globalWinLimit = parseFloat(selectedGame.data('global'));
+                var globalWinLimit = checkParseFloat(selectedGame.data('global'));
                 if (winlimit <= globalWinLimit) {
                     ddlGame.combobox('disable');
 

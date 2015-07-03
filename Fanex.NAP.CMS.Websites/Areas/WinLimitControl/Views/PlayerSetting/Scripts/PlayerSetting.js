@@ -1,4 +1,4 @@
-﻿/* global winLimitControlLabels, CMS, AddPlayerModal, EditPlayerModal */
+﻿/* global winLimitControlLabels, hostPermission, CMS, AddPlayerModal, EditPlayerModal */
 (function () {
     'use strict';
     var gridOptions = null;
@@ -7,15 +7,10 @@
         formAddPlayerModal = $('#form-addplayer'),
         formEditlayerModal = $('#form-editplayer');
     var searchUrl = formFilter.attr('action');
+    var isHost = hostPermission === 1;
 
     function initGridOptions() {
-        var customButtons = [
-            '<div class="custom-buttons-container" id="linkAddPlayer">',
-            '<a href="javascript:;">',
-            winLimitControlLabels.AddPlayer,
-            '</a>',
-            '<span class="ico-plus"></span></div>'];
-
+        var customButtons = [];
         var columns = [
             { HeaderText: '#', Width: 60, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Username, Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
@@ -23,13 +18,23 @@
             { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: winLimitControlLabels.WinLimit, Width: 200, Name: 'colWinLimit',
                 HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMS.formats.DecimalFormat
-            },
-            { HeaderText: winLimitControlLabels.Delete, Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Edit, Width: 60, Name: 'colEdit', HeaderAlign: 'center', CellAlign: 'center' }
+            }
         ];
 
+        if (isHost) {
+            customButtons = [
+                '<div class="custom-buttons-container" id="linkAddPlayer">',
+                '<a href="javascript:;">',
+                winLimitControlLabels.AddPlayer,
+                '</a>',
+                '<span class="ico-plus"></span></div>'];
+
+            columns.push({ HeaderText: winLimitControlLabels.Delete, Width: 60, Name: 'colDelete', HeaderAlign: 'center', CellAlign: 'center' });
+            columns.push({ HeaderText: winLimitControlLabels.Edit, Width: 60, Name: 'colEdit', HeaderAlign: 'center', CellAlign: 'center' });
+        }
+
         return {
-            showTitle: true,
+            showTitle: isHost,
             titleInfo: {
                 customButtons: customButtons.join(''),
                 showButtonsWhenNoData: true
@@ -70,10 +75,12 @@
 
                 cell.push({ Name: 'colGame', Value: winlimit.Game.Name });
                 cell.push({ Name: 'colWinLimit', Value: winlimit.MaxWinLimit });
-                cell.push({ Name: 'colDelete', Value: renderDeleteLink(playerWinLimit.Player.Id, winlimit.Game.Id, true) });
+                if (isHost) {
+                    cell.push({ Name: 'colDelete', Value: renderDeleteLink(playerWinLimit.Player.Id, winlimit.Game.Id, true) });
 
-                if (j === 0) {
-                    cell.push({ Name: 'colEdit', Value: renderEditLink(playerWinLimit.Player), MergeRowNumber: mergeRowNumber });
+                    if (j === 0) {
+                        cell.push({ Name: 'colEdit', Value: renderEditLink(playerWinLimit.Player), MergeRowNumber: mergeRowNumber });
+                    }
                 }
 
                 bodyRows.push({ Columns: cell });
@@ -113,12 +120,14 @@
         var successFunc = function (results) {
             gridOptions.bodyRows = buildBodyRows(results);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
-            if (gridOptions.bodyRows.length > 0) {
-                $('.ico-edit').unbind('click').bind('click', function () { editWinLimit($(this)); });
-                $('.ico-delete').unbind('click').bind('click', function () { deleteWinLimit($(this)); });
-            }
+            if (isHost) {
+                if (gridOptions.bodyRows.length > 0) {
+                    $('.ico-edit').unbind('click').bind('click', function () { editWinLimit($(this)); });
+                    $('.ico-delete').unbind('click').bind('click', function () { deleteWinLimit($(this)); });
+                }
 
-            bindCustomButtons();
+                bindCustomButtons();
+            }
         };
 
         CMS.getJson(url, successFunc);

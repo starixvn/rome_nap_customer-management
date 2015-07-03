@@ -259,7 +259,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Win Limit of {0} for {1} has been updated successfully!.
+        ///   Looks up a localized string similar to The Win Limit of {0} currency per {1} has been updated successfully!.
         /// </summary>
         public static string EditGlobalWinLimitSuccesss {
             get {
@@ -277,7 +277,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure want to change Win Limit of {0} for {1}?.
+        ///   Looks up a localized string similar to Are you sure want to change Win Limit of {0} currency per {1}?.
         /// </summary>
         public static string EditWinLimitConfirm {
             get {
@@ -430,7 +430,6 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Win Limit of {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href=&quot;{1}&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
         /// </summary>
         public static string UnsetGlobalWinLimitError {
             get {

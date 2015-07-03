@@ -12,6 +12,12 @@
 
         AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(GetUnsetGameByPlayerCriteria criteria);
 
-        Result DeletePlayerWinLimit(ICriteria criteria);
+        IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria);
+
+        Result AddPlayerWinLimit(IList<AddPlayerWinLimitCriteria> criterias);
+
+        Result UpdatePlayerWinLimit(IList<UpdatePlayerWinLimitCriteria> criterias);
+
+        Result DeletePlayerWinLimit(ICriteria criterias);
     }
 }

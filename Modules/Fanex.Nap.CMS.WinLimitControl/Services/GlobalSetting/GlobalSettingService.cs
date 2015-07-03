@@ -165,8 +165,8 @@
             {
                 result.Message = string.Format(
                     WinLimitControlLabels.EditGlobalWinLimitSuccesss,
-                    criteria.GameName,
-                    criteria.CurrencyName);
+                    criteria.CurrencyName,
+                    criteria.GameName);
             }
 
             return result;

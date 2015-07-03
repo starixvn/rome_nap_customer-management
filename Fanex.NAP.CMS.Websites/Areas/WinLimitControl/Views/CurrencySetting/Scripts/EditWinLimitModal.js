@@ -64,8 +64,8 @@ function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc)
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/GetGreaterPlayerWinLimits?' + $.param(formData);
         CMS.getJson(url, function (results) {
             var message = winLimitControlLabels.EditWinLimitConfirm
-                .replace('{0}', '<strong>' + game.Name + '</strong>')
-                .replace('{1}', '<strong>' + currency.Name + '</strong>');
+                .replace('{0}', '<strong>' + currency.Name + '</strong>')
+                .replace('{1}', '<strong>' + game.Name + '</strong>');
 
             if (results && results.length > 0) {
                 gridOptions = initGridOptions();

@@ -4,7 +4,7 @@
 
 .freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th { font-weight: normal; }
 
-.custom-buttons-container { margin-right: 13px; }
+.custom-buttons-container { margin-right: 16px; }
 .custom-buttons-container a { color: #333; margin-right: 5px; text-decoration: none; }
 .custom-buttons-container a:hover { color: #000; }
 .custom-buttons-container .ico-plus { position: relative; top: 2px; }

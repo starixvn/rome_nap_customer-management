@@ -16,7 +16,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         }
 
         return parseFloat(value);
-    };
+    }
 
     function formatNumber(number) {
         return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);

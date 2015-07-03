@@ -111,7 +111,7 @@
     <Compile Include="App_Start\WinLimitControlAreaRegistration.cs" />
     <Compile Include="Controllers\CurrencySettingController.cs" />
     <Compile Include="Controllers\PlayerSettingController.cs" />
-    <Compile Include="Controllers\MonitorController.cs" />
+    <Compile Include="Controllers\WinLimitMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalWinLimitCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GetGreaterPlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\UpdateGlobalWinLimitCriteria.cs" />
@@ -126,6 +126,9 @@
     <Compile Include="Criteria\PlayerWinLimitManagement\GetPlayerWinLimitForUpdateCriteria.cs" />
     <Compile Include="Criteria\PlayerWinLimitManagement\GetUnsetGameByPlayerCriteria.cs" />
     <Compile Include="Criteria\PlayerWinLimitManagement\UpdatePlayerWinLimitCriteria.cs" />
+    <Compile Include="Criteria\WinLimitMonitor\GetWinLimitMonitorCriteria.cs" />
+    <Compile Include="Criteria\WinLimitMonitor\UnblockAccountsCriteria.cs" />
+    <Compile Include="Criteria\WinLimitMonitor\UnblockSingleAccountCriteria.cs" />
     <Compile Include="Models\GlobalSetting\GlobalWinLimit.cs" />
     <Compile Include="Models\GlobalSetting\GreaterPlayerWinLimit.cs" />
     <Compile Include="Models\GlobalSetting\WinLimitEntity.cs" />
@@ -133,11 +136,19 @@
     <Compile Include="Models\PlayerWinLimitManagement\GameWinLimit.cs" />
     <Compile Include="Models\PlayerWinLimitManagement\PlayerWinLimit.cs" />
     <Compile Include="Models\PlayerWinLimitManagement\PlayerWinLimitEntity.cs" />
+    <Compile Include="Models\WinLimitMonitor\GameWinLimitMonitorModel.cs" />
+    <Compile Include="Models\WinLimitMonitor\PlayerWinLimitMonitorModel.cs" />
+    <Compile Include="Models\WinLimitMonitor\PlayerWinLimitMonitorView.cs" />
+    <Compile Include="Models\WinLimitMonitor\WinLimitMonitorDataResult.cs" />
+    <Compile Include="Models\WinLimitMonitor\WinLimitMonitorEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GlobalSetting\GlobalSettingRepository.cs" />
     <Compile Include="Repositories\GlobalSetting\IGlobalSettingRepository.cs" />
     <Compile Include="Repositories\PlayerWinLimitManagement\IPlayerSettingRepository.cs" />
     <Compile Include="Repositories\PlayerWinLimitManagement\PlayerSettingRepository.cs" />
+    <Compile Include="Repositories\WinLimitMonitor\DummyData.cs" />
+    <Compile Include="Repositories\WinLimitMonitor\IWinLimitMonitorRepository.cs" />
+    <Compile Include="Repositories\WinLimitMonitor\WinLimitMonitorRepository.cs" />
     <Compile Include="Resources\WinLimitControlLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -147,13 +158,10 @@
     <Compile Include="Services\GlobalSetting\IGlobalSettingService.cs" />
     <Compile Include="Services\PlayerWinLimitManagement\IPlayerSettingService.cs" />
     <Compile Include="Services\PlayerWinLimitManagement\PlayerSettingService.cs" />
+    <Compile Include="Services\WinLimitMonitor\IWinLimitMonitorService.cs" />
+    <Compile Include="Services\WinLimitMonitor\WinLimitMonitorService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Criteria\WinLimitMonitor\" />
-    <Folder Include="Models\WinLimitMonitor\" />
-    <Folder Include="Repositories\WinLimitMonitor\" />
-    <Folder Include="Services\WinLimitMonitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>

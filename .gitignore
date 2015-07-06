@@ -49,6 +49,8 @@
 /Modules/Fanex.Nap.CMS.WinLimitControl/obj
 /Modules/Fanex.Nap.CMS.Settings/bin
 /Modules/Fanex.Nap.CMS.Settings/obj
+/Modules/Fanex.Nap.CMS.FPSClient/bin
+/Modules/Fanex.Nap.CMS.FPSClient/obj
 
 /StyleCop.Cache
 /Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache

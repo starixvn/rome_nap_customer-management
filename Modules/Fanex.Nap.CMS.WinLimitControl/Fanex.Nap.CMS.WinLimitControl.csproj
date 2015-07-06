@@ -58,8 +58,8 @@
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.NAP.Framework.1.0.0.3\lib\net40\Fanex.NAP.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="IBCFile">
-      <HintPath>..\..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
+    <Reference Include="FPS.BRClient">
+      <HintPath>..\..\Dependencies\FPS.BRClient.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
       <HintPath>..\..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -146,7 +146,6 @@
     <Compile Include="Repositories\GlobalSetting\IGlobalSettingRepository.cs" />
     <Compile Include="Repositories\PlayerWinLimitManagement\IPlayerSettingRepository.cs" />
     <Compile Include="Repositories\PlayerWinLimitManagement\PlayerSettingRepository.cs" />
-    <Compile Include="Repositories\WinLimitMonitor\DummyData.cs" />
     <Compile Include="Repositories\WinLimitMonitor\IWinLimitMonitorRepository.cs" />
     <Compile Include="Repositories\WinLimitMonitor\WinLimitMonitorRepository.cs" />
     <Compile Include="Resources\WinLimitControlLabels.Designer.cs">
@@ -166,6 +165,10 @@
     <ProjectReference Include="..\..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.FPSClient\Fanex.Nap.CMS.FPSClient.csproj">
+      <Project>{0F6DFD87-E3FA-4824-A830-E8E64153339F}</Project>
+      <Name>Fanex.Nap.CMS.FPSClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.Settings\Fanex.Nap.CMS.Settings.csproj">
       <Project>{F204FEA9-DC1F-4472-B516-65066B818D00}</Project>

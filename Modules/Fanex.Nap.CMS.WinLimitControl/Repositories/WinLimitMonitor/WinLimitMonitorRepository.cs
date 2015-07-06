@@ -36,23 +36,9 @@
             return winLimitMonitor;
         }
 
-        public Result UnblockAccounts(UnblockAccountsCriteria criteria)
+        public Result UnblockAccount(UnblockSingleAccountCriteria criteria)
         {
-            var updateResult = new Result();
-            foreach (var player in criteria.WinLimitMonitor)
-            {
-                updateResult = ExecuteNonQuery(new UnblockSingleAccountCriteria
-                {
-                    WinLimitMonitor = player
-                });
-
-                if (updateResult.Code != 0)
-                {
-                    break;
-                }
-            }
-
-            return updateResult;
+            return ExecuteNonQuery(criteria);
         }
 
         private WinLimitMonitorEntity ToWinLimitMonitorEntity(IDataReader reader)

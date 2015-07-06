@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.FPSClient.Services;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
@@ -13,13 +14,17 @@
     public class WinLimitMonitorService : IWinLimitMonitorService
     {
         private readonly ISettingService _settingService;
-
+        private readonly IFPSClientService _fpsClient;
         private readonly IWinLimitMonitorRepository _winLimitMonitorRepository;
 
-        public WinLimitMonitorService(ISettingService settingService = null, IWinLimitMonitorRepository winLimitMonitorRepository = null)
+        public WinLimitMonitorService(
+            ISettingService settingService = null, 
+            IWinLimitMonitorRepository winLimitMonitorRepository = null,
+            IFPSClientService fpsClient = null)
         {
             _settingService = settingService ?? new SettingService();
             _winLimitMonitorRepository = winLimitMonitorRepository ?? new WinLimitMonitorRepository();
+            _fpsClient = fpsClient ?? new FPSClientService();
         }
 
         public PlayerWinLimitMonitorView GetWinLimitMonitor(ICriteria criteria)
@@ -65,10 +70,27 @@
 
         public Result UnblockAccounts(UnblockAccountsCriteria criteria)
         {
-            var updateResult = _winLimitMonitorRepository.UnblockAccounts(criteria);
-            if (updateResult.Code == 0)
+            bool fpsResult;
+            Result updateResult = null;
+            foreach (var player in criteria.WinLimitMonitor)
             {
-                updateResult.Message = WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
+                fpsResult = _fpsClient.WinLimitControlUnblock(player.PlayerInfo.Id, player.PlayerInfo.Name, player.Game.Name);
+                if (fpsResult)
+                {
+                    updateResult = _winLimitMonitorRepository.UnblockAccount(new UnblockSingleAccountCriteria
+                    {
+                        WinLimitMonitor = player
+                    });
+
+                    if (updateResult.Code == 0)
+                    {
+                        updateResult.Message = WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
+                    }
+                }
+                else
+                {
+                    updateResult = new Result(-1, "Internal server error!");
+                }
             }
 
             return updateResult;

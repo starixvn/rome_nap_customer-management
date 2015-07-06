@@ -9,6 +9,6 @@
     {
         WinLimitMonitorDataResult GetWinLimitMonitor(ICriteria criteria);
 
-        Result UnblockAccounts(UnblockAccountsCriteria criteria);
+        Result UnblockAccount(UnblockSingleAccountCriteria criteria);
     }
 }

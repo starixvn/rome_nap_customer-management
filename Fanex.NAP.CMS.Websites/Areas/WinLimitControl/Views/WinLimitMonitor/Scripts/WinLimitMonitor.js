@@ -41,14 +41,14 @@ var WinLimitMonitor = function () {
     };
     self.initGridOptions = function () {
         var columns = [
-            { HeaderText: '#', Width: 60, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Username, Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Currency, Width: 120, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: winLimitControlLabels.WinLimit, Width: 200, Name: 'colWinLimit',
+            { HeaderText: winLimitControlLabels.Game, Width: 150, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: winLimitControlLabels.WinLimit, Width: 180, Name: 'colWinLimit',
                 HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMS.formats.DecimalFormat
             },
-            { HeaderText: winLimitControlLabels.WinningAmount, Width: 200, Name: 'colWinningAmount',
+            { HeaderText: winLimitControlLabels.WinningAmount, Width: 180, Name: 'colWinningAmount',
                 HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMS.formats.DecimalFormat
             },
             { HeaderText: winLimitControlLabels.BlockedTime, Width: 140, Name: 'colBlockedTime', HeaderAlign: 'center', CellAlign: 'center' },

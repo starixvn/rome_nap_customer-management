@@ -7,26 +7,26 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Settings.Models;
     using Fanex.Nap.CMS.Settings.Services;
-    using Fanex.Nap.CMS.WinLimitControl.Criteria.GlobalSetting;
+    using Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
-    using Fanex.Nap.CMS.WinLimitControl.Services.GlobalSetting;
+    using Fanex.Nap.CMS.WinLimitControl.Services.CurrencySetting;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
     public class CurrencySettingController : BaseController
     {
         private readonly ISettingService _settingService;
-        private readonly IGlobalSettingService _globalSettingService;
+        private readonly ICurrencySettingService _globalSettingService;
 
         public CurrencySettingController()
             : this(null, null)
         {
         }
 
-        public CurrencySettingController(ISettingService settingService, IGlobalSettingService globalSettingService)
+        public CurrencySettingController(ISettingService settingService, ICurrencySettingService globalSettingService)
         {
             _settingService = settingService ?? new SettingService();
-            _globalSettingService = globalSettingService ?? new GlobalSettingService();
+            _globalSettingService = globalSettingService ?? new CurrencySettingService();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Read)]
@@ -38,7 +38,7 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Read)]
-        public ActionResult Search(GetGlobalWinLimitByCurrencyGameCriteria criteria)
+        public ActionResult Search(GetCurrencyWinLimitCriteria criteria)
         {
             var globalWinLimits = _globalSettingService.GetGlobalWinLimits(criteria);
             return Json(globalWinLimits, JsonRequestBehavior.AllowGet);
@@ -96,7 +96,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
-        public ActionResult AddCurrency(BaseSetting currency, IList<AddGlobalWinLimitCriteria> globalWinLimits)
+        public ActionResult AddCurrency(BaseSetting currency, IList<AddCurrencyWinLimitCriteria> globalWinLimits)
         {
             var results = _globalSettingService.AddCurrency(currency, globalWinLimits);
             return Json(results, JsonRequestBehavior.DenyGet);
@@ -104,7 +104,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
-        public ActionResult AddGame(BaseSetting game, IList<AddGlobalWinLimitCriteria> globalWinLimits)
+        public ActionResult AddGame(BaseSetting game, IList<AddCurrencyWinLimitCriteria> globalWinLimits)
         {
             var results = _globalSettingService.AddGame(game, globalWinLimits);
             return Json(results, JsonRequestBehavior.DenyGet);
@@ -119,7 +119,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Update(UpdateGlobalWinLimitCriteria criteria)
+        public ActionResult Update(UpdateCurrencyWinLimitCriteria criteria)
         {
             var result = _globalSettingService.UpdateGlobalWinLimit(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);

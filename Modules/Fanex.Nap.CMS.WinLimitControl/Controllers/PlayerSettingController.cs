@@ -6,10 +6,10 @@
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Settings.Services;
-    using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerWinLimitManagement;
-    using Fanex.Nap.CMS.WinLimitControl.Models.PlayerWinLimitManagement;
+    using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerSetting;
+    using Fanex.Nap.CMS.WinLimitControl.Models.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
-    using Fanex.Nap.CMS.WinLimitControl.Services.PlayerWinLimitManagement;
+    using Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Framework.Data;

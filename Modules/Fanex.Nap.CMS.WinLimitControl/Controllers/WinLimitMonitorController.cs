@@ -7,7 +7,7 @@
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
-    using Fanex.Nap.CMS.WinLimitControl.Services.PlayerWinLimitManagement;
+    using Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Services.WinLimitMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;

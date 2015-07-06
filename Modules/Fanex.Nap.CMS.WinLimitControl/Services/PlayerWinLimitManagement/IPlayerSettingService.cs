@@ -8,7 +8,7 @@
 
     public interface IPlayerSettingService
     {
-        IList<PlayerWinLimit> GetPlayerWinLimits(ICriteria criteria);
+        IList<PlayerWinLimit> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria);
 
         AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(GetUnsetGameByPlayerCriteria criteria);
 

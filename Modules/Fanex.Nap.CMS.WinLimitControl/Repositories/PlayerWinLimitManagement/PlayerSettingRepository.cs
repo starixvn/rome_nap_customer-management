@@ -12,7 +12,7 @@
 
     public class PlayerSettingRepository : IPlayerSettingRepository
     {
-        public IList<PlayerWinLimitEntity> GetPlayerWinLimits(ICriteria criteria)
+        public IList<PlayerWinLimitEntity> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria)
         {
             var winLimits = new List<PlayerWinLimitEntity>();
 
@@ -25,6 +25,9 @@
                         winLimits.Add(ToPlayerWinLimitEntity(reader));
                     }
                 }
+
+                var outputHash = db.GetOuputParams();
+                criteria.TotalRow = (int)outputHash["totalrow"];
             }
 
             return winLimits;

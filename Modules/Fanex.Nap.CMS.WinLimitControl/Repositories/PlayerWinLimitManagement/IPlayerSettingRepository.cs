@@ -8,7 +8,7 @@
 
     public interface IPlayerSettingRepository
     {
-        IList<PlayerWinLimitEntity> GetPlayerWinLimits(ICriteria criteria);
+        IList<PlayerWinLimitEntity> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria);
 
         AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(ICriteria criteria);
 

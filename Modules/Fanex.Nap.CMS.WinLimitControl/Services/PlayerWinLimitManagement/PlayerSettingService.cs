@@ -27,7 +27,7 @@
             _playerSettingRepository = playerSettingRepository ?? new PlayerSettingRepository();
         }
 
-        public IList<PlayerWinLimit> GetPlayerWinLimits(ICriteria criteria)
+        public IList<PlayerWinLimit> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria)
         {
             var playerWinLimits = new List<PlayerWinLimit>();
 

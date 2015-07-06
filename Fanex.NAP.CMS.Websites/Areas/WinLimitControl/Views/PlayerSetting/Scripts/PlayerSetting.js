@@ -3,11 +3,21 @@
     'use strict';
     var gridOptions = null;
     var freegrid = $('#freegrid');
-    var formFilter = $('#form-filterWinLimit'),
-        formAddPlayerModal = $('#form-addplayer'),
+    var formAddPlayerModal = $('#form-addplayer'),
         formEditlayerModal = $('#form-editplayer');
-    var searchUrl = formFilter.attr('action');
+    var searchUrl = '',
+        searchParams = { PageIndex: 0, PageSize: CMS.pageSize };
+    var $username = $('#username');
     var isHost = hostPermission === 1;
+
+    function afterChangedPage(pageIndex, itemsPerPage) {
+        gridOptions.pagerOption.itemsPerPage = itemsPerPage;
+        gridOptions.pagerOption.currentPage = pageIndex;
+
+        searchParams.PageSize = itemsPerPage;
+        searchParams.PageIndex = pageIndex;
+        renderPlayerSettings();
+    }
 
     function initGridOptions() {
         var customButtons = [];
@@ -45,7 +55,16 @@
             showHighlightRow: true,
             headerColumnHeight: 25,
             gridExpandHeight: 180,
-            columns: columns
+            columns: columns,
+            showPager: true,
+            customPager: true,
+            pagerOption: {
+                itemsPerPage: searchParams.PageSize,
+                currentPage: searchParams.PageIndex,
+                totalItem: 0,
+                itemsPerPageArray: CMS.pagerRanges,
+                pagerSelectCallBack: afterChangedPage
+            }
         };
     }
 
@@ -115,10 +134,12 @@
     }
 
     function renderPlayerSettings() {
-        var url = searchUrl + '?' + formFilter.serialize();
+        searchParams.Username = $username.val().trim();
+        var url = searchUrl + $.param(searchParams);
 
-        var successFunc = function (results) {
-            gridOptions.bodyRows = buildBodyRows(results);
+        var successFunc = function (result) {
+            gridOptions.pagerOption.totalItem = result.TotalRow;
+            gridOptions.bodyRows = buildBodyRows(result.PlayerWinLimits);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
             if (isHost) {
                 if (gridOptions.bodyRows.length > 0) {
@@ -163,11 +184,16 @@
     function initialize() {
         gridOptions = initGridOptions();
 
+        var formFilter = $('#form-filterWinLimit');
         formFilter.submit(function (e) {
             e.preventDefault();
+
+            searchParams.PageIndex = 0;
+            searchParams.PageSize = CMS.pageSize;
             renderPlayerSettings();
         });
 
+        searchUrl = formFilter.attr('action') + '?';
         $('#divModals').empty();
     }
 

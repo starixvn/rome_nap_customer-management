@@ -6,6 +6,10 @@
 
     public class FPSClientService : IFPSClientService
     {
+        private const string Site789y = "789y";
+        private const string SiteMaxbet = "maxbet";
+        private const string SiteMaxbet789y = "maxbet789y";
+
         private const string UnblockAction = "placebet";
 
         private readonly IFPSRepository _fpsRepsitory;
@@ -25,12 +29,12 @@
                 return criteria.Site;    
             }
 
-            if (criteria.Site.Equals("789y", StringComparison.OrdinalIgnoreCase))
+            if (criteria.Site.Equals(Site789y, StringComparison.OrdinalIgnoreCase))
             {
-                return criteria.Site;
+                return SiteMaxbet789y;
             }
 
-            return "maxbet";
+            return SiteMaxbet;
         }
 
         public bool WinLimitControlUnblock(int customerId, string username, string product)

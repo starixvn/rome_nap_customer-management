@@ -87,6 +87,9 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(DeletePlayerWinLimitCriteria criteria)
         {
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+
             var result = _playerSettingService.DeletePlayerWinLimit(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
@@ -111,6 +114,9 @@
         [NonAction]
         private IList<AddPlayerWinLimitCriteria> ToAddPlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
         {
+            int userId = CurrentSession.UserId;
+            string ip = CurrentContext.IP;
+
             IList<AddPlayerWinLimitCriteria> criteria = new List<AddPlayerWinLimitCriteria>();
             foreach (var winlimit in model.WinLimits)
             {
@@ -118,7 +124,9 @@
                 {
                     Player = model.Player.Id,
                     Game = winlimit.Id,
-                    PlayerWinLimit = winlimit.PlayerWinLimit
+                    PlayerWinLimit = winlimit.PlayerWinLimit,
+                    UserId = userId,
+                    IP = ip
                 });    
             }
 
@@ -128,6 +136,9 @@
         [NonAction]
         private IList<UpdatePlayerWinLimitCriteria> ToUpdatePlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
         {
+            int userId = CurrentSession.UserId;
+            string ip = CurrentContext.IP;
+
             IList<UpdatePlayerWinLimitCriteria> criteria = new List<UpdatePlayerWinLimitCriteria>();
             foreach (var winlimit in model.WinLimits)
             {
@@ -135,7 +146,9 @@
                 {
                     Player = model.Player.Id,
                     Game = winlimit.Id,
-                    PlayerWinLimit = winlimit.PlayerWinLimit
+                    PlayerWinLimit = winlimit.PlayerWinLimit,
+                    UserId = userId,
+                    IP = ip
                 });
             }
 

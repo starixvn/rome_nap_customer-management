@@ -14,6 +14,10 @@
 
         public string ErrMsg { get; set; }
 
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
+
         public override string GetSettingKey()
         {
             return "NAP_WinLimit_CustSettingDel";

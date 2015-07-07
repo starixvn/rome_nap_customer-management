@@ -13,6 +13,10 @@
         [SpParam(SqlParamName = "MaxWinLimit")]
         public decimal PlayerWinLimit { get; set; }
 
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
+
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }

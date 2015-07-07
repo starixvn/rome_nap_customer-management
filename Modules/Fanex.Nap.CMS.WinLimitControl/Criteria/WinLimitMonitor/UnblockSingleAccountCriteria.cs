@@ -19,24 +19,6 @@
 
         public WinLimitMonitorEntity WinLimitMonitor { get; set; }
 
-        [SpParam(Ignored = true)]
-        public int UserId
-        {
-            get
-            {
-                return AppSession.CurrentUser.Id;
-            }
-        }
-
-        [SpParam(Ignored = true)]
-        public string IP
-        {
-            get
-            {
-                return IPHelper.ClientIP();
-            }
-        }
-
         public override bool IsValid()
         {
             return true;
@@ -52,6 +34,8 @@
             var hashtable = new Hashtable();
             hashtable.Add("custid", WinLimitMonitor.PlayerInfo.Id);
             hashtable.Add("productid", WinLimitMonitor.Game.Id);
+            hashtable.Add("userid", AppSession.CurrentUser.Id);
+            hashtable.Add("ip", IPHelper.ClientIP());
 
             hashtable.Add("errcode", 0);
             hashtable.Add("errmsg", string.Empty);

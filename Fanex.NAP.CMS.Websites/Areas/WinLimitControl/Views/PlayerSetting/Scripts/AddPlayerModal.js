@@ -139,7 +139,31 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         }
     }
 
+    function duplicatedSelectValue(selects) {
+        var uniques = {};
+
+        var $select;
+        var selectValue;
+        for (var i = 0, max = selects.length; i < max; i++) {
+            $select = $(selects[i]);
+            selectValue = $select.val();
+            if (!uniques[selectValue]) {
+                uniques[selectValue] = true;
+            }
+            else {
+                CMS.showTipsyError($select.next(), winLimitControlLabels.DuplicateGameError);
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     function setFormData() {
+        if (duplicatedSelectValue(tblWinLimit.find('td > select'))) {
+            return false;
+        }
+
         formData = [];
         var row, ddlGame, selectedGame, inputWinLimit;
         var dataIdentity, gameId, winlimit;
@@ -156,8 +180,6 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
 
                 var globalWinLimit = checkParseFloat(selectedGame.data('global'));
                 if (winlimit <= globalWinLimit) {
-                    ddlGame.combobox('disable');
-
                     gameId = parseInt(ddlGame.val());
                     formData.push({ Id: gameId, Name: selectedGame.text(), PlayerWinLimit: winlimit });
                     continue;
@@ -198,11 +220,6 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
 
         parentRow.remove();
         renderNumber();
-
-        if (formData.length === 1) {
-            var row = tblWinLimit.find('tr:first');
-            row.find('#ddlGame' + row.data('identity')).combobox('enable');
-        }
     }
 
     function resetForm() {

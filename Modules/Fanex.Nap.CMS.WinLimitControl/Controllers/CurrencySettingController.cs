@@ -98,6 +98,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
         public ActionResult AddCurrency(BaseSetting currency, IList<AddCurrencyWinLimitCriteria> globalWinLimits)
         {
+            AddUserIdAndIP(globalWinLimits);
             var results = _globalSettingService.AddCurrency(currency, globalWinLimits);
             return Json(results, JsonRequestBehavior.DenyGet);
         }
@@ -106,6 +107,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
         public ActionResult AddGame(BaseSetting game, IList<AddCurrencyWinLimitCriteria> globalWinLimits)
         {
+            AddUserIdAndIP(globalWinLimits);
             var results = _globalSettingService.AddGame(game, globalWinLimits);
             return Json(results, JsonRequestBehavior.DenyGet);
         }
@@ -121,6 +123,9 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
         public ActionResult Update(UpdateCurrencyWinLimitCriteria criteria)
         {
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+ 
             var result = _globalSettingService.UpdateGlobalWinLimit(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
@@ -140,6 +145,19 @@
 
             ViewBag.Currencies = selectListCurrencies;
             ViewBag.Games = selectListGames;
+        }
+
+        [NonAction]
+        private void AddUserIdAndIP(IList<AddCurrencyWinLimitCriteria> globalWinLimits)
+        {
+            int userId = CurrentSession.UserId;
+            string ip = CurrentContext.IP;
+
+            foreach (var criteria in globalWinLimits)
+            {
+                criteria.UserId = userId;
+                criteria.IP = ip; 
+            }
         }
     }
 }

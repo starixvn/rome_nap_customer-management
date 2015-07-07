@@ -18,6 +18,10 @@
         [SpParam(SqlParamName = "ErrMsg")]
         public string ErrorMessage { get; set; }
 
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
+
         [SpParam(Ignored = true)]
         public string CurrencyName { get; set; }
 

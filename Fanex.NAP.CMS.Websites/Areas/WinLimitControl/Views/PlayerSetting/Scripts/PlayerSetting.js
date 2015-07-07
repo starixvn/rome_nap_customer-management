@@ -22,8 +22,8 @@
     function initGridOptions() {
         var customButtons = [];
         var columns = [
-            { HeaderText: '#', Width: 60, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Username, Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: '#', Width: 50, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Currency, Width: 120, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: winLimitControlLabels.WinLimit, Width: 200, Name: 'colWinLimit',

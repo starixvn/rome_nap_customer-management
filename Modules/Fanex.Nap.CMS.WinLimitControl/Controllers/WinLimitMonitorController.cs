@@ -40,6 +40,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetWinLimitMonitorCriteria criteria)
         {
+            criteria.Username.Trim();
             var playerWinLimitMonitors = _winLimitMonitorService.GetWinLimitMonitor(criteria);
             return Json(playerWinLimitMonitors, JsonRequestBehavior.AllowGet);
         }

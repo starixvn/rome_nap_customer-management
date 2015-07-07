@@ -31,6 +31,11 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
     }
 
     function renderWinLimit(currencies) {
+        if (currencies.length === 0) {
+            tblWinLimit.append('<tr style="width:200px;"><td colspan="4">' + winLimitControlLabels.NoMoreGameToSetWinLimitError + '</td></tr>');
+            return;
+        }
+
         var html = [];
         html.push('<tr data-identity="' + identity + '">');
         html.push('<td><span class="spanNumber">1</span></td>');
@@ -63,6 +68,10 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
     }
 
     function setFormData() {
+        if (winlimitctrl.duplicatedSelectValue(tblWinLimit.find('td > select'), winLimitControlLabels.DuplicateCurrencyError)) {
+            return false;
+        }
+
         formData = [];
         var row, ddlCurrency, inputWinLimit;
         var dataIdentity, currencyId, winlimit;
@@ -75,8 +84,6 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
             winlimit = winlimitctrl.parseFloat(inputWinLimit.val());
             if (winlimit > 0) {
                 ddlCurrency = row.find('#ddlCurrency' + dataIdentity);
-                ddlCurrency.combobox('disable');
-
                 currencyId = parseInt(ddlCurrency.val());
                 formData.push({ CurrencyId: currencyId, CurrencyName: ddlCurrency.find('option:selected').text(), MaxWinLimit: winlimit });
                 continue;
@@ -113,11 +120,6 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
 
         parentRow.remove();
         winlimitctrl.renderNumber(tblWinLimit);
-
-        if (formData.length === 1) {
-            var row = tblWinLimit.find('tr:first');
-            row.find('#ddlCurrency' + row.data('identity')).combobox('enable');
-        }
     }
 
     function resetForm() {
@@ -182,8 +184,14 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
             .unbind('submit')
             .bind('submit', function (e) {
                 e.preventDefault();
+
+                var gameId = gameElement.val();
+                if (!gameId) {
+                    return;
+                }
+
                 if (setFormData()) {
-                    var game = { Id: gameElement.val(), Name: gameElement.find('option:selected').text() };
+                    var game = { Id: gameId, Name: gameElement.find('option:selected').text() };
                     var criteria = { game: game, globalWinLimits: formData };
                     CMS.callAjax(
                         self,

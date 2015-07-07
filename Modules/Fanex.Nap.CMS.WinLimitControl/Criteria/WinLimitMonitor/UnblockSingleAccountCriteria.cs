@@ -8,6 +8,15 @@
 
     public class UnblockSingleAccountCriteria : CriteriaBase
     {
+        public UnblockSingleAccountCriteria()
+        { 
+        }
+
+        public UnblockSingleAccountCriteria(WinLimitMonitorEntity winLimitMonitor)
+        {
+            WinLimitMonitor = winLimitMonitor;
+        }
+
         public WinLimitMonitorEntity WinLimitMonitor { get; set; }
 
         [SpParam(Ignored = true)]

@@ -44,11 +44,14 @@
       </violation>
     </violations>
   </sourcecode>
+  <project key="-152012008">
+    <configuration>DEBUG;TRACE</configuration>
+  </project>
   <sourcecode name="GetCustomerTypeAndSiteCriteria.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/09/19 14:09:50.000</styleCop>
       <settingsFile>2015/05/08 09:39:35.504</settingsFile>
-      <sourceFile>2015/07/03 17:01:50.224</sourceFile>
+      <sourceFile>2015/07/06 09:13:15.941</sourceFile>
       <parser>2013/09/19 14:09:50.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/09/19 14:09:50.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -94,7 +97,7 @@
     <timestamps>
       <styleCop>2013/09/19 14:09:50.000</styleCop>
       <settingsFile>2015/05/08 09:39:35.504</settingsFile>
-      <sourceFile>2015/07/03 17:07:56.673</sourceFile>
+      <sourceFile>2015/07/06 08:44:25.916</sourceFile>
       <parser>2013/09/19 14:09:50.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/09/19 14:09:50.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -136,11 +139,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <sourcecode name="IFPSClientService.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="FPSClientService.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/09/19 14:09:50.000</styleCop>
       <settingsFile>2015/05/08 09:39:35.504</settingsFile>
-      <sourceFile>2015/07/03 17:07:18.275</sourceFile>
+      <sourceFile>2015/07/07 10:35:52.845</sourceFile>
       <parser>2013/09/19 14:09:50.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/09/19 14:09:50.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>
@@ -159,14 +162,11 @@
     </timestamps>
     <violations />
   </sourcecode>
-  <project key="-152012008">
-    <configuration>DEBUG;TRACE</configuration>
-  </project>
-  <sourcecode name="FPSClientService.cs" parser="StyleCop.CSharp.CsParser">
+  <sourcecode name="IFPSClientService.cs" parser="StyleCop.CSharp.CsParser">
     <timestamps>
       <styleCop>2013/09/19 14:09:50.000</styleCop>
       <settingsFile>2015/05/08 09:39:35.504</settingsFile>
-      <sourceFile>2015/07/06 10:50:30.901</sourceFile>
+      <sourceFile>2015/07/07 10:35:41.857</sourceFile>
       <parser>2013/09/19 14:09:50.000</parser>
       <StyleCop.CSharp.DocumentationRules>2013/09/19 14:09:50.000</StyleCop.CSharp.DocumentationRules>
       <StyleCop.CSharp.DocumentationRules.FilesHashCode>1157575881</StyleCop.CSharp.DocumentationRules.FilesHashCode>

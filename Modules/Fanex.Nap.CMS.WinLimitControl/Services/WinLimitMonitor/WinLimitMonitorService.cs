@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.WinLimitControl.Models.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Repositories.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
+    using Fanex.Oneyed.BussinessRule.Contracts;
 
     public class WinLimitMonitorService : IWinLimitMonitorService
     {
@@ -70,26 +71,32 @@
 
         public Result UnblockAccounts(UnblockAccountsCriteria criteria)
         {
-            bool fpsResult;
+            ResponseCode fpsResult;
             Result updateResult = null;
+            UnblockSingleAccountCriteria unblockCriteria = null;
             foreach (var player in criteria.WinLimitMonitor)
             {
                 fpsResult = _fpsClient.WinLimitControlUnblock(player.PlayerInfo.Id, player.PlayerInfo.Name, player.Game.Name);
-                if (fpsResult)
+                switch (fpsResult)
                 {
-                    updateResult = _winLimitMonitorRepository.UnblockAccount(new UnblockSingleAccountCriteria
-                    {
-                        WinLimitMonitor = player
-                    });
+                    case ResponseCode.Allow:
+                        unblockCriteria = new UnblockSingleAccountCriteria(player);
+                        updateResult = _winLimitMonitorRepository.UnblockAccount(unblockCriteria);
+                        if (updateResult.Code == 0)
+                        {
+                            updateResult.Message = WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
+                        }
 
-                    if (updateResult.Code == 0)
-                    {
-                        updateResult.Message = WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
-                    }
-                }
-                else
-                {
-                    updateResult = new Result(-1, "Internal server error!");
+                        break;
+
+                    case ResponseCode.TimeOut:
+                    case ResponseCode.GeneralExceptions:
+                        updateResult = new Result(-1, WinLimitControlLabels.InternalServerError);
+                        break;
+
+                    default:
+                        updateResult = new Result(-1, string.Format(WinLimitControlLabels.FPSResponseMessage, fpsResult));
+                        break;
                 }
             }
 

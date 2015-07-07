@@ -3,6 +3,7 @@
     using System;
     using Fanex.Nap.CMS.FPSClient.Criteria;
     using Fanex.Nap.CMS.FPSClient.Repositories;
+    using Fanex.Oneyed.BussinessRule.Contracts;
 
     public class FPSClientService : IFPSClientService
     {
@@ -37,7 +38,7 @@
             return SiteMaxbet;
         }
 
-        public bool WinLimitControlUnblock(int customerId, string username, string product)
+        public ResponseCode WinLimitControlUnblock(int customerId, string username, string product)
         {
             string subscriber = GetSubscriber(new GetCustomerTypeAndSiteCriteria { CustomerId = customerId });
             return _fpsClient.Unblock(subscriber, username, product, UnblockAction);

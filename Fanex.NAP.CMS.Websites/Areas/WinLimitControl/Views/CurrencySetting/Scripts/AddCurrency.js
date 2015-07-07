@@ -31,6 +31,11 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
     }
 
     function renderWinLimit(games) {
+        if (games.length === 0) {
+            tblWinLimit.append('<tr style="width:200px;"><td colspan="4">' + winLimitControlLabels.NoMoreCurrencyToSetWinLimitError + '</td></tr>');
+            return;
+        }
+
         var html = [];
         html.push('<tr data-identity="' + identity + '">');
         html.push('<td><span class="spanNumber">1</span></td>');
@@ -63,10 +68,14 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
     }
 
     function setFormData() {
+        if (winlimitctrl.duplicatedSelectValue(tblWinLimit.find('td > select'), winLimitControlLabels.DuplicateGameError)) {
+            return false;
+        }
+
         formData = [];
         var row, ddlGame, inputWinLimit;
         var dataIdentity, gameId, winlimit;
-        
+
         var winLimitRows = tblWinLimit.find('tr');
         for (var i = 0, max = winLimitRows.length; i < max; i++) {
             row = $(winLimitRows[i]);
@@ -75,7 +84,6 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
             winlimit = winlimitctrl.parseFloat(inputWinLimit.val());
             if (winlimit > 0) {
                 ddlGame = row.find('#ddlGame' + dataIdentity);
-                ddlGame.combobox('disable');
                 
                 gameId = parseInt(ddlGame.val());
                 formData.push({ GameId: gameId, GameName: ddlGame.find('option:selected').text(), MaxWinLimit: winlimit });
@@ -113,11 +121,6 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
 
         parentRow.remove();
         winlimitctrl.renderNumber(tblWinLimit);
-
-        if (formData.length === 1) {
-            var row = tblWinLimit.find('tr:first');
-            row.find('#ddlGame' + row.data('identity')).combobox('enable');
-        }
     }
 
     function resetForm() {
@@ -182,8 +185,14 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
             .unbind('submit')
             .bind('submit', function (e) {
                 e.preventDefault();
+
+                var currencyId = currencyElement.val();
+                if (!currencyId) {
+                    return;
+                }
+
                 if (setFormData()) {
-                    var currency = { Id: currencyElement.val(), Name: currencyElement.find('option:selected').text() };
+                    var currency = { Id: currencyId, Name: currencyElement.find('option:selected').text() };
                     var criteria = { currency: currency, globalWinLimits: formData };
                     CMS.callAjax(
                         self,

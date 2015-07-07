@@ -57,4 +57,24 @@ var winlimitctrl = winlimitctrl || {};
             CMS.showInlineSuccessMsg(message, messageContainer, true, hideMessageAndReloadGlobalSetting);
         }
     };
+
+    winlimitctrl.duplicatedSelectValue = function(selects, duplicatedMessage) {
+        var uniques = {};
+
+        var $select;
+        var selectValue;
+        for (var i = 0, max = selects.length; i < max; i++) {
+            $select = $(selects[i]);
+            selectValue = $select.val();
+            if (!uniques[selectValue]) {
+                uniques[selectValue] = true;
+            } 
+            else {
+                CMS.showTipsyError($select.next(), duplicatedMessage);
+                return true;
+            }
+        }
+        
+        return false;    
+    };
 })(jQuery);

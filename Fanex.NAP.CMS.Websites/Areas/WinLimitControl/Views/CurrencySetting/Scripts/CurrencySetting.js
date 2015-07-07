@@ -155,37 +155,34 @@
         var winlimit = winlimitctrl.parseFloat(editLink.text().replace(/\,/g, ''));
 
         var tdContainer = editLink.parent()
-            .html('<input type="text" maxlength="20" autocomplete="off" class="text-right width-160" id="inputWinLimit" value="' + winlimit + '"/>');
+            .html('<input type="text" maxlength="10" autocomplete="off" class="text-right width-160" id="inputWinLimit" value="' + winlimit + '"/>');
 
         tdContainer.find('#inputWinLimit')
-            .unbind('keypress')
-            .bind('keypress', function (e) {
-                var validCode = CMS.forceNumberInput(e);
-                if (validCode) {
-                    var code = e.which || e.keyCode;
-                    if (code === keyboardManager.Enums.KeyCode.Enter) {
-                        var $this = $(this);
-                        var newWinLimit = winlimitctrl.parseFloat($this.val());
-                        if (newWinLimit > 0) {
-                            if (winlimit !== newWinLimit) {
-                                var editConfirmation = new EditWinLimitModal(currency, game, newWinLimit, renderGlobalSettings);
-                                editConfirmation.initialize();
-                            }
-                        }
-                        else {
-                            $this.val(winlimit);
+            .unbind()
+            .bind('keypress', function (e) { return CMS.forceNumberInput(e); })
+            .bind('keyup', function (e) {
+                var code = e.which || e.keyCode;
+                if (code === keyboardManager.Enums.KeyCode.Enter) {
+                    var $this = $(this);
+                    var newWinLimit = winlimitctrl.parseFloat($this.val());
+                    if (newWinLimit > 0) {
+                        if (winlimit !== newWinLimit) {
+                            var editConfirmation = new EditWinLimitModal(currency, game, newWinLimit, renderGlobalSettings);
+                            editConfirmation.initialize();
                         }
                     }
-                    else if (code === keyboardManager.Enums.KeyCode.Escape) {
-                        tdContainer.html(renderWinLimitRow({ Currency: currency, Game: game, MaxWinLimit: winlimit }, currency.Name))
-                            .find('.linkEdit')
-                            .unbind('click')
-                            .bind('click', function () { inlineEditWinLimit($(this)); });
-                        isEditting = false;
+                    else {
+                        $this.val(winlimit);
                     }
                 }
+                else if (code === keyboardManager.Enums.KeyCode.Escape) {
+                    tdContainer.html(renderWinLimitRow({ Currency: currency, Game: game, MaxWinLimit: winlimit }, currency.Name))
+                        .find('.linkEdit')
+                        .unbind('click')
+                        .bind('click', function () { inlineEditWinLimit($(this)); });
 
-                return validCode;
+                    isEditting = false;
+                }
             }).select();
     }
 

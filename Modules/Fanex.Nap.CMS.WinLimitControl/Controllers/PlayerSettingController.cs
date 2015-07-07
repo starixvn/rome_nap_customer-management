@@ -41,6 +41,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetPlayerWinLimitCriteria criteria)
         {
+            if (criteria.Username != null)
+            {
+                criteria.Username = criteria.Username.Trim();
+            }
+
             criteria.PageIndex++;
             var playerWinLimits = _playerSettingService.GetPlayerWinLimits(criteria);
             return Json(

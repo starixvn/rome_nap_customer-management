@@ -3,11 +3,11 @@
     'use strict';
     var gridOptions = null;
     var freegrid = $('#freegrid');
-    var formAddPlayerModal = $('#form-addplayer'),
+    var formFilter = $('#form-filterWinLimit'),
+        formAddPlayerModal = $('#form-addplayer'),
         formEditlayerModal = $('#form-editplayer');
-    var searchUrl = '',
+    var searchUrl = formFilter.attr('action') + '?',
         searchParams = { PageIndex: 0, PageSize: CMS.pageSize };
-    var $username = $('#username');
     var isHost = hostPermission === 1;
 
     function afterChangedPage(pageIndex, itemsPerPage) {
@@ -134,9 +134,6 @@
     }
 
     function renderPlayerSettings() {
-        searchParams.Username = $username.val().trim();
-        var url = searchUrl + $.param(searchParams);
-
         var successFunc = function (result) {
             gridOptions.pagerOption.totalItem = result.TotalRow;
             gridOptions.bodyRows = buildBodyRows(result.PlayerWinLimits);
@@ -151,7 +148,8 @@
             }
         };
 
-        CMS.getJson(url, successFunc);
+        var params = formFilter.serialize() + '&' + $.param(searchParams);
+        CMS.getJson(searchUrl + params, successFunc);
     }
 
     function deleteWinLimit(deleteElement) {
@@ -184,7 +182,6 @@
     function initialize() {
         gridOptions = initGridOptions();
 
-        var formFilter = $('#form-filterWinLimit');
         formFilter.submit(function (e) {
             e.preventDefault();
 
@@ -193,7 +190,6 @@
             renderPlayerSettings();
         });
 
-        searchUrl = formFilter.attr('action') + '?';
         $('#divModals').empty();
     }
 

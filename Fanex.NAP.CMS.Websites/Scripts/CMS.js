@@ -397,8 +397,7 @@ var CMS = (function ($) {
                 code !== keyboardManager.Enums.KeyCode.Enter &&
                 code !== keyboardManager.Enums.KeyCode.None &&
                 (code !== keyboardManager.Enums.KeyCode.Delete || e.which) &&
-                code !== keyboardManager.Enums.KeyCode.Tab &&
-                code !== keyboardManager.Enums.KeyCode.Escape) {
+                code !== keyboardManager.Enums.KeyCode.Tab) {
                 return false;
             }
 

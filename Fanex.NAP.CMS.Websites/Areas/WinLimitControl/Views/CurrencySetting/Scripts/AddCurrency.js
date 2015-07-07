@@ -46,7 +46,7 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
         html.push(winlimitctrl.renderSelectHtml(games));
         html.push('</select></td>');
 
-        html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="20" value="1000" ');
+        html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="10" value="1000" ');
         html.push('onkeypress="return CMS.forceNumberInput(event)" id="inputWinLimit');
         html.push(identity);
         html.push('"/></div></td>');

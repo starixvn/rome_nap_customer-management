@@ -22,6 +22,15 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
     }
 
+    function showWinLimitGrid(show) {
+        if (show) {
+            tblWinLimitContainer.removeClass('display-none');
+        }
+        else {
+            tblWinLimitContainer.addClass('display-none');
+        }
+    }
+
     function showMessage(result) {
         if (result.Code !== 0) {
             CMS.showInlineErrorMsg(result.Message, messageContainer);
@@ -99,7 +108,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         html.push(renderGameSelect(games));
         html.push('</select></td>');
 
-        html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="20" value="');
+        html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="10" value="');
         html.push(gameWinLimit.PlayerWinLimit);
         html.push('" onkeypress="return CMS.forceNumberInput(event)" id="inputWinLimit');
         html.push(identity);
@@ -157,7 +166,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         }
 
         return false;
-    };
+    }
 
     function setFormData() {
         if (duplicatedSelectValue(tblWinLimit.find('td > select'))) {
@@ -236,6 +245,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         var query = username.val().trim();
         if (query.length === 0) {
             CMS.showTipsyError(username, 'Required field!');
+            showWinLimitGrid(false);
             return;
         }
 
@@ -245,14 +255,16 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
                 playerWinLimit = result;
                 if (playerWinLimit.DbResult.Code === 3) {
                     CMS.showTipsyError(username, playerWinLimit.DbResult.Message);
+                    showWinLimitGrid(false);
                 }
                 else if (playerWinLimit.DbResult.Code === 4) {
                     showMessage(playerWinLimit.DbResult);
+                    showWinLimitGrid(false);
                 }
                 else {
                     resetForm();
                     renderWinLimit(playerWinLimit.WinLimits);
-                    tblWinLimitContainer.removeClass('display-none');
+                    showWinLimitGrid(true);
                 }
             });
     }
@@ -287,7 +299,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
     }
 
     self.initialize = function () {
-        tblWinLimitContainer.addClass('display-none');
+        showWinLimitGrid(false);
 
         resetForm();
         username.val('');

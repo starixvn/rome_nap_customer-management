@@ -50,7 +50,7 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
             html.push(winlimit.Name);
             html.push('</td>');
 
-            html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="20" value="');
+            html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="10" value="');
             html.push(formatNumber(winlimit.PlayerWinLimit));
             html.push('" onkeypress="return CMS.forceNumberInput(event)" data-global="');
             html.push(winlimit.GlobalWinLimit);

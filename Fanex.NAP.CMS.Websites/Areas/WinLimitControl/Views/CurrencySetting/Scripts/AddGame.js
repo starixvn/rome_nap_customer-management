@@ -68,6 +68,11 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
     }
 
     function setFormData() {
+        // Game combobox is empty
+        if (!gameElement.combobox('validInput')) {
+            return false;
+        }
+
         if (winlimitctrl.duplicatedSelectValue(tblWinLimit.find('td > select'), winLimitControlLabels.DuplicateCurrencyError)) {
             return false;
         }
@@ -84,12 +89,17 @@ function AddGame(formContainer, renderGlobalSettingFunc) {
             winlimit = winlimitctrl.parseFloat(inputWinLimit.val());
             if (winlimit > 0) {
                 ddlCurrency = row.find('#ddlCurrency' + dataIdentity);
+                // Currency combobox is empty
+                if (!ddlCurrency.combobox('validInput')) {
+                    return false;
+                }
+
                 currencyId = parseInt(ddlCurrency.val());
                 formData.push({ CurrencyId: currencyId, CurrencyName: ddlCurrency.find('option:selected').text(), MaxWinLimit: winlimit });
                 continue;
             }
 
-            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit);
+            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit, 'se');
             return false;
         }
 

@@ -68,6 +68,11 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
     }
 
     function setFormData() {
+        // Currency combobox is empty
+        if (!currencyElement.combobox('validInput')) {
+            return false;
+        }
+
         if (winlimitctrl.duplicatedSelectValue(tblWinLimit.find('td > select'), winLimitControlLabels.DuplicateGameError)) {
             return false;
         }
@@ -84,13 +89,17 @@ function AddCurrency(formContainer, renderGlobalSettingFunc) {
             winlimit = winlimitctrl.parseFloat(inputWinLimit.val());
             if (winlimit > 0) {
                 ddlGame = row.find('#ddlGame' + dataIdentity);
-                
+                // Game combobox is empty
+                if (!ddlGame.combobox('validInput')) {
+                    return false;
+                }
+
                 gameId = parseInt(ddlGame.val());
                 formData.push({ GameId: gameId, GameName: ddlGame.find('option:selected').text(), MaxWinLimit: winlimit });
                 continue;
             }
 
-            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit);
+            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit, 'se');
             return false;
         }
 

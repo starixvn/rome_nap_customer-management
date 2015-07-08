@@ -81,9 +81,9 @@
                     $(this).select();
                 })
                 .on('paste', function () {
-                     var txt = $(this);
+                    var txt = $(this);
 
-                     txt.autocomplete('search');
+                    txt.autocomplete('search');
                 })
                 .addClass('ui-widget ui-widget-content');
 
@@ -170,6 +170,11 @@
             this.wrapper.remove();
             this.element.show();
             $.Widget.prototype.destroy.call(this);
+        },
+
+        validInput: function () {
+            var term = this.input.data('autocomplete').term;
+            return (term && term.length !== 0);
         }
     });
 })(jQuery);

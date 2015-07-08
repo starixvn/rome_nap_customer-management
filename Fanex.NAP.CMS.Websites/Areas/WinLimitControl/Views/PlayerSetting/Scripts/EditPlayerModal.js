@@ -79,12 +79,12 @@ function EditPlayerModal(formContainer, player, renderPlayerSettingFunc) {
                         formData.push({ Id: inputWinLimit.data('game'), PlayerWinLimit: playerWinLimit });
                     }
                     else {
-                        CMS.showTipsyError(inputWinLimit, '<= ' + formatNumber(globalWinLimit));
+                        CMS.showTipsyError(inputWinLimit, '<= ' + formatNumber(globalWinLimit), 'se');
                         isvalid = false;
                     }
                 }
                 else {
-                    CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit);
+                    CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit, 'se');
                     isvalid = false;
                 }
             });

@@ -6,7 +6,7 @@
   </Function>
 
   <Function Name="Settings">
-    <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel" DbName="DBTXN.CustDB.bodbAdminNet">
+    <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel" DbName="DBTXN.BODB02.bodbAdminNet">
       <Mapping DataField="ExchangeID" ObjectProperty="Id" />
       <Mapping DataField="ExchangeName" ObjectProperty="Name" />
     </Setting>

@@ -185,6 +185,11 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
             winlimit = checkParseFloat(inputWinLimit.val());
             if (winlimit >= 0) {
                 ddlGame = row.find('#ddlGame' + dataIdentity);
+                // Game combobox is empty
+                if (!ddlGame.combobox('validInput')) {
+                    return false;
+                }
+
                 selectedGame = ddlGame.find('option:selected');
 
                 var globalWinLimit = checkParseFloat(selectedGame.data('global'));
@@ -194,11 +199,11 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
                     continue;
                 }
 
-                CMS.showTipsyError(inputWinLimit, '<= ' + formatNumber(globalWinLimit));
+                CMS.showTipsyError(inputWinLimit, '<= ' + formatNumber(globalWinLimit), 'se');
                 return false;
             }
 
-            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit);
+            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit, 'se');
             return false;
         }
 
@@ -244,7 +249,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         
         var query = username.val().trim();
         if (query.length === 0) {
-            CMS.showTipsyError(username, 'Required field!');
+            CMS.showTipsyError(username, winLimitControlLabels.RequiredFieldError, 'nw');
             showWinLimitGrid(false);
             return;
         }
@@ -254,7 +259,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
             function (result) {
                 playerWinLimit = result;
                 if (playerWinLimit.DbResult.Code === 3) {
-                    CMS.showTipsyError(username, playerWinLimit.DbResult.Message);
+                    CMS.showTipsyError(username, playerWinLimit.DbResult.Message, 'nw');
                     showWinLimitGrid(false);
                 }
                 else if (playerWinLimit.DbResult.Code === 4) {
@@ -300,11 +305,10 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
 
     self.initialize = function () {
         showWinLimitGrid(false);
-
         resetForm();
-        username.val('');
-
         CMS.modal(winLimitControlLabels.AddPlayerModalTitle, formContainer);
+        
         bindEvents();
+        username.val('').clearfield();
     };
 }

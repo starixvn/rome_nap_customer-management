@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor
 {
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Text;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Helpers;
     using Fanex.Nap.CMS.Infrastructure.Web;
@@ -10,30 +12,36 @@
     {
         public List<WinLimitMonitorEntity> WinLimitMonitor { get; set; }
 
-        public int UserId
+        public override Hashtable GetSpParams()
         {
-            get
+            return new Hashtable 
             {
-                return AppSession.CurrentUser.Id;
-            }
-        }
-
-        public string IP
-        {
-            get
-            {
-                return IPHelper.ClientIP();
-            }
-        }
-
-        public override bool IsValid()
-        {
-            return true;
+                { "MemUnblock", BuildUnblockCustomerXml() },
+                { "UserId",  AppSession.CurrentUser.Id },
+                { "IP",  IPHelper.ClientIP() },
+                { "ErrCode",  0 },
+                { "ErrMsg",  string.Empty }
+            };
         }
 
         public override string GetSettingKey()
         {
             return "NAP_WinLimitControl_WinLimitMonitorUnblockAccounts";
+        }
+
+        private string BuildUnblockCustomerXml()
+        {
+            string format = @"<row custid=""{0}"" productid=""{1}""/>";
+
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<unblock>");
+            foreach (WinLimitMonitorEntity monitor in WinLimitMonitor)
+            {
+                builder.AppendFormat(format, monitor.PlayerInfo.Id, monitor.Game.Id);
+            }
+
+            builder.Append("</unblock>");
+            return builder.ToString();
         }
     }
 }

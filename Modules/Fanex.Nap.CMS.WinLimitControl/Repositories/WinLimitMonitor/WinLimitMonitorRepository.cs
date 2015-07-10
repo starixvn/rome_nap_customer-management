@@ -7,7 +7,6 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Models;
-    using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Models.WinLimitMonitor;
 
     public class WinLimitMonitorRepository : IWinLimitMonitorRepository
@@ -36,9 +35,15 @@
             return winLimitMonitor;
         }
 
-        public Result UnblockAccount(UnblockSingleAccountCriteria criteria)
+        public Result UnblockAccounts(ICriteria criteria)
         {
-            return ExecuteNonQuery(criteria);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+                return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
+            }
         }
 
         private WinLimitMonitorEntity ToWinLimitMonitorEntity(IDataReader reader)
@@ -64,16 +69,6 @@
                 BlockedTimeDisplay = Converter.ToDateTime(reader["BlockedTime"]).ToString("M/d/yyyy h:mm tt"),
                 IsBlocked = Converter.ToBool(reader["IsBlocked"])
             };
-        }
-
-        private Result ExecuteNonQuery(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-                return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
-            }
         }
     }
 }

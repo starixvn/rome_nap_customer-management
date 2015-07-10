@@ -128,7 +128,6 @@
     <Compile Include="Criteria\PlayerSetting\UpdatePlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimitMonitor\GetWinLimitMonitorCriteria.cs" />
     <Compile Include="Criteria\WinLimitMonitor\UnblockAccountsCriteria.cs" />
-    <Compile Include="Criteria\WinLimitMonitor\UnblockSingleAccountCriteria.cs" />
     <Compile Include="Models\CurrencySetting\CurrencyWinLimit.cs" />
     <Compile Include="Models\CurrencySetting\GreaterPlayerWinLimit.cs" />
     <Compile Include="Models\CurrencySetting\WinLimitEntity.cs" />

@@ -72,35 +72,31 @@
         public Result UnblockAccounts(UnblockAccountsCriteria criteria)
         {
             ResponseCode fpsResult;
-            Result updateResult = null;
-            UnblockSingleAccountCriteria unblockCriteria = null;
-            foreach (var player in criteria.WinLimitMonitor)
+            WinLimitMonitorEntity monitorEntity;
+            IList<WinLimitMonitorEntity> monitorEntities = criteria.WinLimitMonitor;
+
+            // 1. Call FPS to unblock first.
+            // If NOT success: remove from original criteria.
+            int unblockLength = monitorEntities.Count - 1;
+            for (int i = unblockLength; i >= 0; i--)
             {
-                fpsResult = _fpsClient.WinLimitControlUnblock(player.PlayerInfo.Id, player.PlayerInfo.Name, player.Game.Name);
-                switch (fpsResult)
+                monitorEntity = monitorEntities[i];
+                fpsResult = _fpsClient.WinLimitControlUnblock(monitorEntity.PlayerInfo.Id, monitorEntity.PlayerInfo.Name, monitorEntity.Game.Name);
+                if (fpsResult != ResponseCode.Allow)
                 {
-                    case ResponseCode.Allow:
-                        unblockCriteria = new UnblockSingleAccountCriteria(player);
-                        updateResult = _winLimitMonitorRepository.UnblockAccount(unblockCriteria);
-                        if (updateResult.Code == 0)
-                        {
-                            updateResult.Message = WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
-                        }
-
-                        break;
-
-                    case ResponseCode.TimeOut:
-                    case ResponseCode.GeneralExceptions:
-                        updateResult = new Result(-1, WinLimitControlLabels.InternalServerError);
-                        break;
-
-                    default:
-                        updateResult = new Result(-1, string.Format(WinLimitControlLabels.FPSResponseMessage, fpsResult));
-                        break;
+                    monitorEntities.RemoveAt(i);    
                 }
             }
 
-            return updateResult;
+            // 2. Batch unblock to DB.
+            var dbresult = _winLimitMonitorRepository.UnblockAccounts(criteria);
+            if (dbresult.Code == 0)
+            {
+                dbresult.Message = 
+                    dbresult.Code == 0 ? WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess : WinLimitControlLabels.InternalServerError;
+            }
+
+            return dbresult;
         }
     }
 }

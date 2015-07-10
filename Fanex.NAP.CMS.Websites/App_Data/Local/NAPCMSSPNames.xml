@@ -157,6 +157,6 @@
   <Function Name="Win Limit Control - Win Limit Monitor">
     <Setting Key="NAP_WinLimit_SubscriberSel" SpName="NAP_WinLimit_SubscriberSel" DbName="DBTXN.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimitControl_WinLimitMonitorSel" SpName="NAP_WinLimit_Game_SelBlocked" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimitControl_WinLimitMonitorUnblockAccounts" SpName="NAP_WinLimit_Game_Unblock" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimitControl_WinLimitMonitorUnblockAccounts" SpName="NAP_WinLimit_Game_Unblock_xtest" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
   </Function>
 </Functions>

@@ -208,6 +208,10 @@
     </Content>
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local2\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local2\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local2\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local2\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -560,6 +564,10 @@
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+    <Content Include="Web.ConnectionString.local2.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.local.config" />
   </ItemGroup>
   <ItemGroup>
@@ -583,6 +591,7 @@
     <Content Include="Web.master.config" />
     <Content Include="Web.dev.config" />
     <Content Include="Web.backupMNL.config" />
+    <Content Include="Web.local2.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

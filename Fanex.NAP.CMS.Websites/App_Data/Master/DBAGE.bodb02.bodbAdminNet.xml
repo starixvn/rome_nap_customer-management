@@ -1,18 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="TurnoverControl-GlobalSetting">
-    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Nap_SMATurnoverGlobalSettingList_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="Nap_SMATurnoverGlobalSettingUpd_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="Nap_SMATurnoverGlobalSettingIns_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="Nap_SMATurnoverGlobalSettingDel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Nap_SMATurnoverGlobalSettingList_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="Nap_SMATurnoverGlobalSettingUpd_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="Nap_SMATurnoverGlobalSettingIns_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="Nap_SMATurnoverGlobalSettingDel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="TurnoverControl-TurnoverMonitor">
-    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="Nap_SportTypeSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="Nap_SMATurnoverLeagueSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="Nap_SMATurnoverListSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
-    <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="Nap_SMATurnoverBalanceInfoSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  >
+    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="Nap_SportTypeSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="Nap_SMATurnoverLeagueSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="Nap_SMATurnoverListSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="Nap_SMATurnoverBalanceInfoSel_xtest" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="bettype" ObjectProperty="BetType" />
     </Setting>
-    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Nap_SMATurnoverUpd_xtest" DbName="DBAGE.bodb02.bodbAdminNet"  />
+    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Nap_SMATurnoverUpd_xtest" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="SMA Turnover - Mailing List">
     <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.bodb_ACC.bodbAdminNet" />

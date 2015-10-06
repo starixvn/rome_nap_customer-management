@@ -63,5 +63,11 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string GlobalSetting = "GlobalSetting";
 
         public const string TurnoverControlNotification = "TurnoverControlNotification";
+
+        public const string ColossusBetsPayoutManagement = "ColossusBetsPayoutManagement";
+
+        public const string ColossusBetsPayoutUpdateTicketStatus = "ColossusBetsPayoutUpdateTicketStatus";
+
+        public const string ColossusBetsPayoutShowSecurityCode = "ColossusBetsPayoutShowSecurityCode";
     }
 }

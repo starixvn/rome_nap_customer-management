@@ -20,6 +20,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Base controller.
@@ -161,6 +162,16 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         {
             int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this._currentSession.UserId, this.SiteId, functionKey);
             return functionPolicy >= (int)policy;
+        }
+
+        protected JsonResult JsonData(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
+        {
+            var jsonString = JsonConvert.SerializeObject(
+                data,
+                Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
+            return Json(jsonString, behavior);
         }
     }
 }

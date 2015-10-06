@@ -1,0 +1,21 @@
+﻿.filter-bar .filter-form { padding-bottom: 5px; }
+.filter-bar .filter-form #member, .filter-bar .filter-form #betId { width: 100%; }
+.content-box { float: left; margin-left: 10px; width: 1005px; }
+
+.freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th { font-weight: normal; }
+
+.tblColossusBets { border-collapse: separate; border-spacing: 0; }
+.tblColossusBets th, .tblColossusBets td { padding: 7px 15px; }
+.tblColossusBets thead { background: #3c5ea5; background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; color: #fff; }
+.tblColossusBets th { font-weight: normal; border-right: 1px solid #aaa; }
+.tblColossusBets td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
+.tblColossusBets td:first-child { border-left: 1px solid #c5c5c5; }
+.tblColossusBets td.text-red { color: #db2c2c; }
+
+.ticketColossusBets { border-right: 1px solid #c5c5c5!important; margin-right: 20px; padding-right: 20px!important; }
+
+.form .form-row .edit-field textarea { width: 500px; }
+.form .form-row.button-row { float: none; margin: 0; padding-top: 15px; text-align: center; }
+.text-right { text-align: right; }
+
+.search-button { margin-left: 20px; }

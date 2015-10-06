@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "Payout List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head {
+    @Styles.Render("~/bundles/ColossusBets/PaymentStyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("GetTickets", "Payment", FormMethod.Get, new { id = "form-filterTicket", @class = "filter-bar", area = "ColossusBets" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="member">@ColossusBetsLabels.Member</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.TextBox("member", string.Empty, new { maxlength = "50" })
+            </div>
+            <div class="lbl-field col_3">
+                <label for="betId">@ColossusBetsLabels.BetId</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.TextBox("betId", string.Empty, new { maxlength = "50" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@ColossusBetsLabels.Status</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.StatusListForFilter, new { @class = "combobox-autocomplete width-140" })
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@ColossusBetsLabels.Search</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+<div id="divModals" class="display-none">
+@{
+    Html.RenderPartial("~/Areas/ColossusBets/Views/Payment/_ViewTicketDetail.cshtml");
+    Html.RenderPartial("~/Areas/ColossusBets/Views/Payment/_UpdateTicketStatus.cshtml");
+    Html.RenderPartial("~/Areas/ColossusBets/Views/Payment/_ViewTicketNotes.cshtml");
+}
+</div>
+@section Foot {
+    <script type="text/javascript">
+        var updateStatus = '@(ViewBag.UpdateStatus)' === '@true';
+        var showSecurityCode = '@(ViewBag.ShowSecurityCode)' === '@true';
+        var colossusBetsLabels = {
+            Member: '@ColossusBetsLabels.Member',
+            Currency: '@ColossusBetsLabels.Currency',
+            Site: '@ColossusBetsLabels.Site',
+            BetId: '@ColossusBetsLabels.BetId',
+            TotalPayout: '@ColossusBetsLabels.TotalPayout',
+            Status: '@ColossusBetsLabels.Status',
+            SecurityCode: '@ColossusBetsLabels.SecurityCode',
+            Notes: '@ColossusBetsLabels.Notes',
+            Total: '@ColossusBetsLabels.Total',
+            NoData: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData',
+            ViewTicketDetailTitle: '@ColossusBetsLabels.ViewTicketDetailTitle',
+            UpdateTicketStatusTitle: '@ColossusBetsLabels.UpdateTicketStatusTitle',
+            ViewTicketNoteTitle: '@ColossusBetsLabels.ViewTicketNoteTitle'
+        };
+    </script>
+    @Scripts.Render("~/bundles/ColossusBets/PaymentScripts")
+}

@@ -203,45 +203,46 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml"/>
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
-	
-    <Content Include="App_Data\Local2\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local2\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local2\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Local2\NAPCommonSpNames.xml" />
-	
-    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml"/>
-    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-	
-    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml"/>
+    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
-	
+    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml"/>	
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
-	
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml"/>
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
-	
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml"/>
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-	
-	<Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml"/>
-    <Content Include="App_Data\SIT\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
-	
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\viewTicketDetail.js" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\updateTicketStatus.js" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\viewTicketNotes.js" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\payment.js" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Styles\payment.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -451,6 +452,10 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
+      <Project>{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24}</Project>
+      <Name>Fanex.Nap.CMS.ColossusBets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
@@ -524,9 +529,7 @@
     </Content>
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-	<Content Include="Web.AppSettings.sit.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -546,9 +549,6 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-	<Content Include="Web.ConnectionString.sit.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionString.dev.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
@@ -560,8 +560,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config"/>
-	<Content Include="Web.sit.config"/>
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
@@ -581,6 +582,11 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
+    <Content Include="Areas\ColossusBets\Views\Web.config" />
+    <Content Include="Areas\ColossusBets\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payment\_ViewTicketNotes.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payment\_ViewTicketDetail.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payment\_UpdateTicketStatus.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

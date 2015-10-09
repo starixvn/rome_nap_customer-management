@@ -212,12 +212,15 @@
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />

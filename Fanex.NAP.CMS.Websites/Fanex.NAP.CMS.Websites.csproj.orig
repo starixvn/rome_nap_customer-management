@@ -207,28 +207,28 @@
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
-<<<<<<< HEAD
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
-=======
-    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
->>>>>>> #000000 - Max Winning Limit
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
+<<<<<<< HEAD
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
+=======
+>>>>>>> #35215 - Rebase master
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -248,11 +248,7 @@
     <Content Include="App_Data\SIT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
 =======
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
->>>>>>> #000000 - Max Winning Limit
+>>>>>>> #35215 - Rebase master
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -284,6 +280,9 @@
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\EditPlayerModal.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\x-icon.png" />
@@ -625,21 +624,15 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
-<<<<<<< HEAD
     <Content Include="Areas\PayoutManagement\Views\BetTicket\ColossusBets.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\BetTicket\Microgaming.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
-=======
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Web.config" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\_AddCurrencyModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\_AddGameModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_EditPlayerModal.cshtml" />
->>>>>>> #000000 - Max Winning Limit
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -647,9 +640,7 @@
     <Content Include="Web.master.config" />
     <Content Include="Web.backupMNL.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\WinLimitControl\Views\WinLimitMonitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

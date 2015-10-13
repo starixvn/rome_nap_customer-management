@@ -4,11 +4,11 @@
 
     public class GetCurrencyWinLimitCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ExchangeId")]
-        public int Currency { get; set; }
-
         [SpParam(SqlParamName = "ProductId")]
         public int Game { get; set; }
+
+        [SpParam(SqlParamName = "ExchangeId")]
+        public int Currency { get; set; }
 
         public override string GetSettingKey()
         {

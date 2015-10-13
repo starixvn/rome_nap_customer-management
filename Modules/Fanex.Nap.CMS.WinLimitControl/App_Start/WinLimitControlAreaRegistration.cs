@@ -18,7 +18,7 @@
             context.MapRoute(
                 "WinLimitControl_default",
                 "WinLimitControl/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional },
+                new { controller = "WinLimitMonitor", action = "Index", id = UrlParameter.Optional },
                 new[] { "Fanex.Nap.CMS.WinLimitControl.Controllers" });
 
             WinLimitControlBundleConfig.RegisterBundles(BundleTable.Bundles);

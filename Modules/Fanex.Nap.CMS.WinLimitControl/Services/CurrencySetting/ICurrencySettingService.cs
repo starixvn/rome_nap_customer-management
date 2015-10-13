@@ -9,7 +9,7 @@
 
     public interface ICurrencySettingService
     {
-        IList<CurrencyWinLimit> GetGlobalWinLimits(ICriteria criteria);
+        IList<WinLimitEntity> GetCurrencySettings(ICriteria criteria);
 
         IList<BaseSetting> GetExcludedCurrencies();
 

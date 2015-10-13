@@ -17,68 +17,55 @@
         private const int AlreadyExistingGlobalSettingCode = 1;
 
         private readonly ISettingService _settingService;
-        private readonly ICurrencySettingRepository _globalSettingRepository;
+        private readonly ICurrencySettingRepository _currencySettingRepository;
 
-        public CurrencySettingService(ISettingService settingService = null, ICurrencySettingRepository globalSettingRepository = null)
+        public CurrencySettingService(ISettingService settingService = null, ICurrencySettingRepository currencySettingRepository = null)
         {
             _settingService = settingService ?? new SettingService();
-            _globalSettingRepository = globalSettingRepository ?? new CurrencySettingRepository();
+            _currencySettingRepository = currencySettingRepository ?? new CurrencySettingRepository();
         }
 
-        public IList<CurrencyWinLimit> GetGlobalWinLimits(ICriteria criteria)
+        public IList<WinLimitEntity> GetCurrencySettings(ICriteria criteria)
         {
-            IList<CurrencyWinLimit> globalWinLimits = new List<CurrencyWinLimit>();
-
-            var winLimits = _globalSettingRepository.GetGlobalWinLimits(criteria);
-            if (winLimits.Count == 0)
+            IList<WinLimitEntity> currencySettings = _currencySettingRepository.GetCurrencySettings(criteria);
+            if (currencySettings.Count == 0)
             {
-                return globalWinLimits;
+                return currencySettings;
             }
 
-            string currencyName;
-            IList<WinLimitEntity> winLimitsEntity;
-            var currencyHash = _settingService.GetCurrencies().ToDictionary(s => s.Id, d => d.Name);
             var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
-
-            var winLimitsGroup = winLimits.GroupBy(w => w.Currency.Id);
-            foreach (var group in winLimitsGroup)
+            var currencyHash = _settingService.GetCurrencies().ToDictionary(s => s.Id, d => d.Name);
+            foreach (var setting in currencySettings)
             {
-                currencyName = currencyHash[group.Key];
-                winLimitsEntity = new List<WinLimitEntity>();
-                foreach (var winlimit in group)
-                {
-                    winlimit.Game.Name = gameHash[winlimit.Game.Id];
-                    winLimitsEntity.Add(winlimit);
-                }
-
-                globalWinLimits.Add(new CurrencyWinLimit { Currency = currencyName, WinLimits = winLimitsEntity });
+                setting.Game.Name = gameHash[setting.Game.Id];
+                setting.Currency.Name = gameHash[setting.Currency.Id];
             }
 
-            return globalWinLimits;
+            return currencySettings;
         }
 
         public IList<BaseSetting> GetExcludedCurrencies()
         {
             var criteria = new GetExcludedCurrencyCriteria();
-            return _globalSettingRepository.GetExcludedCurrencies(criteria);
+            return _currencySettingRepository.GetExcludedCurrencies(criteria);
         }
 
         public IList<BaseSetting> GetExcludedGames()
         {
             var criteria = new GetExcludedGameCriteria();
-            return _globalSettingRepository.GetExcludedGames(criteria);
+            return _currencySettingRepository.GetExcludedGames(criteria);
         }
 
         public IList<BaseSetting> GetUnsetCurrencies(int gameId)
         {
             var criteria = new GetUnsetCurrencyByGameCriteria(gameId);
-            return _globalSettingRepository.GetUnsetCurrencies(criteria);
+            return _currencySettingRepository.GetUnsetCurrencies(criteria);
         }
 
         public IList<BaseSetting> GetUnsetGames(int currencyId)
         {
             var criteria = new GetUnsetGameByCurrencyCriteria(currencyId);
-            return _globalSettingRepository.GetUnsetGames(criteria);
+            return _currencySettingRepository.GetUnsetGames(criteria);
         }
 
         public IList<Result> AddCurrency(BaseSetting currency, IList<AddCurrencyWinLimitCriteria> criterias)
@@ -90,7 +77,7 @@
             foreach (AddCurrencyWinLimitCriteria criteria in criterias)
             {
                 criteria.CurrencyId = currency.Id;
-                result = _globalSettingRepository.AddGlobalWinLimit(criteria);
+                result = _currencySettingRepository.AddGlobalWinLimit(criteria);
                 if (result.Code == ErrorCodeConstants.NoneError)
                 {
                     success = true;
@@ -126,7 +113,7 @@
             foreach (AddCurrencyWinLimitCriteria criteria in criterias)
             {
                 criteria.GameId = game.Id;
-                result = _globalSettingRepository.AddGlobalWinLimit(criteria);
+                result = _currencySettingRepository.AddGlobalWinLimit(criteria);
                 if (result.Code == ErrorCodeConstants.NoneError)
                 {
                     success = true;
@@ -155,12 +142,12 @@
 
         public IList<GreaterPlayerWinLimit> GetGreaterPlayerWinLimits(ICriteria criteria)
         {
-            return _globalSettingRepository.GetGreaterPlayerWinLimits(criteria);
+            return _currencySettingRepository.GetGreaterPlayerWinLimits(criteria);
         }
 
         public Result UpdateGlobalWinLimit(UpdateCurrencyWinLimitCriteria criteria)
         {
-            var result = _globalSettingRepository.UpdateGlobalWinLimit(criteria);
+            var result = _currencySettingRepository.UpdateGlobalWinLimit(criteria);
             if (result.Code == ErrorCodeConstants.NoneError)
             {
                 result.Message = string.Format(

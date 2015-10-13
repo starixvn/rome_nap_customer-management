@@ -265,8 +265,6 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\Common.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\AddGame.js" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\AddCurrency.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
@@ -510,7 +508,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />

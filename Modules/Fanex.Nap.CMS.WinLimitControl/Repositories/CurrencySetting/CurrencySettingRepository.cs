@@ -12,22 +12,21 @@
 
     public class CurrencySettingRepository : ICurrencySettingRepository
     {
-        public IList<WinLimitEntity> GetGlobalWinLimits(ICriteria criteria)
+        public IList<WinLimitEntity> GetCurrencySettings(ICriteria criteria)
         {
-            var winLimits = new List<WinLimitEntity>();
-
+            IList<WinLimitEntity> currencySettings = new List<WinLimitEntity>(64);
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        winLimits.Add(ToWinLimitModel(reader));
+                        currencySettings.Add(ToWinLimitEntity(reader));
                     }
                 }
             }
 
-            return winLimits;
+            return currencySettings;
         }
 
         public IList<BaseSetting> GetExcludedCurrencies(ICriteria criteria)
@@ -96,18 +95,18 @@
                 return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
             }
         }
-        
-        private WinLimitEntity ToWinLimitModel(IDataReader reader)
+
+        private WinLimitEntity ToWinLimitEntity(IDataReader reader)
         {
             return new WinLimitEntity
             {
-                Currency = new BaseSetting
-                {
-                    Id = Converter.ToInt(reader["ExchangeId"])
-                },
                 Game = new BaseSetting
                 {
                     Id = Converter.ToInt(reader["ProductId"])
+                },
+                Currency = new BaseSetting
+                {
+                    Id = Converter.ToInt(reader["ExchangeId"])
                 },
                 MaxWinLimit = Converter.ToDecimal(reader["MaxWinLimit"])
             };

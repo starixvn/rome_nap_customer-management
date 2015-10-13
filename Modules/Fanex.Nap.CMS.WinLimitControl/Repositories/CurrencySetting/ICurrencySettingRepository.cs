@@ -8,7 +8,7 @@
 
     public interface ICurrencySettingRepository
     {
-        IList<WinLimitEntity> GetGlobalWinLimits(ICriteria criteria);
+        IList<WinLimitEntity> GetCurrencySettings(ICriteria criteria);
 
         IList<BaseSetting> GetExcludedCurrencies(ICriteria criteria);
 

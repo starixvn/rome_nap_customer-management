@@ -4,9 +4,9 @@
 
     public class WinLimitEntity
     {
-        public BaseSetting Currency { get; set; }
-
         public BaseSetting Game { get; set; }
+
+        public BaseSetting Currency { get; set; }
 
         public decimal MaxWinLimit { get; set; }
     }

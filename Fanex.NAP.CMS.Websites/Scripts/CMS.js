@@ -343,6 +343,38 @@ var CMS = (function ($) {
                 }
             });
         },
+        getHtml: function (
+            url,
+            successFunction,
+            errorFunction,
+            completeFunction) {
+            $.ajax({
+                type: 'GET',
+                url: url,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'html',
+                beforeSend: function () { CMS.disableInput(); },
+                success: function (result) {
+                    if (successFunction && typeof (successFunction) === 'function') {
+                        successFunction(result);
+                    }
+                },
+                error: function (xhr) {
+                    if (errorFunction && typeof (errorFunction) === 'function') {
+                        errorFunction(xhr);
+                    } else {
+                        CMS.handleAjaxError(xhr);
+                    }
+                },
+                complete: function () {
+                    if (completeFunction && typeof (completeFunction) === 'function') {
+                        completeFunction();
+                    } else {
+                        CMS.enableInput();
+                    }
+                }
+            });
+        },
         forceNumberInput: function (e) {
             var code = "";
             if (e.which) {

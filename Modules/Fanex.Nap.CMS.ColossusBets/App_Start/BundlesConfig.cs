@@ -6,14 +6,14 @@
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/bundles/ColossusBets/PaymentStyles").Include(
-                "~/Areas/ColossusBets/Views/Payment/Styles/payment.css"));
+            bundles.Add(new StyleBundle("~/bundles/ColossusBets/PayoutStyles").Include(
+                "~/Areas/ColossusBets/Views/Payout/Styles/payout.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/ColossusBets/PaymentScripts").Include(
-                "~/Areas/ColossusBets/Views/Payment/Scripts/payment.js",
-                "~/Areas/ColossusBets/Views/Payment/Scripts/viewTicketDetail.js",
-                "~/Areas/ColossusBets/Views/Payment/Scripts/updateTicketStatus.js",
-                "~/Areas/ColossusBets/Views/Payment/Scripts/viewTicketNotes.js"));
+            bundles.Add(new ScriptBundle("~/bundles/ColossusBets/PayoutScripts").Include(
+                "~/Areas/ColossusBets/Views/Payout/Scripts/payout.js",
+                "~/Areas/ColossusBets/Views/Payout/Scripts/viewTicketDetail.js",
+                "~/Areas/ColossusBets/Views/Payout/Scripts/updateTicketStatus.js",
+                "~/Areas/ColossusBets/Views/Payout/Scripts/viewTicketNotes.js"));
         }
     }
 }

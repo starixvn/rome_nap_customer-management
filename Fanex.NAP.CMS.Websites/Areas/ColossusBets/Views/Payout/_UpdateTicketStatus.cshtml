@@ -1,0 +1,24 @@
+﻿@using (Html.BeginForm("UpdateTicketStatus", "Payout", FormMethod.Post, new { id = "form-updateTicketStatus", @class = "form expand-form", area = "ColossusBets" }))
+{
+    <div class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field ">
+            <label>@ColossusBetsLabels.UpdateStatusTo</label></div>
+        <div class="edit-field">
+            <select class="combobox-autocomplete width-140" id="ddlStatus"></select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field ">
+            <label>@ColossusBetsLabels.Notes</label></div>
+    </div>
+    <div class="form-row">
+        <div class="edit-field">
+            <textarea id="ticketNote" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ColossusBetsLabels.Submit</button>
+        <button type="button" class="red-button">@ColossusBetsLabels.Close</button>
+    </div>
+}

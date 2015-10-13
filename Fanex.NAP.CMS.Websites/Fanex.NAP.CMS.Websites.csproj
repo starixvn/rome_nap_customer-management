@@ -236,13 +236,13 @@
     </Content>
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\viewTicketDetail.js" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\updateTicketStatus.js" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\viewTicketNotes.js" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Scripts\payment.js" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Styles\payment.css" />
+    <Content Include="Areas\ColossusBets\Views\Payout\Scripts\updateTicketStatus.js" />
+    <Content Include="Areas\ColossusBets\Views\Payout\Scripts\payout.js" />
+    <Content Include="Areas\ColossusBets\Views\Payout\Styles\payout.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -583,10 +583,10 @@
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
     <Content Include="Areas\ColossusBets\Views\Web.config" />
-    <Content Include="Areas\ColossusBets\Views\Payment\Index.cshtml" />
-    <Content Include="Areas\ColossusBets\Views\Payment\_ViewTicketNotes.cshtml" />
-    <Content Include="Areas\ColossusBets\Views\Payment\_ViewTicketDetail.cshtml" />
-    <Content Include="Areas\ColossusBets\Views\Payment\_UpdateTicketStatus.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payout\Index.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payout\_ViewTicketNotes.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payout\_UpdateTicketStatus.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Payout\_ViewTicketDetail.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

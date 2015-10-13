@@ -129,6 +129,9 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
   </data>
@@ -138,6 +141,15 @@
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
+  <data name="Disbursed" xml:space="preserve">
+    <value>Disbursed</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="InfoVerified" xml:space="preserve">
+    <value>Info Verified</value>
+  </data>
   <data name="Member" xml:space="preserve">
     <value>Member</value>
   </data>
@@ -146,6 +158,9 @@
   </data>
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -187,7 +202,7 @@
     <value>Update status of ticket</value>
   </data>
   <data name="ViewTicketDetailTitle" xml:space="preserve">
-    <value>Detail of ticket</value>
+    <value>Ticket details of</value>
   </data>
   <data name="ViewTicketNoteTitle" xml:space="preserve">
     <value>View notes of ticket</value>

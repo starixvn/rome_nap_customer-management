@@ -1,0 +1,36 @@
+﻿@using Fanex.Nap.CMS.ColossusBets.Models
+@model IList<TicketNote>
+<div class="form-row">
+    <table class="tblColossusBets">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>@ColossusBetsLabels.Date</th>
+                <th>@ColossusBetsLabels.Author</th>
+                <th>@ColossusBetsLabels.Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model == null || Model.Count == 0)
+            {
+                <tr><td colspan="4" class="text-red">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td></tr>
+            }
+            else
+            {
+                int number = 0;
+                foreach (var note in Model)
+                {
+                    <tr>
+                        <td>@(++number)</td>
+                        <td>@note.Date</td>
+                        <td>@note.Author</td>
+                        <td>@note.Description</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-row button-row">
+    <button type="button" class="red-button" onclick="CMS.closePopup()">@ColossusBetsLabels.Close</button>
+</div>

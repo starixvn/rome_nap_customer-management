@@ -1,0 +1,54 @@
+﻿@using Fanex.Nap.CMS.ColossusBets.Models
+@model TicketDetailReport
+@if (Model.CBAuthorization.ErrorCode != 0)
+{
+    <div class="form expand-form float-left ticketColossusBets">@Model.CBAuthorization.ErrorMsg</div>    
+}
+else
+{
+    <iframe class="form expand-form float-left ticketColossusBets"
+        src="@string.Format(
+            "https://maxbet.sandbox.colossusbets.com/api/tickets/ref/30000047/selection?productToken={0}&siteID=2100100",
+            Model.CBAuthorization.Data.Authorization)">
+    </iframe>
+}
+<div class="form expand-form float-right">
+    <div class="form-row">
+        <p>@Model.Own</p>
+        <p>@Model.Sold</p>
+    </div>
+    <div class="form-row">
+        <table class="tblColossusBets">
+            <thead>
+                <tr>
+                    <th>@ColossusBetsLabels.Date</th>
+                    <th>@ColossusBetsLabels.TransactionType</th>
+                    <th>@ColossusBetsLabels.WinLoss</th>
+                    <th>@ColossusBetsLabels.Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.TicketDetails.Count == 0)
+                {
+                    <tr><td colspan="4" class="text-red">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td></tr>
+                }
+                else
+                {
+                    foreach (var detail in Model.TicketDetails)
+                    {
+                        <tr>
+                            <td>@detail.Date</td>
+                            <td>@detail.TransactionType</td>
+                            <td>@detail.WinLoss</td>
+                            <td>@detail.Status</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2" class="text-right">@ColossusBetsLabels.Total</td>
+                        <td colspan="2">@Model.TotalWinLoss</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

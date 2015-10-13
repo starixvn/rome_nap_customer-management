@@ -18,7 +18,7 @@
             context.MapRoute(
                 name: AreaName + "_Default",
                 url: AreaName + "/{controller}/{action}/{id}",
-                defaults: new { controller = "Payment", action = "Index", id = UrlParameter.Optional },
+                defaults: new { controller = "Payout", action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "Fanex.Nap.CMS.ColossusBets.Controllers" });
 
             BundlesConfig.RegisterBundles(BundleTable.Bundles);

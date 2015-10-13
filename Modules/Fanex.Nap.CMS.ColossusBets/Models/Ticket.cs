@@ -16,7 +16,7 @@
 
         public decimal TotalPayout { get; set; }
 
-        public string Status { get; set; }
+        public IdNameModel Status { get; set; }
 
         public string SecurityCode { get; set; }
     }

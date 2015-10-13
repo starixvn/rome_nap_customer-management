@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.ColossusBets.Models
 {
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.ColossusBets.Models.API;
 
     public class TicketDetailReport
     {
@@ -11,5 +12,9 @@
         public IList<TicketDetail> TicketDetails { get; set; }
 
         public decimal TotalWinLoss { get; set; }
+
+        public long RefNo { get; set; }
+
+        public ColossusBetsAuthorization CBAuthorization { get; set; }
     }
 }

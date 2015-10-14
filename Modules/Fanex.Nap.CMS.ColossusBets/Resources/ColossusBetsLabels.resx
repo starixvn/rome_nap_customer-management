@@ -198,6 +198,9 @@
   <data name="UpdateStatusTo" xml:space="preserve">
     <value>Update Status To</value>
   </data>
+  <data name="UpdateTicketStatusSuccess" xml:space="preserve">
+    <value>Update status of ticket successfully!</value>
+  </data>
   <data name="UpdateTicketStatusTitle" xml:space="preserve">
     <value>Update status of ticket</value>
   </data>

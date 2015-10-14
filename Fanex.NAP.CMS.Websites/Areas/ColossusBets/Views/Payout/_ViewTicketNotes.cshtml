@@ -1,7 +1,8 @@
 ﻿@using Fanex.Nap.CMS.ColossusBets.Models
+@using Fanex.Nap.CMS.Infrastructure.Extensions
 @model IList<TicketNote>
 <div class="form-row">
-    <table class="tblColossusBets">
+    <table class="tblColossusBets tblTicketNote">
         <thead>
             <tr>
                 <th>#</th>
@@ -21,10 +22,10 @@
                 foreach (var note in Model)
                 {
                     <tr>
-                        <td>@(++number)</td>
-                        <td>@note.Date</td>
-                        <td>@note.Author</td>
-                        <td>@note.Description</td>
+                        <td class="width-20 align-center">@(++number)</td>
+                        <td class="width-160 align-center">@note.Date</td>
+                        <td class="width-120">@note.Author</td>
+                        <td style="width: 400px;">@Html.Raw(note.Note.NewlinesToBr())</td>
                     </tr>
                 }
             }

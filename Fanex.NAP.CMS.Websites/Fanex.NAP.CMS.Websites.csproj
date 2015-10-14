@@ -474,7 +474,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />
@@ -587,6 +589,7 @@
     <Content Include="Areas\ColossusBets\Views\Payout\_ViewTicketNotes.cshtml" />
     <Content Include="Areas\ColossusBets\Views\Payout\_UpdateTicketStatus.cshtml" />
     <Content Include="Areas\ColossusBets\Views\Payout\_ViewTicketDetail.cshtml" />
+    <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

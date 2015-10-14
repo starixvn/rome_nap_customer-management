@@ -4,20 +4,22 @@
 
     public class Ticket
     {
-        public int Id { get; set; }
+        public int Number { get; set; }
 
         public IdNameModel Member { get; set; }
 
         public IdNameModel Currency { get; set; }
 
-        public IdNameModel Site { get; set; }
+        public string Site { get; set; }
 
-        public string BetId { get; set; }
+        public long BetId { get; set; }
 
         public decimal TotalPayout { get; set; }
 
         public IdNameModel Status { get; set; }
 
         public string SecurityCode { get; set; }
+
+        public bool HasNotes { get; set; }
     }
 }

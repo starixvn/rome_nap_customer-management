@@ -13,7 +13,7 @@
 
         public decimal TotalWinLoss { get; set; }
 
-        public long RefNo { get; set; }
+        public long BetId { get; set; }
 
         public ColossusBetsAuthorization CBAuthorization { get; set; }
     }

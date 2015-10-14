@@ -4,11 +4,11 @@
 
     public class GetTicketNotesCriteria : CriteriaBase
     {
-        public int TicketId { get; set; }
+        public long BetId { get; set; }
 
         public override string GetSettingKey()
         {
-            return string.Empty;
+            return "NAP_ColossusBets_PayoutDetail";
         }
     }
 }

@@ -2,13 +2,12 @@
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.ColossusBets.Criteria;
     using Fanex.Nap.CMS.ColossusBets.Models;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     public interface IPayoutRepository
     {
-        IList<Ticket> GetTickets(GetTicketsCriteria criteria);
+        IList<Ticket> GetTickets(ICriteria criteria);
 
         IList<TicketDetail> GetTicketDetails(ICriteria criteria);
 

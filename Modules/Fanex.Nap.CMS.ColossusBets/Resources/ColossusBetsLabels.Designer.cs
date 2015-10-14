@@ -304,6 +304,15 @@ namespace Fanex.Nap.CMS.ColossusBets.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update status of ticket successfully!.
+        /// </summary>
+        public static string UpdateTicketStatusSuccess {
+            get {
+                return ResourceManager.GetString("UpdateTicketStatusSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update status of ticket.
         /// </summary>
         public static string UpdateTicketStatusTitle {

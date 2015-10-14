@@ -3,6 +3,8 @@
 function UpdateTicketStatusModal(updateTicketStatusForm, renderPaymentListFunc) {
     'use strict';
     var self = this;
+    self.betId = 0;
+    self.currentStatus = 0;
     var ddlStatus = updateTicketStatusForm.find('#ddlStatus'),
         ticketNote = updateTicketStatusForm.find('#ticketNote'),
         messageContainer = updateTicketStatusForm.find('.inline-message');
@@ -50,15 +52,26 @@ function UpdateTicketStatusModal(updateTicketStatusForm, renderPaymentListFunc) 
     function updateTicketStatus(e) {
         e.preventDefault();
 
+        var note = trimField(ticketNote.val());
+        var statusId = parseInt(ddlStatus.val());
+        if (self.currentStatus === statusId && note.length === 0) {
+            return;
+        }
+
         CMS.callAjax(
             self,
             updateTicketStatusUrl,
-            { status: ddlStatus.val(), notes: trimField(ticketNote.val()) },
-            function (result) { showMessage(result); });
+            { betId: self.betId, status: { id: statusId, name: ddlStatus.find(':selected').text() }, note: note },
+            function (data) {
+                var result = $.parseJSON(data);
+                showMessage(result);
+            });
     }
 
-    self.initialize = function (ticketId, refno, currentStatus, statusList) {
-        CMS.modal(colossusBetsLabels.UpdateTicketStatusTitle + ' ' + refno, updateTicketStatusForm, { resizable: false });
+    self.initialize = function (betId, currentStatus, statusList) {
+        self.betId = betId;
+        self.currentStatus = currentStatus;
+        CMS.modal(colossusBetsLabels.UpdateTicketStatusTitle + ' ' + betId, updateTicketStatusForm, { resizable: false });
 
         renderStatusSelect(statusList, currentStatus);
         ticketNote.val('');

@@ -6,7 +6,6 @@
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.ColossusBets.Criteria;
     using Fanex.Nap.CMS.ColossusBets.Models;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -15,17 +14,16 @@
     {
         private const int DefaultListCapacity = 32;
 
-        public IList<Ticket> GetTickets(GetTicketsCriteria criteria)
+        public IList<Ticket> GetTickets(ICriteria criteria)
         {
             IList<Ticket> tickets = new List<Ticket>(DefaultListCapacity);
-            bool showSecurityCode = criteria.ShowSecurityCode;
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        tickets.Add(ToTicket(reader, showSecurityCode));
+                        tickets.Add(ToTicket(reader));
                     }    
                 }
             }
@@ -82,25 +80,28 @@
             return result;
         }
 
-        private Ticket ToTicket(IDataReader reader, bool showSecurityCode) 
+        private Ticket ToTicket(IDataReader reader) 
         {
             return new Ticket
             {
-                Member = new IdNameModel { Id = Converter.ToInt(reader["custid"]), Name = Converter.ToString2(reader["custname"]) },
-                Currency = new IdNameModel { Id = Converter.ToInt(reader["currencyid"]), Name = Converter.ToString2(reader["currencyname"]) },
-                Site = new IdNameModel { Id = Converter.ToInt(reader["siteid"]), Name = Converter.ToString2(reader["sitename"]) },
-                BetId = Converter.ToString2(reader["betid"]),
-                TotalPayout = Converter.ToDecimal(reader["totalpayout"]),
-                Status = new IdNameModel { Id = Converter.ToInt(reader["statusId"]), Name = Converter.ToString2(reader["status"]) },
-                SecurityCode = showSecurityCode ? Converter.ToString2(reader["securitycode"]) : null
+                Number = Converter.ToInt(reader["rowidx"]),
+                Member = new IdNameModel { Id = Converter.ToInt(reader["custid"]), Name = Converter.ToString2(reader["username"]) },
+                Currency = new IdNameModel { Id = Converter.ToInt(reader["currency"]), Name = Converter.ToString2(reader["currencyname"]) },
+                Site = Converter.ToString2(reader["sitename"]),
+                BetId = Converter.To<long>(reader["betid"]),
+                TotalPayout = Converter.ToDecimal(reader["winamount"]),
+                Status = new IdNameModel { Id = Converter.ToInt(reader["statusid"]), Name = Converter.ToString2(reader["paystatus"]) },
+                SecurityCode = Converter.ToString2(reader["paycode"]),
+                HasNotes = Converter.ToBool(reader["isnoted"])
             };
         }
 
         private TicketDetail ToTicketDetail(IDataReader reader)
         {
-            return new TicketDetail 
+            DateTime transdate = Converter.ToDateTime(reader["transdate"]);
+            return new TicketDetail
             {
-                TransDate = Converter.ToDateTime(reader["transdate"]),
+                Date = transdate.ToLongFormatedDateWithSlash(),
                 BetType = Converter.ToInt(reader["bettype"]),
                 Sold = Converter.ToDecimal(reader["sold"]),
                 WinLoss = Converter.ToDecimal(reader["winlost"]),
@@ -110,12 +111,12 @@
 
         private TicketNote ToTicketNote(IDataReader reader)
         {
-            DateTime date = Converter.ToDateTime(reader["date"]);
+            DateTime createdDate = Converter.ToDateTime(reader["createddate"]);
             return new TicketNote 
             {
-                Date = date.ToShortFormatedDateWithSlash(),
-                Author = Converter.ToString2(reader["author"]),
-                Description = Converter.ToString2(reader["note"]),
+                Date = createdDate.ToLongFormatedDateWithSlash(),
+                Author = Converter.ToString2(reader["username"]),
+                Note = Converter.ToString2(reader["paynote"]),
             };
         }
     }

@@ -1,5 +1,10 @@
 ﻿@using Fanex.Nap.CMS.ColossusBets.Models
+@using Fanex.Nap.CMS.ColossusBets.Constants
 @model TicketDetailReport
+@helper FormatWinLoss(decimal winloss) {
+    <div @(winloss > 0 ? string.Empty : "class=text-red")>@winloss.ToString("N2")</div>
+}
+
 @if (Model.CBAuthorization.ErrorCode != 0)
 {
     <div class="form expand-form float-left ticketColossusBets">@Model.CBAuthorization.ErrorMsg</div>    
@@ -7,9 +12,7 @@
 else
 {
     <iframe class="form expand-form float-left ticketColossusBets"
-        src="@string.Format(
-            "https://maxbet.sandbox.colossusbets.com/api/tickets/ref/30000047/selection?productToken={0}&siteID=2100100",
-            Model.CBAuthorization.Data.Authorization)">
+        src="@string.Format(ColossusBetsConst.ColossusBetsAPITicketsURL, Model.BetId, Model.CBAuthorization.Data.Authorization)">
     </iframe>
 }
 <div class="form expand-form float-right">
@@ -39,13 +42,13 @@ else
                         <tr>
                             <td>@detail.Date</td>
                             <td>@detail.TransactionType</td>
-                            <td>@detail.WinLoss</td>
+                            <td>@FormatWinLoss(detail.WinLoss)</td>
                             <td>@detail.Status</td>
                         </tr>
                     }
                     <tr>
-                        <td colspan="2" class="text-right">@ColossusBetsLabels.Total</td>
-                        <td colspan="2">@Model.TotalWinLoss</td>
+                        <td colspan="2" class="align-right bold">@ColossusBetsLabels.Total</td>
+                        <td colspan="2" class="bold">@FormatWinLoss(Model.TotalWinLoss)</td>
                     </tr>
                 }
             </tbody>

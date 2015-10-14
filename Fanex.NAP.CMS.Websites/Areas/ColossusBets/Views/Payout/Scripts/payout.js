@@ -20,12 +20,12 @@ UpdateTicketStatusModal */
         var columns = [
             { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: colossusBetsLabels.Member, Width: 150, Name: 'colMember', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.Currency, Width: 100, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: colossusBetsLabels.Site, Width: 120, Name: 'colSite', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: colossusBetsLabels.Currency, Width: 80, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: colossusBetsLabels.Site, Width: 100, Name: 'colSite', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: colossusBetsLabels.BetId, Width: 120, Name: 'colBetId', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: colossusBetsLabels.TotalPayout, Width: 120, Name: 'colTotalPayout', HeaderAlign: 'center', CellAlign: 'right' },
             { HeaderText: colossusBetsLabels.Status, Width: 100, Name: 'colStatus', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.SecurityCode, Width: 120, Name: 'colSecurityCode', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: colossusBetsLabels.SecurityCode, Width: 300, Name: 'colSecurityCode', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: colossusBetsLabels.Notes, Width: 50, Name: 'colNotes', HeaderAlign: 'center', CellAlign: 'center' }
         ];
 
@@ -49,15 +49,15 @@ UpdateTicketStatusModal */
         for (var i = 0; i < resultLength; i++) {
             ticket = results[i];
             cell = [
-                { Name: 'colNumber', Value: (i + 1) },
+                { Name: 'colNumber', Value: ticket.Number },
                 { Name: 'colMember', Value: ticket.Member.Name },
                 { Name: 'colCurrency', Value: ticket.Currency.Name },
-                { Name: 'colSite', Value: ticket.Site.Name },
+                { Name: 'colSite', Value: ticket.Site },
                 { Name: 'colBetId', Value: ticket.BetId },
                 { Name: 'colTotalPayout', Value: renderTotalPayout(ticket.Member.Id, ticket.BetId, ticket.TotalPayout) },
-                { Name: 'colStatus', Value: renderStatus(ticket.Id, ticket.BetId, ticket.Status) },
+                { Name: 'colStatus', Value: renderStatus(ticket.BetId, ticket.Status) },
                 { Name: 'colSecurityCode', Value: ticket.SecurityCode },
-                { Name: 'colNotes', Value: renderNotes(ticket.Id, ticket.BetId) }
+                { Name: 'colNotes', Value: renderNotes(ticket.BetId, ticket.HasNotes) }
             ];
 
             bodyRows.push({ Columns: cell });
@@ -80,11 +80,9 @@ UpdateTicketStatusModal */
         return html.join('');
     }
 
-    function renderStatus(ticketId, betId, status) {
+    function renderStatus(betId, status) {
         var html = [
-            '<div class="link ticketStatus" data-ticket="',
-            ticketId,
-            '" data-betid="',
+            '<div class="link ticketStatus" data-betid="',
             betId,
             '" data-status="',
             status.Id,
@@ -96,10 +94,10 @@ UpdateTicketStatusModal */
         return html.join('');
     }
 
-    function renderNotes(ticketId, betId) {
+    function renderNotes(betId, hasNotes) {
         var html = [
-            '<span class="ico-remark" data-ticket="',
-            ticketId,
+            '<span class="',
+            hasNotes ? 'ico-remark' : '',
             '" data-betid="',
             betId,
             '">',
@@ -125,28 +123,27 @@ UpdateTicketStatusModal */
         $('.totalPayout').unbind('click').bind('click', function () {
             var $this = $(this);
             var memberId = $this.data('member');
-            var refno = $this.data('betid');
+            var betId = $this.data('betid');
 
             var successFunc = function (data) {
                 ticketDetailContainer.html(data);
-                CMS.modal(colossusBetsLabels.ViewTicketDetailTitle + ' ' + refno, ticketDetailContainer, { resizable: false });
+                CMS.modal(colossusBetsLabels.ViewTicketDetailTitle + ' ' + betId, ticketDetailContainer, { resizable: false });
             };
 
-            var url = rootUrl + 'ColossusBets/Payout/GetTicketDetail?memberId=' + memberId + '&refno=' + refno;
+            var url = rootUrl + 'ColossusBets/Payout/GetTicketDetail?memberid=' + memberId + '&betid=' + betId;
             CMS.getHtml(url, function (data) { successFunc(data); });
         });
 
         $('.ico-remark').unbind('click').bind('click', function () {
             var $this = $(this);
-            var ticketId = $this.data('ticket');
-            var refno = $this.data('betid');
+            var betId = $this.data('betid');
 
             var successFunc = function (data) {
                 ticketNotesContainer.html(data);
-                CMS.modal(colossusBetsLabels.ViewTicketNoteTitle + ' ' + refno, ticketNotesContainer, { resizable: false });
+                CMS.modal(colossusBetsLabels.ViewTicketNoteTitle + ' ' + betId, ticketNotesContainer, { resizable: false });
             };
 
-            var url = rootUrl + 'ColossusBets/Payout/GetTicketNotes?ticketId=' + ticketId;
+            var url = rootUrl + 'ColossusBets/Payout/GetTicketNotes?betid=' + betId;
             CMS.getHtml(url, function (data) { successFunc(data); });
         });
 
@@ -154,7 +151,7 @@ UpdateTicketStatusModal */
         $('.ticketStatus').unbind('click').bind('click', function () {
             var $this = $(this);
             var statusId = parseInt($this.data('status'));
-            updateTicketStatusModal.initialize($this.data('ticket'), $this.data('betid'), statusId, statusStateMachine[statusId]);
+            updateTicketStatusModal.initialize($this.data('betid'), statusId, statusStateMachine[statusId]);
         });
     }
 

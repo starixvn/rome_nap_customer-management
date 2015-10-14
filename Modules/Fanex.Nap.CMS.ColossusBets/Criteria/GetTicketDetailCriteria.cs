@@ -4,15 +4,14 @@
 
     public class GetTicketDetailCriteria : CriteriaBase
     {
+        public long BetId { get; set; }
+
         [SpParam(SqlParamName = "custid")]
         public int MemberId { get; set; }
 
-        [SpParam(SqlParamName = "refno")]
-        public long RefNo { get; set; }
-
         public override string GetSettingKey()
         {
-            return "Acc_BetListCB_Details";
+            return "NAP_ColossusBets_TicketDetail";
         }
     }
 }

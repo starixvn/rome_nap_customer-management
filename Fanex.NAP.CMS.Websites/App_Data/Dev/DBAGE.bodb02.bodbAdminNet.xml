@@ -15,4 +15,8 @@
     </Setting>
     <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Nap_SMATurnoverUpd" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+
+  <Function Name="Colossus Bets Payout Management">
+    <Setting Key="NAP_ColossusBets_TicketDetail" SpName="NAP_ColossusBets_TicketDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

@@ -97,6 +97,7 @@
     <Compile Include="Criteria\GetBalanceUpDayCriteria.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />
+    <Compile Include="Extensions\StringExtentions.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Models\Alignment.cs" />

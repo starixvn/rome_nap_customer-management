@@ -4,18 +4,17 @@
 
     public class GetTicketsCriteria : CriteriaBase
     {
+        [SpParam(SqlParamName = "username")]
         public string Member { get; set; }
 
-        public string BetId { get; set; }
+        public long BetId { get; set; }
 
+        [SpParam(SqlParamName = "statusid")]
         public int Status { get; set; }
-
-        [SpParam(Ignored = true)]
-        public bool ShowSecurityCode { get; set; }
 
         public override string GetSettingKey()
         {
-            return string.Empty;
+            return "NAP_ColossusBets_PayoutList";
         }
     }
 }

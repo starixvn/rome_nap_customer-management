@@ -7,8 +7,6 @@
 
     public static class ColossusBetsAPIClient
     {
-        private const string AuthorizeURL = "http://122.147.239.73:30051/api/Authorize/AuthorizeCode";
-
         public static ColossusBetsAuthorization Authorize(int customerId, int memberId)
         {
             WebClient client = new WebClient();
@@ -20,7 +18,7 @@
             queryString["customerid"] = customerId.ToString();
             queryString["memberid"] = memberId.ToString();
 
-            string json = client.DownloadString(AuthorizeURL);
+            string json = client.DownloadString(ColossusBetsConst.ColossusBetsAPIAuthorizationURL);
             return JsonConvert.DeserializeObject<ColossusBetsAuthorization>(json);
         }
     }

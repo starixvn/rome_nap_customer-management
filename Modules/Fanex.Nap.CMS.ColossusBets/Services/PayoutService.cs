@@ -78,7 +78,6 @@
             var ticketDetails = _payoutRepository.GetTicketDetails(criteria);
             foreach (TicketDetail detail in ticketDetails)
             {
-                detail.Date = detail.TransDate.ToLongFormatedDateWithSlash();
                 detail.TransactionType = CacheRef.GetBetType(detail.BetType);
                 if (detail.BetType == CashoutBetTypeId)
                 {
@@ -108,7 +107,13 @@
 
         public Result UpdateTicketStatus(ICriteria criteria)
         {
-            return _payoutRepository.UpdateTicketStatus(criteria);
+            var result = _payoutRepository.UpdateTicketStatus(criteria);
+            if (result.Code == 0)
+            {
+                result.Message = ColossusBetsLabels.UpdateTicketStatusSuccess;
+            }
+
+            return result;
         }
     }
 }

@@ -11,11 +11,12 @@
 .tblColossusBets td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
 .tblColossusBets td:first-child { border-left: 1px solid #c5c5c5; }
 .tblColossusBets td.text-red { color: #db2c2c; }
-
+              
 .ticketColossusBets { border-right: 1px solid #c5c5c5!important; margin-right: 20px; padding-right: 20px!important; }
 
 .form .form-row .edit-field textarea { width: 500px; }
 .form .form-row.button-row { float: none; margin: 0; padding-top: 15px; text-align: center; }
-.text-right { text-align: right; }
-
 .search-button { margin-left: 20px; }
+.text-red { color: #f00; }
+
+#ticketNotesContainer { max-height: 650px; }

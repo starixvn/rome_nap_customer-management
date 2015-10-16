@@ -452,6 +452,10 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
+      <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
+      <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
       <Project>{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24}</Project>
       <Name>Fanex.Nap.CMS.ColossusBets</Name>

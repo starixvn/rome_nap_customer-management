@@ -19,13 +19,13 @@
                 <label for="member">@ColossusBetsLabels.Member</label>
             </div>
             <div class="edit-field col_6">
-                @Html.TextBox("member", string.Empty, new { maxlength = "50" })
+                @Html.TextBox("member", string.Empty, new { maxlength = "50", autocomplete = "off" })
             </div>
             <div class="lbl-field col_3">
                 <label for="betId">@ColossusBetsLabels.BetId</label>
             </div>
             <div class="edit-field col_6">
-                @Html.TextBox("betId", string.Empty, new { maxlength = "50" })
+                @Html.TextBox("betId", string.Empty, new { maxlength = "50", autocomplete = "off" })
             </div>
             <div class="lbl-field col_3">
                 <label>@ColossusBetsLabels.Status</label>

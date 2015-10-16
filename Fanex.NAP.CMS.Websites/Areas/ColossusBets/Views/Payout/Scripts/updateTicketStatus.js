@@ -5,7 +5,7 @@ function UpdateTicketStatusModal(updateTicketStatusForm, renderPaymentListFunc) 
     var self = this;
     self.betId = 0;
     self.currentStatus = 0;
-    var ddlStatus = updateTicketStatusForm.find('#ddlStatus'),
+    var selectTicketStatus = updateTicketStatusForm.find('#selectTicketStatus'),
         ticketNote = updateTicketStatusForm.find('#ticketNote'),
         messageContainer = updateTicketStatusForm.find('.inline-message');
     var updateTicketStatusUrl = updateTicketStatusForm.attr('action');
@@ -46,14 +46,14 @@ function UpdateTicketStatusModal(updateTicketStatusForm, renderPaymentListFunc) 
             html.push('</option>');
         }
 
-        ddlStatus.html(html.join('')).combobox();
+        selectTicketStatus.html(html.join('')).combobox();
     }
 
     function updateTicketStatus(e) {
         e.preventDefault();
 
         var note = trimField(ticketNote.val());
-        var statusId = parseInt(ddlStatus.val());
+        var statusId = parseInt(selectTicketStatus.val());
         if (self.currentStatus === statusId && note.length === 0) {
             return;
         }
@@ -61,7 +61,7 @@ function UpdateTicketStatusModal(updateTicketStatusForm, renderPaymentListFunc) 
         CMS.callAjax(
             self,
             updateTicketStatusUrl,
-            { betId: self.betId, status: { id: statusId, name: ddlStatus.find(':selected').text() }, note: note },
+            { betId: self.betId, status: { id: statusId, name: selectTicketStatus.find(':selected').text() }, note: note },
             function (data) {
                 var result = $.parseJSON(data);
                 showMessage(result);

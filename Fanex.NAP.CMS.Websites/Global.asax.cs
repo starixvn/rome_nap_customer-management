@@ -10,14 +10,13 @@
 namespace Fanex.NAP.CMS.Websites
 {
     using System;
-    using System.Data.SqlClient;
     using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
     using Fanex.Data.Configuration;
-    using Fanex.Logging;
+    using Fanex.Nap.CMS.Infrastructure.Helpers;
 
     /// <summary>
     /// MVC application configuration.
@@ -45,47 +44,19 @@ namespace Fanex.NAP.CMS.Websites
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
+            // Don't log 404 error
             Exception ex = Server.GetLastError().GetBaseException();
-            SqlException sqlEx = ex as SqlException;
-            string exceptionFormat = "{0}\r\nType: {1}" +
-                                     "\r\nSource: {2}" +
-                                     "\r\nDomain: {3}" +
-                                     "\r\nReferrer: {4}" +
-                                     "\r\nIP: {5}" +
-                                     "\r\nUserAgent: {6}" +
-                                     "\r\nForm Variable: {7}" +
-                                     "\r\nQueryString: {8}" +
-                                     "\r\nTargetSite: {9}" +
-                                     "\r\nStackTrace: {10}";
-
-            if (!Request.IsLocal)
+            if (ex is HttpException)
             {
-                string message = string.Format(
-                                            exceptionFormat,
-                                            ex.Message,
-                                            ex.GetType().ToString(),
-                                            ex.Source,
-                                            HttpContext.Current.Request.Headers["Host"],
-                                            HttpContext.Current.Request.UrlReferrer,
-                                            HttpContext.Current.Request.UserHostAddress,
-                                            HttpContext.Current.Request.UserAgent,
-                                            Request.Form.ToString(),
-                                            Request.QueryString.ToString(),
-                                            ex.TargetSite,
-                                            ex.StackTrace);
-
-                // Get additional exception data for SqlException.
-                if (sqlEx != null)
+                if (((HttpException)ex).GetHttpCode() == 404)
                 {
-                    message += string.Format(
-                                          "\r\nProcedure: {0}\r\nLine Number: {1}\r\nServer: {2}",
-                                          sqlEx.Procedure,
-                                          sqlEx.LineNumber,
-                                          sqlEx.Server);
+                    Response.Redirect("~/Home");
                 }
 
-                LogService.Error(message);
+                return;
             }
+
+            Logs.Error(ex, Request);
         }
     }
 }

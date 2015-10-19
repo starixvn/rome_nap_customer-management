@@ -4,17 +4,18 @@
 @helper FormatWinLoss(decimal winloss) {
     <div @(winloss > 0 ? string.Empty : "class=text-red")>@winloss.ToString("N2")</div>
 }
-
-@if (Model.CBAuthorization.ErrorCode != 0)
-{
-    <div class="form expand-form float-left ticketColossusBets">@Model.CBAuthorization.ErrorMsg</div>    
-}
-else
-{
-    <iframe class="form expand-form float-left ticketColossusBets"
-        src="@string.Format(ColossusBetsConst.ColossusBetsAPITicketsURL, Model.BetId, Model.CBAuthorization.Data.Authorization)">
-    </iframe>
-}
+<div class="form expand-form float-left ticketColossusBets">
+    @if (Model.CBAuthorization.ErrorCode != 0)
+    { 
+        <p>@Model.CBAuthorization.ErrorMsg</p>
+    }
+    else
+    {
+        <iframe id="ColossusBetsiframe"
+            data-url="@string.Format(ColossusBetsConst.ColossusBetsAPITicketsURL, "30001644", Model.CBAuthorization.Data.Authorization)">
+        </iframe>     
+    }
+</div>
 <div class="form expand-form float-right">
     <div class="form-row">
         <p>@Model.Own</p>

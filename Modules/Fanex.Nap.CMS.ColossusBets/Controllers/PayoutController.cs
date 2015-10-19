@@ -58,7 +58,7 @@
             ColossusBetsAuthorization authorization = task.Result;
             ticketDetailReport.BetId = criteria.BetId;
             ticketDetailReport.CBAuthorization = authorization;
-
+            
             return PartialView("~/Areas/ColossusBets/Views/Payout/_ViewTicketDetail.cshtml", ticketDetailReport);
         }
 

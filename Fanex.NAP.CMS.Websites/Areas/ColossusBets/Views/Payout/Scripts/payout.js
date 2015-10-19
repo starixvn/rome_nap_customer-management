@@ -88,6 +88,7 @@ UpdateTicketStatusModal */
             status.Id,
             '">',
             status.Name,
+            '<span class="ico-horizontal-arrow"></span>',
             '</div>'
         ];
 
@@ -97,7 +98,7 @@ UpdateTicketStatusModal */
     function renderNotes(betId, hasNotes) {
         var html = [
             '<span class="',
-            hasNotes ? 'ico-remark' : '',
+            hasNotes ? 'ico-remark' : 'ico-noremark',
             '" data-betid="',
             betId,
             '">',
@@ -127,6 +128,12 @@ UpdateTicketStatusModal */
 
             var successFunc = function (data) {
                 ticketDetailContainer.html(data);
+                var iframe = ticketDetailContainer.find('#ColossusBetsiframe');
+                if (iframe) {
+                    var iframeSrc = iframe.data('url');
+                    iframe.attr('src', iframeSrc);
+                }
+
                 CMS.modal(colossusBetsLabels.ViewTicketDetailTitle + ' ' + betId, ticketDetailContainer, { resizable: false });
             };
 

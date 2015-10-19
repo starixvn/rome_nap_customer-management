@@ -1,6 +1,11 @@
-﻿@using Fanex.Nap.CMS.ColossusBets.Models
+﻿@using System.Text.RegularExpressions;
+@using Fanex.Nap.CMS.ColossusBets.Models
 @using Fanex.Nap.CMS.Infrastructure.Extensions
 @model IList<TicketNote>
+@helper StripHtmlTags(string text) {
+    string stripHtmlTags = @Regex.Replace(text, @"<[^>]+>|&nbsp;", string.Empty).Trim();
+    <div class="word-wrap">@Html.Raw(stripHtmlTags.NewlinesToBr())</div>
+}
 <div class="form-row">
     <table class="tblColossusBets tblTicketNote">
         <thead>
@@ -25,7 +30,7 @@
                         <td class="width-20 align-center">@(++number)</td>
                         <td class="width-160 align-center">@note.Date</td>
                         <td class="width-120">@note.Author</td>
-                        <td style="width: 400px;">@Html.Raw(note.Note.NewlinesToBr())</td>
+                        <td class="width-400">@StripHtmlTags(note.Note)</td>
                     </tr>
                 }
             }

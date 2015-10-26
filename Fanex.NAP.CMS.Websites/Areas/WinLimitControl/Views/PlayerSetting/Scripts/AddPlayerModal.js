@@ -7,8 +7,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         tblWinLimitContainer = formContainer.find('#tblWinLimit-container'),
         tblWinLimit = formContainer.find('.tblWinLimit > tbody'),
         messageContainer = formContainer.find('.inline-message');
-    var identity = -1;
-    var playerWinLimit = {}, formData = null;
+    var undefinedWinLimits = [], formData = null;
 
     function checkParseFloat(value) {
         if (isNaN(value)) {
@@ -47,237 +46,135 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         }
     }
 
-    function diffOfGameAndFormData() {
-        var diff = [];
-        var needPush, gameId;
-        for (var i = 0, gameLength = playerWinLimit.WinLimits.length; i < gameLength; i++) {
-            gameId = playerWinLimit.WinLimits[i].Id;
-            needPush = true;
-            for (var j = 0, formDataLength = formData.length; j < formDataLength; j++) {
-                if (gameId === formData[j].Id) {
-                    needPush = false;
-                    break;
-                }
-            }
-
-            if (needPush) {
-                diff.push(playerWinLimit.WinLimits[i]);
-            }
-        }
-
-        return diff;
-    }
-
-    function renderGameSelect (games) {
-        var item, html = [];
-        for (var i = 0, max = games.length; i < max; i++) {
-            item = games[i];
-            html.push('<option value="');
-            html.push(item.Id);
-            html.push('" data-global="');
-            html.push(item.GlobalWinLimit);
-            html.push('">');
-            html.push(item.Name);
-            html.push('</option>');
-        }
-
-        return html.join('');
-    }
-
-    function renderNumber() {
-        var spanNumbers = tblWinLimit.find('.spanNumber');
-        $.each(spanNumbers, function (index, value) {
-            value.innerHTML = index + 1;
-        });
-    }
-
-    function renderWinLimit(games) {
-        if (games.length === 0) {
-            tblWinLimit.html('<tr><td colspan="5">' + winLimitControlLabels.NoMoreGameToSetPlayerError + '</td></tr>');
-            return;
-        }
-
-        var gameWinLimit = games[0];
+    function renderWinLimit(undefinedWinLimits) {
         var html = [];
-        html.push('<tr data-identity="' + identity + '">');
-        html.push('<td><span class="spanNumber">1</span></td>');
+        var winlimit;
+        for (var i = 0, gamesLength = undefinedWinLimits.length; i < gamesLength; i++) {
+            winlimit = undefinedWinLimits[i];
 
-        html.push('<td><select class="combobox-autocomplete width-140" id="ddlGame');
-        html.push(identity);
-        html.push('">');
-        html.push(renderGameSelect(games));
-        html.push('</select></td>');
+            html.push('<tr><td class="align-center">');
+            html.push(i + 1);
+            html.push('</td>');
+            if (i === 0) {
+                html.push('<td rowspan="');
+                html.push(gamesLength);
+                html.push('">');
+                html.push(winlimit.Player.Name);
+                html.push('</td>');
 
-        html.push('<td><div class="edit-field"><input type="text" class="text-right width-160" autocomplete="off" maxlength="10" value="');
-        html.push(gameWinLimit.PlayerWinLimit);
-        html.push('" onkeypress="return CMS.forceNumberInput(event)" id="inputWinLimit');
-        html.push(identity);
-        html.push('"/></div></td>');
+                html.push('<td class="align-center" rowspan="');
+                html.push(gamesLength);
+                html.push('">');
+                html.push(winlimit.Currency);
+                html.push('</td>');
+            }
 
-        html.push('<td><div class="text-right" id="globalWinLimit');
-        html.push(identity);
-        html.push('">');
-        html.push(formatNumber(gameWinLimit.GlobalWinLimit));
-        html.push('</div></td>');
+            html.push('<td>');
+            html.push(winlimit.Game.Name);
+            html.push('</td>');
+            
+            html.push('<td class="align-right">');
+            html.push('<input type="text" maxlength="10" autocomplete="off" class="align-right width-160" value="N/A" ');
+            html.push('data-game="');
+            html.push(winlimit.Game.Id);
+            html.push('" data-maxwinlimit="');
+            html.push(winlimit.GlobalWinLimit);
+            html.push('" onkeydown="return CMS.forceNumericInput(event, true);" /></td>');
 
-        html.push('<td><span class="');
-        html.push(identity === 0 ? 'ico-plus' : 'ico-delete');
-        html.push('" id="delWinLimit');
-        html.push(identity);
-        html.push('" title="');
-        html.push(winLimitControlLabels.AddMoreGame);
-        html.push('"></span></td>');
-        html.push('</tr>');
+            html.push('<td class="align-right">');
+            html.push(winlimit.GlobalWinLimit === 0 ? '<span class="text-red">0.00</span>' : formatNumber(winlimit.GlobalWinLimit));
+            html.push('</td></tr>');
+        }
+
         tblWinLimit.append(html.join(''));
-
-        $('#ddlGame' + identity)
-            .combobox()
-            .unbind('change')
-            .bind('change', function () {
-                var $this = $(this);
-                var identity = $this.parent().parent().data('identity');
-                var global = $this.find('option:selected').data('global');
-                $('#globalWinLimit' + identity).html(formatNumber(global));
-            });
-
-        if (identity === 0) {
-            $('#delWinLimit' + identity).unbind('click').bind('click', addGame);
-        }
-        else {
-            $('#delWinLimit' + identity).unbind('click').bind('click', function () { removeGame($(this)); });
-        }
     }
 
-    function duplicatedSelectValue(selects) {
-        var uniques = {};
-
-        var $select;
-        var selectValue;
-        for (var i = 0, max = selects.length; i < max; i++) {
-            $select = $(selects[i]);
-            selectValue = $select.val();
-            if (!uniques[selectValue]) {
-                uniques[selectValue] = true;
-            }
-            else {
-                CMS.showTipsyError($select.next(), winLimitControlLabels.DuplicateGameError);
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     function setFormData() {
-        if (duplicatedSelectValue(tblWinLimit.find('td > select'))) {
+        if (!undefinedWinLimits || undefinedWinLimits.length === 0) {
             return false;
         }
 
+        var custid = undefinedWinLimits[0].Player.Id;
+
+        var isValidFormData = true;
         formData = [];
-        var row, ddlGame, selectedGame, inputWinLimit;
-        var dataIdentity, gameId, winlimit;
-
-        var winLimitRows = tblWinLimit.find('tr');
-        for (var i = 0, max = winLimitRows.length; i < max; i++) {
-            row = $(winLimitRows[i]);
-            dataIdentity = row.data('identity');
-            inputWinLimit = row.find('#inputWinLimit' + dataIdentity);
-            winlimit = checkParseFloat(inputWinLimit.val());
-            if (winlimit >= 0) {
-                ddlGame = row.find('#ddlGame' + dataIdentity);
-                // Game combobox is empty
-                if (!ddlGame.combobox('validInput')) {
-                    return false;
+        $.each(tblWinLimit.find('td > input'), function (index, input) {
+            var $input = $(input);
+            var winlimit = $input.val();
+            if (winlimit !== 'N/A') {
+                var playerWinlimit = checkParseFloat(winlimit);
+                if (playerWinlimit >= 0) {
+                    var maxWinlimit = checkParseFloat($input.data('maxwinlimit'));
+                    if (playerWinlimit <= maxWinlimit) {
+                        formData.push({
+                            Player: { Id: custid },
+                            Game: { Id: $input.data('game') },
+                            PlayerWinLimit: playerWinlimit,
+                            GlobalWinLimit: maxWinlimit 
+                        });
+                    }
+                    else {
+                        isValidFormData = false;
+                        CMS.showTipsyError($input, '<= ' + formatNumber(maxWinlimit), 'w');
+                    }
                 }
-
-                selectedGame = ddlGame.find('option:selected');
-
-                var globalWinLimit = checkParseFloat(selectedGame.data('global'));
-                if (winlimit <= globalWinLimit) {
-                    gameId = parseInt(ddlGame.val());
-                    formData.push({ Id: gameId, Name: selectedGame.text(), PlayerWinLimit: winlimit });
-                    continue;
+                else {
+                    isValidFormData = false;
+                    CMS.showTipsyError($input, winLimitControlLabels.InvalidWinLimit, 'w');
                 }
-
-                CMS.showTipsyError(inputWinLimit, '<= ' + formatNumber(globalWinLimit), 'se');
-                return false;
             }
+        });
 
-            CMS.showTipsyError(inputWinLimit, winLimitControlLabels.InvalidWinLimit, 'se');
-            return false;
-        }
-
-        return true;
-    }
-
-    function addGame() {
-        if (setFormData()) {
-            var diffGames = diffOfGameAndFormData();
-            if (diffGames.length !== 0) {
-                identity++;
-                renderWinLimit(diffGames);
-                renderNumber();
-            }
-        }
-    }
-
-    function removeGame(source) {
-        var parentRow = source.parent().parent();
-        var dataIdentity = parentRow.data('identity');
-        var gameId = parseInt($('#ddlGame' + dataIdentity).val());
-        for (var i = 0, max = formData.length; i < max; i++) {
-            if (formData[i].Id === gameId) {
-                formData.splice(i, 1);
-                break;
-            }
-        }
-
-        parentRow.remove();
-        renderNumber();
+        return isValidFormData;
     }
 
     function resetForm() {
-        identity = 0;
         formData = [];
         tblWinLimit.empty();
         CMS.clearTipsyError(username);
         CMS.hideInlineMsg(messageContainer);
     }
 
-    function searchPlayer(e) {
-        e.preventDefault();
-        
-        var query = username.val().trim();
-        if (query.length === 0) {
+    function searchPlayer(custname) {
+        if (!custname) {
+            custname = username.val().trim();
+        }
+
+        if (custname.length === 0) {
             CMS.showTipsyError(username, winLimitControlLabels.RequiredFieldError, 'nw');
             showWinLimitGrid(false);
             return;
         }
 
         CMS.getJson(
-            window.rootUrl + 'WinLimitControl/PlayerSetting/SearchPlayer?username=' + query,
+            window.rootUrl + 'WinLimitControl/PlayerSetting/SearchPlayer?custname=' + custname,
             function (result) {
-                playerWinLimit = result;
-                if (playerWinLimit.DbResult.Code === 3) {
-                    CMS.showTipsyError(username, playerWinLimit.DbResult.Message, 'nw');
-                    showWinLimitGrid(false);
+                if (result.Code) {
+                    if (result.Code === 2 || result.Code === 3) {
+                        CMS.showTipsyError(username, result.Message, 'nw');
+                    }
+                    else if (result.Code === 4) {
+                        showMessage(result);
+                    }
+
+                    return;
                 }
-                else if (playerWinLimit.DbResult.Code === 4) {
-                    showMessage(playerWinLimit.DbResult);
-                    showWinLimitGrid(false);
-                }
-                else {
-                    resetForm();
-                    renderWinLimit(playerWinLimit.WinLimits);
-                    showWinLimitGrid(true);
-                }
+
+                undefinedWinLimits = result;
+                resetForm();
+                renderWinLimit(undefinedWinLimits);
+                showWinLimitGrid(true);
             });
     }
 
     function bindEvents() {
         formContainer
             .unbind('submit')
-            .bind('submit', searchPlayer);
+            .bind('submit', function (e) {
+                e.preventDefault();
+                searchPlayer(); 
+            });
         
         formContainer
             .find('.red-button')
@@ -288,16 +185,11 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
             .find('#button-addplayer')
             .unbind('click')
             .bind('click', function () {
-                if (!playerWinLimit.DbResult || playerWinLimit.DbResult.Code !== 0 || playerWinLimit.WinLimits.length === 0) {
-                    return;
-                }
-
-                if (setFormData()) {
-                    playerWinLimit.WinLimits = formData;
+                if (setFormData() && formData.length > 0) {
                     CMS.callAjax(
                         self,
                         window.rootUrl + 'WinLimitControl/PlayerSetting/Add',
-                        playerWinLimit,
+                        formData,
                         function (result) { showMessage(result); });
                 }
             });
@@ -307,8 +199,18 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         showWinLimitGrid(false);
         resetForm();
         CMS.modal(winLimitControlLabels.AddPlayerModalTitle, formContainer);
-        
+
         bindEvents();
-        username.val('').clearfield();
+
+        username.autocomplete({
+            minLength: 3,
+            delay: 300,
+            source: window.rootUrl + 'WinLimitControl/PlayerSetting/AutoSuggestion',
+            select: function (event, ui) {
+                searchPlayer(ui.item.value);
+            }
+        })
+        .clearfield()
+        .val('');
     };
 }

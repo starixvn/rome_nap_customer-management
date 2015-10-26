@@ -1,29 +1,154 @@
-﻿/* global winLimitControlLabels, hostPermission, keyboardManager, numeral, winlimitctrl,
+﻿/* global winLimitControlLabels, hostPermission, keyboardManager, numeral, 
     CMSConstants, CMS, EditWinLimitModal */
 (function () {
     'use strict';
-    var formCurrencySetting = $('#form-currencysetting');
-    var filterUrl = formCurrencySetting.attr('action');
-    var freegrid = $('#freegrid');
+    var gridOptions = null,
+        freegrid = $('#freegrid');
+
+    var formCurrencySetting = $('#form-currencysetting'),
+        gameControl = formCurrencySetting.find('#game'),
+        currencyControl = formCurrencySetting.find('#currency'),
+        filterUrl = formCurrencySetting.attr('action') + '?';
+
+    var selectedGame = { Id: '', Name: '' };
+    var editConfirmation = null;
+
     var isEditting = false,
         isHost = hostPermission === 1;
 
-    function formatNumber(number) {
-        return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+    var searchData = {
+        sortColumnName: 'colCurrency',
+        sortDirection: 'asc'
+    };
+
+    function formatWinLimit(winlimit) {
+        if (winlimit === 'N/A' || winlimit === -1) {
+            return 'N/A';
+        }
+
+        return numeral(winlimit).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+    }
+
+    function getFloat(value) {
+        if (value === 'N/A' || isNaN(value)) {
+            return 'N/A';
+        }
+
+        return parseFloat(value);
+    }
+
+    function initGridOptions() {
+        var columns = [
+            { HeaderText: '#', Width: 60, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: winLimitControlLabels.Currency, Width: 180, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
+            { HeaderText: winLimitControlLabels.WinLimit, Width: 200, Name: 'colWinLimit', HeaderAlign: 'center', CellAlign: 'right', Sort: true }
+        ];
+
+        return {
+            showTitle: true,
+            titleInfo: { text: '' },
+            fullWidth: true,
+            fullHeight: true,
+            showDistinctRow: false,
+            showHighlightRow: true,
+            headerColumnHeight: 25,
+            gridExpandHeight: 260,
+            showNumberColumn: true,
+            columns: columns,
+            sortOption: {
+                serverSortFunction: function (sortColumnName, sortDirection) {
+                    searchData.sortColumnName = sortColumnName;
+                    searchData.sortDirection = sortDirection;
+                    renderCurrencySettings();
+                }
+            }
+        };
+    }
+
+    function buildBodyRows(result) {
+        var bodyRows = [];
+        var winlimit;
+
+        var resultLength = result ? result.length : 0;
+        for (var i = 0; i < resultLength; i++) {
+            winlimit = result[i];
+
+            bodyRows.push({ Columns: [
+                { Name: 'colNumber' },
+                { Name: 'colCurrency', Value: winlimit.Currency.Name },
+                { Name: 'colWinLimit', Value: renderWinLimitRow(winlimit.MaxWinLimit, winlimit.Currency)}]
+            });
+        }
+
+        return bodyRows;
+    }
+
+    function renderWinLimitRow(winlimit, currency) {
+        var formated = formatWinLimit(winlimit);
+        if (!isHost) {
+            return formated;
+        }
+
+        var html = [
+            '<a href="javascript:;" class="linkEdit',
+            winlimit === 0 ? ' text-red' : '',
+            '" data-currencyid="',
+            currency.Id,
+            '" data-currency="',
+            currency.Name,
+            '">',
+            formated,
+            '</a>'
+        ];
+
+        return html.join('');
     }
 
     function renderCurrencySettings() {
         isEditting = false;
-        var url = filterUrl + '?' + formCurrencySetting.serialize();
+
+        selectedGame.Id = gameControl.val();
+        selectedGame.Name = gameControl.find(':selected').text();
+
+        searchData.game = selectedGame.Id;
+        searchData.currency = currencyControl.val();
+        var url = filterUrl + $.param(searchData);
+
+        editConfirmation = new EditWinLimitModal(selectedGame, renderCurrencySettings);
 
         var successFunc = function (data) {
-            freegrid.html(data);
+            gridOptions.bodyRows = buildBodyRows(data);
+            gridOptions.titleInfo.text = selectedGame.Name + ' - ' + winLimitControlLabels.CurrencyWinLimitSetting;
+            freegrid.removeClass('display-none').fanexGrid(gridOptions);
             if (isHost) {
-                $('.linkEdit').unbind('click').bind('click', function () { inlineEditWinLimit($(this)); });
+                if (gridOptions.bodyRows.length > 0) {
+                    $('.linkEdit').unbind('click').bind('click', function () { inlineEditWinLimit($(this)); });
+                }
             }
         };
 
-        CMS.getHtml(url, successFunc);
+        CMS.getJson(url, successFunc);
+    }
+
+    function addCurrencySetting(game, currency, winlimit) {
+        var url = window.rootUrl + 'WinLimitControl/CurrencySetting/Add';
+        var formData = {
+            gameId: game.Id,
+            gameName: game.Name,
+            currencyId: currency.Id,
+            currencyName: currency.Name,
+            maxWinLimit: winlimit
+        };
+
+        CMS.callAjax(self, url, formData, function (result) {
+            renderCurrencySettings();
+            if (result.Code === 0) {
+                CMS.showSuccessMessage(result.Message);
+            }
+            else {
+                CMS.showErrorMessage(result.Message);
+            }
+        });
     }
 
     function inlineEditWinLimit(editLink) {
@@ -33,24 +158,27 @@
 
         isEditting = true;
         var currency = { Id: editLink.data('currencyid'), Name: editLink.data('currency') };
-        var game = { Id: editLink.data('gameid'), Name: editLink.data('game') };
-        var winlimit = winlimitctrl.parseFloat(editLink.text().replace(/\,/g, ''));
+        var winlimit = getFloat(editLink.text().replace(/\,/g, ''));
 
         var tdContainer = editLink.parent()
-            .html('<input type="text" maxlength="10" autocomplete="off" class="text-right width-160" id="inputWinLimit" value="' + winlimit + '"/>');
+            .html('<input type="text" maxlength="10" autocomplete="off" class="align-right width-160" id="inputWinLimit"' +
+            ' onkeydown="return CMS.forceNumericInput(event, true);" value="' + winlimit + '"/>');
 
         tdContainer.find('#inputWinLimit')
             .unbind()
-            .bind('keypress', function (e) { return CMS.forceNumberInput(e); })
             .bind('keyup', function (e) {
                 var code = e.which || e.keyCode;
                 if (code === keyboardManager.Enums.KeyCode.Enter) {
                     var $this = $(this);
-                    var newWinLimit = winlimitctrl.parseFloat($this.val());
-                    if (newWinLimit > 0) {
+                    var newWinLimit = getFloat($this.val());
+                    if (newWinLimit >= 0) {
                         if (winlimit !== newWinLimit) {
-                            var editConfirmation = new EditWinLimitModal(currency, game, newWinLimit, renderCurrencySettings);
-                            editConfirmation.initialize();
+                            if (winlimit === 'N/A') {
+                                addCurrencySetting(selectedGame, currency, newWinLimit);
+                            }
+                            else {
+                                editConfirmation.initialize(currency, newWinLimit);
+                            }
                         }
                     }
                     else {
@@ -58,7 +186,7 @@
                     }
                 }
                 else if (code === keyboardManager.Enums.KeyCode.Escape) {
-                    tdContainer.html(renderWinLimitRow({ Currency: currency, Game: game, MaxWinLimit: winlimit }, currency.Name))
+                    tdContainer.html(renderWinLimitRow(winlimit, currency))
                         .find('.linkEdit')
                         .unbind('click')
                         .bind('click', function () { inlineEditWinLimit($(this)); });
@@ -69,6 +197,8 @@
     }
 
     function initialize() {
+        gridOptions = initGridOptions();
+
         formCurrencySetting.submit(function (e) {
             e.preventDefault();
             renderCurrencySettings();

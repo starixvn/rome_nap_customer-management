@@ -6,5 +6,7 @@
     public class PlayerWinLimitEntity : WinLimitEntity
     {
         public BaseSetting Player { get; set; }
+
+        public decimal PlayerWinLimit { get; set; }
     }
 }

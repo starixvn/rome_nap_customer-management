@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Repositories.WinLimitMonitor
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Common;
@@ -48,6 +49,7 @@
 
         private WinLimitMonitorEntity ToWinLimitMonitorEntity(IDataReader reader)
         {
+            var unblockedTime = Converter.ToDateTime(reader["UnblockedTime"], DateTime.MinValue);
             return new WinLimitMonitorEntity
             {
                 PlayerInfo = new BaseSetting
@@ -67,6 +69,7 @@
                 MaxWinLimit = Converter.ToDecimal(reader["WinLimit"]),
                 WinningAmount = Converter.ToDecimal(reader["WinningAmount"]),
                 BlockedTimeDisplay = Converter.ToDateTime(reader["BlockedTime"]).ToString("M/d/yyyy h:mm tt"),
+                UnblockedTimeDisplay = unblockedTime == DateTime.MinValue ? string.Empty : unblockedTime.ToString("M/d/yyyy h:mm tt"),
                 IsBlocked = Converter.ToBool(reader["IsBlocked"])
             };
         }

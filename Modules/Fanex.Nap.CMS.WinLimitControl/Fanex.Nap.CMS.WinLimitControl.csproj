@@ -115,24 +115,19 @@
     <Compile Include="Criteria\CurrencySetting\AddCurrencyWinLimitCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\GetGreaterPlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\UpdateCurrencyWinLimitCriteria.cs" />
-    <Compile Include="Criteria\CurrencySetting\GetExcludedCurrencyCriteria.cs" />
-    <Compile Include="Criteria\CurrencySetting\GetExcludedGameCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\GetCurrencyWinLimitCriteria.cs" />
-    <Compile Include="Criteria\CurrencySetting\GetUnsetCurrencyByGameCriteria.cs" />
-    <Compile Include="Criteria\CurrencySetting\GetUnsetGameByCurrencyCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\AddPlayerWinLimitCriteria.cs" />
+    <Compile Include="Criteria\PlayerSetting\CustomerSuggestionCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\DeletePlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\GetPlayerWinLimitCriteria.cs" />
-    <Compile Include="Criteria\PlayerSetting\GetPlayerWinLimitForUpdateCriteria.cs" />
-    <Compile Include="Criteria\PlayerSetting\GetUnsetGameByPlayerCriteria.cs" />
+    <Compile Include="Criteria\PlayerSetting\GetUndefinedGameByPlayerCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\UpdatePlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\WinLimitMonitor\GetWinLimitMonitorCriteria.cs" />
     <Compile Include="Criteria\WinLimitMonitor\UnblockAccountsCriteria.cs" />
     <Compile Include="Models\CurrencySetting\CurrencyWinLimit.cs" />
     <Compile Include="Models\CurrencySetting\GreaterPlayerWinLimit.cs" />
     <Compile Include="Models\CurrencySetting\WinLimitEntity.cs" />
-    <Compile Include="Models\PlayerSetting\AddOrEditPlayerWinLimit.cs" />
-    <Compile Include="Models\PlayerSetting\GameWinLimit.cs" />
+    <Compile Include="Models\PlayerSetting\UndefinedPlayerWinLimit.cs" />
     <Compile Include="Models\PlayerSetting\PlayerWinLimit.cs" />
     <Compile Include="Models\PlayerSetting\PlayerWinLimitEntity.cs" />
     <Compile Include="Models\WinLimitMonitor\GameWinLimitMonitorModel.cs" />
@@ -164,10 +159,6 @@
     <ProjectReference Include="..\..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.Nap.CMS.FPSClient\Fanex.Nap.CMS.FPSClient.csproj">
-      <Project>{0F6DFD87-E3FA-4824-A830-E8E64153339F}</Project>
-      <Name>Fanex.Nap.CMS.FPSClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.Settings\Fanex.Nap.CMS.Settings.csproj">
       <Project>{F204FEA9-DC1F-4472-B516-65066B818D00}</Project>

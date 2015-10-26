@@ -15,9 +15,6 @@
         private static void RegisterGlobalSettingBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/winlimitcontrol/currencysettingscripts").Include(
-                "~/Areas/WinLimitControl/Views/CurrencySetting/Scripts/Common.js",
-                "~/Areas/WinLimitControl/Views/CurrencySetting/Scripts/AddCurrency.js",
-                "~/Areas/WinLimitControl/Views/CurrencySetting/Scripts/AddGame.js",
                 "~/Areas/WinLimitControl/Views/CurrencySetting/Scripts/EditWinLimitModal.js",
                 "~/Areas/WinLimitControl/Views/CurrencySetting/Scripts/CurrencySetting.js"));
 
@@ -30,7 +27,6 @@
         {
             bundles.Add(new ScriptBundle("~/bundles/winlimitcontrol/playersettingscripts").Include(
                 "~/Areas/WinLimitControl/Views/PlayerSetting/Scripts/AddPlayerModal.js",
-                "~/Areas/WinLimitControl/Views/PlayerSetting/Scripts/EditPlayerModal.js",
                 "~/Areas/WinLimitControl/Views/PlayerSetting/Scripts/PlayerSetting.js"));
 
             bundles.AddAndInclude(

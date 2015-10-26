@@ -1,43 +1,15 @@
 ﻿.filter-bar .filter-form { padding-bottom: 5px; }
 .content-box { float: left; margin-left: 10px; width: 1005px; }
-
-.freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th { font-weight: normal; }
-.freegrid tr.highlight-row:hover td { /*background-color: #ccc;*/ }
-.content-grid .grid-title {
-    border: solid 1px #d2b24d;
-    background: #ffcc33;
-    background: -moz-linear-gradient(#ffcc33, #ffcc35);
-    background: -webkit-linear-gradient(#ffcc33, #ffcc35);
-    height: 25px;
-    margin-bottom: 3px;
-    vertical-align: middle;
-}
-.content-grid .grid-title .grid-title-label {
-    color: #4a4b4f;
-    float: left;
-    font-size: 0.9em;
-    font-weight: bold;
-    height: 18px;
-    padding-left: 4px;
-    padding-top: 5px;
-}
-
-.custom-buttons-container { margin-right: 16px; float: right; }
-.custom-buttons-container a { color: #333; margin-right: 5px; text-decoration: none; }
-.custom-buttons-container a:hover { color: #000; }
-.custom-buttons-container .ico-plus { position: relative; top: 2px; }
-
-.tblWinLimit { border-collapse: separate; border-spacing: 0; }
-.tblWinLimit th, .tblWinLimit td { padding: 7px 15px; }
-.tblWinLimit thead { background: #3c5ea5; background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; color: #fff; }
-.tblWinLimit th { font-weight: normal; border-right: 1px solid #aaa; }
-.tblWinLimit td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
-.tblWinLimit td:first-child { border-left: 1px solid #c5c5c5; }
-.tblWinLimit tr td.nodata { color: #f00; font-weight: bold; text-align: center; }
-
 .form .form-row.button-row { margin-top: 10px; }
 
 #divEffectedCustomers { margin-top: 15px; }
 #divEffectedCustomers.freegrid .grid-fixed-table tr.highlight-row:hover td { background-color: #faffa8; }
 #divEffectedCustomers.freegrid .grid-fixed-table tr.highlight td,
 #divEffectedCustomers.freegrid .grid-fixed-table tr td.highlight { background-color: #FEECD1; }
+
+.text-red { color: #f00; }
+
+.winlimit-notes { color: #f00; margin-top: 20px; }
+.winlimit-notes p { margin-bottom: 5px; }
+.winlimit-notes ul { margin-left: 1em; }
+.winlimit-notes li:before { content: "- " }

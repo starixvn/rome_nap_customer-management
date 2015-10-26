@@ -10,13 +10,16 @@
 
     public class UnblockAccountsCriteria : CriteriaBase
     {
+        public bool IsBlock { get; set; }
+
         public List<WinLimitMonitorEntity> WinLimitMonitor { get; set; }
 
         public override Hashtable GetSpParams()
         {
             return new Hashtable 
             {
-                { "MemUnblock", BuildUnblockCustomerXml() },
+                { "MemBlockUnblock", BuildUnblockCustomerXml() },
+                { "IsBlock", IsBlock },
                 { "UserId",  AppSession.CurrentUser.Id },
                 { "IP",  IPHelper.ClientIP() },
                 { "ErrCode",  0 },

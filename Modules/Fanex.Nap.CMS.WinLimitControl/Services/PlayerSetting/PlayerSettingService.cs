@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
@@ -15,9 +16,6 @@
 
     public class PlayerSettingService : IPlayerSettingService
     {
-        private const int InvalidUsernameErrorCode = 3;
-        private const int UnsetGlobalWinLimitErrorCode = 4;
-
         private readonly ISettingService _settingService;
         private readonly IPlayerSettingRepository _playerSettingRepository;
 
@@ -27,11 +25,16 @@
             _playerSettingRepository = playerSettingRepository ?? new PlayerSettingRepository();
         }
 
-        public IList<PlayerWinLimit> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria)
+        public IList<dynamic> CustomerAutoSuggestion(ICriteria criteria)
+        {
+            return _playerSettingRepository.CustomerAutoSuggestion(criteria);
+        }
+        
+        public IList<PlayerWinLimit> GetPlayerSettings(GetPlayerWinLimitCriteria criteria)
         {
             var playerWinLimits = new List<PlayerWinLimit>();
 
-            var winLimits = _playerSettingRepository.GetPlayerWinLimits(criteria);
+            var winLimits = _playerSettingRepository.GetPlayerSettings(criteria);
             if (winLimits.Count == 0)
             {
                 return playerWinLimits;
@@ -43,7 +46,8 @@
             var currencyHash = _settingService.GetCurrencies().ToDictionary(s => s.Id, d => d.Name);
             var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
 
-            var winLimitsGroup = winLimits.GroupBy(w => new { PlayerId = w.Player.Id, CurrencyId = w.Currency.Id });
+            var winLimitsGroup = SortPlayerSettings(winLimits, criteria.SortColumnName, criteria.SortDirection)
+                .GroupBy(w => new { PlayerId = w.Player.Id, CurrencyId = w.Currency.Id });
             foreach (var group in winLimitsGroup)
             {
                 currencyName = currencyHash[group.Key.CurrencyId];
@@ -61,53 +65,15 @@
             return playerWinLimits;
         }
 
-        public IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria)
+        public IList<UndefinedPlayerWinLimit> GetUndefinedGameByPlayer(GetUndefinedGameByPlayerCriteria criteria)
         {
-            var winlimits = _playerSettingRepository.GetPlayerWinLimitsForUpdate(criteria);
-            if (winlimits.Count > 0)
-            {
-                var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
-                foreach (var winlimit in winlimits)
-                {
-                    winlimit.Name = gameHash[winlimit.Id];    
-                }
-            }
-
-            return winlimits;
-        }
-
-        public AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(GetUnsetGameByPlayerCriteria criteria)
-        {
-            var unsetGames = _playerSettingRepository.GetUnsetGameByPlayer(criteria);
-            if (unsetGames.DbResult.Code == ErrorCodeConstants.NoneError)
-            {
-                unsetGames.Player.Name = criteria.Username;
-
-                var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
-                foreach (var game in unsetGames.WinLimits)
-                {
-                    game.Name = gameHash[game.Id];
-                    game.PlayerWinLimit = game.GlobalWinLimit;
-                }    
-            }
-            else if (unsetGames.DbResult.Code == InvalidUsernameErrorCode)
-            {
-                unsetGames.DbResult.Message = WinLimitControlLabels.InvalidUsername;
-            }
-            else if (unsetGames.DbResult.Code == UnsetGlobalWinLimitErrorCode)
-            {
-                unsetGames.DbResult.Message = string.Format(
-                    WinLimitControlLabels.UnsetGlobalWinLimitError,
-                    unsetGames.Currency,
-                    "../CurrencySetting/Index");
-            }
-            
-            return unsetGames;
+            return _playerSettingRepository.GetUndefinedGameByPlayer(criteria);
         }
 
         public Result AddPlayerWinLimit(IList<AddPlayerWinLimitCriteria> criterias)
         {
-            Result dbresult = null, returnResult = null;
+            Result dbresult = null,
+                returnResult = null;
             foreach (AddPlayerWinLimitCriteria criteria in criterias)
             {
                 dbresult = _playerSettingRepository.AddPlayerWinLimit(criteria);
@@ -124,28 +90,60 @@
             return returnResult ?? dbresult;
         }
 
-        public Result UpdatePlayerWinLimit(IList<UpdatePlayerWinLimitCriteria> criterias)
+        public Result UpdatePlayerWinLimit(UpdatePlayerWinLimitCriteria criteria)
         {
-            Result dbresult = null, returnResult = null;
-            foreach (UpdatePlayerWinLimitCriteria criteria in criterias)
+            var result = _playerSettingRepository.UpdatePlayerWinLimit(criteria);
+            if (result.Code == ErrorCodeConstants.NoneError)
             {
-                dbresult = _playerSettingRepository.UpdatePlayerWinLimit(criteria);
-                if (dbresult.Code == ErrorCodeConstants.NoneError)
-                {
-                    dbresult.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
-                }
-                else
-                {
-                    returnResult = dbresult;
-                }
+                result.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
             }
 
-            return returnResult ?? dbresult;
+            return result;
         }
 
         public Result DeletePlayerWinLimit(ICriteria criteria)
         {
             return _playerSettingRepository.DeletePlayerWinLimit(criteria);
+        }
+
+        private IOrderedEnumerable<PlayerWinLimitEntity> SortPlayerSettings(IList<PlayerWinLimitEntity> sources, string column, string direction)
+        {
+            IOrderedEnumerable<PlayerWinLimitEntity> destinations;
+            if (column.Equals("colUsername", StringComparison.OrdinalIgnoreCase))
+            {
+                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
+                {
+                    destinations = sources.OrderBy(s => s.Player.Name);
+                }
+                else
+                {
+                    destinations = sources.OrderByDescending(s => s.Player.Name);
+                }
+            }
+            else if (column.Equals("colPlayerWinLimit", StringComparison.OrdinalIgnoreCase))
+            {
+                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
+                {
+                    destinations = sources.OrderBy(s => s.PlayerWinLimit);
+                }
+                else
+                {
+                    destinations = sources.OrderByDescending(s => s.PlayerWinLimit);
+                }
+            }
+            else
+            {
+                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
+                {
+                    destinations = sources.OrderBy(s => s.MaxWinLimit);
+                }
+                else
+                {
+                    destinations = sources.OrderByDescending(s => s.MaxWinLimit);
+                }
+            }
+
+            return destinations;
         }
     }
 }

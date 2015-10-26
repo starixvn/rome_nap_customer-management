@@ -16,6 +16,8 @@
 
         public string BlockedTimeDisplay { get; set; }
 
+        public string UnblockedTimeDisplay { get; set; }
+
         public bool IsBlocked { get; set; }
     }
 }

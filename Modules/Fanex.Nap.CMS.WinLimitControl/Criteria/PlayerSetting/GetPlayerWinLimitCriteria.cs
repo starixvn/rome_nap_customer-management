@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerSetting
 {
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting;
 
     public class GetPlayerWinLimitCriteria : GetCurrencyWinLimitCriteria

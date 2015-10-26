@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Models.PlayerSetting;
@@ -12,7 +13,6 @@
     using Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Data;
 
     public class PlayerSettingController : BaseController
     {
@@ -47,39 +47,62 @@
             }
 
             criteria.PageIndex++;
-            var playerWinLimits = _playerSettingService.GetPlayerWinLimits(criteria);
+            var playerWinLimits = _playerSettingService.GetPlayerSettings(criteria);
             return Json(
                 new { TotalRow = criteria.TotalRow, PlayerWinLimits = playerWinLimits },
                 JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
-        public ActionResult SearchPlayer(GetUnsetGameByPlayerCriteria criteria)
+        public ActionResult SearchPlayer(GetUndefinedGameByPlayerCriteria criteria)
         {
-            var unsetGames = _playerSettingService.GetUnsetGameByPlayer(criteria);
-            return Json(unsetGames, JsonRequestBehavior.AllowGet);
+            var undefinedSettings = _playerSettingService.GetUndefinedGameByPlayer(criteria);
+            if (criteria.ErrCode == 0 && undefinedSettings.Count > 0)
+            {
+                return Json(undefinedSettings, JsonRequestBehavior.AllowGet);
+            }
+
+            var result = new Result(2, WinLimitControlLabels.NoMoreGameToSetPlayerWinLimit);
+            if (criteria.ErrCode != 0)
+            {
+                result.Code = criteria.ErrCode;
+                if (criteria.ErrCode == 3)
+                {
+                    result.Message = WinLimitControlLabels.InvalidUsername;
+                }
+                else if (criteria.ErrCode == 4)
+                {
+                    result.Message = string.Format(WinLimitControlLabels.MessageGoToCurrencySettingPage, criteria.ErrMsg, "CurrencySetting");  
+                }
+            }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
-        public ActionResult GetPlayerWinLimits(GetPlayerWinLimitForUpdateCriteria criteria)
+        public ActionResult AutoSuggestion(string term)
         {
-            var winlimits = _playerSettingService.GetPlayerWinLimitsForUpdate(criteria);
-            return Json(winlimits, JsonRequestBehavior.AllowGet);
+            var criteria = new CustomerSuggestionCriteria(term);
+            var customers = _playerSettingService.CustomerAutoSuggestion(criteria);
+            return Json(customers, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Add(AddOrUpdatePlayerWinLimit model)
+        public ActionResult Add(IList<UndefinedPlayerWinLimit> models)
         {
-            var result = _playerSettingService.AddPlayerWinLimit(ToAddPlayerWinLimitCriteria(model));
+            var result = _playerSettingService.AddPlayerWinLimit(ToAddPlayerWinLimitCriteria(models));
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Update(AddOrUpdatePlayerWinLimit model)
+        public ActionResult Update(UpdatePlayerWinLimitCriteria criteria)
         {
-            var result = _playerSettingService.UpdatePlayerWinLimit(ToUpdatePlayerWinLimitCriteria(model));
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+
+            var result = _playerSettingService.UpdatePlayerWinLimit(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
@@ -112,44 +135,25 @@
         }
 
         [NonAction]
-        private IList<AddPlayerWinLimitCriteria> ToAddPlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
+        private IList<AddPlayerWinLimitCriteria> ToAddPlayerWinLimitCriteria(IList<UndefinedPlayerWinLimit> undefinedWinLimits)
         {
             int userId = CurrentSession.UserId;
             string ip = CurrentContext.IP;
 
             IList<AddPlayerWinLimitCriteria> criteria = new List<AddPlayerWinLimitCriteria>();
-            foreach (var winlimit in model.WinLimits)
+            foreach (var winlimit in undefinedWinLimits)
             {
-                criteria.Add(new AddPlayerWinLimitCriteria 
+                if (winlimit.PlayerWinLimit <= winlimit.GlobalWinLimit)
                 {
-                    Player = model.Player.Id,
-                    Game = winlimit.Id,
-                    PlayerWinLimit = winlimit.PlayerWinLimit,
-                    UserId = userId,
-                    IP = ip
-                });    
-            }
-
-            return criteria;
-        }
-
-        [NonAction]
-        private IList<UpdatePlayerWinLimitCriteria> ToUpdatePlayerWinLimitCriteria(AddOrUpdatePlayerWinLimit model)
-        {
-            int userId = CurrentSession.UserId;
-            string ip = CurrentContext.IP;
-
-            IList<UpdatePlayerWinLimitCriteria> criteria = new List<UpdatePlayerWinLimitCriteria>();
-            foreach (var winlimit in model.WinLimits)
-            {
-                criteria.Add(new UpdatePlayerWinLimitCriteria
-                {
-                    Player = model.Player.Id,
-                    Game = winlimit.Id,
-                    PlayerWinLimit = winlimit.PlayerWinLimit,
-                    UserId = userId,
-                    IP = ip
-                });
+                    criteria.Add(new AddPlayerWinLimitCriteria
+                    {
+                        Player = winlimit.Player.Id,
+                        Game = winlimit.Game.Id,
+                        PlayerWinLimit = winlimit.PlayerWinLimit,
+                        UserId = userId,
+                        IP = ip
+                    });
+                }
             }
 
             return criteria;

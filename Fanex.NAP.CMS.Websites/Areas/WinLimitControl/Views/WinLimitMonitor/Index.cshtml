@@ -22,7 +22,7 @@
                 <label for="txtUsername">@WinLimitControlLabels.Username</label>
             </div>
             <div class="edit-field col_7">
-                @Html.TextBox("username", string.Empty, new { maxlength = "100", placeholder = WinLimitControlLabels.All })
+                @Html.TextBox("username", string.Empty, new { maxlength = "100", placeholder = WinLimitControlLabels.All, autocomplete = "off" })
             </div>
             <div class="lbl-field col_2">
                 <label>@WinLimitControlLabels.Game</label>
@@ -35,6 +35,12 @@
             </div>
             <div class="edit-field col_6">
                 @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@WinLimitControlLabels.Status</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-100" })
             </div>
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit">@WinLimitControlLabels.Submit</button>
@@ -63,10 +69,15 @@
             WinLimit: '@WinLimitControlLabels.WinLimit',
             WinningAmount:'@WinLimitControlLabels.WinningAmount',
             BlockedTime:'@WinLimitControlLabels.BlockedTime',
+            UnblockedTime:'@WinLimitControlLabels.UnblockedTime',
             PercentageUsed:'@WinLimitControlLabels.PercentageUsed',
             Blocked:'@WinLimitControlLabels.Blocked',
             WinLimitMonitor_ChooseOneAccountToUnblock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock)",
-            WinLimitMonitor_ConfirmUnblockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts)"
+            WinLimitMonitor_ConfirmUnblockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts)",
+            Block_Accounts: '@WinLimitControlLabels.Block_Accounts',
+            Unblock_Accounts: '@WinLimitControlLabels.Unblock_Accounts',
+            WinLimitMonitor_ChooseOneAccountToBlock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToBlock)",
+            WinLimitMonitor_ConfirmBlockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmBlockAccounts)",
         };       
     </script>
     @Scripts.Render("~/bundles/winlimitcontrol/winlimitmonitor-scripts")

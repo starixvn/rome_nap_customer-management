@@ -1,10 +1,10 @@
 ﻿/* global winLimitControlLabels, CMS */
 /* exported EditWinLimitModal */
-function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc) {
+function EditWinLimitModal(game, renderCurrencySettingFunc) {
     'use strict';
     var self = this;
     var gridOptions = null, freegrid = null;
-    var formData = { currencyId: currency.Id, gameId: game.Id, maxWinLimit: newWinlimit }; 
+    var formData = { gameId: game.Id, currencyId: 0, maxWinLimit: 0 }; 
 
     function initGridOptions() {
         var columns = [
@@ -38,7 +38,7 @@ function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc)
                 [{ Name: 'colNumber', Value: (i + 1) },
                 { Name: 'colUsername', Value: customer.Username },
                 { Name: 'colCurrentWinLimit', Value: customer.CurrentWinLimit },
-                { Name: 'colNewWinLimit', Value: newWinlimit }]
+                { Name: 'colNewWinLimit', Value: formData.maxWinLimit}]
             });
         }
 
@@ -47,10 +47,9 @@ function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc)
 
     function editWinLimit() {
         formData.GameName = game.Name;
-        formData.CurrencyName = currency.Name;
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/Update';
         CMS.callAjax(self, url, formData, function (result) {
-            renderGlobalSettingFunc();
+            renderCurrencySettingFunc();
             if (result.Code === 0) {
                 CMS.showSuccessMessage(result.Message);
             }
@@ -60,7 +59,10 @@ function EditWinLimitModal(currency, game, newWinlimit, renderGlobalSettingFunc)
         });
     }
 
-    self.initialize = function () {
+    self.initialize = function (currency, newWinlimit) {
+        formData.currencyId = currency.Id;
+        formData.CurrencyName = currency.Name;
+        formData.maxWinLimit = newWinlimit;
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/GetGreaterPlayerWinLimits?' + $.param(formData);
         CMS.getJson(url, function (results) {
             var message = winLimitControlLabels.EditWinLimitConfirm

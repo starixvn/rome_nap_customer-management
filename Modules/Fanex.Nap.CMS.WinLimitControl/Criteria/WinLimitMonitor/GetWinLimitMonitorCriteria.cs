@@ -1,14 +1,15 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor
 {
+    using System.Collections;
     using Fanex.Data.Repository;
 
     public class GetWinLimitMonitorCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ExchangeId")]
         public int Currency { get; set; }
 
-        [SpParam(SqlParamName = "ProductId")]
         public int Game { get; set; }
+
+        public int Status { get; set; }
 
         public string Username { get; set; }
 
@@ -21,6 +22,20 @@
         public override string GetSettingKey()
         {
             return "NAP_WinLimitControl_WinLimitMonitorSel";
+        }
+
+        public override Hashtable GetSpParams()
+        {
+            return new Hashtable 
+            {
+                { "username", Username },
+                { "exchangeid", Currency },
+                { "isblocked", Status == 1 },
+                { "productid", Game },
+                { "pageindex", PageIndex },
+                { "pagesize", PageSize },
+                { "totalrow", TotalRow },
+            };
         }
     }
 }

@@ -12,7 +12,28 @@
 
     public class PlayerSettingRepository : IPlayerSettingRepository
     {
-        public IList<PlayerWinLimitEntity> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria)
+        public IList<dynamic> CustomerAutoSuggestion(ICriteria criteria)
+        {
+            IList<dynamic> customers = new List<dynamic>(12);
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        customers.Add(new  
+                        {
+                            label = Converter.ToString2(reader["username"])
+                        });
+                    }
+                }
+            }
+
+            return customers;
+        }
+
+        public IList<PlayerWinLimitEntity> GetPlayerSettings(GetPlayerWinLimitCriteria criteria)
         {
             var winLimits = new List<PlayerWinLimitEntity>();
 
@@ -33,55 +54,25 @@
             return winLimits;
         }
 
-        public AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(ICriteria criteria)
+        public IList<UndefinedPlayerWinLimit> GetUndefinedGameByPlayer(GetUndefinedGameByPlayerCriteria criteria)
         {
-            var gameWinLimits = new List<GameWinLimit>();
-            var unsetGames = new AddOrUpdatePlayerWinLimit 
-            {
-                WinLimits = gameWinLimits
-            };
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    if (reader.Read())
-                    {
-                        unsetGames.Player = new BaseSetting { Id = Converter.ToInt(reader["CustId"]) };
-                        unsetGames.Currency = Converter.ToString2(reader["CurrencyName"]);
-
-                        if (reader.NextResult())
-                        {
-                            while (reader.Read())
-                            {
-                                gameWinLimits.Add(ToAddOrEditPlayerWinLimit(reader));
-                            }
-                        }
-                    }
-
-                    var outputParams = db.GetOuputParams();
-                    unsetGames.DbResult = new Result(Converter.ToInt(outputParams["errcode"]), Converter.ToString2(outputParams["errmsg"]));
-                }
-            }
-
-            return unsetGames;
-        }
-
-        public IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria)
-        {
-            var gameWinLimits = new List<GameWinLimit>();
+            IList<UndefinedPlayerWinLimit> undefinedWinLimits = new List<UndefinedPlayerWinLimit>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        gameWinLimits.Add(ToAddOrEditPlayerWinLimitForUpdate(reader));
+                        undefinedWinLimits.Add(ToUndefinedPlayerWinLimit(reader));
                     }
                 }
+
+                var outputParams = db.GetOuputParams();
+                criteria.ErrCode = (int)outputParams["errcode"];
+                criteria.ErrMsg = (string)outputParams["errmsg"];
             }
 
-            return gameWinLimits;
+            return undefinedWinLimits;
         }
 
         public Result AddPlayerWinLimit(AddPlayerWinLimitCriteria criteria)
@@ -138,25 +129,28 @@
                 {
                     Id = Converter.ToInt(reader["ProductId"])
                 },
-                MaxWinLimit = Converter.ToDecimal(reader["MaxWinLimit"])
+                PlayerWinLimit = Converter.ToDecimal(reader["PlayerWinLimit"], -1),
+                MaxWinLimit = Converter.ToDecimal(reader["CurrencyWinLimit"], -1)
             };
         }
 
-        private GameWinLimit ToAddOrEditPlayerWinLimit(IDataReader reader)
+        private UndefinedPlayerWinLimit ToUndefinedPlayerWinLimit(IDataReader reader)
         {
-            return new GameWinLimit
-            { 
-                Id = Converter.ToInt(reader["ProductId"]),
-                GlobalWinLimit = Converter.ToDecimal(reader["CurrencyMaxWinLimit"])
+            return new UndefinedPlayerWinLimit
+            {
+                Player = new BaseSetting
+                {
+                    Id = Converter.ToInt(reader["custid"]),
+                    Name = Converter.ToString2(reader["Username"])
+                },
+                Currency = Converter.ToString2(reader["Currency"]),
+                Game = new BaseSetting
+                {
+                    Id = Converter.ToInt(reader["ProductId"]),
+                    Name = Converter.ToString2(reader["ProductName"])
+                },
+                GlobalWinLimit = Converter.ToDecimal(reader["CurrencyWinLimit"], -1)
             };
-        }
-
-        private GameWinLimit ToAddOrEditPlayerWinLimitForUpdate(IDataReader reader)
-        {
-            GameWinLimit winlimit = ToAddOrEditPlayerWinLimit(reader);
-            winlimit.PlayerWinLimit = Converter.ToDecimal(reader["PlayerWinLimit"]);
-            
-            return winlimit;
         }
     }
 }

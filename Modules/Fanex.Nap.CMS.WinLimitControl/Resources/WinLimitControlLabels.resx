@@ -117,35 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddCurrency" xml:space="preserve">
-    <value>Add Currency</value>
-  </data>
   <data name="AddCurrencyExistingError" xml:space="preserve">
     <value>There are existing game setting of this currency: {0}.</value>
   </data>
-  <data name="AddCurrencyModalTitle" xml:space="preserve">
-    <value>Set Win Limit of New Added Currency</value>
-  </data>
-  <data name="AddCurrencySuccess" xml:space="preserve">
-    <value>The Win Limit of {0} has been saved successfully!</value>
-  </data>
-  <data name="AddGame" xml:space="preserve">
-    <value>Add Game</value>
-  </data>
   <data name="AddGameExistingError" xml:space="preserve">
     <value>There are existing currency setting of this game: {0}.</value>
-  </data>
-  <data name="AddGameModalTitle" xml:space="preserve">
-    <value>Add New Game to Win Limit List</value>
-  </data>
-  <data name="AddGameSuccess" xml:space="preserve">
-    <value>The Win Limit  of {0} has been saved successfully!</value>
-  </data>
-  <data name="AddMoreCurrency" xml:space="preserve">
-    <value>Add more Currency</value>
-  </data>
-  <data name="AddMoreGame" xml:space="preserve">
-    <value>Add more Game</value>
   </data>
   <data name="AddPlayer" xml:space="preserve">
     <value>Add Player</value>
@@ -154,7 +130,7 @@
     <value>Add new Player to Player Win Limit list</value>
   </data>
   <data name="AddPlayerWinLimitSuccess" xml:space="preserve">
-    <value>The Player Win Limit(s) have been save successfully!</value>
+    <value>The Player Win Limit has been save successfully!</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
@@ -180,12 +156,6 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="DuplicateCurrencyError" xml:space="preserve">
-    <value>The Currency already existed in the list!</value>
-  </data>
-  <data name="DuplicateGameError" xml:space="preserve">
-    <value>The Game already existed in the list!</value>
-  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -194,6 +164,9 @@
   </data>
   <data name="EditPlayerModalTitle" xml:space="preserve">
     <value>Edit Win Limit of {0}</value>
+  </data>
+  <data name="EditPlayerWinLimitConfirm" xml:space="preserve">
+    <value>Are you sure want to set Player Win Limit of {0}?</value>
   </data>
   <data name="EditWinLimitConfirm" xml:space="preserve">
     <value>Are you sure want to change Win Limit of {0} currency per {1}?</value>
@@ -222,17 +195,8 @@
   <data name="NewWinLimit" xml:space="preserve">
     <value>New Win Limit</value>
   </data>
-  <data name="NoMoreCurrencyToSetWinLimitError" xml:space="preserve">
-    <value>There is no more currency to set Win Limit</value>
-  </data>
-  <data name="NoMoreGameToSetPlayerError" xml:space="preserve">
-    <value>There is no more games to set Player Win Limit</value>
-  </data>
-  <data name="NoMoreGameToSetWinLimitError" xml:space="preserve">
-    <value>There is no more games to set Win Limit</value>
-  </data>
-  <data name="Note" xml:space="preserve">
-    <value>Note</value>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
   </data>
   <data name="PercentageUsed" xml:space="preserve">
     <value>Percentage Used</value>
@@ -252,8 +216,14 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
+  </data>
+  <data name="Unblocked" xml:space="preserve">
+    <value>Unblocked</value>
   </data>
   <data name="Unblock_Accounts" xml:space="preserve">
     <value>Unblock account(s)</value>
@@ -268,7 +238,7 @@
     <value>Username</value>
   </data>
   <data name="ViewDetails" xml:space="preserve">
-    <value>View details.</value>
+    <value>View details</value>
   </data>
   <data name="WinLimit" xml:space="preserve">
     <value>Win Limit</value>
@@ -285,10 +255,34 @@
   <data name="WinLimitMonitor_UnblockAccountsSuccess" xml:space="preserve">
     <value>Unblock Successfully</value>
   </data>
-  <data name="WinLimitNote" xml:space="preserve">
-    <value>- Win Limit = 0 is equal to Unlimited Winning.</value>
+  <data name="WinLimitUndefined" xml:space="preserve">
+    <value>Win Limit = N/A: The Win Limit has not been defined yet.</value>
+  </data>
+  <data name="WinLimitUnlimited" xml:space="preserve">
+    <value>Win Limit = 0: Unlimited.</value>
   </data>
   <data name="WinningAmount" xml:space="preserve">
     <value>Winning Amount</value>
+  </data>
+  <data name="UnblockedTime" xml:space="preserve">
+    <value>Unblocked Time</value>
+  </data>
+  <data name="Block_Accounts" xml:space="preserve">
+    <value>Block account(s)</value>
+  </data>
+  <data name="WinLimitMonitor_BlockAccountsSuccess" xml:space="preserve">
+    <value>Block Successfully</value>
+  </data>
+  <data name="WinLimitMonitor_ConfirmBlockAccounts" xml:space="preserve">
+    <value>Are you sure you want to &lt;b&gt;Block&lt;/b&gt; these players per these games?</value>
+  </data>
+  <data name="MessageGoToCurrencySettingPage" xml:space="preserve">
+    <value>The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+  </data>
+  <data name="NoMoreGameToSetPlayerWinLimit" xml:space="preserve">
+    <value>There is no more games to set Player Win Limit</value>
+  </data>
+  <data name="WinLimitMonitor_ChooseOneAccountToBlock" xml:space="preserve">
+    <value>At least one 'Unblocked' Member account must be checked.</value>
   </data>
 </root>

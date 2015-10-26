@@ -3,16 +3,17 @@
     using System.Collections.Generic;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Settings.Models;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Models.PlayerSetting;
 
     public interface IPlayerSettingRepository
     {
-        IList<PlayerWinLimitEntity> GetPlayerWinLimits(GetPlayerWinLimitCriteria criteria);
+        IList<dynamic> CustomerAutoSuggestion(ICriteria criteria);
 
-        AddOrUpdatePlayerWinLimit GetUnsetGameByPlayer(ICriteria criteria);
+        IList<PlayerWinLimitEntity> GetPlayerSettings(GetPlayerWinLimitCriteria criteria);
 
-        IList<GameWinLimit> GetPlayerWinLimitsForUpdate(GetPlayerWinLimitForUpdateCriteria criteria);
+        IList<UndefinedPlayerWinLimit> GetUndefinedGameByPlayer(GetUndefinedGameByPlayerCriteria criteria);
 
         Result AddPlayerWinLimit(AddPlayerWinLimitCriteria criteria);
 

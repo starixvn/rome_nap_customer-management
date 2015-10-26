@@ -15,6 +15,8 @@
 
         public string BlockedTimeDisplay { get; set; }
 
+        public string UnblockedTimeDisplay { get; set; }
+
         public bool IsBlocked { get; set; }
 
         public static GameWinLimitMonitorModel FromWinLimitMonitorEntity(WinLimitMonitorEntity entity)
@@ -26,6 +28,7 @@
                 WinningAmount = entity.WinningAmount,
                 PercentageUsed = CalculatePercentageUsed(entity),
                 BlockedTimeDisplay = entity.BlockedTimeDisplay,
+                UnblockedTimeDisplay = entity.UnblockedTimeDisplay,
                 IsBlocked = entity.IsBlocked
             };
         }

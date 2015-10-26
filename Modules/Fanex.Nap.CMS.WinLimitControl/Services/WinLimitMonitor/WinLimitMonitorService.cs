@@ -3,29 +3,24 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.FPSClient.Services;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Models.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Repositories.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
-    using Fanex.Oneyed.BussinessRule.Contracts;
 
     public class WinLimitMonitorService : IWinLimitMonitorService
     {
         private readonly ISettingService _settingService;
-        private readonly IFPSClientService _fpsClient;
         private readonly IWinLimitMonitorRepository _winLimitMonitorRepository;
 
         public WinLimitMonitorService(
             ISettingService settingService = null, 
-            IWinLimitMonitorRepository winLimitMonitorRepository = null,
-            IFPSClientService fpsClient = null)
+            IWinLimitMonitorRepository winLimitMonitorRepository = null)
         {
             _settingService = settingService ?? new SettingService();
             _winLimitMonitorRepository = winLimitMonitorRepository ?? new WinLimitMonitorRepository();
-            _fpsClient = fpsClient ?? new FPSClientService();
         }
 
         public PlayerWinLimitMonitorView GetWinLimitMonitor(ICriteria criteria)
@@ -71,32 +66,14 @@
 
         public Result UnblockAccounts(UnblockAccountsCriteria criteria)
         {
-            ResponseCode fpsResult;
-            WinLimitMonitorEntity monitorEntity;
-            IList<WinLimitMonitorEntity> monitorEntities = criteria.WinLimitMonitor;
-
-            // 1. Call FPS to unblock first.
-            // If NOT success: remove from original criteria.
-            int unblockLength = monitorEntities.Count - 1;
-            for (int i = unblockLength; i >= 0; i--)
+            var result = _winLimitMonitorRepository.UnblockAccounts(criteria);
+            if (result.Code == 0)
             {
-                monitorEntity = monitorEntities[i];
-                fpsResult = _fpsClient.WinLimitControlUnblock(monitorEntity.PlayerInfo.Id, monitorEntity.PlayerInfo.Name, monitorEntity.Game.Name);
-                if (fpsResult != ResponseCode.Allow)
-                {
-                    monitorEntities.RemoveAt(i);    
-                }
+                result.Message = 
+                    result.Code == 0 ? WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess : WinLimitControlLabels.InternalServerError;
             }
 
-            // 2. Batch unblock to DB.
-            var dbresult = _winLimitMonitorRepository.UnblockAccounts(criteria);
-            if (dbresult.Code == 0)
-            {
-                dbresult.Message = 
-                    dbresult.Code == 0 ? WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess : WinLimitControlLabels.InternalServerError;
-            }
-
-            return dbresult;
+            return result;
         }
     }
 }

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Data.Repository;
@@ -29,27 +28,12 @@
             return currencySettings;
         }
 
-        public IList<BaseSetting> GetExcludedCurrencies(ICriteria criteria)
+        public Result AddCurrencySetting(ICriteria criteria)
         {
-            return QuerySettings(criteria);
+            return ExecuteNonQuery(criteria);
         }
 
-        public IList<BaseSetting> GetExcludedGames(ICriteria criteria)
-        {
-            return QuerySettings(criteria);
-        }
-
-        public IList<BaseSetting> GetUnsetCurrencies(ICriteria criteria)
-        {
-            return QuerySettings(criteria);
-        }
-
-        public IList<BaseSetting> GetUnsetGames(ICriteria criteria)
-        {
-            return QuerySettings(criteria);
-        }
-
-        public Result AddGlobalWinLimit(ICriteria criteria)
+        public Result UpdateCurrencySetting(ICriteria criteria)
         {
             return ExecuteNonQuery(criteria);
         }
@@ -72,19 +56,6 @@
             return winLimits;    
         }
 
-        public Result UpdateGlobalWinLimit(ICriteria criteria)
-        {
-            return ExecuteNonQuery(criteria);
-        }
-
-        private IList<BaseSetting> QuerySettings(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                return db.Query<BaseSetting>(criteria.GetSpParams()).ToList();
-            }
-        }
-
         private Result ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -100,15 +71,12 @@
         {
             return new WinLimitEntity
             {
-                Game = new BaseSetting
-                {
-                    Id = Converter.ToInt(reader["ProductId"])
-                },
                 Currency = new BaseSetting
                 {
-                    Id = Converter.ToInt(reader["ExchangeId"])
+                    Id = Converter.ToInt(reader["CurrencyId"]),
+                    Name = Converter.ToString2(reader["CurrencyName"])
                 },
-                MaxWinLimit = Converter.ToDecimal(reader["MaxWinLimit"])
+                MaxWinLimit = Converter.ToDecimal(reader["MaxWinLimit"], -1)
             };
         }
 

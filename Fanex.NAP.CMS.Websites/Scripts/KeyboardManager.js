@@ -49,11 +49,14 @@ var KeyboardManager = function () {
             Character_x: 88,
             Character_y: 89,
             Character_z: 90,
+            NumberPad_0: 96,
+            NumberPad_9: 105,
 
             // Character ,
             Character_Comma: 188,
             // Character .
-            Character_Period: 190
+            Character_Period: 110,
+            Character_Period1: 190
         }
     };
 };

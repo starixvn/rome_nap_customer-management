@@ -35,38 +35,27 @@
         </div>
     </div>
 }
-<div class="content-grid" id="freegrid">
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/Shared/_Notes.cshtml"); }
 </div>
-<div id="divModals" class="display-none">
-</div>
+<div id="divModals" class="display-none"></div>
 @section Foot
 {
     <script type="text/javascript">
+        window.rootUrl = $('#CMSRoot').val();
         window.hostPermission = @(hostPermission ? 1 : 0);
         var winLimitControlLabels = {
-            AddGame: '@WinLimitControlLabels.AddGame',
-            AddCurrency: '@WinLimitControlLabels.AddCurrency',
+            CurrencyWinLimitSetting: '@WinLimitControlLabels.GlobalSetting',
             Currency: '@WinLimitControlLabels.Currency',
             Game: '@WinLimitControlLabels.Game',
             WinLimit: '@WinLimitControlLabels.WinLimit',
-            Edit: '@WinLimitControlLabels.Edit',
-            AddCurrencyModalTitle: '@WinLimitControlLabels.AddCurrencyModalTitle',
-            AddGameModalTitle: '@WinLimitControlLabels.AddGameModalTitle',
-            AddMoreGame: '@WinLimitControlLabels.AddMoreGame',
-            AddMoreCurrency: '@WinLimitControlLabels.AddMoreCurrency',
-            AddCurrencySuccess: '@WinLimitControlLabels.AddCurrencySuccess',
-            AddGameSuccess: '@WinLimitControlLabels.AddGameSuccess',
-            InvalidWinLimit: '@WinLimitControlLabels.InvalidWinLimit',
             EditWinLimitConfirm: '@WinLimitControlLabels.EditWinLimitConfirm',
             EditWinLimitMessage: '@WinLimitControlLabels.EditWinLimitMessage',
             ViewDetails: '@WinLimitControlLabels.ViewDetails',
             Username: '@WinLimitControlLabels.Username',
             CurrentWinLimit: '@WinLimitControlLabels.CurrentWinLimit',
-            NewWinLimit: '@WinLimitControlLabels.NewWinLimit',
-            NoMoreGameToSetWinLimitError: '@WinLimitControlLabels.NoMoreGameToSetWinLimitError',
-            NoMoreCurrencyToSetWinLimitError: '@WinLimitControlLabels.NoMoreCurrencyToSetWinLimitError',
-            DuplicateGameError: '@WinLimitControlLabels.DuplicateGameError',
-            DuplicateCurrencyError: '@WinLimitControlLabels.DuplicateCurrencyError'
+            NewWinLimit: '@WinLimitControlLabels.NewWinLimit'
         };       
     </script>
     @Scripts.Render("~/bundles/winlimitcontrol/currencysettingscripts")

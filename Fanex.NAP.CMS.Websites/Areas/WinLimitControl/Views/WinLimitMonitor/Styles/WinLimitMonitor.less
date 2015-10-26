@@ -1,7 +1,7 @@
 .filter-bar .filter-form { padding-bottom: 5px; }
+.filter-bar .filter-form #username { width: 100%; }
 
-.boxPercentUsed_100Percent
-{
+.boxPercentUsed_100Percent {
     padding: 0px;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 10px;
@@ -15,8 +15,7 @@
     border-radius: 2px;
 }
 
-.boxPercentUsed_Low
-{
+.boxPercentUsed_Low {
     padding: 0px;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 10px;
@@ -28,8 +27,7 @@
     font-weight: bold;
 }
 
-.boxPercentUsed
-{
+.boxPercentUsed {
     background: url('Images/MaxPercentStatus.png') no-repeat scroll 0 100% transparent;
     border-radius: 2px;
 }
@@ -39,10 +37,56 @@
     margin: 10px;
 }
 
+.refresh-container {
+    position: relative;
+    cursor: pointer;
+    &:hover {
+        .dropdown-container {
+            display: block;
+        }
+    }
 
+    .timer {
+        border: 1px solid #7c98a4;
+        box-shadow: 1px 1px 3px #ccc inset;
+        height: 18px;
+        margin-right: 2px;
 
+        .countdown {
+            background: url("../../../../../Content/Extensions/images/refresh.png") no-repeat scroll -20px center #FFF;
+            float: left;
+            text-align: center;
+            height: 18px;
+            width: 70px;
+        }
 
+        .dropdown {
+            background: url("../../../../../Content/Extensions/images/dropdown.png") no-repeat scroll 4px center #fff;
+            border-left: 1px solid #cecccd;
+            float: left;
+            height: 18px;
+            width: 16px;
 
+        }
+    }
+    
+    .dropdown-container {
+        background-color: #dfdfdf;
+        border: 1px solid #d4d4d4;
+        display: none;
+        margin: 0;
+        position: absolute;
+        top: 20px;
+        width: 88px;
+        z-index: 10;
+        
+        li {
+            border-bottom: 1px solid #fff;
+            padding: 3px 0 3px 17px; 
+        }
 
-
-
+        .checked {
+            background: url("../../../../../Content/Themes/img/countdownCheck.png") no-repeat scroll 5px 8px transparent;
+        }
+    }
+}

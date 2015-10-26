@@ -1,13 +1,14 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.Settings.Models;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
-    using Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Services.WinLimitMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -61,6 +62,11 @@
         {
             var currencies = _settingService.GetCurrencies();
             var games = _settingService.GetGames();
+            var statuses = new List<BaseSetting>
+            {
+                new BaseSetting { Id = 1, Name = WinLimitControlLabels.Blocked },
+                new BaseSetting { Id = 2, Name = WinLimitControlLabels.Unblocked }
+            };
 
             var all = new SelectListItem { Value = "0", Text = WinLimitControlLabels.All };
             var selectListCurrencies = currencies.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.Name }).ToList();
@@ -71,6 +77,7 @@
 
             ViewBag.Currencies = selectListCurrencies;
             ViewBag.Games = selectListGames;
+            ViewBag.Statuses = new SelectList(statuses, "Id", "Name");
         }
     }
 }

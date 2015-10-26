@@ -27,7 +27,9 @@ var WinLimitMonitor = function () {
         defaultPageSize: 50,
         searchParameters: {
             PageSize: 1,
-            PageIndex: 0
+            PageIndex: 0,
+            SortColumnName: 'colUsername',
+            SortDirection: 'asc'
         },
         refreshTimer: {
             Intervals: [90, 120, 150, 180],
@@ -64,7 +66,7 @@ var WinLimitMonitor = function () {
     self.initGridOptions = function () {
         var columns = [
             { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
             { HeaderText: winLimitControlLabels.Currency, Width: 80, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Game, Width: 140, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: winLimitControlLabels.WinLimit, Width: 150, Name: 'colWinLimit',
@@ -97,6 +99,13 @@ var WinLimitMonitor = function () {
                 totalItem: 0,
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: self.handleChangingPage
+            },
+            sortOption: {
+                serverSortFunction: function (sortColumnName, sortDirection) {
+                    self.documentData.searchParameters.SortColumnName = sortColumnName;
+                    self.documentData.searchParameters.SortDirection = sortDirection;
+                    self.getPlayerSettings();
+                }
             }
         };
     };

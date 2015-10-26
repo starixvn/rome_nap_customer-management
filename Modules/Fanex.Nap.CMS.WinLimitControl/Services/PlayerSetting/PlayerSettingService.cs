@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
@@ -46,8 +45,7 @@
             var currencyHash = _settingService.GetCurrencies().ToDictionary(s => s.Id, d => d.Name);
             var gameHash = _settingService.GetGames().ToDictionary(s => s.Id, d => d.Name);
 
-            var winLimitsGroup = SortPlayerSettings(winLimits, criteria.SortColumnName, criteria.SortDirection)
-                .GroupBy(w => new { PlayerId = w.Player.Id, CurrencyId = w.Currency.Id });
+            var winLimitsGroup = winLimits.GroupBy(w => new { PlayerId = w.Player.Id, CurrencyId = w.Currency.Id });
             foreach (var group in winLimitsGroup)
             {
                 currencyName = currencyHash[group.Key.CurrencyId];
@@ -104,46 +102,6 @@
         public Result DeletePlayerWinLimit(ICriteria criteria)
         {
             return _playerSettingRepository.DeletePlayerWinLimit(criteria);
-        }
-
-        private IOrderedEnumerable<PlayerWinLimitEntity> SortPlayerSettings(IList<PlayerWinLimitEntity> sources, string column, string direction)
-        {
-            IOrderedEnumerable<PlayerWinLimitEntity> destinations;
-            if (column.Equals("colUsername", StringComparison.OrdinalIgnoreCase))
-            {
-                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
-                {
-                    destinations = sources.OrderBy(s => s.Player.Name);
-                }
-                else
-                {
-                    destinations = sources.OrderByDescending(s => s.Player.Name);
-                }
-            }
-            else if (column.Equals("colPlayerWinLimit", StringComparison.OrdinalIgnoreCase))
-            {
-                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
-                {
-                    destinations = sources.OrderBy(s => s.PlayerWinLimit);
-                }
-                else
-                {
-                    destinations = sources.OrderByDescending(s => s.PlayerWinLimit);
-                }
-            }
-            else
-            {
-                if (direction.Equals("asc", StringComparison.OrdinalIgnoreCase))
-                {
-                    destinations = sources.OrderBy(s => s.MaxWinLimit);
-                }
-                else
-                {
-                    destinations = sources.OrderByDescending(s => s.MaxWinLimit);
-                }
-            }
-
-            return destinations;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor
 {
+    using System;
     using System.Collections;
     using Fanex.Data.Repository;
 
@@ -19,6 +20,10 @@
 
         public int TotalRow { get; set; }
 
+        public string SortColumnName { get; set; }
+
+        public string SortDirection { get; set; }
+
         public override string GetSettingKey()
         {
             return "NAP_WinLimitControl_WinLimitMonitorSel";
@@ -26,16 +31,27 @@
 
         public override Hashtable GetSpParams()
         {
-            return new Hashtable 
+            var inputParams = new Hashtable 
             {
                 { "username", Username },
+                { "productid", Game },
                 { "exchangeid", Currency },
                 { "isblocked", Status == 1 },
-                { "productid", Game },
                 { "pageindex", PageIndex },
                 { "pagesize", PageSize },
                 { "totalrow", TotalRow },
+                { "sortorder", 1 }
             };
+
+            if (SortColumnName.Equals("colUsername", StringComparison.OrdinalIgnoreCase))
+            {
+                if (SortDirection.Equals("desc", StringComparison.OrdinalIgnoreCase))
+                {
+                    inputParams["sortorder"] = 2;
+                }
+            }
+
+            return inputParams;
         }
     }
 }

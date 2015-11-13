@@ -1,0 +1,13 @@
+﻿@using Fanex.Nap.CMS.PayoutManagement.Models.API
+@model MicrogamingResult
+
+<div class="form expand-form div-microgaming">
+    @if (Model == null || Model.ReturnCode != 0)
+    { 
+        <p>@Model.ReturnMessage</p>
+    }
+    else
+    {
+        <iframe src="@Model.URL"></iframe>     
+    }
+</div>

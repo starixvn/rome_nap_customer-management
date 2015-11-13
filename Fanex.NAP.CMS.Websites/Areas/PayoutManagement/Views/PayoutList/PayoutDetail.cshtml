@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Payout Function / Payout List / Payout Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head {
+    @Styles.Render("~/bundles/PayoutManagement/PayoutDetailStyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">
+                Payout Function / <a href="javascript:;" id="payoutlist-link">Payout List</a> / Payout Details
+            </span>
+        </div>
+    </div>
+}
+<div class="payout-detail">
+    <div class="payout-row">
+        <div class="payout-column">
+            <div class="bold">@ColossusBetsLabels.RefNo:</div>
+  	    </div>
+        <div class="payout-column"><span id="refno"></span></div>
+        <div class="payout-column width-120"></div>
+        <div class="payout-column">
+            <div class="bold">@ColossusBetsLabels.SiteLicensee:</div>
+        </div>
+        <div class="payout-column"><span id="sitelicensee"></span></div>
+        @if ((bool)ViewBag.PayoutViewSecurityCode)
+        {
+            <div class="payout-column width-120"></div>
+            <div class="payout-column">
+                <div class="bold seccode-inner" style="margin-top:4px;">@ColossusBetsLabels.SecurityCode</div>
+  	        </div>
+            <div class="payout-column">
+                <div class="seccode-box seccode-inner">
+                    <span id="seccode-text"></span>
+                    <button type="button" class="blue-button" id="seccode-button">@ColossusBetsLabels.Show</button>
+                </div>
+  	        </div>
+        }
+    </div>
+    <div class="payout-row">
+        <div class="payout-column">
+            <div class="bold">@ColossusBetsLabels.Amount:</div>
+  	    </div>
+        <div class="payout-column"><span id="amount"></span></div>
+        <div class="payout-column width-120"></div>
+        <div class="payout-column">
+            <div class="bold">@ColossusBetsLabels.Currency:</div>
+        </div>
+        <div class="payout-column"><span id="currency"></span></div>
+    </div>
+</div>
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+<div class="clear-fix"></div>
+<div class="payout-detail">
+    <div class="payout-row">
+        <div class="payout-column">
+            <div class="bold">@ColossusBetsLabels.Note:</div>
+  	    </div>
+    </div>
+    <div class="payout-row">
+        <div class="payout-column">
+            <textarea id="ticketNote" rows="8" cols="100"></textarea>
+  	    </div>
+        <div class="payout-column">
+            <div class="payout-row">
+                <div class="payout-column">
+                    <div class="bold" style="margin-top:4px;">@ColossusBetsLabels.Status</div>
+                </div>
+                <div class="payout-column">
+                    @Html.DropDownList("selectTicketStatus", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-140" })
+                </div>
+            </div>
+            <div class="payout-row">
+                <div class="payout-column"></div>
+                <div class="payout-column">
+                    <button type="button" class="blue-button margin-15top" id="update-button">@ColossusBetsLabels.Update</button>
+                </div>
+            </div>
+  	    </div>
+    </div>
+</div>
+
+@section Foot {
+    <script type="text/javascript">
+        var id = @ViewBag.Id,
+            currentStatus = @ViewBag.Status;
+        var colossusBetsLabels = {
+            Show: '@ColossusBetsLabels.Show',
+            Hide: '@ColossusBetsLabels.Hide',
+            Date: '@ColossusBetsLabels.Date',
+            Status: '@ColossusBetsLabels.Status',
+            Note: '@ColossusBetsLabels.Note',
+            Handler: '@ColossusBetsLabels.Handler'
+        };
+    </script>
+    @Scripts.Render("~/bundles/PayoutManagement/PayoutDetailScripts")
+}

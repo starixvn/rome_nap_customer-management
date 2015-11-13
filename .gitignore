@@ -43,7 +43,10 @@
 /Fanex.Nap.CMS.Infrastructure/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/bin
+/Modules/Fanex.Nap.CMS.PayoutManagement/obj
+/Modules/Fanex.Nap.CMS.PayoutManagement/bin
 
 /StyleCop.Cache
 /Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache
 /Fanex.Nap.CMS.Infrastructure/StyleCop.Cache
+/Modules/Fanex.Nap.CMS.PayoutManagement/StyleCop.Cache

@@ -1,0 +1,23 @@
+﻿.payout-detail {
+    display: table;
+    margin: 20px 0;
+}
+.payout-row  {
+    display: table-row;
+}
+.payout-column {
+    display: table-cell;
+    padding: 0 0 5px 10px;
+    vertical-align: top;
+}
+.seccode-box {
+    border: 1px solid #5a7dc1;
+    padding: 1px;
+}
+.seccode-box span {
+    display: inline-block;
+    width: 120px;
+}
+.word-wrap { max-width: 440px; word-wrap: break-word; -ms-word-break: break-all; }
+.margin-15top { margin-top: 15px; }
+textarea { resize: vertical; }

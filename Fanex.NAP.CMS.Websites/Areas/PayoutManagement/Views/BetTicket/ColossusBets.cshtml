@@ -1,0 +1,60 @@
+﻿@using Fanex.Nap.CMS.PayoutManagement.Constants;
+@using Fanex.Nap.CMS.PayoutManagement.Models
+@using Fanex.Nap.CMS.PayoutManagement.Models.API;
+@model ColossusBetsTicket
+@helper FormatWinLoss(decimal winloss) {
+    <div @(winloss > 0 ? string.Empty : "class=text-red")>@winloss.ToString("N2")</div>
+}
+
+<div class="form expand-form float-left div-colossusbets">
+    @{ var cbauthorization = (ColossusBetsAuthorization)ViewBag.CBAuthorization; }
+    @if (cbauthorization == null || cbauthorization.ErrorCode != 0)
+    { 
+        <p>@cbauthorization.ErrorMsg</p>
+    }
+    else
+    {
+        <iframe src="@string.Format(PayoutManagementConst.ColossusBetsAPITicketsURL, Model.RefNo, cbauthorization.Data.Authorization)">
+        </iframe>     
+    }
+</div>
+<div class="form expand-form float-right">
+    <div class="form-row">
+        <p>@Model.Own</p>
+        <p>@Model.Sold</p>
+    </div>
+    <div class="form-row">
+        <table class="tblColossusBets">
+            <thead>
+                <tr>
+                    <th>@ColossusBetsLabels.Date</th>
+                    <th>@ColossusBetsLabels.TransactionType</th>
+                    <th>@ColossusBetsLabels.WinLoss</th>
+                    <th>@ColossusBetsLabels.Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.BetTicketDetails.Count == 0)
+                {
+                    <tr><td colspan="4" class="text-red bold align-center">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td></tr>
+                }
+                else
+                {
+                    foreach (var detail in Model.BetTicketDetails)
+                    {
+                        <tr>
+                            <td>@detail.Date</td>
+                            <td>@detail.TransactionType</td>
+                            <td>@FormatWinLoss(detail.WinLoss)</td>
+                            <td>@detail.Status</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2" class="align-right bold">@ColossusBetsLabels.Total</td>
+                        <td colspan="2" class="bold">@FormatWinLoss(Model.TotalWinLoss)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

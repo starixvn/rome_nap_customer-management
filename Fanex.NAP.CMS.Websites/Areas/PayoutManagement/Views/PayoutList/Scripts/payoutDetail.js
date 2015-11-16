@@ -19,19 +19,19 @@
         $ticketDetailContainer = $('#ticketDetailContainer');
 
     function trimField(value) {
-        return value.replace(/^\s+|\s+$/g, '');
-    }
-
-    function stripLinebreak(value) {
-        var tmp = document.createElement('div');
-        tmp.innerHTML = value;
-        var html = tmp.textContent || tmp.innerText || '';
+        var html = value.replace(/^\s+|\s+$/g, '');
         if (html.length !== 0) {
-            html = html.replace(/\n/g, '<br/>')
-                .replace(/\\r\\n/g, '<br/>');
+            var tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            html = tmp.textContent || tmp.innerText || '';
         }
 
         return html;
+    }
+
+    function stripLinebreak(value) {
+        return value.replace(/\n/g, '<br/>')
+            .replace(/\\r\\n/g, '<br/>');
     }
 
     function showMessage(result) {
@@ -148,6 +148,7 @@
         var note = trimField($ticketNote.val());
         var statusId = parseInt($selectTicketStatus.val());
         if (currentStatus === statusId && note.length === 0) {
+            CMS.showTipsyError($ticketNote, 'Invalid Note', 'se');
             return;
         }
 

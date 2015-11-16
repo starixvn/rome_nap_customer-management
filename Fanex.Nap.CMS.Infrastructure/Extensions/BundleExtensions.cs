@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.Nap.CMS.Infrastructure.Extensions
+﻿namespace Fanex.Nap.CMS.Infrastructure.Extensions
 {
     using System.Web;
     using System.Web.Optimization;

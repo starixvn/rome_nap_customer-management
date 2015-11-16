@@ -1,4 +1,4 @@
-﻿/* global colossusBetsLabels, filterData, currentDate, initFromDate, CMS, CMSConstants, numeral */
+﻿/* global payoutManagementLabels, filterData, currentDate, initFromDate, CMS, CMSConstants, numeral */
 (function () {
     'use strict';
     var gridOptions = null,
@@ -21,15 +21,15 @@
     function initGridOptions() {
         var columns = [
             { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: colossusBetsLabels.Product, Width: 160, Name: 'colProduct', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.SiteLicensee, Width: 150, Name: 'colSiteLicensee', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.Date, Width: 120, Name: 'colDate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: colossusBetsLabels.RefNo, Width: 140, Name: 'colRefNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: colossusBetsLabels.Currency, Width: 100, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: colossusBetsLabels.Amount, Width: 120, Name: 'colAmount', HeaderAlign: 'center', CellAlign: 'right' },
-            { HeaderText: colossusBetsLabels.Status, Width: 100, Name: 'colStatus', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: colossusBetsLabels.Detail, Width: 50, Name: 'colDetail', HeaderAlign: 'center', CellAlign: 'center' }
+            { HeaderText: payoutManagementLabels.Product, Width: 160, Name: 'colProduct', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: payoutManagementLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: payoutManagementLabels.SiteLicensee, Width: 150, Name: 'colSiteLicensee', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: payoutManagementLabels.Date, Width: 120, Name: 'colDate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: payoutManagementLabels.RefNo, Width: 140, Name: 'colRefNo', HeaderAlign: 'center', CellAlign: 'right' },
+            { HeaderText: payoutManagementLabels.Currency, Width: 100, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: payoutManagementLabels.Amount, Width: 120, Name: 'colAmount', HeaderAlign: 'center', CellAlign: 'right' },
+            { HeaderText: payoutManagementLabels.Status, Width: 100, Name: 'colStatus', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: payoutManagementLabels.Detail, Width: 50, Name: 'colDetail', HeaderAlign: 'center', CellAlign: 'center' }
         ];
 
         return {
@@ -125,7 +125,7 @@
 
             var successFunc = function (data) {
                 $ticketDetailContainer.html(data);
-                CMS.modal(colossusBetsLabels.ViewTicketDetailTitle + ' ' + refno, $ticketDetailContainer, { resizable: false });
+                CMS.modal(payoutManagementLabels.ViewTicketDetailTitle + ' ' + refno, $ticketDetailContainer, { resizable: false });
             };
 
             var action;
@@ -231,13 +231,13 @@
             },
             firstDatePicker: {
                 Id: 'dpk-fromdate',
-                Label: colossusBetsLabels.From,
+                Label: payoutManagementLabels.From,
                 LabelCss: 'lbl-field col_4',
                 TextboxCss: 'edit-field col_8'
             },
             secondDatePicker: {
                 Id: 'dpk-todate',
-                Label: colossusBetsLabels.To,
+                Label: payoutManagementLabels.To,
                 InitDate: currentDate,
                 CurrentDate: currentDate,
                 LabelCss: 'lbl-field col_3',

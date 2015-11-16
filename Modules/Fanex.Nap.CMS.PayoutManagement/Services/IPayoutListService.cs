@@ -9,6 +9,8 @@
     {
         void GetSitesLicenseesProducts(out IList<GroupIdNameModel> sitesLicensees, out IList<IdNameModel> products);
 
+        string GetGroupSitenamePermissionKey(string sitename);
+
         IList<IdNameModel> GetStatusStateMachine(int status);
 
         IList<PayoutItem> GetPayoutList(ICriteria criteria);

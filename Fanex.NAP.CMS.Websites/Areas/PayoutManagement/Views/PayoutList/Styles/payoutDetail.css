@@ -21,3 +21,17 @@
 .word-wrap { max-width: 440px; word-wrap: break-word; -ms-word-break: break-all; }
 .margin-15top { margin-top: 15px; }
 textarea { resize: vertical; }
+
+/* Bet Ticket Modal */
+.tblColossusBets { border-collapse: separate; border-spacing: 0; }
+.tblColossusBets th, .tblColossusBets td { padding: 7px 15px; }
+.tblColossusBets thead { background: #3c5ea5; background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; color: #fff; }
+.tblColossusBets th { font-weight: normal; border-right: 1px solid #aaa; }
+.tblColossusBets td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
+.tblColossusBets td:first-child { border-left: 1px solid #c5c5c5; }
+.tblColossusBets td.text-red { color: #db2c2c; }
+
+.div-microgaming > iframe { min-height: 500px; min-width: 800px; }              
+.div-colossusbets { border-right: 1px solid #c5c5c5!important; margin-right: 20px; padding-right: 20px!important; }
+.div-colossusbets > iframe { min-height: 500px; }
+.text-red { color: #f00; }

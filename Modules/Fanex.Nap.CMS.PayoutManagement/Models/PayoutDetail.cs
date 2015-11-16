@@ -1,14 +1,18 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Models
 {
-    using System;
     using System.Collections.Generic;
-    using Fanex.Nap.CMS.Infrastructure.Models;
 
     public class PayoutDetail
     {
+        public int Id { get; set; }
+
         public long RefNo { get; set; }
 
         public string TransId3rd { get; set; }
+
+        public int CustomerId { get; set; }
+
+        public int ProductId { get; set; }
 
         public string Site { get; set; }
 

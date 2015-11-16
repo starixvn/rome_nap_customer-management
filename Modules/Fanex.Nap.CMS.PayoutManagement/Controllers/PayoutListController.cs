@@ -14,14 +14,14 @@
 
     public class PayoutListController : BaseController
     {
-        private readonly PayoutListService _payoutService;
+        private readonly IPayoutListService _payoutService;
 
         public PayoutListController()
             : this(null)
         {
         }
 
-        public PayoutListController(PayoutListService payoutService)
+        public PayoutListController(IPayoutListService payoutService)
         {
             _payoutService = payoutService ?? new PayoutListService();
         }
@@ -46,20 +46,39 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
         public ActionResult PayoutDetail(int id, int status)
         {
-            ViewBag.Id = id;
+            bool updateTicketStatus = false;
+            bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewSecurityCode, Constant.Policy.Read);
+            
+            var criteria = new GetPayoutDetailCriteria { Id = id };
+            var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
+
+            string groupSitenamePermissionKey = _payoutService.GetGroupSitenamePermissionKey(payoutDetail.Site);
+            if (!string.IsNullOrEmpty(groupSitenamePermissionKey))
+            {
+                updateTicketStatus = HasRight(groupSitenamePermissionKey, Constant.Policy.Host);
+            }
+
+            payoutDetail.Id = id;
+            payoutDetail.PayoutNotes = null;
+            ViewBag.ViewSecuriyCodePermission = viewSecurityCode;
+            ViewBag.UpdateTicketStatusPermission = updateTicketStatus;
+            
             ViewBag.Status = status;
             ViewBag.Statuses = new SelectList(_payoutService.GetStatusStateMachine(status), "Id", "Name");
-            ViewBag.PayoutViewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewSecurityCode, Constant.Policy.Read);
 
-            return View("~/Areas/PayoutManagement/Views/PayoutList/PayoutDetail.cshtml");
+            string jsonString = JsonConvert.SerializeObject(
+                payoutDetail,
+                Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            return View("~/Areas/PayoutManagement/Views/PayoutList/PayoutDetail.cshtml", null, jsonString);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPayoutDetail(GetTicketNotesCriteria criteria)
+        public ActionResult GetPayoutDetail(GetPayoutDetailCriteria criteria)
         {
             bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewSecurityCode, Constant.Policy.Read);
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
-            return JsonData(payoutDetail);
+            return JsonData(payoutDetail.PayoutNotes);
         }
 
         [HttpPost]
@@ -81,8 +100,7 @@
             {
                 SitesLicensees = sitesLicensees,
                 Products = products,
-                Statuses = _payoutService.GetStatusStateMachine(0),
-                UpdateStatus = HasRight(CMSFunctionKeys.PayoutManagement, Constant.Policy.Host)
+                Statuses = _payoutService.GetStatusStateMachine(0)
             };
         }
     }

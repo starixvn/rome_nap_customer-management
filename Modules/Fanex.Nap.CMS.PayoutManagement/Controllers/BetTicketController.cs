@@ -24,6 +24,7 @@
             _betTicketService = betTicketService ?? new BetTicketService();
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
         public ActionResult Microgaming(GetBetTicketCriteria criteria)
         {
             var microgaming = _betTicketService.GetMicrogaming(criteria);

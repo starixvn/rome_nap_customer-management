@@ -9,6 +9,7 @@
 }
 
 .content-box { float: left; margin-left: 10px; width: 1005px; }
+.custom-multi-select-rtUL { margin-left: 0; }
 
 /* Bet Ticket Modal */
 .tblColossusBets { border-collapse: separate; border-spacing: 0; }

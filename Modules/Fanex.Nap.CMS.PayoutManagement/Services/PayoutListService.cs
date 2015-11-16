@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Services
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
@@ -36,18 +38,64 @@
             }
         }
 
+        public string GetGroupSitenamePermissionKey(string sitename)
+        {
+            string groupSitenamePermissionKey = null;
+            IList<GroupIdNameModel> sitesLicensees;
+            IList<IdNameModel> products;
+            GetSitesLicenseesProducts(out sitesLicensees, out products);
+            if (sitesLicensees != null)
+            {
+                string groupSitename = null;
+                foreach (GroupIdNameModel group in sitesLicensees)
+                {
+                    if (groupSitename != null)
+                    {
+                        break;
+                    }
+
+                    foreach (IdNameModel site in group.ChildItems)
+                    {
+                        if (site.Name.Equals(sitename, StringComparison.OrdinalIgnoreCase))
+                        {
+                            groupSitename = group.GroupName;
+                            break;
+                        }
+                    }
+                }
+
+                if (groupSitename != null)
+                {
+                    if (groupSitename.Equals("Boping Licensees", StringComparison.OrdinalIgnoreCase))
+                    {
+                        groupSitenamePermissionKey = CMSFunctionKeys.PayoutForBopingLicensees;
+                    }
+                    else if (groupSitename.Equals("ONEWorks Licensees", StringComparison.OrdinalIgnoreCase))
+                    {
+                        groupSitenamePermissionKey = CMSFunctionKeys.PayoutForONEworksLicensees;
+                    }
+                    else if (groupSitename.Equals("Credit Licensees", StringComparison.OrdinalIgnoreCase))
+                    {
+                        groupSitenamePermissionKey = CMSFunctionKeys.PayoutForCredit;
+                    }
+                }
+            }
+
+            return groupSitenamePermissionKey;
+        }
+        
         public IList<IdNameModel> GetStatusStateMachine(int status)
         {
             if (status == 0)
             {
                 return new List<IdNameModel> 
                 {
-                    new IdNameModel { Id = 0, Name = ColossusBetsLabels.All },
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = ColossusBetsLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = ColossusBetsLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = ColossusBetsLabels.Disbursed },
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = ColossusBetsLabels.Completed },
-                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = ColossusBetsLabels.Expired }
+                    new IdNameModel { Id = 0, Name = PayoutManagementLabels.All },
+                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
+                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
+                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
+                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed },
+                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
                 };
             }
 
@@ -56,9 +104,9 @@
             {
                 return new List<IdNameModel> 
                 {
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = ColossusBetsLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = ColossusBetsLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = ColossusBetsLabels.Expired }
+                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
+                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
+                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
                 };
             }
 
@@ -66,9 +114,9 @@
             {
                 return new List<IdNameModel> 
                 {
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = ColossusBetsLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = ColossusBetsLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = ColossusBetsLabels.Disbursed },
+                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
+                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
+                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
                 };
             }
 
@@ -76,9 +124,9 @@
             {
                 return new List<IdNameModel> 
                 {
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = ColossusBetsLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = ColossusBetsLabels.Disbursed },
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = ColossusBetsLabels.Completed },
+                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
+                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
+                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed },
                 };    
             }
 
@@ -86,13 +134,13 @@
             {
                 return new List<IdNameModel> 
                 {
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = ColossusBetsLabels.Completed }
+                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed }
                 };    
             }
 
             return new List<IdNameModel> 
             {
-                new IdNameModel { Id = (int)PayoutStatus.Expired, Name = ColossusBetsLabels.Expired }
+                new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
             };
         }
 
@@ -121,7 +169,7 @@
             var result = _payoutRepository.UpdateTicketStatus(criteria);
             if (result.Code == 0)
             {
-                result.Message = ColossusBetsLabels.UpdateTicketStatusSuccess;
+                result.Message = PayoutManagementLabels.UpdateTicketStatusSuccess;
             }
 
             return result;

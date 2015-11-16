@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class GetTicketNotesCriteria : CriteriaBase
+    public class GetPayoutDetailCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "PayoutTransId")]
         public int Id { get; set; }

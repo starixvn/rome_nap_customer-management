@@ -151,7 +151,7 @@
     <Compile Include="Controllers\PayoutListController.cs" />
     <Compile Include="Criteria\GetSitesLicenseesProductsCriteria.cs" />
     <Compile Include="Criteria\GetBetTicketCriteria.cs" />
-    <Compile Include="Criteria\GetTicketNotesCriteria.cs" />
+    <Compile Include="Criteria\GetPayoutDetailCriteria.cs" />
     <Compile Include="Criteria\GetTicketsCriteria.cs" />
     <Compile Include="Criteria\UpdateTicketStatusCriteria.cs" />
     <Compile Include="Enums\PayoutStatus.cs" />
@@ -170,10 +170,10 @@
     <Compile Include="Repositories\IBetTicketRepository.cs" />
     <Compile Include="Repositories\IPayoutListRepository.cs" />
     <Compile Include="Repositories\PayoutListRepository.cs" />
-    <Compile Include="Resources\ColossusBetsLabels.Designer.cs">
+    <Compile Include="Resources\PayoutManagementLabels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ColossusBetsLabels.resx</DependentUpon>
+      <DependentUpon>PayoutManagementLabels.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\BetTicketService.cs" />
     <Compile Include="Services\IBetTicketService.cs" />
@@ -185,9 +185,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ColossusBetsLabels.resx">
+    <EmbeddedResource Include="Resources\PayoutManagementLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ColossusBetsLabels.Designer.cs</LastGenOutput>
+      <LastGenOutput>PayoutManagementLabels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

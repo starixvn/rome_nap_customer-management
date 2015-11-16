@@ -156,6 +156,8 @@
             {
                 RefNo = Converter.To<long>(reader["RefNo"]),
                 TransId3rd = Converter.ToString2(reader["TransId3rd"]),
+                CustomerId = Converter.ToInt(reader["CustId"]),
+                ProductId = Converter.ToInt(reader["ProductId"]),
                 Site = Converter.ToString2(reader["SiteName"]),
                 SecurityCode = viewSecurityCode ? Converter.ToString2(reader["PayoutCode"]) : null,
                 Amount = Converter.ToDecimal(reader["WinAmount"]),

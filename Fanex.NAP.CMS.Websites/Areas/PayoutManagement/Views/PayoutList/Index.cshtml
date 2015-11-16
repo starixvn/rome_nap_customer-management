@@ -18,30 +18,30 @@
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_3">
-                <label for="username">@ColossusBetsLabels.Username</label>
+                <label for="username">@PayoutManagementLabels.Username</label>
             </div>
             <div class="edit-field col_8">
                 @Html.TextBox("username", string.Empty, new { maxlength = "50", autocomplete = "off" })
             </div>
             <div class="lbl-field col_4">
-                <label>@ColossusBetsLabels.SiteLicensee</label>
+                <label>@PayoutManagementLabels.SiteLicensee</label>
             </div>
             <div class="edit-field col_8">
                 <div id="siteslicensees"></div> 
             </div>
             <div class="lbl-field col_3">
-                <label>@ColossusBetsLabels.Product</label>
+                <label>@PayoutManagementLabels.Product</label>
             </div>
             <div class="edit-field col_8">
                 <div id="products"></div> 
             </div>
             <div class="submit width-auto col_3">
-                <button type="submit" class="submit">@ColossusBetsLabels.Submit</button>
+                <button type="submit" class="submit">@PayoutManagementLabels.Submit</button>
             </div>
         </div>
         <div class="filter-row">
             <div class="lbl-field col_3">
-                <label>@ColossusBetsLabels.Status</label>
+                <label>@PayoutManagementLabels.Status</label>
             </div>
             <div class="edit-field col_8">
                 <div id="statuses"></div>
@@ -54,31 +54,29 @@
     <div class="freegrid display-none" id="freegrid"></div>
 </div>
 <div id="divModals" class="display-none">
-@{
     <div id="ticketDetailContainer"></div>
-}
 </div>
 @section Foot {
     <script type="text/javascript">
         var filterData = $.parseJSON('@Html.Raw(Model)');
         var currentDate = '@currentDate.ToShortFormatedDateWithSlash()',
             initFromDate = '@currentDate.AddYears(-1).ToShortFormatedDateWithSlash()';
-        var colossusBetsLabels = {
-            From: '@ColossusBetsLabels.From',
-            To: '@ColossusBetsLabels.To',
-            Product: '@ColossusBetsLabels.Product',
-            Username: '@ColossusBetsLabels.Username',
-            SiteLicensee: '@ColossusBetsLabels.SiteLicensee',
-            Date: '@ColossusBetsLabels.Date',
-            RefNo: '@ColossusBetsLabels.RefNo',
-            Currency: '@ColossusBetsLabels.Currency',
-            Amount: '@ColossusBetsLabels.Amount',
-            Status: '@ColossusBetsLabels.Status',
-            Detail: '@ColossusBetsLabels.Detail',
-            SecurityCode: '@ColossusBetsLabels.SecurityCode',
-            ViewTicketDetailTitle: '@ColossusBetsLabels.ViewTicketDetailTitle',
-            UpdateTicketStatusTitle: '@ColossusBetsLabels.UpdateTicketStatusTitle',
-            ViewTicketNoteTitle: '@ColossusBetsLabels.ViewTicketNoteTitle'
+        var payoutManagementLabels = {
+            From: '@PayoutManagementLabels.From',
+            To: '@PayoutManagementLabels.To',
+            Product: '@PayoutManagementLabels.Product',
+            Username: '@PayoutManagementLabels.Username',
+            SiteLicensee: '@PayoutManagementLabels.SiteLicensee',
+            Date: '@PayoutManagementLabels.Date',
+            RefNo: '@PayoutManagementLabels.RefNo',
+            Currency: '@PayoutManagementLabels.Currency',
+            Amount: '@PayoutManagementLabels.Amount',
+            Status: '@PayoutManagementLabels.Status',
+            Detail: '@PayoutManagementLabels.Detail',
+            SecurityCode: '@PayoutManagementLabels.SecurityCode',
+            ViewTicketDetailTitle: '@PayoutManagementLabels.ViewTicketDetailTitle',
+            UpdateTicketStatusTitle: '@PayoutManagementLabels.UpdateTicketStatusTitle',
+            ViewTicketNoteTitle: '@PayoutManagementLabels.ViewTicketNoteTitle'
         };
     </script>
     @Scripts.Render("~/bundles/PayoutManagement/PayoutListScripts")

@@ -39,10 +39,10 @@
                 totalWinLoss += ticket.WinLoss;
             }
 
-            colossusbets.Own = string.Format(ColossusBetsLabels.TicketDetailOwn, (1 - sold).ToString("#0.##%"));
+            colossusbets.Own = string.Format(PayoutManagementLabels.TicketDetailOwn, (1 - sold).ToString("#0.##%"));
             colossusbets.Sold = totalWinLossCashout != 0 ?
-                string.Format(ColossusBetsLabels.TicketDetailSoldCashout, sold.ToString("#0.##%"), totalWinLossCashout.ToString("N2")) :
-                string.Format(ColossusBetsLabels.TicketDetailSold, sold.ToString("#0.##%"));
+                string.Format(PayoutManagementLabels.TicketDetailSoldCashout, sold.ToString("#0.##%"), totalWinLossCashout.ToString("N2")) :
+                string.Format(PayoutManagementLabels.TicketDetailSold, sold.ToString("#0.##%"));
             colossusbets.TotalWinLoss = totalWinLoss;
 
             return colossusbets;

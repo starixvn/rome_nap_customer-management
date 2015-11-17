@@ -612,6 +612,7 @@
     <Content Include="Areas\PayoutManagement\Views\BetTicket\ColossusBets.cshtml" />
     <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="Areas\PayoutManagement\Views\BetTicket\Microgaming.cshtml" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Copy of PayoutDetail.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

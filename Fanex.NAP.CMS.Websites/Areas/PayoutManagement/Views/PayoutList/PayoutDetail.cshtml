@@ -15,77 +15,81 @@
         </div>
     </div>
 }
-<div class="payout-detail">
-    <div class="payout-row">
-        <div class="payout-column">
-            <div class="bold">@PayoutManagementLabels.RefNo:</div>
-  	    </div>
-        <div class="payout-column"><span id="refno"></span></div>
-        <div class="payout-column width-120"></div>
-        <div class="payout-column">
-            <div class="bold">@PayoutManagementLabels.SiteLicensee:</div>
-        </div>
-        <div class="payout-column"><span id="sitelicensee"></span></div>
-        @if ((bool)ViewBag.ViewSecuriyCodePermission)
-        {
-            <div class="payout-column width-120"></div>
-            <div class="payout-column">
-                <div class="bold seccode-inner" style="margin-top:4px;">@PayoutManagementLabels.SecurityCode</div>
-  	        </div>
-            <div class="payout-column">
-                <div class="seccode-box seccode-inner">
-                    <span id="seccode-text">******</span>
-                    <button type="button" class="blue-button" id="seccode-button">@PayoutManagementLabels.Show</button>
-                </div>
-  	        </div>
-        }
+<div class="horizontal-align margin-20top">
+    <div class="column width-60">
+        <span class="bold">@PayoutManagementLabels.RefNo:</span>
     </div>
-    <div class="payout-row">
-        <div class="payout-column">
-            <div class="bold">@PayoutManagementLabels.Amount:</div>
+    <div class="column width-120">
+        <span id="refno"></span>
+    </div>
+    <div class="column width-100"></div>
+    <div class="column width-120">
+        <span class="bold">@PayoutManagementLabels.SiteLicensee:</span>
+    </div>
+    <div class="column width-120">
+        <span id="sitelicensee"></span>
+    </div>
+    @if ((bool)ViewBag.ViewSecuriyCodePermission)
+    {
+        <div class="column width-100"></div>
+        <div class="column width-120">
+            <span class="bold seccode-inner">@PayoutManagementLabels.SecurityCode</span>
   	    </div>
-        <div class="payout-column"><span class="link" id="amount"></span></div>
-        <div class="payout-column width-120"></div>
-        <div class="payout-column">
-            <div class="bold">@PayoutManagementLabels.Currency:</div>
-        </div>
-        <div class="payout-column"><span id="currency"></span></div>
+        <div class="column">
+            <div class="seccode-box seccode-inner">
+                <span id="seccode-text">******</span>
+                <button type="button" class="blue-button" id="seccode-button">@PayoutManagementLabels.Show</button>
+            </div>
+  	    </div>
+    }
+</div>
+<div class="horizontal-align">
+    <div class="column width-60">
+        <span class="bold">@PayoutManagementLabels.Amount:</span>
+    </div>
+    <div class="column width-120">
+        <span class="link" id="amount"></span>
+    </div>
+    <div class="column width-100"></div>
+    <div class="column width-120">
+        <span class="bold">@PayoutManagementLabels.Currency:</span>
+    </div>
+    <div class="column width-120">
+        <span id="currency"></span>
     </div>
 </div>
-<div class="content-grid">
+<div class="content-grid margin-20top">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>
 @if ((bool)ViewBag.UpdateTicketStatusPermission)
 {
     <div class="clear-fix"></div>
-    <div class="payout-detail">
-        <div class="payout-row">
-            <div class="payout-column">
-                <div class="bold">@PayoutManagementLabels.Note:</div>
-  	        </div>
-        </div>
-        <div class="payout-row">
-            <div class="payout-column">
-                <textarea id="ticketNote" rows="8" cols="100"></textarea>
-  	        </div>
-            <div class="payout-column">
-                <div class="payout-row">
-                    <div class="payout-column">
-                        <div class="bold" style="margin-top:4px;">@PayoutManagementLabels.Status</div>
-                    </div>
-                    <div class="payout-column">
-                        @Html.DropDownList("selectTicketStatus", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-140" })
-                    </div>
-                </div>
-                <div class="payout-row">
-                    <div class="payout-column"></div>
-                    <div class="payout-column">
-                        <button type="button" class="blue-button margin-15top" id="update-button">@PayoutManagementLabels.Update</button>
-                    </div>
-                </div>
-  	        </div>
+    <div class="horizontal-align margin-20top margin-5bottom">
+        <div class="column">
+            <span class="bold">@PayoutManagementLabels.Note:</span>
         </div>
     </div>
+    <div class="horizontal-align">
+        <div class="column">
+            <textarea id="ticketNote" rows="8" cols="100"></textarea>    
+        </div>
+        <div class="column vertical-topalign">
+            <div class="horizontal-align">
+                <div class="column width-60">
+                    <span class="bold">@PayoutManagementLabels.Status</span>
+                </div>
+                <div class="column">
+                    @Html.DropDownList("selectTicketStatus", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-140" })
+                </div>
+            </div>
+            <div class="horizontal-align">
+                <div class="column width-60">&nbsp;</div>
+                <div class="column margin-10top">
+                    <button type="button" class="blue-button" id="update-button">@PayoutManagementLabels.Update</button>
+                </div>
+            </div>
+        </div>
+    </div>  
 }
 <div id="divModals" class="display-none">
     <div id="ticketDetailContainer"></div>

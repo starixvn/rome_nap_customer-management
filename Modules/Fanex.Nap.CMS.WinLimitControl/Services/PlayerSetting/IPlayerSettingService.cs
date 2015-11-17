@@ -15,10 +15,10 @@
 
         IList<UndefinedPlayerWinLimit> GetUndefinedGameByPlayer(GetUndefinedGameByPlayerCriteria criteria);
 
-        Result AddPlayerWinLimit(IList<AddPlayerWinLimitCriteria> criterias);
+        Result AddPlayerWinLimit(AddPlayerWinLimitCriteria criteria);
 
         Result UpdatePlayerWinLimit(UpdatePlayerWinLimitCriteria criteria);
 
-        Result DeletePlayerWinLimit(ICriteria criterias);
+        Result DeletePlayerWinLimit(ICriteria criteria);
     }
 }

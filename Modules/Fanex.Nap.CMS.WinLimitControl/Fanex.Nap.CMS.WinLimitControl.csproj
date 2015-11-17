@@ -109,7 +109,10 @@
   <ItemGroup>
     <Compile Include="App_Start\WinLimitControlBundleConfig.cs" />
     <Compile Include="App_Start\WinLimitControlAreaRegistration.cs" />
-    <Compile Include="Controllers\CurrencySettingController.cs" />
+    <Compile Include="Constants\WinLimitControlConst.cs" />
+    <Compile Include="Controllers\CurrencySettingController.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Controllers\PlayerSettingController.cs" />
     <Compile Include="Controllers\WinLimitMonitorController.cs" />
     <Compile Include="Criteria\CurrencySetting\AddCurrencyWinLimitCriteria.cs" />
@@ -122,19 +125,19 @@
     <Compile Include="Criteria\PlayerSetting\GetPlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\GetUndefinedGameByPlayerCriteria.cs" />
     <Compile Include="Criteria\PlayerSetting\UpdatePlayerWinLimitCriteria.cs" />
+    <Compile Include="Criteria\WinLimitMonitor\GetWinLimitHistoryCriteria.cs" />
     <Compile Include="Criteria\WinLimitMonitor\GetWinLimitMonitorCriteria.cs" />
-    <Compile Include="Criteria\WinLimitMonitor\UnblockAccountsCriteria.cs" />
-    <Compile Include="Models\CurrencySetting\CurrencyWinLimit.cs" />
+    <Compile Include="Criteria\WinLimitMonitor\BlockUnblockPlayersCriteria.cs" />
     <Compile Include="Models\CurrencySetting\GreaterPlayerWinLimit.cs" />
     <Compile Include="Models\CurrencySetting\WinLimitEntity.cs" />
+    <Compile Include="Models\PlayerSetting\AddPlayerWinLimitViewModel.cs" />
     <Compile Include="Models\PlayerSetting\UndefinedPlayerWinLimit.cs" />
     <Compile Include="Models\PlayerSetting\PlayerWinLimit.cs" />
     <Compile Include="Models\PlayerSetting\PlayerWinLimitEntity.cs" />
-    <Compile Include="Models\WinLimitMonitor\GameWinLimitMonitorModel.cs" />
-    <Compile Include="Models\WinLimitMonitor\PlayerWinLimitMonitorModel.cs" />
-    <Compile Include="Models\WinLimitMonitor\PlayerWinLimitMonitorView.cs" />
-    <Compile Include="Models\WinLimitMonitor\WinLimitMonitorDataResult.cs" />
-    <Compile Include="Models\WinLimitMonitor\WinLimitMonitorEntity.cs" />
+    <Compile Include="Models\WinLimitMonitor\BlockUnblockPlayerViewModel.cs" />
+    <Compile Include="Models\WinLimitMonitor\BlockedWinLimitModel.cs" />
+    <Compile Include="Models\WinLimitMonitor\UnblockedWinLimitModel.cs" />
+    <Compile Include="Models\WinLimitMonitor\PlayerWinLimitHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CurrencySetting\CurrencySettingRepository.cs" />
     <Compile Include="Repositories\CurrencySetting\ICurrencySettingRepository.cs" />

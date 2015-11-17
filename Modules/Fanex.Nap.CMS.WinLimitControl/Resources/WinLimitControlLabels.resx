@@ -240,9 +240,6 @@
   <data name="ViewDetails" xml:space="preserve">
     <value>View details</value>
   </data>
-  <data name="WinLimit" xml:space="preserve">
-    <value>Win Limit</value>
-  </data>
   <data name="WinLimitMonitor" xml:space="preserve">
     <value>Win Limit Monitor</value>
   </data>
@@ -260,9 +257,6 @@
   </data>
   <data name="WinLimitUnlimited" xml:space="preserve">
     <value>Win Limit = 0: Unlimited.</value>
-  </data>
-  <data name="WinningAmount" xml:space="preserve">
-    <value>Winning Amount</value>
   </data>
   <data name="UnblockedTime" xml:space="preserve">
     <value>Unblocked Time</value>
@@ -284,5 +278,56 @@
   </data>
   <data name="WinLimitMonitor_ChooseOneAccountToBlock" xml:space="preserve">
     <value>At least one 'Unblocked' Member account must be checked.</value>
+  </data>
+  <data name="BlockedBy" xml:space="preserve">
+    <value>Blocked By</value>
+  </data>
+  <data name="BlockedWinningAmount" xml:space="preserve">
+    <value>Blocked Winning Amount</value>
+  </data>
+  <data name="LastBlockedTime" xml:space="preserve">
+    <value>Last Blocked Time</value>
+  </data>
+  <data name="LastUnblockedTime" xml:space="preserve">
+    <value>Last Unblocked Time</value>
+  </data>
+  <data name="TodayWinningAmount" xml:space="preserve">
+    <value>Today Winning Amount</value>
+  </data>
+  <data name="TotalWinningAmount" xml:space="preserve">
+    <value>Total Winning Amount</value>
+  </data>
+  <data name="UnblockedBy" xml:space="preserve">
+    <value>Unlocked By</value>
+  </data>
+  <data name="ViewHistory" xml:space="preserve">
+    <value>View History</value>
+  </data>
+  <data name="WinLimit" xml:space="preserve">
+    <value>Win Limit</value>
+  </data>
+  <data name="ChangedBy" xml:space="preserve">
+    <value>Changed By</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="WinLimitHistoryTitle" xml:space="preserve">
+    <value>Win Limit History - {0} - {1}</value>
+  </data>
+  <data name="BlockedWinningAmountHint" xml:space="preserve">
+    <value>Blocked Winning Amount: It's Winning Amount that member has been blocked.</value>
+  </data>
+  <data name="TotalWinningAmountHint" xml:space="preserve">
+    <value>Total Winning Amount: It's total Winning Amount of day until the blocked time.</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="TodayWinningAmountHint" xml:space="preserve">
+    <value>Today Winning Amount: It's Winning Amount of member on current day.</value>
   </data>
 </root>

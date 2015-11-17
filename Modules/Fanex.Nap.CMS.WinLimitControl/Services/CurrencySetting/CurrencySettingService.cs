@@ -6,7 +6,6 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting;
     using Fanex.Nap.CMS.WinLimitControl.Models.CurrencySetting;
     using Fanex.Nap.CMS.WinLimitControl.Repositories.CurrencySetting;
@@ -14,14 +13,10 @@
 
     public class CurrencySettingService : ICurrencySettingService
     {
-        private const int AlreadyExistingGlobalSettingCode = 1;
-
-        private readonly ISettingService _settingService;
         private readonly ICurrencySettingRepository _currencySettingRepository;
 
-        public CurrencySettingService(ISettingService settingService = null, ICurrencySettingRepository currencySettingRepository = null)
+        public CurrencySettingService(ICurrencySettingRepository currencySettingRepository = null)
         {
-            _settingService = settingService ?? new SettingService();
             _currencySettingRepository = currencySettingRepository ?? new CurrencySettingRepository();
         }
 
@@ -38,8 +33,8 @@
             {
                 result.Message = string.Format(
                     WinLimitControlLabels.EditGlobalWinLimitSuccesss,
-                    criteria.CurrencyName,
-                    criteria.GameName);
+                    criteria.WinLimit.Currency.Name,
+                    criteria.WinLimit.Game.Name);
             }
 
             return result;
@@ -52,8 +47,8 @@
             {
                 result.Message = string.Format(
                     WinLimitControlLabels.EditGlobalWinLimitSuccesss,
-                    criteria.CurrencyName,
-                    criteria.GameName);
+                    criteria.WinLimit.Currency.Name,
+                    criteria.WinLimit.Game.Name);
             }
 
             return result;

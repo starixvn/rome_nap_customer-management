@@ -8,17 +8,17 @@
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.WinLimitControl.Models.WinLimitMonitor;
 
-    public class UnblockAccountsCriteria : CriteriaBase
+    public class BlockUnblockPlayersCriteria : CriteriaBase
     {
         public bool IsBlock { get; set; }
 
-        public List<WinLimitMonitorEntity> WinLimitMonitor { get; set; }
+        public IList<BlockUnblockPlayerViewModel> Accounts { get; set; }
 
         public override Hashtable GetSpParams()
         {
             return new Hashtable 
             {
-                { "MemBlockUnblock", BuildUnblockCustomerXml() },
+                { "MemBlockUnblock", BuildBlockUnblockAccountsXml() },
                 { "IsBlock", IsBlock },
                 { "UserId",  AppSession.CurrentUser.Id },
                 { "IP",  IPHelper.ClientIP() },
@@ -32,15 +32,15 @@
             return "NAP_WinLimitControl_WinLimitMonitorUnblockAccounts";
         }
 
-        private string BuildUnblockCustomerXml()
+        private string BuildBlockUnblockAccountsXml()
         {
             string format = @"<row custid=""{0}"" productid=""{1}""/>";
 
             StringBuilder builder = new StringBuilder();
             builder.Append("<unblock>");
-            foreach (WinLimitMonitorEntity monitor in WinLimitMonitor)
+            foreach (var item in Accounts)
             {
-                builder.AppendFormat(format, monitor.PlayerInfo.Id, monitor.Game.Id);
+                builder.AppendFormat(format, item.Player, item.Game);
             }
 
             builder.Append("</unblock>");

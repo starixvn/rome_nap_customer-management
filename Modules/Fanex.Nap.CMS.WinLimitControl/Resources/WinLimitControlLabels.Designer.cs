@@ -133,6 +133,15 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blocked By.
+        /// </summary>
+        public static string BlockedBy {
+            get {
+                return ResourceManager.GetString("BlockedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Blocked Time.
         /// </summary>
         public static string BlockedTime {
@@ -142,11 +151,47 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blocked Winning Amount.
+        /// </summary>
+        public static string BlockedWinningAmount {
+            get {
+                return ResourceManager.GetString("BlockedWinningAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blocked Winning Amount: It&apos;s Winning Amount that member has been blocked..
+        /// </summary>
+        public static string BlockedWinningAmountHint {
+            get {
+                return ResourceManager.GetString("BlockedWinningAmountHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed By.
+        /// </summary>
+        public static string ChangedBy {
+            get {
+                return ResourceManager.GetString("ChangedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -174,6 +219,15 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         public static string CurrentWinLimit {
             get {
                 return ResourceManager.GetString("CurrentWinLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -295,6 +349,24 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Blocked Time.
+        /// </summary>
+        public static string LastBlockedTime {
+            get {
+                return ResourceManager.GetString("LastBlockedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Unblocked Time.
+        /// </summary>
+        public static string LastUnblockedTime {
+            get {
+                return ResourceManager.GetString("LastUnblockedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target=&quot;blank&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
         /// </summary>
         public static string MessageGoToCurrencySettingPage {
@@ -403,6 +475,51 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string System {
+            get {
+                return ResourceManager.GetString("System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today Winning Amount.
+        /// </summary>
+        public static string TodayWinningAmount {
+            get {
+                return ResourceManager.GetString("TodayWinningAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today Winning Amount: It&apos;s Winning Amount of member on current day..
+        /// </summary>
+        public static string TodayWinningAmountHint {
+            get {
+                return ResourceManager.GetString("TodayWinningAmountHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Winning Amount.
+        /// </summary>
+        public static string TotalWinningAmount {
+            get {
+                return ResourceManager.GetString("TotalWinningAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Winning Amount: It&apos;s total Winning Amount of day until the blocked time..
+        /// </summary>
+        public static string TotalWinningAmountHint {
+            get {
+                return ResourceManager.GetString("TotalWinningAmountHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unblock account(s).
         /// </summary>
         public static string Unblock_Accounts {
@@ -417,6 +534,15 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         public static string Unblocked {
             get {
                 return ResourceManager.GetString("Unblocked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlocked By.
+        /// </summary>
+        public static string UnblockedBy {
+            get {
+                return ResourceManager.GetString("UnblockedBy", resourceCulture);
             }
         }
         
@@ -466,11 +592,29 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View History.
+        /// </summary>
+        public static string ViewHistory {
+            get {
+                return ResourceManager.GetString("ViewHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Win Limit.
         /// </summary>
         public static string WinLimit {
             get {
                 return ResourceManager.GetString("WinLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Win Limit History - {0} - {1}.
+        /// </summary>
+        public static string WinLimitHistoryTitle {
+            get {
+                return ResourceManager.GetString("WinLimitHistoryTitle", resourceCulture);
             }
         }
         
@@ -552,15 +696,6 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         public static string WinLimitUnlimited {
             get {
                 return ResourceManager.GetString("WinLimitUnlimited", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Winning Amount.
-        /// </summary>
-        public static string WinningAmount {
-            get {
-                return ResourceManager.GetString("WinningAmount", resourceCulture);
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
@@ -8,7 +7,6 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.PlayerSetting;
-    using Fanex.Nap.CMS.WinLimitControl.Models.PlayerSetting;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
     using Fanex.Nap.CMS.WinLimitControl.Services.PlayerSetting;
     using Fanex.NAP.Core.Business;
@@ -89,9 +87,9 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Add(IList<UndefinedPlayerWinLimit> models)
+        public ActionResult Add(AddPlayerWinLimitCriteria criteria)
         {
-            var result = _playerSettingService.AddPlayerWinLimit(ToAddPlayerWinLimitCriteria(models));
+            var result = _playerSettingService.AddPlayerWinLimit(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
@@ -132,31 +130,6 @@
 
             ViewBag.Currencies = selectListCurrencies;
             ViewBag.Games = selectListGames;
-        }
-
-        [NonAction]
-        private IList<AddPlayerWinLimitCriteria> ToAddPlayerWinLimitCriteria(IList<UndefinedPlayerWinLimit> undefinedWinLimits)
-        {
-            int userId = CurrentSession.UserId;
-            string ip = CurrentContext.IP;
-
-            IList<AddPlayerWinLimitCriteria> criteria = new List<AddPlayerWinLimitCriteria>();
-            foreach (var winlimit in undefinedWinLimits)
-            {
-                if (winlimit.PlayerWinLimit <= winlimit.GlobalWinLimit)
-                {
-                    criteria.Add(new AddPlayerWinLimitCriteria
-                    {
-                        Player = winlimit.Player.Id,
-                        Game = winlimit.Game.Id,
-                        PlayerWinLimit = winlimit.PlayerWinLimit,
-                        UserId = userId,
-                        IP = ip
-                    });
-                }
-            }
-
-            return criteria;
         }
     }
 }

@@ -1,0 +1,51 @@
+﻿<div class="form expand-form" id="div-ViewHistory">
+    <div class="form-row freetable-container">
+        <table class="freetable-header">
+            <colgroup>
+                <col width="40px" />
+                <col width="160px" />
+                <col width="90px" />
+                <col width="130px" />
+                <col width="110px" />
+                <col width="110px" />
+                <col width="70px" />
+                <col width="120px" />
+                <col width="16px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@WinLimitControlLabels.Date</th>
+                    <th>@WinLimitControlLabels.WinLimit</th>
+                    <th>@WinLimitControlLabels.BlockedWinningAmount</th>
+                    <th>@WinLimitControlLabels.TotalWinningAmount</th>
+                    <th>@WinLimitControlLabels.PercentageUsed</th>
+                    <th>@WinLimitControlLabels.Status</th>
+                    <th>@WinLimitControlLabels.ChangedBy</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="freetable-content">
+            <table id="freegrid-history">
+                <colgroup>
+                    <col width="40px" />
+                    <col width="160px" />
+                    <col width="90px" />
+                    <col width="130px" />
+                    <col width="110px" />
+                    <col width="110px" />
+                    <col width="70px" />
+                    <col width="120px" />
+                </colgroup>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-row">
+        @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/Shared/_HistoryNotes.cshtml"); }
+    </div>
+    <div class="form-row button-row">
+        <button type="button" class="red-button" onclick="CMS.closePopup()">@WinLimitControlLabels.Close</button>
+    </div>
+</div>

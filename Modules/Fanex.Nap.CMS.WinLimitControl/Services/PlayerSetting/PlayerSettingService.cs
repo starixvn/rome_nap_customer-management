@@ -48,12 +48,12 @@
             var winLimitsGroup = winLimits.GroupBy(w => new { PlayerId = w.Player.Id, CurrencyId = w.Currency.Id });
             foreach (var group in winLimitsGroup)
             {
-                currencyName = currencyHash[group.Key.CurrencyId];
+                currencyName = currencyHash.ContainsKey(group.Key.CurrencyId) ? currencyHash[group.Key.CurrencyId] : group.Key.CurrencyId.ToString();
                 winLimitsEntity = new List<WinLimitEntity>();
                 foreach (var winlimit in group)
                 {
                     player = winlimit.Player;
-                    winlimit.Game.Name = gameHash[winlimit.Game.Id];
+                    winlimit.Game.Name = gameHash.ContainsKey(winlimit.Game.Id) ? gameHash[winlimit.Game.Id] : winlimit.Game.Id.ToString();
                     winLimitsEntity.Add(winlimit);
                 }
 
@@ -68,24 +68,15 @@
             return _playerSettingRepository.GetUndefinedGameByPlayer(criteria);
         }
 
-        public Result AddPlayerWinLimit(IList<AddPlayerWinLimitCriteria> criterias)
+        public Result AddPlayerWinLimit(AddPlayerWinLimitCriteria criteria)
         {
-            Result dbresult = null,
-                returnResult = null;
-            foreach (AddPlayerWinLimitCriteria criteria in criterias)
+            Result result = _playerSettingRepository.AddPlayerWinLimit(criteria);
+            if (result.Code == ErrorCodeConstants.NoneError)
             {
-                dbresult = _playerSettingRepository.AddPlayerWinLimit(criteria);
-                if (dbresult.Code == ErrorCodeConstants.NoneError)
-                {
-                    dbresult.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
-                }
-                else
-                {
-                    returnResult = dbresult;
-                }
+                result.Message = WinLimitControlLabels.AddPlayerWinLimitSuccess;
             }
 
-            return returnResult ?? dbresult;
+            return result;
         }
 
         public Result UpdatePlayerWinLimit(UpdatePlayerWinLimitCriteria criteria)

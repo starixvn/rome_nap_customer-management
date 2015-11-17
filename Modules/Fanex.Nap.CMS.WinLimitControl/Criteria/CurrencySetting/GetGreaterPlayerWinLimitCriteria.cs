@@ -5,10 +5,10 @@
     public class GetGreaterPlayerWinLimitCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ExchangeID")]
-        public int CurrencyId { get; set; }
+        public int Currency { get; set; }
 
         [SpParam(SqlParamName = "ProductID")]
-        public int GameID { get; set; }
+        public int Game { get; set; }
 
         public decimal MaxWinLimit { get; set; }
 

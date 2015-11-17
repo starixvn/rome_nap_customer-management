@@ -13,9 +13,5 @@
   <add key="ColossusBetsAPIAuthorizationURL" value="http://220.130.26.188:30051/api/Authorize/AuthorizeCode?vendor=101&amp;vendorKey=WZWtzDfCJW&amp;vendorProduct=4&amp;customerId={0}&amp;memberID={1}" />
   <add key="ColossusBetsAPITicketsURL" value="https://maxbet.sandbox.colossusbets.com/api/tickets/ref/{0}/selection?productToken={1}&amp;siteID=2100100" />
 =======
-  <!-- FPS -->
-  <!--<add key="FPS_LOG" value="/FPS_Logs.txt"/>-->
-  <add key="FPS_API" value="net.tcp://10.18.200.209:808/WL_API/Service"/>
-  <add key="FPS_TimeOut" value="1"/>
->>>>>>> #35215 - Add log function to Currency Setting
+>>>>>>> #35215 - Complete win limit
 </appSettings>

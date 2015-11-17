@@ -43,17 +43,21 @@
 /Fanex.Nap.CMS.Infrastructure/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/obj
 /Modules/Fanex.Nap.CMS.NotificationSetting/bin
-<<<<<<< HEAD
 /Modules/Fanex.Nap.CMS.PayoutManagement/obj
 /Modules/Fanex.Nap.CMS.PayoutManagement/bin
-=======
 /Modules/Fanex.Nap.CMS.WinLimitControl/bin
 /Modules/Fanex.Nap.CMS.WinLimitControl/obj
 /Modules/Fanex.Nap.CMS.Settings/bin
 /Modules/Fanex.Nap.CMS.Settings/obj
->>>>>>> #35215 - Add permission checking
+/Modules/Fanex.Nap.CMS.FPSClient/bin
+/Modules/Fanex.Nap.CMS.FPSClient/obj
 
 /StyleCop.Cache
 /Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache
 /Fanex.Nap.CMS.Infrastructure/StyleCop.Cache
+<<<<<<< HEAD
 /Modules/Fanex.Nap.CMS.PayoutManagement/StyleCop.Cache
+=======
+Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
+Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
+>>>>>>> #35215 - Complete win limit

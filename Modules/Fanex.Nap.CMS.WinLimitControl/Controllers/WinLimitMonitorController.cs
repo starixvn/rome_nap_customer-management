@@ -43,18 +43,36 @@
         {
             if (criteria.Username != null)
             {
-                criteria.Username.Trim();
+                criteria.Username = criteria.Username.Trim();
             }
 
-            var playerWinLimitMonitors = _winLimitMonitorService.GetWinLimitMonitor(criteria);
+            criteria.PageIndex++;
+            object winlimits;
+            if (criteria.IsBlocked)
+            {
+                winlimits = _winLimitMonitorService.GetBlockedWinLimits(criteria);    
+            }
+            else
+            {
+                winlimits = _winLimitMonitorService.GetUnblockedWinLimits(criteria);
+            }
+
+            return Json(new { TotalRow = criteria.TotalRow, Winlimits = winlimits }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Host)]
+        public ActionResult BlockUnblockPlayers(BlockUnblockPlayersCriteria criteria)
+        {
+            var playerWinLimitMonitors = _winLimitMonitorService.BlockUnblockPlayers(criteria);
             return Json(playerWinLimitMonitors, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Host)]
-        public ActionResult UnblockAccounts(UnblockAccountsCriteria criteria)
+        [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Read)]
+        public ActionResult ViewHistory(GetWinLimitHistoryCriteria criteria)
         {
-            var playerWinLimitMonitors = _winLimitMonitorService.UnblockAccounts(criteria);
-            return Json(playerWinLimitMonitors, JsonRequestBehavior.AllowGet);
+            var histories = _winLimitMonitorService.GetWinLimitHistories(criteria);
+            return Json(histories, JsonRequestBehavior.AllowGet);
         }
 
         [NonAction]

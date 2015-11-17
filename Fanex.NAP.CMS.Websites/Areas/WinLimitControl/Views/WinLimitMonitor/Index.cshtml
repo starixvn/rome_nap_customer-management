@@ -48,14 +48,22 @@
         </div>
     </div>
 }
-<div id="div-result-message" class="inline-message">
-</div>
+<div id="div-result-message" class="inline-message"></div>
 <div class="content-grid">
-    <div class="freegrid display-none" id="freegrid">
-    </div>
+    <div class="freegrid display-none" id="freegrid"></div>
 </div>
-<div id="divButtons" class="button-div display-none">
-    <input id="btnUnblocked" class="red-button" type="button" value="@WinLimitControlLabels.Unblock_Accounts"/>
+<div class="clear-fix"></div>
+@if (hostPermission) 
+{
+    <div id="divButtons" class="button-div display-none">
+        <input id="btnUnblocked" class="red-button" type="button" value="@WinLimitControlLabels.Unblock_Accounts"/>
+    </div>
+}
+<div id="divNotesContainer" class="display-none">
+    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/Shared/_MonitorNotes.cshtml"); }
+</div>
+<div id="divModals" class="display-none">
+    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/WinLimitMonitor/ViewHistoryModal.cshtml"); }
 </div>
 @section Foot
 {
@@ -67,11 +75,23 @@
             Currency: '@WinLimitControlLabels.Currency',
             Game: '@WinLimitControlLabels.Game',
             WinLimit: '@WinLimitControlLabels.WinLimit',
-            WinningAmount:'@WinLimitControlLabels.WinningAmount',
+            BlockedWinningAmount:'@WinLimitControlLabels.BlockedWinningAmount',
+            TotalWinningAmount:'@WinLimitControlLabels.TotalWinningAmount',
             BlockedTime:'@WinLimitControlLabels.BlockedTime',
             UnblockedTime:'@WinLimitControlLabels.UnblockedTime',
             PercentageUsed:'@WinLimitControlLabels.PercentageUsed',
             Blocked:'@WinLimitControlLabels.Blocked',
+            BlockedBy:'@WinLimitControlLabels.BlockedBy',
+            TodayWinningAmount:'@WinLimitControlLabels.TodayWinningAmount',
+            LastBlockedTime:'@WinLimitControlLabels.LastBlockedTime',
+            LastUnblockedTime:'@WinLimitControlLabels.LastUnblockedTime',
+            UnblockedBy: '@WinLimitControlLabels.UnblockedBy',
+            ViewHistory: '@WinLimitControlLabels.ViewHistory',
+            Date: '@WinLimitControlLabels.Date',
+            Status: '@WinLimitControlLabels.Status',
+            ChangedBy: '@WinLimitControlLabels.ChangedBy',
+            WinLimitHistoryTitle: '@WinLimitControlLabels.WinLimitHistoryTitle',
+            NoData: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData',
             WinLimitMonitor_ChooseOneAccountToUnblock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock)",
             WinLimitMonitor_ConfirmUnblockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts)",
             Block_Accounts: '@WinLimitControlLabels.Block_Accounts',

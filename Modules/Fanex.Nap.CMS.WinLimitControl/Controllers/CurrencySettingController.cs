@@ -6,7 +6,9 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Settings.Models;
     using Fanex.Nap.CMS.Settings.Services;
+    using Fanex.Nap.CMS.WinLimitControl.Constants;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting;
+    using Fanex.Nap.CMS.WinLimitControl.Models.CurrencySetting;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
     using Fanex.Nap.CMS.WinLimitControl.Services.CurrencySetting;
     using Fanex.NAP.Core.Business;
@@ -45,10 +47,14 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Add(AddCurrencyWinLimitCriteria criteria)
+        public ActionResult Add(WinLimitEntity model)
         {
-            criteria.UserId = CurrentSession.UserId;
-            criteria.IP = CurrentContext.IP;
+            var criteria = new AddCurrencyWinLimitCriteria 
+            { 
+                WinLimit = model,
+                UserId = CurrentSession.UserId,
+                IP = CurrentContext.IP
+            };
 
             var result = _currencySettingService.AddCurrencySetting(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
@@ -56,10 +62,14 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.CurrencyWinLimitSetting, Policy = Constant.Policy.Host)]
-        public ActionResult Update(UpdateCurrencyWinLimitCriteria criteria)
+        public ActionResult Update(WinLimitEntity model)
         {
-            criteria.UserId = CurrentSession.UserId;
-            criteria.IP = CurrentContext.IP;
+            var criteria = new UpdateCurrencyWinLimitCriteria
+            {
+                WinLimit = model,
+                UserId = CurrentSession.UserId,
+                IP = CurrentContext.IP
+            };
 
             var result = _currencySettingService.UpdateCurrencySetting(criteria);
             return Json(result, JsonRequestBehavior.DenyGet);
@@ -81,6 +91,7 @@
             
             ViewBag.Games = new SelectList(games, "Id", "Name");
             ViewBag.Currencies = new SelectList(currencies, "Id", "Name");
+            ViewBag.MaxWinLimit = WinLimitControlConst.MaxWinLimit;
         }
     }
 }

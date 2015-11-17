@@ -207,14 +207,27 @@
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
+<<<<<<< HEAD
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+=======
+    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>
+      </SubType>
+    </Content>
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
+>>>>>>> #35215 - Complete win limit
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
@@ -263,14 +276,13 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\Common.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\EditPlayerModal.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\ViewHistoryModal.js" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
@@ -311,6 +323,7 @@
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
+    <Content Include="Content\Themes\img\countdownCheck.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
     <Content Include="Content\Themes\img\grid-view.png" />
     <Content Include="Content\Themes\img\icn-collpase.png" />
@@ -617,21 +630,18 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
-<<<<<<< HEAD
     <Content Include="Areas\PayoutManagement\Views\BetTicket\ColossusBets.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\BetTicket\Microgaming.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
-=======
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Web.config" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
->>>>>>> #35215 - Render grid by html
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_EditPlayerModal.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_MonitorNotes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_HistoryNotes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -656,7 +666,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>60809</DevelopmentServerPort>
+          <DevelopmentServerPort>56849</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

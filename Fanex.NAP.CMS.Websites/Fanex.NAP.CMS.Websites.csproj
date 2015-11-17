@@ -210,7 +210,10 @@
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+      <SubType>
+      </SubType>
+    </Content>
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml">
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
@@ -271,6 +274,7 @@
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\ViewHistoryModal.js" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
@@ -627,6 +631,9 @@
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_MonitorNotes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_HistoryNotes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -651,7 +658,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>60809</DevelopmentServerPort>
+          <DevelopmentServerPort>56849</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

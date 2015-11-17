@@ -37,6 +37,7 @@
         private static void RegisterWinLimitMonitorBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/winlimitcontrol/winlimitmonitor-scripts").Include(
+                "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/ViewHistoryModal.js",
                 "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/WinLimitMonitor.js"));
 
             bundles.AddAndInclude(

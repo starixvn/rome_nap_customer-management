@@ -131,24 +131,24 @@
 
   <Function Name="Game Win Limit - Global Setting">
     <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CurrencySettingSel" SpName="NAP_WinLimit_CurrencySettingSel_xtest" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CurrencySettingSel" SpName="NAP_WinLimit_CurrencySettingSel" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CurrencySettingIns" SpName="NAP_WinLimit_CurrencySettingIns" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
      <Setting Key="NAP_WinLimit_CurrencySettingUpd" SpName="NAP_WinLimit_CurrencySettingUpd" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
   </Function>
 
   <Function Name="Game Win Limit - Player Management">
     <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel_xtest" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingListSel" SpName="NAP_WinLimit_CustSettingListSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel_xtest" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
   </Function>
 
   <Function Name="Win Limit Control - Win Limit Monitor">
-    <Setting Key="NAP_WinLimit_SubscriberSel" SpName="NAP_WinLimit_SubscriberSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimitControl_WinLimitMonitorSel" SpName="NAP_WinLimit_GameSel" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_BlockedMemberSel" SpName="NAP_WinLimit_BlockedMemberSel" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_UnblockedMemberSel" SpName="NAP_WinLimit_UnblockedMemberSel" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimitControl_WinLimitMonitorUnblockAccounts" SpName="NAP_WinLimit_Game_BlockUnblock" DbName="DBTXN.BODB02.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
   </Function>
 </Functions>

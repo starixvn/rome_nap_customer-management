@@ -3,6 +3,9 @@
 .content-box { float: left; margin-left: 10px; width: 1005px; }
 
 .freegrid .freegrid thead th, .freegrid .grid-fixed-table thead th { font-weight: normal; }
+.freegrid td.freegrid-td { overflow: visible; }
+.freegrid td.freegrid-td .table-cell { position: relative; }
+.freegrid .error-tipsy { min-width: 100px; }
 
 .custom-buttons-container { margin-right: 16px; }
 .custom-buttons-container a { color: #333; margin-right: 5px; text-decoration: none; }

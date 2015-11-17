@@ -1,5 +1,5 @@
-﻿/* global winLimitControlLabels, hostPermission, keyboardManager, numeral, 
-    CMSConstants, CMS, EditWinLimitModal */
+﻿/* global winLimitControlLabels, hostPermission, maxWinLimit, keyboardManager, numeral, 
+CMSConstants, CMS, EditWinLimitModal */
 (function () {
     'use strict';
     var gridOptions = null,
@@ -26,15 +26,15 @@
             return 'N/A';
         }
 
-        return numeral(winlimit).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+        return numeral(winlimit).format(CMSConstants.NumberFormat.IntNumber);
     }
 
-    function getFloat(value) {
+    function getInt(value) {
         if (value === 'N/A' || isNaN(value)) {
             return 'N/A';
         }
 
-        return parseFloat(value);
+        return parseInt(value);
     }
 
     function initGridOptions() {
@@ -133,11 +133,9 @@
     function addCurrencySetting(game, currency, winlimit) {
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/Add';
         var formData = {
-            gameId: game.Id,
-            gameName: game.Name,
-            currencyId: currency.Id,
-            currencyName: currency.Name,
-            maxWinLimit: winlimit
+            Game: game,
+            Currency: currency,
+            MaxWinLimit: winlimit
         };
 
         CMS.callAjax(self, url, formData, function (result) {
@@ -158,11 +156,11 @@
 
         isEditting = true;
         var currency = { Id: editLink.data('currencyid'), Name: editLink.data('currency') };
-        var winlimit = getFloat(editLink.text().replace(/\,/g, ''));
+        var winlimit = getInt(editLink.text().replace(/\,/g, ''));
 
         var tdContainer = editLink.parent()
             .html('<input type="text" maxlength="10" autocomplete="off" class="align-right width-160" id="inputWinLimit"' +
-            ' onkeydown="return CMS.forceNumericInput(event, true);" value="' + winlimit + '"/>');
+            ' onkeydown="return CMS.forceNumericInput(event);" value="' + winlimit + '"/>');
 
         tdContainer.find('#inputWinLimit')
             .unbind()
@@ -170,8 +168,8 @@
                 var code = e.which || e.keyCode;
                 if (code === keyboardManager.Enums.KeyCode.Enter) {
                     var $this = $(this);
-                    var newWinLimit = getFloat($this.val());
-                    if (newWinLimit >= 0) {
+                    var newWinLimit = getInt($this.val());
+                    if (newWinLimit >= 0 && newWinLimit <= maxWinLimit) {
                         if (winlimit !== newWinLimit) {
                             if (winlimit === 'N/A') {
                                 addCurrencySetting(selectedGame, currency, newWinLimit);

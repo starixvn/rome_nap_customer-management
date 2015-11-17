@@ -1,19 +1,21 @@
-﻿/* global winLimitControlLabels, CMS */
+﻿/* global winLimitControlLabels, CMS, CMSConstants */
 /* exported EditWinLimitModal */
 function EditWinLimitModal(game, renderCurrencySettingFunc) {
     'use strict';
     var self = this;
-    var gridOptions = null, freegrid = null;
-    var formData = { gameId: game.Id, currencyId: 0, maxWinLimit: 0 }; 
+    var gridOptions = null;
+    var formData = { Game: game, Currency: {}, MaxWinLimit: 0 }; 
 
     function initGridOptions() {
         var columns = [
             { HeaderText: '#', Width: 45, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Username, Width: 160, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: winLimitControlLabels.CurrentWinLimit, Width: 140, Name: 'colCurrentWinLimit',
-                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMS.formats.DecimalFormat },
+                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber
+            },
             { HeaderText: winLimitControlLabels.NewWinLimit, Width: 140, Name: 'colNewWinLimit',
-                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMS.formats.DecimalFormat }
+                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber
+            }
         ];
 
         return {
@@ -38,7 +40,7 @@ function EditWinLimitModal(game, renderCurrencySettingFunc) {
                 [{ Name: 'colNumber', Value: (i + 1) },
                 { Name: 'colUsername', Value: customer.Username },
                 { Name: 'colCurrentWinLimit', Value: customer.CurrentWinLimit },
-                { Name: 'colNewWinLimit', Value: formData.maxWinLimit}]
+                { Name: 'colNewWinLimit', Value: formData.MaxWinLimit}]
             });
         }
 
@@ -46,7 +48,6 @@ function EditWinLimitModal(game, renderCurrencySettingFunc) {
     }
 
     function editWinLimit() {
-        formData.GameName = game.Name;
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/Update';
         CMS.callAjax(self, url, formData, function (result) {
             renderCurrencySettingFunc();
@@ -60,17 +61,26 @@ function EditWinLimitModal(game, renderCurrencySettingFunc) {
     }
 
     self.initialize = function (currency, newWinlimit) {
-        formData.currencyId = currency.Id;
-        formData.CurrencyName = currency.Name;
-        formData.maxWinLimit = newWinlimit;
-        var url = window.rootUrl + 'WinLimitControl/CurrencySetting/GetGreaterPlayerWinLimits?' + $.param(formData);
+        formData.Currency = currency;
+        formData.MaxWinLimit = newWinlimit;
+
+        var queryParams = [
+            window.rootUrl,
+            'WinLimitControl/CurrencySetting/GetGreaterPlayerWinLimits?game=',
+            game.Id,
+            '&currency=',
+            currency.Id,
+            '&maxWinLimit=',
+            newWinlimit
+        ];
+        var url = queryParams.join('');
         CMS.getJson(url, function (results) {
             var message = winLimitControlLabels.EditWinLimitConfirm
                 .replace('{0}', '<strong>' + currency.Name + '</strong>')
                 .replace('{1}', '<strong>' + game.Name + '</strong>');
 
             if (results && results.length > 0) {
-                gridOptions = initGridOptions();
+                gridOptions = gridOptions || initGridOptions();
                 gridOptions.bodyRows = buildBodyRows(results);
                 var html = [
                     winLimitControlLabels.EditWinLimitMessage
@@ -80,13 +90,11 @@ function EditWinLimitModal(game, renderCurrencySettingFunc) {
                 ];
 
                 CMS.showConfirmMessage(html.join(''), function () { editWinLimit(); });
+
+                var freegrid = $('#divEffectedCustomers').fanexGrid(gridOptions).hide();
                 $('#linkEffectedCustomers')
                     .unbind('click')
                     .bind('click', function () { freegrid.toggle(); });
-
-                freegrid = $('#divEffectedCustomers')
-                    .fanexGrid(gridOptions)
-                    .hide();
             }
             else {
                 CMS.showConfirmMessage(message, function () { editWinLimit(); });

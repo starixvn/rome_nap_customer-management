@@ -1,42 +1,37 @@
 ﻿/* global winLimitControlLabels, hostPermission, AddPlayerModal,
-CMS, CMSConstants, keyboardManager,
-numeral */
+CMS, CMSConstants, keyboardManager, numeral */
 (function () {
     'use strict';
     var gridOptions = null,
         freegrid = $('#freegrid');
 
     var formFilter = $('#form-filterWinLimit'),
-        formAddPlayerModal = $('#form-addplayer');
-    var searchUrl = formFilter.attr('action') + '?',
-        searchParams = {
-            PageIndex: 0,
-            PageSize: CMS.pageSize,
-            SortColumnName: 'colUsername',
-            SortDirection: 'asc'
-        };
+        formAddPlayerModal = $('#form-addplayer'),
+        searchUrl = formFilter.attr('action') + '?',
+        searchParams;
+
+    var $username = $('#username'),
+        $currency = $('#currency'),
+        $game = $('#game');
 
     var isPlayerWinLimitEditting = false,
         isHost = hostPermission === 1;
 
     function formatNumber(number) {
-        return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+        return numeral(number).format(CMSConstants.NumberFormat.IntNumber);
     }
 
-    function getFloat(value) {
+    function getInt(value) {
         if (isNaN(value)) {
             return -1;
         }
 
-        return parseFloat(value);
+        return parseInt(value);
     }
 
     function afterChangedPage(pageIndex, itemsPerPage) {
-        gridOptions.pagerOption.itemsPerPage = itemsPerPage;
-        gridOptions.pagerOption.currentPage = pageIndex;
-
-        searchParams.PageSize = itemsPerPage;
         searchParams.PageIndex = pageIndex;
+        searchParams.PageSize = itemsPerPage;
         renderPlayerSettings();
     }
 
@@ -78,9 +73,6 @@ numeral */
             showPager: true,
             customPager: true,
             pagerOption: {
-                itemsPerPage: searchParams.PageSize,
-                currentPage: searchParams.PageIndex,
-                totalItem: 0,
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: afterChangedPage
             },
@@ -97,7 +89,8 @@ numeral */
     function buildBodyRows(results) {
         var bodyRows = [];
         var cell, playerWinLimit, winlimit;
-        var mergeRowNumber = 0;
+        var mergeRowNumber = 0,
+            startIndex = searchParams.PageIndex * searchParams.PageSize;
 
         var resultLength = results ? results.length : 0;
         for (var i = 0; i < resultLength; i++) {
@@ -113,7 +106,7 @@ numeral */
                 winlimit = playerWinLimit.WinLimits[j];
 
                 if (j === 0) {
-                    cell.push({ Name: 'colNumber', Value: (i + 1), MergeRowNumber: mergeRowNumber });
+                    cell.push({ Name: 'colNumber', Value: (i + 1 + startIndex), MergeRowNumber: mergeRowNumber });
                     cell.push({ Name: 'colUsername', Value: playerWinLimit.Player.Name, MergeRowNumber: mergeRowNumber });
                     cell.push({ Name: 'colCurrency', Value: playerWinLimit.Currency, MergeRowNumber: mergeRowNumber });
                 }
@@ -121,7 +114,8 @@ numeral */
                 cell.push({ Name: 'colGame', Value: winlimit.Game.Name });
                 cell.push({
                     Name: 'colPlayerWinLimit',
-                    Value: renderPlayerWinLimitLink(playerWinLimit.Player, winlimit.Game.Id, winlimit.PlayerWinLimit, winlimit.MaxWinLimit)
+                    Value: renderPlayerWinLimitLink(playerWinLimit.Player, winlimit.Game.Id, winlimit.PlayerWinLimit, winlimit.MaxWinLimit),
+                    TdClass: 'freegrid-td'
                 });
                 cell.push({ Name: 'colCurrencyWinLimit', Value: renderCurrencyWinLimitRow(winlimit.MaxWinLimit) });
                 if (isHost) {
@@ -145,21 +139,34 @@ numeral */
     }
 
     function renderPlayerWinLimitLink(player, gameId, playerWinLimit, currencyWinLimit) {
-        var html = [
-            '<a href="javascript:;" class="editInlinePlayerWinLimit',
-            playerWinLimit === 0 ? ' text-red' : '',
-            '" data-playerid="',
-            player.Id,
-            '" data-player="',
-            player.Name,
-            '" data-game="',
-            gameId,
-            '" data-currencywinlimit="',
-            currencyWinLimit,
-            '">',
-            formatNumber(playerWinLimit),
-            '</a>'
-        ];
+        var html;
+        var formatedPlayerWinLimit = formatNumber(playerWinLimit);
+        if (currencyWinLimit === 0) {
+            html = [
+                '<span class="',
+                playerWinLimit === 0 ? 'text-red' : '',
+                '">',
+                formatedPlayerWinLimit,
+                '</span>'
+            ];
+        }
+        else {
+            html = [
+                isHost ? '<a href="javascript:;" class="editInlinePlayerWinLimit' : '<span',
+                playerWinLimit === 0 ? ' text-red' : '',
+                '" data-playerid="',
+                player.Id,
+                '" data-player="',
+                player.Name,
+                '" data-game="',
+                gameId,
+                '" data-currencywinlimit="',
+                currencyWinLimit,
+                '">',
+                formatedPlayerWinLimit,
+                isHost ? '</a>' : '</span>'
+            ];
+        }
 
         return html.join('');
     }
@@ -180,6 +187,8 @@ numeral */
         isPlayerWinLimitEditting = false;
 
         var successFunc = function (result) {
+            gridOptions.pagerOption.currentPage = searchParams.PageIndex;
+            gridOptions.pagerOption.itemsPerPage = searchParams.PageSize;
             gridOptions.pagerOption.totalItem = result.TotalRow;
             gridOptions.bodyRows = buildBodyRows(result.PlayerWinLimits);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
@@ -193,8 +202,7 @@ numeral */
             }
         };
 
-        var params = formFilter.serialize() + '&' + $.param(searchParams);
-        CMS.getJson(searchUrl + params, successFunc);
+        CMS.getJson(searchUrl + $.param(searchParams), successFunc);
     }
 
     function editInlinePlayerWinLimit(editLink) {
@@ -206,12 +214,12 @@ numeral */
 
         var player = { Id: editLink.data('playerid'), Name: editLink.data('player') },
             gameId = editLink.data('game'),
-            playerWinlimit = getFloat(editLink.text().replace(/\,/g, '')),
-            currencyWinlimit = getFloat(editLink.data('currencywinlimit'));
+            playerWinlimit = getInt(editLink.text().replace(/\,/g, '')),
+            currencyWinlimit = getInt(editLink.data('currencywinlimit'));
 
         var tdContainer = editLink.parent()
             .html('<input type="text" maxlength="10" autocomplete="off" class="align-right width-160" id="inputPlayerWinLimit"' +
-            ' onkeydown="return CMS.forceNumericInput(event, true);" value="' + playerWinlimit + '"/>');
+            ' onkeydown="return CMS.forceNumericInput(event);" value="' + playerWinlimit + '"/>');
 
         tdContainer.find('#inputPlayerWinLimit')
             .unbind()
@@ -232,7 +240,7 @@ numeral */
     }
 
     function updatePlayerWinLimit(player, gameId, playerWinlimit, currencyWinlimit, inputPlayerWinlimit) {
-        var newPlayerWinLimit = getFloat(inputPlayerWinlimit.val());
+        var newPlayerWinLimit = getInt(inputPlayerWinlimit.val());
         if (newPlayerWinLimit >= 0) {
             if (playerWinlimit !== newPlayerWinLimit) {
                 if (newPlayerWinLimit <= currencyWinlimit) {
@@ -289,20 +297,31 @@ numeral */
         });
     }
 
+    function getSearchParams() {
+        return {
+            Username: $username.val().trim(),
+            Currency: $currency.val(),
+            Game: $game.val(),
+            PageIndex: 0,
+            PageSize: CMS.pageSize,
+            SortColumnName: 'colUsername',
+            SortDirection: 'asc'
+        };
+    }
+
     function initialize() {
         gridOptions = initGridOptions();
 
         formFilter.submit(function (e) {
             e.preventDefault();
 
-            searchParams.PageIndex = 0;
-            searchParams.PageSize = CMS.pageSize;
+            searchParams = getSearchParams();
             renderPlayerSettings();
         });
 
         $('#divModals').empty();
 
-        $('#username').autocomplete({
+        $username.autocomplete({
             minLength: 3,
             delay: 300,
             source: window.rootUrl + 'WinLimitControl/PlayerSetting/AutoSuggestion'

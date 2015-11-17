@@ -84,22 +84,30 @@ CMSConstants, CMS, EditWinLimitModal */
     }
 
     function renderWinLimitRow(winlimit, currency) {
+        var html;
         var formated = formatWinLimit(winlimit);
         if (!isHost) {
-            return formated;
+            html = [
+                '<span class="',
+                winlimit === 0 ? 'text-red' : '',
+                '">',
+                formated,
+                '</span>'
+            ];
         }
-
-        var html = [
-            '<a href="javascript:;" class="linkEdit',
-            winlimit === 0 ? ' text-red' : '',
-            '" data-currencyid="',
-            currency.Id,
-            '" data-currency="',
-            currency.Name,
-            '">',
-            formated,
-            '</a>'
-        ];
+        else {
+            html = [
+                '<a href="javascript:;" class="linkEdit',
+                winlimit === 0 ? ' text-red' : '',
+                '" data-currencyid="',
+                currency.Id,
+                '" data-currency="',
+                currency.Name,
+                '">',
+                formated,
+                '</a>'
+            ];
+        }
 
         return html.join('');
     }

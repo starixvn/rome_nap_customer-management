@@ -152,7 +152,7 @@ CMS, CMSConstants, keyboardManager, numeral */
         }
         else {
             html = [
-                isHost ? '<a href="javascript:;" class="editInlinePlayerWinLimit' : '<span',
+                isHost ? '<a href="javascript:;" class="editInlinePlayerWinLimit' : '<span class="',
                 playerWinLimit === 0 ? ' text-red' : '',
                 '" data-playerid="',
                 player.Id,

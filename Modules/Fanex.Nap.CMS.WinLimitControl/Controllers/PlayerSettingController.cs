@@ -77,7 +77,7 @@
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PlayerWinLimitManagement, Policy = Constant.Policy.Read)]
         public ActionResult AutoSuggestion(string term)
         {
             var criteria = new CustomerSuggestionCriteria(term);

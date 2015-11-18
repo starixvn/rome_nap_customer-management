@@ -15,11 +15,4 @@
     </Setting>
     <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Nap_SMATurnoverUpd" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
-
-  <Function Name="Colossus Bets Payout Management">
-    <Setting Key="NAP_PayoutTrans_SelPermission" SpName="NAP_PayoutTrans_SelPermission" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_PayoutTrans_SelList" SpName="NAP_PayoutTrans_SelList" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_PayoutTrans_SelDetail" SpName="NAP_PayoutTrans_SelDetail" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_PayoutTrans_SelBetTicket" SpName="NAP_PayoutTrans_SelBetTicket" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
 </Functions>

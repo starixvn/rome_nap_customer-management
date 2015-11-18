@@ -207,6 +207,7 @@
     </Content>
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Dev\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -215,6 +216,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
@@ -573,9 +575,6 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.dev.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
@@ -617,9 +616,12 @@
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Web.master.config" />
-    <Content Include="Web.dev.config" />
     <Content Include="Web.backupMNL.config" />
     <Content Include="Web.Configuration\PayoutManagementSection.config" />
+    <Content Include="Web.dev.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.ConnectionString.dev.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

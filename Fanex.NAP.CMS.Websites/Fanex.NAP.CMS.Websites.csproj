@@ -205,20 +205,18 @@
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
       <SubType>
       </SubType>
     </Content>
-    <Content Include="App_Data\Dev\DBCust.CustDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\NAPCMSSPNames.xml">
-    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml">
+    <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
@@ -597,8 +595,6 @@
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.local.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
@@ -612,8 +608,6 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.sit.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>

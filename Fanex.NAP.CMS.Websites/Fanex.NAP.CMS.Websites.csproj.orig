@@ -203,6 +203,7 @@
   <ItemGroup>
     <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
+<<<<<<< HEAD
     <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
@@ -219,6 +220,20 @@
     <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml">
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
+=======
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>
+      </SubType>
+    </Content>
+    <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
+>>>>>>> #35215 - remove dev folder
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
@@ -229,12 +244,8 @@
     </Content>
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-<<<<<<< HEAD
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
-=======
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>
       </SubType>
     </Content>
@@ -243,25 +254,17 @@
     <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
->>>>>>> #35215 - Split of DB server
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-<<<<<<< HEAD
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
-=======
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
->>>>>>> #35215 - Split of DB server
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
@@ -269,16 +272,11 @@
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-<<<<<<< HEAD
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
-=======
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
->>>>>>> #35215 - Split of DB server
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
@@ -613,9 +611,12 @@
     <Content Include="Web.AppSettings.sit.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+<<<<<<< HEAD
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+=======
+>>>>>>> #35215 - remove dev folder
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
@@ -628,9 +629,12 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+<<<<<<< HEAD
     <Content Include="Web.ConnectionString.sit.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+=======
+>>>>>>> #35215 - remove dev folder
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>

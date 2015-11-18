@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.WinLimitMonitor
 {
+    using System;
     using Fanex.Data.Repository;
+    using Fanex.NAP.Core.Configuration;
 
     public class GetWinLimitMonitorCriteria : CriteriaBase
     {
@@ -17,6 +19,14 @@
         public int PageIndex { get; set; }
 
         public int TotalRow { get; set; }
+
+        public bool ExcludeTestData
+        {
+            get
+            {
+                return NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase);
+            }
+        }
 
         [SpParam(Ignored = true)]
         public int Status { get; set; }

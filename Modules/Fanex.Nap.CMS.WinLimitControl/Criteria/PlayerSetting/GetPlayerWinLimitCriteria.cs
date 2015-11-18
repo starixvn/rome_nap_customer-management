@@ -3,6 +3,7 @@
     using System;
     using System.Collections;
     using Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting;
+    using Fanex.NAP.Core.Configuration;
 
     public class GetPlayerWinLimitCriteria : GetCurrencyWinLimitCriteria
     {
@@ -29,7 +30,8 @@
                 { "pageindex", PageIndex },
                 { "pagesize", PageSize },
                 { "sortorder", 1 },
-                { "totalrow", TotalRow }
+                { "totalrow", TotalRow },
+                { "excludetestdata", NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase) }
             };
 
             if (SortColumnName.Equals("colUsername", StringComparison.OrdinalIgnoreCase))

@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.Nap.CMS.PayoutManagement.Configurations;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
-    using Fanex.Nap.CMS.PayoutManagement.Enums;
     using Fanex.Nap.CMS.PayoutManagement.Models;
     using Fanex.Nap.CMS.PayoutManagement.Repositories;
     using Fanex.Nap.CMS.PayoutManagement.Resources;
@@ -86,62 +87,18 @@
         
         public IList<IdNameModel> GetStatusStateMachine(int status)
         {
-            if (status == 0)
+            var groupStatus = PayoutManagementSection.Instance.PayoutStatus
+                .Cast<GroupStatusElement>()
+                .FirstOrDefault(g => g.Key == status);
+            if (groupStatus != null)
             {
-                return new List<IdNameModel> 
-                {
-                    new IdNameModel { Id = 0, Name = PayoutManagementLabels.All },
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed },
-                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
-                };
+                return groupStatus.Statuses
+                    .Cast<AddElement>()
+                    .Select(e => new IdNameModel { Id = e.Key, Name = e.Value })
+                    .ToList();    
             }
 
-            PayoutStatus payoutStatus = (PayoutStatus)status;
-            if (payoutStatus == PayoutStatus.Open)
-            {
-                return new List<IdNameModel> 
-                {
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
-                };
-            }
-
-            if (payoutStatus == PayoutStatus.InfoVerified)
-            {
-                return new List<IdNameModel> 
-                {
-                    new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutManagementLabels.Open },
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
-                };
-            }
-
-            if (payoutStatus == PayoutStatus.Disbursed)
-            {
-                return new List<IdNameModel> 
-                {
-                    new IdNameModel { Id = (int)PayoutStatus.InfoVerified, Name = PayoutManagementLabels.InfoVerified },
-                    new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutManagementLabels.Disbursed },
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed },
-                };    
-            }
-
-            if (payoutStatus == PayoutStatus.Completed)
-            {
-                return new List<IdNameModel> 
-                {
-                    new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutManagementLabels.Completed }
-                };    
-            }
-
-            return new List<IdNameModel> 
-            {
-                new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutManagementLabels.Expired }
-            };
+            return null;
         }
 
         public IList<PayoutItem> GetPayoutList(ICriteria criteria)

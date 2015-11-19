@@ -178,15 +178,6 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Info Verified.
-        /// </summary>
-        public static string InfoVerified {
-            get {
-                return ResourceManager.GetString("InfoVerified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
         public static string Note {
@@ -363,6 +354,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verified.
+        /// </summary>
+        public static string Verified {
+            get {
+                return ResourceManager.GetString("Verified", resourceCulture);
             }
         }
         

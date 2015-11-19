@@ -3,7 +3,7 @@
     public enum PayoutStatus
     {
         Open = 1,
-        InfoVerified,
+        Verified,
         Disbursed,
         Completed,
         Expired

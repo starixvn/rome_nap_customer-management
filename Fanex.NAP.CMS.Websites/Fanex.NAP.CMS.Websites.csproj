@@ -216,7 +216,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
@@ -588,6 +590,7 @@
     </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.local.config" />
   </ItemGroup>

@@ -156,9 +156,6 @@
   <data name="Hide" xml:space="preserve">
     <value>Hide</value>
   </data>
-  <data name="InfoVerified" xml:space="preserve">
-    <value>Info Verified</value>
-  </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
   </data>
@@ -218,6 +215,9 @@
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
+  </data>
+  <data name="Verified" xml:space="preserve">
+    <value>Verified</value>
   </data>
   <data name="ViewTicketDetailTitle" xml:space="preserve">
     <value>Ticket details of</value>

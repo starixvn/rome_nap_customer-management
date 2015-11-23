@@ -582,14 +582,12 @@
     </Content>
     <Content Include="Web.ConnectionString.backupMNL.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config">
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.prod.config" />
+    <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.local.config" />
@@ -624,7 +622,6 @@
     <Content Include="Web.dev.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.ConnectionString.dev.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

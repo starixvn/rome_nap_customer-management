@@ -38,6 +38,11 @@
             return ExecuteNonQuery(criteria);
         }
 
+        public Result UpdateRelatedPlayerSetting(ICriteria criteria)
+        {
+            return ExecuteNonQuery(criteria);
+        }
+
         public IList<GreaterPlayerWinLimit> GetGreaterPlayerWinLimits(ICriteria criteria)
         {
             var winLimits = new List<GreaterPlayerWinLimit>();

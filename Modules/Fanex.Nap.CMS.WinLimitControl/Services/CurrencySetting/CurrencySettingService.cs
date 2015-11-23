@@ -45,10 +45,21 @@
             var result = _currencySettingRepository.UpdateCurrencySetting(criteria);
             if (result.Code == ErrorCodeConstants.NoneError)
             {
-                result.Message = string.Format(
-                    WinLimitControlLabels.EditGlobalWinLimitSuccesss,
-                    criteria.WinLimit.Currency.Name,
-                    criteria.WinLimit.Game.Name);
+                UpdateRelatedPlayerWinLimitCriteria updateRelatedPlayerCriteria = new UpdateRelatedPlayerWinLimitCriteria()
+                {
+                    WinLimit = criteria.WinLimit,
+                    UserId = criteria.UserId,
+                    IP = criteria.IP,
+                };
+
+                result = _currencySettingRepository.UpdateRelatedPlayerSetting(updateRelatedPlayerCriteria);
+                if (result.Code == ErrorCodeConstants.NoneError)
+                {
+                    result.Message = string.Format(
+                        WinLimitControlLabels.EditGlobalWinLimitSuccesss,
+                        criteria.WinLimit.Currency.Name,
+                        criteria.WinLimit.Game.Name);
+                }
             }
 
             return result;

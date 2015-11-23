@@ -116,6 +116,7 @@
     <Compile Include="Controllers\PlayerSettingController.cs" />
     <Compile Include="Controllers\WinLimitMonitorController.cs" />
     <Compile Include="Criteria\CurrencySetting\AddCurrencyWinLimitCriteria.cs" />
+    <Compile Include="Criteria\CurrencySetting\UpdateRelatedPlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\GetGreaterPlayerWinLimitCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\UpdateCurrencyWinLimitCriteria.cs" />
     <Compile Include="Criteria\CurrencySetting\GetCurrencyWinLimitCriteria.cs" />

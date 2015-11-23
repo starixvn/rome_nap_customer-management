@@ -13,6 +13,8 @@
 
         Result UpdateCurrencySetting(ICriteria criteria);
 
+        Result UpdateRelatedPlayerSetting(ICriteria criteria);
+
         IList<GreaterPlayerWinLimit> GetGreaterPlayerWinLimits(ICriteria criteria);
     }
 }

@@ -9,5 +9,6 @@
     <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
   </Function>
 </Functions>

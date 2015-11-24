@@ -201,54 +201,41 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Dev\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Dev\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutDetail.js" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutList.js" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutDetail.css" />
@@ -573,6 +560,7 @@
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -582,6 +570,7 @@
     </Content>
     <Content Include="Web.ConnectionString.backupMNL.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-    <Function Name="Colossus Bets Payout Management">
-        <Setting Key="NAP_ColossusBets_PayoutList" SpName="NAP_ColossusBets_PayoutList" DbName="DBTXN.bodb02.bodbAdminNet" />
-        <Setting Key="NAP_ColossusBets_PayoutDetail" SpName="NAP_ColossusBets_PayoutDetail" DbName="DBTXN.bodb02.bodbAdminNet" />
-        <Setting Key="NAP_ColossusBets_PayoutUpd" SpName="NAP_ColossusBets_PayoutUpd" DbName="DBTXN.bodb02.bodbAdminNet" />
-    </Function>
+  <Function Name="Payout Management">
+    <Setting Key="NAP_PayoutTrans_Upd" SpName="NAP_PayoutTrans_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

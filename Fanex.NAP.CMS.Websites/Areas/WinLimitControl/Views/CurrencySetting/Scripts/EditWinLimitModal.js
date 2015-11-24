@@ -50,13 +50,13 @@ function EditWinLimitModal(game, renderCurrencySettingFunc) {
     function editWinLimit() {
         var url = window.rootUrl + 'WinLimitControl/CurrencySetting/Update';
         CMS.callAjax(self, url, formData, function (result) {
-            renderCurrencySettingFunc();
             if (result.Code === 0) {
                 CMS.showSuccessMessage(result.Message);
             }
             else {
                 CMS.showErrorMessage(result.Message);
             }
+            setTimeout(function () { renderCurrencySettingFunc(); }, 3000);
         });
     }
 

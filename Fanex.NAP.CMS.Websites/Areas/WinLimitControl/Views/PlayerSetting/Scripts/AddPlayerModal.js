@@ -185,6 +185,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
             .unbind('click')
             .bind('click', function () {
                 if (setFormData() && formData && formData.playerSettings.length > 0) {
+                    this.disabled = true;
                     CMS.callAjax(
                         self,
                         window.rootUrl + 'WinLimitControl/PlayerSetting/Add',
@@ -200,7 +201,7 @@ function AddPlayerModal(formContainer, renderPlayerSettingFunc) {
         CMS.modal(winLimitControlLabels.AddPlayerModalTitle, formContainer);
 
         bindEvents();
-
+        $('#button-addplayer').prop('disabled', false);
         username.autocomplete({
             minLength: 3,
             delay: 300,

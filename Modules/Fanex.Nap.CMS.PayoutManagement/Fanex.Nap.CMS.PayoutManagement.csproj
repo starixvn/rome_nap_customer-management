@@ -144,7 +144,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundlesConfig.cs" />
     <Compile Include="App_Start\PayoutManagementAreaRegistration.cs" />
-    <Compile Include="Configurations\PayoutManagementSection.cs" />
     <Compile Include="Constants\PayoutManagementConst.cs" />
     <Compile Include="Controllers\BetTicketController.cs" />
     <Compile Include="Controllers\PayoutManagementAPIClient.cs" />

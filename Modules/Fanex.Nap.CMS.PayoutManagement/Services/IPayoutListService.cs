@@ -11,8 +11,6 @@
 
         string GetGroupSitenamePermissionKey(string sitename);
 
-        IList<IdNameModel> GetStatusStateMachine(int status);
-
         IList<PayoutItem> GetPayoutList(ICriteria criteria);
 
         PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode);

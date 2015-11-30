@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.Nap.CMS.PayoutManagement.Configurations;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
     using Fanex.Nap.CMS.PayoutManagement.Models;
     using Fanex.Nap.CMS.PayoutManagement.Repositories;
@@ -83,22 +81,6 @@
             }
 
             return groupSitenamePermissionKey;
-        }
-        
-        public IList<IdNameModel> GetStatusStateMachine(int status)
-        {
-            var groupStatus = PayoutManagementSection.Instance.PayoutStatus
-                .Cast<GroupStatusElement>()
-                .FirstOrDefault(g => g.Key == status);
-            if (groupStatus != null)
-            {
-                return groupStatus.Statuses
-                    .Cast<AddElement>()
-                    .Select(e => new IdNameModel { Id = e.Key, Name = e.Value })
-                    .ToList();    
-            }
-
-            return null;
         }
 
         public IList<PayoutItem> GetPayoutList(ICriteria criteria)

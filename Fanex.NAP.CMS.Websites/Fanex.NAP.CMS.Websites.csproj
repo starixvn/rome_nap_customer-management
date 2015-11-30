@@ -607,7 +607,6 @@
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Web.master.config" />
     <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.Configuration\PayoutManagementSection.config" />
     <Content Include="Web.dev.config">
       <SubType>Designer</SubType>
     </Content>

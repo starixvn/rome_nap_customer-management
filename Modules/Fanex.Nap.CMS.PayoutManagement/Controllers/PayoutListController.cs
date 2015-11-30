@@ -6,6 +6,7 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
+    using Fanex.Nap.CMS.PayoutManagement.Enums;
     using Fanex.Nap.CMS.PayoutManagement.Models;
     using Fanex.Nap.CMS.PayoutManagement.Services;
     using Fanex.NAP.Core.Business;
@@ -64,7 +65,7 @@
             ViewBag.UpdateTicketStatusPermission = updateTicketStatus;
             
             ViewBag.Status = status;
-            ViewBag.Statuses = new SelectList(_payoutService.GetStatusStateMachine(status), "Id", "Name");
+            ViewBag.Statuses = new SelectList(GetStatuses(), "Id", "Name");
 
             string jsonString = JsonConvert.SerializeObject(
                 payoutDetail,
@@ -100,7 +101,20 @@
             {
                 SitesLicensees = sitesLicensees,
                 Products = products,
-                Statuses = _payoutService.GetStatusStateMachine(0)
+                Statuses = GetStatuses()
+            };
+        }
+
+        [NonAction]
+        private IList<IdNameModel> GetStatuses()
+        {
+            return new List<IdNameModel>(5) 
+            {
+                new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutStatus.Open.ToString() },
+                new IdNameModel { Id = (int)PayoutStatus.Verified, Name = PayoutStatus.Verified.ToString() },
+                new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutStatus.Disbursed.ToString() },
+                new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutStatus.Completed.ToString() },
+                new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutStatus.Expired.ToString() }
             };
         }
     }

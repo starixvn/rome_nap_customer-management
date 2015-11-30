@@ -39,7 +39,7 @@
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 150,
+            gridExpandHeight: 190,
             columns: columns,
             showPager: false
         };

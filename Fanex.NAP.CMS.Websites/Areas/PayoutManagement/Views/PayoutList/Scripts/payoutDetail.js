@@ -146,12 +146,12 @@
 
     function updateTicketStatus() {
         var note = trimField($ticketNote.val());
-        var statusId = parseInt($selectTicketStatus.val());
-        if (currentStatus === statusId && note.length === 0) {
-            CMS.showTipsyError($ticketNote, 'Invalid Note', 'se');
+        if (note.length === 0) {
+            CMS.showTipsyError($ticketNote, 'Required field!', 'se');
             return;
         }
 
+        var statusId = parseInt($selectTicketStatus.val());
         var url = rootUrl + 'PayoutManagement/PayoutList/UpdateTicketStatus';
         var formData = {
             id: payoutDetail.Id,

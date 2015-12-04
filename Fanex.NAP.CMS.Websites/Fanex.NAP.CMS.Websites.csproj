@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\BundleExtensions.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -201,45 +202,49 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Dev\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local2\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local2\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local2\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local2\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutDetail.js" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutList.js" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutDetail.css" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutList.css" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -337,18 +342,6 @@
     <Content Include="Scripts\CMSConstants.js" />
     <Content Include="Scripts\KeyboardManager.js" />
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\fanex.multiSelect.css" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\fanex.multiSelect.js" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\BottomLine.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\FirstNodeSpan.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\MiddleLine.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\NodeSpan.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\PlusMinus.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\sprites.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\TopLine.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
-    <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Libs\Popup\dialogbox.js" />
@@ -461,17 +454,9 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
-      <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
-      <Name>Fanex.Nap.CMS.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.PayoutManagement\Fanex.Nap.CMS.PayoutManagement.csproj">
-      <Project>{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24}</Project>
-      <Name>Fanex.Nap.CMS.PayoutManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
@@ -487,9 +472,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.AppSettings.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.AppSettings.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />
@@ -541,6 +524,7 @@
     <Content Include="Views\ManageSmartPunters\Index.cshtml" />
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -560,9 +544,11 @@
     </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+    <Content Include="Web.ConnectionString.dev.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.master.config">
@@ -572,11 +558,15 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Web.prod.config" />
+    <Content Include="Web.uat.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config">
+    <Content Include="Web.ConnectionString.local2.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.local.config" />
@@ -595,21 +585,14 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
-    <Content Include="Areas\PayoutManagement\Views\Web.config" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
-    <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
-    <Content Include="Areas\PayoutManagement\Views\BetTicket\ColossusBets.cshtml" />
-    <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="Areas\PayoutManagement\Views\BetTicket\Microgaming.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Web.master.config" />
+    <Content Include="Web.dev.config" />
     <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.dev.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Web.local2.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

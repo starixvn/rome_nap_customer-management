@@ -192,7 +192,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\BundleExtensions.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -250,6 +249,10 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-mac.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input.css" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutDetail.js" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutList.js" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutDetail.css" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutList.css" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Scripts\AddSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
@@ -454,9 +457,17 @@
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
+      <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
+      <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.PayoutManagement\Fanex.Nap.CMS.PayoutManagement.csproj">
+      <Project>{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24}</Project>
+      <Name>Fanex.Nap.CMS.PayoutManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
@@ -585,6 +596,11 @@
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Styles\MailingList.less" />
+    <Content Include="Areas\PayoutManagement\Views\BetTicket\ColossusBets.cshtml" />
+    <Content Include="Areas\PayoutManagement\Views\BetTicket\Microgaming.cshtml" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
+    <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
+    <Content Include="Areas\PayoutManagement\Views\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

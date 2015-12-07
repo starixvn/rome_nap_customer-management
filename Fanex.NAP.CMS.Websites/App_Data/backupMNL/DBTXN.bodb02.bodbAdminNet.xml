@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
+  <Function Name="Payout Management">
+    <Setting Key="NAP_PayoutTrans_Upd" SpName="NAP_PayoutTrans_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
+  </Function>
+  
   <Function Name="Settings">
     <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel" DbName="DBTXN.bodb02.bodbAdminNet">
       <Mapping DataField="ExchangeID" ObjectProperty="Id" />

@@ -201,19 +201,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
@@ -226,11 +237,19 @@
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
@@ -624,7 +643,7 @@
     <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Web.config" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
-    <None Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>

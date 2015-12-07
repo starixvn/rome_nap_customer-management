@@ -63,5 +63,11 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string GlobalSetting = "GlobalSetting";
 
         public const string TurnoverControlNotification = "TurnoverControlNotification";
+
+        public const string PayoutManagement = "PayoutManagement";
+        public const string PayoutForBopingLicensees = "PayoutForBopingLicensees";
+        public const string PayoutForONEworksLicensees = "PayoutForONEworksLicensees";
+        public const string PayoutForCredit = "PayoutForCredit";
+        public const string PayoutViewSecurityCode = "ViewSecurityCode";
     }
 }

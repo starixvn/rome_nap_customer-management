@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.Websites
 {
     using System.Web.Optimization;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.NotificationSetting.AppStart;
     using Fanex.Nap.CMS.TurnoverControl.AppStart;
 

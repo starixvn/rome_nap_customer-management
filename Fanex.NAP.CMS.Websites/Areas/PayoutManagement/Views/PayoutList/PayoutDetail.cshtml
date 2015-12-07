@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Payout Function / Payout List / Payout Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head {
+    @Styles.Render("~/bundles/PayoutManagement/PayoutDetailStyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">
+                Payout Function / <a href="javascript:;" id="payoutlist-link">Payout List</a> / Payout Details
+            </span>
+        </div>
+    </div>
+}
+<div class="horizontal-align margin-20top">
+    <div class="column width-60">
+        <span class="bold">@PayoutManagementLabels.RefNo:</span>
+    </div>
+    <div class="column width-120">
+        <span id="refno"></span>
+    </div>
+    <div class="column width-100"></div>
+    <div class="column width-120">
+        <span class="bold">@PayoutManagementLabels.SiteLicensee:</span>
+    </div>
+    <div class="column width-120">
+        <span id="sitelicensee"></span>
+    </div>
+    @if ((bool)ViewBag.ViewSecuriyCodePermission)
+    {
+        <div class="column width-100"></div>
+        <div class="column width-120">
+            <span class="bold seccode-inner display-none">@PayoutManagementLabels.SecurityCode</span>
+  	    </div>
+        <div class="column">
+            <div class="seccode-box seccode-inner display-none">
+                <span id="seccode-text">******</span>
+                <button type="button" class="blue-button" id="seccode-button">@PayoutManagementLabels.Show</button>
+            </div>
+  	    </div>
+    }
+</div>
+<div class="horizontal-align">
+    <div class="column width-60">
+        <span class="bold">@PayoutManagementLabels.Amount:</span>
+    </div>
+    <div class="column width-120">
+        <span class="link" id="amount"></span>
+    </div>
+    <div class="column width-100"></div>
+    <div class="column width-120">
+        <span class="bold">@PayoutManagementLabels.Currency:</span>
+    </div>
+    <div class="column width-120">
+        <span id="currency"></span>
+    </div>
+</div>
+<div class="content-grid margin-20top">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if ((bool)ViewBag.UpdateTicketStatusPermission)
+{
+    <div class="clear-fix"></div>
+    <div class="horizontal-align margin-20top margin-5bottom">
+        <div class="column">
+            <span class="bold">@PayoutManagementLabels.Note:</span>
+        </div>
+    </div>
+    <div class="horizontal-align">
+        <div class="column">
+            <textarea id="ticketNote" rows="8" cols="100"></textarea>    
+        </div>
+        <div class="column vertical-topalign">
+            <div class="horizontal-align">
+                <div class="column width-60">
+                    <span class="bold">@PayoutManagementLabels.Status</span>
+                </div>
+                <div class="column">
+                    @Html.DropDownList("selectTicketStatus", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-140" })
+                </div>
+            </div>
+            <div class="horizontal-align">
+                <div class="column width-60">&nbsp;</div>
+                <div class="column margin-10top">
+                    <button type="button" class="blue-button" id="update-button">@PayoutManagementLabels.Update</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+}
+<div id="divModals" class="display-none">
+    <div id="ticketDetailContainer"></div>
+</div>
+
+@section Foot {
+    <script type="text/javascript">
+        var payoutDetail = $.parseJSON('@Html.Raw(Model)');
+        var currentStatus = @ViewBag.Status;
+        var payoutManagementLabels = {
+            Show: '@PayoutManagementLabels.Show',
+            Hide: '@PayoutManagementLabels.Hide',
+            Date: '@PayoutManagementLabels.Date',
+            Status: '@PayoutManagementLabels.Status',
+            Note: '@PayoutManagementLabels.Note',
+            Handler: '@PayoutManagementLabels.Handler',
+            ViewTicketDetailTitle: '@PayoutManagementLabels.ViewTicketDetailTitle'
+        };
+    </script>
+    @Scripts.Render("~/bundles/PayoutManagement/PayoutDetailScripts")
+}

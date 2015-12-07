@@ -1,0 +1,26 @@
+﻿.filter-bar .filter-form { padding-bottom: 5px; }
+.filter-bar .filter-form #username,
+.filter-bar .filter-form #dpk-fromdate,
+.filter-bar .filter-form #dpk-todate { width: 175px; }
+.filter-bar .filter-form .edit-field input[type="text"].fanex-multiselect-state-default:hover,
+.filter-bar .filter-form .edit-field input[type="text"].fanex-multiselect-state-default:focus {
+   border: none;
+   box-shadow: none;
+}
+
+.content-box { float: left; margin-left: 10px; width: 1005px; }
+.custom-multi-select-rtUL { margin-left: 0; }
+
+/* Bet Ticket Modal */
+.tblColossusBets { border-collapse: separate; border-spacing: 0; }
+.tblColossusBets th, .tblColossusBets td { padding: 7px 15px; }
+.tblColossusBets thead { background: #3c5ea5; background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5; color: #fff; }
+.tblColossusBets th { font-weight: normal; border-right: 1px solid #aaa; }
+.tblColossusBets td { border-bottom: 1px solid #c5c5c5; border-right: 1px solid #c5c5c5; vertical-align: middle; }
+.tblColossusBets td:first-child { border-left: 1px solid #c5c5c5; }
+.tblColossusBets td.text-red { color: #db2c2c; }
+
+.div-microgaming > iframe { min-height: 500px; min-width: 800px; }              
+.div-colossusbets { border-right: 1px solid #c5c5c5!important; margin-right: 20px; padding-right: 20px!important; }
+.div-colossusbets > iframe { min-height: 500px; }
+.text-red { color: #f00; }

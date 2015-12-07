@@ -1,0 +1,83 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@{
+    ViewBag.Title = "Payout Function / Payout List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head {
+    @Styles.Render("~/bundles/PayoutManagement/PayoutListStyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("GetPayoutList", "PayoutList", FormMethod.Post, new { id = "form-filterTicket", @class = "filter-bar", area = "ColossusBets" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="username">@PayoutManagementLabels.Username</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.TextBox("username", string.Empty, new { maxlength = "50", autocomplete = "off" })
+            </div>
+            <div class="lbl-field col_4">
+                <label>@PayoutManagementLabels.SiteLicensee</label>
+            </div>
+            <div class="edit-field col_8">
+                <div id="siteslicensees"></div> 
+            </div>
+            <div class="lbl-field col_3">
+                <label>@PayoutManagementLabels.Product</label>
+            </div>
+            <div class="edit-field col_8">
+                <div id="products"></div> 
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@PayoutManagementLabels.Submit</button>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label>@PayoutManagementLabels.Status</label>
+            </div>
+            <div class="edit-field col_8">
+                <div id="statuses"></div>
+            </div>
+            <div id="fromtodate-picker"></div>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+<div id="divModals" class="display-none">
+    <div id="ticketDetailContainer"></div>
+</div>
+@section Foot {
+    <script type="text/javascript">
+        var filterData = $.parseJSON('@Html.Raw(Model)');
+        var currentDate = '@currentDate.ToShortFormatedDateWithSlash()',
+            initFromDate = '@currentDate.AddYears(-1).ToShortFormatedDateWithSlash()';
+        var payoutManagementLabels = {
+            From: '@PayoutManagementLabels.From',
+            To: '@PayoutManagementLabels.To',
+            Product: '@PayoutManagementLabels.Product',
+            Username: '@PayoutManagementLabels.Username',
+            SiteLicensee: '@PayoutManagementLabels.SiteLicensee',
+            Date: '@PayoutManagementLabels.Date',
+            RefNo: '@PayoutManagementLabels.RefNo',
+            Currency: '@PayoutManagementLabels.Currency',
+            Amount: '@PayoutManagementLabels.Amount',
+            Status: '@PayoutManagementLabels.Status',
+            Detail: '@PayoutManagementLabels.Detail',
+            SecurityCode: '@PayoutManagementLabels.SecurityCode',
+            ViewTicketDetailTitle: '@PayoutManagementLabels.ViewTicketDetailTitle',
+            UpdateTicketStatusTitle: '@PayoutManagementLabels.UpdateTicketStatusTitle',
+            ViewTicketNoteTitle: '@PayoutManagementLabels.ViewTicketNoteTitle'
+        };
+    </script>
+    @Scripts.Render("~/bundles/PayoutManagement/PayoutListScripts")
+}

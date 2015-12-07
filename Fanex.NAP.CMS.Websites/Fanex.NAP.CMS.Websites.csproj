@@ -207,8 +207,6 @@
     </Content>
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Dev\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
@@ -219,15 +217,6 @@
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Dev\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Dev\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Dev\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -580,9 +569,6 @@
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.dev.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
@@ -593,9 +579,6 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionString.dev.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.master.config">
@@ -611,10 +594,6 @@
     </Content>
     <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionString.local2.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.local.config" />
   </ItemGroup>

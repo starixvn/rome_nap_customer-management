@@ -8,6 +8,6 @@
     }
     else
     {
-        <iframe src="@Model.URL"></iframe>     
+        <iframe src="@HttpContext.Current.Server.UrlDecode(Model.URL)"></iframe>     
     }
 </div>

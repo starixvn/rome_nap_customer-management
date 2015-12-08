@@ -245,7 +245,9 @@
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
@@ -257,6 +259,9 @@
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />

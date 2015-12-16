@@ -330,4 +330,10 @@
   <data name="TodayWinningAmountHint" xml:space="preserve">
     <value>Today Winning Amount: It's Winning Amount of member on current day.</value>
   </data>
+  <data name="ReachedLimitTime" xml:space="preserve">
+    <value>Reached Limit Time</value>
+  </data>
+  <data name="WinningAmount" xml:space="preserve">
+    <value>Winning Amount</value>
+  </data>
 </root>

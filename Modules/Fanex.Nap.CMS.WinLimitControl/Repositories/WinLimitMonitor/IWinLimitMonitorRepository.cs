@@ -8,9 +8,7 @@
 
     public interface IWinLimitMonitorRepository
     {
-        IList<BlockedWinLimitModel> GetBlockedWinLimits(GetWinLimitMonitorCriteria criteria);
-
-        IList<UnblockedWinLimitModel> GetUnblockedWinLimits(GetWinLimitMonitorCriteria criteria);
+        IList<WinLimitModel> GetWinLimits(GetWinLimitMonitorCriteria criteria);
 
         Result BlockUnblockPlayers(ICriteria criteria);
 

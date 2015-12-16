@@ -28,26 +28,9 @@
             }
         }
 
-        [SpParam(Ignored = true)]
-        public int Status { get; set; }
-
-        [SpParam(Ignored = true)]
-        public bool IsBlocked
-        {
-            get
-            {
-                return Status == 1;
-            }
-        }
-
         public override string GetSettingKey()
         {
-            if (IsBlocked)
-            {
-                return "NAP_WinLimit_BlockedMemberSel";    
-            }
-
-            return "NAP_WinLimit_UnblockedMemberSel";
+            return "NAP_WinLimit_GameSel"; 
         }
     }
 }

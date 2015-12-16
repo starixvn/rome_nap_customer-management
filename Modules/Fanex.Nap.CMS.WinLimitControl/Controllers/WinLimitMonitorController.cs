@@ -48,24 +48,9 @@
 
             criteria.PageIndex++;
             object winlimits;
-            if (criteria.IsBlocked)
-            {
-                winlimits = _winLimitMonitorService.GetBlockedWinLimits(criteria);    
-            }
-            else
-            {
-                winlimits = _winLimitMonitorService.GetUnblockedWinLimits(criteria);
-            }
+            winlimits = _winLimitMonitorService.GetWinLimits(criteria);  
 
             return Json(new { TotalRow = criteria.TotalRow, Winlimits = winlimits }, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Host)]
-        public ActionResult BlockUnblockPlayers(BlockUnblockPlayersCriteria criteria)
-        {
-            var playerWinLimitMonitors = _winLimitMonitorService.BlockUnblockPlayers(criteria);
-            return Json(playerWinLimitMonitors, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Read)]

@@ -8,11 +8,7 @@
 
     public interface IWinLimitMonitorService
     {
-        IList<BlockedWinLimitModel> GetBlockedWinLimits(GetWinLimitMonitorCriteria criteria);
-
-        IList<UnblockedWinLimitModel> GetUnblockedWinLimits(GetWinLimitMonitorCriteria criteria);
-
-        Result BlockUnblockPlayers(BlockUnblockPlayersCriteria criteria);
+        IList<WinLimitModel> GetWinLimits(GetWinLimitMonitorCriteria criteria);
 
         IList<PlayerWinLimitHistory> GetWinLimitHistories(ICriteria criteria);
     }

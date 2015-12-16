@@ -298,9 +298,13 @@
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound-mute.png" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
+    <Content Include="Content\Extensions\images\sound.jpg" />
     <Content Include="Content\Extensions\images\x-icon.png" />
+    <Content Include="Content\Extensions\Sound\koekoeksklok.mp3" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -335,6 +339,7 @@
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
+    <Content Include="Content\Themes\img\countdownCheck.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
     <Content Include="Content\Themes\img\grid-view.png" />
     <Content Include="Content\Themes\img\icn-collpase.png" />
@@ -643,7 +648,6 @@
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Shared\_HistoryNotes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Shared\_MonitorNotes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Web.config" />

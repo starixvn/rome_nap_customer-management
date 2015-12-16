@@ -36,12 +36,6 @@
             <div class="edit-field col_6">
                 @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
             </div>
-            <div class="lbl-field col_2">
-                <label>@WinLimitControlLabels.Status</label>
-            </div>
-            <div class="edit-field col_6">
-                @Html.DropDownList("status", (IEnumerable<SelectListItem>)ViewBag.Statuses, new { @class = "combobox-autocomplete width-100" })
-            </div>
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit">@WinLimitControlLabels.Submit</button>
             </div>
@@ -53,18 +47,12 @@
     <div class="freegrid display-none" id="freegrid"></div>
 </div>
 <div class="clear-fix"></div>
-@if (hostPermission) 
-{
-    <div id="divButtons" class="button-div display-none">
-        <input id="btnUnblocked" class="red-button" type="button" value="@WinLimitControlLabels.Unblock_Accounts"/>
-    </div>
-}
-<div id="divNotesContainer" class="display-none">
-    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/Shared/_MonitorNotes.cshtml"); }
-</div>
 <div id="divModals" class="display-none">
     @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/WinLimitMonitor/ViewHistoryModal.cshtml"); }
 </div>
+<audio id="alert-audio" controls preload="auto" style="display: none">
+    <source src="~/Content/Extensions/Sound/koekoeksklok.mp3" type="audio/mpeg" />
+</audio>
 @section Foot
 {
     <script type="text/javascript">
@@ -77,6 +65,8 @@
             WinLimit: '@WinLimitControlLabels.WinLimit',
             BlockedWinningAmount:'@WinLimitControlLabels.BlockedWinningAmount',
             TotalWinningAmount:'@WinLimitControlLabels.TotalWinningAmount',
+            WinningAmount:'@WinLimitControlLabels.WinningAmount',
+            ReachedLimitTime:'@WinLimitControlLabels.ReachedLimitTime',
             BlockedTime:'@WinLimitControlLabels.BlockedTime',
             UnblockedTime:'@WinLimitControlLabels.UnblockedTime',
             PercentageUsed:'@WinLimitControlLabels.PercentageUsed',
@@ -98,7 +88,9 @@
             Unblock_Accounts: '@WinLimitControlLabels.Unblock_Accounts',
             WinLimitMonitor_ChooseOneAccountToBlock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToBlock)",
             WinLimitMonitor_ConfirmBlockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmBlockAccounts)",
-        };       
+        };
+
+        var alertSound = document.getElementById("alert-audio"); 
     </script>
     @Scripts.Render("~/bundles/winlimitcontrol/winlimitmonitor-scripts")
 }

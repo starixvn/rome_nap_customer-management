@@ -18,27 +18,9 @@
             _winLimitMonitorRepository = winLimitMonitorRepository ?? new WinLimitMonitorRepository();
         }
 
-        public IList<BlockedWinLimitModel> GetBlockedWinLimits(GetWinLimitMonitorCriteria criteria)
+        public IList<WinLimitModel> GetWinLimits(GetWinLimitMonitorCriteria criteria)
         {
-            return _winLimitMonitorRepository.GetBlockedWinLimits(criteria);
-        }
-
-        public IList<UnblockedWinLimitModel> GetUnblockedWinLimits(GetWinLimitMonitorCriteria criteria)
-        {
-            return _winLimitMonitorRepository.GetUnblockedWinLimits(criteria);
-        }
-
-        public Result BlockUnblockPlayers(BlockUnblockPlayersCriteria criteria)
-        {
-            var result = _winLimitMonitorRepository.BlockUnblockPlayers(criteria);
-            if (result.Code == 0)
-            {
-                result.Message = criteria.IsBlock ?
-                    WinLimitControlLabels.WinLimitMonitor_BlockAccountsSuccess :
-                    WinLimitControlLabels.WinLimitMonitor_UnblockAccountsSuccess;
-            }
-
-            return result;
+            return _winLimitMonitorRepository.GetWinLimits(criteria);
         }
 
         public IList<PlayerWinLimitHistory> GetWinLimitHistories(ICriteria criteria)

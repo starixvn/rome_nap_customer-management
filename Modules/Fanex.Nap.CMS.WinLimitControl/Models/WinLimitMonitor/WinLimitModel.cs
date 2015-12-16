@@ -5,7 +5,7 @@
     using Fanex.Nap.CMS.Settings.Models;
     using Fanex.Nap.CMS.WinLimitControl.Resources;
 
-    public class BlockedWinLimitModel
+    public class WinLimitModel
     {
         public BaseSetting Player { get; set; }
 
@@ -46,5 +46,9 @@
                 return string.IsNullOrEmpty(BlockedByUsername) ? WinLimitControlLabels.System : BlockedByUsername;
             }
         }
+
+        public bool IsNotified { get; set; }
+
+        public bool IsModified { get; set; }
     }
 }

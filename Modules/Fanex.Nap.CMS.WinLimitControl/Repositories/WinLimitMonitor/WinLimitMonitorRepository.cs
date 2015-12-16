@@ -12,36 +12,16 @@
 
     public class WinLimitMonitorRepository : IWinLimitMonitorRepository
     {
-        public IList<BlockedWinLimitModel> GetBlockedWinLimits(GetWinLimitMonitorCriteria criteria)
+        public IList<WinLimitModel> GetWinLimits(GetWinLimitMonitorCriteria criteria)
         {
-            IList<BlockedWinLimitModel> winlimits = new List<BlockedWinLimitModel>();
+            IList<WinLimitModel> winlimits = new List<WinLimitModel>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        winlimits.Add(ToBlockedWinLimitModel(reader));
-                    }
-                }
-
-                var output = db.GetOuputParams();
-                criteria.TotalRow = Converter.ToInt(output["totalrow"]);
-            }
-
-            return winlimits;
-        }
-
-        public IList<UnblockedWinLimitModel> GetUnblockedWinLimits(GetWinLimitMonitorCriteria criteria)
-        {
-            IList<UnblockedWinLimitModel> winlimits = new List<UnblockedWinLimitModel>();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader.Read())
-                    {
-                        winlimits.Add(ToUnblockedWinLimitModel(reader));
+                        winlimits.Add(ToWinLimitModel(reader));
                     }
                 }
 
@@ -80,9 +60,9 @@
             return entities;
         }
 
-        private BlockedWinLimitModel ToBlockedWinLimitModel(IDataReader reader)
+        private WinLimitModel ToWinLimitModel(IDataReader reader)
         {
-            return new BlockedWinLimitModel
+            return new WinLimitModel
             {
                 Player = new BaseSetting
                 {
@@ -103,34 +83,9 @@
                 BlockedWinningAmount = Converter.ToDecimal(reader["BlockedWinningAmount"]),
                 TotalWinningAmount = Converter.ToDecimal(reader["TotalWinningAmount"]),
                 BlockedTime = Converter.ToDateTime(reader["BlockedTime"]),
-                BlockedByUsername = Converter.ToString2(reader["BlockedByUsername"])
-            };
-        }
-
-        private UnblockedWinLimitModel ToUnblockedWinLimitModel(IDataReader reader)
-        {
-            return new UnblockedWinLimitModel
-            {
-                Player = new BaseSetting
-                {
-                    Id = Converter.ToInt(reader["CustId"]),
-                    Name = Converter.ToString2(reader["Username"])
-                },
-                Currency = new BaseSetting
-                {
-                    Id = Converter.ToInt(reader["ExchangeId"]),
-                    Name = Converter.ToString2(reader["Currency"])
-                },
-                Game = new BaseSetting
-                {
-                    Id = Converter.ToInt(reader["ProductId"]),
-                    Name = Converter.ToString2(reader["ProductName"])
-                },
-                WinLimit = Converter.ToDecimal(reader["WinLimit"]),
-                TodayWinningAmount = Converter.ToDecimal(reader["TodayWinningAmount"]),
-                LastBlockedTime = Converter.ToDateTime(reader["BlockedTime"]),
-                LastUnblockedTime = Converter.ToDateTime(reader["UnblockedTime"]),
-                UnblockedByUsername = Converter.ToString2(reader["UnblockedByUsername"])
+                BlockedByUsername = Converter.ToString2(reader["BlockedByUsername"]),
+                IsNotified = Converter.ToBool(reader["IsNotified"]),
+                IsModified = Converter.ToBool(reader["IsModified"])
             };
         }
 

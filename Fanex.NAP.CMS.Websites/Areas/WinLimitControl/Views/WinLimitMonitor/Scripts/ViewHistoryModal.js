@@ -47,9 +47,9 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         row.push(formatNumber(history.WinLimit));
         row.push('</td>');
 
-        row.push('<td class="align-right">');
-        row.push(formatNumber(history.BlockedWinningAmount));
-        row.push('</td>');
+//        row.push('<td class="align-right">');
+//        row.push(formatNumber(history.BlockedWinningAmount));
+//        row.push('</td>');
 
         row.push('<td class="align-right">');
         row.push(formatNumber(history.TotalWinningAmount));
@@ -59,13 +59,13 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         row.push(getPercentageUsedBox(history.PercentageUsed));
         row.push('</td>');
 
-        row.push('<td class="align-left">');
-        row.push(history.Status);
-        row.push('</td>');
+//        row.push('<td class="align-left">');
+//        row.push(history.Status);
+//        row.push('</td>');
 
-        row.push('<td class="align-left">');
-        row.push(history.ChangedByDisplay);
-        row.push('</td></tr>');
+//        row.push('<td class="align-left">');
+//        row.push(history.ChangedByDisplay);
+//        row.push('</td></tr>');
         return row.join('');
     }
 

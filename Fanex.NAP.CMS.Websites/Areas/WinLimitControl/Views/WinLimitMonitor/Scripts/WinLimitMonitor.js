@@ -28,6 +28,8 @@ var WinLimitMonitor = function () {
         maxPercentageUsed = 100;
 
     var viewHistoryModal = null;
+    var isSoundAlert = false;
+
     var timer = {
         id: 0,
         pausing: false,
@@ -47,6 +49,10 @@ var WinLimitMonitor = function () {
             delay: 300,
             source: window.rootUrl + 'WinLimitControl/PlayerSetting/AutoSuggestion'
         });
+
+        if ($.cookie('mute-sound') == null) {
+            $.cookie('mute-sound', 'false');
+        }
 
         $('#divModals').empty();
         viewHistoryModal = new ViewHistoryModal($divViewHistoryContainer, function () { timer.pausing = false; });
@@ -72,52 +78,6 @@ var WinLimitMonitor = function () {
 
     function isBlockedSearching() {
         return searchParameters.Status === '1';
-    }
-
-    function getBlockUnblockColumns(isBlocked) {
-        var columns = [
-            { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: winLimitControlLabels.Currency, Width: 75, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Game, Width: 100, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: 'colWinLimit', HeaderAlign: 'center', CellAlign: 'right',
-                FormatNumber: CMSConstants.NumberFormat.IntNumber
-            }];
-
-        var blockUnblockColumnName;
-        if (isBlocked) {
-            blockUnblockColumnName = winLimitControlLabels.BlockedBy;
-            columns.push({ HeaderText: winLimitControlLabels.BlockedWinningAmount, Width: 100, Name: 'colBlockedWinningAmount',
-                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber
-            });
-            columns.push({ HeaderText: winLimitControlLabels.TotalWinningAmount, Width: 100, Name: 'colTotalWinningAmount',
-                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber
-            });
-            columns.push({ HeaderText: winLimitControlLabels.BlockedTime, Width: 145, Name: 'colBlockedTime', HeaderAlign: 'center',
-                CellAlign: 'center'
-            });
-            columns.push({ HeaderText: winLimitControlLabels.PercentageUsed, Width: 110, Name: 'colPercentageUsed', HeaderAlign: 'center',
-                CellAlign: 'center'
-            });
-        }
-        else {
-            blockUnblockColumnName = winLimitControlLabels.UnblockedBy;
-            columns.push({ HeaderText: winLimitControlLabels.TodayWinningAmount, Width: 140, Name: 'colTodayWinningAmount',
-                HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber
-            });
-            columns.push({ HeaderText: winLimitControlLabels.LastBlockedTime, Width: 160, Name: 'colLastBlockedTime', HeaderAlign: 'center',
-                CellAlign: 'center'
-            });
-            columns.push({ HeaderText: winLimitControlLabels.LastUnblockedTime, Width: 160, Name: 'colLastUnblockedTime', HeaderAlign: 'center',
-                CellAlign: 'center'
-            });
-        }
-
-        columns.push({ HeaderText: winLimitControlLabels.Blocked, Width: 60, Name: 'colBlocked', HeaderAlign: 'center', CellAlign: 'center' });
-        columns.push({ HeaderText: blockUnblockColumnName, Width: 100, Name: 'colModifiedBy', HeaderAlign: 'center', CellAlign: 'left' });
-        columns.push({ HeaderText: '', Width: 40, Name: 'colViewHistory', HeaderAlign: 'center', CellAlign: 'center' });
-
-        return columns;
     }
 
     function initGridOptions() {
@@ -151,7 +111,19 @@ var WinLimitMonitor = function () {
             gridOptions.pagerOption.totalItem = result.TotalRow;
 
             gridOptions.titleInfo.customButtons = renderAutoRefresh();
-            gridOptions.columns = getBlockUnblockColumns(isBlocked);
+            gridOptions.columns =
+                [
+                    { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: winLimitControlLabels.Currency, Width: 75, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: 'colWinLimit', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber },
+                    { HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: 'colTotalWinningAmount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber },
+                    { HeaderText: winLimitControlLabels.ReachedLimitTime, Width: 145, Name: 'colBlockedTime', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: winLimitControlLabels.PercentageUsed, Width: 110, Name: 'colPercentageUsed', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: '', Width: 40, Name: 'colViewHistory', HeaderAlign: 'center', CellAlign: 'center' }
+                ];
+
             gridOptions.bodyRows = buildBodyRows(result.Winlimits, isBlocked);
 
             $freegrid.removeClass('display-none').fanexGrid(gridOptions);
@@ -189,44 +161,34 @@ var WinLimitMonitor = function () {
         var startIndex = searchParameters.PageIndex * searchParameters.PageSize;
 
         var cell, winlimit, customData;
+        isSoundAlert = false;
         for (var i = 0, max = data.length; i < max; i++) {
             winlimit = data[i];
-
             customData = ' data-playerid="' + winlimit.Player.Id + '"' + ' data-gameid="' + winlimit.Game.Id + '"';
             cell = [
                 { Name: 'colNumber', Value: (startIndex + i + 1) },
                 { Name: 'colUsername', Value: winlimit.Player.Name },
                 { Name: 'colCurrency', Value: winlimit.Currency.Name },
                 { Name: 'colGame', Value: winlimit.Game.Name },
-                { Name: 'colWinLimit', Value: winlimit.WinLimit }
+                { Name: 'colWinLimit', Value: winlimit.WinLimit },
+                { Name: 'colTotalWinningAmount', Value: winlimit.TotalWinningAmount },
+                { Name: 'colBlockedTime', Value: winlimit.BlockedTimeDisplay },
+                { Name: 'colPercentageUsed', Value: getPercentageUsedBox(winlimit.PercentageUsed) },
+                { Name: 'colViewHistory', Value: renderViewHistoryRow(winlimit.Player.Name, winlimit.Game.Name, customData) }
             ];
 
-            cell = buildBlockUnblockRow(isBlocked, cell, winlimit, customData);
-            cell.push({ Name: 'colViewHistory', Value: renderViewHistoryRow(winlimit.Player.Name, winlimit.Game.Name, customData) });
-            bodyRows.push({ Columns: cell });
+            if (winlimit.IsNotified == true) {
+                bodyRows.push({ Columns: cell });
+            }
+            else {
+                bodyRows.push({ Columns: cell, CssClass: 'new-data-row' });
+                if (winlimit.IsModified == 0) {
+                    isSoundAlert = true;
+                }
+            }
         }
 
         return bodyRows;
-    }
-
-    function buildBlockUnblockRow(isBlocked, cell, winlimit, customData) {
-        if (isBlocked) {
-            cell.push({ Name: 'colBlockedWinningAmount', Value: winlimit.BlockedWinningAmount });
-            cell.push({ Name: 'colTotalWinningAmount', Value: winlimit.TotalWinningAmount });
-            cell.push({ Name: 'colBlockedTime', Value: winlimit.BlockedTimeDisplay });
-            cell.push({ Name: 'colPercentageUsed', Value: getPercentageUsedBox(winlimit.PercentageUsed) });
-            cell.push({ Name: 'colBlocked', Value: '<input type="checkbox" class="checkbox-blocked" checked="checked"' + customData + '/>' });
-            cell.push({ Name: 'colModifiedBy', Value: winlimit.BlockedByUsernameDisplay });
-        }
-        else {
-            cell.push({ Name: 'colTodayWinningAmount', Value: winlimit.TodayWinningAmount });
-            cell.push({ Name: 'colLastBlockedTime', Value: winlimit.LastBlockedTimeDisplay });
-            cell.push({ Name: 'colLastUnblockedTime', Value: winlimit.LastUnblockedTimeDisplay });
-            cell.push({ Name: 'colBlocked', Value: '<input type="checkbox" class="checkbox-blocked"' + customData + '/>' });
-            cell.push({ Name: 'colModifiedBy', Value: winlimit.UnblockedByUsernameDisplay });
-        }
-
-        return cell;
     }
 
     function getPercentageUsedBox(percentageUsed) {
@@ -290,7 +252,9 @@ var WinLimitMonitor = function () {
                         '<div title="Refresh" class="countdown">' + selected + '</div>' +
                         '<div class="dropdown"></div>' +
                      '</div>' + dropdown.join('') +
-                '</div>';
+
+                '</div>' +
+                '<img id="sound" class="' + ($.cookie('mute-sound') == 'true' ? "sound-disabled" : "sound-enable") + '" alt="X" >';
     }
 
     function bindAutoRefreshEvents() {
@@ -333,6 +297,21 @@ var WinLimitMonitor = function () {
             });
 
         autoRefreshFunc(countdownContainer);
+
+
+        $('#sound').click(function () {
+
+            $(this).toggleClass('sound-enable sound-disabled');
+            var muteSound = $.cookie('mute-sound');
+            if (muteSound == 'true')
+                muteSound = 'false';
+            else
+                muteSound = 'true';
+
+            $.cookie('mute-sound', muteSound);
+        });
+
+        alertDataChange();
     }
 
     function bindViewHistory() {
@@ -423,6 +402,17 @@ var WinLimitMonitor = function () {
         }
 
         CMS.showInlineSuccessMsg(result.Message, $divResult, true, getPlayerSettings);
+    }
+
+    function alertDataChange() {
+        if (isSoundAlert == true) {
+            CMS.showErrorMessage('Players have reached Company Win Limit. Please check again.');
+            if ($.cookie('mute-sound') == 'false') {
+                alertSound.play();
+            }
+
+            setTimeout(CMS.closeMsgBox, 120000);
+        }
     }
 };
 

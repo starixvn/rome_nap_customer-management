@@ -36,7 +36,12 @@
     margin: 10px 0 0 10px;
 }
 
+.freegrid .grid-fixed-table tr.new-data-row td {
+   background: #BBB766;
+}
+
 .refresh-container {
+	float: left;
     position: relative;
     cursor: pointer;
     &:hover {
@@ -89,6 +94,19 @@
         }
     }
 }
+
+.sound-enable{
+	float: left;
+	margin: -3px 5px;
+	content: url("Images/sound.png");
+}
+
+.sound-disabled{
+	float: left;
+	margin: -3px 5px;
+	content: url("Images/sound-mute.png");
+}
+
 
 #div-ViewHistory {
     @ft-border: 1px solid #c5c5c5;

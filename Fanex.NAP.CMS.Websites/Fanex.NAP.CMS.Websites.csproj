@@ -17,6 +17,11 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -240,7 +245,9 @@
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />

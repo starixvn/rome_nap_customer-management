@@ -16,7 +16,7 @@
         {
             get
             {
-                return NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase);
+                return System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1");
             }
         }
 

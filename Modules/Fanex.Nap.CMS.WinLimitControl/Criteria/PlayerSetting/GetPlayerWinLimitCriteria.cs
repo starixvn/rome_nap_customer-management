@@ -31,7 +31,7 @@
                 { "pagesize", PageSize },
                 { "sortorder", 1 },
                 { "totalrow", TotalRow },
-                { "excludetestdata", NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase) }
+                { "excludetestdata", System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1")}
             };
 
             if (SortColumnName.Equals("colUsername", StringComparison.OrdinalIgnoreCase))

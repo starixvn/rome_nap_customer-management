@@ -203,40 +203,70 @@
   <ItemGroup>
     <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml" />
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -258,9 +288,23 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\ViewHistoryModal.js" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound-mute.png" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
+    <Content Include="Content\Extensions\images\sound.jpg" />
     <Content Include="Content\Extensions\images\x-icon.png" />
+    <Content Include="Content\Extensions\Sound\koekoeksklok.mp3" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -295,6 +339,7 @@
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
+    <Content Include="Content\Themes\img\countdownCheck.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
     <Content Include="Content\Themes\img\grid-view.png" />
     <Content Include="Content\Themes\img\icn-collpase.png" />
@@ -478,6 +523,10 @@
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj">
+      <Project>{946B264B-145F-41F8-9C21-24B4C2B79B07}</Project>
+      <Name>Fanex.Nap.CMS.WinLimitControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -540,12 +589,11 @@
     <Content Include="Views\ManageSmartPunters\Index.cshtml" />
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.uat.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
-    <Content Include="Web.AppSettings.sit.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -562,18 +610,15 @@
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.sit.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.backupMNL.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config" />
-    <Content Include="Web.sit.config">
+    <Content Include="Web.uat.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.local.config">
@@ -600,12 +645,26 @@
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
+    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_MonitorNotes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\Web.config" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
+    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
-    <Content Include="Web.master.config" />
+    <Content Include="Web.master.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.backupMNL.config" />
+    <Content Include="Web.AppSettings.sit.config" />
+    <Content Include="Web.ConnectionString.sit.config" />
+    <Content Include="Web.sit.config" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

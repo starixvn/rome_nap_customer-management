@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = WinLimitControlLabels.PlayerWinLimitManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/winlimitcontrol/playersettingstyles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("Search", "PlayerSetting", FormMethod.Get, new { id = "form-filterWinLimit", @class = "filter-bar", area = "WinLimitControl" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="username">@WinLimitControlLabels.Username</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.TextBox("username", string.Empty, new { maxlength = "100", autocomplete = "off" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@WinLimitControlLabels.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@WinLimitControlLabels.Game</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@WinLimitControlLabels.Search</button>
+            </div>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/Shared/_Notes.cshtml", false); }
+</div>
+<div id="divModals" class="display-none">
+@{
+    if (hostPermission) 
+    {
+        Html.RenderPartial("~/Areas/WinLimitControl/Views/PlayerSetting/_AddPlayerModal.cshtml");
+    }
+}
+</div>
+@section Foot
+{
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        window.hostPermission = @(hostPermission ? 1 : 0);
+        var winLimitControlLabels = {
+            AddPlayer: '@WinLimitControlLabels.AddPlayer',
+            Username: '@WinLimitControlLabels.Username',
+            Currency: '@WinLimitControlLabels.Currency',
+            Game: '@WinLimitControlLabels.Game',
+            PlayerWinLimit: '@WinLimitControlLabels.PlayerWinLimit',
+            CurrencyWinLimit: '@WinLimitControlLabels.CurrencyWinLimit',
+            Delete: '@WinLimitControlLabels.Delete',
+            EditPlayerWinLimitConfirm: '@WinLimitControlLabels.EditPlayerWinLimitConfirm',
+            AddPlayerModalTitle: '@WinLimitControlLabels.AddPlayerModalTitle',
+            InvalidWinLimit: '@WinLimitControlLabels.InvalidWinLimit',
+            PlayerWinLimitConfirmDelete: '@WinLimitControlLabels.PlayerWinLimitConfirmDelete',
+            EditPlayerModalTitle: '@WinLimitControlLabels.EditPlayerModalTitle',
+            RequiredFieldError: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.RequiredFieldError'
+        };       
+    </script>
+    @Scripts.Render("~/bundles/winlimitcontrol/playersettingscripts")
+}

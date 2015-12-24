@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddCurrencyExistingError" xml:space="preserve">
+    <value>There are existing game setting of this currency: {0}.</value>
+  </data>
+  <data name="AddGameExistingError" xml:space="preserve">
+    <value>There are existing currency setting of this game: {0}.</value>
+  </data>
+  <data name="AddPlayer" xml:space="preserve">
+    <value>Add Player</value>
+  </data>
+  <data name="AddPlayerModalTitle" xml:space="preserve">
+    <value>Add new Player to Player Win Limit list</value>
+  </data>
+  <data name="AddPlayerWinLimitSuccess" xml:space="preserve">
+    <value>The Player Win Limit has been save successfully!</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Blocked" xml:space="preserve">
+    <value>Blocked</value>
+  </data>
+  <data name="BlockedTime" xml:space="preserve">
+    <value>Blocked Time</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="CurrencyWinLimit" xml:space="preserve">
+    <value>Currency Win Limit</value>
+  </data>
+  <data name="CurrentWinLimit" xml:space="preserve">
+    <value>Current Win Limit</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditGlobalWinLimitSuccesss" xml:space="preserve">
+    <value>The Win Limit of {0} currency per {1} has been updated successfully!</value>
+  </data>
+  <data name="EditPlayerModalTitle" xml:space="preserve">
+    <value>Edit Win Limit of {0}</value>
+  </data>
+  <data name="EditPlayerWinLimitConfirm" xml:space="preserve">
+    <value>Are you sure want to set Player Win Limit of {0}?</value>
+  </data>
+  <data name="EditWinLimitConfirm" xml:space="preserve">
+    <value>Are you sure want to change Win Limit of {0} currency per {1}?</value>
+  </data>
+  <data name="EditWinLimitMessage" xml:space="preserve">
+    <value>The action could lead to a lowered Player Win Limit of the following customers: {0}</value>
+  </data>
+  <data name="FPSResponseMessage" xml:space="preserve">
+    <value>FPS error with ResponseCode: {0}!</value>
+  </data>
+  <data name="Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="GlobalSetting" xml:space="preserve">
+    <value>Currency Win Limit Setting</value>
+  </data>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>Internal server error!</value>
+  </data>
+  <data name="InvalidUsername" xml:space="preserve">
+    <value>Invalid username</value>
+  </data>
+  <data name="InvalidWinLimit" xml:space="preserve">
+    <value>Invalid Win Limit</value>
+  </data>
+  <data name="NewWinLimit" xml:space="preserve">
+    <value>New Win Limit</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="PercentageUsed" xml:space="preserve">
+    <value>Percentage Used</value>
+  </data>
+  <data name="PlayerWinLimit" xml:space="preserve">
+    <value>Player Win Limit</value>
+  </data>
+  <data name="PlayerWinLimitConfirmDelete" xml:space="preserve">
+    <value>Are you sure you want to remove setting of this customer for this game?</value>
+  </data>
+  <data name="PlayerWinLimitManagement" xml:space="preserve">
+    <value>Player Win Limit Management</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Unblocked" xml:space="preserve">
+    <value>Unblocked</value>
+  </data>
+  <data name="Unblock_Accounts" xml:space="preserve">
+    <value>Unblock account(s)</value>
+  </data>
+  <data name="UnsetGlobalWinLimitError" xml:space="preserve">
+    <value>The Win Limit on Keno of {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href="{1}"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+  </data>
+  <data name="UpdatePlayerWinLimitSuccess" xml:space="preserve">
+    <value>The Player Win Limit(s) have been save successfully!</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View details</value>
+  </data>
+  <data name="WinLimitMonitor" xml:space="preserve">
+    <value>Win Limit Monitor</value>
+  </data>
+  <data name="WinLimitMonitor_ChooseOneAccountToUnblock" xml:space="preserve">
+    <value>At least one 'Blocked' Member account must be unchecked.</value>
+  </data>
+  <data name="WinLimitMonitor_ConfirmUnblockAccounts" xml:space="preserve">
+    <value>Are you sure you want to &lt;b&gt;Unblock&lt;/b&gt; these players per these games?</value>
+  </data>
+  <data name="WinLimitMonitor_UnblockAccountsSuccess" xml:space="preserve">
+    <value>Unblock Successfully</value>
+  </data>
+  <data name="WinLimitUndefined" xml:space="preserve">
+    <value>Win Limit = N/A: The Win Limit has not been defined yet.</value>
+  </data>
+  <data name="WinLimitUnlimited" xml:space="preserve">
+    <value>Win Limit = 0: Unlimited.</value>
+  </data>
+  <data name="UnblockedTime" xml:space="preserve">
+    <value>Unblocked Time</value>
+  </data>
+  <data name="Block_Accounts" xml:space="preserve">
+    <value>Block account(s)</value>
+  </data>
+  <data name="WinLimitMonitor_BlockAccountsSuccess" xml:space="preserve">
+    <value>Block Successfully</value>
+  </data>
+  <data name="WinLimitMonitor_ConfirmBlockAccounts" xml:space="preserve">
+    <value>Are you sure you want to &lt;b&gt;Block&lt;/b&gt; these players per these games?</value>
+  </data>
+  <data name="MessageGoToCurrencySettingPage" xml:space="preserve">
+    <value>The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+  </data>
+  <data name="NoMoreGameToSetPlayerWinLimit" xml:space="preserve">
+    <value>There is no more games to set Player Win Limit</value>
+  </data>
+  <data name="WinLimitMonitor_ChooseOneAccountToBlock" xml:space="preserve">
+    <value>At least one 'Unblocked' Member account must be checked.</value>
+  </data>
+  <data name="BlockedBy" xml:space="preserve">
+    <value>Blocked By</value>
+  </data>
+  <data name="BlockedWinningAmount" xml:space="preserve">
+    <value>Blocked Winning Amount</value>
+  </data>
+  <data name="LastBlockedTime" xml:space="preserve">
+    <value>Last Blocked Time</value>
+  </data>
+  <data name="LastUnblockedTime" xml:space="preserve">
+    <value>Last Unblocked Time</value>
+  </data>
+  <data name="TodayWinningAmount" xml:space="preserve">
+    <value>Today Winning Amount</value>
+  </data>
+  <data name="TotalWinningAmount" xml:space="preserve">
+    <value>Total Winning Amount</value>
+  </data>
+  <data name="UnblockedBy" xml:space="preserve">
+    <value>Unlocked By</value>
+  </data>
+  <data name="ViewHistory" xml:space="preserve">
+    <value>View History</value>
+  </data>
+  <data name="WinLimit" xml:space="preserve">
+    <value>Win Limit</value>
+  </data>
+  <data name="ChangedBy" xml:space="preserve">
+    <value>Changed By</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="WinLimitHistoryTitle" xml:space="preserve">
+    <value>Win Limit History - {0} - {1}</value>
+  </data>
+  <data name="BlockedWinningAmountHint" xml:space="preserve">
+    <value>Blocked Winning Amount: It's Winning Amount that member has been blocked.</value>
+  </data>
+  <data name="TotalWinningAmountHint" xml:space="preserve">
+    <value>Total Winning Amount: It's total Winning Amount of day until the blocked time.</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="TodayWinningAmountHint" xml:space="preserve">
+    <value>Today Winning Amount: It's Winning Amount of member on current day.</value>
+  </data>
+  <data name="ReachedLimitTime" xml:space="preserve">
+    <value>Reached Limit Time</value>
+  </data>
+  <data name="WinningAmount" xml:space="preserve">
+    <value>Winning Amount</value>
+  </data>
+</root>

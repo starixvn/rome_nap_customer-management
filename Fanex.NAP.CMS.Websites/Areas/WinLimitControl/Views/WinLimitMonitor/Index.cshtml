@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = WinLimitControlLabels.WinLimitMonitor;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/winlimitcontrol/winlimitmonitor-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@using (Html.BeginForm("Search", "WinLimitMonitor", FormMethod.Get, new { id = "form-filterWinLimit", @class = "filter-bar", area = "WinLimitControl" }))
+{
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txtUsername">@WinLimitControlLabels.Username</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.TextBox("username", string.Empty, new { maxlength = "100", placeholder = WinLimitControlLabels.All, autocomplete = "off" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@WinLimitControlLabels.Game</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@WinLimitControlLabels.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@WinLimitControlLabels.Submit</button>
+            </div>
+        </div>
+    </div>
+}
+<div id="div-result-message" class="inline-message"></div>
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+<div class="clear-fix"></div>
+<div id="divModals" class="display-none">
+    @{ Html.RenderPartial("~/Areas/WinLimitControl/Views/WinLimitMonitor/ViewHistoryModal.cshtml"); }
+</div>
+<audio id="alert-audio" controls preload="auto" style="display: none">
+    <source src="~/Content/Extensions/Sound/koekoeksklok.mp3" type="audio/mpeg" />
+</audio>
+@section Foot
+{
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        window.hostPermission = @(hostPermission ? 1 : 0);
+        var winLimitControlLabels = {
+            Username: '@WinLimitControlLabels.Username',
+            Currency: '@WinLimitControlLabels.Currency',
+            Game: '@WinLimitControlLabels.Game',
+            WinLimit: '@WinLimitControlLabels.WinLimit',
+            BlockedWinningAmount:'@WinLimitControlLabels.BlockedWinningAmount',
+            TotalWinningAmount:'@WinLimitControlLabels.TotalWinningAmount',
+            WinningAmount:'@WinLimitControlLabels.WinningAmount',
+            ReachedLimitTime:'@WinLimitControlLabels.ReachedLimitTime',
+            BlockedTime:'@WinLimitControlLabels.BlockedTime',
+            UnblockedTime:'@WinLimitControlLabels.UnblockedTime',
+            PercentageUsed:'@WinLimitControlLabels.PercentageUsed',
+            Blocked:'@WinLimitControlLabels.Blocked',
+            BlockedBy:'@WinLimitControlLabels.BlockedBy',
+            TodayWinningAmount:'@WinLimitControlLabels.TodayWinningAmount',
+            LastBlockedTime:'@WinLimitControlLabels.LastBlockedTime',
+            LastUnblockedTime:'@WinLimitControlLabels.LastUnblockedTime',
+            UnblockedBy: '@WinLimitControlLabels.UnblockedBy',
+            ViewHistory: '@WinLimitControlLabels.ViewHistory',
+            Date: '@WinLimitControlLabels.Date',
+            Status: '@WinLimitControlLabels.Status',
+            ChangedBy: '@WinLimitControlLabels.ChangedBy',
+            WinLimitHistoryTitle: '@WinLimitControlLabels.WinLimitHistoryTitle',
+            NoData: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData',
+            WinLimitMonitor_ChooseOneAccountToUnblock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock)",
+            WinLimitMonitor_ConfirmUnblockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts)",
+            Block_Accounts: '@WinLimitControlLabels.Block_Accounts',
+            Unblock_Accounts: '@WinLimitControlLabels.Unblock_Accounts',
+            WinLimitMonitor_ChooseOneAccountToBlock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToBlock)",
+            WinLimitMonitor_ConfirmBlockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmBlockAccounts)",
+        };
+
+        var alertSound = document.getElementById("alert-audio"); 
+    </script>
+    @Scripts.Render("~/bundles/winlimitcontrol/winlimitmonitor-scripts")
+}

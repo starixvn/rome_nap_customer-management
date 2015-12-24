@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Win Limit Control">
+    <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+  </Function>
+</Functions>

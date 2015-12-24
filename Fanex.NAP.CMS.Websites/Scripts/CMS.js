@@ -403,6 +403,37 @@ var CMS = (function ($) {
 
             return true;
         },
+        forceNumericInput: function (e, allowDot) {
+            var code = e.which || e.keyCode;
+            switch (code) {
+                case keyboardManager.Enums.KeyCode.None:
+                case keyboardManager.Enums.KeyCode.End:
+                case keyboardManager.Enums.KeyCode.Home:
+                case keyboardManager.Enums.KeyCode.LeftArrow:
+                case keyboardManager.Enums.KeyCode.RightArrow:
+                case keyboardManager.Enums.KeyCode.Delete:
+                case keyboardManager.Enums.KeyCode.Backspace:
+                case keyboardManager.Enums.KeyCode.Tab:
+                case keyboardManager.Enums.KeyCode.Enter:
+                case keyboardManager.Enums.KeyCode.Escape:
+                    return true;
+            }
+
+            if (CMS.isCtrlCombine(e, code)) {
+                return true;
+            }
+
+            if (allowDot) {
+                switch (code) {
+                    case keyboardManager.Enums.KeyCode.Character_Period:
+                    case keyboardManager.Enums.KeyCode.Character_Period1:
+                        return true;
+                }
+            }
+
+            return (code >= keyboardManager.Enums.KeyCode.Number_0 && code <= keyboardManager.Enums.KeyCode.Number_9) ||
+                (code >= keyboardManager.Enums.KeyCode.NumberPad_0 && code <= keyboardManager.Enums.KeyCode.NumberPad_9);
+        },
         isCtrlCombine: function (e, code) {
             var charFromCode = String.fromCharCode(code).toLowerCase();
             return e.ctrlKey &&
@@ -410,6 +441,7 @@ var CMS = (function ($) {
                 charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_c).toLowerCase() ||
                 charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_a).toLowerCase());
         },
+        // gravity: nw | n | ne | w | e | sw | s | se
         showTipsyError: function ($obj, message, gravity) {
             if ($obj.is(':hidden')) {
                 return;

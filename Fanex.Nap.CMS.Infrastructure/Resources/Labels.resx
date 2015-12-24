@@ -129,6 +129,9 @@
   <data name="Message_NoReportData" xml:space="preserve">
     <value>There is no data.</value>
   </data>
+  <data name="RequiredFieldError" xml:space="preserve">
+    <value>Required field!</value>
+  </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
   </data>

@@ -59,3 +59,6 @@
 
 Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
 Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
+
+/Modules/Fanex.Nap.CMS.Settings/obj
+/Modules/Fanex.Nap.CMS.Settings/bin

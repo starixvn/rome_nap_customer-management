@@ -1,8 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.WinLimitControl.Criteria.CurrencySetting
 {
-    using System;
     using Fanex.Data.Repository;
-    using Fanex.NAP.Core.Configuration;
 
     public class GetCurrencyWinLimitCriteria : CriteriaBase
     {
@@ -16,7 +14,7 @@
         {
             get 
             {
-                return NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase);
+                return System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1");
             }
         }
 

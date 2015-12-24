@@ -1,8 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Settings.Criteria
 {
-    using System;
     using Fanex.Data.Repository;
-    using Fanex.NAP.Core.Configuration;
 
     public class GetCurrencyCriteria : CriteriaBase
     {
@@ -10,7 +8,7 @@
         {
             get
             {
-                return NapSettings.Settings.Environment.Equals("LIVE", StringComparison.OrdinalIgnoreCase);
+                return System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1");
             }
         }
 

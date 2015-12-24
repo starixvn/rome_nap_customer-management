@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.PayoutManagem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.WinLimitControl", "Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj", "{946B264B-145F-41F8-9C21-24B4C2B79B07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.Settings", "Modules\Fanex.Nap.CMS.Settings\Fanex.Nap.CMS.Settings.csproj", "{F204FEA9-DC1F-4472-B516-65066B818D00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{946B264B-145F-41F8-9C21-24B4C2B79B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{946B264B-145F-41F8-9C21-24B4C2B79B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{946B264B-145F-41F8-9C21-24B4C2B79B07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F204FEA9-DC1F-4472-B516-65066B818D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F204FEA9-DC1F-4472-B516-65066B818D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F204FEA9-DC1F-4472-B516-65066B818D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F204FEA9-DC1F-4472-B516-65066B818D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,5 +120,6 @@ Global
 		{91147E01-1591-4BC1-852E-0A9FA06B8475} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{946B264B-145F-41F8-9C21-24B4C2B79B07} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{F204FEA9-DC1F-4472-B516-65066B818D00} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 	EndGlobalSection
 EndGlobal

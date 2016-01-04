@@ -3,8 +3,8 @@
   <Function Name="Payout Management">
     <Setting Key="NAP_PayoutTrans_SelPermission" SpName="NAP_PayoutTrans_SelPermission" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_PayoutTrans_SelList" SpName="NAP_PayoutTrans_SelList" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_PayoutTrans_SelDetail" SpName="NAP_PayoutTrans_SelDetail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_PayoutTrans_SelBetTicket" SpName="NAP_PayoutTrans_SelBetTicket" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_PayoutTrans_SelDetail" SpName="NAP_PayoutTrans_SelDetail_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_PayoutTrans_SelBetTicket" SpName="NAP_PayoutTrans_SelBetTicket_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 
 	<Function Name="Colossus Bets Bonus Ticket">

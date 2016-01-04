@@ -48,7 +48,7 @@
         public ActionResult PayoutDetail(int id, int status)
         {
             bool updateTicketStatus = false;
-            bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewSecurityCode, Constant.Policy.Read);
+            bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewWinningCode, Constant.Policy.Read);
             
             var criteria = new GetPayoutDetailCriteria { Id = id };
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
@@ -77,7 +77,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPayoutDetail(GetPayoutDetailCriteria criteria)
         {
-            bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewSecurityCode, Constant.Policy.Read);
+            bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewWinningCode, Constant.Policy.Read);
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
             return JsonData(payoutDetail.PayoutNotes);
         }

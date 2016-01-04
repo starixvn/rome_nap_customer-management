@@ -129,6 +129,9 @@
   <data name="Completed" xml:space="preserve">
     <value>Completed</value>
   </data>
+  <data name="ConfirmUpdateCompleteMessage" xml:space="preserve">
+    <value>Completing this payout will notify Super, Master and Agent of their winning share of Colossus Bets product by sending priviate message to them on the Alpha site and update their balance. This action cannot be undo</value>
+  </data>
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
   </data>
@@ -150,6 +153,9 @@
   <data name="From" xml:space="preserve">
     <value>From</value>
   </data>
+  <data name="FundReceived" xml:space="preserve">
+    <value>Fund received</value>
+  </data>
   <data name="Handler" xml:space="preserve">
     <value>Handler</value>
   </data>
@@ -167,9 +173,6 @@
   </data>
   <data name="RefNo" xml:space="preserve">
     <value>Ref No</value>
-  </data>
-  <data name="SecurityCode" xml:space="preserve">
-    <value>Security Code</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
@@ -227,5 +230,8 @@
   </data>
   <data name="WinLoss" xml:space="preserve">
     <value>Win Loss</value>
+  </data>
+  <data name="WinningCode" xml:space="preserve">
+    <value>Winning Code</value>
   </data>
 </root>

@@ -33,7 +33,7 @@
     {
         <div class="column width-100"></div>
         <div class="column width-120">
-            <span class="bold seccode-inner display-none">@PayoutManagementLabels.SecurityCode</span>
+            <span class="bold seccode-inner display-none">@PayoutManagementLabels.WinningCode</span>
   	    </div>
         <div class="column">
             <div class="seccode-box seccode-inner display-none">
@@ -105,8 +105,10 @@
             Date: '@PayoutManagementLabels.Date',
             Status: '@PayoutManagementLabels.Status',
             Note: '@PayoutManagementLabels.Note',
+            FundReceived: '@PayoutManagementLabels.FundReceived',
             Handler: '@PayoutManagementLabels.Handler',
-            ViewTicketDetailTitle: '@PayoutManagementLabels.ViewTicketDetailTitle'
+            ViewTicketDetailTitle: '@PayoutManagementLabels.ViewTicketDetailTitle',
+            ConfirmUpdateCompleteMessage: '@PayoutManagementLabels.ConfirmUpdateCompleteMessage'
         };
     </script>
     @Scripts.Render("~/bundles/PayoutManagement/PayoutDetailScripts")

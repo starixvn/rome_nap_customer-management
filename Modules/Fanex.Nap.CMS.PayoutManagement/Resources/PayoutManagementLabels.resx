@@ -222,6 +222,9 @@
   <data name="Verified" xml:space="preserve">
     <value>Verified</value>
   </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
   <data name="ViewTicketDetailTitle" xml:space="preserve">
     <value>Ticket details of</value>
   </data>

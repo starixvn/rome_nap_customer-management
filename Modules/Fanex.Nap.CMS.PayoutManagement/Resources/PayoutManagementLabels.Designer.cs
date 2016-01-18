@@ -376,6 +376,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticket details of.
         /// </summary>
         public static string ViewTicketDetailTitle {

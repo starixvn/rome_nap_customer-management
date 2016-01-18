@@ -18,14 +18,14 @@
     var $payoutlistLink = $('#payoutlist-link'),
         $refno = $('#refno'),
         $sitelicensee = $('#sitelicensee'),
-        $seccodeBox = $('.seccode-inner'),
-        $seccodeButton = $('#seccode-button'),
-        $seccodeText = $('#seccode-text'),
         $amount = $('#amount'),
         $currency = $('#currency'),
         $ticketNote = $('#ticketNote'),
         $selectTicketStatus = $('#selectTicketStatus'),
         $updateButton = $('#update-button'),
+        $winningCodeLabel = $('#winning-code-label'),
+        $winningCode = $('#WinningCode'),
+        $verifyButton = $('#verify-button'),
         $ticketDetailContainer = $('#ticketDetailContainer');
 
     function trimField(value) {
@@ -120,11 +120,14 @@
         $refno.html(payoutDetail.RefNo);
         $sitelicensee.html(payoutDetail.Site);
         if (payoutDetail.SecurityCode && payoutDetail.SecurityCode.length > 0) {
-            $seccodeBox.removeClass('display-none');
-            $seccodeText.html('******');
+            $winningCode.removeClass('display-none');
+            $winningCodeLabel.removeClass('display-none');
+            $verifyButton.removeClass('display-none');
         }
         else {
-            $seccodeBox.addClass('display-none');
+            $winningCode.addClass('display-none');
+            $winningCodeLabel.addClass('display-none');
+            $verifyButton.addClass('display-none');
         }
 
         $amount.attr('data-transid', payoutDetail.Id)
@@ -185,6 +188,18 @@
         });
     }
 
+    function checkWinningCode()
+    {
+        var url = rootUrl + 'PayoutManagement/PayoutList/CheckWinningCode';
+        CMS.callAjax(self, url, { winningCode: $winningCode.val() }, function (result) {
+            if (result == 'true') {
+                CMS.showSuccessMessage('WINNING CODE IS VALID.');
+            } else {
+                CMS.showErrorMessage('WINNING CODE IS INVALID.');
+            }
+        })
+    }
+
     function getUpdateTicketStatusParams()
     {
         return {
@@ -196,17 +211,6 @@
 
     function initialize() {
         getPayoutDetail();
-
-        $seccodeButton.click(function () {
-            if ($seccodeText.html() === '******') {
-                $seccodeText.html(payoutDetail.SecurityCode);
-                $seccodeButton.text(payoutManagementLabels.Hide);
-            }
-            else {
-                $seccodeText.html('******');
-                $seccodeButton.text(payoutManagementLabels.Show);
-            }
-        });
         $selectTicketStatus.val(currentStatus);
 
         $updateButton.click(function () {
@@ -215,12 +219,21 @@
                 return;
             }
 
-            if (payoutDetail.ProductId == 204 && parseInt($selectTicketStatus.val()) == statusEnum.Completed ) {
+            var slectedStatus = parseInt($selectTicketStatus.val());
+            if (payoutDetail.ProductId == 204 && (slectedStatus == statusEnum.Completed || slectedStatus == statusEnum.Expired)) {
                 CMS.showConfirmMessage(payoutManagementLabels.ConfirmUpdateCompleteMessage, updateTicketStatus);
             } else {
                 updateTicketStatus();
             }
-            
+        });
+
+        $verifyButton.click(function () {
+            if (($winningCode.val()).length === 0) {
+                CMS.showTipsyError($winningCode, 'Required field!', 'se');
+                return;
+            }
+
+            checkWinningCode();
         });
 
         $payoutlistLink.click(function () { window.location = rootUrl + 'PayoutManagement/PayoutList/Index'; });

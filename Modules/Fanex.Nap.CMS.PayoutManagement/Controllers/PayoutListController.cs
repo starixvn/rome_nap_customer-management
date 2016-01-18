@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Controllers
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Constants;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -11,8 +10,10 @@
     using Fanex.Nap.CMS.PayoutManagement.Services;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Infrastructure.Web;
     using Newtonsoft.Json;
-
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     public class PayoutListController : BaseController
     {
         private readonly IPayoutListService _payoutService;
@@ -79,6 +80,7 @@
         {
             bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewWinningCode, Constant.Policy.Read);
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
+            SessionManager.Set(PayoutManagementConst.WinningCode, payoutDetail.SecurityCode);
             return JsonData(payoutDetail.PayoutNotes);
         }
 
@@ -88,6 +90,12 @@
         {
             var result = _payoutService.UpdateTicketStatus(criteria);
             return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
+        public ActionResult CheckWinningCode(string WinningCode)
+        {
+            return JsonData(WinningCode.Equals(SessionManager.Get<string>(PayoutManagementConst.WinningCode)));
         }
 
         [NonAction]

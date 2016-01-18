@@ -33,13 +33,15 @@
     {
         <div class="column width-100"></div>
         <div class="column width-120">
-            <span class="bold seccode-inner display-none">@PayoutManagementLabels.WinningCode</span>
+            <span id="winning-code-label" class="bold seccode-inner display-none">@PayoutManagementLabels.WinningCode</span>
   	    </div>
         <div class="column">
-            <div class="seccode-box seccode-inner display-none">
+            @Html.TextBox("WinningCode", string.Empty, new { @class="display-none", maxlength = "50", autocomplete = "off" })
+            <button id="verify-button" type="button" class="blue-button display-none">@PayoutManagementLabels.Verify</button>
+            @*<div class="seccode-box seccode-inner display-none">
                 <span id="seccode-text">******</span>
                 <button type="button" class="blue-button" id="seccode-button">@PayoutManagementLabels.Show</button>
-            </div>
+            </div>*@
   	    </div>
     }
 </div>

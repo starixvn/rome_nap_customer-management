@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Colossus Bets Bonus Ticket List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head {
+    @Styles.Render("~/bundles/ColossusBets/BonusTicketStyles")
+}
+
+@section Headline
+{
+<div class="title">
+	<div><span class="curr">@ViewBag.Title</span></div>
+</div>
+}
+
+<div class="content-grid">
+	<div class="freegrid display-none" id="freegrid"></div>
+</div>
+
+@if ((bool)ViewBag.HostPermission)
+{
+<div class="button-div">
+	@Html.ActionLink(ColossusBetsLabels.New, "BonusTicketDetail", "BonusTicket", null, new { area = "ColossusBets", @class="blue-button" })
+</div>
+}
+
+@section Foot {
+<script type="text/javascript">
+	var data = $.parseJSON('@Html.Raw(Model)');
+	var colossusBetsLabels = {
+		Member: '@ColossusBetsLabels.Member',
+		RefNo: '@ColossusBetsLabels.RefNo',
+		Pool: '@ColossusBetsLabels.Pool',
+		League: '@ColossusBetsLabels.League',
+		Match: '@ColossusBetsLabels.Match',
+		Choice: '@ColossusBetsLabels.Choice',
+		Status: '@ColossusBetsLabels.Status',
+		Detail: '@ColossusBetsLabels.Detail'
+	};
+</script>
+    @Scripts.Render("~/bundles/ColossusBets/BonusTicketScripts")
+}

@@ -1,0 +1,26 @@
+﻿.button-div {
+    display: inline-block;
+    margin: 10px;
+}
+a.blue-button {
+	display: block;
+	line-height: 25px;
+}
+/* Bonus Ticket Detail */
+.form {
+	background-color: transparent;
+	border: 0;
+	box-shadow: none;
+}
+.form .form-row .padding-left100 {
+	padding-left: 100px;
+}
+.form .form-row .width-265 {
+	width: 265px;
+}
+.width-246 {
+	width: 246px
+}
+.width-60 {
+	width: 60px
+}

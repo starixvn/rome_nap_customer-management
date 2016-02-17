@@ -75,5 +75,8 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string PayoutForONEworksLicensees = "PayoutForONEworksLicensees";
         public const string PayoutForCredit = "PayoutForCredit";
         public const string PayoutViewSecurityCode = "ViewSecurityCode";
+
+        // ColossusBets - Insert Bonus Ticket
+        public const string ColossusBetsInsertBonusTicket = "InsertColossusBetsBonusTicket";
     }
 }

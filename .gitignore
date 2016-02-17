@@ -56,11 +56,14 @@
 /Modules/Fanex.Nap.CMS.NotificationSetting/StyleCop.Cache
 /Fanex.Nap.CMS.Infrastructure/StyleCop.Cache
 /Modules/Fanex.Nap.CMS.PayoutManagement/StyleCop.Cache
+/Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
 
-Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
-Modules/Fanex.Nap.CMS.WinLimitControl/StyleCop.Cache
 
 /Modules/Fanex.Nap.CMS.Settings/obj
 /Modules/Fanex.Nap.CMS.Settings/bin
 .vs/Fanex.NAP.CMS.Site/v14/.suo
 .vs/config/applicationhost.config
+
+/Modules/Fanex.Nap.CMS.ColossusBets/bin
+/Modules/Fanex.Nap.CMS.ColossusBets/obj
+/Modules/Fanex.Nap.CMS.ColossusBets/StyleCop.Cache

@@ -68,7 +68,7 @@
 	function validateAmount() {
 		// 112 = WON
 		if ($status.val() === '112') {
-			var isValid = validateEmptyInput($amount);
+			return validateEmptyInput($amount);
 		}
 
 		return true;
@@ -83,14 +83,6 @@
 			return undefined;
 		}
 
-		if (!validateEmptyInput($league)) {
-			return undefined;
-		}
-
-		if (!validateEmptyInput($match)) {
-			return undefined;
-		}
-
 		if (!validateEmptyInput($choice)) {
 			return undefined;
 		}
@@ -98,6 +90,8 @@
 		if (!validateAmount()) {
 			return undefined;
 		}
+
+		var statusId = $status.val();
 
 		return {
 			refno: $refno.val().trim(),
@@ -107,7 +101,7 @@
 			winAmount: $amount.val().trim(),
 			custid: custId,
 			result: $result.val(),
-			statusId: $status.val()
+			statusId: isNaN(statusId) ? $status.data('statusid') : statusId
 		};
 	}
 
@@ -122,7 +116,9 @@
 				});
 			};
 
-			if (formData.statusId !== '0') {
+			var showConfirm = !isNaN($status.val()) && formData.statusId !== '0';
+
+			if (showConfirm) {
 				CMS.showConfirmMessage(
 					colossusBetsLabels.SaveBonusTicketConfirmMessage,
 					ajax
@@ -146,19 +142,12 @@
 		});
 
 		if (custId === 0) {
-			$amount.val('');
 			$refno
-				.val('')
 				.focus()
 				.blur(function () {
 					getBonusTicketByRefno();
 				});
 		}
-		else {
-			$refno.attr('disabled', 'disabled');
-		}
-
-		$status.attr('disabled', 'disabled');
 	}
 
 	initialize();

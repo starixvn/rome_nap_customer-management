@@ -4,6 +4,28 @@
 
     public class DoSettlement
     {
+        public DoSettlement()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+
+            SettlementUrl = appSettings["ColossusBetsAPISettlementURL"];
+
+            Vendor = appSettings["ColossusBetsAPISettlementVendor"];
+            VendorKey = appSettings["ColossusBetsAPISettlementVendorKey"];
+
+            Type = appSettings["ColossusBetsAPISettlementType"];
+            ProductId = int.Parse(appSettings["ColossusBetsAPISettlementProductId"]);
+            GameId = int.Parse(appSettings["ColossusBetsAPISettlementGameId"]);
+
+            Status = 0;
+            Payout = 0;
+            Odds = 0;
+            Stake = 0;
+
+            Ext1 = "0";
+            Ext2 = "0";
+        }
+
         public string SettlementUrl { get; set; }
 
         public string Vendor { get; set; }
@@ -35,28 +57,6 @@
         public string Ext2 { get; set; }
 
         public string Ext3 { get; set; }
-
-        public DoSettlement()
-        {
-            var appSettings = ConfigurationManager.AppSettings;
-
-            SettlementUrl = appSettings["ColossusBetsAPISettlementURL"];
-
-            Vendor = appSettings["ColossusBetsAPISettlementVendor"];
-            VendorKey = appSettings["ColossusBetsAPISettlementVendorKey"];
-
-            Type = appSettings["ColossusBetsAPISettlementType"];
-            ProductId = int.Parse(appSettings["ColossusBetsAPISettlementProductId"]);
-            GameId = int.Parse(appSettings["ColossusBetsAPISettlementGameId"]); ;
-
-            Status = 0;
-            Payout = 0;
-            Odds = 0;
-            Stake = 0;
-
-            Ext1 = "0";
-            Ext2 = "0";
-        }
 
         public string SerializeJSON()
         {

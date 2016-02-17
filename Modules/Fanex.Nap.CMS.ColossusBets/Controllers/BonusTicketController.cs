@@ -107,7 +107,7 @@
                 new IdNameModel { Id = (int)BonusTicketStatus.LOSE, Name = BonusTicketStatus.LOSE.ToString() }
             };
 
-            ViewBag.Status = new SelectList(statuses, "Id", "Name"); ;
+            ViewBag.Status = new SelectList(statuses, "Id", "Name");
         }
     }
 }

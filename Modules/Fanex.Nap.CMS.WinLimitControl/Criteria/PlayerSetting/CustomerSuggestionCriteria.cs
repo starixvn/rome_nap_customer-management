@@ -18,7 +18,7 @@
         {
             get
             {
-                return System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1"); ;
+                return System.Configuration.ConfigurationManager.AppSettings["ExcludeTestData"].Equals("1");
             }
         }
 

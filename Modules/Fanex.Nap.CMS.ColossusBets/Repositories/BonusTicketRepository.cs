@@ -30,7 +30,7 @@
                     {
                         return new BonusTicketDetail
                         {
-                            RefNo = Convert.ToInt64(reader["refno"]),
+                            RefNo = Converter.ToString2(reader["refno"]),
                             Pool = Converter.ToString2(reader["poolname"]),
                             CustId = Converter.ToInt(reader["custid"]),
                             Username = Converter.ToString2(reader["username"]),

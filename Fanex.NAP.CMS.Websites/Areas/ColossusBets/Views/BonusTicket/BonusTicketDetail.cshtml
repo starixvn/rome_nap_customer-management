@@ -1,6 +1,9 @@
 ﻿@{
     ViewBag.Title = "Colossus Bets Bonus Ticket Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool editMode = Model.CustId > 0;
+	bool disabledStatusAmount = editMode && Model.StatusId != 0;
 }
 
 @model Fanex.Nap.CMS.ColossusBets.Models.BonusTicketDetail
@@ -20,21 +23,21 @@
 {
 <div class="form-row">
 	<div class="lbl-field bold width-60">
-		@Html.LabelFor(m => m.RefNo)
+		<label for="RefNo">@ColossusBetsLabels.RefNo</label>
 	</div>
 	<div class="edit-field">
-		@Html.TextBoxFor(m => m.RefNo, new { @class = "" })
+		<input type="text" id="RefNo" class="" value="@(editMode ? Model.RefNo.ToString() : string.Empty)" @(editMode ? "disabled" : string.Empty) />
 	</div>
 </div>
 <div class="form-row">
 	<div class="lbl-field bold width-60">
-		@Html.LabelFor(m => m.Pool)
+		<label>@ColossusBetsLabels.Pool</label>
 	</div>
 	<div class="lbl-field width-265" id="Pool">
 		@Model.Pool
 	</div>
 	<div class="lbl-field bold width-60 padding-left100">
-		@Html.LabelFor(m => m.Username)
+		<label>@ColossusBetsLabels.Member</label>
 	</div>
 	<div class="lbl-field width-265" id="Username">
 		@Model.Username
@@ -42,40 +45,41 @@
 </div>
 <div class="form-row">
 	<div class="lbl-field bold width-60">
-		@Html.LabelFor(m => m.League)
+		<label for="League">@ColossusBetsLabels.League</label>
 	</div>
 	<div class="edit-field">
-		@Html.TextBoxFor(m => m.League, new { @class = "" })
+		<input type="text" id="League" class="" value="@Model.League" />
 	</div>
 	<div class="lbl-field bold width-60 padding-left100">
-		@Html.LabelFor(m => m.Match)
+		<label for="Match">@ColossusBetsLabels.Match</label>
 	</div>
 	<div class="edit-field">
-		@Html.TextBoxFor(m => m.Match, new { @class = "" })
+		<input type="text" id="Match" class="" value="@Model.Match" />
 	</div>
 </div>
 <div class="form-row">
 	<div class="lbl-field bold width-60">
-		@Html.LabelFor(m => m.Choice)
+		<label for="Choice">@ColossusBetsLabels.Choice</label>
 	</div>
 	<div class="edit-field">
-		@Html.TextBoxFor(m => m.Choice, new { @class = "" })
+		<input type="text" id="Choice" class="" value="@Model.Choice" />
 	</div>
 	<div class="lbl-field bold width-60 padding-left100">
-		@Html.LabelFor(m => m.Result)
+		<label for="Result">@ColossusBetsLabels.ResultOptional</label>
 	</div>
 	<div class="edit-field">
-		@Html.TextBoxFor(m => m.Result, new { @class = "" })
+		<input type="text" id="Result" class="" value="@Model.Result" />
 	</div>
 </div>
 <div class="form-row">
 	<div class="lbl-field width-60 bold">
-		@Html.LabelFor(m => m.Status)
+		<label for="Status">@ColossusBetsLabels.Status</label>
 	</div>
 	<div class="edit-field">
-		@if (Model.CustId > 0 && Model.StatusId != 0)
+		@if (disabledStatusAmount)
 		{
-			@Html.TextBoxFor(m => m.Status, new { @class = "", disabled = "disabled" })
+			<input type="text" id="Status" class="" disabled
+				value="@Model.Status" data-statusid="@Model.StatusId" />
 		}
 		else
 		{
@@ -83,10 +87,13 @@
 		}
 	</div>
 	<div class="lbl-field bold width-60 padding-left100">
-		@Html.LabelFor(m => m.WinAmount)
+		<label for="WinAmount">@ColossusBetsLabels.Amount</label>
 	</div>
 	<div class="edit-field">
-		<input type="text" id="WinAmount" class="" maxlength="12" onkeydown="return CMS.forceNumericInput(event);" value="@Model.WinAmount.ToString("N2")"/>
+		<input type="text" id="WinAmount" class="" maxlength="12"
+			onkeydown="return CMS.forceNumericInput(event);"
+			value="@(editMode ? Model.WinAmount.ToString("N2") : string.Empty)"
+			@(disabledStatusAmount ? "disabled" : string.Empty) />
 	</div>
 </div>
 <div class="form-row">

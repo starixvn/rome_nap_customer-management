@@ -78,8 +78,7 @@
 	<div class="edit-field">
 		@if (disabledStatusAmount)
 		{
-			<input type="text" id="Status" class="" disabled
-				value="@Model.Status" data-statusid="@Model.StatusId" />
+			<input type="text" id="Status" class="" value="@Model.Status" data-statusid="@Model.StatusId" />
 		}
 		else
 		{
@@ -92,14 +91,13 @@
 	<div class="edit-field">
 		<input type="text" id="WinAmount" class="" maxlength="12"
 			onkeydown="return CMS.forceNumericInput(event);"
-			value="@(editMode ? Model.WinAmount.ToString("N2") : string.Empty)"
-			@(disabledStatusAmount ? "disabled" : string.Empty) />
+			value="@(editMode ? Model.WinAmount.ToString("N2") : string.Empty)" />
 	</div>
 </div>
 <div class="form-row">
 	<div class="lbl-field width-60">&nbsp;</div>
 	<div class="edit-field">
-		@if ((bool)ViewBag.HostPermission)
+		@if ((bool)ViewBag.HostPermission && !disabledStatusAmount)
 		{
 			<button type="submit" class="blue-button">@ColossusBetsLabels.Save</button>
 		}

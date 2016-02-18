@@ -22,14 +22,14 @@
 
         public BonusTicketDetail GetBonusTicketDetail(long refno)
         {
-            ICriteria criteria = new GetBonusTicketDetailCriteria { TranslogId = refno };
+            ICriteria criteria = new GetBonusTicketDetailCriteria { RefNo = refno };
 
             return _bonusTicketRepository.GetBonusTicketDetail(criteria);
         }
 
         public BonusTicketDetail GetBonusTicketDetailByRefNo(long refno)
         {
-            ICriteria criteria = new GetBonusTicketDetailByRefNoCriteria { TranslogId = refno };
+            ICriteria criteria = new GetBonusTicketDetailByRefNoCriteria { RefNo = refno };
 
             return _bonusTicketRepository.GetBonusTicketDetailByRefNo(criteria);
         }

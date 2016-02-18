@@ -4,7 +4,7 @@
 
     public class GetBonusTicketDetailCriteria : CriteriaBase
     {
-        public long TranslogId { get; set; }
+        public long RefNo { get; set; }
 
         public override string GetSettingKey()
         {

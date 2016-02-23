@@ -5,6 +5,7 @@
     using System.Text;
     using Criteria;
     using Data.Repository;
+    using Infrastructure.Helpers;
     using Infrastructure.Models;
     using Models;
     using Newtonsoft.Json;
@@ -77,6 +78,8 @@
                 }
                 catch (System.Exception ex)
                 {
+                    Logs.Error(ex);
+
                     result = new Result { Code = 500, Message = ex.Message };
                 }
             }

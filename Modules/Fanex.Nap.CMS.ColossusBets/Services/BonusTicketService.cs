@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.ColossusBets.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using System.Text;
     using Criteria;
@@ -63,26 +65,56 @@
                 Ext3 = amount.ToString()
             };
 
-            using (WebClient client = new WebClient())
+            try
             {
-                client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-                var data = Encoding.UTF8.GetBytes(model.SerializeJSON());
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(new Uri(model.SettlementUrl));
+                httpWebRequest.Accept = "application/json";
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
 
-                try
-                {
-                    var results = client.UploadData(model.SettlementUrl, "POST", data);
-                    string jsonResult = Encoding.UTF8.GetString(results);
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                byte[] bytes = encoding.GetBytes(model.SerializeJSON());
 
-                    var resultAPI = JsonConvert.DeserializeObject<ResultAPI>(jsonResult);
-                    result = new Result { Code = resultAPI.ErrorCode, Message = resultAPI.ErrorMsg };
-                }
-                catch (System.Exception ex)
-                {
-                    Logs.Error(ex);
+                Stream requestStream = httpWebRequest.GetRequestStream();
+                requestStream.Write(bytes, 0, bytes.Length);
+                requestStream.Flush();
+                requestStream.Close();
 
-                    result = new Result { Code = 500, Message = ex.Message };
-                }
+                var response = httpWebRequest.GetResponse();
+
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                string jsonResult = reader.ReadToEnd();
+
+                var resultAPI = JsonConvert.DeserializeObject<ResultAPI>(jsonResult);
+                result = new Result { Code = resultAPI.ErrorCode, Message = resultAPI.ErrorMsg };
             }
+            catch (Exception ex)
+            {
+                Logs.Error(ex);
+                result = new Result { Code = 500, Message = ex.Message };
+            }
+
+            //using (WebClient client = new WebClient())
+            //{
+            //    client.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+            //    var data = Encoding.UTF8.GetBytes(model.SerializeJSON());
+
+            //    try
+            //    {
+            //        var results = client.UploadData(model.SettlementUrl, "POST", data);
+            //        string jsonResult = Encoding.UTF8.GetString(results);
+
+            //        var resultAPI = JsonConvert.DeserializeObject<ResultAPI>(jsonResult);
+            //        result = new Result { Code = resultAPI.ErrorCode, Message = resultAPI.ErrorMsg };
+            //    }
+            //    catch (System.Exception ex)
+            //    {
+            //        Logs.Error(ex);
+
+            //        result = new Result { Code = 500, Message = ex.Message };
+            //    }
+            //}
 
             return result;
         }

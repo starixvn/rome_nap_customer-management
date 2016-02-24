@@ -60,45 +60,31 @@
 
         public string SerializeJSON()
         {
-            var buffer = new string[] 
-            {
-                "{",
-                "vendor:",
-                Vendor,
-                ",vendorKey:",
-                VendorKey,
-                ",data:{type:",
-                Type,
-                ",productID:",
-                ProductId.ToString(),
-                ",gameID:",
-                GameId.ToString(),
-                ",eventID:",
-                EventId.ToString(),
-                ",tickets:[{ticketID:",
-                TicketId,
-                ",customerID:",
-                CustomerId.ToString(),
-                ",status:",
-                Status.ToString(),
-                ",payout:",
-                Payout.ToString(),
-                ",odds:",
-                Odds.ToString(),
-                ",stake:",
-                Stake.ToString(),
-                ",ext1:",
-                Ext1,
-                ",ext2:",
-                Ext2,
-                ",ext3:",
-                Ext3,
-                "}]",
-                "}",
-                "}"
-            };
+            string jsonFormat = "{{" +
+                "\"vendor\":\"{0}\"," +
+                "\"vendorKey\":\"{1}\"," +
+                "\"data\":" +
+                "{{" +
+                    "\"type\":\"{2}\"," +
+                    "\"productID\":\"{3}\"," +
+                    "\"gameID\":\"{4}\"," +
+                    "\"eventID\":\"{5}\"," +
+                    "\"tickets\":" +
+                    "[{{" +
+                        "\"ticketID\":\"{6}\"," +
+                        "\"customerID\":\"{7}\"," +
+                        "\"status\":\"0\"," +
+                        "\"payout\":\"0\"," +
+                        "\"odds\":\"0\"," +
+                        "\"stake\":\"0\"," +
+                        "\"ext1\":\"0\"," +
+                        "\"ext2\":\"0\"," +
+                        "\"ext3\":\"{8}\"" +
+                    "}}]" +
+                "}}" +
+            "}}";
 
-            return string.Join(string.Empty, buffer);
+            return string.Format(jsonFormat, Vendor, VendorKey, Type, ProductId, GameId, EventId, TicketId, CustomerId, Ext3);
         }
     }
 }

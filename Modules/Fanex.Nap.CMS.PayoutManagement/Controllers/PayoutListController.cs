@@ -14,6 +14,7 @@
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Web.Mvc;
+
     public class PayoutListController : BaseController
     {
         private readonly IPayoutListService _payoutService;
@@ -93,9 +94,9 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
-        public ActionResult CheckWinningCode(string WinningCode)
+        public ActionResult CheckWinningCode(string winningCode)
         {
-            return JsonData(WinningCode.Equals(SessionManager.Get<string>(PayoutManagementConst.WinningCode)));
+            return JsonData(winningCode.Equals(SessionManager.Get<string>(PayoutManagementConst.WinningCode)));
         }
 
         [NonAction]

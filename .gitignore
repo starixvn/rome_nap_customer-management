@@ -61,8 +61,7 @@
 
 /Modules/Fanex.Nap.CMS.Settings/obj
 /Modules/Fanex.Nap.CMS.Settings/bin
-.vs/Fanex.NAP.CMS.Site/v14/.suo
-.vs/config/applicationhost.config
+.vs/*
 
 /Modules/Fanex.Nap.CMS.ColossusBets/bin
 /Modules/Fanex.Nap.CMS.ColossusBets/obj

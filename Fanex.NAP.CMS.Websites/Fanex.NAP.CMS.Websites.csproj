@@ -263,6 +263,9 @@
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -507,6 +510,10 @@
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
+      <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
+      <Name>Fanex.Nap.CMS.ColossusBets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
@@ -533,7 +540,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />
@@ -593,6 +602,7 @@
     </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -650,6 +660,9 @@
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Web.config" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Index.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\BonusTicketDetail.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

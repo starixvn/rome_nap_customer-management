@@ -227,7 +227,7 @@
                 showOtherMonths: true,
                 selectOtherMonths: true,
                 minDate: '01/01/2012',
-                maxDate: currentDate
+                maxDate: null
             },
             firstDatePicker: {
                 Id: 'dpk-fromdate',

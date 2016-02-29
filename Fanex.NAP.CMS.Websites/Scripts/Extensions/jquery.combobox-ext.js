@@ -166,6 +166,14 @@
             this.a.button('enable');
         },
 
+        readonly: function () {
+            this.input.attr("readonly", true);
+        },
+
+        removeReadonly: function () {
+            this.input.attr("readonly", false);
+        },
+
         destroy: function () {
             this.wrapper.remove();
             this.element.show();

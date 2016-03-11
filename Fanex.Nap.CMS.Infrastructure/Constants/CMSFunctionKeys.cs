@@ -78,5 +78,8 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // ColossusBets - Insert Bonus Ticket
         public const string ColossusBetsInsertBonusTicket = "InsertColossusBetsBonusTicket";
+
+        // Virtual Setting Control
+        public const string VirtualSettingMonitor = "VirtualSettingMonitor";
     }
 }

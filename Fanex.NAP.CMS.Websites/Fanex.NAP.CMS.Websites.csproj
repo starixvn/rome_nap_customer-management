@@ -213,6 +213,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -220,6 +221,7 @@
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -227,6 +229,7 @@
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Master\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -238,6 +241,7 @@
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -247,6 +251,7 @@
     <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -256,6 +261,7 @@
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -287,6 +293,8 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\VirtualSettingMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
@@ -526,6 +534,10 @@
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.VirtualSettingControl\Fanex.Nap.CMS.VirtualSettingControl.csproj">
+      <Project>{fa19db02-6356-4be1-b7eb-642884adf9e3}</Project>
+      <Name>Fanex.Nap.CMS.VirtualSettingControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj">
       <Project>{946B264B-145F-41F8-9C21-24B4C2B79B07}</Project>
       <Name>Fanex.Nap.CMS.WinLimitControl</Name>
@@ -663,6 +675,10 @@
     <Content Include="Areas\ColossusBets\Views\Web.config" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Index.cshtml" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\BonusTicketDetail.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Styles\VirtualSettingMonitor.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\ViewHistoryModal.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\Web.config" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -58,5 +58,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 
             return new List<T>();
         }
+
+        public virtual IEnumerable<T> GetData<T>(Fanex.Data.Repository.ICriteria criteria)
+        {
+            return (new Fanex.Data.Repository.DynamicRepository()).Fetch<T>(criteria);
+        }
     }
 }

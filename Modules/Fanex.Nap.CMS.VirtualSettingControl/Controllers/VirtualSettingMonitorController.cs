@@ -57,8 +57,8 @@
             criteria.ReportToDate = DateTime.Now;
             var monthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
             var custMarginHistory = _virtualSettingMonitorService.GetCustomerVirtualSettingHistories(criteria, monthList);
-            
-            return Json(new { MarginHistory = custMarginHistory, MonthList = GetMonthListName(monthList) }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { MarginHistory = custMarginHistory, MonthList = GetMonthListName(GenerateMonthList(criteria.ReportToDate.Month, 12)) }, JsonRequestBehavior.AllowGet);
         }
 
         #region Utilities

@@ -2,6 +2,6 @@
 <Functions>
   <Function Name="Virtual Setting Control">
     <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoring" SpName="NAP_Report_CustMngt_VirtualRateMonitoring" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
-    <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="180"/>
   </Function>
 </Functions>

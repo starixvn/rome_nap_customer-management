@@ -117,7 +117,8 @@ var VirtualSettingMonitor = function () {
         isSoundAlert = false;
         for (var i = startIndex; i < endIndex; i++) {
             customer = data.CustMargin[i];
-            customData = ' data-custid="' + customer.CustId + '" data-username="' + customer.Username + '" data-sportid="' + searchParameters.SportId + '"';
+            var last3MonthsData = [customer.CustMargin[0], customer.CustMargin[1], customer.CustMargin[2]];
+            customData = ' data-custid="' + customer.CustId + '" data-username="' + customer.Username + '" data-sportid="' + searchParameters.SportId + '" data-l3mdata="' + last3MonthsData + '"';
             cssClass = i % 2 == 0 ? '' : 'freegrid-even';
 
             bodyRows.push({
@@ -189,8 +190,9 @@ var VirtualSettingMonitor = function () {
                 var custid = $this.data('custid');
                 var username = $this.data('username');
                 var sportid = $this.data('sportid');
+                var l3mdata = $this.data('l3mdata');
 
-                viewHistoryModal.initialize(custid, username, sportid);
+                viewHistoryModal.initialize(custid, username, sportid, l3mdata);
             });
     }
 

@@ -24,6 +24,8 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
             bodyRows.push('</td></tr>');
         }
         else {
+
+            var last3mData = l3mdata.split(',');
             for (var i = 0; i < 3; i++)
             {
                 var row = ['<tr><td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">'];
@@ -32,8 +34,10 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
 
                 row.push('<td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">');
                 row.push(formatNumber(i == 0
-                ? results.MarginHistory.CustMargin[resultsLength - 1].Turnover
-                : i == 1 ? results.MarginHistory.CustMargin[resultsLength - 1].Winloss : results.MarginHistory.CustMargin[resultsLength - 1].Margin));
+                ? (results.MarginHistory.CustMargin[resultsLength - 1].Turnover + last3mData[0] + last3mData[3] + last3mData[6])
+                : i == 1
+                    ? (results.MarginHistory.CustMargin[resultsLength - 1].Winloss + last3mData[1] + last3mData[4] + last3mData[7])
+                    : (results.MarginHistory.CustMargin[resultsLength - 1].Margin + last3mData[2] + last3mData[5] + last3mData[8])));
                 row.push('</td>');
 
                 for (var j = 0, max = resultsLength - 4; j < max; j++) {
@@ -47,11 +51,10 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
 
                 // build from existed data
                 for (var k = 0; k < 3; k++) {
-                    var history = l3mdata[k];
                     row.push('<td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">');
                     row.push(formatNumber(i == 0
-                        ? history.Turnover
-                        : i == 1 ? history.Winloss : history.Margin));
+                        ? last3mData[k * 3]
+                        : i == 1 ? last3mData[k * 3 + 1] : last3mData[k * 3 + 2]));
                     row.push('</td>');
                 }
 

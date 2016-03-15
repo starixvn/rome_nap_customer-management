@@ -117,7 +117,9 @@ var VirtualSettingMonitor = function () {
         isSoundAlert = false;
         for (var i = startIndex; i < endIndex; i++) {
             customer = data.CustMargin[i];
-            var last3MonthsData = [customer.CustMargin[0], customer.CustMargin[1], customer.CustMargin[2]];
+            var last3MonthsData = [customer.CustMargin[0].Turnover, customer.CustMargin[0].Winloss, customer.CustMargin[0].Margin,
+                customer.CustMargin[1].Turnover, customer.CustMargin[1].Winloss, customer.CustMargin[1].Margin,
+                customer.CustMargin[2].Turnover, customer.CustMargin[2].Winloss, customer.CustMargin[2].Margin];
             customData = ' data-custid="' + customer.CustId + '" data-username="' + customer.Username + '" data-sportid="' + searchParameters.SportId + '" data-l3mdata="' + last3MonthsData + '"';
             cssClass = i % 2 == 0 ? '' : 'freegrid-even';
 

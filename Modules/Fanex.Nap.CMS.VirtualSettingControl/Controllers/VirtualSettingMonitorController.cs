@@ -41,7 +41,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetVirtualSettingMonitorCriteria criteria)
         {
-            criteria.ReportToDate = DateTime.Now;
+            criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-12-31");
             var monthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
             var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
             Array.Reverse(reversedMonthList);
@@ -54,7 +54,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
         public ActionResult ViewHistory(GetCustomerMarginHistoryCriteria criteria)
         {
-            criteria.ReportToDate = DateTime.Now;
+            criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-12-31");
             var monthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
             var custMarginHistory = _virtualSettingMonitorService.GetCustomerVirtualSettingHistories(criteria, monthList);
 

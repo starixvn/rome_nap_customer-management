@@ -34,7 +34,7 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
 
                 row.push('<td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">');
                 row.push(formatNumber(i == 0
-                ? (results.MarginHistory.CustMargin[resultsLength - 1].Turnover + parseFloat(last3mData[0]) + (last3mData[3]) + parseFloat(last3mData[6]))
+                ? (results.MarginHistory.CustMargin[resultsLength - 1].Turnover + parseFloat(last3mData[0]) + parseFloat(last3mData[3]) + parseFloat(last3mData[6]))
                 : i == 1
                     ? (results.MarginHistory.CustMargin[resultsLength - 1].Winloss + parseFloat(last3mData[1]) + parseFloat(last3mData[4]) + parseFloat(last3mData[7]))
                     : (results.MarginHistory.CustMargin[resultsLength - 1].Margin + parseFloat(last3mData[2]) + parseFloat(last3mData[5]) + parseFloat(last3mData[8]))));

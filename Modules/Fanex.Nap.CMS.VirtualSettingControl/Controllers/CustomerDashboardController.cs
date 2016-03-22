@@ -49,7 +49,7 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
-        public ActionResult GetDashboardData(GetVirtualSettingMonitorCriteria criteria)
+        public ActionResult Search(GetVirtualSettingMonitorCriteria criteria)
         {
             criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-12-31");
             var monthList = GenerateMonthList(criteria.ReportToDate.Month, 3);

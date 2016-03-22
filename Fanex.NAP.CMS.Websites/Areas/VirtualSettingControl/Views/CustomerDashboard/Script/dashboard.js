@@ -5,12 +5,12 @@
 ////'use strict';
 
 $(document).ready(function () {
-    var Dashboard = new Fanex.NAP.CMS.Reports.Dashboard();
+    var Dashboard = new Fanex.TGRS.Reports.Dashboard();
     Dashboard.Initialize();
 });
 
-Namespace.Register("Fanex.NAP.CMS.Reports.Dashboard");
-Fanex.NAP.CMS.Reports.Dashboard = function () {
+Namespace.Register("Fanex.TGRS.Reports.Dashboard");
+Fanex.TGRS.Reports.Dashboard = function () {
     var $this = this;
     var defaultMonthRange = 3;
     var defaultChartType = 2;
@@ -24,24 +24,26 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
     var currentMonthRange = defaultMonthRange;
 
     var urls = {
-        GetDashboardData: common.ResolveRootUrl('CustomerDashboard/GetDashboardData')
+        GetSummaryData: common.ResolveRootUrl('Dashboard/GetSummaryData'),
+        GetTeamData: common.ResolveRootUrl('Dashboard/GetTeamData')
     };
 
     var domElements = {
         divHorizontalTab: null,
 
-        monthMarginContainer: null,
-        monthWinlossContainer: null,
-        monthBetCountContainer: null,
+        monthteamWinlossContainer: null,
+        monthteamMarginContainer: null,
+        teamWinlossContainer: null,
+        teamMarginContainer: null,
 
-        divBestSports: null,
-        divBestBettypes: null,
-        divEventChoice: null,
+        divBestLeague: null,
+        divBestTrader: null,
+        divBestBettype: null,
 
         lblTurnOver: null,
         lblWinLoss: null,
         lblMargin: null,
-        lblBetCount: null,
+        lblMatches: null,
 
         divMonthSelect: null,
         titleMonthCount: null,
@@ -55,17 +57,18 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
         domElements.divHorizontalTab = $('#divHorizontalTab');
 
         domElements.monthMarginContainer = $('#monthMarginContainer');
-        domElements.monthWinlossContainer = $('#monthWinlossContainer');
-        domElements.monthBetCountContainer = $('#monthBetCountContainer');
+        domElements.monthMatchContainer = $('#monthMatchContainer');
+        domElements.teamWinlossContainer = $('#teamWinlossContainer');
+        domElements.teamMarginContainer = $('#teamMarginContainer');
 
-        domElements.divBestSports = $('#divBestSports');
-        domElements.divBestBettypes = $('#divBestBettypes');
-        domElements.divEventChoice = $('#divEventChoice');
+        domElements.divBestLeague = $('#divBestLeague');
+        domElements.divBestTrader = $('#divBestTrader');
+        domElements.divBestBettype = $('#divBestBettype');
 
         domElements.lblTurnOver = $('#lblTurnOver');
         domElements.lblWinLoss = $('#lblWinLoss');
         domElements.lblMargin = $('#lblMargin');
-        domElements.lblMatches = $('#lblBetCount');
+        domElements.lblMatches = $('#lblMatches');
 
         domElements.titleMonthCount = $('#titleMonthCount');
 
@@ -78,7 +81,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
 
     //{ module-init
     var initialize = function () {
-        ChartOptions = new Fanex.NAP.CMS.DashboardChart();
+        ChartOptions = new Fanex.TGRS.DashboardChart();
         getSettingFromCookies();
     };
 
@@ -139,7 +142,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             data: JSON.stringify(monthCriteria),
             success: function (result) {
                 if (result) {
-                    renderDashboard(result, currentChartType);
+                    renderSummaryReports(result, currentChartType);
                 }
             },
             error: function (xhr) {
@@ -189,10 +192,10 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
         domElements.divMonthSelect.val(currentMonthRange);
     };
 
-    var renderDashboard = function (data, chartType) {
-        renderGeneralInfo(data.DashboardGeneralInfo);
-        drawSummaryChart(data.DashboardMarginModels, data.DashboardBetCountByMonth, chartType);
-        renderRankInfo(data.DashboardTopSports, data.DashboardTopBettypes, data.DashboardTopEventChoice);
+    var renderSummaryReports = function (data, chartType) {
+        renderGeneralInfo(data.GeneralInfo);
+        drawSummaryChart(data.SummaryData, chartType);
+        renderRankInfo(data.BestLeagues, data.BestTraders, data.BestBettypes);
     };
 
     var renderTitle = function (month) {
@@ -200,7 +203,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
     };
 
     var renderGeneralInfo = function (data) {
-        domElements.lblWinLoss.text(numeral(data.Winloss).format(common.Formats.DecimalFormat));
+        domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
         if (data.Margin != null) {
             domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat) + "%");
         }
@@ -208,68 +211,59 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             domElements.lblMargin.text(labels.NA);
         }
         domElements.lblTurnOver.text(numeral(data.Turnover).format(common.Formats.DecimalFormat));
-        domElements.lblBetCount.text(numeral(data.BetCount).format(common.Formats.IntegerFormat));
+        domElements.lblMatches.text(numeral(data.MatchCount).format(common.Formats.IntegerFormat));
     };
 
-    var createRankRowHtml = function (name, turnover, winloss, margin) {
+    var createRankRowHtml = function (name, value) {
         var template = '<div class="rank-row">' +
                         '<div class="name">{0}</div>' +
                        ' <div class="value"><div class="number-value">{1}</div></div>' +
-                       ' <div class="value"><div class="number-value">{2}</div></div>' +
-                       ' <div class="value"><div class="number-value">{3}</div></div>' +
                         '</div>';
-        return template.format(name, turnover, winloss, margin);
+        return template.format(name, value);
     };
 
-    var renderRankInfo = function (bestSports, bestBettypes, bestEventChoice) {
-        //sports
-        domElements.divBestSports.html('');
-        if (bestSports) {
-            $.each(bestSports, function (index, item) {
-                domElements.divBestSports.append(createRankRowHtml(item.SportName
-                    , numeral(item.Turnover).format(common.Formats.DecimalFormat)
-                    , numeral(item.Winloss).format(common.Formats.DecimalFormat)
-                    , numeral(item.Margin).format(common.Formats.DecimalFormat)
-                    ));
+    var renderRankInfo = function (bestLeagues, bestTraders, bestBettypes) {
+        //leagues
+        domElements.divBestLeague.html('');
+        if (bestLeagues) {
+            $.each(bestLeagues, function (index, item) {
+                domElements.divBestLeague.append(createRankRowHtml(item.LeagueName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
+            });
+        }
+
+        //traders
+        domElements.divBestTrader.html('');
+        if (bestTraders) {
+            $.each(bestTraders, function (index, item) {
+                domElements.divBestTrader.append(createRankRowHtml(item.UserName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
             });
         }
 
         //bettypes
-        domElements.divBestBettypes.html('');
+        domElements.divBestBettype.html('');
         if (bestBettypes) {
             $.each(bestBettypes, function (index, item) {
-                domElements.divBestTrader.append(createRankRowHtml(item.BetTypeName
-                    , numeral(item.Turnover).format(common.Formats.DecimalFormat)
-                    , numeral(item.Winloss).format(common.Formats.DecimalFormat)
-                    , numeral(item.Margin).format(common.Formats.DecimalFormat)
-                    ));
-            });
-        }
-
-        //eventchoice
-        domElements.divEventChoice.html('');
-        if (bestEventChoice) {
-            $.each(bestEventChoice, function (index, item) {
-                domElements.divEventChoice.append(createRankRowHtml(item.LiveStatus
-                    , numeral(item.Turnover).format(common.Formats.DecimalFormat)
-                    , numeral(item.Winloss).format(common.Formats.DecimalFormat)
-                    , numeral(item.Margin).format(common.Formats.DecimalFormat)
-                    ));
+                domElements.divBestBettype.append(createRankRowHtml(item.TypeName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
             });
         }
     };
 
-    var prepareSummaryColumnData = function (marginData, betcountData, chartData) {
+    var prepareSummaryColumnData = function (monthData, teamData, chartData) {
         chartData.MonthMarginData = [{
             name: 'Margin %',
             data: []
         }];
 
         chartData.MonthMatchData = [{
-            name: 'Bet Count',
+            name: 'Match Count',
             data: []
         }];
-        
+
+        chartData.TeamMarginData = [{
+            name: 'Margin %',
+            data: []
+        }];
+
         chartData.TeamMixData = [{
             type: 'column',
             yAxis: 0,
@@ -292,7 +286,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             data: []
         }];
 
-        $.each(marginData, function (index, item) {
+        $.each(monthData, function (index, item) {
             chartData.MonthMarginData[0].data.push(item.Margin);
             chartData.MonthCategories.push(item.Month + "/" + item.Year);
 
@@ -300,7 +294,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             var pipeItem = {
                 //name: Highcharts.getOptions().lang.shortMonths[item.Month - 1],
                 name: item.Month + "/" + item.Year,
-                y: item.Margin
+                y: item.MatchCount
             };
             chartData.MonthMatchData[0].data.push(pipeItem);
         });
@@ -332,17 +326,19 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
 
     var drawSummaryChart = function (data, type) {
         domElements.monthMarginContainer.html('');
-        domElements.monthWinlossContainer.html('');
-        domElements.monthBetCountContainer.html('');
+        domElements.monthMatchContainer.html('');
+        domElements.teamWinlossContainer.html('');
+        domElements.teamMarginContainer.html('');
 
         var summaryColumnOption = ChartOptions.ColumnChartOption();
 
         //make data
         if (data) {
             chartData = {
-                MarginData: [],
-                WinlossData: [],
-                BetCountData: [],
+                TeamMarginData: [],
+                TeamMixData: [],
+                MonthMarginData: [],
+                MonthMatchData: [],
                 Categories: [],
                 MonthCategories: [],
                 MixDataMin: 0
@@ -351,20 +347,29 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             prepareSummaryColumnData(data.MonthData, data.TeamData, chartData);
         }
 
-        // month margin chart
+        // month turn over chart
         summaryColumnOption.title.text = 'Margin (%) By Month';
-        summaryColumnOption.series = chartData.MarginData;
+        summaryColumnOption.series = chartData.MonthMarginData;
         summaryColumnOption.xAxis.categories = chartData.MonthCategories;
         if (type === ChartType._2D) {
             summaryColumnOption.chart.options3d.enabled = false;
         }
         domElements.monthMarginContainer.highcharts(summaryColumnOption);
 
-        // month turnover&winloss chart
+        // match
+        var pipeChartOption = ChartOptions.PipeChartOption();
+        pipeChartOption.title.text = 'Match Count By Month';
+        pipeChartOption.series = chartData.MonthMatchData;
+        if (type === ChartType._2D) {
+            pipeChartOption.chart.options3d.enabled = false;
+        }
+        domElements.monthMatchContainer.highcharts(pipeChartOption);
+
+        // team turnover&winloss chart
         var mixChartOption = ChartOptions.MixChartOption();
         mixChartOption.xAxis.categories = chartData.Categories;
         mixChartOption.title.text = 'WinLoss/Turnover By Team';
-        mixChartOption.series = chartData.WinlossData;
+        mixChartOption.series = chartData.TeamMixData;
         if (type === ChartType._2D) {
             mixChartOption.chart.options3d.enabled = false;
         }
@@ -372,16 +377,16 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
             mixChartOption.yAxis[0].min = chartData.MixDataMin;
             mixChartOption.yAxis[1].min = chartData.MixDataMin;
         }
-        domElements.monthBetCountContainer.highcharts(mixChartOption);
+        domElements.teamWinlossContainer.highcharts(mixChartOption);
 
-        // month betcount chart
-        var pipeChartOption = ChartOptions.PipeChartOption();
-        pipeChartOption.title.text = 'Bet Count By Month';
-        pipeChartOption.series = chartData.BetCountData;
+        // team margin chart
+        summaryColumnOption.title.text = 'Margin (%) By Team';
+        summaryColumnOption.xAxis.categories = chartData.Categories;
         if (type === ChartType._2D) {
-            pipeChartOption.chart.options3d.enabled = false;
+            summaryColumnOption.chart.options3d.enabled = false;
         }
-        domElements.monthMatchContainer.highcharts(pipeChartOption);
+        summaryColumnOption.series = chartData.TeamMarginData;
+        domElements.teamMarginContainer.highcharts(summaryColumnOption);
     };
     //}
 };

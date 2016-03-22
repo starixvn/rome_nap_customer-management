@@ -2,8 +2,8 @@
 /* global Namespace, Highcharts, common, numeral */
 ////'use strict';
 
-Namespace.Register("Fanex.NAP.CMS.DashboardColumnChart");
-Fanex.NAP.CMS.DashboardChart = function () {
+Namespace.Register("Fanex.TGRS.DashboardColumnChart");
+Fanex.TGRS.DashboardChart = function () {
     var $this = this;
 
     $this.ApplyDarkTheme = function () {

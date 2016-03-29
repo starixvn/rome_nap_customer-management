@@ -3,7 +3,6 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
-    using Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VirtualSettingMonitor;
     using System;
     using System.Collections.Generic;
@@ -11,12 +10,8 @@
 
     public class VirtualSettingMonitorService : ServiceBase, IVirtualSettingMonitorService
     {
-        private readonly IVirtualSettingMonitorRepository _virtualSettingMonitorRepository;
-
-        public VirtualSettingMonitorService(
-            IVirtualSettingMonitorRepository virtualSettingMonitorRepository = null)
+        public VirtualSettingMonitorService()
         {
-            _virtualSettingMonitorRepository = virtualSettingMonitorRepository ?? new VirtualSettingMonitorRepository();
         }
 
         public VirtualSettingViewModel GetVirtualSettingMonitor(ICriteria criteria, int[] monthList)

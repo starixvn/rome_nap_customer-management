@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = ViewLang.PerformanceSummaryReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/styles/dashboard")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            Performance of last <label id ="titleMonthCount" class="no-pointer">6</label> months
+
+            <select class="team-month-picker" id="divTeamMonthPicker">
+            </select>
+
+            <div class="switch-toggle switch-ios flat-switch">
+              <input id="chk2D" name="chartType" type="radio" checked="">
+              <label for="chk2D">2D</label>
+
+              <input id="chk3D" name="chartType" type="radio">
+              <label for="chk3D">3D</label>
+
+              <a id="toggleA"></a>
+            </div>
+        </div>
+    </div>
+    <div id="divTabSummaryContent" class="tab-content">
+        <div class="main-col">
+            <div id="divGeneralInfo" class="general-info">
+                <div class="info-cell-1-left">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Turnover</label>
+                        <label class="number" id="lblTurnOver">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.WinLoss</label>
+                        <label class="number" id="lblWinLoss">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">@ViewLang.Margin</label>
+                        <label class="number" id="lblMargin">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">
+                            @ViewLang.MatchCount</label>
+                        <label class="number" id="lblBetCount">123,456,789.00
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="divTurnover" class="info-cell-2-left">
+                <div class="info-cell2-content">
+                    <div id="monthMarginContainer" class="chart-container"></div>
+                </div>
+            </div>
+            <div id="divWinloss" class="info-cell-2">
+                <div class="info-cell2-content">
+                    <div id="monthWinlossContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div id="divMargin" class="info-cell-2-left no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="monthBetCountContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div id="divMatch" class="info-cell-2 no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="teamMarginContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sub-col">
+            <div class="info-cell-3-top">
+                <div class="info-cell3-content">
+                    <div class="title">Top 5 Sports</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">League</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestSports">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-3">
+                <div class="info-cell3-content">
+                    <div class="title">Top 10 Bet Types</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Trader</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestBettypes">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-3-last">
+                <div class="info-cell3-content">
+                    <div class="title">Top Event Choices</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Bet type</div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divEventChoice">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/scripts/dashboard")
+    <script type="text/javascript">
+        var labels = {
+            League: '@ViewLang.League',
+            Turnover: '@ViewLang.Turnover',
+            WinLoss: '@ViewLang.WinLoss',
+            Margin: '@ViewLang.Margin',
+            BetType: '@ViewLang.BetType',
+            NA: '@ViewLang.NA'
+        };
+    </script>
+}

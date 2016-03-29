@@ -1,0 +1,326 @@
+.black-content {
+    //background: #E4F2FD;
+    color: #353535;
+    background-color: #edecea;
+}
+.white-content {
+    background: #fff;
+    color: #5a7dc1;
+}
+body {
+    .black-content;
+}
+.first-tab {
+    margin-left: 98px !important;
+}
+.tab-content {
+    height: 0;
+}
+.main-col {
+    width: 72%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+.full-col {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    float: left;
+}
+.sub-col {
+    width: 28%;
+    height: 100%;
+    display: inline-block;
+    //float: left;
+}
+
+.absolute-padding {
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.dashboard-border {
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow:    0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+    box-shadow:         0px 1px 2px 0px rgba(0, 0, 0, 0.25);
+}
+.title-border {
+    -webkit-box-shadow: 0px 1px 1px 0px #d8d9dc;
+    -moz-box-shadow:    0px 1px 1px 0px #d8d9dc;
+    box-shadow:         0px 1px 1px 0px #d8d9dc;
+}
+.info-cell-container {
+    .absolute-padding;
+    display: inline-block;
+    float: left;
+}
+
+.general-info {
+    height: 8%;
+}
+
+.dashboard-title {
+    .white-content;
+    .absolute-padding;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 145%;
+    .title-border;
+
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    padding-left: 10px;
+    label {
+        cursor: pointer;
+    }
+    .no-pointer {
+        cursor: auto;
+    }
+
+    .team-month-picker {
+        float: right;
+        margin-right: 8px;
+        margin-top: 11px;
+        color: #5a7dc1;
+        border: 1px solid #5a7dc1;
+    }
+
+    .flat-switch {
+        float: right;
+        width: 55px;
+        margin-right: 8px;
+        margin-top: 10.5px;
+    }
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+.info-cell-1 {
+    .info-cell-container;
+    text-align: center;
+    width: 25%;
+    height: 100%;
+    padding: 8px 8px 11px 0;
+}
+
+.info-cell-1-left {
+    .info-cell-1;
+    padding: 8px 8px 11px 8px;
+}
+
+.info-cell1-content {
+    .white-content;
+    .dashboard-border;
+    border-top: solid 3px #5a7dc1;
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    text-align: center;
+    text-transform: uppercase;
+
+
+    label {
+        display: block;
+        float: center;
+        cursor: auto;
+    }
+    label.title {
+        margin-top: 5px;
+        font-size: 110%;
+        font-weight: bold;
+    }
+    label.number {
+        margin-top: 1px;
+        font-size: 110%;
+    }
+}
+.info-cell1-content-border {
+    .white-content;
+}
+
+.info-cell-2 {
+    .info-cell-container;
+    text-align: center;
+    width: 50%;
+    height: 46%;
+    padding: 0 8px 8px 0;
+}
+
+.info-cell-2-left {
+    .info-cell-2;
+    padding: 0 8px 8px 8px;
+}
+.no-padding-bot {
+    padding-bottom: 0px !important;
+}
+
+.info-cell2-content {
+    .white-content;
+    .dashboard-border;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-cell-3 {
+    .info-cell-container;
+    padding: 0 8px 8px 0;
+    width: 100%;
+    height: 27%;
+}
+
+.info-cell-3-top {
+    .info-cell-3;
+    padding: 8px 8px 8px 0;
+    height: 33%;
+}
+
+.info-cell-3-last {
+    .info-cell-3;
+    padding: 0 8px 0px 0;
+    height: 40%;
+}
+
+.info-cell3-content {
+    .absolute-padding;
+    .white-content;
+    width: 100%;
+    height: 100%;
+    .dashboard-border;
+
+    .title {
+        .absolute-padding;
+        padding: 0 0 0 6px;
+        height: 38px;
+        line-height: 38px;
+        border: 1px solid #5a7dc1;
+        background: #5a7dc1;
+        color: white;
+        font-size: 16px;
+    }
+    .no-border {
+        border-bottom: none !important;
+    }
+    .rank-row {
+        display: inline-block;
+        width: 100%;
+        border-bottom: 1px dotted #dedede;
+
+        .name {
+            .absolute-padding;
+            padding: 2px 0 0 6px;
+            float: left;
+            width: 78%;
+            color: black;
+            font-size: 12px;
+        }
+        .value {
+            float: right;
+            width: 22%;
+            text-align: center;
+            .center-value {
+                float: right;
+                margin-right: 5px;
+            }
+            font-size: 12px;
+            color: black;
+        }
+
+        .title-name {
+            padding-top: 5px;
+            color: #5a7dc1;
+            font-size: 14px;
+        }
+        .title-value {
+            padding-top: 5px;
+            color: #5a7dc1;
+            font-size: 14px;
+        }
+        .number-value {
+            float: right;
+            margin-right: 7px;
+        }
+    }
+}
+
+
+.info-cell-team {
+    .info-cell-container;
+    //padding: 0 1px 1px 1px;
+    width: 50%;
+    height: 48%;
+}
+
+.info-cell-team-content {
+    .white-content;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.info-cell-month {
+    .info-cell-container;
+    //padding: 0 1px 1px 1px;
+    width: 100%;
+    height: 4%;
+    clear: left;
+}
+
+.switch-ios.switch-toggle {
+    border-radius: 5px;
+}
+.switch-ios.switch-toggle a {
+    outline: none;
+    border-radius: 2px;
+    background-color: #3cb54e;
+}
+.switch-ios.switch-toggle a:focus, a:active {
+      outline: none;
+}
+.switch-toggle input + label {
+      font-size: 13px;
+}
+
+.switch-toggle {
+    height: 18px;
+    min-height: 0px;
+}
+
+.switch-ios.switch-toggle label {
+    color: #aed8b4;
+}
+
+.switch-ios input:checked + label {
+    color: #fff;
+}
+
+.switch-ios.switch-toggle {
+    border: 1px solid #3cb54e;
+    box-shadow: none;
+}
+
+/* for IE8*/
+.switch-toggle {
+    .type3D {
+        left: 50%;
+    }
+}
+
+/* 
+.label {
+    z-index: 1 !important;
+}
+
+.highcharts-tooltip span {
+    background-color: rgba(255,255,255,1);
+    opacity:1;
+    z-index:9999 !important;
+}
+*/

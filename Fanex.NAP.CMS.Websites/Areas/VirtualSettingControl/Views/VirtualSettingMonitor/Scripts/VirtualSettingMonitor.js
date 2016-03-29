@@ -126,7 +126,7 @@ var VirtualSettingMonitor = function () {
             bodyRows.push({
                 Columns: [
                     { Name: 'colNumber', Value: (i + 1), MergeRowNumber: 3 },
-                    { Name: 'colUsername', Value: customer.Username, MergeRowNumber: 3 },
+                    { Name: 'colUsername', Value: renderCustomerDashboardRow(customer.Username, customer.CustId), MergeRowNumber: 3 },
                     { Name: 'colRate', Value: customer.VRate, MergeRowNumber: 3 },
                     { Name: 'colMonth1', Value: customer.CustMargin[3].Turnover },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].Turnover },
@@ -159,6 +159,21 @@ var VirtualSettingMonitor = function () {
         }
 
         return bodyRows;
+    }
+
+    function renderCustomerDashboardRow(username, custid) {
+        var html;
+        html = [
+                '<a class="linkEdit" href="CustomerDashboard/Index?CustId=',
+                custid,
+                '&MonthToCheck=',
+                $wonperiod,
+                '">',
+                username,
+                '</a>'
+        ];
+
+        return html.join('');
     }
 
     function renderViewHistoryRow(custid, customData) {

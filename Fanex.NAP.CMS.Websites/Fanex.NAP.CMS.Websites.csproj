@@ -293,6 +293,8 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\VirtualSettingMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
@@ -679,6 +681,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Styles\VirtualSettingMonitor.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\ViewHistoryModal.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\Web.config" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Styles\dashboard.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

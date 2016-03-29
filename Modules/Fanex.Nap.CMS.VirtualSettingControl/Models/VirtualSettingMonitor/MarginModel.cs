@@ -14,7 +14,7 @@
         {
             get
             {
-                return Turnover == 0 ? 0 : Winloss / Turnover;
+                return Turnover == 0 ? 0 : Winloss / Turnover * 100;
             }
         }
 

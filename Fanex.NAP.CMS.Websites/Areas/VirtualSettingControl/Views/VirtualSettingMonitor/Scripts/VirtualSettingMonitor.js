@@ -164,10 +164,11 @@ var VirtualSettingMonitor = function () {
     function renderCustomerDashboardRow(username, custid) {
         var html;
         html = [
-                '<a class="linkEdit" href="CustomerDashboard/Index?CustId=',
-                custid,
-                '&MonthToCheck=',
-                $wonperiod,
+                '<a class="linkDashboard" href="javascript;"',
+                 ' data-custid="',
+                 custid,
+                ' data-monthtocheck="',
+                $wonperiod.val(),
                 '">',
                 username,
                 '</a>'
@@ -197,6 +198,17 @@ var VirtualSettingMonitor = function () {
         gridOptions.bodyRows = buildBodyRows();
         $freegrid.fanexGrid(gridOptions);
         bindViewHistory();
+    }
+
+    function bindViewDashboard() {
+        $freegrid.find('.linkDashboard')
+            .unbind('click')
+            .bind('click', function () {
+                var $this = $(this);
+                var custid = $this.data('custid');
+                var monthtocheck = $this.data('monthtocheck');
+
+            });
     }
 
     function bindViewHistory() {

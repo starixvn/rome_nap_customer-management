@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Virtual Setting Monitor";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var hostPermission = (bool)ViewBag.HostPermission;
 }
 @section Head
 {
@@ -78,7 +77,6 @@
 {
     <script type="text/javascript">
         window.rootUrl = $('#CMSRoot').val();
-        window.hostPermission = @(hostPermission ? 1 : 0);    
     </script>
     <!--@Scripts.Render("~/bundles/virtualsettingcontrol/virtualsettingmonitor-scripts")
     -->

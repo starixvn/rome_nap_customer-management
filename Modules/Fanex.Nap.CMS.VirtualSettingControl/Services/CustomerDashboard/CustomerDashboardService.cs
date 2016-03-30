@@ -14,7 +14,7 @@
     /// </summary>
     public class CustomerDashboardService : ServiceBase, ICustomerDashboardService
     {
-        public CustomerDashboardModel GetDashboardInfo(ICriteria criteria)
+        public CustomerDashboardModel GetDashboardInfo(GetDashboardInfoCriteria criteria)
         {
             return null;
         }

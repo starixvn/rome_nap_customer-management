@@ -20,6 +20,18 @@
             bundles.AddAndInclude(
                 "~/bundles/virtualsettingcontrol/virtualsettingmonitor-styles",
                 "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitor/Styles/VirtualSettingMonitor.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/dashboard").Include(
+                "~/Scripts/Libs/jQuery/jquery.cookie.min",
+                "~/Scripts/Libs/Highcharts/highcharts.js",
+                "~/Scripts/Libs/Highcharts/highcharts-3d.js",
+                "~/Areas/VirtualSettingControl/Views/CustomerDashboard/Script/dashboard-chart.js",
+                "~/Areas/VirtualSettingControl/Views/CustomerDashboard/Script/dashboard.js"));
+
+            bundles.AddAndInclude(
+                "~/styles/dashboard",
+                "~/Content/ToggleSwitch/toggle-switch.css",
+                "~/Areas/VirtualSettingControl/Views/CustomerDashboard/Styles/dashboard.less");
         }
     }
 }

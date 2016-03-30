@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = ViewLang.PerformanceSummaryReport;
+    ViewBag.Title = "Customer Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/styles/dashboard")
@@ -27,29 +27,28 @@
             <div id="divGeneralInfo" class="general-info">
                 <div class="info-cell-1-left">
                     <div class="info-cell1-content">
-                        <label class="title">@ViewLang.Turnover</label>
+                        <label class="title">Turnover</label>
                         <label class="number" id="lblTurnOver">123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
-                        <label class="title">@ViewLang.WinLoss</label>
+                        <label class="title">Win Loss</label>
                         <label class="number" id="lblWinLoss">123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
-                        <label class="title">@ViewLang.Margin</label>
+                        <label class="title">Margin</label>
                         <label class="number" id="lblMargin">123,456,789.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
-                        <label class="title">
-                            @ViewLang.MatchCount</label>
+                        <label class="title">Bet Count</label>
                         <label class="number" id="lblBetCount">123,456,789.00
                         </label>
                     </div>
@@ -121,12 +120,6 @@
     @Scripts.Render("~/scripts/dashboard")
     <script type="text/javascript">
         var labels = {
-            League: '@ViewLang.League',
-            Turnover: '@ViewLang.Turnover',
-            WinLoss: '@ViewLang.WinLoss',
-            Margin: '@ViewLang.Margin',
-            BetType: '@ViewLang.BetType',
-            NA: '@ViewLang.NA'
         };
     </script>
 }

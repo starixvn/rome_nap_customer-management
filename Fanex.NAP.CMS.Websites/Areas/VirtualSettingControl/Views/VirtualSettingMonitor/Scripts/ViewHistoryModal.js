@@ -26,6 +26,9 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         else {
 
             var last3mData = l3mdata.split(',');
+            var sumTO = results.MarginHistory.CustMargin[resultsLength - 1].Turnover + parseFloat(last3mData[0]) + parseFloat(last3mData[3]) + parseFloat(last3mData[6]);
+            var sumWL = results.MarginHistory.CustMargin[resultsLength - 1].Winloss + parseFloat(last3mData[1]) + parseFloat(last3mData[4]) + parseFloat(last3mData[7]);
+            var sumMargin = sumTO == 0 ? 0 : (sumWL/sumTO * 100)
             for (var i = 0; i < 3; i++)
             {
                 var row = ['<tr><td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">'];
@@ -33,11 +36,7 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
                 row.push('</td>');
 
                 row.push('<td class="align-right"' + (i % 2 != 0 ? 'style="background-color:#ebf5fc' : '') + '">');
-                row.push(formatNumber(i == 0
-                ? (results.MarginHistory.CustMargin[resultsLength - 1].Turnover + parseFloat(last3mData[0]) + parseFloat(last3mData[3]) + parseFloat(last3mData[6]))
-                : i == 1
-                    ? (results.MarginHistory.CustMargin[resultsLength - 1].Winloss + parseFloat(last3mData[1]) + parseFloat(last3mData[4]) + parseFloat(last3mData[7]))
-                    : (results.MarginHistory.CustMargin[resultsLength - 1].Margin + parseFloat(last3mData[2]) + parseFloat(last3mData[5]) + parseFloat(last3mData[8]))));
+                row.push(formatNumber(i == 0 ? sumTO : i == 1 ? sumWL : sumMargin));
                 row.push('</td>');
 
                 for (var j = 0, max = resultsLength - 4; j < max; j++) {

@@ -164,10 +164,9 @@ var VirtualSettingMonitor = function () {
     function renderCustomerDashboardRow(username, custid) {
         var html;
         html = [
-                '<a class="linkDashboard" href="javascript;"',
-                 ' data-custid="',
-                 custid,
-                ' data-monthtocheck="',
+                '<a class="linkEdit" href="CustomerDashboard/Index?CustId=',
+                custid,
+                '&MonthToCheck=',
                 $wonperiod.val(),
                 '">',
                 username,

@@ -24,8 +24,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var currentMonthRange = defaultMonthRange;
 
     var urls = {
-        GetSummaryData: common.ResolveRootUrl('Dashboard/GetSummaryData'),
-        GetTeamData: common.ResolveRootUrl('Dashboard/GetTeamData')
+        GetDashboardData: 'CustomerDashboard/GetDashboardData', //common.ResolveRootUrl('Dashboard/GetSummaryData'),
+        GetTeamData: 'CustomerDashboard/GetTeamData' //common.ResolveRootUrl('Dashboard/GetTeamData')
     };
 
     var domElements = {
@@ -48,7 +48,9 @@ Fanex.TGRS.Reports.Dashboard = function () {
         divMonthSelect: null,
         titleMonthCount: null,
 
-        toggleA: null
+        toggleA: null,
+
+        custId: null
     };
     //}
 
@@ -75,6 +77,8 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divMonthSelect = $("#divTeamMonthPicker");
 
         domElements.toggleA = $("#toggleA");
+
+        domElements.custId = $("#lblCustId");
     };
 
     //}
@@ -104,12 +108,12 @@ Fanex.TGRS.Reports.Dashboard = function () {
     var handlePageEvents = function () {
         $("#headline").hide();
         makeMonthDropdown();
-        ajaxGetSummaryData();
+        ajaxGetDashboardData();
 
         domElements.divMonthSelect.on('change', function () {
             currentMonthRange = parseInt(domElements.divMonthSelect.val());
             renderTitle(currentMonthRange);
-            ajaxGetSummaryData();
+            ajaxGetDashboardData();
             saveMonthRangeCookies();
         });
 
@@ -129,27 +133,28 @@ Fanex.TGRS.Reports.Dashboard = function () {
     //}
 
     //{ ajax functions
-    var ajaxGetSummaryData = function () {
-        var monthCriteria = {
-            month: parseInt(domElements.divMonthSelect.val())
+    var ajaxGetDashboardData = function () {
+        var dashboardCriteria = {
+            CustId: parseInt(domElements.custId.val()),
+            MonthToCheck: parseInt(domElements.divMonthSelect.val())
         };
-        common.DisableInput();
+        //common.DisableInput();
         $.ajax({
             type: 'POST',
-            url: urls.GetSummaryData,
+            url: urls.GetDashboardData,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify(monthCriteria),
+            data: JSON.stringify(dashboardCriteria),
             success: function (result) {
                 if (result) {
-                    renderSummaryReports(result, currentChartType);
+                    renderDashboard(result, currentChartType);
                 }
             },
             error: function (xhr) {
-                common.HandleAjaxError(xhr);
+                //common.HandleAjaxError(xhr);
             },
             complete: function () {
-                common.EnableInput();
+                //common.EnableInput();
             }
         });
     };
@@ -192,10 +197,10 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divMonthSelect.val(currentMonthRange);
     };
 
-    var renderSummaryReports = function (data, chartType) {
+    var renderDashboard = function (data, chartType) {
         renderGeneralInfo(data.GeneralInfo);
-        drawSummaryChart(data.SummaryData, chartType);
-        renderRankInfo(data.BestLeagues, data.BestTraders, data.BestBettypes);
+        //drawSummaryChart(data.SummaryData, chartType);
+        //renderRankInfo(data.BestLeagues, data.BestTraders, data.BestBettypes);
     };
 
     var renderTitle = function (month) {
@@ -203,15 +208,15 @@ Fanex.TGRS.Reports.Dashboard = function () {
     };
 
     var renderGeneralInfo = function (data) {
-        domElements.lblWinLoss.text(numeral(data.Winlost).format(common.Formats.DecimalFormat));
+        domElements.lblWinLoss.text(numeral(data.Winloss));
         if (data.Margin != null) {
-            domElements.lblMargin.text(numeral(data.Margin).format(common.Formats.DecimalFormat) + "%");
+            domElements.lblMargin.text(numeral(data.Margin) + "%");
         }
         else {
             domElements.lblMargin.text(labels.NA);
         }
-        domElements.lblTurnOver.text(numeral(data.Turnover).format(common.Formats.DecimalFormat));
-        domElements.lblMatches.text(numeral(data.MatchCount).format(common.Formats.IntegerFormat));
+        domElements.lblTurnOver.text(numeral(data.Turnover));
+        domElements.lblMatches.text(numeral(data.MatchCount));
     };
 
     var createRankRowHtml = function (name, value) {
@@ -227,7 +232,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divBestLeague.html('');
         if (bestLeagues) {
             $.each(bestLeagues, function (index, item) {
-                domElements.divBestLeague.append(createRankRowHtml(item.LeagueName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
+                domElements.divBestLeague.append(createRankRowHtml(item.LeagueName, numeral(item.Margin)));
             });
         }
 
@@ -235,7 +240,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divBestTrader.html('');
         if (bestTraders) {
             $.each(bestTraders, function (index, item) {
-                domElements.divBestTrader.append(createRankRowHtml(item.UserName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
+                domElements.divBestTrader.append(createRankRowHtml(item.UserName, numeral(item.Margin)));
             });
         }
 
@@ -243,7 +248,7 @@ Fanex.TGRS.Reports.Dashboard = function () {
         domElements.divBestBettype.html('');
         if (bestBettypes) {
             $.each(bestBettypes, function (index, item) {
-                domElements.divBestBettype.append(createRankRowHtml(item.TypeName, numeral(item.Margin).format(common.Formats.DecimalFormat)));
+                domElements.divBestBettype.append(createRankRowHtml(item.TypeName, numeral(item.Margin)));
             });
         }
     };

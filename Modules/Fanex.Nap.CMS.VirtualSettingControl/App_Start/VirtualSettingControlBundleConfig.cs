@@ -7,10 +7,11 @@
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            RegisterVirtualSettingonitorBundles(bundles);
+            RegisterVirtualSettingMonitorBundles(bundles);
+            RegisterCustomerDashboardBundles(bundles);
         }
 
-        private static void RegisterVirtualSettingonitorBundles(BundleCollection bundles)
+        private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/virtualsettingcontrol/virtualsettingmonitor-scripts").Include(
                 "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitor/Scripts/ViewHistoryModal.js",
@@ -20,9 +21,12 @@
             bundles.AddAndInclude(
                 "~/bundles/virtualsettingcontrol/virtualsettingmonitor-styles",
                 "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitor/Styles/VirtualSettingMonitor.less");
+        }
 
+        private static void RegisterCustomerDashboardBundles(BundleCollection bundles)
+        {
             bundles.Add(new ScriptBundle("~/scripts/dashboard").Include(
-                "~/Scripts/Libs/jQuery/jquery.cookie.min",
+                "~/Scripts/Libs/jQuery/jquery.cookie.min.js",
                 "~/Scripts/Libs/Highcharts/highcharts.js",
                 "~/Scripts/Libs/Highcharts/highcharts-3d.js",
                 "~/Areas/VirtualSettingControl/Views/CustomerDashboard/Script/dashboard-chart.js",

@@ -72,30 +72,6 @@
 
 #endregion
 
-        #region CustomerDashboard
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
-        public ActionResult CustomerDashboard(GetDashboardInfoCriteria criteria)
-        {
-            criteria.ReportToDate = DateTime.Now;
-            //ViewBag.HostPermission = HasRight(CMSFunctionKeys.VirtualSettingMonitor, Constant.Policy.Read);
-            var dashboadInfo = _customerDashboardService.GetDashboardInfo(criteria);
-            return View("~/Areas/VirtualSettingControl/Views/CustomerDashboard/Index.cshtml");
-        }
-
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
-        public ActionResult CustomerDashboardSearch(GetVirtualSettingMonitorCriteria criteria)
-        {
-            criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-12-31");
-            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
-            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
-            Array.Reverse(reversedMonthList);
-            criteria.MonthList = string.Join(",", reversedMonthList);
-            var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
-
-            return Json(new { TotalRow = (virtualSettings == null ? 0 : virtualSettings.CustMargin.Count), MonthList = GetMonthListName(monthList), VirtualSettings = virtualSettings }, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
-
         #region Utilities
         private int[] GenerateMonthList(int currentMonth, int monthRange)
         {

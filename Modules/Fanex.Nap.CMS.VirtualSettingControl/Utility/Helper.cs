@@ -18,7 +18,7 @@
                     return "Mar";
 
                 case 4:
-                    return "April";
+                    return "Apr";
 
                 case 5:
                     return "May";

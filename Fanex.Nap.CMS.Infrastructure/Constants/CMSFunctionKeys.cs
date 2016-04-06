@@ -68,7 +68,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string CurrencyWinLimitSetting = "CurrencyWinLimitSetting";
         public const string PlayerWinLimitManagement = "PlayerWinLimitManagement";
         public const string WinLimitMonitor = "WinLimitMonitor";
-        
+
         // Payout Management
         public const string PayoutManagement = "PayoutManagement";
         public const string PayoutForBopingLicensees = "PayoutForBopingLicensees";
@@ -81,5 +81,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Virtual Setting Control
         public const string VirtualSettingMonitor = "VirtualSettingMonitor";
+
+        public const string AutoAdjustmentReport = "AutoAdjustmentReport";
     }
 }

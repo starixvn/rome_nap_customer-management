@@ -6,7 +6,7 @@
 
     public class AdjustmentReportService : IAdjustmentReportService
     {
-        public IEnumerable<VrAutoAdjustmentLogEntry> GetHistory(ICriteria criteria)
+        public IEnumerable<VrAutoAdjustmentLogEntry> GetReport(ICriteria criteria)
         {
             return new[]
             {
@@ -15,7 +15,7 @@
             };
         }
 
-        public IEnumerable<CustomerMarginHistory> GetEntryDetails(ICriteria criteria)
+        public IEnumerable<CustomerMarginHistory> GetCustomerMarginHistory(ICriteria criteria)
         {
             return new[]
             {

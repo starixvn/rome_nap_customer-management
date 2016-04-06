@@ -6,8 +6,8 @@
 
     public interface IAdjustmentReportService
     {
-        IEnumerable<VrAutoAdjustmentLogEntry> GetHistory(ICriteria criteria);
+        IEnumerable<VrAutoAdjustmentLogEntry> GetReport(ICriteria criteria);
 
-        IEnumerable<CustomerMarginHistory> GetEntryDetails(ICriteria criteria);
+        IEnumerable<CustomerMarginHistory> GetCustomerMarginHistory(ICriteria criteria);
     }
 }

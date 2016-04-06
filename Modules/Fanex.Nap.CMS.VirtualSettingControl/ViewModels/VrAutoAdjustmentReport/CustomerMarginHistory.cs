@@ -13,19 +13,19 @@
 
         private readonly double _margin;
 
-        private readonly IEnumerable<string> months;
+        private readonly IEnumerable<string> _months;
 
-        private readonly IEnumerable<double> turnovers, winlosses, margins;
+        private readonly IEnumerable<double> _turnovers, _winlosses, _margins;
 
         public CustomerMarginHistory(IEnumerable<Models.VrAutoAdjustmentReport.CustomerMarginHistory> logEntries, IMarginCalculatorService calculator, Func<int, string> monthGetter)
         {
             _avgTurnover = calculator.CalculateTurnover(logEntries);
             _avgWinloss = calculator.CalculateWinloss(logEntries);
             _margin = calculator.CalculateMargin(_avgTurnover, _avgWinloss);
-            months = logEntries.Select(l => monthGetter(l.Month));
-            turnovers = logEntries.Select(l => l.Turnover);
-            winlosses = logEntries.Select(l => l.Winloss);
-            margins = logEntries.Select(l => l.Margin);
+            _months = logEntries.Select(l => monthGetter(l.Month));
+            _turnovers = logEntries.Select(l => l.Turnover);
+            _winlosses = logEntries.Select(l => l.Winloss);
+            _margins = logEntries.Select(l => l.Margin);
         }
 
         public double AvgTurnover
@@ -45,22 +45,22 @@
 
         public IEnumerable<string> Months
         {
-            get { return months; }
+            get { return _months; }
         }
 
         public IEnumerable<double> Turnovers
         {
-            get { return turnovers; }
+            get { return _turnovers; }
         }
 
         public IEnumerable<double> Winlosses
         {
-            get { return winlosses; }
+            get { return _winlosses; }
         }
 
         public IEnumerable<double> Margins
         {
-            get { return margins; }
+            get { return _margins; }
         }
     }
 }

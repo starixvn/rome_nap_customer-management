@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Virtual Setting Control">
+<<<<<<< HEAD
+    <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoring" SpName="NAP_Report_CustMngt_VirtualRateMonitoring" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="180" />
+    <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="180"/>
+    <Setting Key="NAP_Report_CustMngt_CustomerMarginLatestMonths" SpName="NAP_Report_CustMngt_CustomerMarginLatestMonths" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
+  </Function>
+
+  <Function Name="Customer Dashboard">
+    <Setting Key="NAP_Report_CustMngt_GetCustomerDashboardInfo" SpName="NAP_Report_CustMngt_GetCustomerDashboardInfo" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
+=======
+    <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoring" SpName="NAP_Report_CustMngt_VirtualRateMonitoring" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+    <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300"/>
+>>>>>>> #53160 - Extend TimeOut to 5mins
+  </Function>
+</Functions>

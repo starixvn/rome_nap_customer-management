@@ -9,6 +9,7 @@
         {
             RegisterVirtualSettingMonitorBundles(bundles);
             RegisterCustomerDashboardBundles(bundles);
+            RegisterVrAutoAdjustmentReportBundles(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -36,6 +37,16 @@
                 "~/styles/dashboard",
                 "~/Content/ToggleSwitch/toggle-switch.css",
                 "~/Areas/VirtualSettingControl/Views/CustomerDashboard/Styles/dashboard.less");
+        }
+
+        private static void RegisterVrAutoAdjustmentReportBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/bundles/VrAutoAdjustmentReport/css",
+                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Styles/vrAutoAdjustmentReport.css");
+
+            bundles.Add(new ScriptBundle("~/bundles/VrAutoAdjustmentReport/js").Include(
+                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Scripts/vrAutoAdjustmentReport.js"));
         }
     }
 }

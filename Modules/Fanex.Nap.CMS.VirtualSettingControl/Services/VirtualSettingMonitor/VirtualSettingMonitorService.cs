@@ -53,7 +53,7 @@
                 var virtualSetting = cust.Select(l => l).ToList();
                 var currentYear = DateTime.Now.Year;
 
-                foreach(var month in monthList)
+                foreach (var month in monthList)
                 {
                     if (month == 12)
                     {
@@ -61,14 +61,14 @@
                     }
 
                     var custSetting = FindVirtualSetting(virtualSetting, month);
-                    newCust.CustMargin.Add( custSetting != null
+                    newCust.CustMargin.Add(custSetting != null
                             ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
                             : new MarginModel(month, currentYear));
                 }
 
                 // The Average Performance record
-                var sumTurnover = newCust.CustMargin.Sum( l => l.Turnover);
-                var sumWinloss = newCust.CustMargin.Sum( l => l.Winloss);
+                var sumTurnover = newCust.CustMargin.Sum(l => l.Turnover);
+                var sumWinloss = newCust.CustMargin.Sum(l => l.Winloss);
                 newCust.CustMargin.Add(new MarginModel(0, 0, sumTurnover, sumWinloss));
 
                 virtualSettingViewModel.CustMargin.Add(newCust);

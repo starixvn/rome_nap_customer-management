@@ -1,39 +1,26 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
-    using System.Web.Mvc;
-    using Criteria.VirtualSettingMonitor;
-    using Criteria.VrAutoAdjustmentReport;
-    using Infrastructure;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
+    using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Services.VrAutoAdjustmentReport;
-    using ViewModels.VrAutoAdjustmentReport;
+    using System.Web.Mvc;
 
-    public class AutoAdjustmentReportController : Controller
+    public class AutoAdjustmentReportController : BaseController
     {
-        private readonly IAdjustmentReportService _reportService;
+        private readonly IAdjustmentReportService _adjustmentReportService;
 
-        public AutoAdjustmentReportController() : this(null)
+        public AutoAdjustmentReportController()
+            : this(null)
         {
         }
 
-        public AutoAdjustmentReportController(IAdjustmentReportService reportService)
+        public AutoAdjustmentReportController(IAdjustmentReportService adjustmentReportService)
         {
-            _reportService = reportService ?? new AdjustmentReportService();
+            _adjustmentReportService = adjustmentReportService ?? new AdjustmentReportService();
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
-        public ActionResult GetAutoAdjustmentResult(GetAutoAdjustmentReportCriteria criteria)
+        public ActionResult Index()
         {
-            return Json(_reportService.GetReport(criteria), JsonRequestBehavior.AllowGet);
-        }
-
-        [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
-        public ActionResult GetCustomerMarginHistory(GetCustomerMarginCriteria criteria)
-        {
-            var model = _reportService.GetCustomerMarginHistory(criteria);
-            var viewModel = new CustomerMarginHistory(model, new MarginCalculator(), Utility.Helper.GetMonthName);
-            return Json(viewModel, JsonRequestBehavior.AllowGet);
+            return View("~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Index.cshtml");
         }
     }
 }

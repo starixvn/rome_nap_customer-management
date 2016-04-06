@@ -30,7 +30,7 @@
         }
 
         public VirtualSettingMonitorController(
-            ISettingService settingService, 
+            ISettingService settingService,
             IVirtualSettingMonitorService virtualSettingMonitorService,
             ICustomerDashboardService customerDashboardService)
         {
@@ -70,7 +70,7 @@
             return Json(new { MarginHistory = custMarginHistory, MonthList = GetMonthListName(GenerateMonthList(criteria.ReportToDate.Month, 12)) }, JsonRequestBehavior.AllowGet);
         }
 
-#endregion
+        #endregion
 
         #region Utilities
         private int[] GenerateMonthList(int currentMonth, int monthRange)
@@ -92,7 +92,7 @@
         {
             var monthListName = new string[months.Length];
 
-            for(var i = 0; i < months.Length; i++)
+            for (var i = 0; i < months.Length; i++)
             {
                 monthListName[i] = MonthsName[months[i] - 1];
             }

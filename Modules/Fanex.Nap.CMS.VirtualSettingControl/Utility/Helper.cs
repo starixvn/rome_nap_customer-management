@@ -1,0 +1,52 @@
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
+{
+    using System;
+
+    public static class Helper
+    {
+        public static string GetMonthName(int month)
+        {
+            switch (month)
+            {
+                case 1:
+                    return "Jan";
+
+                case 2:
+                    return "Feb";
+
+                case 3:
+                    return "Mar";
+
+                case 4:
+                    return "April";
+
+                case 5:
+                    return "May";
+
+                case 6:
+                    return "Jun";
+
+                case 7:
+                    return "Jul";
+
+                case 8:
+                    return "Aug";
+
+                case 9:
+                    return "Sep";
+
+                case 10:
+                    return "Oct";
+
+                case 11:
+                    return "Nov";
+
+                case 12:
+                    return "Dec";
+
+                default:
+                    throw new Exception(month + " is not a valid month");
+            }
+        }
+    }
+}

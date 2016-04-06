@@ -29,7 +29,7 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
-        public ActionResult GetCustomerMarginHistory(GetCustomerMarginHistoryCriteria criteria)
+        public ActionResult GetCustomerMarginHistory(GetCustomerMarginCriteria criteria)
         {
             var model = _reportService.GetCustomerMarginHistory(criteria);
             var viewModel = new CustomerMarginHistory(model, new MarginCalculator(), Utility.Helper.GetMonthName);

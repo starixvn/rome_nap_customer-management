@@ -118,8 +118,8 @@
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginLatestMonthsCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
-    <Compile Include="Criteria\VrAutoAdjustmentReport\GetAdjustmentRptCriteria.cs" />
-    <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrMarginCriteria.cs" />
+    <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginCriteria.cs" />
+    <Compile Include="Criteria\VrAutoAdjustmentReport\GetAutoAdjustmentReportCriteria .cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />

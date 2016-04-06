@@ -17,12 +17,12 @@
 
         private readonly IEnumerable<double> _turnovers, _winlosses, _margins;
 
-        public CustomerMarginHistory(IEnumerable<Models.VrAutoAdjustmentReport.CustomerMarginHistory> logEntries, IMarginCalculatorService calculator, Func<int, string> monthGetter)
+        public CustomerMarginHistory(IEnumerable<Models.VrAutoAdjustmentReport.CustomerMarginHistory> logEntries, IMarginCalculatorService calculator, Func<int, string> getMonthFunc)
         {
             _avgTurnover = calculator.CalculateTurnover(logEntries);
             _avgWinloss = calculator.CalculateWinloss(logEntries);
             _margin = calculator.CalculateMargin(_avgTurnover, _avgWinloss);
-            _months = logEntries.Select(l => monthGetter(l.Month));
+            _months = logEntries.Select(l => getMonthFunc(l.Month));
             _turnovers = logEntries.Select(l => l.Turnover);
             _winlosses = logEntries.Select(l => l.Winloss);
             _margins = logEntries.Select(l => l.Margin);

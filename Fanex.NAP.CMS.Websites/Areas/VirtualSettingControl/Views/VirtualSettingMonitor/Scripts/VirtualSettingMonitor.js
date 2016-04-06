@@ -168,6 +168,8 @@ var VirtualSettingMonitor = function () {
                 custid,
                 '&MonthToCheck=',
                 $wonperiod.val(),
+                '&SportId=',
+                $sport.val(),
                 '">',
                 username,
                 '</a>'

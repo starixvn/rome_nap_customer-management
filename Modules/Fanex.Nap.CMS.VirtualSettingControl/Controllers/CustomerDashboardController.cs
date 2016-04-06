@@ -5,11 +5,13 @@
     using Fanex.Nap.CMS.Settings.Services;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.CustomerDashboard;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.CustomerDashboard;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
 
     public class CustomerDashboardController : BaseController
@@ -30,7 +32,7 @@
         }
 
         public CustomerDashboardController(
-            ISettingService settingService, 
+            ISettingService settingService,
             IVirtualSettingMonitorService virtualSettingMonitorService,
             ICustomerDashboardService customerDashboardService)
         {
@@ -48,10 +50,29 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
         public ActionResult GetDashboardData(GetDashboardInfoCriteria criteria)
         {
-            criteria.ReportToDate = DateTime.Now;
+            criteria.CustId = 111311;
+            criteria.ReportToDate = DateTime.Parse("2015-08-01"); // DateTime.Now;
             var dashboadInfo = _customerDashboardService.GetDashboardInfo(criteria);
+            dashboadInfo.DashboardMarginModels = GetMarginData(criteria);
 
-            return Json(new { GeneralInfo = dashboadInfo.DashboardGeneralInfo }, JsonRequestBehavior.AllowGet);
+            return Json(new { DashboardData = dashboadInfo }, JsonRequestBehavior.AllowGet);
+        }
+
+        private List<MarginModel> GetMarginData(GetDashboardInfoCriteria inputParams)
+        {
+            var monthList = GenerateMonthList(8, inputParams.MonthToCheck);
+            var criteria = new GetCustomerMarginLatestMonthsCriteria
+            {
+                CustId = inputParams.CustId,
+                MonthToCheck = inputParams.MonthToCheck,
+                ReportToDate = DateTime.Parse("2015-08-01"),
+                SportId = 1
+            };
+
+            var margins = _virtualSettingMonitorService.GetCustomerVirtualSettingLatestMonths(criteria, monthList);
+            margins.RemoveAt(margins.Count - 1);
+
+            return margins;
         }
 
         #region Utilities
@@ -74,7 +95,7 @@
         {
             var monthListName = new string[months.Length];
 
-            for(var i = 0; i < months.Length; i++)
+            for (var i = 0; i < months.Length; i++)
             {
                 monthListName[i] = MonthsName[months[i] - 1];
             }

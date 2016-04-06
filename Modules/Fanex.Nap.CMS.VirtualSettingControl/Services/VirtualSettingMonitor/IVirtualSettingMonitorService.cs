@@ -10,5 +10,7 @@
         VirtualSettingViewModel GetVirtualSettingMonitor(ICriteria criteria, int[] monthList);
 
         CustomerVirtualSettingModel GetCustomerVirtualSettingHistories(ICriteria criteria, int[] monthList);
+
+        List<MarginModel> GetCustomerVirtualSettingLatestMonths(ICriteria criteria, int[] monthList);
     }
 }

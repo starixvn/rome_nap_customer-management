@@ -26,6 +26,14 @@
             return BindCustomerVirtualSettingHistories(rawData, monthList);
         }
 
+        public List<MarginModel> GetCustomerVirtualSettingLatestMonths(ICriteria criteria, int[] monthList)
+        {
+            var rawData = GetData<VirtualSettingModel>(criteria).ToList();
+            var refinedData = BindCustomerVirtualSettingHistories(rawData, monthList);
+
+            return refinedData.CustMargin;
+        }
+
         #region Utilities
 
         public VirtualSettingViewModel BindVirtualSettingData(List<VirtualSettingModel> rawData, int[] monthList)
@@ -43,12 +51,19 @@
                     };
 
                 var virtualSetting = cust.Select(l => l).ToList();
+                var currentYear = DateTime.Now.Year;
+
                 foreach(var month in monthList)
                 {
+                    if (month == 12)
+                    {
+                        currentYear = currentYear - 1;
+                    }
+
                     var custSetting = FindVirtualSetting(virtualSetting, month);
                     newCust.CustMargin.Add( custSetting != null
                             ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
-                            : new MarginModel(month, 0));
+                            : new MarginModel(month, currentYear));
                 }
 
                 // The Average Performance record
@@ -65,12 +80,18 @@
         public CustomerVirtualSettingModel BindCustomerVirtualSettingHistories(List<VirtualSettingModel> rawData, int[] monthList)
         {
             var custVirtualSettingHistory = new CustomerVirtualSettingModel();
+            var currentYear = DateTime.Now.Year;
             foreach (var month in monthList)
             {
+                if (month == 12)
+                {
+                    currentYear = currentYear - 1;
+                }
+
                 var custSetting = FindVirtualSetting(rawData, month);
                 custVirtualSettingHistory.CustMargin.Add(custSetting != null
                         ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
-                        : new MarginModel(month, 0));
+                        : new MarginModel(month, currentYear));
             }
 
             // The Average Performance record

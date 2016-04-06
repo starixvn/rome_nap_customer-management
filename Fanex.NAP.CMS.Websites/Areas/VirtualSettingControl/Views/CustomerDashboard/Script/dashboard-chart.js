@@ -2,8 +2,8 @@
 /* global Namespace, Highcharts, common, numeral */
 ////'use strict';
 
-Namespace.Register("Fanex.TGRS.DashboardColumnChart");
-Fanex.TGRS.DashboardChart = function () {
+Namespace.Register("Fanex.NAP.CMS.DashboardColumnChart");
+Fanex.NAP.CMS.DashboardChart = function () {
     var $this = this;
 
     $this.ApplyDarkTheme = function () {
@@ -472,25 +472,25 @@ Fanex.TGRS.DashboardChart = function () {
     var formatAxis = function (data) {
         if (Math.abs(data.value) >= 1000000000) {
             if (data.value % 1000000000 === 0) {
-                return numeral(data.value / 1000000000).format(common.Formats.IntegerFormat) + " Bil";
+                return numeral(data.value / 1000000000).format('0,0') + " Bil";
             }
             else {
-                return numeral(data.value / 1000000000).format(common.Formats.DecimalFormat) + " Bil";
+                return numeral(data.value / 1000000000).format(0, 0.00) + " Bil";
             }
         } else if (Math.abs(data.value) >= 1000000) {
             if (data.value % 1000000 === 0) {
-                return numeral(data.value / 1000000).format(common.Formats.IntegerFormat) + " M";
+                return numeral(data.value / 1000000).format('0,0') + " M";
             }
             else {
-                return numeral(data.value / 1000000).format(common.Formats.DecimalFormat) + " M";
+                return numeral(data.value / 1000000).format(0, 0.00) + " M";
             }
         }
         else if (Math.abs(data.value) >= 1000) {
             if (data.value % 1000 === 0) {
-                return numeral(data.value / 1000).format(common.Formats.IntegerFormat) + " K";
+                return numeral(data.value / 1000).format('0,0') + " K";
             }
             else {
-                return numeral(data.value / 1000).format(common.Formats.DecimalFormat) + " K";
+                return numeral(data.value / 1000).format('0,0') + " K";
             }
         } else {
             return data.value;

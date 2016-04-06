@@ -29,28 +29,28 @@
                 <div class="info-cell-1-left">
                     <div class="info-cell1-content">
                         <label class="title">Turnover</label>
-                        <label class="number" id="lblTurnOver">123,456,789.00
+                        <label class="number" id="lblTurnOver">0.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">Win Loss</label>
-                        <label class="number" id="lblWinLoss">123,456,789.00
+                        <label class="number" id="lblWinLoss">0.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">Margin</label>
-                        <label class="number" id="lblMargin">123,456,789.00
+                        <label class="number" id="lblMargin">0.00
                         </label>
                     </div>
                 </div>
                 <div class="info-cell-1">
                     <div class="info-cell1-content">
                         <label class="title">Bet Count</label>
-                        <label class="number" id="lblBetCount">123,456,789.00
+                        <label class="number" id="lblBetCount">0
                         </label>
                     </div>
                 </div>
@@ -62,19 +62,20 @@
             </div>
             <div id="divWinloss" class="info-cell-2">
                 <div class="info-cell2-content">
-                    <div id="monthWinlossContainer" class="chart-container">
+                    <div id="monthBetCountContainer" class="chart-container">
                     </div>
                 </div>
             </div>
             <div id="divMargin" class="info-cell-2-left no-padding-bot">
                 <div class="info-cell2-content">
-                    <div id="monthBetCountContainer" class="chart-container">
+                    <div id="monthWinlossContainer" class="chart-container">
                     </div>
                 </div>
             </div>
             <div id="divMatch" class="info-cell-2 no-padding-bot">
                 <div class="info-cell2-content">
-                    <div id="teamMarginContainer" class="chart-container">
+                    <div id="monthMarginByStakeContainer" class="chart-container"> 
+                        <div style="color: #5a7dc1; fill: #5a7dc1; font-size: 18px; text-transform: uppercase; font-family: Lucida Grande,Lucida Sans Unicode,Arial,Helvetica,sans-serif; margin-top: 10px; ">MARGIN (%) BY STAKE RANGE IS COMING SOON ....</div>
                     </div>
                 </div>
             </div>
@@ -115,7 +116,7 @@
                         <div class="value title-value"><div class="center-value">Winloss</div></div>
                         <div class="value title-value"><div class="center-value">Margin %</div></div>
                     </div>
-                    <div id="divEventChoice">
+                    <div id="divEventChoices">
                     </div>
                 </div>
             </div>
@@ -123,6 +124,8 @@
     </div>
 </div>
 <label id="lblCustId" style="display:none">@Model.CustId</label>
+<label id="lblMonthToCheck" style="display:none">@Model.MonthToCheck</label>
+<label id="lblSportId" style="display:none">@Model.SportId</label>
 @section Foot
 {
     @Scripts.Render("~/scripts/dashboard")

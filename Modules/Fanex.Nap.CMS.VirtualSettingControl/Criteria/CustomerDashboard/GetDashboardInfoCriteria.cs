@@ -12,6 +12,8 @@
 
         public int MonthToCheck { get; set; }
 
+        public int SportId { get; set; }
+
         public DateTime ReportToDate { get; set; }
 
         /// <summary>

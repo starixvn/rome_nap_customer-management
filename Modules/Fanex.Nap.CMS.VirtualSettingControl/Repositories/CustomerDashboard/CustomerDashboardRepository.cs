@@ -1,16 +1,19 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Repositories.CustomerDashboard
 {
     using Fanex.Data;
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.CustomerDashboard;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.CustomerDashboard;
-    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using System;
     using System.Collections.Generic;
     using System.Data;
 
     public class CustomerDashboardRepository : ICustomerDashboardRepository
     {
-        public CustomerDashboardModel GetDashboardInfo(ICriteria criteria)
+        public CustomerDashboardRepository()
+        {
+        }
+
+        public CustomerDashboardModel GetDashboardInfo(GetDashboardInfoCriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -46,7 +49,7 @@
 
             };
 
-            return null;
+            return generalInfo;
         }
 
         public IEnumerable<BetCountByMonth> ParseBetCount(DataTable data)

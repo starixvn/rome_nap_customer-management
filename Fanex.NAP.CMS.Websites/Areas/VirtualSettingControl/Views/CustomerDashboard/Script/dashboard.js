@@ -309,7 +309,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
         
         $.each(marginData, function (index, item) {
             chartData.MonthCategories.push(item.Month + "/" + item.Year);
-            chartData.MonthMarginData[0].data.push((numeral(item.Margin).format('0, 0.00')));
+            chartData.MonthMarginData[0].data.push(item.Margin);
             chartData.MonthTOWLData[0].data.push(item.Turnover);
             chartData.MonthTOWLData[1].data.push(item.Winloss);
             if (item.Turnover < chartData.MixDataMin) {

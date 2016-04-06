@@ -2,7 +2,7 @@
 {
     using Data.Repository;
 
-    public class GetAdjustmentRptCriteria : CriteriaBase
+    public class GetCustomerMarginCriteria : CriteriaBase
     {
         public int CustId { get; set; }
     }

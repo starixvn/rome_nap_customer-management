@@ -3,7 +3,7 @@
     using System;
     using Data.Repository;
 
-    public class GetVrMarginCriteria : CriteriaBase
+    public class GetAutoAdjustmentReportCriteria : CriteriaBase
     {
         public DateTime FromDate { get; set; }
 

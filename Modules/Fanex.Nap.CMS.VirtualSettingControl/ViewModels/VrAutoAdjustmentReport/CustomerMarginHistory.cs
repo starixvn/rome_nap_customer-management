@@ -7,11 +7,11 @@
 
     public class CustomerMarginHistory
     {
-        private readonly double avgTurnover;
+        private readonly double _avgTurnover;
 
-        private readonly double avgWinloss;
+        private readonly double _avgWinloss;
 
-        private readonly double margin;
+        private readonly double _margin;
 
         private readonly IEnumerable<string> months;
 
@@ -19,9 +19,9 @@
 
         public CustomerMarginHistory(IEnumerable<Models.VrAutoAdjustmentReport.CustomerMarginHistory> logEntries, IMarginCalculatorService calculator, Func<int, string> monthGetter)
         {
-            avgTurnover = calculator.CalculateTurnover(logEntries);
-            avgWinloss = calculator.CalculateWinloss(logEntries);
-            margin = calculator.CalculateMargin(avgTurnover, avgWinloss);
+            _avgTurnover = calculator.CalculateTurnover(logEntries);
+            _avgWinloss = calculator.CalculateWinloss(logEntries);
+            _margin = calculator.CalculateMargin(_avgTurnover, _avgWinloss);
             months = logEntries.Select(l => monthGetter(l.Month));
             turnovers = logEntries.Select(l => l.Turnover);
             winlosses = logEntries.Select(l => l.Winloss);
@@ -30,17 +30,17 @@
 
         public double AvgTurnover
         {
-            get { return avgTurnover; }
+            get { return _avgTurnover; }
         }
 
         public double AvgWinloss
         {
-            get { return avgWinloss; }
+            get { return _avgWinloss; }
         }
 
         public double Margin
         {
-            get { return margin; }
+            get { return _margin; }
         }
 
         public IEnumerable<string> Months

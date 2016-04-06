@@ -110,6 +110,7 @@
   <ItemGroup>
     <Compile Include="App_Start\VirtualSettingControlAreaRegistration.cs" />
     <Compile Include="App_Start\VirtualSettingControlBundleConfig.cs" />
+    <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
@@ -117,6 +118,8 @@
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginLatestMonthsCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
+    <Compile Include="Criteria\VrAutoAdjustmentReport\GetAdjustmentRptCriteria.cs" />
+    <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrMarginCriteria.cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
@@ -125,15 +128,23 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerVirtualSettingModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
+    <Compile Include="Models\VrAutoAdjustmentReport\CustomerMarginHistory.cs" />
+    <Compile Include="Models\VrAutoAdjustmentReport\VrAutoAdjustmentLogEntry.cs" />
     <Compile Include="Services\CustomerDashboard\CustomerDashboardService.cs" />
     <Compile Include="Services\CustomerDashboard\ICustomerDashboardService.cs" />
     <Compile Include="Models\CustomerDashboard\CustomerDashboardModel.cs" />
+    <Compile Include="Services\VrAutoAdjustmentReport\MarginCalculator.cs" />
+    <Compile Include="Services\VrAutoAdjustmentReport\IMarginCalculatorService.cs" />
+    <Compile Include="Services\VrAutoAdjustmentReport\IAdjustmentReportService.cs" />
+    <Compile Include="Services\VrAutoAdjustmentReport\AdjustmentReportService.cs" />
+    <Compile Include="Utility\Helper.cs" />
     <Compile Include="ViewModels\VirtualSettingMonitor\VirtualSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerDashboard\ICustomerDashboardRepository.cs" />
     <Compile Include="Repositories\CustomerDashboard\CustomerDashboardRepository.cs" />
     <Compile Include="Services\VirtualSettingMonitor\IVirtualSettingMonitorService.cs" />
     <Compile Include="Services\VirtualSettingMonitor\VirtualSettingMonitorService.cs" />
+    <Compile Include="ViewModels\VrAutoAdjustmentReport\CustomerMarginHistory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

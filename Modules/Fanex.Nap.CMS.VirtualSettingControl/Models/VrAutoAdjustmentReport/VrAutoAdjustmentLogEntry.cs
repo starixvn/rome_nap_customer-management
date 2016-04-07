@@ -13,5 +13,10 @@
         public int OldRate { get; set; }
 
         public int NewRate { get; set; }
+
+        public string UpdatedDateString
+        {
+            get { return UpdatedDate.ToString("d"); }
+        }
     }
 }

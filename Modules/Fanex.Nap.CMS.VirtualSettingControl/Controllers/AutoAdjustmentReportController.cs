@@ -1,14 +1,16 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
+﻿using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport;
+
+namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
+    using System;
+    using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Services.VirtualSettingMonitor;
     using Services.VrAutoAdjustmentReport;
-    using System;
-    using System.Web.Mvc;
 
-    public class AutoAdjustmentReportController: BaseController
+    public class AutoAdjustmentReportController : BaseController
     {
         private const int MonthsToCheck = 6;
 
@@ -30,6 +32,11 @@
         public ActionResult Index()
         {
             return View("~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Index.cshtml");
+        }
+
+        public ActionResult ViewVrAdjustmentReport(GetVrAdjustmentLogCriteria criteria)
+        {
+            return Json(_adjustmentReportService.GetReport(criteria), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ViewHistory(int custId)

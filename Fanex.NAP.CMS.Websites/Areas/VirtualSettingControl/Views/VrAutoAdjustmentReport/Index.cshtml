@@ -14,9 +14,7 @@
     </div>
 }
 
-
-@using (Html.BeginForm("", "", FormMethod.Post, new { id = "", @class = "filter-bar", area = "" }))
-{
+<form class="filter-bar">
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_4">
@@ -24,24 +22,24 @@
             </div>
             <div id="fromtodate-picker"></div>
             <div class="submit width-auto col_3">
-                <button type="submit" class="submit">Generate</button>
+                <button type="submit" class="submit" id="btn-generate">Generate</button>
             </div>
         </div>
     </div>
-}
-
+</form>
 
 <div class="content-grid">
-    <div class="freegrid display-none" id="freegrid"></div>
+    <div class="freegrid display-none" id="auto-adjustment-report-freegrid"></div>
 </div>
 
 <div id="divModals" class="display-none">
-    <div class="form expand-form">
-        <div class="">
-            Hung Cuong
-        </div>
-        <div class="form-row button-row">
-            <button type="button" class="red-button" onclick="CMS.closePopup()">Close</button>
+    <div id="auto-adjustment-report-detail">
+        <div class="form-row freetable-container">
+            <div class="freegrid" id="auto-adjustment-report-detail-freegrid"></div>
+            <div style="height: 8px;"></div>
+            <div class="form-row button-row" style="text-align: center;">
+                <button type="button" class="red-button" onclick="CMS.closePopup()">Close</button>
+            </div>
         </div>
     </div>
 </div>

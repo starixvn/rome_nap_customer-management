@@ -48,5 +48,30 @@
                     throw new Exception(month + " is not a valid month");
             }
         }
+
+        public static string[] GetMonthListName(int[] months)
+        {
+            var monthListName = new string[months.Length];
+
+            for (var i = 0; i < months.Length; i++)
+            {
+                monthListName[i] = GetMonthName(months[i]);
+            }
+
+            return monthListName;
+        }
+
+        public static int[] GenerateMonthList(DateTime currentMonth, int monthRange)
+        {
+            var result = new int[monthRange];
+
+            for (var i = 1; i <= monthRange; i++)
+            {
+                result[monthRange - i] = currentMonth.Month;
+                currentMonth = currentMonth.AddMonths(-1);
+            }
+
+            return result;
+        }
     }
 }

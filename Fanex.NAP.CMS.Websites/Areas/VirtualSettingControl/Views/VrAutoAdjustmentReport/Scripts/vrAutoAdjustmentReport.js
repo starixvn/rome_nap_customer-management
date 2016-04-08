@@ -137,7 +137,7 @@
 
     var renderVrAdjustmentReportGrid = function (data) {
         var columnHeaders = [
-            { HeaderText: '#', Width: 60, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: '#', Width: 60, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: 'Member', Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: 'Updated Date', Width: 125, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 100, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },

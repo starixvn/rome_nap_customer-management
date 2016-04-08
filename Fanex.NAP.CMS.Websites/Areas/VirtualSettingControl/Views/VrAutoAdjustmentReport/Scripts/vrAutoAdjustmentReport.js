@@ -2,13 +2,10 @@
 (function () {
     'use strict';
     var rootUrl = $('#CMSRoot').val();
+
     var $fromtoDatePicker = $('#fromtodate-picker');
     var $autoAdjustmentReportDetail = $('#auto-adjustment-report-detail');
     var $vrAdjustmentReportGrid = $("#auto-adjustment-report-freegrid");
-
-    function formatNumber(number) {
-        return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
-    }
 
     function initDateRangeSelect() {
         $fromtoDatePicker.nexDatePicker({
@@ -26,7 +23,7 @@
                 Id: 'dpk-fromdate',
                 Label: '',
                 LabelCss: '',
-                TextboxCss: 'edit-field col_8'
+                TextboxCss: 'edit-field col_6'
             },
             secondDatePicker: {
                 Id: 'dpk-todate',
@@ -34,14 +31,12 @@
                 InitDate: currentDate,
                 CurrentDate: currentDate,
                 LabelCss: '',
-                TextboxCss: 'edit-field col_8'
+                TextboxCss: 'edit-field col_6'
             }
         });
 
         $('#dpk-fromdate').datepicker('setDate', initFromDate);
     }
-
-    var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
 
     var getCustomerHistory = function (custId, username) {
         var url = rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewHistory?CustId=' + custId;
@@ -131,18 +126,19 @@
     };
 
     var getVrAdjustmentLog = function () {
+        var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
-            FromDate: '2016/5/8',
-            ToDate: '2016/5/9'
+            FromDate: fromtoDate.FromDate,
+            ToDate: fromtoDate.ToDate
         };
 
-        CMS.getData('GET', rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, renderVrAdjustmentReportGrid);
+        CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, renderVrAdjustmentReportGrid);
     }
 
     var renderVrAdjustmentReportGrid = function (data) {
         var columnHeaders = [
             { HeaderText: '#', Width: 60, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 100, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Member', Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: 'Updated Date', Width: 125, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 100, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 100, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
@@ -150,29 +146,51 @@
         ];
 
         var bodyMapFunc = function (item, index) {
-            return {
+            var historyCellFormat = '<a href="javascript:;" class="ico-remark" data-custid="{0}" data-username="{1}" title="View History"></a>';
+
+            var column = {
                 Columns: [
-                    {Name: 'colRowNum', Value: index + 1},
-                    {Name: 'colUsername', Value: item.Username},
-                    {Name: 'colUpdatedDate', Value: item.UpdatedDateString},
-                    {Name: 'colOldRate', Value: item.OldRate},
-                    {Name: 'colNewRate', Value: item.NewRate},
-                    {Name: 'colHistoryLink', Value: ''}
+                    { Name: 'colRowNum', Value: index + 1 },
+                    { Name: 'colUsername', Value: item.Username },
+                    { Name: 'colUpdatedDate', Value: item.UpdatedDateString },
+                    { Name: 'colOldRate', Value: item.OldRate },
+                    { Name: 'colNewRate', Value: item.NewRate },
+                    { Name: 'colHistoryLink', Value: historyCellFormat.format(item.CustId, item.Username) }
                 ]
             };
+
+            return column;
         };
 
         var gridOptions = {
-            fullHeight: true,
             fullWidth: true,
-            gridExpandHeight: 250,
-            columns: columnHeaders,
+            fullHeight: true,
+            showDistinctRow: false,
+            showHighlightRow: true,
+            headerColumnHeight: 35,
+            gridExpandHeight: 180,
+            showPager: true,
+            pagerOption: {
+                currentPage: 0,
+                itemsPerPage: CMS.pageSize,
+                itemsPerPageArray: CMS.pagerRanges,
+                afterPagedFunction: reportEventHandler
+            },
+            columns: columnHeaders
         };
+
         $vrAdjustmentReportGrid.removeClass('display-none');
-        CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data, bodyMapFunc, null, null,reportEventHandler);
+        CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data, bodyMapFunc, null, null, reportEventHandler);
     }
 
-    var reportEventHandler=function (target) {
+    var reportEventHandler = function () {
+        $vrAdjustmentReportGrid.find('.ico-remark').click(function () {
+            var $this = $(this);
+            var custId = $this.data('custid');
+            var username = $this.data('username');
+
+            getCustomerHistory(custId, username);
+        });
     }
 
     function initialize() {
@@ -180,8 +198,8 @@
 
         $('#btn-generate').on('click', function (event) {
             event.preventDefault();
+
             getVrAdjustmentLog();
-            //getCustomerHistory(753422, 'Cao Hung Cuong');
         });
     }
 

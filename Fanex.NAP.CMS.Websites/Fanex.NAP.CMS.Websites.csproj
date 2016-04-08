@@ -295,8 +295,8 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
-    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
-    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\VrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\VirtualSettingMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />

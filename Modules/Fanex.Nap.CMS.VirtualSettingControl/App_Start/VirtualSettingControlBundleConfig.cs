@@ -43,10 +43,10 @@
         {
             bundles.AddAndInclude(
                 "~/bundles/VrAutoAdjustmentReport/css",
-                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Styles/vrAutoAdjustmentReport.css");
+                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Styles/VrAutoAdjustmentReport.css");
 
             bundles.Add(new ScriptBundle("~/bundles/VrAutoAdjustmentReport/js").Include(
-                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Scripts/vrAutoAdjustmentReport.js"));
+                "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Scripts/VrAutoAdjustmentReport.js"));
         }
     }
 }

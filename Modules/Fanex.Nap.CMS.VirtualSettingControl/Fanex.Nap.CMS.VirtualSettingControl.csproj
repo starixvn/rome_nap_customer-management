@@ -128,13 +128,10 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerVirtualSettingModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
-    <Compile Include="Models\VrAutoAdjustmentReport\CustomerMarginHistory.cs" />
     <Compile Include="Models\VrAutoAdjustmentReport\VrAutoAdjustmentLogEntry.cs" />
     <Compile Include="Services\CustomerDashboard\CustomerDashboardService.cs" />
     <Compile Include="Services\CustomerDashboard\ICustomerDashboardService.cs" />
     <Compile Include="Models\CustomerDashboard\CustomerDashboardModel.cs" />
-    <Compile Include="Services\VrAutoAdjustmentReport\MarginCalculator.cs" />
-    <Compile Include="Services\VrAutoAdjustmentReport\IMarginCalculatorService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\IAdjustmentReportService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\AdjustmentReportService.cs" />
     <Compile Include="Utility\Helper.cs" />
@@ -144,7 +141,6 @@
     <Compile Include="Repositories\CustomerDashboard\CustomerDashboardRepository.cs" />
     <Compile Include="Services\VirtualSettingMonitor\IVirtualSettingMonitorService.cs" />
     <Compile Include="Services\VirtualSettingMonitor\VirtualSettingMonitorService.cs" />
-    <Compile Include="ViewModels\VrAutoAdjustmentReport\CustomerMarginHistory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

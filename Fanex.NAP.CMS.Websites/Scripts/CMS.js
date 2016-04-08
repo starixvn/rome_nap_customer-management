@@ -105,7 +105,7 @@ var CMS = (function ($) {
             };
 
             callbackFunc = callbackFunc || function () {
-                };
+            };
             CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
             setTimeout(callbackFunc, 3000);
         },
@@ -132,7 +132,7 @@ var CMS = (function ($) {
             };
 
             callbackFunc = callbackFunc || function () {
-                };
+            };
             CMS.headlineMsgBox.confirm(message, callbackFunc, options);
         },
         closeMsgBox: function () {
@@ -173,7 +173,7 @@ var CMS = (function ($) {
         },
         hideInlineMsg: function ($obj, callbackFunc) {
             callbackFunc = callbackFunc || function () {
-                };
+            };
             $obj.removeClass('error').removeClass('info').slideUp(callbackFunc);
             $obj.html('');
         },
@@ -499,31 +499,37 @@ var CMS = (function ($) {
             }
         },
 
-        getData: function (requestType, url, criteria, success, error, complete) {
+        getData: function (url, criteria, successFunction, errorFunction, completeFunction) {
             $.ajax(
-                {
-                    url: url,
-                    type: requestType,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    beforeSend: CMS.disableInput,
-                    data: criteria,
-                    success: success,
-                    error: function (xhr) {
-                        CMS.handleAjaxError(xhr);
-                        if (error) {
-                            error(xhr);
-                        }
-                    },
-                    complete: function () {
-                        CMS.enableInput();
-                        if (complete) {
-                            complete();
-                        }
+            {
+                url: url,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: criteria,
+                beforeSend: function () {
+                    CMS.disableInput();
+                },
+                success: function (result) {
+                    if (successFunction && typeof (successFunction) === 'function') {
+                        successFunction(result);
                     }
-
+                },
+                error: function (xhr) {
+                    if (errorFunction && typeof (errorFunction) === 'function') {
+                        errorFunction(xhr);
+                    } else {
+                        CMS.handleAjaxError(xhr);
+                    }
+                },
+                complete: function () {
+                    if (completeFunction && typeof (completeFunction) === 'function') {
+                        completeFunction();
+                    } else {
+                        CMS.enableInput();
+                    }
                 }
-            )
+            });
         },
 
         renderGrid: function (target,

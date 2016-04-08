@@ -3,14 +3,16 @@
 namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VrAutoAdjustmentReport;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Services.VirtualSettingMonitor;
     using Services.VrAutoAdjustmentReport;
 
-    public class AutoAdjustmentReportController : BaseController
+    public class AutoAdjustmentReportController: BaseController
     {
         private const int MonthsToCheck = 6;
 
@@ -36,7 +38,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 
         public ActionResult ViewVrAdjustmentReport(GetVrAdjustmentLogCriteria criteria)
         {
-            return Json(_adjustmentReportService.GetReport(criteria), JsonRequestBehavior.AllowGet);
+            var result = _adjustmentReportService.GetReport(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ViewHistory(int custId)

@@ -16,7 +16,7 @@
 
         public string UpdatedDateString
         {
-            get { return UpdatedDate.ToString("d"); }
+            get { return UpdatedDate.ToString("dd/MM/yyyy"); }
         }
     }
 }

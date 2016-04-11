@@ -1,12 +1,11 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
-    using Fanex.Nap.CMS.VirtualSettingControl.Models.VrAutoAdjustmentReport;
+    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;

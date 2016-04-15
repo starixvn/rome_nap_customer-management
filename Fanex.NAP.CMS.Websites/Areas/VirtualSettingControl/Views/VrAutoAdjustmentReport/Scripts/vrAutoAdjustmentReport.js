@@ -145,9 +145,10 @@
             { HeaderText: '', Width: 60, Name: 'colHistoryLink', HeaderAlign: 'center', CellAlign: 'center' }
         ];
 
-        var bodyMapFunc = function (item, index) {
-            var historyCellFormat = '<a href="javascript:;" class="ico-remark" data-custid="{0}" data-username="{1}" title="View History"></a>';
+        var historyCellFormat = '<a href="javascript:;" class="ico-remark" data-custid="{0}" data-username="{1}" title="View History"></a>';
 
+        var bodyMapFunc = function (item, index) {
+            
             var column = {
                 Columns: [
                     { Name: 'colRowNum', Value: index + 1 },
@@ -202,6 +203,6 @@
             getVrAdjustmentLog();
         });
     }
-
+    
     initialize();
 })();

@@ -50,8 +50,8 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
         public ActionResult GetDashboardData(GetDashboardInfoCriteria criteria)
         {
-            criteria.CustId = 111311;
-            criteria.ReportToDate = DateTime.Parse("2015-08-01"); // DateTime.Now;
+            //criteria.CustId = 111311;
+            criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-08-01"); // 
             var dashboadInfo = _customerDashboardService.GetDashboardInfo(criteria);
             dashboadInfo.DashboardMarginModels = GetMarginData(criteria);
 
@@ -65,8 +65,8 @@
             {
                 CustId = inputParams.CustId,
                 MonthToCheck = inputParams.MonthToCheck,
-                ReportToDate = DateTime.Parse("2015-08-01"),
-                SportId = 1
+                ReportToDate = DateTime.Now, //DateTime.Parse("2015-08-01"),
+                SportId = inputParams.SportId
             };
 
             var margins = _virtualSettingMonitorService.GetCustomerVirtualSettingLatestMonths(criteria, monthList);

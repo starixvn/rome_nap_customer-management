@@ -60,7 +60,7 @@
 
         private List<MarginModel> GetMarginData(GetDashboardInfoCriteria inputParams)
         {
-            var monthList = GenerateMonthList(8, inputParams.MonthToCheck);
+            var monthList = GenerateMonthList(DateTime.Now.Month, inputParams.MonthToCheck);
             var criteria = new GetCustomerMarginLatestMonthsCriteria
             {
                 CustId = inputParams.CustId,

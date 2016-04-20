@@ -54,7 +54,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
             var monthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
             var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
             Array.Reverse(reversedMonthList);
-            criteria.MonthList = string.Join(",", reversedMonthList);
             var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
 
             return Json(new { TotalRow = (virtualSettings == null ? 0 : virtualSettings.CustMargin.Count), MonthList = monthList.Select(Utility.Helper.GetMonthName), VirtualSettings = virtualSettings }, JsonRequestBehavior.AllowGet);

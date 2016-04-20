@@ -17,8 +17,6 @@
 
         public DateTime ReportToDate { get; set; }
 
-        public string MonthList { get; set; }
-
         public override string GetSettingKey()
         {
             return "NAP_Report_CustMngt_VirtualRateMonitoring"; 

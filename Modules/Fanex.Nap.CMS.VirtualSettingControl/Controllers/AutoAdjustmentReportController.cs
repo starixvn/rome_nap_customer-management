@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
+﻿using System.Text;
+
+namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
     using System;
     using System.Web.Mvc;
@@ -12,7 +14,7 @@
     using Services.VirtualSettingMonitor;
     using Services.VrAutoAdjustmentReport;
 
-    public class AutoAdjustmentReportController: BaseController
+    public class AutoAdjustmentReportController : BaseController
     {
         private const int MonthsToCheck = 6;
 
@@ -42,7 +44,7 @@
         {
             var result = _adjustmentReportService.GetReport(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]

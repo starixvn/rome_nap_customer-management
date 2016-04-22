@@ -57,7 +57,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
                 CustId = custId,
                 MonthToCheck = MonthsToCheck,
                 ReportToDate = today,
-                SportId = -1
+                SportId = 0
             };
             var custMarginHistory = _virtualSettingMonitorService.GetCustomerVirtualSettingLatestMonths(criteria, monthList);
             var result = new

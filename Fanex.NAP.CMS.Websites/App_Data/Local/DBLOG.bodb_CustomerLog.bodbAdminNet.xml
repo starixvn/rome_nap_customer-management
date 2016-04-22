@@ -2,6 +2,9 @@
 <Functions>
     <Function Name="Win Limit Control">
         <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    </Function>
+
+    <Function Name="Virtual Setting Control">
         <Setting Key ="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     </Function>
 </Functions>

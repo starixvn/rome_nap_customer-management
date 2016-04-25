@@ -470,30 +470,35 @@ Fanex.NAP.CMS.DashboardChart = function () {
     };
 
     var formatAxis = function (data) {
+        var result = '';
+        var decimalFormat = '0,0.00';
+        var integerFormat = '0,0';
+        var formatType = decimalFormat;
+
         if (Math.abs(data.value) >= 1000000000) {
             if (data.value % 1000000000 === 0) {
-                return numeral(data.value / 1000000000).format('0,0') + " Bil";
+                formatType = integerFormat;
             }
-            else {
-                return numeral(data.value / 1000000000).format(0, 0.00) + " Bil";
-            }
+
+            result = numeral(data.value / 1000000000).format(formatType) + " Bil";
+
         } else if (Math.abs(data.value) >= 1000000) {
             if (data.value % 1000000 === 0) {
-                return numeral(data.value / 1000000).format('0,0') + " M";
+                formatType = integerFormat;
             }
-            else {
-                return numeral(data.value / 1000000).format(0, 0.00) + " M";
-            }
+
+            result = numeral(data.value / 1000000).format(formatType) + " M";
         }
         else if (Math.abs(data.value) >= 1000) {
             if (data.value % 1000 === 0) {
-                return numeral(data.value / 1000).format('0,0') + " K";
+                formatType = integerFormat;
             }
-            else {
-                return numeral(data.value / 1000).format('0,0') + " K";
-            }
+
+            result = numeral(data.value / 1000).format(formatType) + " K";
         } else {
-            return data.value;
+            result = data.value;
         }
+
+        return result;
     };
 };

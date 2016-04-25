@@ -50,16 +50,8 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult ViewHistory(int custId)
         {
-            var today = DateTime.Now;
-            var monthList = Helper.GenerateMonthList(today, MonthsToCheck);
-            var criteria = new GetCustomerMarginLatestMonthsCriteria()
-            {
-                CustId = custId,
-                MonthToCheck = MonthsToCheck,
-                ReportToDate = today,
-                SportId = 0
-            };
-            var custMarginHistory = _virtualSettingMonitorService.GetCustomerVirtualSettingLatestMonths(criteria, monthList);
+            var monthList = Helper.GenerateMonthList(DateTime.Now, MonthsToCheck);
+            var custMarginHistory = _adjustmentReportService.GetCustomerVirtualSettingLatestMonths(custId, DateTime.Now, MonthsToCheck);
             var result = new
             {
                 MarginHistory = custMarginHistory,

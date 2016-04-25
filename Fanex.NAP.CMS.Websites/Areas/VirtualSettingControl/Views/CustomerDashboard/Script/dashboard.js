@@ -372,7 +372,7 @@ Fanex.NAP.CMS.Reports.Dashboard = function () {
 
         // turnover&winloss
         var mixChartOption = ChartOptions.MixChartOption();
-        mixChartOption.title.text = 'WinLoss/Turnover By Team';
+        mixChartOption.title.text = 'WinLoss/Turnover By Month';
         mixChartOption.series = chartData.MonthTOWLData;
         mixChartOption.xAxis.categories = chartData.MonthCategories;
         if (type === ChartType._2D) {

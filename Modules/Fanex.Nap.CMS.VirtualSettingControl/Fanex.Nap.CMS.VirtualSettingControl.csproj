@@ -141,6 +141,8 @@
     <Compile Include="Repositories\CustomerDashboard\CustomerDashboardRepository.cs" />
     <Compile Include="Services\VirtualSettingMonitor\IVirtualSettingMonitorService.cs" />
     <Compile Include="Services\VirtualSettingMonitor\VirtualSettingMonitorService.cs" />
+    <Compile Include="ViewModels\VrAutoAdjustmentReport\LogEntryViewModel.cs" />
+    <Compile Include="ViewModels\VrAutoAdjustmentReport\MarginViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

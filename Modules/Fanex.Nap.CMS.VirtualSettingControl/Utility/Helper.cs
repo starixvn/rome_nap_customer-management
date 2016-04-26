@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
+﻿using System.Collections.Generic;
+
+namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
 {
     using System;
 
@@ -72,6 +74,37 @@
             }
 
             return result;
+        }
+
+        public static IEnumerable<string> GetDate(DateTime currentTime, int monthRange, string format)
+        {
+            for (int i = monthRange; i > 0; --i)
+            {
+                yield return currentTime.AddMonths(-i).ToString(format);
+            }
+        }
+
+
+        public static Tuple<IEnumerable<T>, IEnumerable<T>> Split<T>(this IEnumerable<T> source, int count)
+        {
+            var c = 0;
+            var fst = new Queue<T>();
+            var snd = new Queue<T>();
+
+            foreach (var item in source)
+            {
+                if (c < count)
+                {
+                    fst.Enqueue(item);
+                }
+                else
+                {
+                    snd.Enqueue(item);
+                }
+                ++c;
+            }
+
+            return new Tuple<IEnumerable<T>, IEnumerable<T>>(fst, snd);
         }
     }
 }

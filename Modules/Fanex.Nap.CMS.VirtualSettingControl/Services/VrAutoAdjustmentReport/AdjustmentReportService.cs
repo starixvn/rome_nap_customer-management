@@ -17,7 +17,7 @@
             return this.GetData<VrAutoAdjustmentLogEntry>(criteria);
         }
 
-        public List<MarginModel> GetCustomerVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck)
+        public IEnumerable<MarginModel> GetVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck)
         {
             var dataByMonths = new List<VirtualSettingModel>();
             var monthList = Helper.GenerateMonthList(reportDate, monthsToCheck);
@@ -70,9 +70,7 @@
 
         private VirtualSettingModel FindVirtualSetting(List<VirtualSettingModel> rawData, int month)
         {
-            return rawData.Any(l => l.ReportMonth == month)
-                ? rawData.First(l => l.ReportMonth == month)
-                : null;
+            return rawData.FirstOrDefault(l => l.ReportMonth == month);
         }
     }
 }

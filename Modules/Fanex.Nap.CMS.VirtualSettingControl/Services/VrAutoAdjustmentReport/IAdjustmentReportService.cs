@@ -11,6 +11,6 @@
     {
         IEnumerable<VrAutoAdjustmentLogEntry> GetReport(ICriteria criteria);
 
-        List<MarginModel> GetCustomerVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck);
+        IEnumerable<MarginModel> GetVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck);
     }
 }

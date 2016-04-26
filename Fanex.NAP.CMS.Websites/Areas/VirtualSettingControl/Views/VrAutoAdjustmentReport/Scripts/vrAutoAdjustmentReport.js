@@ -1,4 +1,14 @@
 ﻿/* global currentDate, initFromDate, CMS, CMSConstants, numeral */
+
+
+Array.prototype.collect = function (collector) {
+    var result = [];
+    for (var i = 0; i < this.length; ++i) {
+        result = result.concat(collector(this[i], i));
+    }
+    return result;
+};
+
 (function () {
     'use strict';
     var rootUrl = $('#CMSRoot').val();
@@ -136,31 +146,68 @@
     }
 
     var renderVrAdjustmentReportGrid = function (data) {
+
+        var getMonthHeaders = function (month, index) {
+            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber };
+        };
+
+        var getWinlossCell = function (marginItem, index) {
+            return { Name: 'colMonth' + index, Value: marginItem.Winloss };
+        }
+
+        var getTurnoverCell = function (marginItem, index) {
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover };
+        }
+
+        var getMarginCell = function (marginItem, index) {
+            return { Name: 'colMonth' + index, Value: marginItem.Margin };
+        }
+
+        var months = data.Months.map(getMonthHeaders);
+
+
         var columnHeaders = [
-            { HeaderText: '#', Width: 60, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: 'Updated Date', Width: 125, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: '#', Width: 50, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Member', Width: 100, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: 'Updated Date', Width: 100, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 100, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 100, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: '', Width: 60, Name: 'colHistoryLink', HeaderAlign: 'center', CellAlign: 'center' }
-        ];
-
-        var historyCellFormat = '<a href="javascript:;" class="ico-remark" data-custid="{0}" data-username="{1}" title="View History"></a>';
+            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
+        ].concat(months);
 
         var bodyMapFunc = function (item, index) {
-            
+
+            var winlossRow = item.MarginViewModels.map(getWinlossCell);
+
+            var avgWinloss = { Name: 'colMonth0', Value: item.AvgPerformance.Winloss };
+
+            var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
+
+            var avgTurnover = { Name: 'colMonth0', Value: item.AvgPerformance.Turnover };
+
+            var marginRow = item.MarginViewModels.map(getMarginCell);
+
+            var avgMargin = { Name: 'colMonth0', Value: item.AvgPerformance.Margin };
+
             var column = {
                 Columns: [
-                    { Name: 'colRowNum', Value: index + 1 },
-                    { Name: 'colUsername', Value: item.Username },
-                    { Name: 'colUpdatedDate', Value: item.UpdatedDateString },
-                    { Name: 'colOldRate', Value: item.OldRate },
-                    { Name: 'colNewRate', Value: item.NewRate },
-                    { Name: 'colHistoryLink', Value: historyCellFormat.format(item.CustId, item.Username) }
-                ]
+                    { Name: 'colRowNum', Value: index + 1, MergeRowNumber: 3 },
+                    { Name: 'colUsername', Value: item.Username, MergeRowNumber: 3 },
+                    { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 3 },
+                    { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 3 },
+                    { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 3 }
+                ].concat( [avgWinloss],winlossRow)
             };
 
-            return column;
+            var turnoverCol = {
+                Columns: [avgTurnover].concat(turnoverRow)
+            };
+
+            var marginCol = {
+                Columns: [avgMargin].concat(marginRow)
+            };
+
+            return [column, turnoverCol, marginCol];
         };
 
         var gridOptions = {
@@ -177,15 +224,17 @@
                 itemsPerPageArray: CMS.pagerRanges,
                 afterPagedFunction: reportEventHandler
             },
-            columns: columnHeaders
+            columns: columnHeaders,
+            bodyRows: data.Reports.collect(bodyMapFunc)
         };
 
-        $vrAdjustmentReportGrid.removeClass('display-none');
-        CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data, bodyMapFunc, null, null, reportEventHandler);
+        $vrAdjustmentReportGrid.removeClass('display-none').fanexGrid(gridOptions);
+
+        //CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data.Reports, bodyMapFunc);
     }
 
-    var reportEventHandler = function () {
-        $vrAdjustmentReportGrid.find('.ico-remark').click(function () {
+    var reportEventHandler = function (reportGrid) {
+        reportGrid.find('.ico-remark').click(function () {
             var $this = $(this);
             var custId = $this.data('custid');
             var username = $this.data('username');
@@ -203,6 +252,6 @@
             getVrAdjustmentLog();
         });
     }
-    
+
     initialize();
 })();

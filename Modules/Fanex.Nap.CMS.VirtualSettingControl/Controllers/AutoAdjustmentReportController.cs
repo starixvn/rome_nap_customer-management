@@ -1,14 +1,16 @@
-﻿using System.Text;
-
-namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
-    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VrAutoAdjustmentReport;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
+    using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Services.VirtualSettingMonitor;
@@ -20,8 +22,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 
         private readonly IAdjustmentReportService _adjustmentReportService;
 
-        private readonly IVirtualSettingMonitorService _virtualSettingMonitorService;
-
         public AutoAdjustmentReportController()
             : this(null, null)
         {
@@ -30,7 +30,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
         public AutoAdjustmentReportController(IAdjustmentReportService adjustmentReportService, IVirtualSettingMonitorService virtualSettingMonitorService)
         {
             _adjustmentReportService = adjustmentReportService ?? new AdjustmentReportService();
-            _virtualSettingMonitorService = virtualSettingMonitorService ?? new VirtualSettingMonitorService();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
@@ -42,23 +41,42 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult ViewVrAdjustmentReport(GetVrAdjustmentLogCriteria criteria)
         {
-            var result = _adjustmentReportService.GetReport(criteria);
-
-            return Json(result);
+            return Json(new
+            {
+                Months = Helper.GetDate(DateTime.Today, MonthsToCheck, "MMM - yyyy"),
+                Reports = GetReport(_adjustmentReportService.GetReport(criteria))
+            });
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult ViewHistory(int custId)
         {
             var monthList = Helper.GenerateMonthList(DateTime.Now, MonthsToCheck);
-            var custMarginHistory = _adjustmentReportService.GetCustomerVirtualSettingLatestMonths(custId, DateTime.Now, MonthsToCheck);
+            var custMarginHistory = _adjustmentReportService.GetVirtualSettingLatestMonths(custId, DateTime.Now, MonthsToCheck);
             var result = new
             {
                 MarginHistory = custMarginHistory,
                 MonthList = Helper.GetMonthListName(monthList)
             };
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
+        }
+
+        private IEnumerable<LogEntryViewModel> GetReport(IEnumerable<VrAutoAdjustmentLogEntry> logs)
+        {
+            var historyDict = logs.Select(e => e.CustId).Distinct().ToDictionary(id => id, id => (IEnumerable<MarginModel>)null);
+
+            foreach (var entry in logs)
+            {
+                if (historyDict[entry.CustId] == null)
+                {
+                    historyDict[entry.CustId] =
+                        _adjustmentReportService.GetVirtualSettingLatestMonths(entry.CustId, DateTime.Today,
+                            MonthsToCheck);
+                }
+
+                yield return new LogEntryViewModel(entry, historyDict[entry.CustId]);
+            }
         }
     }
 }

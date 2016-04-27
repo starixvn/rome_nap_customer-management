@@ -32,9 +32,9 @@ var VirtualSettingMonitor = function () {
         bindEvents();
         gridOptions = initGridOptions();
         searchUrl = $formFilter.attr('action') + '?';
-        
+
         $('#divModals').empty();
-        viewHistoryModal = new ViewHistoryModal($divViewHistoryContainer, function () {});        
+        viewHistoryModal = new ViewHistoryModal($divViewHistoryContainer, function () { });
     };
 
     function cacheElements() {

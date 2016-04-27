@@ -5,15 +5,15 @@
 
     public class GetCustomerMarginByMonthCriteria : CriteriaBase
     {
-        public int CustId { get; set; }
+        public string CustIds { get; set; }
 
-        public int Month { get; set; }
+        public int MonthToCheck { get; set; }
 
-        public int Year { get; set; }
+        public DateTime ReportToDate { get; set; }
 
         public override string GetSettingKey()
         {
-            return "NAP_Report_CustMngt_GetCustomerMarginByMonth";
+            return "NAP_Report_CustMngt_CustomerMarginLatestMonths";
         }
     }
 }

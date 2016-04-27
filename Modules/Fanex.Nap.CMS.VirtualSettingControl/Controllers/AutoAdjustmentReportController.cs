@@ -41,10 +41,13 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult ViewVrAdjustmentReport(GetVrAdjustmentLogCriteria criteria)
         {
+            var queryResult = _adjustmentReportService.GetReport(criteria);
+
             return Json(new
             {
+                queryResult.ItemsCount,
                 Months = Helper.GetDate(DateTime.Today, MonthsToCheck, "MMM - yyyy"),
-                Reports = GetReport(_adjustmentReportService.GetReport(criteria))
+                Reports = GetReport(queryResult.Items)
             });
         }
 
@@ -71,8 +74,7 @@
                 if (historyDict[entry.CustId] == null)
                 {
                     historyDict[entry.CustId] =
-                        _adjustmentReportService.GetVirtualSettingLatestMonths(entry.CustId, DateTime.Today,
-                            MonthsToCheck);
+                        _adjustmentReportService.GetVirtualSettingLatestMonths(entry.CustId, DateTime.Today, MonthsToCheck);
                 }
 
                 yield return new LogEntryViewModel(entry, historyDict[entry.CustId]);

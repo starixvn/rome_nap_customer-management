@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using Data.Repository;
-    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Models.VrAutoAdjustmentReport;
 
     public interface IAdjustmentReportService
     {
-        IEnumerable<VrAutoAdjustmentLogEntry> GetReport(ICriteria criteria);
+        QueryResult<VrAutoAdjustmentLogEntry> GetReport(PagingCriteria criteria);
 
         IEnumerable<MarginModel> GetVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck);
     }

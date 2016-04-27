@@ -25,9 +25,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
 
         public LogEntryViewModel(VrAutoAdjustmentLogEntry log, IEnumerable<MarginModel> history)
         {
-            mapLogData(log);
+            MapLogData(log);
 
-            mapHistoryData(history);
+            MapHistoryData(history);
         }
 
         public int CustId
@@ -65,7 +65,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
             get { return _avgPerformance; }
         }
 
-        private void mapLogData(VrAutoAdjustmentLogEntry log)
+        private void MapLogData(VrAutoAdjustmentLogEntry log)
         {
             _custId = log.CustId;
             _username = log.Username;
@@ -74,7 +74,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
             _newRate = log.NewRate;
         }
 
-        private void mapHistoryData(IEnumerable<MarginModel> history)
+        private void MapHistoryData(IEnumerable<MarginModel> history)
         {
             var temp = history.Select(m => new MarginViewModel(m.Winloss, m.Turnover)).Split(6);
 

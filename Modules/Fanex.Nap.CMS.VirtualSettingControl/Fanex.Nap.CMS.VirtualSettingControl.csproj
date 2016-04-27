@@ -135,6 +135,8 @@
     <Compile Include="Services\VrAutoAdjustmentReport\IAdjustmentReportService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\AdjustmentReportService.cs" />
     <Compile Include="Utility\Helper.cs" />
+    <Compile Include="Utility\PagingCriteria.cs" />
+    <Compile Include="Utility\QueryResult.cs" />
     <Compile Include="ViewModels\VirtualSettingMonitor\VirtualSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerDashboard\ICustomerDashboardRepository.cs" />

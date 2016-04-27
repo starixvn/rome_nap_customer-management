@@ -12,9 +12,11 @@
 
     public class AdjustmentReportService : ServiceBase, IAdjustmentReportService
     {
-        public IEnumerable<VrAutoAdjustmentLogEntry> GetReport(ICriteria criteria)
+        public QueryResult<VrAutoAdjustmentLogEntry> GetReport(PagingCriteria criteria)
         {
-            return this.GetData<VrAutoAdjustmentLogEntry>(criteria);
+            var result = this.GetData<VrAutoAdjustmentLogEntry>(criteria);
+
+            return new QueryResult<VrAutoAdjustmentLogEntry>(criteria, result);
         }
 
         public IEnumerable<MarginModel> GetVirtualSettingLatestMonths(int custId, DateTime reportDate, int monthsToCheck)

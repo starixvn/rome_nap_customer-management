@@ -139,32 +139,42 @@ Array.prototype.collect = function (collector) {
         var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
             FromDate: fromtoDate.FromDate,
-            ToDate: fromtoDate.ToDate
+            ToDate: fromtoDate.ToDate,
+            PageSize: CMS.pageSize
         };
 
         CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, renderVrAdjustmentReportGrid);
     }
 
+    var reportEventHandler = function (reportGrid) {
+        reportGrid.find('.ico-remark').click(function () {
+            var $this = $(this);
+            var custId = $this.data('custid');
+            var username = $this.data('username');
+
+            getCustomerHistory(custId, username);
+        });
+    };
+
     var renderVrAdjustmentReportGrid = function (data) {
 
-        var getMonthHeaders = function (month, index) {
+        function getMonthHeaders(month, index) {
             return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber };
         };
 
-        var getWinlossCell = function (marginItem, index) {
+        function getWinlossCell(marginItem, index) {
             return { Name: 'colMonth' + index, Value: marginItem.Winloss };
         }
 
-        var getTurnoverCell = function (marginItem, index) {
+        function getTurnoverCell(marginItem, index) {
             return { Name: 'colMonth' + index, Value: marginItem.Turnover };
         }
 
-        var getMarginCell = function (marginItem, index) {
+        function getMarginCell(marginItem, index) {
             return { Name: 'colMonth' + index, Value: marginItem.Margin };
         }
 
         var months = data.Months.map(getMonthHeaders);
-
 
         var columnHeaders = [
             { HeaderText: '#', Width: 50, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
@@ -175,7 +185,7 @@ Array.prototype.collect = function (collector) {
             { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
         ].concat(months);
 
-        var bodyMapFunc = function (item, index) {
+        function bodyMapFunc(item, index) {
 
             var winlossRow = item.MarginViewModels.map(getWinlossCell);
 
@@ -196,7 +206,7 @@ Array.prototype.collect = function (collector) {
                     { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 3 },
                     { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 3 },
                     { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 3 }
-                ].concat( [avgWinloss],winlossRow)
+                ].concat([avgWinloss], winlossRow)
             };
 
             var turnoverCol = {
@@ -218,29 +228,43 @@ Array.prototype.collect = function (collector) {
             headerColumnHeight: 35,
             gridExpandHeight: 180,
             showPager: true,
+            customPager: true,
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: CMS.pageSize,
                 itemsPerPageArray: CMS.pagerRanges,
-                afterPagedFunction: reportEventHandler
+                pagerSelectCallBack: onPageChangedHandler,
+                totalItem: data.ItemsCount
             },
             columns: columnHeaders,
             bodyRows: data.Reports.collect(bodyMapFunc)
         };
 
+        function onPageChangedHandler(index, pageSize) {
+            var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
+
+            var criteria = {
+                FromDate: fromtoDate.FromDate,
+                ToDate: fromtoDate.ToDate,
+                PageIndex: index,
+                PageSize: pageSize
+            };
+
+            CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
+                gridOptions.pagerOption.currentPage = index;
+                gridOptions.pagerOption.itemsPerPage = pageSize;
+                gridOptions.pagerOption.totalItem = data.ItemsCount;
+
+                gridOptions.bodyRows = data.Reports.collect(bodyMapFunc);
+
+                $vrAdjustmentReportGrid.fanexGrid(gridOptions);
+            });
+        };
+
+
         $vrAdjustmentReportGrid.removeClass('display-none').fanexGrid(gridOptions);
 
         //CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data.Reports, bodyMapFunc);
-    }
-
-    var reportEventHandler = function (reportGrid) {
-        reportGrid.find('.ico-remark').click(function () {
-            var $this = $(this);
-            var custId = $this.data('custid');
-            var username = $this.data('username');
-
-            getCustomerHistory(custId, username);
-        });
     }
 
     function initialize() {

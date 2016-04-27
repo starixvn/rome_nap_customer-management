@@ -84,7 +84,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
             }
         }
 
-
         public static Tuple<IEnumerable<T>, IEnumerable<T>> Split<T>(this IEnumerable<T> source, int count)
         {
             var c = 0;

@@ -1,0 +1,27 @@
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
+{
+    using System.Collections.Generic;
+
+    public struct QueryResult<T>
+    {
+        private readonly int _itemsSize;
+
+        private readonly IEnumerable<T> _items;
+
+        public QueryResult(PagingCriteria criteria, IEnumerable<T> result)
+        {
+            _itemsSize = criteria.ItemsCount;
+            _items = result;
+        }
+
+        public int ItemsCount
+        {
+            get { return _itemsSize; }
+        }
+
+        public IEnumerable<T> Items
+        {
+            get { return _items; }
+        }
+    }
+}

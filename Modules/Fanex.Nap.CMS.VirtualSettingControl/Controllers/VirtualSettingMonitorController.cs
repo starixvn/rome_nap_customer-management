@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
@@ -12,6 +10,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using System;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class VirtualSettingMonitorController : BaseController
@@ -51,8 +50,8 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
         public ActionResult Search(GetVirtualSettingMonitorCriteria criteria)
         {
             criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-12-31");
-            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
-            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 3);
+            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 6);
+            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 6);
             Array.Reverse(reversedMonthList);
             var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
 

@@ -1,9 +1,7 @@
-﻿using Fanex.Nap.CMS.VirtualSettingControl.Utility;
-
-namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport
 {
     using System;
-    using Data.Repository;
+    using Fanex.NAP.CMS.Criteria.Common;
 
     public class GetVrAdjustmentLogCriteria : PagingCriteria
     {

@@ -135,8 +135,6 @@
     <Compile Include="Services\VrAutoAdjustmentReport\IAdjustmentReportService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\AdjustmentReportService.cs" />
     <Compile Include="Utility\Helper.cs" />
-    <Compile Include="Utility\PagingCriteria.cs" />
-    <Compile Include="Utility\QueryResult.cs" />
     <Compile Include="ViewModels\VirtualSettingMonitor\VirtualSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CustomerDashboard\ICustomerDashboardRepository.cs" />
@@ -156,6 +154,10 @@
     <Folder Include="ViewModels\CustomerDashboard\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.NAP.CMS.Criteria\Fanex.NAP.CMS.Criteria.csproj">
+      <Project>{85B0833C-4389-4F0F-80D4-02D49DB7906E}</Project>
+      <Name>Fanex.NAP.CMS.Criteria</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362d3-46e5-43e2-ae63-8c8827f5ca55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>

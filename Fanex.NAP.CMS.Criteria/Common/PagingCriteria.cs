@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
+﻿namespace Fanex.NAP.CMS.Criteria.Common
 {
     using Fanex.Data.Repository;
 

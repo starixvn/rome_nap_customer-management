@@ -1,11 +1,10 @@
-﻿using Fanex.Nap.CMS.VirtualSettingControl.Utility;
-
-namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
 {
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VrAutoAdjustmentReport;
+    using Fanex.NAP.CMS.Core.Helpers;
 
     public class LogEntryViewModel
     {

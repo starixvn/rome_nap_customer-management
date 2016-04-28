@@ -154,6 +154,10 @@
     <Folder Include="ViewModels\CustomerDashboard\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">
+      <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
+      <Name>Fanex.NAP.CMS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Fanex.NAP.CMS.Criteria\Fanex.NAP.CMS.Criteria.csproj">
       <Project>{85B0833C-4389-4F0F-80D4-02D49DB7906E}</Project>
       <Name>Fanex.NAP.CMS.Criteria</Name>

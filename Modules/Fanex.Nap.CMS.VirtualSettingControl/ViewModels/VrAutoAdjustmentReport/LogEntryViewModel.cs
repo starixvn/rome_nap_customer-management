@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
+﻿using System;
+
+namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -75,11 +77,11 @@
 
         private void MapHistoryData(IEnumerable<MarginModel> history)
         {
-            var temp = history.Select(m => new MarginViewModel(m.Winloss, m.Turnover)).Split(6);
+            _marginViewModels = history.Select(m => new MarginViewModel(m.Winloss, m.Turnover));
 
-            _avgPerformance = temp.Item2.First();
-
-            _marginViewModels = temp.Item1;
+            _avgPerformance = history.Aggregate(new Tuple<decimal, decimal>(0, 0),
+                (t, m) => new Tuple<decimal, decimal>(t.Item1 + m.Winloss, t.Item2 + m.Turnover),
+                t => new MarginViewModel(t.Item1, t.Item2));
         }
     }
 }

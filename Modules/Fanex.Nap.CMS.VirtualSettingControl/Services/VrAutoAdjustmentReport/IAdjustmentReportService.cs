@@ -10,7 +10,7 @@
 
     public interface IAdjustmentReportService
     {
-        QueryResult<VrAutoAdjustmentLogEntry> GetReport(PagingCriteria criteria);
+        PagingQueryResult<VrAutoAdjustmentLogEntry> GetReport(PagingCriteria criteria);
 
         ILookup<int, MarginModel> GetVirtualSettingLatestMonths(IEnumerable<int> custIds, DateTime reportDate, int monthsToCheck);
     }

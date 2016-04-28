@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
 
-    public struct QueryResult<T>
+    public struct PagingQueryResult<T>
     {
         private readonly int _itemsSize;
 
         private readonly IEnumerable<T> _items;
 
-        public QueryResult(PagingCriteria criteria, IEnumerable<T> result)
+        public PagingQueryResult(PagingCriteria criteria, IEnumerable<T> result)
         {
             _itemsSize = criteria.ItemsCount;
             _items = result;

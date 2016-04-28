@@ -5,7 +5,9 @@
 
     public class GetCustomerMarginHistoryCriteria : CriteriaBase
     {
-        public int CustId { get; set; }
+        public string CustIds { get; set; }
+
+        public int MonthToCheck { get; set; }
 
         public int SportId { get; set; }
 

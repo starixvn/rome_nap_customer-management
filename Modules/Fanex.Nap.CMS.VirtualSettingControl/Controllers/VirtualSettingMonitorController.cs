@@ -7,6 +7,7 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.CustomerDashboard;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using System;
@@ -55,7 +56,7 @@
             Array.Reverse(reversedMonthList);
             var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
 
-            return Json(new { TotalRow = (virtualSettings == null ? 0 : virtualSettings.CustMargin.Count), MonthList = monthList.Select(Utility.Helper.GetMonthName), VirtualSettings = virtualSettings }, JsonRequestBehavior.AllowGet);
+            return Json(new { TotalRow = (virtualSettings == null ? 0 : virtualSettings.CustMargin.Count), MonthList = Helper.GetDate(DateTime.Today, criteria.MonthToCheck, "MMM - yyyy"), VirtualSettings = virtualSettings }, JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]

@@ -12,6 +12,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
     public class CustomerDashboardController : BaseController
@@ -61,15 +62,15 @@
         private List<MarginModel> GetMarginData(GetDashboardInfoCriteria inputParams)
         {
             var monthList = GenerateMonthList(DateTime.Now.Month, inputParams.MonthToCheck);
-            var criteria = new GetCustomerMarginLatestMonthsCriteria
+            var criteria = new GetCustomerMarginHistoryCriteria
             {
-                CustId = inputParams.CustId,
+                CustIds = inputParams.CustId.ToString(),
                 MonthToCheck = inputParams.MonthToCheck,
-                ReportToDate = DateTime.Now, //DateTime.Parse("2015-08-01"),
+                ReportToDate = DateTime.Now,
                 SportId = inputParams.SportId
             };
 
-            var margins = _virtualSettingMonitorService.GetCustomerVirtualSettingLatestMonths(criteria, monthList);
+            var margins = _virtualSettingMonitorService.GetCustomerVirtualSettingHistories(criteria, monthList).ToList();
             margins.RemoveAt(margins.Count - 1);
 
             return margins;

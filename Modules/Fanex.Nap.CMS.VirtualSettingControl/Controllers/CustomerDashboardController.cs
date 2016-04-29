@@ -51,8 +51,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
         public ActionResult GetDashboardData(GetDashboardInfoCriteria criteria)
         {
-            //criteria.CustId = 111311;
-            criteria.ReportToDate = DateTime.Now; //DateTime.Parse("2015-08-01"); // 
+            criteria.ReportToDate = DateTime.Now;
             var dashboadInfo = _customerDashboardService.GetDashboardInfo(criteria);
             dashboadInfo.DashboardMarginModels = GetMarginData(criteria);
 

@@ -38,12 +38,6 @@
             return BindCustomerVirtualSettingHistories(rawData, monthList);
         }
 
-        public IEnumerable<MarginModel> GetCustomerVirtualSettingLatestMonths(ICriteria criteria, int[] monthList)
-        {
-            var rawData = GetData<VirtualSettingModel>(criteria).ToList();
-            return BindCustomerVirtualSettingHistories(rawData, monthList);
-        }
-
         #region Utilities
 
         public VirtualSettingViewModel BindVirtualSettingData(List<VirtualSettingModel> custInfo, List<VirtualSettingModel> custMargin, int[] monthList)
@@ -121,10 +115,6 @@
                 : null;
         }
 
-        public CustomerVirtualSettingModel BindVirtualSettingData(VirtualSettingModel rawData)
-        {
-            return null;
-        }
         #endregion
     }
 }

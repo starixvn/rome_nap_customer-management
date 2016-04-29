@@ -11,7 +11,5 @@
         VirtualSettingViewModel GetVirtualSettingMonitor(GetVirtualSettingMonitorCriteria criteria, int[] monthList);
 
         IEnumerable<MarginModel> GetCustomerVirtualSettingHistories(ICriteria criteria, int[] monthList);
-
-        IEnumerable<MarginModel> GetCustomerVirtualSettingLatestMonths(ICriteria criteria, int[] monthList);
     }
 }

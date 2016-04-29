@@ -1,5 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor
 {
+    using System;
+
     public class MarginModel
     {
         public int Year { get; set; }
@@ -14,7 +16,7 @@
         {
             get
             {
-                return Turnover == 0 ? 0 : Winloss / Turnover * 100;
+                return Turnover == 0 ? 0 : Math.Round(Winloss / Turnover * 100, 2);
             }
         }
 

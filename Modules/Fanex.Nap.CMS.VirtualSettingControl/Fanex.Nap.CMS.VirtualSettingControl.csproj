@@ -114,8 +114,6 @@
     <Compile Include="Controllers\CustomerDashboardController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
-    <Compile Include="Criteria\CustomerDashboard\GetSummaryInfoCriteria.cs" />
-    <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginLatestMonthsCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginByMonthCriteria.cs" />

@@ -80,9 +80,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
             var viewModels = new Queue<MarginViewModel>();
             var temp = history.ToDictionary(m => new Tuple<int, int>(m.Month, m.Year));
 
-            var today = DateTime.Today.AddMonths(-5);
+            var startDate = DateTime.Today.AddMonths(-5);
 
-            Helper.Aggregate(today, 6, d =>
+            Helper.Aggregate(startDate, 6, d =>
              {
                  var key = new Tuple<int, int>(d.Month, d.Year);
 

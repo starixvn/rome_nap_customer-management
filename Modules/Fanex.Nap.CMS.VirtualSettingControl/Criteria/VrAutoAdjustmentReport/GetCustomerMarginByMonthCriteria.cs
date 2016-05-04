@@ -13,7 +13,7 @@
 
         public override string GetSettingKey()
         {
-            return "NAP_Report_CustMngt_CustomerMarginLatestMonths";
+            return "NAP_Report_CustMngt_CustomerMarginHistory";
         }
     }
 }

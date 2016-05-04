@@ -189,15 +189,15 @@ Array.prototype.collect = function (collector) {
 
             var winlossRow = item.MarginViewModels.map(getWinlossCell);
 
-            var avgWinloss = { Name: 'colMonth0', Value: item.AvgPerformance.Winloss };
+            var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
 
             var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
 
-            var avgTurnover = { Name: 'colMonth0', Value: item.AvgPerformance.Turnover };
+            var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover };
 
             var marginRow = item.MarginViewModels.map(getMarginCell);
 
-            var avgMargin = { Name: 'colMonth0', Value: item.AvgPerformance.Margin };
+            var avgMargin = { Name: 'colAvg', Value: item.AvgPerformance.Margin };
 
             var column = {
                 Columns: [

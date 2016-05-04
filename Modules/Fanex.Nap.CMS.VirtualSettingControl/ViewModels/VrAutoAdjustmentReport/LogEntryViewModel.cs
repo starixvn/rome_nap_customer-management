@@ -1,4 +1,5 @@
 ﻿using System;
+using Fanex.Nap.CMS.VirtualSettingControl.Utility;
 
 namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
 {
@@ -6,7 +7,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
     using System.Linq;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VrAutoAdjustmentReport;
-    using Fanex.NAP.CMS.Core.Helpers;
 
     public class LogEntryViewModel
     {
@@ -77,9 +77,30 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport
 
         private void MapHistoryData(IEnumerable<MarginModel> history)
         {
-            _marginViewModels = history.Select(m => new MarginViewModel(m.Winloss, m.Turnover));
+            var viewModels = new Queue<MarginViewModel>();
+            var temp = history.ToDictionary(m => new Tuple<int, int>(m.Month, m.Year));
 
-            _avgPerformance = history.Aggregate(new Tuple<decimal, decimal>(0, 0),
+            var today = DateTime.Today.AddMonths(-5);
+
+            Helper.Aggregate(today, 6, d =>
+             {
+                 var key = new Tuple<int, int>(d.Month, d.Year);
+
+                 if (temp.ContainsKey(key))
+                 {
+                     var model = temp[key];
+                     var viewModel = new MarginViewModel(model.Winloss, model.Turnover);
+                     viewModels.Enqueue(viewModel);
+                 }
+                 else
+                 {
+                     viewModels.Enqueue(new MarginViewModel(0, 0));
+                 }
+             });
+
+            _marginViewModels = viewModels;
+
+            _avgPerformance = viewModels.Aggregate(new Tuple<decimal, decimal>(0, 0),
                 (t, m) => new Tuple<decimal, decimal>(t.Item1 + m.Winloss, t.Item2 + m.Turnover),
                 t => new MarginViewModel(t.Item1, t.Item2));
         }

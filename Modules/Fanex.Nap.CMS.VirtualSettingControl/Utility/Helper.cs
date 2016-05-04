@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
 {
     using System;
+    using System.Collections.Generic;
 
     public static class Helper
     {
@@ -78,9 +77,22 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Utility
 
         public static IEnumerable<string> GetDate(DateTime currentTime, int monthRange, string format)
         {
-            for (int i = monthRange; i > 0; --i)
+            return MapDate(currentTime.AddMonths(-monthRange + 1), monthRange, d => d.ToString("MMM - yyyy"));
+        }
+
+        public static IEnumerable<T> MapDate<T>(DateTime initDate, int range, Func<DateTime, T> mapFunc)
+        {
+            for (int i = 0; i < range; i++)
             {
-                yield return currentTime.AddMonths(-i).ToString(format);
+                yield return mapFunc(initDate.AddMonths(i));
+            }
+        }
+
+        public static void Aggregate(DateTime initDate, int range, Action<DateTime> action)
+        {
+            for (int i = 0; i < range; i++)
+            {
+                action(initDate.AddMonths(i));
             }
         }
     }

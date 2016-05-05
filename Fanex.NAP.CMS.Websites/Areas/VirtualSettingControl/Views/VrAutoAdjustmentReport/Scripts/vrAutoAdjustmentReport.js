@@ -139,8 +139,7 @@ Array.prototype.collect = function (collector) {
         var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
             FromDate: fromtoDate.FromDate,
-            ToDate: fromtoDate.ToDate,
-            PageSize: CMS.pageSize
+            ToDate: fromtoDate.ToDate
         };
 
         CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, renderVrAdjustmentReportGrid);
@@ -233,8 +232,7 @@ Array.prototype.collect = function (collector) {
                 currentPage: 0,
                 itemsPerPage: CMS.pageSize,
                 itemsPerPageArray: CMS.pagerRanges,
-                pagerSelectCallBack: onPageChangedHandler,
-                totalItem: data.ItemsCount
+                totalItem: data.Reports.length
             },
             columns: columnHeaders,
             bodyRows: data.Reports.collect(bodyMapFunc)

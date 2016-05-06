@@ -67,6 +67,8 @@
   <ItemGroup>
     <Compile Include="Common\GetBalanceUpDayCriteria.cs" />
     <Compile Include="Common\GetMatchesOfLeagueCriteria.cs" />
+    <Compile Include="Common\PagingCriteria.cs" />
+    <Compile Include="Common\QueryResult.cs" />
     <Compile Include="ConfigureCustomerAccess\DeleteRequestCriteria.cs" />
     <Compile Include="Common\GetCountryListCriteria.cs" />
     <Compile Include="ConfigureCustomerAccess\GetRequestInfoCriteria.cs" />

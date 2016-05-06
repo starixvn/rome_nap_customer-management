@@ -1,7 +1,7 @@
 ﻿/* File Created: March 3, 2014 */
 /* global keyboardManager */
 /* jshint strict: false,
-camelcase: false */
+ camelcase: false */
 // 'use strict';
 
 var CMS = (function ($) {
@@ -104,13 +104,14 @@ var CMS = (function ($) {
                 duration: 3000
             };
 
-            callbackFunc = callbackFunc || function () { };
+            callbackFunc = callbackFunc || function () {
+            };
             CMS.headlineMsgBox.showMsgBox(msgWrapper, options);
             setTimeout(callbackFunc, 3000);
         },
         showMixMessage: function (infoMsg, errorMsg) {
             var msgWrapper = '<div class="mix-msg"><div id="divInfo" class="success">' + infoMsg + '</div>' +
-                             '<div id="divError" class="error">' + errorMsg + '</div></div>';
+                '<div id="divError" class="error">' + errorMsg + '</div></div>';
             var options = {
                 sticky: true,
                 position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
@@ -130,7 +131,8 @@ var CMS = (function ($) {
                 css: 'custom-confirm'
             };
 
-            callbackFunc = callbackFunc || function () { };
+            callbackFunc = callbackFunc || function () {
+            };
             CMS.headlineMsgBox.confirm(message, callbackFunc, options);
         },
         closeMsgBox: function () {
@@ -170,7 +172,8 @@ var CMS = (function ($) {
             }
         },
         hideInlineMsg: function ($obj, callbackFunc) {
-            callbackFunc = callbackFunc || function () { };
+            callbackFunc = callbackFunc || function () {
+            };
             $obj.removeClass('error').removeClass('info').slideUp(callbackFunc);
             $obj.html('');
         },
@@ -258,10 +261,16 @@ var CMS = (function ($) {
             }
         },
         disableInput: function () {
-            try { $.blockUI(); } catch (e) { }
+            try {
+                $.blockUI();
+            } catch (e) {
+            }
         },
         enableInput: function () {
-            try { $.unblockUI(); } catch (e) { }
+            try {
+                $.unblockUI();
+            } catch (e) {
+            }
         },
         navigateToRoot: function (url) {
             window.location.replace(CMS.resolveRootUrl(url));
@@ -279,11 +288,11 @@ var CMS = (function ($) {
         },
 
         callAjax: function (reportHandler,
-            url,
-            requestParams,
-            successFunction,
-            errorFunction,
-            completeFunction) {
+                            url,
+                            requestParams,
+                            successFunction,
+                            errorFunction,
+                            completeFunction) {
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -311,17 +320,18 @@ var CMS = (function ($) {
                 }
             });
         },
-        getJson: function (
-            url,
-            successFunction,
-            errorFunction,
-            completeFunction) {
+        getJson: function (url,
+                           successFunction,
+                           errorFunction,
+                           completeFunction) {
             $.ajax({
                 type: 'GET',
                 url: url,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                beforeSend: function () { CMS.disableInput(); },
+                beforeSend: function () {
+                    CMS.disableInput();
+                },
                 success: function (result) {
                     if (successFunction && typeof (successFunction) === 'function') {
                         successFunction(result);
@@ -343,17 +353,18 @@ var CMS = (function ($) {
                 }
             });
         },
-        getHtml: function (
-            url,
-            successFunction,
-            errorFunction,
-            completeFunction) {
+        getHtml: function (url,
+                           successFunction,
+                           errorFunction,
+                           completeFunction) {
             $.ajax({
                 type: 'GET',
                 url: url,
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'html',
-                beforeSend: function () { CMS.disableInput(); },
+                beforeSend: function () {
+                    CMS.disableInput();
+                },
                 success: function (result) {
                     if (successFunction && typeof (successFunction) === 'function') {
                         successFunction(result);
@@ -486,10 +497,60 @@ var CMS = (function ($) {
             } else {
                 return [oElement.x, oElement.y];
             }
+        },
+
+        getData: function (url, criteria, successFunction, errorFunction, completeFunction) {
+            $.ajax(
+            {
+                url: url,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: criteria,
+                beforeSend: function () {
+                    CMS.disableInput();
+                },
+                success: function (result) {
+                    if (successFunction && typeof (successFunction) === 'function') {
+                        successFunction(result);
+                    }
+                },
+                error: function (xhr) {
+                    if (errorFunction && typeof (errorFunction) === 'function') {
+                        errorFunction(xhr);
+                    } else {
+                        CMS.handleAjaxError(xhr);
+                    }
+                },
+                complete: function () {
+                    if (completeFunction && typeof (completeFunction) === 'function') {
+                        completeFunction();
+                    } else {
+                        CMS.enableInput();
+                    }
+                }
+            });
+        },
+
+        renderGrid: function (target,
+                              gridOptions,
+                              bodyData,
+                              bodyMapFunc,
+                              footerData,
+                              footerMapFunc,
+                              callback) {
+            gridOptions.bodyRows = bodyData.map(bodyMapFunc);
+            if (footerData) {
+                gridOptions.footerRows = footerData.map(footerMapFunc);
+            }
+            target.fanexGrid(gridOptions);
+            if (callback) {
+                callback(target, gridOptions);
+            }
         }
     };
 
-} (jQuery));
+}(jQuery));
 
 $(document).ready(function () {
     CMS.initCoreValues();

@@ -1,0 +1,39 @@
+﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor
+{
+    using System;
+
+    public class MarginModel
+    {
+        public int Year { get; set; }
+
+        public int Month { get; set; }
+
+        public decimal Winloss { get; set; }
+
+        public decimal Turnover { get; set; }
+
+        public decimal Margin 
+        {
+            get
+            {
+                return Turnover == 0 ? 0 : Math.Round(Winloss / Turnover * 100, 2);
+            }
+        }
+
+        public MarginModel(int month, int year)
+        {
+            Month = month;
+            Year = year;
+            Winloss = 0;
+            Turnover = 0;
+        }
+
+        public MarginModel(int month, int year, decimal turnover, decimal winloss)
+        {
+            Month = month;
+            Year = year;
+            Winloss = winloss;
+            Turnover = turnover;
+        }
+    }
+}

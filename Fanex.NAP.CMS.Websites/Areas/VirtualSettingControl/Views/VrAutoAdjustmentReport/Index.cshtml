@@ -1,0 +1,53 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@{
+    ViewBag.Title = "VR Auto Adjustment Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head {
+    @Styles.Render("~/bundles/VrAutoAdjustmentReport/css")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+
+<form class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label>Updated Date</label>
+            </div>
+            <div id="fromtodate-picker"></div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit" id="btn-generate">Generate</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="auto-adjustment-report-freegrid"></div>
+</div>
+
+<div id="divModals" class="display-none">
+    <div id="auto-adjustment-report-detail">
+        <div class="form-row freetable-container">
+            <div class="freegrid" id="auto-adjustment-report-detail-freegrid"></div>
+            <div style="height: 8px;"></div>
+            <div class="form-row button-row" style="text-align: center;">
+                <button type="button" class="red-button" onclick="CMS.closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Foot {
+    <script type="text/javascript">
+        var currentDate = '@currentDate.ToShortFormatedDateWithSlash()';
+        var initFromDate = currentDate;
+    </script>
+    @Scripts.Render("~/bundles/VrAutoAdjustmentReport/js")
+}

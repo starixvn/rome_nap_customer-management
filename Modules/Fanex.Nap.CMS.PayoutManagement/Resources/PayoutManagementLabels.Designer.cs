@@ -97,6 +97,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Completing this payout will notify Super, Master and Agent of their winning share of Colossus Bets product by sending priviate message to them on the Alpha site and update their balance. This action cannot be undo.
+        /// </summary>
+        public static string ConfirmUpdateCompleteMessage {
+            get {
+                return ResourceManager.GetString("ConfirmUpdateCompleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>
         public static string Currency {
@@ -160,6 +169,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fund received.
+        /// </summary>
+        public static string FundReceived {
+            get {
+                return ResourceManager.GetString("FundReceived", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Handler.
         /// </summary>
         public static string Handler {
@@ -210,15 +228,6 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         public static string RefNo {
             get {
                 return ResourceManager.GetString("RefNo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Security Code.
-        /// </summary>
-        public static string SecurityCode {
-            get {
-                return ResourceManager.GetString("SecurityCode", resourceCulture);
             }
         }
         
@@ -367,6 +376,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ticket details of.
         /// </summary>
         public static string ViewTicketDetailTitle {
@@ -390,6 +408,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         public static string WinLoss {
             get {
                 return ResourceManager.GetString("WinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Winning Code.
+        /// </summary>
+        public static string WinningCode {
+            get {
+                return ResourceManager.GetString("WinningCode", resourceCulture);
             }
         }
     }

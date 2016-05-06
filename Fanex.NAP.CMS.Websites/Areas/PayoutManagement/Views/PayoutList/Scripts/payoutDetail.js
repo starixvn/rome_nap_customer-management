@@ -1,21 +1,31 @@
-﻿/* global payoutManagementLabels, payoutDetail, currentStatus, CMS, numeral, CMSConstants */
+﻿/// <reference path="../PayoutDetail.cshtml" />
+/// <reference path="D:\Gitlab\NAP\customer-management\Fanex.NAP.CMS.Websites\Scripts/CMS.js" />
+/* global payoutManagementLabels, payoutDetail, currentStatus, CMS, numeral, CMSConstants */
 (function () {
     'use strict';
     var self = this;
     var gridOptions = null,
         freegrid = $('#freegrid');
     var rootUrl = $('#CMSRoot').val();
+    var statusEnum = {
+        Open: 1,
+        Verified: 2,
+        Disbursed: 3,
+        Completed: 4,
+        Expired: 5
+    };
+
     var $payoutlistLink = $('#payoutlist-link'),
         $refno = $('#refno'),
         $sitelicensee = $('#sitelicensee'),
-        $seccodeBox = $('.seccode-inner'),
-        $seccodeButton = $('#seccode-button'),
-        $seccodeText = $('#seccode-text'),
         $amount = $('#amount'),
         $currency = $('#currency'),
         $ticketNote = $('#ticketNote'),
         $selectTicketStatus = $('#selectTicketStatus'),
         $updateButton = $('#update-button'),
+        $winningCodeLabel = $('#winning-code-label'),
+        $winningCode = $('#WinningCode'),
+        $verifyButton = $('#verify-button'),
         $ticketDetailContainer = $('#ticketDetailContainer');
 
     function trimField(value) {
@@ -86,11 +96,20 @@
     }
 
     function getPayoutDetail() {
+        renderPayoutDetailOnUI(payoutDetail);
         var successFunc = function (results) {
             var payoutNotes = $.parseJSON(results);
             gridOptions = gridOptions || initGridOptions();
             gridOptions.bodyRows = buildBodyRows(payoutNotes);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
+
+            if (currentStatus == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+                $selectTicketStatus.combobox('disable');
+            }
+            else {
+                $selectTicketStatus.combobox('enable');
+            }
+            $selectTicketStatus.combobox('readonly');
         };
 
         var url = rootUrl + 'PayoutManagement/PayoutList/GetPayoutDetail?id=' + payoutDetail.Id;
@@ -101,11 +120,14 @@
         $refno.html(payoutDetail.RefNo);
         $sitelicensee.html(payoutDetail.Site);
         if (payoutDetail.SecurityCode && payoutDetail.SecurityCode.length > 0) {
-            $seccodeBox.removeClass('display-none');
-            $seccodeText.html('******');
+            $winningCode.removeClass('display-none');
+            $winningCodeLabel.removeClass('display-none');
+            $verifyButton.removeClass('display-none');
         }
         else {
-            $seccodeBox.addClass('display-none');
+            $winningCode.addClass('display-none');
+            $winningCodeLabel.addClass('display-none');
+            $verifyButton.addClass('display-none');
         }
 
         $amount.attr('data-transid', payoutDetail.Id)
@@ -116,6 +138,13 @@
             .click(viewBetTicket);
 
         $currency.html(payoutDetail.Currency);
+
+        if (currentStatus == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+            $selectTicketStatus.combobox('disable');
+        }
+        else {
+            $selectTicketStatus.combobox('enable');
+        }
     }
 
     function viewBetTicket() {
@@ -145,46 +174,68 @@
     }
 
     function updateTicketStatus() {
-        var note = trimField($ticketNote.val());
-        if (note.length === 0) {
-            CMS.showTipsyError($ticketNote, 'Required field!', 'se');
-            return;
-        }
-
         var statusId = parseInt($selectTicketStatus.val());
         var url = rootUrl + 'PayoutManagement/PayoutList/UpdateTicketStatus';
-        var formData = {
-            id: payoutDetail.Id,
-            status: { id: statusId, name: $selectTicketStatus.find(':selected').text() },
-            note: note
-        };
-
+        var formData = getUpdateTicketStatusParams();
         CMS.callAjax(self, url, formData, function (data) {
             var result = $.parseJSON(data);
+            if (statusId == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+                $selectTicketStatus.combobox('disable');
+            }
+
+            currentStatus = formData.status.id;
             showMessage(result);
         });
     }
 
+    function checkWinningCode()
+    {
+        var url = rootUrl + 'PayoutManagement/PayoutList/CheckWinningCode';
+        CMS.callAjax(self, url, { winningCode: $winningCode.val() }, function (result) {
+            if (result == 'true') {
+                CMS.showSuccessMessage('WINNING CODE IS VALID.');
+            } else {
+                CMS.showErrorMessage('WINNING CODE IS INVALID.');
+            }
+        })
+    }
+
+    function getUpdateTicketStatusParams()
+    {
+        return {
+            id: payoutDetail.Id,
+            status: { id: parseInt($selectTicketStatus.val()), name: $selectTicketStatus.find(':selected').text() },
+            note: trimField($ticketNote.val())
+        };
+    }
+
     function initialize() {
         getPayoutDetail();
-        renderPayoutDetailOnUI(payoutDetail);
-
-        $seccodeButton.click(function () {
-            if ($seccodeText.html() === '******') {
-                $seccodeText.html(payoutDetail.SecurityCode);
-                $seccodeButton.text(payoutManagementLabels.Hide);
-            }
-            else {
-                $seccodeText.html('******');
-                $seccodeButton.text(payoutManagementLabels.Show);
-            }
-        });
+        $selectTicketStatus.val(currentStatus);
 
         $updateButton.click(function () {
-            updateTicketStatus();
+            if (trimField($ticketNote.val()).length === 0) {
+                CMS.showTipsyError($ticketNote, 'Required field!', 'se');
+                return;
+            }
+
+            var slectedStatus = parseInt($selectTicketStatus.val());
+            if (payoutDetail.ProductId == 204 && (slectedStatus == statusEnum.Completed || slectedStatus == statusEnum.Expired)) {
+                CMS.showConfirmMessage(payoutManagementLabels.ConfirmUpdateCompleteMessage, updateTicketStatus);
+            } else {
+                updateTicketStatus();
+            }
         });
 
-        $selectTicketStatus.val(currentStatus);
+        $verifyButton.click(function () {
+            if (($winningCode.val()).length === 0) {
+                CMS.showTipsyError($winningCode, 'Required field!', 'se');
+                return;
+            }
+
+            checkWinningCode();
+        });
+
         $payoutlistLink.click(function () { window.location = rootUrl + 'PayoutManagement/PayoutList/Index'; });
 
         $('#divModals').empty();

@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Colossus Bets Bonus Ticket Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool editMode = Model.CustId > 0;
+	bool disabledStatusAmount = editMode && Model.StatusId != 0;
+}
+
+@model Fanex.Nap.CMS.ColossusBets.Models.BonusTicketDetail
+
+@section Head {
+    @Styles.Render("~/bundles/ColossusBets/BonusTicketStyles")
+}
+
+@section Headline
+{
+<div class="title">
+	<div><span class="curr">@ViewBag.Title</span></div>
+</div>
+}
+
+@using (Html.BeginForm("SaveBonusTicket", "BonusTicket", FormMethod.Post, new { area = "ColossusBets", @class = "form", id = "save-form" }))
+{
+<div class="form-row">
+	<div class="lbl-field bold width-60">
+		<label for="RefNo">@ColossusBetsLabels.RefNo</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="RefNo" class="" value="@(editMode ? Model.RefNo.ToString() : string.Empty)" @(editMode ? "disabled" : string.Empty) />
+	</div>
+</div>
+<div class="form-row">
+	<div class="lbl-field bold width-60">
+		<label>@ColossusBetsLabels.Pool</label>
+	</div>
+	<div class="lbl-field width-265" id="Pool">
+		@Model.Pool
+	</div>
+	<div class="lbl-field bold width-60 padding-left100">
+		<label>@ColossusBetsLabels.Member</label>
+	</div>
+	<div class="lbl-field width-265" id="Username">
+		@Model.Username
+	</div>
+</div>
+<div class="form-row">
+	<div class="lbl-field bold width-60">
+		<label for="League">@ColossusBetsLabels.League</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="League" class="" value="@Model.League" />
+	</div>
+	<div class="lbl-field bold width-60 padding-left100">
+		<label for="Match">@ColossusBetsLabels.Match</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="Match" class="" value="@Model.Match" />
+	</div>
+</div>
+<div class="form-row">
+	<div class="lbl-field bold width-60">
+		<label for="Choice">@ColossusBetsLabels.Choice</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="Choice" class="" value="@Model.Choice" />
+	</div>
+	<div class="lbl-field bold width-60 padding-left100">
+		<label for="Result">@ColossusBetsLabels.ResultOptional</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="Result" class="" value="@Model.Result" />
+	</div>
+</div>
+<div class="form-row">
+	<div class="lbl-field width-60 bold">
+		<label for="Status">@ColossusBetsLabels.Status</label>
+	</div>
+	<div class="edit-field">
+		@if (disabledStatusAmount)
+		{
+			<input type="text" id="Status" class="" value="@Model.Status" data-statusid="@Model.StatusId" />
+		}
+		else
+		{
+			@Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Status, new { @class = "combobox-autocomplete width-246" })
+		}
+	</div>
+	<div class="lbl-field bold width-60 padding-left100">
+		<label for="WinAmount">@ColossusBetsLabels.Amount</label>
+	</div>
+	<div class="edit-field">
+		<input type="text" id="WinAmount" class="" maxlength="12"
+			onkeydown="return CMS.forceNumericInput(event);"
+			value="@(editMode ? Model.WinAmount.ToString("N2") : string.Empty)" />
+	</div>
+</div>
+<div class="form-row">
+	<div class="lbl-field width-60">&nbsp;</div>
+	<div class="edit-field">
+		@if ((bool)ViewBag.HostPermission && !disabledStatusAmount)
+		{
+			<button type="submit" class="blue-button">@ColossusBetsLabels.Save</button>
+		}
+		<button type="button" class="blue-button" id="cancel-button">@ColossusBetsLabels.Cancel</button>
+	</div>
+</div>
+}
+
+@section Foot {
+<script type="text/javascript">
+	var custId = @Model.CustId;
+	var colossusBetsLabels = {
+		WrongRefNo: '@ColossusBetsLabels.WrongRefNo',
+		SaveBonusTicketConfirmMessage: "@Html.Raw(ColossusBetsLabels.SaveBonusTicketConfirmMessage)",
+		RequiredField: 'Required field!'
+	};
+</script>
+    @Scripts.Render("~/bundles/ColossusBets/BonusTicketDetailScripts")
+}

@@ -173,5 +173,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 
             return Json(jsonString, behavior);
         }
+
+        protected new JsonResult Json(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
+        {
+            return new JsonResult()
+            {
+                JsonRequestBehavior = behavior,
+                Data = data,
+                MaxJsonLength = int.MaxValue
+            };
+        }
     }
 }

@@ -213,6 +213,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -220,6 +221,7 @@
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -227,6 +229,7 @@
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Master\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -238,6 +241,7 @@
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -247,6 +251,7 @@
     <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -256,6 +261,7 @@
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
@@ -263,6 +269,9 @@
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -284,6 +293,12 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\MaxPercentStatus.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\refresh.png" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\VrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\VirtualSettingMonitor.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
@@ -375,6 +390,7 @@
     <Content Include="Content\Themes\jquery\images\ui-icons_fcd113_256x240.png" />
     <Content Include="Content\Themes\jquery\jquery-ui-1.9.1.custom.min.css" />
     <Content Include="Content\Themes\reset.css" />
+    <Content Include="Content\ToggleSwitch\toggle-switch.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\CMSConstants.js" />
     <Content Include="Scripts\KeyboardManager.js" />
@@ -391,6 +407,9 @@
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\Libs\Highcharts\exporting.js" />
+    <Content Include="Scripts\Libs\Highcharts\highcharts-3d.js" />
+    <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Libs\Popup\dialogbox.js" />
@@ -507,6 +526,10 @@
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
+      <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
+      <Name>Fanex.Nap.CMS.ColossusBets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
@@ -518,6 +541,10 @@
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.VirtualSettingControl\Fanex.Nap.CMS.VirtualSettingControl.csproj">
+      <Project>{fa19db02-6356-4be1-b7eb-642884adf9e3}</Project>
+      <Name>Fanex.Nap.CMS.VirtualSettingControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj">
       <Project>{946B264B-145F-41F8-9C21-24B4C2B79B07}</Project>
@@ -533,7 +560,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.AppSettings.config" />
+    <Content Include="Web.AppSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />
@@ -593,6 +622,7 @@
     </Content>
     <Content Include="Web.AppSettings.local.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.AppSettings.master.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
@@ -650,6 +680,16 @@
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\Web.config" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\Index.cshtml" />
+    <Content Include="Areas\ColossusBets\Views\BonusTicket\BonusTicketDetail.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Styles\VirtualSettingMonitor.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\ViewHistoryModal.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\Web.config" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Styles\dashboard.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

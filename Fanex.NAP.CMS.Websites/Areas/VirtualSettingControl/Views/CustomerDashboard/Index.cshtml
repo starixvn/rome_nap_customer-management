@@ -1,0 +1,136 @@
+﻿@model  Fanex.Nap.CMS.VirtualSettingControl.Criteria.CustomerDashboard.GetDashboardInfoCriteria
+@{
+    ViewBag.Title = "Customer Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/styles/dashboard")
+<div id="divHorizontalTab">
+    <div class="dashboard-title">
+        <div class="dashboard-content">
+            Performance of last <label id ="titleMonthCount" class="no-pointer">6</label> months
+
+            <select class="team-month-picker" id="divTeamMonthPicker">
+            </select>
+
+            <div class="switch-toggle switch-ios flat-switch">
+              <input id="chk2D" name="chartType" type="radio" checked="">
+              <label for="chk2D">2D</label>
+
+              <input id="chk3D" name="chartType" type="radio">
+              <label for="chk3D">3D</label>
+
+              <a id="toggleA"></a>
+            </div>
+        </div>
+    </div>
+    <div id="divTabSummaryContent" class="tab-content">
+        <div class="main-col">
+            <div id="divGeneralInfo" class="general-info">
+                <div class="info-cell-1-left">
+                    <div class="info-cell1-content">
+                        <label class="title">Turnover</label>
+                        <label class="number" id="lblTurnOver">0.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">Win Loss</label>
+                        <label class="number" id="lblWinLoss">0.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">Margin</label>
+                        <label class="number" id="lblMargin">0.00
+                        </label>
+                    </div>
+                </div>
+                <div class="info-cell-1">
+                    <div class="info-cell1-content">
+                        <label class="title">Bet Count</label>
+                        <label class="number" id="lblBetCount">0
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="divTurnover" class="info-cell-2-left">
+                <div class="info-cell2-content">
+                    <div id="monthMarginContainer" class="chart-container"></div>
+                </div>
+            </div>
+            <div id="divWinloss" class="info-cell-2">
+                <div class="info-cell2-content">
+                    <div id="monthBetCountContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div id="divMargin" class="info-cell-2-left no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="monthWinlossContainer" class="chart-container">
+                    </div>
+                </div>
+            </div>
+            <div id="divMatch" class="info-cell-2 no-padding-bot">
+                <div class="info-cell2-content">
+                    <div id="monthMarginByStakeContainer" class="chart-container"> 
+                        <div style="color: #5a7dc1; fill: #5a7dc1; font-size: 18px; text-transform: uppercase; font-family: Lucida Grande,Lucida Sans Unicode,Arial,Helvetica,sans-serif; margin-top: 10px; ">MARGIN (%) BY STAKE RANGE IS COMING SOON ....</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sub-col">
+            <div class="info-cell-3-top">
+                <div class="info-cell3-content">
+                    <div class="title">Top 5 Sports</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Sport</div>
+                        <div class="value title-value"><div class="center-value">Turnover</div></div>
+                        <div class="value title-value"><div class="center-value">Winloss</div></div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestSports">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-3">
+                <div class="info-cell3-content">
+                    <div class="title">Top 10 Bet Types</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Bet Type</div>
+                        <div class="value title-value"><div class="center-value">Turnover</div></div>
+                        <div class="value title-value"><div class="center-value">Winloss</div></div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divBestBettypes">
+                    </div>
+                </div>
+            </div>
+            <div class="info-cell-3-last">
+                <div class="info-cell3-content">
+                    <div class="title">Top Event Choices</div>
+                    <div class="rank-row no-border">
+                        <div class="name title-name">Event Type</div>
+                        <div class="value title-value"><div class="center-value">Turnover</div></div>
+                        <div class="value title-value"><div class="center-value">Winloss</div></div>
+                        <div class="value title-value"><div class="center-value">Margin %</div></div>
+                    </div>
+                    <div id="divEventChoices">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<label id="lblCustId" style="display:none">@Model.CustId</label>
+<label id="lblMonthToCheck" style="display:none">@Model.MonthToCheck</label>
+<label id="lblSportId" style="display:none">@Model.SportId</label>
+@section Foot
+{
+    @Scripts.Render("~/scripts/dashboard")
+    <script type="text/javascript">
+        var labels = {
+        };
+    </script>
+}

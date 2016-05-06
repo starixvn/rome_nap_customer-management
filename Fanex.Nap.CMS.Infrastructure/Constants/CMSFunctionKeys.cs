@@ -68,12 +68,20 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string CurrencyWinLimitSetting = "CurrencyWinLimitSetting";
         public const string PlayerWinLimitManagement = "PlayerWinLimitManagement";
         public const string WinLimitMonitor = "WinLimitMonitor";
-        
+
         // Payout Management
         public const string PayoutManagement = "PayoutManagement";
         public const string PayoutForBopingLicensees = "PayoutForBopingLicensees";
         public const string PayoutForONEworksLicensees = "PayoutForONEworksLicensees";
         public const string PayoutForCredit = "PayoutForCredit";
-        public const string PayoutViewSecurityCode = "ViewSecurityCode";
+        public const string PayoutViewWinningCode = "ViewWinningCode";
+
+        // ColossusBets - Insert Bonus Ticket
+        public const string ColossusBetsInsertBonusTicket = "InsertColossusBetsBonusTicket";
+
+        // Virtual Setting Control
+        public const string VirtualSettingMonitor = "VirtualSettingMonitor";
+
+        public const string AutoAdjustmentReport = "AutoAdjustmentReport";
     }
 }

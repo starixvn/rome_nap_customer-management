@@ -7,6 +7,7 @@
         public static readonly string MicroGamingResultAPI;
         public static readonly string ColossusBetsAPIAuthorizationURL;
         public static readonly string ColossusBetsAPITicketsURL;
+        public static readonly string WinningCode;
 
         static PayoutManagementConst()
         {
@@ -15,6 +16,8 @@
             MicroGamingResultAPI = appSettings["MicroGamingResultAPI"];
             ColossusBetsAPIAuthorizationURL = appSettings["ColossusBetsAPIAuthorizationURL"];
             ColossusBetsAPITicketsURL = appSettings["ColossusBetsAPITicketsURL"];
+
+            WinningCode = "WinningCode";
         }
     }
 }

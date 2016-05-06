@@ -230,33 +230,35 @@ Array.prototype.collect = function (collector) {
             customPager: true,
             pagerOption: {
                 currentPage: 0,
-                itemsPerPage: CMS.pageSize,
-                itemsPerPageArray: CMS.pagerRanges,
-                totalItem: data.Reports.length
+                itemsPerPage: 50,
+                itemsPerPageArray: [50, 100, 200],
+                totalItem: data.Reports.length,
+                pagerSelectCallBack: onPageChangedHandler,
+                showDetail: true
             },
             columns: columnHeaders,
-            bodyRows: data.Reports.collect(bodyMapFunc)
+            bodyRows: data.Reports.slice(0, 50).collect(bodyMapFunc)
         };
 
         function onPageChangedHandler(index, pageSize) {
-            var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
+            //var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
 
-            var criteria = {
-                FromDate: fromtoDate.FromDate,
-                ToDate: fromtoDate.ToDate,
-                PageIndex: index,
-                PageSize: pageSize
-            };
+            //var criteria = {
+            //    FromDate: fromtoDate.FromDate,
+            //    ToDate: fromtoDate.ToDate,
+            //    PageIndex: index,
+            //    PageSize: pageSize
+            //};
 
-            CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
-                gridOptions.pagerOption.currentPage = index;
-                gridOptions.pagerOption.itemsPerPage = pageSize;
-                gridOptions.pagerOption.totalItem = data.ItemsCount;
+            //CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
+            gridOptions.pagerOption.currentPage = index;
+            gridOptions.pagerOption.itemsPerPage = pageSize;
+            gridOptions.pagerOption.totalItem = data.Reports.length;
 
-                gridOptions.bodyRows = data.Reports.collect(bodyMapFunc);
+            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc);
 
-                $vrAdjustmentReportGrid.fanexGrid(gridOptions);
-            });
+            $vrAdjustmentReportGrid.fanexGrid(gridOptions);
+            //});
         };
 
 

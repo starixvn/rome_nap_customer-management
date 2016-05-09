@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+<<<<<<< HEAD
+    <Function Name="Win Limit Control">
+        <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+    </Function>
+
+    <Function Name="Virtual Setting Control">
+        <Setting Key ="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    </Function>
+=======
+  <Function Name="Win Limit Control">
+    <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"></Setting>
+  </Function>
+>>>>>>> #57151 - New feature for Win Limit Monitor
+</Functions>

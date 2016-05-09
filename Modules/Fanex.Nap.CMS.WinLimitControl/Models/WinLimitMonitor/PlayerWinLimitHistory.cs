@@ -10,11 +10,7 @@
 
         public decimal WinLimit { get; set; }
 
-        public decimal? BlockedWinningAmount { get; set; }
-
         public decimal TotalWinningAmount { get; set; }
-
-        public bool IsBlocked { get; set; }
 
         public decimal PercentageUsed
         {
@@ -34,13 +30,7 @@
             }
         }
 
-        public string Status 
-        {
-            get
-            {
-                return IsBlocked ? WinLimitControlLabels.Blocked : WinLimitControlLabels.Unblocked;
-            }
-        }
+        public string Action { get; set; }
 
         public string ChangedByDisplay 
         {

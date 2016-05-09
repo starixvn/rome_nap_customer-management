@@ -1,5 +1,12 @@
 .filter-bar .filter-form { padding-bottom: 5px; }
-.filter-bar .filter-form #username { width: 100%; }
+.filter-bar .filter-form #username,
+.filter-bar .filter-form #dpk-fromdate { 
+	width: 100%;
+}
+
+.filter-bar .filter-form #dpk-todate { 
+	width: 174px;
+}
 
 .boxPercentUsed_100Percent {
     padding: 0px;
@@ -95,16 +102,22 @@
     }
 }
 
-.sound-enable{
+.sound-enable {
+	background: url("Images/sound.png") no-repeat;
+	cursor: pointer;
+	height: 25px;
+	width: 24px;
 	float: left;
 	margin: -3px 5px;
-	content: url("Images/sound.png");
 }
 
-.sound-disabled{
+.sound-disabled {
+	background: url("Images/sound-mute.png") no-repeat;
+	cursor: pointer;
+	height: 25px;
+	width: 24px;
 	float: left;
 	margin: -3px 5px;
-	content: url("Images/sound-mute.png");
 }
 
 

@@ -60,6 +60,13 @@
             return Json(histories, JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.WinLimitMonitor, Policy = Constant.Policy.Host)]
+        public ActionResult UnblockPlayer(UnblockPlayerCriteria criteria)
+        {
+            var result = _winLimitMonitorService.UnblockPlayer(criteria);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
         [NonAction]
         private void PopulateCurrencyAndGame()
         {

@@ -1,419 +1,392 @@
 ﻿/* global CMS, CMSConstants, winLimitControlLabels, ViewHistoryModal */
 /* jshint strict: false,
 camelcase: false */
-var winLimitMonitor;
-$(document).ready(function () {
-    winLimitMonitor.initPage();
-});
+(function () {
+	"use strict";
 
-var WinLimitMonitor = function () {
-    var self = this;
-    var $formFilter = null,
-        $username = null,
-        $game = null,
-        $currency = null,
-        $status = null,
-        $freegrid = null,
-        $divButtons = null,
-        $btnUnblocked = null,
-        $divResult = null,
-        $divNotesContainer = null,
-        $liBlockedNote = null,
-        $liUnblockedNote = null,
-        $divViewHistoryContainer = null;
+	var self = this;
+	var $formFilter = $("#form-filterWinLimit"),
+		$datePickerPlugin = null,
+		$username = $("#username"),
+		$game = $("#game"),
+		$currency = $("#currency"),
+		$status = $("#status"),
+		$freegrid = $("#freegrid"),
+		$btnUnblocked = $("#btnUnblocked"),
+		$divResult = $("#div-result-message"),
+		$divViewHistoryContainer = $("#div-ViewHistory");
 
-    var searchUrl = '',
+	var searchUrl = $formFilter.attr("action") + "?",
         searchParameters = null,
         gridOptions = null,
         maxPercentageUsed = 100;
 
-    var viewHistoryModal = null;
-    var isSoundAlert = false;
+	var viewHistoryModal = null;
+	var isSoundAlert = false;
 
-    var timer = {
-        id: 0,
-        pausing: false,
-        refresh: {
-            intervals: [90, 120, 150, 180],
-            selected: 90
-        }
-    };
+	var timer = {
+		id: 0,
+		pausing: false,
+		refresh: {
+			intervals: [90, 120, 150, 180],
+			selected: 90
+		}
+	};
 
-    self.initPage = function () {
-        cacheElements();
-        bindEvents();
-        gridOptions = initGridOptions();
-        searchUrl = $formFilter.attr('action') + '?';
-        $username.autocomplete({
-            minLength: 3,
-            delay: 300,
-            source: window.rootUrl + 'WinLimitControl/PlayerSetting/AutoSuggestion'
-        });
+	function getCookieMuteSound() {
+		return $.cookie("mute-sound");
+	}
 
-        if ($.cookie('mute-sound') == null) {
-            $.cookie('mute-sound', 'false');
-        }
+	function setCookieMuteSound(value) {
+		return $.cookie("mute-sound", value);
+	}
 
-        $('#divModals').empty();
-        viewHistoryModal = new ViewHistoryModal($divViewHistoryContainer, function () { timer.pausing = false; });
+	function getSearchParams() {
+		var dateRange = $datePickerPlugin ?
+			$datePickerPlugin.nexDatePicker("getDateRange") :
+			{ FromDate: currentDate, ToDate: currentDate }
 
-        $formFilter.trigger('submit');
-    };
+		return {
+			FromDate: dateRange.FromDate,
+			ToDate: dateRange.ToDate,
+			Username: $username.val().trim(),
+			Game: $game.val(),
+			Currency: $currency.val(),
+			Status: $status.val(),
+			PageIndex: 0,
+			PageSize: CMS.pageSize
+		};
+	}
 
-    function cacheElements() {
-        $formFilter = $('#form-filterWinLimit');
-        $username = $('#username');
-        $game = $('#game');
-        $currency = $('#currency');
-        $status = $('#status');
-        $freegrid = $('#freegrid');
-        $divButtons = $('#divButtons');
-        $btnUnblocked = $('#btnUnblocked');
-        $divResult = $('#div-result-message');
-        $divNotesContainer = $('#divNotesContainer');
-        $liBlockedNote = $divNotesContainer.find('.blockedNote');
-        $liUnblockedNote = $divNotesContainer.find('.unblockedNote');
-        $divViewHistoryContainer = $('#div-ViewHistory');
-    }
+	function initGridOptions() {
+		var columns = [
+			{ HeaderText: "#", Width: 40, Name: "colNumber", HeaderAlign: "center", CellAlign: "center" },
+			{ HeaderText: winLimitControlLabels.Username, Width: 200, Name: "colUsername", HeaderAlign: "center", CellAlign: "left" },
+			{ HeaderText: winLimitControlLabels.Currency, Width: 75, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
+			{ HeaderText: winLimitControlLabels.Game, Width: 200, Name: "colGame", HeaderAlign: "center", CellAlign: "left" },
+			{ HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: "colWinLimit", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
+			{ HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: "colTotalWinningAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
+			{ HeaderText: winLimitControlLabels.ReachedLimitTime, Width: 145, Name: "colBlockedTime", HeaderAlign: "center", CellAlign: "center" },
+			{ HeaderText: winLimitControlLabels.PercentageUsed, Width: 110, Name: "colPercentageUsed", HeaderAlign: "center", CellAlign: "center" },
+			{ HeaderText: winLimitControlLabels.Blocked, Width: 50, Name: "colBlocked", HeaderAlign: "center", CellAlign: "center" },
+			{ HeaderText: "", Width: 40, Name: "colViewHistory", HeaderAlign: "center", CellAlign: "center" }
+		];
 
-    function isBlockedSearching() {
-        return searchParameters.Status === '1';
-    }
+		return {
+			showTitle: true,
+			titleInfo: {},
+			fullWidth: true,
+			fullHeight: true,
+			showDistinctRow: false,
+			showHighlightRow: true,
+			headerColumnHeight: 35,
+			gridExpandHeight: 300,
+			columns: columns,
+			bodyRows: [],
+			showPager: true,
+			customPager: true,
+			pagerOption: {
+				itemsPerPageArray: CMS.pagerRanges,
+				pagerSelectCallBack: handleChangingPage
+			}
+		};
+	}
 
-    function initGridOptions() {
-        return {
-            showTitle: true,
-            titleInfo: {},
-            fullWidth: true,
-            fullHeight: true,
-            showDistinctRow: false,
-            showHighlightRow: true,
-            headerColumnHeight: 35,
-            gridExpandHeight: 300,
-            columns: [],
-            showPager: true,
-            customPager: true,
-            pagerOption: {
-                itemsPerPageArray: CMS.pagerRanges,
-                pagerSelectCallBack: handleChangingPage
-            }
-        };
-    }
-
-    function getPlayerSettings() {
-        CMS.hideInlineMsg($divResult);
-        var url = searchUrl + $.param(searchParameters);
-        var successFunc = function (result) {
-            var isBlocked = isBlockedSearching();
-
-            gridOptions.pagerOption.currentPage = searchParameters.PageIndex;
-            gridOptions.pagerOption.itemsPerPage = searchParameters.PageSize;
-            gridOptions.pagerOption.totalItem = result.TotalRow;
-
-            gridOptions.titleInfo.customButtons = renderAutoRefresh();
-            gridOptions.columns =
-                [
-                    { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-                    { HeaderText: winLimitControlLabels.Currency, Width: 75, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
-                    { HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: 'colWinLimit', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber },
-                    { HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: 'colTotalWinningAmount', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.IntNumber },
-                    { HeaderText: winLimitControlLabels.ReachedLimitTime, Width: 145, Name: 'colBlockedTime', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: winLimitControlLabels.PercentageUsed, Width: 110, Name: 'colPercentageUsed', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: '', Width: 40, Name: 'colViewHistory', HeaderAlign: 'center', CellAlign: 'center' }
-                ];
-
-            gridOptions.bodyRows = buildBodyRows(result.Winlimits, isBlocked);
-
-            $freegrid.removeClass('display-none').fanexGrid(gridOptions);
-            if (result.TotalRow > 0) {
-                bindAutoRefreshEvents();
-                bindViewHistory();
-
-                $btnUnblocked.val(
-                    isBlocked ?
-                    winLimitControlLabels.Unblock_Accounts :
-                    winLimitControlLabels.Block_Accounts
-                );
-                $divButtons.removeClass('display-none');
-            }
-            else {
-                $divButtons.addClass('display-none');
-            }
-
-            $divNotesContainer.removeClass('display-none');
-            if (isBlocked) {
-                $liBlockedNote.removeClass('display-none');
-                $liUnblockedNote.addClass('display-none');
-            }
-            else {
-                $liUnblockedNote.removeClass('display-none');
-                $liBlockedNote.addClass('display-none');
-            }
-        };
-
-        CMS.getJson(url, successFunc);
-    }
-
-    function buildBodyRows(data, isBlocked) {
-        var bodyRows = [];
-        var startIndex = searchParameters.PageIndex * searchParameters.PageSize;
-
-        var cell, winlimit, customData;
-        isSoundAlert = false;
-        for (var i = 0, max = data.length; i < max; i++) {
-            winlimit = data[i];
-            customData = ' data-playerid="' + winlimit.Player.Id + '"' + ' data-gameid="' + winlimit.Game.Id + '"';
-            cell = [
-                { Name: 'colNumber', Value: (startIndex + i + 1) },
-                { Name: 'colUsername', Value: winlimit.Player.Name },
-                { Name: 'colCurrency', Value: winlimit.Currency.Name },
-                { Name: 'colGame', Value: winlimit.Game.Name },
-                { Name: 'colWinLimit', Value: winlimit.WinLimit },
-                { Name: 'colTotalWinningAmount', Value: winlimit.TotalWinningAmount },
-                { Name: 'colBlockedTime', Value: winlimit.BlockedTimeDisplay },
-                { Name: 'colPercentageUsed', Value: getPercentageUsedBox(winlimit.PercentageUsed) },
-                { Name: 'colViewHistory', Value: renderViewHistoryRow(winlimit.Player.Name, winlimit.Game.Name, customData) }
-            ];
-
-            if (winlimit.IsNotified == true) {
-                bodyRows.push({ Columns: cell });
-            }
-            else {
-                bodyRows.push({ Columns: cell, CssClass: 'new-data-row' });
-                if (winlimit.IsModified == 0) {
-                    isSoundAlert = true;
-                }
-            }
-        }
-
-        return bodyRows;
-    }
-
-    function getPercentageUsedBox(percentageUsed) {
-        var displayPercent = parseInt(percentageUsed);
-        if (displayPercent >= maxPercentageUsed) {
-            return '<div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + displayPercent + '%</div>';
-        }
-
-        return '<div class="col-percentage-used-body align-center boxPercentUsed_Low boxPercentUsed" style="background-position: -' +
-            (maxPercentageUsed - displayPercent) + 'px">' + displayPercent + '%</div>';
-    }
-
-    function renderViewHistoryRow(playerName, gameName, customData) {
-        var customAttr = [
-            '<a href="javascript:;" class="ico-remark" ',
-            customData,
-            ' data-playername="',
-            playerName,
-            '" data-gamename="',
-            gameName,
-            '" title="',
-            winLimitControlLabels.ViewHistory,
-            '" ></a>'
-        ];
-
-        return customAttr.join('');
-    }
-
-    function handleChangingPage(pageIndex, itemsPerPage) {
-        searchParameters.PageIndex = parseInt(pageIndex);
-        searchParameters.PageSize = parseInt(itemsPerPage);
-        getPlayerSettings();
-    }
-
-    function renderAutoRefresh() {
-        var intervals = timer.refresh.intervals,
+	function renderAutoRefresh() {
+		var intervals = timer.refresh.intervals,
             selected = timer.refresh.selected;
 
-        var interval,
+		var interval,
             dropdown = ['<ul class="dropdown-container">'];
-        for (var i = 0, max = intervals.length; i < max; i++) {
-            interval = intervals[i];
-            dropdown.push('<li data-value="');
-            dropdown.push(interval);
-            dropdown.push('"');
-            if (selected === interval) {
-                dropdown.push(' class="checked"');
-            }
+		for (var i = 0, max = intervals.length; i < max; i++) {
+			interval = intervals[i];
+			dropdown.push('<li data-value="');
+			dropdown.push(interval);
+			dropdown.push('"');
+			if (selected === interval) {
+				dropdown.push(' class="checked"');
+			}
 
-            dropdown.push('>');
-            dropdown.push(interval);
-            dropdown.push(' ');
-            dropdown.push('sec');
-            dropdown.push('</li>');
-        }
+			dropdown.push('>');
+			dropdown.push(interval);
+			dropdown.push(' ');
+			dropdown.push('sec');
+			dropdown.push('</li>');
+		}
 
-        dropdown.push('</ul>');
+		dropdown.push('</ul>');
 
-        return '<div class="refresh-container" id="refresh-container">' +
+		return '<div class="refresh-container" id="refresh-container">' +
                     '<div class="timer">' +
                         '<div title="Refresh" class="countdown">' + selected + '</div>' +
                         '<div class="dropdown"></div>' +
                      '</div>' + dropdown.join('') +
-
                 '</div>' +
-                '<img id="sound" class="' + ($.cookie('mute-sound') == 'true' ? "sound-disabled" : "sound-enable") + '" alt="X" >';
-    }
+                '<span id="sound" class="' + (getCookieMuteSound() === "true" ? "sound-disabled" : "sound-enable") + '"></span>';
+	}
 
-    function bindAutoRefreshEvents() {
-        if (timer.id) {
-            clearTimeout(timer.id);
-        }
+	function handleChangingPage(pageIndex, itemsPerPage) {
+		searchParameters.PageIndex = parseInt(pageIndex);
+		searchParameters.PageSize = parseInt(itemsPerPage);
+		getWinLimitMonitor();
+	}
 
-        var refreshContainer = $('#refresh-container');
-        var countdownContainer = refreshContainer.find('.countdown');
-        var dropdownContainer = refreshContainer.find('.dropdown-container');
+	function bindAutoRefreshEvents() {
+		if (timer.id) {
+			clearTimeout(timer.id);
+		}
 
-        var autoRefreshFunc = function (countdownContainer) {
-            timer.id = setTimeout(function () {
-                if (!timer.pausing) {
-                    var currentValue = parseInt(countdownContainer.text());
-                    if (currentValue === 1) {
-                        countdownContainer.html('...');
-                        getPlayerSettings();
-                        return;
-                    }
+		var refreshContainer = $("#refresh-container");
+		var countdownContainer = refreshContainer.find(".countdown");
+		var dropdownContainer = refreshContainer.find(".dropdown-container");
 
-                    countdownContainer.html(--currentValue);
-                }
+		var autoRefreshFunc = function (countdownContainer) {
+			timer.id = setTimeout(function () {
+				if (!timer.pausing) {
+					var currentValue = parseInt(countdownContainer.text());
+					if (currentValue === 1) {
+						countdownContainer.html("...");
+						getWinLimitMonitor();
+						return;
+					}
 
-                autoRefreshFunc(countdownContainer);
-            }, 1000);
-        };
+					countdownContainer.html(--currentValue);
+				}
 
-        countdownContainer.unbind('click').bind('click', getPlayerSettings);
+				autoRefreshFunc(countdownContainer);
+			}, 1000);
+		};
 
-        dropdownContainer.find('li')
-            .unbind('click')
-            .bind('click', function () {
-                dropdownContainer.find('li.checked').removeClass('checked');
+		countdownContainer.unbind("click").bind("click", getWinLimitMonitor);
 
-                var $this = $(this);
-                $this.addClass('checked');
-                timer.refresh.selected = parseInt($this.data('value'));
-                countdownContainer.html(timer.refresh.selected);
+		dropdownContainer.find("li")
+            .unbind("click")
+            .bind("click", function () {
+            	dropdownContainer.find("li.checked").removeClass("checked");
+
+            	var $this = $(this);
+            	$this.addClass("checked");
+            	timer.refresh.selected = parseInt($this.data("value"));
+            	countdownContainer.html(timer.refresh.selected);
             });
 
-        autoRefreshFunc(countdownContainer);
+		autoRefreshFunc(countdownContainer);
+	}
 
+	function bindSoundEvent() {
+		$("#sound").click(function () {
+			$(this).toggleClass("sound-enable sound-disabled");
+			var muteSound = getCookieMuteSound() === "true" ? "false" : "true";
+			setCookieMuteSound(muteSound);
+		});
 
-        $('#sound').click(function () {
+		if (isSoundAlert) {
+			CMS.showErrorMessage("Players have reached Company Win Limit. Please check again.");
+			if (getCookieMuteSound() === "false") {
+				alertSound.play();
+			}
 
-            $(this).toggleClass('sound-enable sound-disabled');
-            var muteSound = $.cookie('mute-sound');
-            if (muteSound == 'true')
-                muteSound = 'false';
-            else
-                muteSound = 'true';
+			setTimeout(CMS.closeMsgBox, 1000 * 120);
+		}
+	}
 
-            $.cookie('mute-sound', muteSound);
-        });
+	function bindUnblockEvent() {
+		$(".checkbox-blocked")
+			.unbind("click")
+			.bind("click", function (e) {
+				e.preventDefault();
 
-        alertDataChange();
-    }
+				var $this = $(this);
+				var playerName = $this.data("playername");
+				var gameName = $this.data("gamename");
 
-    function bindViewHistory() {
-        $freegrid.find('.ico-remark')
-            .unbind('click')
-            .bind('click', function () {
-                var $this = $(this);
-                var player = { Id: $this.data('playerid'), Name: $this.data('playername') };
-                var game = { Id: $this.data('gameid'), Name: $this.data('gamename') };
+				var message = winLimitControlLabels.UnblockPlayerConfirm
+					.replace("{0}", playerName)
+					.replace("{1}", gameName);
 
-                timer.pausing = true;
-                viewHistoryModal.initialize(player, game);
+				var okFunc = function () {
+					var unblockParam = {
+						PlayerId: $this.data("playerid"),
+						GameId: $this.data("gameid"),
+						WinlostDate: $this.data("winlostdate"),
+					};
+
+					CMS.callAjax(self, window.rootUrl + "WinLimitControl/WinLimitMonitor/UnblockPlayer", unblockParam, function (result) {
+						if (result && result.Code === 0) {
+							getWinLimitMonitor();
+						}
+						else {
+							CMS.showErrorMessage(result.Message);
+						}
+					});
+				};
+
+				CMS.showConfirmMessage(message, okFunc);
+			});
+	}
+
+	function bindViewHistory() {
+		$freegrid.find(".ico-remark")
+            .unbind("click")
+            .bind("click", function () {
+            	var $this = $(this);
+            	var player = { Id: $this.data('playerid'), Name: $this.data('playername') };
+            	var game = { Id: $this.data('gameid'), Name: $this.data('gamename') };
+
+            	timer.pausing = true;
+            	viewHistoryModal.initialize(player, game);
             });
-    }
+	}
 
-    function bindEvents() {
-        $formFilter.submit(function (e) {
-            e.preventDefault();
-            searchParameters = getSearchParams();
-            getPlayerSettings();
-        });
+	function getPercentageUsedBox(percentageUsed) {
+		var displayPercent = parseInt(percentageUsed);
+		if (displayPercent >= maxPercentageUsed) {
+			return '<div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + displayPercent + '%</div>';
+		}
 
-        $btnUnblocked.hover(
-        function () {
-            checkSelectedAccounts();
-        },
-        function () {
-            setTimeout(function () {
-                CMS.clearTipsyError($btnUnblocked);
-                $btnUnblocked.removeAttr('original-title');
-            }, 100);
-        });
-    }
+		return '<div class="col-percentage-used-body align-center boxPercentUsed_Low boxPercentUsed" style="background-position: -' +
+            (maxPercentageUsed - displayPercent) + 'px">' + displayPercent + '%</div>';
+	}
 
-    function getSearchParams() {
-        return {
-            Username: $username.val().trim(),
-            Game: $game.val(),
-            Currency: $currency.val(),
-            Status: $status.val(),
-            PageIndex: 0,
-            PageSize: CMS.pageSize
-        };
-    }
+	function renderBlockedRow(customData, isBlocked, winlostDate) {
+		if (!isBlocked) {
+			return '<input type="checkbox" disabled="disabled" />';
+		}
 
-    function checkSelectedAccounts() {
-        var isBlock = !isBlockedSearching();
-        var blocksUnblocks, message;
-        if (isBlock) {
-            blocksUnblocks = $('.checkbox-blocked:checked');
-            message = winLimitControlLabels.WinLimitMonitor_ChooseOneAccountToBlock;
-        }
-        else {
-            blocksUnblocks = $('.checkbox-blocked:not(:checked)');
-            message = winLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock;
-        }
+		if (hostPermission === 0) {
+			return '<input type="checkbox" disabled="disabled" checked="true" />';
+		}
 
-        if (blocksUnblocks.length === 0) {
-            CMS.showTipsyError($btnUnblocked, message, 'w');
-            $btnUnblocked.unbind('click');
-        }
-        else {
-            $btnUnblocked.unbind('click');
-            $btnUnblocked.click(function () { blockUnblockAccounts(isBlock, blocksUnblocks); });
-        }
-    }
+		return '<input type="checkbox" ' + customData + ' data-winlostdate="' + winlostDate + '" checked="true" class="checkbox-blocked" />';
+	}
 
-    function blockUnblockAccounts(isBlock, blocksUnblocks) {
-        var message = isBlock ? winLimitControlLabels.WinLimitMonitor_ConfirmBlockAccounts : winLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts;
-        var okFunc = function () {
-            var accounts = [];
-            blocksUnblocks.each(function () {
-                var $this = $(this);
-                accounts.push({ Player: $this.data('playerid'), Game: $this.data('gameid') });
-            });
+	function renderViewHistoryRow(customData) {
+		var customAttr = [
+            '<a href="javascript:;" class="ico-remark" ',
+            customData,
+            ' title="',
+            winLimitControlLabels.ViewHistory,
+            '"></a>'
+		];
 
-            var updateParams = { IsBlock: isBlock, Accounts: accounts };
-            CMS.callAjax(self, window.rootUrl + 'WinLimitControl/WinLimitMonitor/BlockUnblockPlayers', updateParams, renderUnblockResult);
-        };
+		return customAttr.join("");
+	}
 
-        CMS.showConfirmMessage(message, okFunc);
-    }
+	function buildBodyRows(data) {
+		var bodyRows = [];
+		var startIndex = searchParameters.PageIndex * searchParameters.PageSize;
 
-    function renderUnblockResult(result) {
-        if (result.Code) {
-            CMS.showInlineErrorMsg(result.Message, $divResult);
-            return;
-        }
+		var cell, winlimit, customData;
+		isSoundAlert = false;
 
-        CMS.showInlineSuccessMsg(result.Message, $divResult, true, getPlayerSettings);
-    }
+		for (var i = 0, max = data.length; i < max; i++) {
+			winlimit = data[i];
+			customData = 'data-playerid="' + winlimit.Player.Id + '"' + ' data-playername="' + winlimit.Player.Name + '"' +
+				' data-gameid="' + winlimit.Game.Id + '"' + ' data-gamename="' + winlimit.Game.Name + '"';
+			cell = [
+                { Name: "colNumber", Value: (startIndex + i + 1) },
+                { Name: "colUsername", Value: winlimit.Player.Name },
+                { Name: "colCurrency", Value: winlimit.Currency.Name },
+                { Name: "colGame", Value: winlimit.Game.Name },
+                { Name: "colWinLimit", Value: winlimit.WinLimit },
+                { Name: "colTotalWinningAmount", Value: winlimit.TotalWinningAmount },
+                { Name: "colBlockedTime", Value: winlimit.BlockedTimeDisplay },
+                { Name: "colPercentageUsed", Value: getPercentageUsedBox(winlimit.PercentageUsed) },
+				{ Name: "colBlocked", Value: renderBlockedRow(customData, winlimit.IsBlocked, winlimit.WinlostDateDisplay) },
+                { Name: "colViewHistory", Value: renderViewHistoryRow(customData) }
+			];
 
-    function alertDataChange() {
-        if (isSoundAlert == true) {
-            CMS.showErrorMessage('Players have reached Company Win Limit. Please check again.');
-            if ($.cookie('mute-sound') == 'false') {
-                alertSound.play();
-            }
+			if (winlimit.IsNotified) {
+				bodyRows.push({ Columns: cell, CssClass: "new-data-row" });
+				isSoundAlert = true;
+			}
+			else {
+				bodyRows.push({ Columns: cell });
+			}
+		}
 
-            setTimeout(CMS.closeMsgBox, 120000);
-        }
-    }
-};
+		return bodyRows;
+	}
 
-winLimitMonitor = new WinLimitMonitor();
+	function getWinLimitMonitor() {
+		CMS.hideInlineMsg($divResult);
+		var url = searchUrl + $.param(searchParameters);
+
+		CMS.getJson(url, function (result) {
+			gridOptions.titleInfo.customButtons = renderAutoRefresh();
+
+			gridOptions.pagerOption.currentPage = searchParameters.PageIndex;
+			gridOptions.pagerOption.itemsPerPage = searchParameters.PageSize;
+			gridOptions.pagerOption.totalItem = result.TotalRow;
+
+			gridOptions.bodyRows = buildBodyRows(result.Winlimits);
+			$freegrid.removeClass("display-none").fanexGrid(gridOptions);
+
+			if (result.TotalRow > 0) {
+				bindAutoRefreshEvents();
+				bindSoundEvent();
+				bindUnblockEvent();
+				bindViewHistory();
+			}
+		});
+	}
+
+	function initDateRangeSelect() {
+		$datePickerPlugin = $("#fromtodate-picker").nexDatePicker({
+			nexDatePickerType: "daterange",
+			datePickerFormat: {
+				dateFormat: CMS.formats.DateFormat,
+				changeMonth: true,
+				changeYear: true,
+				showOtherMonths: true,
+				selectOtherMonths: true,
+				minDate: new Date(minDate),
+				maxDate: new Date(currentDate)
+			},
+			firstDatePicker: {
+				Id: "dpk-fromdate",
+				Label: winLimitControlLabels.FromDate,
+				InitDate: new Date(currentDate),
+				LabelCss: "lbl-field col_3",
+				TextboxCss: "edit-field col_7"
+			},
+			secondDatePicker: {
+				Id: "dpk-todate",
+				Label: winLimitControlLabels.ToDate,
+				InitDate: new Date(currentDate),
+				CurrentDate: new Date(currentDate),
+				LabelCss: "lbl-field col_3",
+				TextboxCss: "edit-field col_8"
+			}
+		});
+	}
+
+	function initialize() {
+		gridOptions = initGridOptions();
+
+		$username.autocomplete({
+			minLength: 3,
+			delay: 300,
+			source: window.rootUrl + "WinLimitControl/PlayerSetting/AutoSuggestion"
+		});
+
+		if (getCookieMuteSound() === null) {
+			setCookieMuteSound("false");
+		}
+
+		viewHistoryModal = new ViewHistoryModal($divViewHistoryContainer, function () { timer.pausing = false; });
+		$("#divModals").empty();
+
+		$formFilter
+			.submit(function (e) {
+				e.preventDefault();
+				searchParameters = getSearchParams();
+				getWinLimitMonitor();
+			})
+			.trigger("submit");
+
+		setTimeout(initDateRangeSelect, 100);
+	}
+
+	initialize();
+})();

@@ -37,9 +37,9 @@
         private static void RegisterWinLimitMonitorBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/winlimitcontrol/winlimitmonitor-scripts").Include(
+                "~/Scripts/Libs/jQuery/jquery.cookie.min.js",
                 "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/ViewHistoryModal.js",
-                "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/WinLimitMonitor.js",
-                "~/Scripts/Libs/jQuery/jquery.cookie.min.js"));
+                "~/Areas/WinLimitControl/Views/WinLimitMonitor/Scripts/WinLimitMonitor.js"));
 
             bundles.AddAndInclude(
                 "~/bundles/winlimitcontrol/winlimitmonitor-styles",

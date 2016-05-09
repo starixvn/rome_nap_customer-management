@@ -32,17 +32,6 @@
             return winlimits;
         }
 
-        public Result BlockUnblockPlayers(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var outputParams = db.GetOuputParams();
-                return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
-            }
-        }
-
         public IList<PlayerWinLimitHistory> GetWinLimitHistories(ICriteria criteria)
         {
             IList<PlayerWinLimitHistory> entities = new List<PlayerWinLimitHistory>();
@@ -58,6 +47,17 @@
             }
 
             return entities;
+        }
+
+        public Result UnblockPlayer(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputParams = db.GetOuputParams();
+                return new Result((int)outputParams["errcode"], outputParams["errmsg"].ToString());
+            }
         }
 
         private WinLimitModel ToWinLimitModel(IDataReader reader)
@@ -80,25 +80,22 @@
                     Name = Converter.ToString2(reader["ProductName"])
                 },
                 WinLimit = Converter.ToDecimal(reader["WinLimit"]),
-                BlockedWinningAmount = Converter.ToDecimal(reader["BlockedWinningAmount"]),
                 TotalWinningAmount = Converter.ToDecimal(reader["TotalWinningAmount"]),
                 BlockedTime = Converter.ToDateTime(reader["BlockedTime"]),
-                BlockedByUsername = Converter.ToString2(reader["BlockedByUsername"]),
                 IsNotified = Converter.ToBool(reader["IsNotified"]),
-                IsModified = Converter.ToBool(reader["IsModified"])
+                IsBlocked = Converter.ToBool(reader["IsBlocked"]),
+                WinlostDate = Converter.ToDateTime(reader["WinlostDate"])
             };
         }
 
         private PlayerWinLimitHistory ToPlayerWinLimitHistory(IDataReader reader)
         {
-            bool isBlocked = Converter.ToBool(reader["IsBlocked"]);
             return new PlayerWinLimitHistory
             {
                 Date = Converter.ToDateTime(reader["Date"]),
                 WinLimit = Converter.ToDecimal(reader["WinLimit"]),
-                BlockedWinningAmount = isBlocked ? Converter.ToDecimal(reader["BlockedWinAmt"]) : (decimal?)null,
                 TotalWinningAmount = Converter.ToDecimal(reader["TotalWinAmt"]),
-                IsBlocked = isBlocked,
+                Action = Converter.ToString2(reader["Action"]),
                 ChangedBy = Converter.ToString2(reader["ChangedBy"])
             };
         }

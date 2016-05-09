@@ -138,9 +138,6 @@
   <data name="Blocked" xml:space="preserve">
     <value>Blocked</value>
   </data>
-  <data name="BlockedTime" xml:space="preserve">
-    <value>Blocked Time</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -216,17 +213,11 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status</value>
-  </data>
   <data name="Submit" xml:space="preserve">
     <value>Submit</value>
   </data>
   <data name="Unblocked" xml:space="preserve">
     <value>Unblocked</value>
-  </data>
-  <data name="Unblock_Accounts" xml:space="preserve">
-    <value>Unblock account(s)</value>
   </data>
   <data name="UnsetGlobalWinLimitError" xml:space="preserve">
     <value>The Win Limit on Keno of {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href="{1}"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
@@ -243,12 +234,6 @@
   <data name="WinLimitMonitor" xml:space="preserve">
     <value>Win Limit Monitor</value>
   </data>
-  <data name="WinLimitMonitor_ChooseOneAccountToUnblock" xml:space="preserve">
-    <value>At least one 'Blocked' Member account must be unchecked.</value>
-  </data>
-  <data name="WinLimitMonitor_ConfirmUnblockAccounts" xml:space="preserve">
-    <value>Are you sure you want to &lt;b&gt;Unblock&lt;/b&gt; these players per these games?</value>
-  </data>
   <data name="WinLimitMonitor_UnblockAccountsSuccess" xml:space="preserve">
     <value>Unblock Successfully</value>
   </data>
@@ -258,17 +243,8 @@
   <data name="WinLimitUnlimited" xml:space="preserve">
     <value>Win Limit = 0: Unlimited.</value>
   </data>
-  <data name="UnblockedTime" xml:space="preserve">
-    <value>Unblocked Time</value>
-  </data>
-  <data name="Block_Accounts" xml:space="preserve">
-    <value>Block account(s)</value>
-  </data>
   <data name="WinLimitMonitor_BlockAccountsSuccess" xml:space="preserve">
     <value>Block Successfully</value>
-  </data>
-  <data name="WinLimitMonitor_ConfirmBlockAccounts" xml:space="preserve">
-    <value>Are you sure you want to &lt;b&gt;Block&lt;/b&gt; these players per these games?</value>
   </data>
   <data name="MessageGoToCurrencySettingPage" xml:space="preserve">
     <value>The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
@@ -276,38 +252,11 @@
   <data name="NoMoreGameToSetPlayerWinLimit" xml:space="preserve">
     <value>There is no more games to set Player Win Limit</value>
   </data>
-  <data name="WinLimitMonitor_ChooseOneAccountToBlock" xml:space="preserve">
-    <value>At least one 'Unblocked' Member account must be checked.</value>
-  </data>
-  <data name="BlockedBy" xml:space="preserve">
-    <value>Blocked By</value>
-  </data>
-  <data name="BlockedWinningAmount" xml:space="preserve">
-    <value>Blocked Winning Amount</value>
-  </data>
-  <data name="LastBlockedTime" xml:space="preserve">
-    <value>Last Blocked Time</value>
-  </data>
-  <data name="LastUnblockedTime" xml:space="preserve">
-    <value>Last Unblocked Time</value>
-  </data>
-  <data name="TodayWinningAmount" xml:space="preserve">
-    <value>Today Winning Amount</value>
-  </data>
-  <data name="TotalWinningAmount" xml:space="preserve">
-    <value>Total Winning Amount</value>
-  </data>
-  <data name="UnblockedBy" xml:space="preserve">
-    <value>Unlocked By</value>
-  </data>
   <data name="ViewHistory" xml:space="preserve">
     <value>View History</value>
   </data>
   <data name="WinLimit" xml:space="preserve">
     <value>Win Limit</value>
-  </data>
-  <data name="ChangedBy" xml:space="preserve">
-    <value>Changed By</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -318,22 +267,28 @@
   <data name="WinLimitHistoryTitle" xml:space="preserve">
     <value>Win Limit History - {0} - {1}</value>
   </data>
-  <data name="BlockedWinningAmountHint" xml:space="preserve">
-    <value>Blocked Winning Amount: It's Winning Amount that member has been blocked.</value>
-  </data>
-  <data name="TotalWinningAmountHint" xml:space="preserve">
-    <value>Total Winning Amount: It's total Winning Amount of day until the blocked time.</value>
-  </data>
   <data name="System" xml:space="preserve">
     <value>System</value>
-  </data>
-  <data name="TodayWinningAmountHint" xml:space="preserve">
-    <value>Today Winning Amount: It's Winning Amount of member on current day.</value>
   </data>
   <data name="ReachedLimitTime" xml:space="preserve">
     <value>Reached Limit Time</value>
   </data>
   <data name="WinningAmount" xml:space="preserve">
     <value>Winning Amount</value>
+  </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ProceededBy" xml:space="preserve">
+    <value>Proceeded By</value>
+  </data>
+  <data name="UnblockPlayerConfirm" xml:space="preserve">
+    <value>Are you sure you want to UnBlock player {0} on {1} product?</value>
   </data>
 </root>

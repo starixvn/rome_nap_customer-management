@@ -11,5 +11,7 @@
         IList<WinLimitModel> GetWinLimits(GetWinLimitMonitorCriteria criteria);
 
         IList<PlayerWinLimitHistory> GetWinLimitHistories(ICriteria criteria);
+
+        Result UnblockPlayer(ICriteria criteria);
     }
 }

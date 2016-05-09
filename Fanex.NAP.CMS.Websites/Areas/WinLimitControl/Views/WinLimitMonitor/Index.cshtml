@@ -1,7 +1,9 @@
-﻿@{
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@{
     ViewBag.Title = WinLimitControlLabels.WinLimitMonitor;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var hostPermission = (bool)ViewBag.HostPermission;
+    var today = DateTime.Today;
 }
 @section Head
 {
@@ -18,13 +20,16 @@
 {
     <div class="filter-form">
         <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+        </div>
+        <div class="filter-row">
             <div class="lbl-field col_3">
                 <label for="txtUsername">@WinLimitControlLabels.Username</label>
             </div>
             <div class="edit-field col_7">
                 @Html.TextBox("username", string.Empty, new { maxlength = "100", placeholder = WinLimitControlLabels.All, autocomplete = "off" })
             </div>
-            <div class="lbl-field col_2">
+            <div class="lbl-field col_3">
                 <label>@WinLimitControlLabels.Game</label>
             </div>
             <div class="edit-field col_8">
@@ -57,37 +62,25 @@
 {
     <script type="text/javascript">
         window.rootUrl = '@Url.Content("~")';
-        window.hostPermission = @(hostPermission ? 1 : 0);
+        var hostPermission = @(hostPermission ? 1 : 0);
+        var currentDate = "@today.ToShortFormatedDateWithSlash()";
+        var minDate = "@today.AddMonths(-3).ToShortFormatedDateWithSlash()";
         var winLimitControlLabels = {
+            FromDate: '@WinLimitControlLabels.FromDate',
+            ToDate: '@WinLimitControlLabels.ToDate',
             Username: '@WinLimitControlLabels.Username',
             Currency: '@WinLimitControlLabels.Currency',
             Game: '@WinLimitControlLabels.Game',
             WinLimit: '@WinLimitControlLabels.WinLimit',
-            BlockedWinningAmount:'@WinLimitControlLabels.BlockedWinningAmount',
-            TotalWinningAmount:'@WinLimitControlLabels.TotalWinningAmount',
             WinningAmount:'@WinLimitControlLabels.WinningAmount',
             ReachedLimitTime:'@WinLimitControlLabels.ReachedLimitTime',
-            BlockedTime:'@WinLimitControlLabels.BlockedTime',
-            UnblockedTime:'@WinLimitControlLabels.UnblockedTime',
             PercentageUsed:'@WinLimitControlLabels.PercentageUsed',
-            Blocked:'@WinLimitControlLabels.Blocked',
-            BlockedBy:'@WinLimitControlLabels.BlockedBy',
-            TodayWinningAmount:'@WinLimitControlLabels.TodayWinningAmount',
-            LastBlockedTime:'@WinLimitControlLabels.LastBlockedTime',
-            LastUnblockedTime:'@WinLimitControlLabels.LastUnblockedTime',
-            UnblockedBy: '@WinLimitControlLabels.UnblockedBy',
+            Blocked: '@WinLimitControlLabels.Blocked',
             ViewHistory: '@WinLimitControlLabels.ViewHistory',
             Date: '@WinLimitControlLabels.Date',
-            Status: '@WinLimitControlLabels.Status',
-            ChangedBy: '@WinLimitControlLabels.ChangedBy',
             WinLimitHistoryTitle: '@WinLimitControlLabels.WinLimitHistoryTitle',
             NoData: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData',
-            WinLimitMonitor_ChooseOneAccountToUnblock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToUnblock)",
-            WinLimitMonitor_ConfirmUnblockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmUnblockAccounts)",
-            Block_Accounts: '@WinLimitControlLabels.Block_Accounts',
-            Unblock_Accounts: '@WinLimitControlLabels.Unblock_Accounts',
-            WinLimitMonitor_ChooseOneAccountToBlock: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ChooseOneAccountToBlock)",
-            WinLimitMonitor_ConfirmBlockAccounts: "@Html.Raw(WinLimitControlLabels.WinLimitMonitor_ConfirmBlockAccounts)",
+            UnblockPlayerConfirm: '@WinLimitControlLabels.UnblockPlayerConfirm'
         };
 
         var alertSound = document.getElementById("alert-audio"); 

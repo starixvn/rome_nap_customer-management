@@ -240,7 +240,9 @@
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
@@ -674,7 +676,6 @@
     <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Shared\_MonitorNotes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
     <Content Include="Areas\WinLimitControl\Views\Web.config" />
     <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />

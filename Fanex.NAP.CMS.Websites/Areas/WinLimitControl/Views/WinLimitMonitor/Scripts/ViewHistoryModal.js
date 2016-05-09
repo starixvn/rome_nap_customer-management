@@ -19,7 +19,7 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
 
         var resultsLength = results ? results.length : 0;
         if (resultsLength === 0) {
-            bodyRows.push('<tr><td colspan="8" class="nodata">');
+            bodyRows.push('<tr><td colspan="7" class="nodata">');
             bodyRows.push(winLimitControlLabels.NoData);
             bodyRows.push('</td></tr>');
         }
@@ -47,10 +47,6 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         row.push(formatNumber(history.WinLimit));
         row.push('</td>');
 
-//        row.push('<td class="align-right">');
-//        row.push(formatNumber(history.BlockedWinningAmount));
-//        row.push('</td>');
-
         row.push('<td class="align-right">');
         row.push(formatNumber(history.TotalWinningAmount));
         row.push('</td>');
@@ -59,13 +55,13 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         row.push(getPercentageUsedBox(history.PercentageUsed));
         row.push('</td>');
 
-//        row.push('<td class="align-left">');
-//        row.push(history.Status);
-//        row.push('</td>');
+        row.push('<td class="align-center">');
+        row.push(history.Action);
+        row.push('</td>');
 
-//        row.push('<td class="align-left">');
-//        row.push(history.ChangedByDisplay);
-//        row.push('</td></tr>');
+        row.push('<td class="align-left">');
+        row.push(history.ChangedByDisplay);
+        row.push('</td></tr>');
         return row.join('');
     }
 

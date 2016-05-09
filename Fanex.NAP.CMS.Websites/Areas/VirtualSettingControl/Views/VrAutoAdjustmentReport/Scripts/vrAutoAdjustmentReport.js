@@ -184,40 +184,42 @@ Array.prototype.collect = function (collector) {
             { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
         ].concat(months);
 
-        function bodyMapFunc(item, index) {
+        function bodyMapFunc(page, pageSize) {
+            return function (item, index) {
 
-            var winlossRow = item.MarginViewModels.map(getWinlossCell);
+                var winlossRow = item.MarginViewModels.map(getWinlossCell);
 
-            var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
+                var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
 
-            var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
+                var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
 
-            var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover };
+                var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover };
 
-            var marginRow = item.MarginViewModels.map(getMarginCell);
+                var marginRow = item.MarginViewModels.map(getMarginCell);
 
-            var avgMargin = { Name: 'colAvg', Value: item.AvgPerformance.Margin };
+                var avgMargin = { Name: 'colAvg', Value: item.AvgPerformance.Margin };
 
-            var column = {
-                Columns: [
-                    { Name: 'colRowNum', Value: index + 1, MergeRowNumber: 3 },
-                    { Name: 'colUsername', Value: item.Username, MergeRowNumber: 3 },
-                    { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 3 },
-                    { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 3 },
-                    { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 3 }
-                ].concat([avgWinloss], winlossRow)
+                var column = {
+                    Columns: [
+                        { Name: 'colRowNum', Value: page * pageSize + index + 1, MergeRowNumber: 3 },
+                        { Name: 'colUsername', Value: item.Username, MergeRowNumber: 3 },
+                        { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 3 },
+                        { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 3 },
+                        { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 3 }
+                    ].concat([avgWinloss], winlossRow)
+                };
+
+                var turnoverCol = {
+                    Columns: [avgTurnover].concat(turnoverRow)
+                };
+
+                var marginCol = {
+                    Columns: [avgMargin].concat(marginRow)
+                };
+
+                return [column, turnoverCol, marginCol];
             };
-
-            var turnoverCol = {
-                Columns: [avgTurnover].concat(turnoverRow)
-            };
-
-            var marginCol = {
-                Columns: [avgMargin].concat(marginRow)
-            };
-
-            return [column, turnoverCol, marginCol];
-        };
+        }
 
         var gridOptions = {
             fullWidth: true,
@@ -237,7 +239,7 @@ Array.prototype.collect = function (collector) {
                 showDetail: true
             },
             columns: columnHeaders,
-            bodyRows: data.Reports.slice(0, 50).collect(bodyMapFunc)
+            bodyRows: data.Reports.slice(0, 50).collect(bodyMapFunc(0, 50))
         };
 
         function onPageChangedHandler(index, pageSize) {
@@ -251,16 +253,17 @@ Array.prototype.collect = function (collector) {
             //};
 
             //CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
+            pageSize = parseInt(pageSize);
+            index = parseInt(index);
             gridOptions.pagerOption.currentPage = index;
             gridOptions.pagerOption.itemsPerPage = pageSize;
             gridOptions.pagerOption.totalItem = data.Reports.length;
 
-            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc);
+            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
 
             $vrAdjustmentReportGrid.fanexGrid(gridOptions);
             //});
         };
-
 
         $vrAdjustmentReportGrid.removeClass('display-none').fanexGrid(gridOptions);
 

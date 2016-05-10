@@ -30,7 +30,7 @@
                 @Html.TextBox("username", string.Empty, new { maxlength = "100", placeholder = WinLimitControlLabels.All, autocomplete = "off" })
             </div>
             <div class="lbl-field col_3">
-                <label>@WinLimitControlLabels.Game</label>
+                <label>@WinLimitControlLabels.Product</label>
             </div>
             <div class="edit-field col_8">
                 @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })

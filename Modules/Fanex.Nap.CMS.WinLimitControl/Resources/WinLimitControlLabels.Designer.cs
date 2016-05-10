@@ -394,6 +394,15 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reached Limit Time.
         /// </summary>
         public static string ReachedLimitTime {

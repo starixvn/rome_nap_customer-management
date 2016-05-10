@@ -700,7 +700,9 @@
     </Content>
     <Content Include="Web.backupMNL.config" />
     <Content Include="Web.AppSettings.sit.config" />
-    <Content Include="Web.ConnectionString.sit.config" />
+    <Content Include="Web.ConnectionString.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.sit.config" />
   </ItemGroup>
   <ItemGroup />

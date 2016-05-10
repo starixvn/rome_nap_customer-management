@@ -291,4 +291,7 @@
   <data name="UnblockPlayerConfirm" xml:space="preserve">
     <value>Are you sure you want to UnBlock player {0} on {1} product?</value>
   </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
 </root>

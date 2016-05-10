@@ -16,7 +16,6 @@
 
   <Function Name="Win Limit Control">
     <Setting Key="NAP_WinLimit_CurrencySettingSel" SpName="NAP_WinLimit_CurrencySettingSel" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
-
     <Setting Key="NAP_WinLimit_GameSel" SpName="NAP_WinLimit_GameSel_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_Game_Unblock" SpName="NAP_WinLimit_Game_Unblock_xtest" DbName="DBTXN.bodb02.bodbAdminNet"></Setting>
   </Function>

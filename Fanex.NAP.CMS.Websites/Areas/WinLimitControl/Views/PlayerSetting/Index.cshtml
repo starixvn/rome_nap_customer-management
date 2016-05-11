@@ -29,8 +29,8 @@
             <div class="edit-field col_6">
                 @Html.DropDownList("currency", (IEnumerable<SelectListItem>)ViewBag.Currencies, new { @class = "combobox-autocomplete width-100" })
             </div>
-            <div class="lbl-field col_2">
-                <label>@WinLimitControlLabels.Game</label>
+            <div class="lbl-field col_3">
+                <label>@WinLimitControlLabels.Product</label>
             </div>
             <div class="edit-field col_8">
                 @Html.DropDownList("game", (IEnumerable<SelectListItem>)ViewBag.Games, new { @class = "combobox-autocomplete width-140" })
@@ -62,7 +62,7 @@
             AddPlayer: '@WinLimitControlLabels.AddPlayer',
             Username: '@WinLimitControlLabels.Username',
             Currency: '@WinLimitControlLabels.Currency',
-            Game: '@WinLimitControlLabels.Game',
+            Product: '@WinLimitControlLabels.Product',
             PlayerWinLimit: '@WinLimitControlLabels.PlayerWinLimit',
             CurrencyWinLimit: '@WinLimitControlLabels.CurrencyWinLimit',
             Delete: '@WinLimitControlLabels.Delete',

@@ -41,7 +41,7 @@ CMS, CMSConstants, keyboardManager, numeral */
             { HeaderText: '#', Width: 50, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: winLimitControlLabels.Username, Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left', Sort: true },
             { HeaderText: winLimitControlLabels.Currency, Width: 120, Name: 'colCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: winLimitControlLabels.Game, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: winLimitControlLabels.Product, Width: 200, Name: 'colGame', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: winLimitControlLabels.PlayerWinLimit, Width: 200, Name: 'colPlayerWinLimit', HeaderAlign: 'center', CellAlign: 'right' },
             { HeaderText: winLimitControlLabels.CurrencyWinLimit, Width: 200, Name: 'colCurrencyWinLimit', HeaderAlign: 'center', CellAlign: 'right' }
         ];

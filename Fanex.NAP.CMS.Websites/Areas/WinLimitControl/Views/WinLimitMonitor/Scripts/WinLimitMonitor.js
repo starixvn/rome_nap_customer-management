@@ -63,7 +63,7 @@ camelcase: false */
 			{ HeaderText: "#", Width: 40, Name: "colNumber", HeaderAlign: "center", CellAlign: "center" },
 			{ HeaderText: winLimitControlLabels.Username, Width: 200, Name: "colUsername", HeaderAlign: "center", CellAlign: "left" },
 			{ HeaderText: winLimitControlLabels.Currency, Width: 75, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-			{ HeaderText: winLimitControlLabels.Game, Width: 200, Name: "colGame", HeaderAlign: "center", CellAlign: "left" },
+			{ HeaderText: winLimitControlLabels.Product, Width: 200, Name: "colGame", HeaderAlign: "center", CellAlign: "left" },
 			{ HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: "colWinLimit", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
 			{ HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: "colTotalWinningAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
 			{ HeaderText: winLimitControlLabels.ReachedLimitTime, Width: 145, Name: "colBlockedTime", HeaderAlign: "center", CellAlign: "center" },

@@ -313,7 +313,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Win Limit of product on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target=&quot;blank&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
+        ///   Looks up a localized string similar to The Win Limit of products on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target=&quot;blank&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
         /// </summary>
         public static string MessageGoToCurrencySettingPage {
             get {

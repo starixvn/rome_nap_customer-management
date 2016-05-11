@@ -171,6 +171,7 @@
     <EmbeddedResource Include="Resources\WinLimitControlLabels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>WinLimitControlLabels.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

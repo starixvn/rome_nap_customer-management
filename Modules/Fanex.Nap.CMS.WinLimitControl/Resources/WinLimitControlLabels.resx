@@ -247,7 +247,7 @@
     <value>Block Successfully</value>
   </data>
   <data name="MessageGoToCurrencySettingPage" xml:space="preserve">
-    <value>The Win Limit of product on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+    <value>The Win Limit of products on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
   </data>
   <data name="NoMoreGameToSetPlayerWinLimit" xml:space="preserve">
     <value>There is no more products to set Player Win Limit</value>

@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddCurrencyExistingError" xml:space="preserve">
-    <value>There are existing game setting of this currency: {0}.</value>
+    <value>There are existing product setting of this currency: {0}.</value>
   </data>
   <data name="AddGameExistingError" xml:space="preserve">
-    <value>There are existing currency setting of this game: {0}.</value>
+    <value>There are existing currency setting of this product: {0}.</value>
   </data>
   <data name="AddPlayer" xml:space="preserve">
     <value>Add Player</value>
@@ -202,7 +202,7 @@
     <value>Player Win Limit</value>
   </data>
   <data name="PlayerWinLimitConfirmDelete" xml:space="preserve">
-    <value>Are you sure you want to remove setting of this customer for this game?</value>
+    <value>Are you sure you want to remove setting of this customer for this product?</value>
   </data>
   <data name="PlayerWinLimitManagement" xml:space="preserve">
     <value>Player Win Limit Management</value>
@@ -247,10 +247,10 @@
     <value>Block Successfully</value>
   </data>
   <data name="MessageGoToCurrencySettingPage" xml:space="preserve">
-    <value>The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
+    <value>The Win Limit of product on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target="blank"&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first.</value>
   </data>
   <data name="NoMoreGameToSetPlayerWinLimit" xml:space="preserve">
-    <value>There is no more games to set Player Win Limit</value>
+    <value>There is no more products to set Player Win Limit</value>
   </data>
   <data name="ViewHistory" xml:space="preserve">
     <value>View History</value>

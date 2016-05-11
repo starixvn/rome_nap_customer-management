@@ -70,7 +70,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are existing game setting of this currency: {0}..
+        ///   Looks up a localized string similar to There are existing product setting of this currency: {0}..
         /// </summary>
         public static string AddCurrencyExistingError {
             get {
@@ -79,7 +79,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are existing currency setting of this game: {0}..
+        ///   Looks up a localized string similar to There are existing currency setting of this product: {0}..
         /// </summary>
         public static string AddGameExistingError {
             get {
@@ -313,7 +313,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Win Limit of games on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target=&quot;blank&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
+        ///   Looks up a localized string similar to The Win Limit of product on {0} currency has not been configured yet.&lt;br/&gt;Please go to &lt;a href={1} target=&quot;blank&quot;&gt;Setting Page&lt;/a&gt; to do the setting for {0} currency first..
         /// </summary>
         public static string MessageGoToCurrencySettingPage {
             get {
@@ -331,7 +331,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no more games to set Player Win Limit.
+        ///   Looks up a localized string similar to There is no more products to set Player Win Limit.
         /// </summary>
         public static string NoMoreGameToSetPlayerWinLimit {
             get {
@@ -367,7 +367,7 @@ namespace Fanex.Nap.CMS.WinLimitControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to remove setting of this customer for this game?.
+        ///   Looks up a localized string similar to Are you sure you want to remove setting of this customer for this product?.
         /// </summary>
         public static string PlayerWinLimitConfirmDelete {
             get {

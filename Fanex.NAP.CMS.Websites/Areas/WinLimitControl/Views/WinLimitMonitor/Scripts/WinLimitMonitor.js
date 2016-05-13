@@ -49,7 +49,7 @@ camelcase: false */
 		return {
 			FromDate: dateRange.FromDate,
 			ToDate: dateRange.ToDate,
-			Username: $username.val().trim(),
+			Username: $.trim($username.val()),
 			Game: $game.val(),
 			Currency: $currency.val(),
 			Status: $status.val(),

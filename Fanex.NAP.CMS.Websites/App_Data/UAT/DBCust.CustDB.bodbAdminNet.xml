@@ -1,14 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Win Limit Control">
-    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-
-    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel_xtest" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel_xtest" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
   </Function>
 </Functions>

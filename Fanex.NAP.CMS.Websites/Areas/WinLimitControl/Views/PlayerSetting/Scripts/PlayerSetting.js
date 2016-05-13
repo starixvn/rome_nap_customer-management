@@ -299,7 +299,7 @@ CMS, CMSConstants, keyboardManager, numeral */
 
     function getSearchParams() {
         return {
-            Username: $username.val().trim(),
+            Username: $.trim($username.val()),
             Currency: $currency.val(),
             Game: $game.val(),
             PageIndex: 0,

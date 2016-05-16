@@ -1,6 +1,5 @@
 ﻿/* global currentDate, initFromDate, CMS, CMSConstants, numeral */
 
-
 Array.prototype.collect = function (collector) {
     var result = [];
     for (var i = 0; i < this.length; ++i) {
@@ -156,7 +155,6 @@ Array.prototype.collect = function (collector) {
     };
 
     var renderVrAdjustmentReportGrid = function (data) {
-
         function getMonthHeaders(month, index) {
             return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber };
         };
@@ -186,7 +184,6 @@ Array.prototype.collect = function (collector) {
 
         function bodyMapFunc(page, pageSize) {
             return function (item, index) {
-
                 var winlossRow = item.MarginViewModels.map(getWinlossCell);
 
                 var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
@@ -233,7 +230,7 @@ Array.prototype.collect = function (collector) {
             pagerOption: {
                 currentPage: 0,
                 itemsPerPage: 50,
-                itemsPerPageArray: [50, 100, 200],
+                itemsPerPageArray: [50, 100, 200, 300, 500],
                 totalItem: data.Reports.length,
                 pagerSelectCallBack: onPageChangedHandler,
                 showDetail: true

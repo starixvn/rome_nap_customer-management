@@ -74,7 +74,9 @@ camelcase: false */
 
 		return {
 			showTitle: true,
-			titleInfo: {},
+			titleInfo: {
+				showButtonsWhenNoData: true
+			},
 			fullWidth: true,
 			fullHeight: true,
 			showDistinctRow: false,
@@ -322,9 +324,10 @@ camelcase: false */
 			gridOptions.bodyRows = buildBodyRows(result.Winlimits);
 			$freegrid.removeClass("display-none").fanexGrid(gridOptions);
 
+			bindAutoRefreshEvents();
+			bindSoundEvent();
+
 			if (result.TotalRow > 0) {
-				bindAutoRefreshEvents();
-				bindSoundEvent();
 				bindUnblockEvent();
 				bindViewHistory();
 			}

@@ -22,7 +22,8 @@
         {
             get
             {
-                return WinLimit == 0 ? 100 : (TotalWinningAmount / WinLimit * 100);
+                var roundTotalWinningAmount = Math.Round(TotalWinningAmount, 2);
+                return WinLimit == 0 ? 100 : (roundTotalWinningAmount / WinLimit * 100);
             }
         }
 

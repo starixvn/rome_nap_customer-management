@@ -14,6 +14,14 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         return numeral(number).format(CMSConstants.NumberFormat.IntNumber);
     }
 
+    function formatDecimal(number) {
+    	if (number === null) {
+    		return 'N/A';
+    	}
+
+    	return numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+    }
+
     function buildBodyRows(results) {
         var bodyRows = [];
 
@@ -48,7 +56,7 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
         row.push('</td>');
 
         row.push('<td class="align-right">');
-        row.push(formatNumber(history.TotalWinningAmount));
+        row.push(formatDecimal(history.TotalWinningAmount));
         row.push('</td>');
 
         row.push('<td class="align-center">');
@@ -66,7 +74,7 @@ function ViewHistoryModal(divContainer, closedPopupFunc) {
     }
 
     function getPercentageUsedBox(percentageUsed) {
-        var displayPercent = parseInt(percentageUsed);
+        var displayPercent = percentageUsed.toFixed(2);
         if (displayPercent >= maxPercentageUsed) {
             return '<div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + displayPercent + '%</div>';
         }

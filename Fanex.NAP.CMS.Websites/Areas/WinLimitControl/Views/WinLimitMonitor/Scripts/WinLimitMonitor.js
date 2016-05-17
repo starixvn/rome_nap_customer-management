@@ -65,7 +65,7 @@ camelcase: false */
 			{ HeaderText: winLimitControlLabels.Currency, Width: 75, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
 			{ HeaderText: winLimitControlLabels.Product, Width: 200, Name: "colGame", HeaderAlign: "center", CellAlign: "left" },
 			{ HeaderText: winLimitControlLabels.WinLimit, Width: 100, Name: "colWinLimit", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
-			{ HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: "colTotalWinningAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.IntNumber },
+			{ HeaderText: winLimitControlLabels.WinningAmount, Width: 100, Name: "colTotalWinningAmount", HeaderAlign: "center", CellAlign: "right", FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
 			{ HeaderText: winLimitControlLabels.ReachedLimitTime, Width: 145, Name: "colBlockedTime", HeaderAlign: "center", CellAlign: "center" },
 			{ HeaderText: winLimitControlLabels.PercentageUsed, Width: 110, Name: "colPercentageUsed", HeaderAlign: "center", CellAlign: "center" },
 			{ HeaderText: winLimitControlLabels.Blocked, Width: 50, Name: "colBlocked", HeaderAlign: "center", CellAlign: "center" },
@@ -241,7 +241,7 @@ camelcase: false */
 	}
 
 	function getPercentageUsedBox(percentageUsed) {
-		var displayPercent = parseInt(percentageUsed);
+		var displayPercent = percentageUsed.toFixed(2);
 		if (displayPercent >= maxPercentageUsed) {
 			return '<div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + displayPercent + '%</div>';
 		}

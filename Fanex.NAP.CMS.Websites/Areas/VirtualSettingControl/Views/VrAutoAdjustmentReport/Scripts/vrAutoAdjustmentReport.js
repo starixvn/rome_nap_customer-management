@@ -184,7 +184,7 @@ Array.prototype.collect = function (collector) {
             { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Figure', Width: 100, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right' }
         ].concat(months);
 
         function bodyMapFunc(page, pageSize) {
@@ -205,7 +205,7 @@ Array.prototype.collect = function (collector) {
                 var betRow = item.MarginViewModels.map(getBetCell);
                 var betTotal = { Name: 'colAvg', Value: item.AvgPerformance.BetCount };
 
-                var css = (index & 1) == 1 ? 'freegrid freegrid-even td' : '';
+                var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
                 var column = {
                     Columns: [
@@ -248,14 +248,13 @@ Array.prototype.collect = function (collector) {
             customPager: true,
             pagerOption: {
                 currentPage: 0,
-                itemsPerPage: 50,
-                itemsPerPageArray: [50, 100, 200, 300, 500],
+                itemsPerPage: CMS.pageSize,
+                itemsPerPageArray: CMS.pagerRanges,
                 totalItem: data.Reports.length,
-                pagerSelectCallBack: onPageChangedHandler,
-                showDetail: true
+                pagerSelectCallBack: onPageChangedHandler
             },
             columns: columnHeaders,
-            bodyRows: data.Reports.slice(0, 50).collect(bodyMapFunc(0, 50)),
+            bodyRows: data.Reports.slice(0, CMS.pageSize).collect(bodyMapFunc(0, CMS.pageSize))
         };
 
         function onPageChangedHandler(index, pageSize) {

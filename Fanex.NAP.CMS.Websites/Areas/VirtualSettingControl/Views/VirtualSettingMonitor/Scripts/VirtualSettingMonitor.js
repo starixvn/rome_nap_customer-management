@@ -57,7 +57,7 @@ var VirtualSettingMonitor = function () {
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
-            showHighlightRow: true,
+            showHighlightRow: false,
             headerColumnHeight: 35,
             gridExpandHeight: 180,
             columns: [],
@@ -156,13 +156,13 @@ var VirtualSettingMonitor = function () {
 
             bodyRows.push({
                 Columns: [
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Margin },
-                    { Name: 'colMonth1', Value: customer.CustMargin[0].Margin },
-                    { Name: 'colMonth2', Value: customer.CustMargin[1].Margin },
-                    { Name: 'colMonth3', Value: customer.CustMargin[2].Margin },
-                    { Name: 'colMonth4', Value: customer.CustMargin[3].Margin },
-                    { Name: 'colMonth5', Value: customer.CustMargin[4].Margin },
-                    { Name: 'colMonth6', Value: customer.CustMargin[5].Margin }
+                    { Name: 'colAvg', Value: customer.CustMargin[6].Margin + "%" },
+                    { Name: 'colMonth1', Value: customer.CustMargin[0].Margin + "%" },
+                    { Name: 'colMonth2', Value: customer.CustMargin[1].Margin + "%" },
+                    { Name: 'colMonth3', Value: customer.CustMargin[2].Margin + "%" },
+                    { Name: 'colMonth4', Value: customer.CustMargin[3].Margin + "%" },
+                    { Name: 'colMonth5', Value: customer.CustMargin[4].Margin + "%" },
+                    { Name: 'colMonth6', Value: customer.CustMargin[5].Margin + "%" }
                 ],
                 CssClass: cssClass
             });

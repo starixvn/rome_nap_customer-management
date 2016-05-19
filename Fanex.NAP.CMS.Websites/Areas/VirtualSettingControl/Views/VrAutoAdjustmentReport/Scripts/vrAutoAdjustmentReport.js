@@ -179,12 +179,12 @@ Array.prototype.collect = function (collector) {
 
         var columnHeaders = [
             { HeaderText: '#', Width: 50, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 100, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: 'Updated Date', Width: 100, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: 'Updated Date', Width: 80, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Figure', Width: 100, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
+            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center' },
         ].concat(months);
 
         function bodyMapFunc(page, pageSize) {

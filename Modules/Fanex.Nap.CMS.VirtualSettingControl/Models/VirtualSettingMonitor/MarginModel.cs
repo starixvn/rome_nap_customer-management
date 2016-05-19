@@ -4,6 +4,8 @@
 
     public class MarginModel
     {
+        public int BetCount { get;  set; }
+
         public MarginModel(int month, int year)
         {
             Month = month;
@@ -17,6 +19,15 @@
             Month = month;
             Year = year;
             Winloss = winloss;
+            Turnover = turnover;
+        }
+
+        public MarginModel(int month, int year, decimal turnover, decimal winloss, int betCount)
+        {
+            Month = month;
+            Year = year;
+            Winloss = winloss;
+            BetCount = betCount;
             Turnover = turnover;
         }
 

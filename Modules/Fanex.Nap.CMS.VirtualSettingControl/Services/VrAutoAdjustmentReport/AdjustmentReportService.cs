@@ -27,7 +27,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 ReportToDate = reportDate
             };
 
-            return GetData<VirtualSettingModel>(criteria).ToLookup(m => m.CustId, m => new MarginModel(m.ReportMonth, m.ReportYear, m.Turnover, m.Winloss));
+            return GetData<VirtualSettingModel>(criteria).ToLookup(m => m.CustId, m => new MarginModel(m.ReportMonth, m.ReportYear, m.Turnover, m.Winloss, m.BetCount));
         }
     }
 }

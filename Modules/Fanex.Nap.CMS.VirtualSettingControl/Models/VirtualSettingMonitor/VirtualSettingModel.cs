@@ -14,6 +14,8 @@
 
         public decimal Margin { get; set; }
 
+        public int BetCount { get; set; }
+
         public int ReportYear { get; set; }
 
         public int ReportMonth { get; set; }

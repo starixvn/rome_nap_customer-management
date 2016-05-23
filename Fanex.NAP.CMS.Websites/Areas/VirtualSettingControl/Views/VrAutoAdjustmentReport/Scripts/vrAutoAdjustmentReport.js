@@ -156,15 +156,15 @@ Array.prototype.collect = function (collector) {
 
     var renderVrAdjustmentReportGrid = function (data) {
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber };
+            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
         };
 
         function getWinlossCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Winloss };
+            return { Name: 'colMonth' + index, Value: marginItem.Winloss.toFixed(2) };
         }
 
         function getTurnoverCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Turnover };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover.toFixed(2) };
         }
 
         function getMarginCell(marginItem, index) {
@@ -172,7 +172,7 @@ Array.prototype.collect = function (collector) {
         }
 
         function getBetCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.BetCount };
+            return { Name: 'colMonth' + index, Value: marginItem.BetCount.toFixed(0) };
         }
 
         var months = data.Months.map(getMonthHeaders);
@@ -191,11 +191,11 @@ Array.prototype.collect = function (collector) {
             return function (item, index) {
                 var winlossHeader = { Name: 'colFigure', Value: "Winloss" };
                 var winlossRow = item.MarginViewModels.map(getWinlossCell);
-                var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
+                var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss.toFixed(2) };
 
                 var turnoverHeader = { Name: 'colFigure', Value: "Turnover" };
                 var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
-                var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover };
+                var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover.toFixed(2) };
 
                 var marginHeader = { Name: 'colFigure', Value: "Margin" };
                 var marginRow = item.MarginViewModels.map(getMarginCell);
@@ -203,7 +203,7 @@ Array.prototype.collect = function (collector) {
 
                 var betcountHeader = { Name: 'colFigure', Value: "Bet Count" };
                 var betRow = item.MarginViewModels.map(getBetCell);
-                var betTotal = { Name: 'colAvg', Value: item.AvgPerformance.BetCount };
+                var betTotal = { Name: 'colAvg', Value: item.AvgPerformance.BetCount.toFixed(0) };
 
                 var css = (index & 1) == 1 ? 'freegrid-even' : '';
 

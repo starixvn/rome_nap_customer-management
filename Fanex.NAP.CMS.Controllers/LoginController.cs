@@ -9,6 +9,9 @@
 //   <change who="Jason.Ly" date="2014.7.29">Separate Login action into some private functions.</change>
 // </history>
 
+using Fanex.NAP.Core.Service.Impl;
+using ONEbook.UM.Models;
+
 namespace Fanex.NAP.CMS.Controllers
 {
     using System;
@@ -23,7 +26,6 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Model;
-    using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Auth;
@@ -43,7 +45,7 @@ namespace Fanex.NAP.CMS.Controllers
         private ISiteService _siteService;
         private IMenuItemService _menuItemService;
         private ICurrentSession _currentSession;
-        private IMaintenanceService _maintenanceService;
+        private ONEbook.UM.Services.IMaintenanceService _maintenanceService;
         private HashAlgorithm _hashAlgorithm;
 
         #endregion Members
@@ -61,14 +63,14 @@ namespace Fanex.NAP.CMS.Controllers
             ISiteService siteService,
             IMenuItemService menuItemService,
             ICurrentSession currentSession,
-            IMaintenanceService maintenanceService)
+           ONEbook.UM.Services.IMaintenanceService maintenanceService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
             this._siteService = siteService ?? new SiteService();
             this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
-            this._maintenanceService = maintenanceService ?? new MaintenanceService();
+            this._maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
             _hashAlgorithm = new SHA256Managed();
         }
 
@@ -111,7 +113,7 @@ namespace Fanex.NAP.CMS.Controllers
                 return Redirect(NapSettings.Settings.HubUrl);
             }
 
-            if (_maintenanceService.GetDowntimeInfo().IsDowntime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
                 return RedirectToAction("Offline");
             }
@@ -204,29 +206,27 @@ namespace Fanex.NAP.CMS.Controllers
         [HttpPost]
         public ActionResult ReCheckLogin()
         {
-            var maintenanceInfo = this._maintenanceService.GetDowntimeInfo();
-
-            if (maintenanceInfo.IsDowntime)
+            if (_maintenanceService.IsUnderMaintenance())
             {
-                return this.Json("-1");
+                return Json("-1");
             }
 
             // check if not nap hub
-            if (this.SiteId != 0)
+            if (SiteId != 0)
             {
-                var siteStatus = this._siteService.GetStatusById(this.SiteId);
+                var siteStatus = _siteService.GetStatusById(SiteId);
 
                 if (!siteStatus)
                 {
-                    return this.Json("1");
+                    return Json("1");
                 }
             }
 
             UserReCheckInUserCriteria criteria = new UserReCheckInUserCriteria();
-            criteria.OnUserId = Convert.ToInt32(this._currentSession.OnUserId);
-            this._userService.ReUserCheckIn(ref criteria);
+            criteria.OnUserId = Convert.ToInt32(_currentSession.OnUserId);
+            _userService.ReUserCheckIn(ref criteria);
 
-            return this.Json(criteria.IsKickedOut ? "1" : "0");
+            return Json(criteria.IsKickedOut ? "1" : "0");
         }
 
         /// <summary>
@@ -235,17 +235,16 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>Return status of maintenance.</returns>
         public ActionResult Offline()
         {
-            var downTime = this._maintenanceService.GetDowntimeInfo();
-
-            if (!downTime.IsDowntime)
+            if (!_maintenanceService.IsUnderMaintenance())
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
 
+            UnderMaintenanceTime downTime = _maintenanceService.GetUnderMaintenanceTime();
             ViewBag.UmtFrom = downTime.From;
             ViewBag.UmtTo = downTime.To;
 
-            return this.View();
+            return View();
         }
 
         #endregion Other Actions

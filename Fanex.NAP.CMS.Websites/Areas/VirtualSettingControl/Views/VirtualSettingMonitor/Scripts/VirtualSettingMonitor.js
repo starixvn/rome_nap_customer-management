@@ -84,13 +84,14 @@ var VirtualSettingMonitor = function () {
                     { HeaderText: '#', Width: 40, Name: 'colNumber', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: "Member", Width: 200, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
                     { HeaderText: "Virtual Rate", Width: 75, Name: 'colRate', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.IntNumber },
-                    { HeaderText: "AVG. Performance", Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[0], Width: 100, Name: 'colMonth1', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[1], Width: 100, Name: 'colMonth2', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[2], Width: 100, Name: 'colMonth3', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[3], Width: 100, Name: 'colMonth4', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[4], Width: 100, Name: 'colMonth5', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
-                    { HeaderText: result.MonthList[5], Width: 100, Name: 'colMonth6', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber }
+                    { HeaderText: "Figure", Width: 100, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: "AVG. Performance", Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[0], Width: 100, Name: 'colMonth1', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[1], Width: 100, Name: 'colMonth2', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[2], Width: 100, Name: 'colMonth3', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[3], Width: 100, Name: 'colMonth4', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[4], Width: 100, Name: 'colMonth5', HeaderAlign: 'center', CellAlign: 'right',  },
+                    { HeaderText: result.MonthList[5], Width: 100, Name: 'colMonth6', HeaderAlign: 'center', CellAlign: 'right',  }
                 ];
 
             gridOptions.bodyRows = buildBodyRows();
@@ -127,42 +128,59 @@ var VirtualSettingMonitor = function () {
 
             bodyRows.push({
                 Columns: [
-                    { Name: 'colNumber', Value: (i + 1), MergeRowNumber: 3 },
-                    { Name: 'colUsername', Value: renderCustomerDashboardRow(customer.Username, customer.CustId), MergeRowNumber: 3 },
-                    { Name: 'colRate', Value: customer.VRate, MergeRowNumber: 3 },
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Turnover },
-                    { Name: 'colMonth1', Value: customer.CustMargin[0].Turnover },
-                    { Name: 'colMonth2', Value: customer.CustMargin[1].Turnover },
-                    { Name: 'colMonth3', Value: customer.CustMargin[2].Turnover },
-                    { Name: 'colMonth4', Value: customer.CustMargin[3].Turnover },
-                    { Name: 'colMonth5', Value: customer.CustMargin[4].Turnover },
-                    { Name: 'colMonth6', Value: customer.CustMargin[5].Turnover }
+                    { Name: 'colNumber', Value: (i + 1), MergeRowNumber: 4 },
+                    { Name: 'colUsername', Value: renderCustomerDashboardRow(customer.Username, customer.CustId), MergeRowNumber: 4 },
+                    { Name: 'colRate', Value: customer.VRate, MergeRowNumber: 4 },
+                    { Name: 'colFigure', Value: "Turnover" },
+                    { Name: 'colAvg', Value: customer.CustMargin[6].Turnover.toFixed(2) },
+                    { Name: 'colMonth1', Value: customer.CustMargin[0].Turnover.toFixed(2) },
+                    { Name: 'colMonth2', Value: customer.CustMargin[1].Turnover.toFixed(2) },
+                    { Name: 'colMonth3', Value: customer.CustMargin[2].Turnover.toFixed(2) },
+                    { Name: 'colMonth4', Value: customer.CustMargin[3].Turnover.toFixed(2) },
+                    { Name: 'colMonth5', Value: customer.CustMargin[4].Turnover.toFixed(2) },
+                    { Name: 'colMonth6', Value: customer.CustMargin[5].Turnover.toFixed(2) }
                 ],
                 CssClass: cssClass
             });
 
             bodyRows.push({
                 Columns: [
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Winloss },
-                    { Name: 'colMonth1', Value: customer.CustMargin[0].Winloss },
-                    { Name: 'colMonth2', Value: customer.CustMargin[1].Winloss },
-                    { Name: 'colMonth3', Value: customer.CustMargin[2].Winloss },
-                    { Name: 'colMonth4', Value: customer.CustMargin[3].Winloss },
-                    { Name: 'colMonth5', Value: customer.CustMargin[4].Winloss },
-                    { Name: 'colMonth6', Value: customer.CustMargin[5].Winloss }
+                    { Name: 'colFigure', Value: "Winloss" },
+                    { Name: 'colAvg', Value: customer.CustMargin[6].Winloss.toFixed(2) },
+                    { Name: 'colMonth1', Value: customer.CustMargin[0].Winloss.toFixed(2) },
+                    { Name: 'colMonth2', Value: customer.CustMargin[1].Winloss.toFixed(2) },
+                    { Name: 'colMonth3', Value: customer.CustMargin[2].Winloss.toFixed(2) },
+                    { Name: 'colMonth4', Value: customer.CustMargin[3].Winloss.toFixed(2) },
+                    { Name: 'colMonth5', Value: customer.CustMargin[4].Winloss.toFixed(2) },
+                    { Name: 'colMonth6', Value: customer.CustMargin[5].Winloss.toFixed(2) }
                 ],
                 CssClass: cssClass
             });
 
             bodyRows.push({
                 Columns: [
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Margin + "%" },
-                    { Name: 'colMonth1', Value: customer.CustMargin[0].Margin + "%" },
-                    { Name: 'colMonth2', Value: customer.CustMargin[1].Margin + "%" },
-                    { Name: 'colMonth3', Value: customer.CustMargin[2].Margin + "%" },
-                    { Name: 'colMonth4', Value: customer.CustMargin[3].Margin + "%" },
-                    { Name: 'colMonth5', Value: customer.CustMargin[4].Margin + "%" },
-                    { Name: 'colMonth6', Value: customer.CustMargin[5].Margin + "%" }
+                    { Name: 'colFigure', Value: "Margin" },
+                    { Name: 'colAvg', Value: customer.CustMargin[6].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth1', Value: customer.CustMargin[0].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth2', Value: customer.CustMargin[1].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth3', Value: customer.CustMargin[2].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth4', Value: customer.CustMargin[3].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth5', Value: customer.CustMargin[4].Margin.toFixed(2) + "%" },
+                    { Name: 'colMonth6', Value: customer.CustMargin[5].Margin.toFixed(2) + "%" }
+                ],
+                CssClass: cssClass
+            });
+
+            bodyRows.push({
+                Columns: [
+                    { Name: 'colFigure', Value: "BetCount" },
+                    { Name: 'colAvg', Value: customer.CustMargin[6].BetCount },
+                    { Name: 'colMonth1', Value: customer.CustMargin[0].BetCount },
+                    { Name: 'colMonth2', Value: customer.CustMargin[1].BetCount },
+                    { Name: 'colMonth3', Value: customer.CustMargin[2].BetCount },
+                    { Name: 'colMonth4', Value: customer.CustMargin[3].BetCount },
+                    { Name: 'colMonth5', Value: customer.CustMargin[4].BetCount },
+                    { Name: 'colMonth6', Value: customer.CustMargin[5].BetCount }
                 ],
                 CssClass: cssClass
             });

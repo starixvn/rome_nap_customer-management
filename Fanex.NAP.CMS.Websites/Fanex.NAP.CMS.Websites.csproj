@@ -654,23 +654,21 @@
 	<Content Include="Web.ConnectionString.sit.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-	<Content Include="Web.prod.config">
-      <DependentUpon>Web.config</DependentUpon>
+	<Content Include="Web.prod.config">    
     </Content>
-	<Content Include="Web.uat.config">
-      <DependentUpon>Web.config</DependentUpon>
+	<Content Include="Web.uat.config">   
     </Content>
-	<Content Include="Web.sit.config">
-      <DependentUpon>Web.config</DependentUpon>
+	<Content Include="Web.sit.config">  
     </Content>
 	<Content Include="Web.local.config">
-      <DependentUpon>Web.config</DependentUpon>
     </Content>
 	<Content Include="Web.master.config">
-      <DependentUpon>Web.config</DependentUpon>
     </Content>
 	<Content Include="Web.backupMNL.config">
-      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.master.config">
+    </Content>
+	<Content Include="Web.backupMNL.config">
     </Content>
   </ItemGroup>
   <ItemGroup>

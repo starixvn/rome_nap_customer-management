@@ -632,6 +632,9 @@
     <Content Include="Web.AppSettings.backupMNL.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.sit.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
@@ -645,14 +648,30 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.prod.config" />
-    <Content Include="Web.uat.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.ConnectionString.local.config">
+	 <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.local.config" />
+	<Content Include="Web.ConnectionString.sit.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </Content>
+	<Content Include="Web.prod.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.uat.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.sit.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.local.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.master.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+	<Content Include="Web.backupMNL.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Index.cshtml" />
@@ -694,16 +713,7 @@
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Content\Themes\PopupCustomStyle.less" />
-    <Content Include="Web.master.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.backupMNL.config" />
-    <Content Include="Web.AppSettings.sit.config" />
-    <Content Include="Web.ConnectionString.sit.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.sit.config" />
+    <Content Include="Content\Themes\PopupCustomStyle.less" />    
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

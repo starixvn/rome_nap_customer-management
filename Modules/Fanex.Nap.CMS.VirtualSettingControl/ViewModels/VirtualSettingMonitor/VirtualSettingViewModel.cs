@@ -5,11 +5,11 @@
 
     public class VirtualSettingViewModel
     {
-        public List<CustomerVirtualSettingModel> CustMargin { get; set; }
-
         public VirtualSettingViewModel()
         {
             CustMargin = new List<CustomerVirtualSettingModel>();
         }
+
+        public List<CustomerVirtualSettingModel> CustMargin { get; set; }        
     }
 }

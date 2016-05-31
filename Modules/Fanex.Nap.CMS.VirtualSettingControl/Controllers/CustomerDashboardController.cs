@@ -17,9 +17,9 @@
 
     public class CustomerDashboardController : BaseController
     {
-        private readonly string[] MonthsName = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+        private readonly string[] _monthsName = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
-        private readonly int[] Months = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+        private readonly int[] _months = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
         private readonly ISettingService _settingService;
 
@@ -80,10 +80,10 @@
         {
             for (var i = 23; i >= 0; i--)
             {
-                if (Months[i] == currentMonth)
+                if (_months[i] == currentMonth)
                 {
                     int[] result = new int[monthRange];
-                    Array.Copy(Months, i - monthRange + 1, result, 0, monthRange);
+                    Array.Copy(_months, i - monthRange + 1, result, 0, monthRange);
                     return result;
                 }
             }
@@ -97,7 +97,7 @@
 
             for (var i = 0; i < months.Length; i++)
             {
-                monthListName[i] = MonthsName[months[i] - 1];
+                monthListName[i] = _monthsName[months[i] - 1];
             }
 
             return monthListName;

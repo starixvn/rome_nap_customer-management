@@ -72,9 +72,10 @@
 
 Fanex.NAP.CMS.Site.v12.suo
 
-*.cache
+*.[Cc]ache
 
 [Dd]ebug
 [Rr]elease
 /.idea/
 .vs/Fanex.NAP.CMS/v14/.suo
+packages/

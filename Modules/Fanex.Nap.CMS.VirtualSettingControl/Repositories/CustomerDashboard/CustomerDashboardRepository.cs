@@ -46,7 +46,6 @@
                 Winloss = Convert.ToDecimal(data.Rows[0]["winloss"].ToString()),
                 Margin = Convert.ToDecimal(data.Rows[0]["margin"].ToString()),
                 BetCount = Convert.ToInt32(data.Rows[0]["betcount"].ToString())
-
             };
 
             return generalInfo;
@@ -55,7 +54,7 @@
         public IEnumerable<BetCountByMonth> ParseBetCount(DataTable data)
         {
             var betcounts = new List<BetCountByMonth>();
-            foreach(DataRow dataRow in data.Rows)
+            foreach (DataRow dataRow in data.Rows)
             {
                 betcounts.Add(new BetCountByMonth
                 {

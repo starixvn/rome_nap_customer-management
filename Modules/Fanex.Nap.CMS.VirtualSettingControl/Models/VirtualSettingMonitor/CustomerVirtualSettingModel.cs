@@ -4,17 +4,17 @@
 
     public class CustomerVirtualSettingModel
     {
+        public CustomerVirtualSettingModel()
+        {
+            CustMargin = new List<MarginModel>();
+        }
+
         public int CustId { get; set; }
 
         public string Username { get; set; }
 
         public decimal VRate { get; set; }
 
-        public List<MarginModel> CustMargin { get; set; }
-
-        public CustomerVirtualSettingModel()
-        {
-            CustMargin = new List<MarginModel>();
-        }
+        public List<MarginModel> CustMargin { get; set; }        
     }
 }

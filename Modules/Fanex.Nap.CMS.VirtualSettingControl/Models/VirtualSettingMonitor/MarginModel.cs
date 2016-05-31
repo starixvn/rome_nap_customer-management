@@ -4,22 +4,6 @@
 
     public class MarginModel
     {
-        public int Year { get; set; }
-
-        public int Month { get; set; }
-
-        public decimal Winloss { get; set; }
-
-        public decimal Turnover { get; set; }
-
-        public decimal Margin 
-        {
-            get
-            {
-                return Turnover == 0 ? 0 : Math.Round(Winloss / Turnover * 100, 2);
-            }
-        }
-
         public MarginModel(int month, int year)
         {
             Month = month;
@@ -35,5 +19,21 @@
             Winloss = winloss;
             Turnover = turnover;
         }
+
+        public int Year { get; set; }
+
+        public int Month { get; set; }
+
+        public decimal Winloss { get; set; }
+
+        public decimal Turnover { get; set; }
+
+        public decimal Margin 
+        {
+            get
+            {
+                return Turnover == 0 ? 0 : Math.Round(Winloss / Turnover * 100, 2);
+            }
+        }        
     }
 }

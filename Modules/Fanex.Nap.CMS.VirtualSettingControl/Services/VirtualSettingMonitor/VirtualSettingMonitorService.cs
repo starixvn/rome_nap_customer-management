@@ -1,13 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitor
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VirtualSettingMonitor;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class VirtualSettingMonitorService : ServiceBase, IVirtualSettingMonitorService
     {
@@ -51,11 +51,11 @@
                     ? custMarginCategorized.Single(l => l.Key == cust.CustId).Select(l => l).ToList()
                     : new List<VirtualSettingModel>();
                 var newCust = new CustomerVirtualSettingModel
-                    {
-                        CustId = cust.CustId,
-                        Username = cust.Username,
-                        VRate = cust.VRate
-                    };
+                {
+                    CustId = cust.CustId,
+                    Username = cust.Username,
+                    VRate = cust.VRate
+                };
 
                 var currentYear = DateTime.Now.Year;
 
@@ -68,14 +68,15 @@
 
                     var custSetting = FindVirtualSetting(listCustMargin, month);
                     newCust.CustMargin.Add(custSetting != null
-                            ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
+                            ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss, custSetting.BetCount)
                             : new MarginModel(month, currentYear));
                 }
 
                 // The Average Performance record
                 var sumTurnover = newCust.CustMargin.Sum(l => l.Turnover);
                 var sumWinloss = newCust.CustMargin.Sum(l => l.Winloss);
-                newCust.CustMargin.Add(new MarginModel(0, 0, sumTurnover, sumWinloss));
+                var sumBet = newCust.CustMargin.Sum(l => l.BetCount);
+                newCust.CustMargin.Add(new MarginModel(0, 0, sumTurnover, sumWinloss, sumBet));
 
                 virtualSettingViewModel.CustMargin.Add(newCust);
             }
@@ -115,6 +116,6 @@
                 : null;
         }
 
-        #endregion
+        #endregion Utilities
     }
 }

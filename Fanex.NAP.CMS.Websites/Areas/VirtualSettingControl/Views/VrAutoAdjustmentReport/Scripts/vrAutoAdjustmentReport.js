@@ -1,6 +1,5 @@
 ﻿/* global currentDate, initFromDate, CMS, CMSConstants, numeral */
 
-
 Array.prototype.collect = function (collector) {
     var result = [];
     for (var i = 0; i < this.length; ++i) {
@@ -156,88 +155,106 @@ Array.prototype.collect = function (collector) {
     };
 
     var renderVrAdjustmentReportGrid = function (data) {
-
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber };
+            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
         };
 
         function getWinlossCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Winloss };
+            return { Name: 'colMonth' + index, Value: marginItem.Winloss.toFixed(2) };
         }
 
         function getTurnoverCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Turnover };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover.toFixed(2) };
         }
 
         function getMarginCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Margin };
+            return { Name: 'colMonth' + index, Value: (marginItem.Margin * 100).toFixed(2) + "%" };
+        }
+
+        function getBetCell(marginItem, index) {
+            return { Name: 'colMonth' + index, Value: marginItem.BetCount.toFixed(0) };
         }
 
         var months = data.Months.map(getMonthHeaders);
 
         var columnHeaders = [
             { HeaderText: '#', Width: 50, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 100, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: 'Updated Date', Width: 100, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Old Rate', Width: 100, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'New Rate', Width: 100, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber },
+            { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: 'Updated Date', Width: 80, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Figure', Width: 100, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right' }
         ].concat(months);
 
-        function bodyMapFunc(item, index) {
+        function bodyMapFunc(page, pageSize) {
+            return function (item, index) {
+                var winlossHeader = { Name: 'colFigure', Value: "Winloss" };
+                var winlossRow = item.MarginViewModels.map(getWinlossCell);
+                var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss.toFixed(2) };
 
-            var winlossRow = item.MarginViewModels.map(getWinlossCell);
+                var turnoverHeader = { Name: 'colFigure', Value: "Turnover" };
+                var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
+                var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover.toFixed(2) };
 
-            var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss };
+                var marginHeader = { Name: 'colFigure', Value: "Margin" };
+                var marginRow = item.MarginViewModels.map(getMarginCell);
+                var avgMargin = { Name: 'colAvg', Value: (item.AvgPerformance.Margin * 100).toFixed(2) + "%" };
 
-            var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
+                var betcountHeader = { Name: 'colFigure', Value: "Bet Count" };
+                var betRow = item.MarginViewModels.map(getBetCell);
+                var betTotal = { Name: 'colAvg', Value: item.AvgPerformance.BetCount.toFixed(0) };
 
-            var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover };
+                var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
-            var marginRow = item.MarginViewModels.map(getMarginCell);
+                var column = {
+                    Columns: [
+                        { Name: 'colRowNum', Value: page * pageSize + index + 1, MergeRowNumber: 4 },
+                        { Name: 'colUsername', Value: item.Username, MergeRowNumber: 4 },
+                        { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 4 },
+                        { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 4 },
+                        { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 4 }
+                    ].concat([turnoverHeader, avgTurnover], turnoverRow),
+                    CssClass: css
+                };
 
-            var avgMargin = { Name: 'colAvg', Value: item.AvgPerformance.Margin };
+                var winlossCol = {
+                    Columns: [winlossHeader, avgWinloss].concat(winlossRow),
+                    CssClass: css
+                };
 
-            var column = {
-                Columns: [
-                    { Name: 'colRowNum', Value: index + 1, MergeRowNumber: 3 },
-                    { Name: 'colUsername', Value: item.Username, MergeRowNumber: 3 },
-                    { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 3 },
-                    { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 3 },
-                    { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 3 }
-                ].concat([avgWinloss], winlossRow)
+                var marginCol = {
+                    Columns: [marginHeader, avgMargin].concat(marginRow),
+                    CssClass: css
+                };
+
+                var betCol = {
+                    Columns: [betcountHeader, betTotal].concat(betRow),
+                    CssClass: css
+                };
+
+                return [column, winlossCol, marginCol, betCol];
             };
-
-            var turnoverCol = {
-                Columns: [avgTurnover].concat(turnoverRow)
-            };
-
-            var marginCol = {
-                Columns: [avgMargin].concat(marginRow)
-            };
-
-            return [column, turnoverCol, marginCol];
-        };
+        }
 
         var gridOptions = {
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
-            showHighlightRow: true,
+            showHighlightRow: false,
             headerColumnHeight: 35,
             gridExpandHeight: 180,
             showPager: true,
             customPager: true,
             pagerOption: {
                 currentPage: 0,
-                itemsPerPage: 50,
-                itemsPerPageArray: [50, 100, 200],
+                itemsPerPage: CMS.pageSize,
+                itemsPerPageArray: CMS.pagerRanges,
                 totalItem: data.Reports.length,
-                pagerSelectCallBack: onPageChangedHandler,
-                showDetail: true
+                pagerSelectCallBack: onPageChangedHandler
             },
             columns: columnHeaders,
-            bodyRows: data.Reports.slice(0, 50).collect(bodyMapFunc)
+            bodyRows: data.Reports.slice(0, CMS.pageSize).collect(bodyMapFunc(0, CMS.pageSize))
         };
 
         function onPageChangedHandler(index, pageSize) {
@@ -251,16 +268,17 @@ Array.prototype.collect = function (collector) {
             //};
 
             //CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
+            pageSize = parseInt(pageSize);
+            index = parseInt(index);
             gridOptions.pagerOption.currentPage = index;
             gridOptions.pagerOption.itemsPerPage = pageSize;
             gridOptions.pagerOption.totalItem = data.Reports.length;
 
-            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc);
+            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
 
             $vrAdjustmentReportGrid.fanexGrid(gridOptions);
             //});
         };
-
 
         $vrAdjustmentReportGrid.removeClass('display-none').fanexGrid(gridOptions);
 

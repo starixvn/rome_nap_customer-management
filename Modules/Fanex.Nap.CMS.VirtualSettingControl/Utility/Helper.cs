@@ -27,10 +27,10 @@
             if (dict.ContainsKey(key))
             {
                 var model = dict[key];
-                return new MarginViewModel(model.Winloss, model.Turnover);
+                return new MarginViewModel(model.Winloss, model.Turnover, model.BetCount);
             }
 
-            return new MarginViewModel(0, 0);
+            return new MarginViewModel(0, 0, 0);
         }
 
         public static IEnumerable<T> MapDate<T>(DateTime initDate, int range, Func<DateTime, T> mapFunc)

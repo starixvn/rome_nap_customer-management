@@ -78,11 +78,11 @@
         {
             _marginViewModels = Helper.GetMarginViewModels(DateTime.Today, 6, history);
 
-            _avgPerformance =
-                _marginViewModels.Aggregate(
-                    new Tuple<decimal, decimal>(0, 0),
-                    (t, m) => new Tuple<decimal, decimal>(t.Item1 + m.Winloss, t.Item2 + m.Turnover),
-                    t => new MarginViewModel(t.Item1, t.Item2));
+            var totalWinloss = history.Sum(m => m.Winloss);
+            var totalTurnover = history.Sum(m => m.Turnover);
+            var totalBetCount = history.Sum(m => m.BetCount);
+
+            _avgPerformance = new MarginViewModel(totalWinloss, totalTurnover, totalBetCount);
         }
     }
 }

@@ -20,6 +20,17 @@
             Turnover = turnover;
         }
 
+        public MarginModel(int month, int year, decimal turnover, decimal winloss, int betCount)
+        {
+            Month = month;
+            Year = year;
+            Winloss = winloss;
+            BetCount = betCount;
+            Turnover = turnover;
+        }
+
+        public int BetCount { get; set; }
+
         public int Year { get; set; }
 
         public int Month { get; set; }

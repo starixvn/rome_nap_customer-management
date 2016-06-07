@@ -9,17 +9,19 @@
 
 namespace Fanex.NAP.CMS.Services.Interfaces
 {
-    using System.Collections.Generic;
     using Fanex.NAP.CMS.Criteria.LossMonitor;
     using Fanex.NAP.CMS.ViewModels.LossMonitor;
+    using Fanex.NAP.Framework.Command;
+    using System.Collections.Generic;
 
     public interface ILossMonitorService
     {
-        /// <summary>
-        /// Gets the list of SMA who reached the max loss limit.
-        /// </summary>
-        /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of SMALossGroup objects.</returns>
         List<SMALossGroup> GetSMALoss(GetSMALossMonitorListCriteria criteria);
+
+        ICommandResult InsertSMA(InsertSMACriteria criteria);
+
+        ICommandResult DeleteSMA(DeleteSMACriteria criteria);
+
+        ICommandResult UpdateMaxLoss(UpdateSMAMaxLossCriteria criteria);
     }
 }

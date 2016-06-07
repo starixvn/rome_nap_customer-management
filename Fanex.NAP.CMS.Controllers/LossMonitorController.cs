@@ -18,6 +18,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.CMS.ViewModels.LossMonitor;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Loss monitor controller.
@@ -58,6 +59,50 @@ namespace Fanex.NAP.CMS.Controllers
             List<SMALossGroup> result = this._lossMonitorService.GetSMALoss(new GetSMALossMonitorListCriteria());
 
             return Json(result);
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult AddSMA(string username, int maxLoss)
+        {
+            var result = this._lossMonitorService.InsertSMA(new InsertSMACriteria
+            {
+                Username = username,
+                MaxLoss = maxLoss,
+                Creator = this.CurrentSession.UserId,
+                IP = this.CurrentContext.IP
+            });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult DeleteSMA(int custId)
+        {
+            var result = this._lossMonitorService.DeleteSMA(new DeleteSMACriteria
+            {
+                CustId = custId,
+                Creator = this.CurrentSession.UserId,
+                IP = this.CurrentContext.IP
+            });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult EditMaxLoss(int custId, int maxLoss)
+        {
+            var result = this._lossMonitorService.UpdateMaxLoss(new UpdateSMAMaxLossCriteria
+            {
+                CustId = custId,
+                MaxLoss = maxLoss,
+                Creator = this.CurrentSession.UserId,
+                IP = this.CurrentContext.IP
+            });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

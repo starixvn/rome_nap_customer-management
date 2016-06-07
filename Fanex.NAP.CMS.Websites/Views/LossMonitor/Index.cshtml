@@ -1,4 +1,12 @@
-﻿@{
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.NAP.Core.Business;
+@using Fanex.Nap.CMS.Infrastructure;
+@{
+    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.LossControl, Constant.Policy.Host);
+}
+
+@{
     ViewBag.Title = ViewLang.LossMonitor;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,12 +19,55 @@
     <div class="title">
         <div>
             <span class="curr">@ViewBag.Title</span>
+            <input id="btn-add" type="button" class="submit display-none btnAdd" value="@Labels.Add" />
         </div>
     </div>
 }
+
+<div id="div-result-message" class="inline-message">
+</div>
+
 <div id="divSMALossMonitorContainer" class="display-none content-grid">
     <div id="divSMALossMonitor" class="freegrid"></div>
 </div>
+
+<div id="divPopupContent" class="display-none">
+    <div id="divAddSMA" class="form expand-form">
+        <div id="div-result-add-message" class="inline-message">
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-100">
+                <label for="txt-username">
+                    SMA Name
+                </label>
+            </div>
+            <div class="edit-field">
+                <input id="txt-username" class="width-230 clearable" type="text" value="" name="txt-username"
+                       maxlength="30" data-val-required="Required field!" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-100">
+                <label for="txt-maxloss">
+                    Max Loss
+                </label>
+            </div>
+            <div class="edit-field">
+                <input id="txt-maxloss" class="width-230 clearable" type="text" value="" name="txt-maxloss"
+                       maxlength="13" data-val-required="Required field!" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field normal-label width-100">
+            </div>
+            <div class="edit-field">
+                <input id="btnSave" class="blue-button" type="button" value="Add">
+                <input id="btnCancel" class="red-button" type="button" value="Cancel">
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Foot
 {
     @Scripts.Render("~/scripts/lossMonitor")
@@ -31,6 +82,9 @@
             MaxLoss: '@ViewLang.MaxLoss',
             LossPercentage: '@ViewLang.LossPercentage',
             AutoRefresh: '@ViewLang.AutoRefresh'
+        };
+        var viewResources = {
+            hasHostPermission: @(hasHostPermission ? 0 : 1)
         };
     </script>
 }

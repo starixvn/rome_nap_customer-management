@@ -24,6 +24,7 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
         {
             if (rawData != null)
             {
+                this.CustId = rawData.CustId;
                 this.Username = rawData.Username;
                 this.Level = CacheRef.GetLevel(rawData.RoleID);
                 this.Currency = rawData.Currency;
@@ -34,6 +35,8 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
                 this.ChangedLevel = Converter.ToInt(rawData.Movement);
             }
         }
+
+        public int CustId { get; set; }
 
         public string Username { get; set; }
 

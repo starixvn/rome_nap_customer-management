@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------
 // <history>
 //   <change who="Jason.Ly" date="2014.5.23">Created</change>
+//   <change who="Aaron.Cao" date="2016.6.7">Added Insert, Update, Delete</change>
 // </history>
 
 namespace Fanex.NAP.CMS.Services.Implements
@@ -15,6 +16,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Models.LossMonitor;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.LossMonitor;
+    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Loss monitor service.
@@ -88,6 +90,21 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
 
             return result;
+        }
+
+        public ICommandResult InsertSMA(InsertSMACriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        public ICommandResult DeleteSMA(DeleteSMACriteria criteria)
+        {
+            return this.UpdateData(criteria);
+        }
+
+        public ICommandResult UpdateMaxLoss(UpdateSMAMaxLossCriteria criteria)
+        {
+            return this.UpdateData(criteria);
         }
     }
 }

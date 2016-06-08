@@ -20,6 +20,7 @@ var KeyboardManager = function () {
             UpArrow: 38,
             RightArrow: 39,
             DownArrow: 40,
+            Negative: 45,
             Delete: 46,
             Number_0: 48,
             Number_9: 57,

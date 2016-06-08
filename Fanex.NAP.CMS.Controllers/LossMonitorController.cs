@@ -62,7 +62,7 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
         public JsonResult AddSMA(string username, int maxLoss)
         {
             var result = this._lossMonitorService.InsertSMA(new InsertSMACriteria
@@ -77,7 +77,7 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
         public JsonResult DeleteSMA(int custId)
         {
             var result = this._lossMonitorService.DeleteSMA(new DeleteSMACriteria
@@ -91,7 +91,7 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
         public JsonResult EditMaxLoss(int custId, int maxLoss)
         {
             var result = this._lossMonitorService.UpdateMaxLoss(new UpdateSMAMaxLossCriteria

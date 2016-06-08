@@ -701,7 +701,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
-    <Content Include="Views\LossMonitor\AddSMAForm.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

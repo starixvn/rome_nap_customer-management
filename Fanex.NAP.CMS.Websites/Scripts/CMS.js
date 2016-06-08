@@ -414,6 +414,35 @@ var CMS = (function ($) {
 
             return true;
         },
+        forceNegativeNumberInput: function (e) {
+            var code = "";
+            if (e.which) {
+                code = e.which;
+            }
+            else if (e.keyCode) {
+                code = e.keyCode;
+            }
+
+            if (code === keyboardManager.Enums.KeyCode.End ||
+                code === keyboardManager.Enums.KeyCode.Home ||
+                code === keyboardManager.Enums.KeyCode.LeftArrow ||
+                code === keyboardManager.Enums.KeyCode.RightArrow ||
+                CMS.isCtrlCombine(e, code)) {
+                return true;
+            }
+
+            if ((code < keyboardManager.Enums.KeyCode.Number_0 || keyboardManager.Enums.KeyCode.Number_9 < code) &&
+                code !== keyboardManager.Enums.KeyCode.Backspace &&
+                code !== keyboardManager.Enums.KeyCode.Negative &&
+                code !== keyboardManager.Enums.KeyCode.Enter &&
+                code !== keyboardManager.Enums.KeyCode.None &&
+                (code !== keyboardManager.Enums.KeyCode.Delete || e.which) &&
+                code !== keyboardManager.Enums.KeyCode.Tab) {
+                return false;
+            }
+
+            return true;
+        },
         forceNumericInput: function (e, allowDot) {
             var code = e.which || e.keyCode;
             switch (code) {

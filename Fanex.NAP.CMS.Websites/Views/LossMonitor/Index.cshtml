@@ -3,7 +3,7 @@
 @using Fanex.NAP.Core.Business;
 @using Fanex.Nap.CMS.Infrastructure;
 @{
-    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.LossControl, Constant.Policy.Host);
+    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Host);
 }
 
 @{
@@ -84,7 +84,7 @@
             AutoRefresh: '@ViewLang.AutoRefresh'
         };
         var viewResources = {
-            hasHostPermission: @(hasHostPermission ? 0 : 1)
+            hasHostPermission: @(hasHostPermission ? 1 : 0)
         };
     </script>
 }

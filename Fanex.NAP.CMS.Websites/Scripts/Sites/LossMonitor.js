@@ -80,18 +80,21 @@ Fanex.CMS.LossMonitor = function () {
     };
 
     var bindEvents = function () {
-        domElements.textboxSMAName.keyup(function (event) {
-            if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
-                self.btnSearchClick();
+        if (viewResources.hasHostPermission)
+        {
+            domElements.textboxSMAName.keyup(function (event) {
+                if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
+                    self.btnSearchClick();
+                }
+            });
+
+            if (!viewResources.hasHostPermission) {
+                return;
             }
-        });
 
-        if (!viewResources.hasHostPermission) {
-            return;
+            domElements.btnAdd.unbind("click");
+            domElements.btnAdd.click(btnAddClick);
         }
-
-        domElements.btnAdd.unbind("click");
-        domElements.btnAdd.click(btnAddClick);
     };
 
     var btnAddClick = function () {
@@ -158,6 +161,7 @@ Fanex.CMS.LossMonitor = function () {
                       { HeaderText: labels.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center" }],
             gridExpandHeight: 110,
             showDistinctRow: false,
+            enableHiddenColumns: false,
             showTree: true,
             showTitle: true,
             titleInfo: {
@@ -202,9 +206,12 @@ Fanex.CMS.LossMonitor = function () {
                                   { Name: 'ColYesterdayBalance', Value: item.YesterdayBalance },
                                   { Name: 'ColTotalBalance', Value: item.TotalBalance },
                                   {
-                                      Name: 'ColMaxLoss', Value: maxLossFormat.format(item.CustId, item.Username,
+                                      Name: 'ColMaxLoss', Value: viewResources.hasHostPermission ? 
+                                          maxLossFormat.format(item.CustId, item.Username,
                                           numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
                                           numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
+                                          :
+                                          maxLossFormatNoHost.format(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
                                   },
                                   { Name: 'ColLossPercentage', Value: percentageCol },
                                   {
@@ -230,27 +237,35 @@ Fanex.CMS.LossMonitor = function () {
             });
         }
 
+        if (!viewResources.hasHostPermission)
+        {
+            gridOptions.hiddenColumns = [8];
+        }
+
         gridOptions.bodyRows = bodyData;
         domElements.divSMALossMonitor.fanexGrid(gridOptions);
         handleGridEvents();
     };
 
     var handleGridEvents = function () {
-        var editIcons = domElements.divSMALossMonitor.find(".edit-maxloss");
-        editIcons.on('click', function () {
-            var $link = $(this);
+        if (viewResources.hasHostPermission)
+        {
+            var editIcons = domElements.divSMALossMonitor.find(".edit-maxloss");
+            editIcons.on('click', function () {
+                var $link = $(this);
 
-            editMaxLoss($link);
-        });
+                editMaxLoss($link);
+            });
 
-        var deleteIcons = domElements.divSMALossMonitor.find(".ico-delete");
-        deleteIcons.on('click', function () {
-            var $link = $(this);
-            var custId = $link.attr('data-custid');
-            var username = $link.attr('data-username');
+            var deleteIcons = domElements.divSMALossMonitor.find(".ico-delete");
+            deleteIcons.on('click', function () {
+                var $link = $(this);
+                var custId = $link.attr('data-custid');
+                var username = $link.attr('data-username');
 
-            deleteSMA(username, custId);
-        });
+                deleteSMA(username, custId);
+            });
+        }
 
         domElements.divSMALossMonitorContainer.find('#divAutoRefresh').each(function () {
             domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport, true, false);
@@ -306,7 +321,7 @@ Fanex.CMS.LossMonitor = function () {
 
         textboxEdit.unbind("keypress");
         textboxEdit.keypress(function (e) {
-            var allowInput = CMS.forceNumberInput(e);
+            var allowInput = CMS.forceNegativeNumberInput(e);
             if (!allowInput) {
                 return false;
             }
@@ -318,6 +333,8 @@ Fanex.CMS.LossMonitor = function () {
         textboxEdit.keyup(function (e) {
             var textboxValue = $(this).val();
             var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
+
+            formatMaxLossGrid(textboxEdit);
 
             cachedData.maxLoss = maxLoss;
             cachedData.oldMaxLoss = oldMaxLoss;
@@ -345,6 +362,12 @@ Fanex.CMS.LossMonitor = function () {
                 CMS.showConfirmMessage(
                     "Are you sure you want to update max loss of " + cachedData.username + "?",
                     function () {
+                        if (isNaN(cachedData.maxLoss))
+                        {
+                            CMS.showInlineErrorMsg("Max Loss should be a negative number!", domElements.divResult);
+                            return;
+                        }
+
                         $.get(urls.EditMaxLoss, { custId: cachedData.custId, maxLoss: cachedData.maxLoss }).success(function (result) {
                             if (result.Code) {
                                 CMS.showInlineErrorMsg(result.Message, domElements.divResult);
@@ -361,20 +384,19 @@ Fanex.CMS.LossMonitor = function () {
                     });
                 return;
             }
-
-            formatMaxLoss(textboxEdit);
         });
 
         textboxEdit.on("paste", function (e) {
             setTimeout(function () {
-                formatMaxLoss(textboxEdit);
+                formatMaxLossGrid(textboxEdit);
             }, 100);
         });
     };
-    var formatMaxLoss = function (textboxEdit) {
+    var formatMaxLossGrid = function (textboxEdit) {
         var textboxValue = textboxEdit.val();
         var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
-        if (maxLoss.toString() === textboxValue.replace(/,/g, "")) {
+
+        if (!isNaN(maxLoss)) {
             textboxEdit.val(numeral(maxLoss).format(CMSConstants.NumberFormat.IntNumber));
         }
     };
@@ -391,7 +413,7 @@ Fanex.CMS.LossMonitor = function () {
         cachedData.username = username;
 
         CMS.showConfirmMessage(
-            "Are you sure you want to delete " + cachedData.username + "?",
+            "Are you sure you want to remove " + cachedData.username + "?",
             function () {
                 CMS.disableInput();
                 $.get(urls.DeleteSMA, { custId: cachedData.custId }).success(function (result) {
@@ -400,7 +422,7 @@ Fanex.CMS.LossMonitor = function () {
                         return;
                     }
 
-                    CMS.showInlineSuccessMsg("Deleted Max Loss successfully.", domElements.divResult, true);
+                    CMS.showInlineSuccessMsg("Removed Max Loss successfully.", domElements.divResult, true);
 
                     getSMALossReport();
                 });
@@ -414,7 +436,7 @@ Fanex.CMS.LossMonitor = function () {
 
         popupElements.txtMaxLoss.unbind("keypress");
         popupElements.txtMaxLoss.keypress(function (e) {
-            var allowInput = CMS.forceNumberInput(e);
+            var allowInput = CMS.forceNegativeNumberInput(e);
             if (!allowInput) {
                 return false;
             }
@@ -439,6 +461,13 @@ Fanex.CMS.LossMonitor = function () {
             maxLoss = parseFloat(maxLoss.replace(/,/g, ""));
 
             if (Validator.validateForm(popupElements.divForm, 'w')) {
+                if (isNaN(maxLoss))
+                {
+                    CMS.showInlineErrorMsg("Max Loss should be a negative number!", popupElements.divErrorSuccessMsg);
+                    return;
+                }
+
+
                 $.get(urls.AddSMA, { username: username, maxLoss: maxLoss }).success(function (result) {
                     if (result.IsSuccessful) {
                         CMS.showInlineSuccessMsg("Added SMA successfully.", popupElements.divErrorSuccessMsg, false, function () {
@@ -460,9 +489,9 @@ Fanex.CMS.LossMonitor = function () {
 
     var formatMaxLoss = function () {
         var textboxValue = popupElements.txtMaxLoss.val();
-        var maxTurnover = parseInt(textboxValue.replace(/,/g, ""));
-        if (maxTurnover.toString() === textboxValue.replace(/,/g, "")) {
-            popupElements.txtMaxLoss.val(numeral(maxTurnover).format(CMSConstants.NumberFormat.IntNumber));
+        var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
+        if (!isNaN(maxLoss)) {
+            popupElements.txtMaxLoss.val(numeral(maxLoss).format(CMSConstants.NumberFormat.IntNumber));
         }
     };
 

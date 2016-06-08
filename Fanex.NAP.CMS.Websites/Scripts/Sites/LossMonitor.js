@@ -360,11 +360,11 @@ Fanex.CMS.LossMonitor = function () {
                 cachedData.username = username;
 
                 CMS.showConfirmMessage(
-                    "Are you sure you want to update max loss of " + cachedData.username + "?",
+                    messages.UpdateMaxLossConfirm.format(cachedData.username, numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
                     function () {
                         if (isNaN(cachedData.maxLoss))
                         {
-                            CMS.showInlineErrorMsg("Max Loss should be a negative number!", domElements.divResult);
+                            CMS.showInlineErrorMsg(messages.MaxLossNeedNegative, domElements.divResult);
                             return;
                         }
 
@@ -374,7 +374,7 @@ Fanex.CMS.LossMonitor = function () {
                                 return;
                             }
 
-                            CMS.showInlineSuccessMsg("Updated Max Loss successfully.", domElements.divResult, true);
+                            CMS.showInlineSuccessMsg(messages.UpdateMaxLossSuccess, domElements.divResult, true);
 
                             cachedData.current.html(numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
                             var textboxEdit = cachedData.current.next();
@@ -413,16 +413,17 @@ Fanex.CMS.LossMonitor = function () {
         cachedData.username = username;
 
         CMS.showConfirmMessage(
-            "Are you sure you want to remove " + cachedData.username + "?",
+            messages.RemoveSMA.format(cachedData.username),
             function () {
                 CMS.disableInput();
                 $.get(urls.DeleteSMA, { custId: cachedData.custId }).success(function (result) {
                     if (result.Code) {
+                        CMS.enableInput();
                         CMS.showInlineErrorMsg(result.Message, domElements.divResult);
                         return;
                     }
 
-                    CMS.showInlineSuccessMsg("Removed Max Loss successfully.", domElements.divResult, true);
+                    CMS.showInlineSuccessMsg(messages.RemoveSMASuccess, domElements.divResult, true);
 
                     getSMALossReport();
                 });
@@ -430,6 +431,22 @@ Fanex.CMS.LossMonitor = function () {
     };
 
     var bindPopupEventhandlers = function () {
+        popupElements.divForm.unbind("keyup");
+        popupElements.divForm.keyup(function (e) {
+            var code = "";
+            if (e.which) {
+                code = e.which;
+            }
+            else if (e.keyCode) {
+                code = e.keyCode;
+            }
+
+            if (code === keyboardManager.Enums.KeyCode.Enter) {
+                addNewSMA();
+            }
+        });
+
+
         popupElements.txtMaxLoss.blur(function () {
             formatMaxLoss();
         });
@@ -456,35 +473,37 @@ Fanex.CMS.LossMonitor = function () {
         });
 
         popupElements.btnSave.click(function () {
-            var username = popupElements.txtUsername.val();
-            var maxLoss = popupElements.txtMaxLoss.val();
-            maxLoss = parseFloat(maxLoss.replace(/,/g, ""));
-
-            if (Validator.validateForm(popupElements.divForm, 'w')) {
-                if (isNaN(maxLoss))
-                {
-                    CMS.showInlineErrorMsg("Max Loss should be a negative number!", popupElements.divErrorSuccessMsg);
-                    return;
-                }
-
-
-                $.get(urls.AddSMA, { username: username, maxLoss: maxLoss }).success(function (result) {
-                    if (result.IsSuccessful) {
-                        CMS.showInlineSuccessMsg("Added SMA successfully.", popupElements.divErrorSuccessMsg, false, function () {
-                            setTimeout(CMS.closePopup, 3000);
-                        });
-                        disableRequestForm();
-                        getSMALossReport();
-                    } else {
-                        CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
-                    }
-                });
-            }
+            addNewSMA();
         });
 
         popupElements.btnCancel.click(function () {
             CMS.closePopup();
         });
+    };
+
+    var addNewSMA = function () {
+        var username = popupElements.txtUsername.val();
+        var maxLoss = popupElements.txtMaxLoss.val();
+        maxLoss = parseFloat(maxLoss.replace(/,/g, ""));
+
+        if (Validator.validateForm(popupElements.divForm, 'w')) {
+            if (isNaN(maxLoss)) {
+                CMS.showInlineErrorMsg(messages.MaxLossNeedNegative, popupElements.divErrorSuccessMsg);
+                return;
+            }
+
+            $.get(urls.AddSMA, { username: username, maxLoss: maxLoss }).success(function (result) {
+                if (result.IsSuccessful) {
+                    CMS.showInlineSuccessMsg(messages.AddSMASuccess, popupElements.divErrorSuccessMsg, false, function () {
+                        setTimeout(CMS.closePopup, 3000);
+                    });
+                    disableRequestForm();
+                    getSMALossReport();
+                } else {
+                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                }
+            });
+        }
     };
 
     var formatMaxLoss = function () {

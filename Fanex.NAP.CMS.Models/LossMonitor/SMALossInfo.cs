@@ -16,6 +16,8 @@ namespace Fanex.NAP.CMS.Models.LossMonitor
     {
         public byte LevelID { get; set; }
 
+        public int CustId { get; set; }
+
         public string Username { get; set; }
 
         public byte? RoleID { get; set; }

@@ -199,6 +199,7 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Content/Sites/lossMonitor.less");
 
             bundles.Add(new ScriptBundle("~/scripts/lossMonitor").Include(
+                "~/Scripts/Libs/Popup/dialogbox.js",
                 "~/Scripts/Sites/LossMonitor.js"));
         }
     }

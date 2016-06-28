@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="ManageSmartPuntersController.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="ManageSmartPuntersController.cs">
+// Copyright (c). All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>

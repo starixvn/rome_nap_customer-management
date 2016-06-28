@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="GotMatchTurnoverResult.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="GotMatchTurnoverResult.cs">
+// Copyright (c). All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 // <history>

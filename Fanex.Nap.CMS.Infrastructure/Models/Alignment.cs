@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="Alignment.cs" company="Nexcel Solutions Vietnam.">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Nap.CMS.Infrastructure.Models
+﻿namespace Fanex.Nap.CMS.Infrastructure.Models
 {
     /// <summary>
     /// TODO: Update summary.

@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="NpoiExcelExtensions.cs" company="Nexcel Solutions Vietnam.">
-// TODO: Update copyright text.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Nap.CMS.Infrastructure.Extensions
+﻿namespace Fanex.Nap.CMS.Infrastructure.Extensions
 {
     using System;
     using System.Drawing;

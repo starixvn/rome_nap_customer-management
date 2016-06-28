@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="fanex.MultiSelect.js" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="fanex.MultiSelect.js">
+// Copyright (c). All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 'use strict';

@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="IMailingListRepository.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="IMailingListRepository.cs">
+// Copyright (c). All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 

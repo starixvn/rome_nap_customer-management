@@ -1,6 +1,6 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="GetUserGroupCriteria.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="GetUserGroupCriteria.cs">
+// Copyright (c). All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
 

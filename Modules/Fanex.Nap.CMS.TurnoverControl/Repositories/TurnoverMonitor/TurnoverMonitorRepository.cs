@@ -79,7 +79,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>SMA turnover list.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public List<CustomerTurnoverInfo> SMATurnoverList(GetSMATurnoverListCriteria criteria)

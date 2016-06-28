@@ -69,7 +69,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>Action result.</returns>
         [AllowAnonymous]
         [HttpGet]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
             string currentTime = this._userService.UserSSOGetTime();
@@ -140,7 +140,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>The login result page.</returns>
         [HttpGet]
         [AllowAnonymous]
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult AccountingLogin(string username, string onlineUserId, Uri redirectUrl, bool newTab = false)
         {
             Session.Clear();

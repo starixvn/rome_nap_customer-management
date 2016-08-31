@@ -212,10 +212,11 @@ namespace Fanex.NAP.CMS.Services.Implements
                         index += count;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     // Assum that any exception occurs during calling API is a failure and CasinoApiLogger will write log for this.
                     // No need to throw exception here.
+                    Logging.LogService.Debug(ex.Message);
                 }
             }
 

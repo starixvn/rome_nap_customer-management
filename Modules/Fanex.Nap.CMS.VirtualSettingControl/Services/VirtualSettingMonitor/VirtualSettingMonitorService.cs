@@ -78,7 +78,10 @@
                 var sumBet = newCust.CustMargin.Sum(l => l.BetCount);
                 newCust.CustMargin.Add(new MarginModel(0, 0, sumTurnover, sumWinloss, sumBet));
 
-                virtualSettingViewModel.CustMargin.Add(newCust);
+                if (sumWinloss > 0)
+                {
+                    virtualSettingViewModel.CustMargin.Add(newCust);
+                }
             }
 
             return virtualSettingViewModel;

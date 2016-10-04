@@ -151,11 +151,20 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add SMA/Smart Punter.
+        ///   Looks up a localized string similar to Add Smart Punter.
         /// </summary>
         public static string AddSmartPunter {
             get {
                 return ResourceManager.GetString("AddSmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add SMA/Smart Punter.
+        /// </summary>
+        public static string AddSMASmartPunter {
+            get {
+                return ResourceManager.GetString("AddSMASmartPunter", resourceCulture);
             }
         }
         
@@ -453,6 +462,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string EditSmartPunter {
             get {
                 return ResourceManager.GetString("EditSmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit SMA/Smart Punter.
+        /// </summary>
+        public static string EditSMASmartPunter {
+            get {
+                return ResourceManager.GetString("EditSMASmartPunter", resourceCulture);
             }
         }
         

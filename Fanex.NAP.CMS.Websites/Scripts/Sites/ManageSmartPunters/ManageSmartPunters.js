@@ -160,7 +160,8 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
             popupElements.txtNewUsername.val(punter.Username);
             popupElements.txtRemark.val(punter.Remark).focus();
             popupElements.txtNewUsername.prop('disabled', true);
-            popupElements.ddlRole.val(2).combobox('refresh');
+            popupElements.ddlRole.val(punter.RoleId).combobox('refresh');
+            popupElements.ddlRole.combobox('disable');
         }
 
         bindPopupEventHandlers(isEdit);
@@ -178,14 +179,15 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
     var renderSmartPunterList = function (data) {
         var statusFormat = '<span class="{0}">{1}</span>';
         var remarkFormat = '<span class="ico-remark" title="{0}"></span>';
-        var editFormat = '<span class="ico-edit" data-cust-id="{0}" title="{1}"></span>';
+        var editFormat = '<span class="ico-edit" data-cust-id="{0}" data-role-id="{1}" title="{2}"></span>';
         var removeFormat = '<span class="ico-delete" data-cust-id="{0}" title="{1}"></span>';
-
+       
         var gridOptions = {
             columns: [{ HeaderText: labels.Order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Username, Width: 135, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.Nickname, Width: 135, Name: 'ColNickname', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.Status, Width: 65, Name: 'ColStatus', HeaderAlign: 'center', CellAlign: 'center' },
+                      { HeaderText: labels.Level, Width: 65, Name: 'ColRoleName', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Currency, Width: 60, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Site, Width: 100, Name: 'ColSite', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                       { HeaderText: labels.Super, Width: 120, Name: 'ColSuper', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -224,6 +226,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
                               { Name: 'ColUsername', Value: item.Username, CssClass: 'username-column' },
                               { Name: 'ColNickname', Value: item.Nickname },
                               { Name: 'ColStatus', Value: statusFormat.format(statusClass, item.Status) },
+                              { Name: 'ColRoleName', Value: item.RoleName },
                               { Name: 'ColCurrency', Value: item.Currency },
                               { Name: 'ColSite', Value: item.Site },
                               { Name: 'ColSuper', Value: item.Super },
@@ -235,7 +238,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
                 };
 
                 if (hasEditRight) {
-                    row.Columns.push({ Name: 'ColEdit', Value: editFormat.format(item.CustID, labels.Edit) });
+                    row.Columns.push({ Name: 'ColEdit', Value: editFormat.format(item.CustID, item.RoleId, labels.Edit) });
                     row.Columns.push({ Name: 'ColRemove', Value: removeFormat.format(item.CustID, labels.Remove) });
                 }
 
@@ -270,6 +273,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
             var row = cell.closest('tr');
             var usernameCell = row.find('div.username-column');
             var custID = cell.attr('data-cust-id');
+            var roleId = cell.attr('data-role-id');
             var remark = row.find('span.ico-remark').attr('original-title');
             var username = usernameCell.attr('title');
 
@@ -277,6 +281,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
 
             displayPopupForm({
                 CustID: custID,
+                RoleId: roleId,
                 Username: username,
                 Remark: remark.decode()
             });

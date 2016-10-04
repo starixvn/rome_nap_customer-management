@@ -159,6 +159,10 @@ namespace Fanex.NAP.CMS.Core.Web
                     case CustomerLevels.Agent:
                         level = ViewLang.Agent;
                         break;
+
+                    case CustomerLevels.Member:
+                        level = ViewLang.Member;
+                        break;
                 }
             }
 

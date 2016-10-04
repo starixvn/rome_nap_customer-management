@@ -460,7 +460,7 @@
     <value>Optional</value>
   </data>
   <data name="AddSmartPunter" xml:space="preserve">
-    <value>Add SMA/Smart Punter</value>
+    <value>Add Smart Punter</value>
   </data>
   <data name="EditSmartPunter" xml:space="preserve">
     <value>Edit Smart Punter</value>
@@ -488,5 +488,11 @@
   </data>
   <data name="LogID" xml:space="preserve">
     <value>Log ID</value>
+  </data>
+  <data name="AddSMASmartPunter" xml:space="preserve">
+    <value>Add SMA/Smart Punter</value>
+  </data>
+  <data name="EditSMASmartPunter" xml:space="preserve">
+    <value>Edit SMA/Smart Punter</value>
   </data>
 </root>

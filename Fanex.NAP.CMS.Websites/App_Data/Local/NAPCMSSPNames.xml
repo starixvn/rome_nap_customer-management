@@ -104,9 +104,9 @@
     </Setting>
   </Function>
   <Function Name="ManageSmartPunters">
-    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter" DbName="DBACC.bodb02.bodbAdminNet">
+    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter_xtest" DbName="DBACC.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter_xtest" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_CustomerUpdSmartPunter" SpName="NAP_CustomerUpdSmartPunter" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>

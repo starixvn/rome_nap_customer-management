@@ -66,6 +66,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             var insertCriteria = new InsertSmartPunterCriteria
             {
                 Username = filter.Username,
+                RoleId = filter.RoleId,
                 Remark = filter.Remark,
                 UserID = filter.UserID,
                 IP = filter.IP

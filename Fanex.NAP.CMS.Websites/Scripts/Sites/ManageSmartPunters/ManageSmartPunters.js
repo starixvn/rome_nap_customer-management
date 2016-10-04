@@ -62,6 +62,8 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
         popupElements.txtRemark = $('#txtRemark', domElements.divPopup);
         popupElements.btnSave = $('#btnSave', domElements.divPopup);
         popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
+        popupElements.ddlRole = $('#ddlRole', domElements.divPopup);
+
     };
 
     // Initialize fields and handle events.
@@ -94,6 +96,8 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
 
         domElements.btnAddSmartPunter.on('click', function () {
             displayPopupForm();
+         
+
         });
     };
 
@@ -103,6 +107,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
             if (Validator.validateForm(popupElements.divSmartPunterForm, 'w')) {
                 var custID = popupElements.hdnCustID.val();
                 var username = $.trim(popupElements.txtNewUsername.val());
+                var roleId = popupElements.ddlRole.val();
                 var remark = popupElements.txtRemark.val();
                 var params = {
                     Remark: remark.encode(),
@@ -123,6 +128,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
                 } else {
                     popupElements.txtNewUsername.val(username);
                     params.Username = username;
+                    params.RoleId = roleId;
                     addNewSmartPunter(params);
                 }
             }
@@ -146,6 +152,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
         CMS.closeMsgBox();
         CMS.modal(title, form);
         cachePopupElements();
+        popupElements.ddlRole.val(1).combobox();
 
         if (isEdit) {
             editBackupData = punter;
@@ -153,6 +160,7 @@ Fanex.CMS.ManageSmartPunters.ManageSmartPunters = function () {
             popupElements.txtNewUsername.val(punter.Username);
             popupElements.txtRemark.val(punter.Remark).focus();
             popupElements.txtNewUsername.prop('disabled', true);
+            popupElements.ddlRole.val(2).combobox('refresh');
         }
 
         bindPopupEventHandlers(isEdit);

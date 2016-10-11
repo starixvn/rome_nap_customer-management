@@ -79,6 +79,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action Monitoring.
+        /// </summary>
+        public static string ActionMonitoring {
+            get {
+                return ResourceManager.GetString("ActionMonitoring", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ACTIVATE {0} selected account(s).
         /// </summary>
         public static string ActivateSelectedAccounts {
@@ -165,6 +174,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string AddSMASmartPunter {
             get {
                 return ResourceManager.GetString("AddSMASmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        public static string Admin {
+            get {
+                return ResourceManager.GetString("Admin", resourceCulture);
             }
         }
         
@@ -520,6 +538,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Function.
+        /// </summary>
+        public static string Function {
+            get {
+                return ResourceManager.GetString("Function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Given Credit.
         /// </summary>
         public static string GivenCredit {
@@ -642,6 +669,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string LogID {
             get {
                 return ResourceManager.GetString("LogID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log Time.
+        /// </summary>
+        public static string LogTime {
+            get {
+                return ResourceManager.GetString("LogTime", resourceCulture);
             }
         }
         
@@ -934,6 +970,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restrcited.
+        /// </summary>
+        public static string Restrcited {
+            get {
+                return ResourceManager.GetString("Restrcited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -1020,6 +1065,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string SMAName {
             get {
                 return ResourceManager.GetString("SMAName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smart Punter.
+        /// </summary>
+        public static string SmartPunter {
+            get {
+                return ResourceManager.GetString("SmartPunter", resourceCulture);
             }
         }
         

@@ -77,8 +77,11 @@
     <Compile Include="ManageRobots\RobotAccountItem.cs" />
     <Compile Include="ManageRobots\UpdateRobotInfoFilter.cs" />
     <Compile Include="ManageRobots\UpdateRobotStatusFilter.cs" />
+    <Compile Include="ManageSmartPunters\ActionMonitoringLog.cs" />
     <Compile Include="ManageSmartPunters\AddSmartPunterFilter.cs" />
     <Compile Include="ManageSmartPunters\DeleteSmartPunterFilter.cs" />
+    <Compile Include="ManageSmartPunters\GetActionMonitoringLogsFilter.cs" />
+    <Compile Include="ManageSmartPunters\GetActionMonitoringLogsResult.cs" />
     <Compile Include="ManageSmartPunters\GetSmartPunterLogsFilter.cs" />
     <Compile Include="ManageSmartPunters\GettingSmartPunterLogsResult.cs" />
     <Compile Include="ManageSmartPunters\SmartPunterDetailLogItem.cs" />

@@ -134,7 +134,8 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/manageSmartPunters").Include(
                 "~/Scripts/Sites/ManageSmartPunters/PageManager.js",
                 "~/Scripts/Sites/ManageSmartPunters/ManageSmartPunters.js",
-                "~/Scripts/Sites/ManageSmartPunters/ControlSmartPuntersLog.js"));
+                "~/Scripts/Sites/ManageSmartPunters/ControlSmartPuntersLog.js",
+                "~/Scripts/Sites/ManageSmartPunters/ActionMonitoring.js"));
         }
 
         /// <summary>

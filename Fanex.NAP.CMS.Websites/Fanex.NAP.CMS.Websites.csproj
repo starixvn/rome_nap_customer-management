@@ -428,6 +428,7 @@
     <Content Include="Scripts\Sites\ConfigureTOByEvent\SportPage.js" />
     <Content Include="Scripts\Sites\ConfigureTOBySMA.js" />
     <Content Include="Scripts\Sites\ConfigureSMATOByEvent.js" />
+    <Content Include="Scripts\Sites\ManageSmartPunters\ActionMonitoring.js" />
     <Content Include="Scripts\Sites\ManageSmartPunters\ManageSmartPunters.js" />
     <Content Include="Scripts\Sites\ManageSmartPunters\ControlSmartPuntersLog.js" />
     <Content Include="Scripts\Sites\ManageSmartPunters\PageManager.js" />

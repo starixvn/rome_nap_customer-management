@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -222,6 +223,41 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             return logResult;
         }
+
+        public GetActionMonitoringLogsResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
+        {
+            GetActionMonitoringLogsCriteria criteria = new GetActionMonitoringLogsCriteria
+            {
+                FromDate = filter.FromDate,
+                ToDate = filter.ToDate,
+                UserName = filter.UserName,
+                Admin = filter.Admin
+            };
+
+            IList<ActionMonitoringLog> actionMonitoringLogs = this.Repository.Fetch<ActionMonitoringLog>(criteria).ToList();
+            int totalItems = actionMonitoringLogs.Count();
+
+            //if (filter.SortDirection == "asc")
+            //{
+            //    actionMonitoringLogs.OrderBy(n=> n.Level)
+
+            //}
+            //else
+            //{
+
+            //}
+
+            actionMonitoringLogs = actionMonitoringLogs.Skip(filter.PageSize * filter.PageIndex).Take(filter.PageSize).ToList();
+
+            GetActionMonitoringLogsResult result = new GetActionMonitoringLogsResult
+            {
+                ActionMonitoringLogs = actionMonitoringLogs,
+                TotalItems = totalItems
+            };
+
+            return result;
+        }
+
 
         /// <summary>
         /// Queries the number of smart punters that satisfy the filter.

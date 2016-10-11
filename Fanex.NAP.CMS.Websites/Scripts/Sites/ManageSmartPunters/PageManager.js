@@ -20,17 +20,25 @@ Fanex.CMS.ManageSmartPunters.PageManager = function () {
         divLogForm: null,
         divSmartPunterListContainer: null
     };
+
     var manageSmartPunters = null;
     var controlSmartPuntersLog = null;
+    var actionMonitoring = null;
 
     var cacheDOM = function () {
         domElements.spnNote = $('#spnNote');
+
         domElements.divFilterFormTag = $('#divFilterFormTag');
         domElements.divLogFormTag = $('#divLogFormTag');
+        domElements.divActionMonitoringFormTag = $('#divActionMonitoringFormTag');
+
         domElements.divFilterForm = $('#divFilterForm');
         domElements.divLogForm = $('#divLogForm');
+        domElements.divActionMonitoringForm = $('#divActionMonitoringForm');
+
         domElements.divSmartPunterListContainer = $('#divSmartPunterListContainer');
         domElements.divSmartPunterLogListContainer = $('#divSmartPunterLogListContainer');
+        domElements.divActionMonitoringLogListContainer = $('#divActionMonitoringLogListContainer');
     };
 
     // Initialize fields and handle events.
@@ -38,9 +46,15 @@ Fanex.CMS.ManageSmartPunters.PageManager = function () {
         domElements.divFilterFormTag.click(function () {
             domElements.divFilterFormTag.addClass('active');
             domElements.divFilterForm.removeClass('display-none');
+
             domElements.divLogFormTag.removeClass('active');
+            domElements.divActionMonitoringFormTag.removeClass('active');
+
             domElements.divLogForm.addClass('display-none');
+            domElements.divActionMonitoringForm.addClass('display-none');
+
             domElements.divSmartPunterLogListContainer.addClass('display-none');
+            domElements.divActionMonitoringLogListContainer.addClass('display-none');
 
             if (!manageSmartPunters) {
                 manageSmartPunters = new Fanex.CMS.ManageSmartPunters.ManageSmartPunters();
@@ -54,15 +68,42 @@ Fanex.CMS.ManageSmartPunters.PageManager = function () {
         domElements.divLogFormTag.click(function () {
             domElements.divLogFormTag.addClass('active');
             domElements.divLogForm.removeClass('display-none');
+
             domElements.divFilterFormTag.removeClass('active');
+            domElements.divActionMonitoringFormTag.removeClass('active');
+
             domElements.divFilterForm.addClass('display-none');
+            domElements.divActionMonitoringForm.addClass('display-none');
+
             domElements.divSmartPunterListContainer.addClass('display-none');
+            domElements.divActionMonitoringLogListContainer.addClass('display-none');
 
             if (!controlSmartPuntersLog) {
                 controlSmartPuntersLog = new Fanex.CMS.ManageSmartPunters.ControlSmartPuntersLog();
                 controlSmartPuntersLog.InitPage();
             } else {
                 controlSmartPuntersLog.ResetForm();
+            }
+        });
+
+        domElements.divActionMonitoringFormTag.click(function () {
+            domElements.divActionMonitoringFormTag.addClass('active');
+            domElements.divActionMonitoringForm.removeClass('display-none');
+
+            domElements.divFilterFormTag.removeClass('active');
+            domElements.divLogFormTag.removeClass('active');
+
+            domElements.divFilterForm.addClass('display-none');
+            domElements.divLogForm.addClass('display-none');
+
+            domElements.divSmartPunterListContainer.addClass('display-none');
+            domElements.divSmartPunterLogListContainer.addClass('display-none');
+
+            if (!actionMonitoring) {
+                actionMonitoring = new Fanex.CMS.ManageSmartPunters.ActionMonitoring();
+                actionMonitoring.InitPage();
+            } else {
+                actionMonitoring.ResetForm();
             }
         });
 

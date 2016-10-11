@@ -495,4 +495,22 @@
   <data name="EditSMASmartPunter" xml:space="preserve">
     <value>Edit SMA/Smart Punter</value>
   </data>
+  <data name="ActionMonitoring" xml:space="preserve">
+    <value>Action Monitoring</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="SmartPunter" xml:space="preserve">
+    <value>Smart Punter</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Function</value>
+  </data>
+  <data name="LogTime" xml:space="preserve">
+    <value>Log Time</value>
+  </data>
+  <data name="Restrcited" xml:space="preserve">
+    <value>Restrcited</value>
+  </data>
 </root>

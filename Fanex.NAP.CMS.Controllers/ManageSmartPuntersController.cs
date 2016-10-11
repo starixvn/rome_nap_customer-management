@@ -146,5 +146,15 @@ namespace Fanex.NAP.CMS.Controllers
 
             return Json(result);
         }
+
+        public JsonResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
+        {
+            filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);
+
+            GetActionMonitoringLogsResult result = _manageSmartPuntersService.GetActionMonitoringLogs(filter);
+
+            return Json(result);
+        }
+
     }
 }

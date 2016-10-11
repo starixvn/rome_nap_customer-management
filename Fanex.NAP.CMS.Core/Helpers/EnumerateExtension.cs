@@ -1,8 +1,10 @@
-﻿namespace Fanex.NAP.CMS.Core.Helpers
-{
-    using System;
-    using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Fanex.NAP.CMS.Core.Helpers
+{
     public static class EnumerateExtension
     {
         public static Tuple<IEnumerable<T>, IEnumerable<T>> Split<T>(this IEnumerable<T> source, int count)
@@ -25,6 +27,20 @@
             }
 
             return new Tuple<IEnumerable<T>, IEnumerable<T>>(fst, snd);
+        }
+
+        public static IEnumerable<T> OrderBy<T>(this IEnumerable<T> source, string propertyName)
+        {
+            PropertyInfo propInfo = typeof(T).GetProperty(propertyName);
+
+            return source.OrderBy(x => propInfo.GetValue(x, null));
+        }
+
+        public static IEnumerable<T> OrderByDescending<T>(this IEnumerable<T> source, string propertyName)
+        {
+            PropertyInfo propInfo = typeof(T).GetProperty(propertyName);
+
+            return source.OrderByDescending(x => propInfo.GetValue(x, null));
         }
     }
 }

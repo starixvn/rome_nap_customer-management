@@ -7,10 +7,10 @@
 //   <change who="Jason.Ly" date="2014.7.7">Created.</change>
 // </history>
 
+using System;
+
 namespace Fanex.NAP.CMS.Core.Helpers
 {
-    using System;
-
     /// <summary>
     /// Contains extensions of DateTime type.
     /// </summary>

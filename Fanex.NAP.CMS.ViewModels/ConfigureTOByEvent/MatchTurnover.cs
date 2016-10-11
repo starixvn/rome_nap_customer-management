@@ -7,11 +7,12 @@
 //   <change who="Jason.Ly" date="2014.4.17">Created</change>
 // </history>
 
+using Fanex.NAP.CMS.Core.Helpers;
+
 namespace Fanex.NAP.CMS.ViewModels.ConfigureTOByEvent
 {
     using System;
     using Fanex.Common;
-    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.ConfigureTOByEvent;

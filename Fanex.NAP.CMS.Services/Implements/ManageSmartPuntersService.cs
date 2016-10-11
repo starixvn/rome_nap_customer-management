@@ -7,6 +7,8 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
+using Fanex.NAP.CMS.Core.Helpers;
+
 namespace Fanex.NAP.CMS.Services.Implements
 {
     using System;
@@ -234,30 +236,33 @@ namespace Fanex.NAP.CMS.Services.Implements
                 Admin = filter.Admin
             };
 
-            IList<ActionMonitoringLog> actionMonitoringLogs = this.Repository.Fetch<ActionMonitoringLog>(criteria).ToList();
+            IEnumerable<ActionMonitoringLog> actionMonitoringLogs = this.Repository.Fetch<ActionMonitoringLog>(criteria).ToList();
             int totalItems = actionMonitoringLogs.Count();
 
-            //if (filter.SortDirection == "asc")
-            //{
-            //    actionMonitoringLogs.OrderBy(n=> n.Level)
-
-            //}
-            //else
-            //{
-
-            //}
+            actionMonitoringLogs = SortActionMonitoringLogs(actionMonitoringLogs, filter.SortDirection, filter.SortField);
 
             actionMonitoringLogs = actionMonitoringLogs.Skip(filter.PageSize * filter.PageIndex).Take(filter.PageSize).ToList();
 
             GetActionMonitoringLogsResult result = new GetActionMonitoringLogsResult
             {
-                ActionMonitoringLogs = actionMonitoringLogs,
+                ActionMonitoringLogs = actionMonitoringLogs.ToList(),
                 TotalItems = totalItems
             };
 
             return result;
         }
 
+        private IEnumerable<ActionMonitoringLog> SortActionMonitoringLogs(IEnumerable<ActionMonitoringLog> actionMonitoringLogs, string direction, string propertyName)
+        {
+            if (propertyName == nameof(ActionMonitoringLog.RoleName))
+            {
+                propertyName = nameof(ActionMonitoringLog.RoleId);
+            }
+
+            var result = (direction == "asc" ? actionMonitoringLogs.OrderBy(propertyName) : actionMonitoringLogs.OrderByDescending(propertyName));
+
+            return result;
+        }
 
         /// <summary>
         /// Queries the number of smart punters that satisfy the filter.

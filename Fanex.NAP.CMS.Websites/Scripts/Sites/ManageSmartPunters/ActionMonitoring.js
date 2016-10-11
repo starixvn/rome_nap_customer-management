@@ -14,7 +14,7 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
         Admin: null,
         PageIndex: 0,
         PageSize: CMS.pageSize,
-        SortField: 'ColLogTime',
+        SortField: 'LogDate',
         SortDirection: 'desc'
     };
 
@@ -35,15 +35,15 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
 
     var renderActionMonitoringLogs = function (data) {
         var gridOptions = {
-            columns: [{ HeaderText: labels.Order, Width: 40, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
-                        { HeaderText: labels.LogTime, Width: 150, Name: 'ColLogTime', HeaderAlign: 'center', Sort: true, SortDirection: 'desc' },
-                        { HeaderText: labels.Admin, Width: 80, Name: 'ColAdmin', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.SmaOrSmartPunter, Width: 150, Name: 'ColUsername', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.Level, Width: 50, Name: 'ColLevel', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.Action, Width: 100, Name: 'ColActionName', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.Function, Width: 250, Name: 'ColFunctionName', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.IP, Width: 90, Name: 'ColIP', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.Restricted, Width: 100, Name: 'ColRestricted', HeaderAlign: 'center', CellAlign: 'center', Sort: true }
+            columns: [{ HeaderText: labels.Order, Width: 40, Name: 'Order', HeaderAlign: 'center', CellAlign: 'center' },
+                        { HeaderText: labels.LogTime, Width: 120, Name: 'LogDate', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.Admin, Width: 80, Name: 'Admin', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.SmaOrSmartPunter, Width: 150, Name: 'Username', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.Level, Width: 50, Name: 'RoleName', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.Action, Width: 100, Name: 'ActionName', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.Function, Width: 250, Name: 'FunctionName', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.IP, Width: 90, Name: 'IP', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.Restricted, Width: 80, Name: 'IsRestricted', HeaderAlign: 'center', CellAlign: 'center', Sort: true }
             ],
             showDistinctRow: false,
             showNumberColumn: true,
@@ -56,7 +56,7 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
                 pagerSelectCallBack: function (pageIndex, itemsPerPage) {
                     parameters.PageSize = itemsPerPage;
                     parameters.PageIndex = pageIndex;
-              
+
                     getActionMonitoringLogs();
                 }
             },
@@ -64,12 +64,18 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
                 serverSortFunction: function (sortColumnName, sortDirection) {
                     parameters.SortField = sortColumnName;
                     parameters.SortDirection = sortDirection;
-          
+
                     getActionMonitoringLogs();
                 }
             },
             gridExpandHeight: 200
         };
+
+        for (var i = 0; i < gridOptions.columns.length; i++) {
+            if (gridOptions.columns[i].Name === parameters.SortField) {
+                gridOptions.columns[i].SortDirection = parameters.SortDirection;
+            }
+        }
 
         var bodyRows = [];
         var row;
@@ -80,15 +86,15 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
                 : '<input type="checkbox" id="107193" data-active="true" data-chk-group="chkStatus">';
 
             row = {
-                Columns: [{ Name: 'ColOrder', Value: index },
-                            { Name: 'ColLogTime', Value: item.LogTime },
-                            { Name: 'ColAdmin', Value: item.Admin },
-                            { Name: 'ColUsername', Value: item.Username },
-                            { Name: 'ColLevel', Value: item.Level },
-                            { Name: 'ColActionName', Value: item.ActionName },
-                            { Name: 'ColFunctionName', Value: item.FunctionName },
-                            { Name: 'ColIP', Value: item.IP },
-                            { Name: 'ColRestricted', Value: restrictedHtml }
+                Columns: [{ Name: 'Order', Value: index },
+                            { Name: 'LogDate', Value: item.LogDate },
+                            { Name: 'Admin', Value: item.Admin },
+                            { Name: 'Username', Value: item.Username },
+                            { Name: 'RoleName', Value: item.RoleName },
+                            { Name: 'ActionName', Value: item.ActionName },
+                            { Name: 'FunctionName', Value: item.FunctionName },
+                            { Name: 'IP', Value: item.IP },
+                            { Name: 'IsRestricted', Value: restrictedHtml }
 
                 ]
             };
@@ -171,16 +177,27 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
     };
 
     $this.ResetForm = function () {
-        //resetDatepikers();
-        //domElements.txtLogUsername.val('').focus();
-        //Validator.clearError(domElements.txtLogUsername);
+        domElements.txtFromDate.datepicker('option', 'minDate', datepickerSetting.MinDate);
+        domElements.txtFromDate.datepicker('option', 'maxDate', datepickerSetting.Today);
+        domElements.txtFromDate.datepicker('setDate', datepickerSetting.Today);
 
-        //// Reset cached parameters.
-        //parameters.Username = null;
-        //parameters.FromDate = null;
-        //parameters.ToDate = null;
-        //parameters.PageSize = CMS.pageSize;
-        //parameters.PageIndex = 0;
+        domElements.txtToDate.datepicker('option', 'minDate', datepickerSetting.MinDate);
+        domElements.txtToDate.datepicker('option', 'maxDate', datepickerSetting.Today);
+        domElements.txtToDate.datepicker('setDate', datepickerSetting.Today);
+
+        domElements.txtUsername.val('').focus();
+        domElements.txtAdmin.val('');
+
+        parameters = {
+            FromDate: null,
+            ToDate: null,
+            Username: null,
+            Admin: null,
+            PageIndex: 0,
+            PageSize: CMS.pageSize,
+            SortField: 'LogDate',
+            SortDirection: 'desc'
+        };
     };
 
     $this.InitPage = function () {

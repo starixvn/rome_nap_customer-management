@@ -143,9 +143,7 @@
     <Compile Include="Web\CacheRef.cs" />
     <Compile Include="Web\SessionManager.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Comparers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Configurations\CMSFunctionKeys.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

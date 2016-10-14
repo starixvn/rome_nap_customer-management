@@ -156,12 +156,11 @@ namespace Fanex.NAP.CMS.Controllers
         {
             filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);
 
-            GetActionMonitoringLogsResult result = _manageSmartPuntersService.GetActionMonitoringLogs(filter);
+            GetActionMonitoringLogsResult result = _manageSmartPuntersService.GetActionMonitoringLogs(filter, CurrentSession.UserId);
 
             string json = JsonConvert.SerializeObject(result, new IsoDateTimeConverter() { DateTimeFormat = "MM-dd-yyyy HH:mm:ss" });
 
             return Content(json, "application/json");
         }
-
     }
 }

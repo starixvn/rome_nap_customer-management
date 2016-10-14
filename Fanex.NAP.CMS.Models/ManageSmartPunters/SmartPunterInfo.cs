@@ -26,7 +26,7 @@ namespace Fanex.NAP.CMS.Models.ManageSmartPunters
 
         public bool Reject { get; set; }
 
-        public int RoleId{ get; set; }
+        public int RoleId { get; set; }
 
         public string Currency { get; set; }
 

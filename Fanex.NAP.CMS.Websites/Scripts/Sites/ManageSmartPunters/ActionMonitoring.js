@@ -42,7 +42,7 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
                         { HeaderText: labels.Level, Width: 50, Name: 'RoleName', HeaderAlign: 'center', Sort: true },
                         { HeaderText: labels.Action, Width: 100, Name: 'ActionName', HeaderAlign: 'center', Sort: true },
                         { HeaderText: labels.Function, Width: 250, Name: 'FunctionName', HeaderAlign: 'center', Sort: true },
-                        { HeaderText: labels.IP, Width: 90, Name: 'IP', HeaderAlign: 'center', Sort: true },
+                        { HeaderText: labels.IP, Width: 90, Name: 'IP', HeaderAlign: 'center', CellAlign: 'center', Sort: true },
                         { HeaderText: labels.Restricted, Width: 80, Name: 'IsRestricted', HeaderAlign: 'center', CellAlign: 'center', Sort: true }
             ],
             showDistinctRow: false,
@@ -83,7 +83,7 @@ Fanex.CMS.ManageSmartPunters.ActionMonitoring = function () {
         $.each(data.ActionMonitoringLogs, function (index, item) {
             var restrictedHtml = item.IsRestricted
                 ? '<input type="checkbox" id="107193" data-active="true" data-chk-group="chkStatus" checked disabled>'
-                : '<input type="checkbox" id="107193" data-active="true" data-chk-group="chkStatus">';
+                : '<input type="checkbox" id="107193" data-active="true" data-chk-group="chkStatus" disabled>';
 
             row = {
                 Columns: [{ Name: 'Order', Value: index },

@@ -7,7 +7,16 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
+using System.Configuration;
+using Fanex.Common.Extensions;
+using Fanex.Data.Repository;
+using Fanex.NAP.CMS.Core;
 using Fanex.NAP.CMS.Core.Helpers;
+using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Configuration;
+using Fanex.NAP.Core.Service.Impl;
+using Fanex.NAP.Core.Service.Interface;
+using Fanex.NAP.Core.Web.Session;
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
@@ -31,6 +40,19 @@ namespace Fanex.NAP.CMS.Services.Implements
     public class ManageSmartPuntersService : CMSBaseService, IManageSmartPuntersService
     {
         private const int InvalidUsernameErrorCode = 100;
+
+        private readonly IPermissionSerivce _permissionSerivce;
+        private readonly IIpService _ipService;
+
+        public ManageSmartPuntersService() : this(new PermissionSerivce(new UserService()), new IpService(new DynamicRepository()))
+        {
+        }
+
+        public ManageSmartPuntersService(IPermissionSerivce permissionSerivce, IIpService ipService)
+        {
+            _permissionSerivce = permissionSerivce;
+            _ipService = ipService;
+        }
 
         /// <summary>
         /// Gets the smart punter list.
@@ -226,7 +248,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             return logResult;
         }
 
-        public GetActionMonitoringLogsResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
+        public GetActionMonitoringLogsResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter, int userId)
         {
             GetActionMonitoringLogsCriteria criteria = new GetActionMonitoringLogsCriteria
             {
@@ -236,12 +258,27 @@ namespace Fanex.NAP.CMS.Services.Implements
                 Admin = filter.Admin
             };
 
-            IEnumerable<ActionMonitoringLog> actionMonitoringLogs = this.Repository.Fetch<ActionMonitoringLog>(criteria).ToList();
+            IList<ActionMonitoringLog> actionMonitoringLogs = Repository.Fetch<ActionMonitoringLog>(criteria).ToList();
             int totalItems = actionMonitoringLogs.Count();
 
-            actionMonitoringLogs = SortActionMonitoringLogs(actionMonitoringLogs, filter.SortDirection, filter.SortField);
+            // Sorting
+            actionMonitoringLogs = SortActionMonitoringLogs(actionMonitoringLogs, filter.SortDirection, filter.SortField).ToList();
 
+            // Paging
             actionMonitoringLogs = actionMonitoringLogs.Skip(filter.PageSize * filter.PageIndex).Take(filter.PageSize).ToList();
+
+            // IpVn
+            bool hasReadOrHost = _permissionSerivce.HasPermission(userId, CMSFunctionKeys.ViewIpVn, Constant.Policy.Read);
+            if (hasReadOrHost == false)
+            {
+                foreach (ActionMonitoringLog actionMonitoringLog in actionMonitoringLogs)
+                {
+                    if (_ipService.IsVnIp(actionMonitoringLog.IP))
+                    {
+                        actionMonitoringLog.IP = ConfigurationManager.AppSettings["IpVn"];
+                    }
+                }
+            }
 
             GetActionMonitoringLogsResult result = new GetActionMonitoringLogsResult
             {
@@ -254,12 +291,12 @@ namespace Fanex.NAP.CMS.Services.Implements
 
         private IEnumerable<ActionMonitoringLog> SortActionMonitoringLogs(IEnumerable<ActionMonitoringLog> actionMonitoringLogs, string direction, string propertyName)
         {
-            if (propertyName == nameof(ActionMonitoringLog.RoleName))
+            if (propertyName == "RoleName")
             {
-                propertyName = nameof(ActionMonitoringLog.RoleId);
+                propertyName = "RoleId";
             }
 
-            var result = (direction == "asc" ? actionMonitoringLogs.OrderBy(propertyName) : actionMonitoringLogs.OrderByDescending(propertyName));
+            var result = direction == "asc" ? actionMonitoringLogs.OrderBy(propertyName) : actionMonitoringLogs.OrderByDescending(propertyName);
 
             return result;
         }

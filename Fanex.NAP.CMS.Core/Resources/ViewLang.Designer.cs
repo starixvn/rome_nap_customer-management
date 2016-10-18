@@ -970,11 +970,11 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restrcited.
+        ///   Looks up a localized string similar to Restricted.
         /// </summary>
-        public static string Restrcited {
+        public static string Restricted {
             get {
-                return ResourceManager.GetString("Restrcited", resourceCulture);
+                return ResourceManager.GetString("Restricted", resourceCulture);
             }
         }
         

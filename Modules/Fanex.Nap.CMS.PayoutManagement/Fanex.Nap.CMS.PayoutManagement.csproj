@@ -148,6 +148,7 @@
     <Compile Include="Controllers\BetTicketController.cs" />
     <Compile Include="Controllers\PayoutManagementAPIClient.cs" />
     <Compile Include="Controllers\PayoutListController.cs" />
+    <Compile Include="Criteria\GetSiteIdByCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GetSitesLicenseesProductsCriteria.cs" />
     <Compile Include="Criteria\GetBetTicketCriteria.cs" />
     <Compile Include="Criteria\GetPayoutDetailCriteria.cs" />

@@ -13,6 +13,7 @@
             using (WebClient client = new WebClient())
             {
                 string json = client.DownloadString(string.Format(PayoutManagementConst.ColossusBetsAPIAuthorizationURL, customerId, memberId));
+
                 return JsonConvert.DeserializeObject<ColossusBetsAuthorization>(json);
             }
         }

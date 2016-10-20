@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Constants;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
@@ -44,6 +45,9 @@
                 () => PayoutManagementAPIClient.ColossusBetsAuthorize(userId, criteria.Member));
 
             var colossusbets = _betTicketService.GetColossusBets(criteria);
+
+            string siteIdByCustomer = _betTicketService.GetSiteIdByCustomerId(new GetSiteIdByCustomerIdCriteria(criteria.Member));
+            ViewBag.CBDomain = PayoutManagementConst.GetColossusBetsDomainBySiteId(siteIdByCustomer);
             ViewBag.CBAuthorization = task.Result;
 
             return PartialView("~/Areas/PayoutManagement/Views/BetTicket/ColossusBets.cshtml", colossusbets);

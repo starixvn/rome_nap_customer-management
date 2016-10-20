@@ -11,4 +11,7 @@
     <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
     <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
   </Function>
+  <Function Name="Colossus Bets Bet List - Get SiteId">
+    <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

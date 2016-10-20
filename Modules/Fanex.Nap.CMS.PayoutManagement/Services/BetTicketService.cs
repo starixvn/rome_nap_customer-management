@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Services
 {
+    using System;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.PayoutManagement.Models;
@@ -46,6 +47,11 @@
             colossusbets.TotalWinLoss = totalWinLoss;
 
             return colossusbets;
+        }
+
+        public string GetSiteIdByCustomerId(ICriteria criteria)
+        {
+            return _betTicketRepository.GetSiteIdByCustomerId(criteria);
         }
     }
 }

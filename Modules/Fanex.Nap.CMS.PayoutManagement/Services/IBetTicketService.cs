@@ -8,5 +8,7 @@
         BetTicket GetMicrogaming(ICriteria criteria);
 
         ColossusBetsTicket GetColossusBets(ICriteria criteria);
+
+        string GetSiteIdByCustomerId(ICriteria criteria);
     }
 }

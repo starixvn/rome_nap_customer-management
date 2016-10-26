@@ -11,5 +11,4 @@
   <Function Name="ManageSmartPunters">
     <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
   </Function>
-
 </Functions>

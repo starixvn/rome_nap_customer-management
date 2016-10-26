@@ -7,4 +7,8 @@
 	<Function Name="Virtual Setting Control">
 		<Setting Key ="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
 	</Function>
+
+  <Function Name="ManageSmartPunters">
+    <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet"/>
+  </Function>
 </Functions>

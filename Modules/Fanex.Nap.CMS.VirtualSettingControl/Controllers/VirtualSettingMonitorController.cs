@@ -51,8 +51,8 @@
         public ActionResult Search(GetVirtualSettingMonitorCriteria criteria)
         {
             criteria.ReportToDate = DateTime.Now;
-            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 6);
-            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 6);
+            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
+            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
             Array.Reverse(reversedMonthList);
             var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
 
@@ -60,7 +60,7 @@
                 new
                 {
                     TotalRow = virtualSettings == null ? 0 : virtualSettings.CustMargin.Count,
-                    MonthList = Helper.GetDate(DateTime.Today, criteria.MonthToCheck, "MMM - yyyy"),
+                    MonthList = Helper.GetDate(DateTime.Today, 12, "MMM - yyyy"),
                     VirtualSettings = virtualSettings
                 }, 
                 JsonRequestBehavior.AllowGet);

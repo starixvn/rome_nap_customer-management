@@ -138,7 +138,7 @@ var VirtualSettingMonitor = function () {
                     { Name: 'colUsername', Value: renderCustomerDashboardRow(customer.Username, customer.CustId), MergeRowNumber: 4 },
                     { Name: 'colRate', Value: customer.VRate, MergeRowNumber: 4 },
                     { Name: 'colFigure', Value: "Turnover" },
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Turnover.toFixed(2) },
+                    { Name: 'colAvg', Value: customer.CustMargin[12].Turnover.toFixed(2) },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].Turnover.toFixed(2) },
                     { Name: 'colMonth2', Value: customer.CustMargin[1].Turnover.toFixed(2) },
                     { Name: 'colMonth3', Value: customer.CustMargin[2].Turnover.toFixed(2) },
@@ -158,7 +158,7 @@ var VirtualSettingMonitor = function () {
             bodyRows.push({
                 Columns: [
                     { Name: 'colFigure', Value: "Winloss" },
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Winloss.toFixed(2) },
+                    { Name: 'colAvg', Value: customer.CustMargin[12].Winloss.toFixed(2) },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].Winloss.toFixed(2) },
                     { Name: 'colMonth2', Value: customer.CustMargin[1].Winloss.toFixed(2) },
                     { Name: 'colMonth3', Value: customer.CustMargin[2].Winloss.toFixed(2) },
@@ -178,7 +178,7 @@ var VirtualSettingMonitor = function () {
             bodyRows.push({
                 Columns: [
                     { Name: 'colFigure', Value: "Margin" },
-                    { Name: 'colAvg', Value: customer.CustMargin[6].Margin.toFixed(2) + "%" },
+                    { Name: 'colAvg', Value: customer.CustMargin[12].Margin.toFixed(2) + "%" },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].Margin.toFixed(2) + "%" },
                     { Name: 'colMonth2', Value: customer.CustMargin[1].Margin.toFixed(2) + "%" },
                     { Name: 'colMonth3', Value: customer.CustMargin[2].Margin.toFixed(2) + "%" },
@@ -198,7 +198,7 @@ var VirtualSettingMonitor = function () {
             bodyRows.push({
                 Columns: [
                     { Name: 'colFigure', Value: "BetCount" },
-                    { Name: 'colAvg', Value: customer.CustMargin[6].BetCount },
+                    { Name: 'colAvg', Value: customer.CustMargin[12].BetCount },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].BetCount },
                     { Name: 'colMonth2', Value: customer.CustMargin[1].BetCount },
                     { Name: 'colMonth3', Value: customer.CustMargin[2].BetCount },

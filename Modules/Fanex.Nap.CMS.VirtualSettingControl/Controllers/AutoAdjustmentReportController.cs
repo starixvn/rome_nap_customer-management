@@ -15,7 +15,7 @@
 
     public class AutoAdjustmentReportController : BaseController
     {
-        private const int MonthsToCheck = 6;
+        private const int MonthsToCheck = 12;
 
         private readonly IAdjustmentReportService _adjustmentReportService;
 

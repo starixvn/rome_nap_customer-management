@@ -76,7 +76,7 @@
 
         private void MapHistoryData(IEnumerable<MarginModel> history)
         {
-            _marginViewModels = Helper.GetMarginViewModels(DateTime.Today, 6, history);
+            _marginViewModels = Helper.GetMarginViewModels(DateTime.Today, 12, history);
 
             var totalWinloss = history.Sum(m => m.Winloss);
             var totalTurnover = history.Sum(m => m.Turnover);

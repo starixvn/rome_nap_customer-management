@@ -1,0 +1,47 @@
+﻿<?xml version="1.0"?>
+<appSettings>
+  <add key="DefaultPageSize" value="50" />
+  <add key="RemoteRefURL" value="tcp://10.18.200.124:8888/CallGetRefFunction" />
+  <add key="ConnectionStringEncrypt" value="0"/>
+  <add key="ServerTimezone" value="Atlantic Standard Time" />
+  <add key="TOControlPercentageUsed" value="50" />
+  <add key="Admin_SMATurnover_FunctionId" value="328"/>
+  <add key="Admin_SMATurnover_FunctionName" value="[SMATurnoverMailingList]"/>
+  <add key="ExcludeTestData" value="0" />
+  
+  <add key="MicroGamingResultAPI" value="http://thirdparty.net2cast.com/test/3rd/GetMGResultPage" />
+
+	<add key="ColossusBetsAPISettlementURL" value="http://cbapi.edge2cast.com:8068/api/ColossusBets/DoSettlement" />
+	<add key="ColossusBetsAPISettlementVendor" value="4" />
+	<add key="ColossusBetsAPISettlementVendorKey" value="kXvGTVKufe" />
+	<add key="ColossusBetsAPISettlementType" value="settle" />
+	<add key="ColossusBetsAPISettlementProductId" value="204" />
+	<add key="ColossusBetsAPISettlementGameId" value="18000" />
+<<<<<<< HEAD
+  <add key="IpVn" value="-" />
+=======
+
+  <add key="ColossusBetsAPIAuthorizationURL" value="http://220.130.26.188:30051/api/Authorize/AuthorizeCode?vendor=101&amp;vendorKey=WZWtzDfCJW&amp;vendorProduct=4&amp;customerId={0}&amp;memberID={1}" />
+  <add key="ColossusBetsAPITicketsURL" value="/api/tickets/ref/{0}/selection?productToken={1}&amp;siteID=2100100" />
+  <!--
+      37 Spondemo
+      30 12BET
+      31 Fun88
+      36 Dafa
+      49 Vwin
+      211 TCL88
+      41 Letou
+      44 BBIN
+      -1 MaxBet
+    -->
+  <add key="ColossusBets_37" value="http://spondemo.staging-colossusbets.com"/>
+  <add key="ColossusBets_30" value="http://12bet.staging-colossusbets.com"/>
+  <add key="ColossusBets_31" value="http://fun88.staging-colossusbets.com"/>
+  <add key="ColossusBets_36" value="http://dafabet.staging-colossusbets.com"/>
+  <add key="ColossusBets_49" value="http://vwin.staging-colossusbets.com"/>
+  <add key="ColossusBets_211" value="http://tlc88.staging-colossusbets.com"/>
+  <add key="ColossusBets_41" value="http://bet16.staging-colossusbets.com"/>
+  <add key="ColossusBets_44" value="http://bbin.staging-colossusbets.com"/>
+  <add key="ColossusBets_-1" value="http://maxbet.staging-colossusbets.com"/>
+>>>>>>> #65666 - [ColossusBets] Change the way to load iframe
+</appSettings>

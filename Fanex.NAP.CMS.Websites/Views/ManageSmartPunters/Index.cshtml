@@ -20,8 +20,10 @@
     <div class="tabs-area">
         <div id="divFilterFormTag" class="tab first active">@ViewLang.ManageSmartPunters</div>
         <div id="divLogFormTag" class="tab">Smart Punter Control Log</div>
+        <div id="divActionMonitoringFormTag" class="tab">@ViewLang.ActionMonitoring</div>
         <span id="spnNote" class="note-info-message" title="@Messages.ManageSmartPunterNote"></span>
     </div>
+
     <div id="divFilterForm" class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_5">
@@ -68,13 +70,40 @@
         </div>
         <div class="filter-row"></div>
     </div>
+    <div id="divActionMonitoringForm" class="filter-form display-none">
+        <div class="filter-row">
+            <div id="from-to-date-picker"></div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txtUserName">@ViewLang.SMA/@ViewLang.SmartPunter</label>
+            </div>
+            <div class="edit-field col_5">
+                <input type="text" id="txtUserName" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
+            </div>
+            <div class="lbl-field col_3">
+                <label for="txtAdmin">@ViewLang.Admin</label>
+            </div>
+            <div class="edit-field col_5">
+                <input type="text" id="txtAdmin" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
+            </div>
+            <div class="submit width-auto col_3">
+                <input id="btnActionMonitoringSearch" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+        </div>
+    </div>
 </div>
+
 <div id="divSmartPunterListContainer" class="display-none content-grid">
     <div id="divSmartPunterList" class="freegrid"></div>
 </div>
 <div id="divSmartPunterLogListContainer" class="display-none log-list content-grid">
     <div id="divSmartPunterLogList" class="freegrid"></div>
 </div>
+<div id="divActionMonitoringLogListContainer" class="display-none log-list content-grid">
+    <div id="divActionMonitoringLogList" class="freegrid"></div>
+</div>
+
 <div id="divDetailTemplate" class="display-none">
     <div class="detail-title">{0}</div>
     <div class="detail-table">
@@ -112,6 +141,19 @@
             </div>
             <div class="form-row">
                 <div class="lbl-field">
+                    <label for="ddlRole">@ViewLang.Level<br /></label>
+                </div>
+                <div class="edit-field">
+                    <select id="ddlRole" class="level-width">
+                        <option value="4">@ViewLang.Super</option>
+                        <option value="3">@ViewLang.Master</option>
+                        <option value="2">@ViewLang.Agent</option>
+                        <option value="1" selected>@ViewLang.Member</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
                     <label for="txtRemark">@ViewLang.Remark<br /><span class="optional">(@ViewLang.Optional)</span></label>
                 </div>
                 <div class="edit-field">
@@ -137,6 +179,7 @@
             Username: '@ViewLang.Username',
             Nickname: '@ViewLang.Nickname',
             Status: '@ViewLang.Status',
+            Level: '@ViewLang.Level',
             Currency: '@ViewLang.Currency',
             Site: '@ViewLang.Site',
             Super: '@ViewLang.Super',
@@ -147,15 +190,22 @@
             Remark: '@ViewLang.Remark',
             Edit: '@ViewLang.Edit',
             Remove: '@ViewLang.Remove',
-            AddSmartPunter: '@ViewLang.AddSmartPunter',
-            EditSmartPunter: '@ViewLang.EditSmartPunter',
+            AddSmartPunter: '@ViewLang.AddSMASmartPunter',
+            EditSmartPunter: '@ViewLang.EditSMASmartPunter',
             FromDate: '@ViewLang.FromDate',
             ToDate: '@ViewLang.ToDate',
             LogID: '@ViewLang.LogID',
             LogDate: '@ViewLang.LogDate',
             EditedBy: '@ViewLang.EditedBy',
             Action: '@ViewLang.Action',
-            Details: '@ViewLang.Details'
+            Details: '@ViewLang.Details',
+
+            LogTime: '@ViewLang.LogTime',
+            Admin: '@ViewLang.Admin',
+            SmaOrSmartPunter: '@ViewLang.SMA/@ViewLang.SmartPunter',
+            Function: '@ViewLang.Function',
+            IP: '@ViewLang.IP',
+            Restricted: '@ViewLang.Restricted'
         };
         var messages = {
             InvalidValueError: '@Messages.InvalidValueError',

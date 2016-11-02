@@ -167,6 +167,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiLogers\CasinoApiLogger.cs" />
+    <Compile Include="Interfaces\IIpService.cs" />
+    <Compile Include="Implements\IpService.cs" />
+    <Compile Include="Interfaces\IPermissionSerivce.cs" />
+    <Compile Include="Implements\PermissionSerivce.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\CMSBaseService.cs" />
@@ -218,6 +222,7 @@
       <Name>Fanex.NAP.CMS.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

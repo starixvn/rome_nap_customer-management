@@ -7,6 +7,9 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Fanex.NAP.CMS.Controllers
 {
     using System;
@@ -145,6 +148,19 @@ namespace Fanex.NAP.CMS.Controllers
             result = this._manageSmartPuntersService.GetSmartPunterLogs(filter);
 
             return Json(result);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
+        public ActionResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
+        {
+            filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);
+
+            GetActionMonitoringLogsResult result = _manageSmartPuntersService.GetActionMonitoringLogs(filter, CurrentSession.UserId);
+
+            string json = JsonConvert.SerializeObject(result, new IsoDateTimeConverter() { DateTimeFormat = "MM-dd-yyyy HH:mm:ss" });
+
+            return Content(json, "application/json");
         }
     }
 }

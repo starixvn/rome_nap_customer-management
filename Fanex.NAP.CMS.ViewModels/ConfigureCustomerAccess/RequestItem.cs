@@ -7,11 +7,12 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
+using Fanex.NAP.CMS.Core.Helpers;
+
 namespace Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Models.ConfigureCustomerAccess;
 
     /// <summary>

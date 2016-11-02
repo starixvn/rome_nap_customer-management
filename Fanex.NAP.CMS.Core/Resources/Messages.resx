@@ -187,7 +187,7 @@
     <value>Invalid value!</value>
   </data>
   <data name="ManageSmartPunterNote" xml:space="preserve">
-    <value>This function is to enhance security regarding Smart Punter betting information by restricting access to Smart Punters' accounts and information to a group of specified back-office users.</value>
+    <value>This function is to enhance security regarding Smart Punter betting information by restricting access to Smart Punters' accounts and information to a group of specified back-office users. You can also add a SMA to restrict their whole line.</value>
   </data>
   <data name="NewPasswordCannotEmpty" xml:space="preserve">
     <value>New password cannot be empty.</value>

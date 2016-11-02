@@ -18,6 +18,8 @@ namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
     {
         public string Username { get; set; }
 
+        public int RoleId { get; set; }
+
         public string Remark { get; set; }
 
         public int UserID { get; set; }

@@ -49,5 +49,12 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// <param name="filter">The filter object that is used to get logs related to a specific smart punter.</param>
         /// <returns>List of SmartPunterLogItem items.</returns>
         GettingSmartPunterLogsResult GetSmartPunterLogs(GetSmartPunterLogsFilter filter);
+
+        /// <summary>
+        /// Gets the smart punter user logs.
+        /// </summary>
+        /// <param name="criteria">The filter object that is used to get logs related to a specific smart punter.</param>
+        /// <returns>List of SmartPunterLogItem items.</returns>
+        GetActionMonitoringLogsResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter, int userId);
     }
 }

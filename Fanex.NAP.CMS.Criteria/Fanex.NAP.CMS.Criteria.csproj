@@ -95,6 +95,7 @@
     <Compile Include="ConfigureTOBySMA\GetSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\InsertSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
+    <Compile Include="Ips\GetIpVnCriteria.cs" />
     <Compile Include="LossMonitor\DeleteSMACriteria.cs" />
     <Compile Include="LossMonitor\UpdateSMAMaxLossCriteria.cs" />
     <Compile Include="LossMonitor\InsertSMACriteria.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="ManageSmartPunters\GetCustIDByUsernameNicknameCriteria.cs" />
     <Compile Include="ManageSmartPunters\GetSmartPuntersCriteria.cs" />
     <Compile Include="ManageSmartPunters\GetSmartPunterLogsCriteria.cs" />
+    <Compile Include="ManageSmartPunters\GetActionMonitoringLogsCriteria.cs" />
     <Compile Include="ManageSmartPunters\GetTotalSmartPunterLogsCriteria.cs" />
     <Compile Include="ManageSmartPunters\InsertSmartPunterCriteria.cs" />
     <Compile Include="ManageSmartPunters\UpdateSmartPunterCriteria.cs" />

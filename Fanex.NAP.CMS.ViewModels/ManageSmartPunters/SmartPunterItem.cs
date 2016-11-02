@@ -7,10 +7,12 @@
 //   <change who="Jason.Ly" date="2014.6.5">Created</change>
 // </history>
 
+using Fanex.NAP.CMS.Core.Helpers;
+using Fanex.NAP.CMS.Core.Web;
+
 namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 {
     using System;
-    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
 
@@ -31,6 +33,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
                 this.Master = rawData.Master;
                 this.Agent = rawData.Agent;
                 this.Status = ConvertStatus(rawData.Reject, rawData.Closed);
+                this.RoleId = rawData.RoleId;
                 this.Currency = rawData.Currency;
                 this.Site = rawData.Site;
                 this.AddedBy = rawData.Creator;
@@ -52,6 +55,16 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
         public string Agent { get; set; }
 
         public string Status { get; set; }
+
+        public int RoleId { get; set; }
+
+        public string RoleName
+        {
+            get
+            {
+                return CacheRef.GetLevel((byte?)RoleId);
+            }
+        }
 
         public string Currency { get; set; }
 

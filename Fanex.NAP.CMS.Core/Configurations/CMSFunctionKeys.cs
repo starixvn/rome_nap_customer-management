@@ -63,5 +63,6 @@ namespace Fanex.NAP.CMS.Core
 
         public const string TurnoverUsage = "TurnoverUsage";
 
+        public const string ViewIpVn = "ViewIPVN";
     }
 }

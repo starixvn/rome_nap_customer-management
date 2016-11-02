@@ -7,11 +7,12 @@
 //   <change who="Jason.Ly" date="2014.6.24">Created</change>
 // </history>
 
+using Fanex.NAP.CMS.Core.Helpers;
+
 namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
 {
     using System;
     using Fanex.Common;
-    using Fanex.NAP.CMS.Core.Helpers;
     using Fanex.NAP.CMS.Models.ManageSmartPunters;
 
     /// <summary>

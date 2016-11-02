@@ -4,11 +4,11 @@
     <Setting Key="NAP_PayoutTrans_Upd" SpName="NAP_PayoutTrans_Upd" DbName="DBTXN.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Settings">
-    <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="NAP_WinLimit_CurrencySel" SpName="NAP_WinLimit_CurrencySel" DbName="DBTXN.bodb02.bodbAdminNet">
       <Mapping DataField="ExchangeID" ObjectProperty="Id" />
       <Mapping DataField="ExchangeName" ObjectProperty="Name" />
     </Setting>
-    <Setting Key="NAP_WinLimit_ProductSel" SpName="NAP_WinLimit_ProductSel_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="NAP_WinLimit_ProductSel" SpName="NAP_WinLimit_ProductSel" DbName="DBTXN.bodb02.bodbAdminNet">
       <Mapping DataField="ProductID" ObjectProperty="Id" />
       <Mapping DataField="ProductName" ObjectProperty="Name" />
     </Setting>
@@ -16,9 +16,9 @@
   <Function Name="Win Limit Control">
     <Setting Key="NAP_WinLimit_CurrencySettingSel" SpName="NAP_WinLimit_CurrencySettingSel" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_WinLimit_GameSel" SpName="NAP_WinLimit_GameSel_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="NAP_WinLimit_GameSel" SpName="NAP_WinLimit_GameSel" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_WinLimit_Game_Unblock" SpName="NAP_WinLimit_Game_Unblock_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="NAP_WinLimit_Game_Unblock" SpName="NAP_WinLimit_Game_Unblock" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
   </Function>
   <Function Name="Colossus Bets Bonus Ticket">

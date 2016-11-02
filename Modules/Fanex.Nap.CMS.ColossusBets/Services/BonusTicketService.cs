@@ -69,6 +69,8 @@
 
                 try
                 {
+                    Logs.Error(new System.Exception(model.SerializeJSON()));
+
                     string jsonResult = client.UploadString(model.SettlementUrl, "POST", model.SerializeJSON());
 
                     var resultAPI = JsonConvert.DeserializeObject<ResultAPI>(jsonResult);

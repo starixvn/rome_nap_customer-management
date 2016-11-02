@@ -85,9 +85,12 @@
     </Setting>
   </Function>
   <Function Name="LossMonitor">
-    <Setting Key="NAP_LimitLoss_SMAIns" SpName="NAP_LimitLoss_SMAIns" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
-    <Setting Key="NAP_LimitLoss_SMADel" SpName="NAP_LimitLoss_SMADel" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
-    <Setting Key="NAP_LimitLoss_SMAMaxLossUpd" SpName="NAP_LimitLoss_SMAMaxLossUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet"></Setting>
+    <Setting Key="NAP_LimitLoss_SMAIns" SpName="NAP_LimitLoss_SMAIns" DbName="DBAGE.bodb_AGE.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_LimitLoss_SMADel" SpName="NAP_LimitLoss_SMADel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
+    </Setting>
+    <Setting Key="NAP_LimitLoss_SMAMaxLossUpd" SpName="NAP_LimitLoss_SMAMaxLossUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet">
+    </Setting>
     <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_LimitLoss_ActionConfigSel" SpName="NAP_LimitLoss_ActionConfigSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
@@ -104,15 +107,15 @@
     </Setting>
   </Function>
   <Function Name="ManageSmartPunters">
-    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter" DbName="DBACC.bodb02.bodbAdminNet">
+    <Setting Key="NAP_CustomerSelSmartPunter" SpName="NAP_CustomerSelSmartPunter_xtest" DbName="DBACC.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="NAP_CustomerInsSmartPunter" SpName="NAP_CustomerInsSmartPunter_xtest" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_CustomerUpdSmartPunter" SpName="NAP_CustomerUpdSmartPunter" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
     <Setting Key="Nap_CustomerDelSmartPunter" SpName="Nap_CustomerDelSmartPunter" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
-    <Setting Key="Acc_UserLog_RunSPSel" SpName="Acc_UserLog_RunSPSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
+    <Setting Key="Acc_UserLog_RunSPSel" SpName="Acc_UserLog_RunSPSel_xtest" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
     </Setting>
     <Setting Key="Acc_UserLog_RunSPSelTotalRecords" SpName="Acc_UserLog_RunSPSelTotalRecords" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
     </Setting>

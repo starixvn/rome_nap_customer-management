@@ -7,6 +7,7 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
+using Fanex.NAP.Core.Service.Impl;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -29,6 +30,7 @@ namespace Fanex.NAP.CMS.Controllers
     public class ManageSmartPuntersController : BaseController
     {
         private readonly IManageSmartPuntersService _manageSmartPuntersService;
+        private readonly IPermissionSerivce _permissionSerivce;
 
         public ManageSmartPuntersController() :
             this(null)
@@ -40,6 +42,7 @@ namespace Fanex.NAP.CMS.Controllers
             int lastYear = DateTime.Today.AddYears(-1).Year;
 
             this._manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
+            _permissionSerivce = _permissionSerivce ?? new PermissionSerivce(new UserService());
             ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
             ViewBag.MinDate = new DateTime(lastYear, 1, 1);
         }
@@ -52,6 +55,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.CanViewActionMonitoring = _permissionSerivce.HasPermission(CurrentSession.UserId, CMSFunctionKeys.ActionMonitoringLog, Constant.Policy.Read);
+
             return View();
         }
 
@@ -151,7 +156,7 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ActionMonitoringLog, Policy = Constant.Policy.Read)]
         public ActionResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
         {
             filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);

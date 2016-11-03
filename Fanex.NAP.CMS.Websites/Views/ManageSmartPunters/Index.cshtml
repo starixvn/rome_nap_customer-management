@@ -1,5 +1,6 @@
 ﻿@{
     var hasEditAccessRight = (bool)ViewBag.HasEditAccessRight;
+    var canViewActionMonitoring = (bool)ViewBag.CanViewActionMonitoring;
 
     ViewBag.Title = ViewLang.ManageSmartPunters;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +21,11 @@
     <div class="tabs-area">
         <div id="divFilterFormTag" class="tab first active">@ViewLang.ManageSmartPunters</div>
         <div id="divLogFormTag" class="tab">Smart Punter Control Log</div>
-        <div id="divActionMonitoringFormTag" class="tab">@ViewLang.ActionMonitoring</div>
+
+        @if (canViewActionMonitoring)
+        {
+            <div id="divActionMonitoringFormTag" class="tab">@ViewLang.ActionMonitoring</div>
+        }
         <span id="spnNote" class="note-info-message" title="@Messages.ManageSmartPunterNote"></span>
     </div>
 
@@ -70,28 +75,31 @@
         </div>
         <div class="filter-row"></div>
     </div>
-    <div id="divActionMonitoringForm" class="filter-form display-none">
-        <div class="filter-row">
-            <div id="from-to-date-picker"></div>
+    @if (canViewActionMonitoring)
+    {
+        <div id="divActionMonitoringForm" class="filter-form display-none">
+            <div class="filter-row">
+                <div id="from-to-date-picker"></div>
+            </div>
+            <div class="filter-row">
+                <div class="lbl-field col_5">
+                    <label for="txtUserName">@ViewLang.SMA/@ViewLang.SmartPunter</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtUserName" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+                <div class="lbl-field col_3">
+                    <label for="txtAdmin">@ViewLang.Admin</label>
+                </div>
+                <div class="edit-field col_5">
+                    <input type="text" id="txtAdmin" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
+                </div>
+                <div class="submit width-auto col_3">
+                    <input id="btnActionMonitoringSearch" type="button" class="submit" value="@ViewLang.Search" />
+                </div>
+            </div>
         </div>
-        <div class="filter-row">
-            <div class="lbl-field col_5">
-                <label for="txtUserName">@ViewLang.SMA/@ViewLang.SmartPunter</label>
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtUserName" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
-            </div>
-            <div class="lbl-field col_3">
-                <label for="txtAdmin">@ViewLang.Admin</label>
-            </div>
-            <div class="edit-field col_5">
-                <input type="text" id="txtAdmin" maxlength="30" data-val-required="@Messages.RequiredFieldError" />
-            </div>
-            <div class="submit width-auto col_3">
-                <input id="btnActionMonitoringSearch" type="button" class="submit" value="@ViewLang.Search" />
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
 <div id="divSmartPunterListContainer" class="display-none content-grid">
@@ -100,10 +108,12 @@
 <div id="divSmartPunterLogListContainer" class="display-none log-list content-grid">
     <div id="divSmartPunterLogList" class="freegrid"></div>
 </div>
-<div id="divActionMonitoringLogListContainer" class="display-none log-list content-grid">
-    <div id="divActionMonitoringLogList" class="freegrid"></div>
-</div>
-
+@if (canViewActionMonitoring)
+{
+    <div id="divActionMonitoringLogListContainer" class="display-none log-list content-grid">
+        <div id="divActionMonitoringLogList" class="freegrid"></div>
+    </div>
+}
 <div id="divDetailTemplate" class="display-none">
     <div class="detail-title">{0}</div>
     <div class="detail-table">

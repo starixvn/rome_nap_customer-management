@@ -55,7 +55,7 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.CanViewActionMonitoring = _permissionSerivce.HasPermission(CurrentSession.UserId, CMSFunctionKeys.ActionMonitoringLog, Constant.Policy.Host);
+            ViewBag.CanViewActionMonitoring = _permissionSerivce.HasPermission(CurrentSession.UserId, CMSFunctionKeys.ActionMonitoringLog, Constant.Policy.Read);
 
             return View();
         }

@@ -156,7 +156,7 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public ActionResult GetActionMonitoringLogs(GetActionMonitoringLogsFilter filter)
         {
             filter.ToDate = filter.ToDate.AddDays(1).AddSeconds(-1);

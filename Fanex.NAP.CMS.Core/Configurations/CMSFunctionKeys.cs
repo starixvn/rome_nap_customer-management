@@ -55,7 +55,7 @@ namespace Fanex.NAP.CMS.Core
 
         public const string ManageSmartPunters = "ManageSmartPunters";
 
-        public const string ActionMonitoringLog = "ActionMonitoringLog";
+        public const string ActionMonitoringLog = "SmartPunterActionMonitoring";
 
         public const string ManageUser = "ManageUser";
 

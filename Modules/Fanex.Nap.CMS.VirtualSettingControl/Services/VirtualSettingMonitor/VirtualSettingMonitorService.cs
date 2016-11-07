@@ -22,7 +22,7 @@
             var custMarginCriteria = new GetCustomerMarginHistoryCriteria
             {
                 CustIds = string.Join(",", custInfo.Select(l => l.CustId)),
-                MonthToCheck = criteria.MonthToCheck,
+                MonthToCheck = 12, //criteria.MonthToCheck,
                 SportId = criteria.SportId,
                 ReportToDate = criteria.ReportToDate
             };

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ColossusBets.Models
 {
+    using System;
     using System.Configuration;
 
     public class DoSettlement
@@ -77,6 +78,7 @@
                         "\"payout\":\"0\"," +
                         "\"odds\":\"0\"," +
                         "\"stake\":\"0\"," +
+                        "\"settleDate\":\"{9}\"," +
                         "\"ext1\":\"0\"," +
                         "\"ext2\":\"0\"," +
                         "\"ext3\":\"{8}\"" +
@@ -84,7 +86,7 @@
                 "}}" +
             "}}";
 
-            return string.Format(jsonFormat, Vendor, VendorKey, Type, ProductId, GameId, EventId, TicketId, CustomerId, Ext3);
+            return string.Format(jsonFormat, Vendor, VendorKey, Type, ProductId, GameId, EventId, TicketId, CustomerId, Ext3, DateTime.Today.ToString("yyyy/MM/dd"));
         }
     }
 }

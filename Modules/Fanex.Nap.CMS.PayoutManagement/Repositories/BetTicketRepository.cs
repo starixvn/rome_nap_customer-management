@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Common;
@@ -50,6 +51,24 @@
             }
 
             return colossusbets;
+        }
+
+        public string GetSiteIdByCustomerId(ICriteria criteria)
+        {
+            string siteId = string.Empty;
+
+            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteScalar(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                if (outputParams != null && outputParams.ContainsKey("siteid"))
+                {
+                    siteId = outputParams["siteid"].ToString();
+                }
+            }
+
+            return siteId;
         }
 
         private BetTicketDetail ToBetTicketDetail(IDataReader reader)

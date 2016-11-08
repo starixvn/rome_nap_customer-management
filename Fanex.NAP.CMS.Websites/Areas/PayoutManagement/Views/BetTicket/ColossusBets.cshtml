@@ -14,7 +14,7 @@
     }
     else
     {
-        <iframe src="@string.Format(PayoutManagementConst.ColossusBetsAPITicketsURL, Model.TransId3rd, cbauthorization.Data.Authorization)">
+        <iframe src="@string.Format(ViewBag.CBDomain.ToString() + PayoutManagementConst.ColossusBetsAPITicketsURL, Model.TransId3rd, cbauthorization.Data.Authorization)">
         </iframe>     
     }
 </div>

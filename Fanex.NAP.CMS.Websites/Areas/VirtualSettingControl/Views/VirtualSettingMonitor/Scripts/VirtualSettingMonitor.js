@@ -160,7 +160,7 @@ var VirtualSettingMonitor = function () {
             bodyRows.push({
                 Columns: [
                     { Name: 'colFigure', Value: "Winloss" },
-                    { Name: 'colAvg', Value: customer.CustMargin[12].Winloss.toFixed(2) },
+                    { Name: 'colAvg', Value: customer.CustMargin[13].Winloss.toFixed(2) },
                     { Name: 'colMonth1', Value: customer.CustMargin[0].Winloss.toFixed(2) },
                     { Name: 'colMonth2', Value: customer.CustMargin[1].Winloss.toFixed(2) },
                     { Name: 'colMonth3', Value: customer.CustMargin[2].Winloss.toFixed(2) },

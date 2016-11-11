@@ -66,7 +66,7 @@
                         currentYear = currentYear - 1;
                     }
 
-                    var custSetting = FindVirtualSetting(listCustMargin, month);
+                    var custSetting = FindVirtualSetting(listCustMargin, month, currentYear);
                     newCust.CustMargin.Add(custSetting != null
                             ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss, custSetting.BetCount)
                             : new MarginModel(month, currentYear));
@@ -91,14 +91,28 @@
         {
             var custVirtualSettingHistory = new List<MarginModel>();
             var currentYear = DateTime.Now.Year;
+            var currentMonth = DateTime.Now.Month;
+            var encounterFirstDecember = true;
             foreach (var month in monthList)
             {
                 if (month == 12)
                 {
-                    currentYear = currentYear - 1;
+                    if (currentMonth == 12 && encounterFirstDecember)
+                    {
+                        encounterFirstDecember = false;
+                    }
+                    else
+                    {
+                        currentYear = currentYear - 1;
+                    }
                 }
 
-                var custSetting = FindVirtualSetting(rawData, month);
+                if (currentMonth == 12)
+                {
+                    currentYear = currentYear + 1;
+                }
+
+                var custSetting = FindVirtualSetting(rawData, month, currentYear);
                 custVirtualSettingHistory.Add(custSetting != null
                         ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
                         : new MarginModel(month, currentYear));
@@ -112,10 +126,10 @@
             return custVirtualSettingHistory;
         }
 
-        public VirtualSettingModel FindVirtualSetting(List<VirtualSettingModel> rawData, int month)
+        public VirtualSettingModel FindVirtualSetting(List<VirtualSettingModel> rawData, int month, int year)
         {
-            return rawData.Any(l => l.ReportMonth == month)
-                ? rawData.First(l => l.ReportMonth == month)
+            return rawData.Any(l => l.ReportMonth == month && l.ReportYear == year)
+                ? rawData.First(l => l.ReportMonth == month && l.ReportYear == year)
                 : null;
         }
 

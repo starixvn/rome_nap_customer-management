@@ -16,6 +16,8 @@
 
     public class VirtualSettingMonitorController : BaseController
     {
+        private const int MonthsToCheck = 13;
+
         private static readonly int[] Months = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
         private readonly ISettingService _settingService;
@@ -51,8 +53,8 @@
         public ActionResult Search(GetVirtualSettingMonitorCriteria criteria)
         {
             criteria.ReportToDate = DateTime.Now;
-            var monthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
-            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, 12);
+            var monthList = GenerateMonthList(criteria.ReportToDate.Month, MonthsToCheck);
+            var reversedMonthList = GenerateMonthList(criteria.ReportToDate.Month, MonthsToCheck);
             Array.Reverse(reversedMonthList);
             var virtualSettings = _virtualSettingMonitorService.GetVirtualSettingMonitor(criteria, monthList);
 
@@ -60,7 +62,7 @@
                 new
                 {
                     TotalRow = virtualSettings == null ? 0 : virtualSettings.CustMargin.Count,
-                    MonthList = Helper.GetDate(DateTime.Today, 12, "MMM - yyyy"),
+                    MonthList = Helper.GetDate(DateTime.Today, MonthsToCheck, "MMM - yyyy"),
                     VirtualSettings = virtualSettings
                 }, 
                 JsonRequestBehavior.AllowGet);

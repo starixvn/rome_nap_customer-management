@@ -10,10 +10,10 @@ namespace Fanex.Nap.CMS.PayoutManagement.Criteria
         }
 
         [SpParam(SqlParamName = "custid")]
-        public int CustomerId { get; }
+        public int CustomerId { get; private set;  }
 
         [SpParam(SqlParamName = "siteid")]
-        public int SiteId { get; }
+        public int SiteId { get; private set; }
 
         public override string GetSettingKey()
         {

@@ -77,7 +77,7 @@ Array.prototype.collect = function (collector) {
             for (var i = 0; i < data.MonthList.length; i++) {
                 var header = {
                     HeaderText: data.MonthList[i],
-                    Width: 100,
+                    Width: 80,
                     Name: data.MonthList[i],
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -156,7 +156,7 @@ Array.prototype.collect = function (collector) {
 
     var renderVrAdjustmentReportGrid = function (data) {
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 100, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
+            return { HeaderText: month, Width: 95, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
         };
 
         function getWinlossCell(marginItem, index) {
@@ -178,12 +178,12 @@ Array.prototype.collect = function (collector) {
         var months = data.Months.map(getMonthHeaders);
 
         var columnHeaders = [
-            { HeaderText: '#', Width: 50, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: 'Updated Date', Width: 80, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Figure', Width: 100, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right' }
         ].concat(months);
 

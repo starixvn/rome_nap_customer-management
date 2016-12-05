@@ -58,12 +58,27 @@
                 };
 
                 var currentYear = DateTime.Now.Year;
-
+                var currentMonth = DateTime.Now.Month;
+                var encounterFirstDecember = false;
                 foreach (var month in monthList)
                 {
                     if (month == 12)
                     {
-                        currentYear = currentYear - 1;
+                        if (currentMonth == 12)
+                        {
+                            if (!encounterFirstDecember)
+                            {
+                                encounterFirstDecember = true;
+                            }
+                            else
+                            {
+                                currentYear = currentYear - 1;
+                            }
+                        }
+                        else
+                        {
+                            currentYear = currentYear - 1;
+                        }
                     }
 
                     var custSetting = FindVirtualSetting(listCustMargin, month, currentYear);
@@ -71,6 +86,8 @@
                             ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss, custSetting.BetCount)
                             : new MarginModel(month, currentYear));
                 }
+
+                newCust.CustMargin = newCust.CustMargin.OrderBy(l => l.Year).ThenBy(l => l.Month).ToList();
 
                 // The Average Performance record
                 var sumTurnover = newCust.CustMargin.Sum(l => l.Turnover);
@@ -92,14 +109,21 @@
             var custVirtualSettingHistory = new List<MarginModel>();
             var currentYear = DateTime.Now.Year;
             var currentMonth = DateTime.Now.Month;
-            var encounterFirstDecember = true;
+            var encounterFirstDecember = false;
             foreach (var month in monthList)
             {
                 if (month == 12)
                 {
-                    if (currentMonth == 12 && encounterFirstDecember)
+                    if (currentMonth == 12)
                     {
-                        encounterFirstDecember = false;
+                        if (!encounterFirstDecember)
+                        {
+                            encounterFirstDecember = true;
+                        }
+                        else
+                        {
+                            currentYear = currentYear - 1;
+                        }
                     }
                     else
                     {
@@ -107,16 +131,13 @@
                     }
                 }
 
-                if (currentMonth == 12)
-                {
-                    currentYear = currentYear + 1;
-                }
-
                 var custSetting = FindVirtualSetting(rawData, month, currentYear);
                 custVirtualSettingHistory.Add(custSetting != null
                         ? new MarginModel(custSetting.ReportMonth, custSetting.ReportYear, custSetting.Turnover, custSetting.Winloss)
                         : new MarginModel(month, currentYear));
             }
+
+            custVirtualSettingHistory = custVirtualSettingHistory.OrderBy(l => l.Year).ThenBy(l => l.Month).ToList();
 
             // The Average Performance record
             var sumTurnover = rawData.Sum(l => l.Turnover);

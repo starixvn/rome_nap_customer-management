@@ -228,7 +228,9 @@
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
@@ -283,7 +285,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\UAT\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\Local\NAPCMSSPNames.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />

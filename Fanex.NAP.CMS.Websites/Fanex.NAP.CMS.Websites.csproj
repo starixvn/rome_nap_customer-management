@@ -678,6 +678,7 @@
     <Content Include="Web.uat.config">
     </Content>
     <Content Include="Web.sit.config">
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.backupMNL.config">
     </Content>

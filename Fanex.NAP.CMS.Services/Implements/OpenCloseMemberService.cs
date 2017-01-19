@@ -13,6 +13,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using CasinoLibrary.Model.UserException;
     using CasinoLibrary.SBAgent;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
@@ -130,7 +131,19 @@ namespace Fanex.NAP.CMS.Services.Implements
             var result = new UpdatedMembersStatusResult();
             List<UpdatedMemberStatus> syncCasinoMembers = filter.MemberStatusList.Where(obj => obj.SyncCasino).ToList();
             List<UpdatedMemberStatus> members = filter.MemberStatusList.Where(obj => !obj.SyncCasino).ToList();
-            List<UpdatedMemberStatus> updatedRnGMembers = UpdateRnGCasinoStatus(syncCasinoMembers, filter);
+            List<UpdatedMemberStatus> updatedRnGMembers;
+
+            try
+            {
+                updatedRnGMembers = UpdateRnGCasinoStatus(syncCasinoMembers, filter);
+            }
+            catch (ErrorException ex)
+            {
+                result.ErrorCode = 100;
+                result.ErrorMsg = ex.Message;
+                updatedRnGMembers = new List<UpdatedMemberStatus>();
+            }
+
             List<UpdatedMemberStatus> failedList = syncCasinoMembers.Except(updatedRnGMembers).ToList();
 
             if (updatedRnGMembers.Count > 0)
@@ -211,6 +224,10 @@ namespace Fanex.NAP.CMS.Services.Implements
 
                         index += count;
                     }
+                }
+                catch (ErrorException ex)
+                {
+                    throw ex;
                 }
                 catch (Exception ex)
                 {

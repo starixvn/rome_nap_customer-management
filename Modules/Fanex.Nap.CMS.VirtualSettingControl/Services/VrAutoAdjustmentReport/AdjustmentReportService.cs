@@ -145,10 +145,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     exportExcelInfo.CurrentRow++;
                     exportExcelInfo.CurrentColumn = 5;
                     exportExcelInfo.RenderCurrentCell(figureTexts[2], centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.AvgPerformance.Margin, _excelStyleTemplate.DecimalStyle);
+                    exportExcelInfo.RenderCurrentCell((Math.Round(record.AvgPerformance.Margin, 2) * 100).ToString() + "%", _excelStyleTemplate.DecimalStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        exportExcelInfo.RenderCurrentCell(record.MarginViewModels.ElementAt(counter).Margin, _excelStyleTemplate.DecimalStyle);
+                        exportExcelInfo.RenderCurrentCell((Math.Round(record.MarginViewModels.ElementAt(counter).Margin, 2) * 100).ToString() + "%", _excelStyleTemplate.DecimalStyle);
                     }
 
                     exportExcelInfo.CurrentRow++;

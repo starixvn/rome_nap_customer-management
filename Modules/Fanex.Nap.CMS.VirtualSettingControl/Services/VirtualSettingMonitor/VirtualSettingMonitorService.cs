@@ -67,7 +67,12 @@
             _excelStyleTemplate.InitAllGeneralStyles();
             ExportVirtualSettingsMonitorHeader(exportExcelInfo, criteria);
             ExportVirtualSettingsMonitorBody(exportExcelInfo, reportData, criteria.MonthToCheck);
-            var fileName = string.Format(Labels.VirtualSettingsMonitor_ExcelFileName, criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", criteria.Rate, criteria.MonthToSum);
+            var fileName = string.Format(
+                Labels.VirtualSettingsMonitor_ExcelFileName, 
+                DateTime.Now.ToShortFormatedDateWithSlash(),
+                criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", 
+                criteria.Rate, 
+                criteria.MonthToSum);
             ExcelHelper.ResponseStream(excelFile, ExcelHelper.FormatFileName(fileName));
         }
 
@@ -196,10 +201,16 @@
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
-            exportExcelInfo.RenderRow(Labels.VRAutoAdjustment, _excelStyleTemplate.HeaderTextStyle);
+            exportExcelInfo.RenderRow(Labels.VirtualSettingsMonitor, _excelStyleTemplate.HeaderTextStyle);
 
             exportExcelInfo.RenderRow(
-                string.Format(Labels.VirtualSettingsMonitor_Legend, criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", criteria.Rate, criteria.TopRows, criteria.MonthToSum), 
+                string.Format(
+                    Labels.VirtualSettingsMonitor_Legend, 
+                    DateTime.Now.ToShortFormatedDateWithSlash(), 
+                    criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", 
+                    criteria.Rate, 
+                    criteria.TopRows, 
+                    criteria.MonthToSum), 
                 _excelStyleTemplate.TextStyle);
 
             exportExcelInfo.CreateCurrentNPOIRow();
@@ -262,16 +273,16 @@
                     exportExcelInfo.CurrentColumn = 3;
                     exportExcelInfo.RenderCurrentCell(figureTexts[2], centerTextStyle);
 
-                    exportExcelInfo.RenderCurrentCell(record.CustMargin[monthsToCheck].Turnover == 0 ? 0 : Math.Round(record.CustMargin[monthsToCheck].Winloss / record.CustMargin[monthsToCheck].Turnover * 100, 2), _excelStyleTemplate.DecimalStyle);
+                    exportExcelInfo.RenderCurrentCell((record.CustMargin[monthsToCheck].Turnover == 0 ? 0 : Math.Round(record.CustMargin[monthsToCheck].Winloss / record.CustMargin[monthsToCheck].Turnover * 100, 2)).ToString() + "%", _excelStyleTemplate.DecimalStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        exportExcelInfo.RenderCurrentCell(record.CustMargin.ElementAt(counter).Margin, _excelStyleTemplate.DecimalStyle);
+                        exportExcelInfo.RenderCurrentCell(record.CustMargin.ElementAt(counter).Margin.ToString() + "%", _excelStyleTemplate.DecimalStyle);
                     }
 
                     exportExcelInfo.CurrentRow++;
                     exportExcelInfo.CurrentColumn = 3;
                     exportExcelInfo.RenderCurrentCell(figureTexts[3], centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.CustMargin.Sum(l => l.BetCount), _excelStyleTemplate.IntStyle);
+                    exportExcelInfo.RenderCurrentCell(record.CustMargin[monthsToCheck].BetCount, _excelStyleTemplate.IntStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
                         exportExcelInfo.RenderCurrentCell(record.CustMargin.ElementAt(counter).BetCount, _excelStyleTemplate.IntStyle);

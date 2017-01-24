@@ -185,7 +185,7 @@ var VirtualSettingMonitor = function () {
                     { Name: 'colMonth10', Value: customer.CustMargin[9].Winloss.toFixed(2) },
                     { Name: 'colMonth11', Value: customer.CustMargin[10].Winloss.toFixed(2) },
                     { Name: 'colMonth12', Value: customer.CustMargin[11].Winloss.toFixed(2) },
-                    { Name: 'colMonth13', Value: customer.CustMargin[12].Turnover.toFixed(2) }
+                    { Name: 'colMonth13', Value: customer.CustMargin[12].Winloss.toFixed(2) }
                 ],
                 CssClass: cssClass
             });

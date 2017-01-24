@@ -169,9 +169,9 @@
     <value>Virtual Settings Monitor</value>
   </data>
   <data name="VirtualSettingsMonitor_ExcelFileName" xml:space="preserve">
-    <value>VRAutoAdjustmentReport_{0}_Rate{1}_WonPeriod{2}Months</value>
+    <value>VRAutoAdjustmentReport_{0}_{1}_Rate{2}_WonPeriod{3}Months</value>
   </data>
   <data name="VirtualSettingsMonitor_Legend" xml:space="preserve">
-    <value>Sport: {0}, Virtual Rate: {1}, Select top: {2}, Won Period: {3} months</value>
+    <value>Report Date: {0}, Sport: {1}, Virtual Rate: {2}, Select top: {3}, Won Period: {4} months</value>
   </data>
 </root>

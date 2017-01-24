@@ -187,7 +187,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to VRAutoAdjustmentReport_{0}_Rate{1}_WonPeriod{2}Months.
+        ///   Looks up a localized string similar to VRAutoAdjustmentReport_{0}_{1}_Rate{2}_WonPeriod{3}Months.
         /// </summary>
         public static string VirtualSettingsMonitor_ExcelFileName {
             get {
@@ -196,7 +196,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sport: {0}, Virtual Rate: {1}, Select top: {2}, Won Period: {3} months.
+        ///   Looks up a localized string similar to Report Date: {0}, Sport: {1}, Virtual Rate: {2}, Select top: {3}, Won Period: {4} months.
         /// </summary>
         public static string VirtualSettingsMonitor_Legend {
             get {

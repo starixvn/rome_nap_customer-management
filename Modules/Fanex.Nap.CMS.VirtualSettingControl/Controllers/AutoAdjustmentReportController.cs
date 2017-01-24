@@ -49,5 +49,11 @@
                 Reports = logResult.Select(entry => new LogEntryViewModel(entry, histories[entry.CustId]))
             });
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
+        public void ExportVRAdjustmentReport(GetVrAdjustmentLogCriteria criteria)
+        {
+            _adjustmentReportService.ExportVRAdjustmentReport(criteria, MonthsToCheck);
+        }
     }
 }

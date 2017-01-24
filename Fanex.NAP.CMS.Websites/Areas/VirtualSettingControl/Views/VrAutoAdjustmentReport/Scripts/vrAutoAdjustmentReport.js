@@ -254,7 +254,25 @@ Array.prototype.collect = function (collector) {
                 pagerSelectCallBack: onPageChangedHandler
             },
             columns: columnHeaders,
+            showTitle: true,
+            titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportVRAdjustmentReport();
+                }
+            },
             bodyRows: data.Reports.slice(0, CMS.pageSize).collect(bodyMapFunc(0, CMS.pageSize))
+        };
+
+        function exportVRAdjustmentReport() {
+            var url = rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ExportVRAdjustmentReport';
+            var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
+            var criteria = {
+                FromDate: fromtoDate.FromDate,
+                ToDate: fromtoDate.ToDate
+            };
+
+            CMS.downloadFile(url, criteria);
         };
 
         function onPageChangedHandler(index, pageSize) {

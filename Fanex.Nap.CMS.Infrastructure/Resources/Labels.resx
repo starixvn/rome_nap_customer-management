@@ -120,6 +120,12 @@
   <data name="Agent" xml:space="preserve">
     <value>Agent</value>
   </data>
+  <data name="AVGPerformance" xml:space="preserve">
+    <value>AVG. Performance</value>
+  </data>
+  <data name="Figure" xml:space="preserve">
+    <value>Figure</value>
+  </data>
   <data name="Master" xml:space="preserve">
     <value>Master</value>
   </data>
@@ -129,10 +135,43 @@
   <data name="Message_NoReportData" xml:space="preserve">
     <value>There is no data.</value>
   </data>
+  <data name="NewRate" xml:space="preserve">
+    <value>New Rate</value>
+  </data>
+  <data name="OldRate" xml:space="preserve">
+    <value>Old Rate</value>
+  </data>
   <data name="RequiredFieldError" xml:space="preserve">
     <value>Required field!</value>
   </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
+  </data>
+  <data name="UpdatedDate" xml:space="preserve">
+    <value>Updated Date</value>
+  </data>
+  <data name="VRAutoAdjustment" xml:space="preserve">
+    <value>VR Auto Adjustment Report</value>
+  </data>
+  <data name="VRAutoAdjustment_ExcelFileName" xml:space="preserve">
+    <value>VRAutoAdjustmentReport_{0}</value>
+  </data>
+  <data name="Symbol_No" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="VRAutoAdjustment_Legend" xml:space="preserve">
+    <value>From: {0} To: {1}</value>
+  </data>
+  <data name="VirtualRate" xml:space="preserve">
+    <value>Virtual Rate</value>
+  </data>
+  <data name="VirtualSettingsMonitor" xml:space="preserve">
+    <value>Virtual Settings Monitor</value>
+  </data>
+  <data name="VirtualSettingsMonitor_ExcelFileName" xml:space="preserve">
+    <value>VRAutoAdjustmentReport_{0}_Rate{1}_WonPeriod{2}Months</value>
+  </data>
+  <data name="VirtualSettingsMonitor_Legend" xml:space="preserve">
+    <value>Sport: {0}, Virtual Rate: {1}, Select top: {2}, Won Period: {3} months</value>
   </data>
 </root>

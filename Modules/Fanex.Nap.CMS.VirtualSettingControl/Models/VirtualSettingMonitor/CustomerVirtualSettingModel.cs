@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor
 {
+    using System;
     using System.Collections.Generic;
-
+    
+    [Serializable]
     public class CustomerVirtualSettingModel
     {
         public CustomerVirtualSettingModel()

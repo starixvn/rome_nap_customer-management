@@ -2,6 +2,7 @@
 {
     using System;
 
+    [Serializable]
     public class MarginModel
     {
         public MarginModel(int month, int year)

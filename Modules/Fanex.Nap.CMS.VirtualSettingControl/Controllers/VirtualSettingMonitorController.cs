@@ -68,6 +68,15 @@
                 JsonRequestBehavior.AllowGet);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitor, Policy = Constant.Policy.Read)]
+        public void ExportVirtualSettingsMonitor(GetVirtualSettingMonitorCriteria criteria)
+        {
+            criteria.ReportToDate = DateTime.Now;
+            criteria.MonthToCheck = MonthsToCheck;
+
+            _virtualSettingMonitorService.ExportVirtualSettingsMonitor(criteria);
+        }
+
         #endregion
 
         #region Utilities

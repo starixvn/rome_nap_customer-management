@@ -52,8 +52,6 @@ var VirtualSettingMonitor = function () {
 
     function initGridOptions() {
         return {
-            showTitle: true,
-            titleInfo: {},
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
@@ -66,9 +64,23 @@ var VirtualSettingMonitor = function () {
             pagerOption: {
                 itemsPerPageArray: [10, 50, 100, 200],
                 pagerSelectCallBack: reRenderAfterPaged
+            },
+            showTitle: true,
+            titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportVirtualSettingsMonitor();
+                }
             }
         };
     }
+    
+    function exportVirtualSettingsMonitor() {
+        var url = rootUrl + 'VirtualSettingControl/VirtualSettingMonitor/ExportVirtualSettingsMonitor';
+        var criteria = getSearchParams();
+
+        CMS.downloadFile(url, criteria);
+    };
 
     function getVirtualSettings() {
         CMS.hideInlineMsg($divResult);

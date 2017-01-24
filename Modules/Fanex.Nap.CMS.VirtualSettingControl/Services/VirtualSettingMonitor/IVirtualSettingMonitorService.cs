@@ -11,5 +11,7 @@
         VirtualSettingViewModel GetVirtualSettingMonitor(GetVirtualSettingMonitorCriteria criteria, int[] monthList);
 
         IEnumerable<MarginModel> GetCustomerVirtualSettingHistories(ICriteria criteria, int[] monthList);
+
+        void ExportVirtualSettingsMonitor(GetVirtualSettingMonitorCriteria criteria);
     }
 }

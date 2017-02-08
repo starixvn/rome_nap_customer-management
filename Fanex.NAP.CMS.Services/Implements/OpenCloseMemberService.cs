@@ -137,10 +137,10 @@ namespace Fanex.NAP.CMS.Services.Implements
             {
                 updatedRnGMembers = UpdateRnGCasinoStatus(syncCasinoMembers, filter);
             }
-            catch (ErrorException ex)
+            catch (ErrorException casinoException)
             {
-                result.ErrorCode = 100;
-                result.ErrorMsg = ex.Message;
+                result.ErrorCode = 999;
+                result.ErrorMsg = casinoException.Message;
                 updatedRnGMembers = new List<UpdatedMemberStatus>();
             }
 
@@ -225,9 +225,11 @@ namespace Fanex.NAP.CMS.Services.Implements
                         index += count;
                     }
                 }
-                catch (ErrorException ex)
+                catch (ErrorException casinoException)
                 {
-                    throw ex;
+                    Logging.LogService.Error(casinoException.Message, casinoException);
+
+                    throw casinoException;
                 }
                 catch (Exception ex)
                 {

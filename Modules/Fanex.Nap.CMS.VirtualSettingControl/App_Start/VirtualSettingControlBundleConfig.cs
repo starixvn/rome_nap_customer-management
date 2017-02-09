@@ -47,6 +47,9 @@
 
             bundles.Add(new ScriptBundle("~/bundles/VrAutoAdjustmentReport/js").Include(
                 "~/Areas/VirtualSettingControl/Views/VrAutoAdjustmentReport/Scripts/VrAutoAdjustmentReport.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/NewVrAutoAdjustmentReport/js").Include(
+                "~/Areas/VirtualSettingControl/Views/NewVrAutoAdjustmentReport/Scripts/VrAutoAdjustmentReport.js"));
         }
     }
 }

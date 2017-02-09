@@ -5,6 +5,11 @@
     [Serializable]
     public class MarginModel
     {
+        public MarginModel()
+        {
+
+        }
+
         public MarginModel(int month, int year)
         {
             Month = month;
@@ -30,6 +35,10 @@
             Turnover = turnover;
         }
 
+        public int CustId { get; set; }
+
+        public string Username { get; set; }
+
         public int BetCount { get; set; }
 
         public int Year { get; set; }
@@ -40,12 +49,27 @@
 
         public decimal Turnover { get; set; }
 
-        public decimal Margin 
+        public decimal Margin
         {
             get
             {
                 return Turnover == 0 ? 0 : Math.Round(Winloss / Turnover * 100, 2);
             }
-        }        
+        }
+
+        public DateTime ReportDate
+        {
+            get
+            {
+                try
+                {
+                    return new DateTime(Year, Month, 1);
+                }
+                catch
+                {
+                    return DateTime.Now;
+                }
+            }
+        }
     }
 }

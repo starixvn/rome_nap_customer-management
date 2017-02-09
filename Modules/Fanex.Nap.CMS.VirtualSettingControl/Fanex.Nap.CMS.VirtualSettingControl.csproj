@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="App_Start\VirtualSettingControlAreaRegistration.cs" />
     <Compile Include="App_Start\VirtualSettingControlBundleConfig.cs" />
+    <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginByMonthCriteria.cs" />
+    <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrAdjustmentLogCriteria.cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerVirtualSettingModel.cs" />
+    <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
     <Compile Include="Models\VrAutoAdjustmentReport\VrAutoAdjustmentLogEntry.cs" />

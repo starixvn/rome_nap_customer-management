@@ -38,7 +38,29 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 ReportToDate = reportDate
             };
 
-            return GetData<VirtualSettingModel>(criteria).ToLookup(m => m.CustId, m => new MarginModel(m.ReportMonth, m.ReportYear, m.Turnover, m.Winloss, m.BetCount));
+            var result = GetData<VirtualSettingModel>(criteria);
+
+            return result.ToLookup(m => m.CustId, m => new MarginModel(m.ReportMonth, m.ReportYear, m.Turnover, m.Winloss, m.BetCount));
+        }
+
+        public List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria)
+        {
+            var marginList = this.GetData<MarginModel>(criteria);
+            var result = new List<CustomerMarginModel>();
+            var groupItem = marginList.GroupBy(m => m.Username);
+
+            foreach (var item in groupItem)
+            {
+                var model = new CustomerMarginModel
+                {
+                    Username = item.Key,
+                    MarginList = item.ToList()
+                };
+
+                result.Add(model);
+            }
+
+            return result;
         }
 
         public void ExportVRAdjustmentReport(GetVrAdjustmentLogCriteria criteria, int monthsToCheck)

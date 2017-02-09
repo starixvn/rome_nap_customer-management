@@ -43,11 +43,13 @@
             var histories =
                 _adjustmentReportService.GetVirtualSettingLatestMonths(logResult.Select(c => c.CustId), DateTime.Today, MonthsToCheck);
 
-            return Json(new
+            var result = new
             {
                 Months = Helper.GetDate(DateTime.Today, MonthsToCheck, "MMM - yyyy"),
                 Reports = logResult.Select(entry => new LogEntryViewModel(entry, histories[entry.CustId]))
-            });
+            };
+
+            return Json(result);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]

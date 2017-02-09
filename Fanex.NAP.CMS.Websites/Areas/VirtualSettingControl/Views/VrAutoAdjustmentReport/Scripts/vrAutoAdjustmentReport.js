@@ -77,7 +77,7 @@ Array.prototype.collect = function (collector) {
             for (var i = 0; i < data.MonthList.length; i++) {
                 var header = {
                     HeaderText: data.MonthList[i],
-                    Width: 80,
+                    Width: 90,
                     Name: data.MonthList[i],
                     HeaderAlign: 'center',
                     CellAlign: 'right',
@@ -156,7 +156,7 @@ Array.prototype.collect = function (collector) {
 
     var renderVrAdjustmentReportGrid = function (data) {
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 95, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
+            return { HeaderText: month, Width: 90, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
         };
 
         function getWinlossCell(marginItem, index) {
@@ -179,7 +179,7 @@ Array.prototype.collect = function (collector) {
 
         var columnHeaders = [
             { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: 'Member', Width: 180, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
             { HeaderText: 'Updated Date', Width: 80, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },

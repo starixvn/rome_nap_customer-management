@@ -6,6 +6,7 @@
   <Function Name="Virtual Setting Control">
     <Setting Key="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="ManageSmartPunters">
     <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />

@@ -20,7 +20,16 @@
             <div class="lbl-field col_4">
                 <label>Updated Date</label>
             </div>
-            <div id="fromtodate-picker"></div>
+            
+            <div class="col_8">
+                <select id="updated-date" class="combobox-autocomplete width-160">
+                    @for (var i = 0; i < @ViewBag.ReportDateList.Count; i++)
+                    {
+                        <option readonly value="@ViewBag.ReportDateList[i].AdjustDateValue" selected>@ViewBag.ReportDateList[i].AdjustDateString</option>
+                    }
+                </select>
+            </div>
+
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit" id="btn-generate">Generate</button>
             </div>

@@ -43,7 +43,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             return result.ToLookup(m => m.CustId, m => new MarginModel(m.ReportMonth, m.ReportYear, m.Turnover, m.Winloss, m.BetCount));
         }
 
-        public List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria)
+        public List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria, int monthsToCheck, DateTime AdjustDate)
         {
             var marginList = this.GetData<MarginModel>(criteria);
             var result = new List<CustomerMarginModel>();
@@ -51,11 +51,31 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
 
             foreach (var item in groupItem)
             {
+                var marginModelList = new List<MarginModel>();
+
+
                 var model = new CustomerMarginModel
                 {
                     Username = item.Key,
                     MarginList = item.ToList()
                 };
+
+                if (model.MarginList.Count < monthsToCheck)
+                {
+                    var lastMonth = new DateTime(AdjustDate.Year, AdjustDate.Month, 1);
+
+                    for (var i = 0; i < monthsToCheck; i++)
+                    {
+                        var month = lastMonth.AddMonths(-i);
+
+                        if (!model.MarginList.Exists(t => t.ReportDate == month))
+                        {
+                            model.MarginList.Add(new MarginModel { Month = month.Month, Year = month.Year });
+                        }
+                    }
+                }
+
+                model.MarginList = model.MarginList.OrderBy(t => t.ReportDate).ToList();
 
                 result.Add(model);
             }
@@ -91,10 +111,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             ExcelHelper.ResponseStream(excelFile, ExcelHelper.FormatFileName(fileName));
         }
 
+        public IEnumerable<CustomerMarginDateModel> GetReportDate(ICriteria criteria)
+        {
+            return this.GetData<CustomerMarginDateModel>(criteria);
+        }
+
         #region Utilities
 
         private void ExportVRAdjustmentReportHeader(
-            ExportExcelInfoByNPOI exportExcelInfo, 
+            ExportExcelInfoByNPOI exportExcelInfo,
             GetVrAdjustmentLogCriteria criteria,
             int monthsToCheck)
         {
@@ -117,7 +142,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.RenderCurrentCell(Labels.AVGPerformance, _excelStyleTemplate.HeaderTextStyle);
 
             var months = Helper.GetDate(DateTime.Today, monthsToCheck, "MMM - yyyy");
-            foreach(var month in months)
+            foreach (var month in months)
             {
                 exportExcelInfo.RenderCurrentCell(month, _excelStyleTemplate.HeaderTextStyle);
             }
@@ -137,7 +162,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             {
                 var rowIndex = 0;
                 var counter = 0;
-                var figureTexts = new string[4] {"Turnover", "Winloss", "Margin", "Bet Count"};
+                var figureTexts = new string[4] { "Turnover", "Winloss", "Margin", "Bet Count" };
                 foreach (var record in reportData)
                 {
                     exportExcelInfo.ResetCurrentColumn();

@@ -19,7 +19,7 @@
         {
             get
             {
-                return MarginList.Count;
+                return MarginList.Where(t => t.Winloss != 0).Count();
             }
         }
 
@@ -35,7 +35,7 @@
         {
             get
             {
-                var last3Months = MarginList.OrderByDescending(t => t.ReportDate).Take(3);
+                var last3Months = MarginList.Where(t => t.Turnover != 0).OrderByDescending(t => t.ReportDate).Take(3);
                 var result = new MarginModel
                 {
                     BetCount = last3Months.Sum(t => t.BetCount),
@@ -53,9 +53,9 @@
             {
                 var result = new MarginModel();
 
-                if (MarginList.Count >= 6)
+                if (MarginList.Where(t => t.Turnover != 0).Count() >= 6)
                 {
-                    var last6Months = MarginList.OrderByDescending(t => t.ReportDate).Take(6);
+                    var last6Months = MarginList.Where(t => t.Turnover != 0).OrderByDescending(t => t.ReportDate).Take(6);
 
                     result.BetCount = last6Months.Sum(t => t.BetCount);
                     result.Turnover = last6Months.Sum(t => t.Turnover);

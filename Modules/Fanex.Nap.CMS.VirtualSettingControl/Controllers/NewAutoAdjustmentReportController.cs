@@ -14,8 +14,6 @@
     {
         private readonly IAdjustmentReportService _adjustmentReportService;
 
-        private const int MonthsToCheck = 13;
-
         public NewAutoAdjustmentReportController()
         {
             _adjustmentReportService = new AdjustmentReportService();
@@ -24,18 +22,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var reportDateList = _adjustmentReportService.GetReportDate(new GetCustomerMarginHistoryDateCriteria());
+            ViewBag.ReportDateList = reportDateList;
             return View("~/Areas/VirtualSettingControl/Views/NewVrAutoAdjustmentReport/Index.cshtml");
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
         public ActionResult ViewVrAdjustmentReport(GetCustomerMarginHistoryCriteria criteria)
         {
-            criteria.AdjustDate = new DateTime(2017, 2, 9, 0, 6, 48, 650);
-            var data = _adjustmentReportService.GetCustomerMarginHistory(criteria);
             var result = new
             {
-                Months = Helper.GetDate(DateTime.Today, MonthsToCheck, "MMM - yyyy"),
-                Reports = data
+                Months = Helper.GetDate(criteria.AdjustDate, 13, "MMM - yyyy"),
+                Reports = _adjustmentReportService.GetCustomerMarginHistory(criteria, 13, criteria.AdjustDate)
             };
 
             return Json(result);

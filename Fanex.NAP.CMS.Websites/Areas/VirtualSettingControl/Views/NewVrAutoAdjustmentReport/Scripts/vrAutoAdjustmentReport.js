@@ -13,150 +13,20 @@ Array.prototype.collect = function (collector) {
     var rootUrl = $('#CMSRoot').val();
 
     var $fromtoDatePicker = $('#fromtodate-picker');
-    var $autoAdjustmentReportDetail = $('#auto-adjustment-report-detail');
     var $vrAdjustmentReportGrid = $("#auto-adjustment-report-freegrid");
-
-    function initDateRangeSelect() {
-        $fromtoDatePicker.nexDatePicker({
-            nexDatePickerType: 'daterange',
-            datePickerFormat: {
-                dateFormat: CMS.formats.DateFormat,
-                changeMonth: true,
-                changeYear: true,
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                minDate: '01/01/2012',
-                maxDate: null
-            },
-            firstDatePicker: {
-                Id: 'dpk-fromdate',
-                Label: '',
-                LabelCss: '',
-                TextboxCss: 'edit-field col_6'
-            },
-            secondDatePicker: {
-                Id: 'dpk-todate',
-                Label: '',
-                InitDate: currentDate,
-                CurrentDate: currentDate,
-                LabelCss: '',
-                TextboxCss: 'edit-field col_6'
-            }
-        });
-
-        $('#dpk-fromdate').datepicker('setDate', initFromDate);
-    }
-
-    var getCustomerHistory = function (custId, username) {
-        var url = rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewHistory?CustId=' + custId;
-
-        CMS.getJson(url, function (result) {
-            $('#divModals').empty();
-            var title = 'Customer Margin History: ' + username;
-            CMS.modal(title, $autoAdjustmentReportDetail, { resizable: false });
-
-            renderCustomerHistory(result);
-        });
-    };
-
-    var renderCustomerHistory = function (data) {
-        var generateColumnHeaders = function () {
-            var columnHeaders =
-                [
-                    { HeaderText: '', Width: 60, Name: 'colRowName', HeaderAlign: 'center', CellAlign: 'center' },
-                    {
-                        HeaderText: "AVG. Performance",
-                        Width: 150,
-                        Name: 'colAvg',
-                        HeaderAlign: 'center',
-                        CellAlign: 'right',
-                        FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber
-                    }
-                ];
-
-            for (var i = 0; i < data.MonthList.length; i++) {
-                var header = {
-                    HeaderText: data.MonthList[i],
-                    Width: 80,
-                    Name: data.MonthList[i],
-                    HeaderAlign: 'center',
-                    CellAlign: 'right',
-                    FormatNumber: CMSConstants.NumberFormat.TwoDecimalNumber
-                };
-
-                columnHeaders.push(header);
-            }
-
-            return columnHeaders;
-        };
-
-        var generateBodyRows = function () {
-            var rowsName = ['Turnover', 'Winloss', 'Margin'];
-            var rows = [];
-            $.each(rowsName, function (index, rowName) {
-                var avgData = rowName === 'Turnover' ? data.MarginHistory[data.MonthList.length].Turnover :
-                    (rowName === 'Winloss' ? data.MarginHistory[data.MonthList.length].Winloss : data.MarginHistory[data.MonthList.length].Margin);
-                var columns = [
-                    { Name: 'colRowName', Value: rowName },
-                    { Name: 'colAvg', Value: avgData }
-                ];
-
-                for (var i = 0; i < data.MonthList.length; i++) {
-                    var colData = rowName === 'Turnover' ? data.MarginHistory[i].Turnover :
-                        (rowName === 'Winloss' ? data.MarginHistory[i].Winloss : data.MarginHistory[i].Margin);
-                    var column = { Name: data.MonthList[i], Value: colData };
-
-                    columns.push(column);
-                }
-
-                var turnOverRow = {
-                    Columns: columns
-                };
-
-                rows.push(turnOverRow);
-            });
-
-            return rows;
-        };
-
-        var bodyRows = generateBodyRows();
-        var columnHeaders = generateColumnHeaders();
-
-        var gridOptions = {
-            fullHeight: true,
-            fullWidth: true,
-            gridExpandHeight: 250
-        };
-
-        gridOptions.columns = columnHeaders;
-        gridOptions.bodyRows = bodyRows;
-
-        $('#auto-adjustment-report-detail-freegrid').fanexGrid(gridOptions);
-    };
 
     var getVrAdjustmentLog = function () {
         var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
-            FromDate: fromtoDate.FromDate,
-            ToDate: fromtoDate.ToDate
+            AdjustDate: $("#updated-date").val()
         };
 
         CMS.getData(rootUrl + 'VirtualSettingControl/NewAutoAdjustmentReport/ViewVrAdjustmentReport', criteria, renderVrAdjustmentReportGrid);
     }
 
-    var reportEventHandler = function (reportGrid) {
-        reportGrid.find('.ico-remark').click(function () {
-            var $this = $(this);
-            var custId = $this.data('custid');
-            var username = $this.data('username');
-
-            getCustomerHistory(custId, username);
-        });
-    };
-
     var renderVrAdjustmentReportGrid = function (data) {
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 95, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right'};
+            return { HeaderText: month, Width: 90, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right' };
         };
 
         function getWinlossCell(marginItem, index) {
@@ -178,32 +48,41 @@ Array.prototype.collect = function (collector) {
         var months = data.Months.map(getMonthHeaders);
 
         var columnHeaders = [
-            { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
-            { HeaderText: 'Updated Date', Width: 80, Name: 'colUpdatedDate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Old Rate', Width: 60, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'New Rate', Width: 60, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: 'AVG. Performance', Width: 100, Name: 'colAvg', HeaderAlign: 'center', CellAlign: 'right' }
+                    { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: 'Months', Width: 50, Name: 'colMonths', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Won Months', Width: 50, Name: 'colWonMonths', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Last 3m', Width: 95, Name: 'colLast3m', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Last 6m', Width: 95, Name: 'colLast6m', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'Total', Width: 95, Name: 'colTotal', HeaderAlign: 'center', CellAlign: 'right' }
         ].concat(months);
 
         function bodyMapFunc(page, pageSize) {
             return function (item, index) {
                 var winlossHeader = { Name: 'colFigure', Value: "Winloss" };
-                var winlossRow = item.MarginViewModels.map(getWinlossCell);
-                var avgWinloss = { Name: 'colAvg', Value: item.AvgPerformance.Winloss.toFixed(2) };
+                var winlossRow = item.MarginList.map(getWinlossCell);
+                var last3mWL = { Name: 'colLast3m', Value: item.Last3Months.Winloss.toFixed(2) };
+                var last6mWL = { Name: 'colLast6m', Value: item.Last6Months.Winloss.toFixed(2) };
+                var totalWL = { Name: 'colTotal', Value: item.Total.Winloss.toFixed(2) };
 
                 var turnoverHeader = { Name: 'colFigure', Value: "Turnover" };
-                var turnoverRow = item.MarginViewModels.map(getTurnoverCell);
-                var avgTurnover = { Name: 'colAvg', Value: item.AvgPerformance.Turnover.toFixed(2) };
+                var turnoverRow = item.MarginList.map(getTurnoverCell);
+                var last3mTO = { Name: 'colLast3m', Value: item.Last3Months.Turnover.toFixed(2) };
+                var last6mTO = { Name: 'colLast6m', Value: item.Last6Months.Turnover.toFixed(2) };
+                var totalTO = { Name: 'colTotal', Value: item.Total.Turnover.toFixed(2) };
 
                 var marginHeader = { Name: 'colFigure', Value: "Margin" };
-                var marginRow = item.MarginViewModels.map(getMarginCell);
-                var avgMargin = { Name: 'colAvg', Value: (item.AvgPerformance.Margin * 100).toFixed(2) + "%" };
+                var marginRow = item.MarginList.map(getMarginCell);
+                var last3mMG = { Name: 'colLast3m', Value: item.Last3Months.Margin.toFixed(2) + "%" };
+                var last6mMG = { Name: 'colLast6m', Value: item.Last6Months.Margin.toFixed(2) + "%" };
+                var totalMG = { Name: 'colTotal', Value: item.Total.Margin.toFixed(2) + "%" };
 
                 var betcountHeader = { Name: 'colFigure', Value: "Bet Count" };
-                var betRow = item.MarginViewModels.map(getBetCell);
-                var betTotal = { Name: 'colAvg', Value: item.AvgPerformance.BetCount.toFixed(0) };
+                var betRow = item.MarginList.map(getBetCell);
+                var last3mBC = { Name: 'colLast3m', Value: item.Last3Months.BetCount.toFixed(0) };
+                var last6mBC = { Name: 'colLast6m', Value: item.Last6Months.BetCount.toFixed(0) };
+                var totalBC = { Name: 'colTotal', Value: item.Total.BetCount.toFixed(0) };
 
                 var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
@@ -211,25 +90,24 @@ Array.prototype.collect = function (collector) {
                     Columns: [
                         { Name: 'colRowNum', Value: page * pageSize + index + 1, MergeRowNumber: 4 },
                         { Name: 'colUsername', Value: item.Username, MergeRowNumber: 4 },
-                        { Name: 'colUpdatedDate', Value: item.UpdatedDate, MergeRowNumber: 4 },
-                        { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 4 },
-                        { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 4 }
-                    ].concat([turnoverHeader, avgTurnover], turnoverRow),
+                        { Name: 'colMonths', Value: item.Months, MergeRowNumber: 4 },
+                        { Name: 'colWonMonths', Value: item.WonMonths, MergeRowNumber: 4 }
+                    ].concat([turnoverHeader, last3mTO, last6mTO, totalTO], turnoverRow),
                     CssClass: css
                 };
 
                 var winlossCol = {
-                    Columns: [winlossHeader, avgWinloss].concat(winlossRow),
+                    Columns: [winlossHeader, last3mWL, last6mWL, totalWL].concat(winlossRow),
                     CssClass: css
                 };
 
                 var marginCol = {
-                    Columns: [marginHeader, avgMargin].concat(marginRow),
+                    Columns: [marginHeader, last3mMG, last6mMG, totalMG].concat(marginRow),
                     CssClass: css
                 };
 
                 var betCol = {
-                    Columns: [betcountHeader, betTotal].concat(betRow),
+                    Columns: [betcountHeader, last3mBC, last6mBC, totalBC].concat(betRow),
                     CssClass: css
                 };
 
@@ -254,7 +132,25 @@ Array.prototype.collect = function (collector) {
                 pagerSelectCallBack: onPageChangedHandler
             },
             columns: columnHeaders,
+            showTitle: true,
+            titleInfo: {
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    exportVRAdjustmentReport();
+                }
+            },
             bodyRows: data.Reports.slice(0, CMS.pageSize).collect(bodyMapFunc(0, CMS.pageSize))
+        };
+
+        function exportVRAdjustmentReport() {
+            var url = rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ExportVRAdjustmentReport';
+            var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
+            var criteria = {
+                FromDate: fromtoDate.FromDate,
+                ToDate: fromtoDate.ToDate
+            };
+
+            CMS.downloadFile(url, criteria);
         };
 
         function onPageChangedHandler(index, pageSize) {
@@ -286,7 +182,7 @@ Array.prototype.collect = function (collector) {
     }
 
     function initialize() {
-        setTimeout(initDateRangeSelect, 100);
+        $("#updated-date").val($("#updated-date option:first").val());
 
         $('#btn-generate').on('click', function (event) {
             event.preventDefault();

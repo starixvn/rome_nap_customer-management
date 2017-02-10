@@ -15,7 +15,9 @@
         ILookup<int, MarginModel> GetVirtualSettingLatestMonths(IEnumerable<int> custIds, DateTime reportDate, int monthsToCheck);
 
         void ExportVRAdjustmentReport(GetVrAdjustmentLogCriteria criteria, int monthsToCheck);
-        
-        List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria);
+
+        List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria, int monthsToCheck, DateTime AdjustDate);
+
+        IEnumerable<CustomerMarginDateModel> GetReportDate(ICriteria criteria);
     }
 }

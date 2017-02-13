@@ -76,7 +76,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 result.Add(model);
             }
 
-            return result;
+            return result.OrderBy(t => t.Months).ToList();
         }
 
         public void ExportVRAdjustmentReport(GetVrAdjustmentLogCriteria criteria, int monthsToCheck)

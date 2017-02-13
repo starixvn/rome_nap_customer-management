@@ -12,6 +12,8 @@
 
     public class NewAutoAdjustmentReportController : BaseController
     {
+        private const int MonthsToCheck = 12;
+
         private readonly IAdjustmentReportService _adjustmentReportService;
 
         public NewAutoAdjustmentReportController()
@@ -24,6 +26,7 @@
         {
             var reportDateList = _adjustmentReportService.GetReportDate(new GetCustomerMarginHistoryDateCriteria());
             ViewBag.ReportDateList = reportDateList;
+
             return View("~/Areas/VirtualSettingControl/Views/NewVrAutoAdjustmentReport/Index.cshtml");
         }
 
@@ -32,11 +35,17 @@
         {
             var result = new
             {
-                Months = Helper.GetDate(criteria.AdjustDate, 13, "MMM - yyyy"),
-                Reports = _adjustmentReportService.GetCustomerMarginHistory(criteria, 13, criteria.AdjustDate)
+                Months = Helper.GetDate(criteria.AdjustDate, MonthsToCheck, "MMM - yyyy"),
+                Reports = _adjustmentReportService.GetCustomerMarginHistory(criteria, MonthsToCheck, criteria.AdjustDate)
             };
 
             return Json(result);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.AutoAdjustmentReport, Policy = Constant.Policy.Read)]
+        public void ExportVRAdjustmentReport(GetCustomerMarginHistoryCriteria criteria)
+        {
+            _adjustmentReportService.ExportNewVRAdjustmentReport(criteria, MonthsToCheck, criteria.AdjustDate);
         }
     }
 }

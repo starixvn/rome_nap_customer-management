@@ -38,6 +38,7 @@
         private const string NegativeNumberFormat = "[>=0]#,##0{0}_);[RED][<0]-#,##0{1}";
         private const string NormalNumberFormat = "#,##0{0}_);-#,##0{1}";
         private const string PositiveNumberFormat = "[RED][>0]#,##0{0}_);[<0]-#,##0{1};#,##0{2}";
+        private const string NegativePositiveTwoDecimalDigitNumber = "[>=0]##,##0.00;[RED][<0]-##,##0.00";
 
         private const int VerticalAlignTop = 0;
         private const int VerticalAlignCenter = 1;
@@ -135,6 +136,15 @@
             short fontColor = 8)
         {
             return StyleWithFormula(excelFile, cellColor, bold, TwoDecimalDigitNumber, fontColor);
+        }
+
+        public static ICellStyle DecimalColorStyle(
+            HSSFWorkbook excelFile,
+            short cellColor,
+            bool bold,
+            short fontColor = 8)
+        {
+            return StyleWithFormula(excelFile, cellColor, bold, NegativePositiveTwoDecimalDigitNumber, fontColor);
         }
 
         /// <summary>

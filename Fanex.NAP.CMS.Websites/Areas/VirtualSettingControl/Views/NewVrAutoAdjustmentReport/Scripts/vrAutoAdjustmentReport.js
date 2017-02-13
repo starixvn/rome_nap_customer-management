@@ -16,7 +16,6 @@ Array.prototype.collect = function (collector) {
     var $vrAdjustmentReportGrid = $("#auto-adjustment-report-freegrid");
 
     var getVrAdjustmentLog = function () {
-        var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
             AdjustDate: $("#updated-date").val()
         };
@@ -25,64 +24,89 @@ Array.prototype.collect = function (collector) {
     }
 
     var renderVrAdjustmentReportGrid = function (data) {
+        function betcountCustomCellRender(currentCell) {
+            return currentCell.Value;
+        };
+
         function getMonthHeaders(month, index) {
-            return { HeaderText: month, Width: 90, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right' };
+            return {
+                HeaderText: month, Width: 90, Name: 'colMonth' + index, HeaderAlign: 'center', CellAlign: 'right',
+                FormatNumber: CMS.formats.DecimalFormat, FormatNegative: '$'
+            };
         };
 
         function getWinlossCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Winloss.toFixed(2) };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover > 0 ? marginItem.Winloss : '' };
         }
 
         function getTurnoverCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.Turnover.toFixed(2) };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover > 0 ? marginItem.Turnover : '' };
         }
 
         function getMarginCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: (marginItem.Margin * 100).toFixed(2) + "%" };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover > 0 ? marginItem.Margin : '' };
         }
 
         function getBetCell(marginItem, index) {
-            return { Name: 'colMonth' + index, Value: marginItem.BetCount.toFixed(0) };
+            return { Name: 'colMonth' + index, Value: marginItem.Turnover > 0 ? marginItem.BetCount : '', CustomCellRender: betcountCustomCellRender };
         }
 
         var months = data.Months.map(getMonthHeaders);
 
         var columnHeaders = [
                     { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'Member', Width: 120, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: 'Member', Width: 180, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
                     { HeaderText: 'Months', Width: 50, Name: 'colMonths', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Won Months', Width: 50, Name: 'colWonMonths', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'Last 3m', Width: 95, Name: 'colLast3m', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'Last 6m', Width: 95, Name: 'colLast6m', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'Total', Width: 95, Name: 'colTotal', HeaderAlign: 'center', CellAlign: 'right' }
+                    { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'left' },
+                    {
+                        HeaderText: 'Last 3m', Width: 95, Name: 'colLast3m', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: CMS.formats.DecimalFormat, FormatNegative: '$'
+                    },
+                    {
+                        HeaderText: 'Last 6m', Width: 95, Name: 'colLast6m', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: CMS.formats.DecimalFormat, FormatNegative: '$'
+                    },
+                    {
+                        HeaderText: 'Total', Width: 95, Name: 'colTotal', HeaderAlign: 'center', CellAlign: 'right',
+                        FormatNumber: CMS.formats.DecimalFormat, FormatNegative: '$'
+                    }
         ].concat(months);
 
         function bodyMapFunc(page, pageSize) {
+
             return function (item, index) {
-                var winlossHeader = { Name: 'colFigure', Value: "Winloss" };
+                var winlossHeader = {
+                    Name: 'colFigure', Value: "Winloss"
+                };
                 var winlossRow = item.MarginList.map(getWinlossCell);
-                var last3mWL = { Name: 'colLast3m', Value: item.Last3Months.Winloss.toFixed(2) };
-                var last6mWL = { Name: 'colLast6m', Value: item.Last6Months.Winloss.toFixed(2) };
-                var totalWL = { Name: 'colTotal', Value: item.Total.Winloss.toFixed(2) };
+                var last3mWL = { Name: 'colLast3m', Value: item.Last3Months.Turnover > 0 ? item.Last3Months.Winloss : '' };
+                var last6mWL = { Name: 'colLast6m', Value: item.Last6Months.Turnover > 0 ? item.Last6Months.Winloss : '' };
+                var totalWL = { Name: 'colTotal', Value: item.Total.Turnover > 0 ? item.Total.Winloss : '' };
 
-                var turnoverHeader = { Name: 'colFigure', Value: "Turnover" };
+                var turnoverHeader = {
+                    Name: 'colFigure', Value: "Turnover"
+                };
                 var turnoverRow = item.MarginList.map(getTurnoverCell);
-                var last3mTO = { Name: 'colLast3m', Value: item.Last3Months.Turnover.toFixed(2) };
-                var last6mTO = { Name: 'colLast6m', Value: item.Last6Months.Turnover.toFixed(2) };
-                var totalTO = { Name: 'colTotal', Value: item.Total.Turnover.toFixed(2) };
+                var last3mTO = { Name: 'colLast3m', Value: item.Last3Months.Turnover > 0 ? item.Last3Months.Turnover : '' };
+                var last6mTO = { Name: 'colLast6m', Value: item.Last6Months.Turnover > 0 ? item.Last6Months.Turnover : '' };
+                var totalTO = { Name: 'colTotal', Value: item.Total.Turnover > 0 ? item.Total.Turnover : '' };
 
-                var marginHeader = { Name: 'colFigure', Value: "Margin" };
+                var marginHeader = {
+                    Name: 'colFigure', Value: "Margin (%)"
+                };
                 var marginRow = item.MarginList.map(getMarginCell);
-                var last3mMG = { Name: 'colLast3m', Value: item.Last3Months.Margin.toFixed(2) + "%" };
-                var last6mMG = { Name: 'colLast6m', Value: item.Last6Months.Margin.toFixed(2) + "%" };
-                var totalMG = { Name: 'colTotal', Value: item.Total.Margin.toFixed(2) + "%" };
+                var last3mMG = { Name: 'colLast3m', Value: item.Last3Months.Turnover > 0 ? item.Last3Months.Margin : '' };
+                var last6mMG = { Name: 'colLast6m', Value: item.Last6Months.Turnover > 0 ? item.Last6Months.Margin : '' };
+                var totalMG = { Name: 'colTotal', Value: item.Total.Turnover > 0 ? item.Total.Margin : '' };
 
-                var betcountHeader = { Name: 'colFigure', Value: "Bet Count" };
+                var betcountHeader = {
+                    Name: 'colFigure', Value: "Bet Count"
+                };
                 var betRow = item.MarginList.map(getBetCell);
-                var last3mBC = { Name: 'colLast3m', Value: item.Last3Months.BetCount.toFixed(0) };
-                var last6mBC = { Name: 'colLast6m', Value: item.Last6Months.BetCount.toFixed(0) };
-                var totalBC = { Name: 'colTotal', Value: item.Total.BetCount.toFixed(0) };
+                var last3mBC = { Name: 'colLast3m', Value: item.Last3Months.Turnover > 0 ? item.Last3Months.BetCount : '', CustomCellRender: betcountCustomCellRender };
+                var last6mBC = { Name: 'colLast6m', Value: item.Last6Months.Turnover > 0 ? item.Last6Months.BetCount : '', CustomCellRender: betcountCustomCellRender };
+                var totalBC = { Name: 'colTotal', Value: item.Total.Turnover > 0 ? item.Total.BetCount : '', CustomCellRender: betcountCustomCellRender };
 
                 var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
@@ -143,27 +167,15 @@ Array.prototype.collect = function (collector) {
         };
 
         function exportVRAdjustmentReport() {
-            var url = rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ExportVRAdjustmentReport';
-            var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
+            var url = rootUrl + 'VirtualSettingControl/NewAutoAdjustmentReport/ExportVRAdjustmentReport';
             var criteria = {
-                FromDate: fromtoDate.FromDate,
-                ToDate: fromtoDate.ToDate
+                AdjustDate: $("#updated-date").val()
             };
 
             CMS.downloadFile(url, criteria);
         };
 
         function onPageChangedHandler(index, pageSize) {
-            //var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
-
-            //var criteria = {
-            //    FromDate: fromtoDate.FromDate,
-            //    ToDate: fromtoDate.ToDate,
-            //    PageIndex: index,
-            //    PageSize: pageSize
-            //};
-
-            //CMS.getData(rootUrl + 'VirtualSettingControl/AutoAdjustmentReport/ViewVrAdjustmentReport', criteria, function (data) {
             pageSize = parseInt(pageSize);
             index = parseInt(index);
             gridOptions.pagerOption.currentPage = index;
@@ -173,12 +185,9 @@ Array.prototype.collect = function (collector) {
             gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
 
             $vrAdjustmentReportGrid.fanexGrid(gridOptions);
-            //});
         };
 
         $vrAdjustmentReportGrid.removeClass('display-none').fanexGrid(gridOptions);
-
-        //CMS.renderGrid($vrAdjustmentReportGrid, gridOptions, data.Reports, bodyMapFunc);
     }
 
     function initialize() {

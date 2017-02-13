@@ -44,6 +44,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
 
         public ICellStyle DecimalStyle { get; set; }
 
+        public ICellStyle DecimalColorStyle { get; set; }
+
         public void InitHeaderStyle()
         {
             HeaderTextStyle = NpoiExcelExtensions.HeaderStyle(ExcelFile);
@@ -54,6 +56,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
             TextStyle = NpoiExcelExtensions.TextStyle(ExcelFile, BodyColorIndex, false, Alignment.Left);
             IntStyle = NpoiExcelExtensions.IntStyle(ExcelFile, BodyColorIndex, false);
             DecimalStyle = NpoiExcelExtensions.DecimalStyle(ExcelFile, BodyColorIndex, false);
+            DecimalColorStyle = NpoiExcelExtensions.DecimalColorStyle(ExcelFile, BodyColorIndex, false);
         }
 
         public void InitAllGeneralStyles()

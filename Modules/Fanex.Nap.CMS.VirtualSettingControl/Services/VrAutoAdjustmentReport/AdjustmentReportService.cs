@@ -250,7 +250,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.RenderRow(Labels.VRAutoAdjustment, _excelStyleTemplate.HeaderTextStyle);
 
             exportExcelInfo.RenderRow(
-                string.Format(Labels.NewVRAutoAdjustment_Legend, criteria.AdjustDate.ToString("MM/dd/yyyy hh:mm:ss.fff")),
+                string.Format(Labels.NewVRAutoAdjustment_Legend, criteria.AdjustDate.ToString("MM/dd/yyyy HH:mm:ss.fff")),
                 _excelStyleTemplate.TextStyle);
 
             exportExcelInfo.CreateCurrentNPOIRow();

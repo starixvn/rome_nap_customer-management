@@ -174,4 +174,22 @@
   <data name="VirtualSettingsMonitor_Legend" xml:space="preserve">
     <value>Report Date: {0}, Sport: {1}, Virtual Rate: {2}, Select top: {3}, Won Period: {4} months</value>
   </data>
+  <data name="NewVRAutoAdjustment_Legend" xml:space="preserve">
+    <value>Adjust Date: {0}</value>
+  </data>
+  <data name="Last3m" xml:space="preserve">
+    <value>Last 3m</value>
+  </data>
+  <data name="Last6m" xml:space="preserve">
+    <value>Last 6m</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Months</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="WonMonths" xml:space="preserve">
+    <value>Won Months</value>
+  </data>
 </root>

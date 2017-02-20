@@ -88,6 +88,24 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last 3m.
+        /// </summary>
+        public static string Last3m {
+            get {
+                return ResourceManager.GetString("Last3m", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last 6m.
+        /// </summary>
+        public static string Last6m {
+            get {
+                return ResourceManager.GetString("Last6m", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Master {
@@ -115,11 +133,29 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Months.
+        /// </summary>
+        public static string Months {
+            get {
+                return ResourceManager.GetString("Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Rate.
         /// </summary>
         public static string NewRate {
             get {
                 return ResourceManager.GetString("NewRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Date: {0}.
+        /// </summary>
+        public static string NewVRAutoAdjustment_Legend {
+            get {
+                return ResourceManager.GetString("NewVRAutoAdjustment_Legend", resourceCulture);
             }
         }
         
@@ -156,6 +192,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string Symbol_No {
             get {
                 return ResourceManager.GetString("Symbol_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         
@@ -228,6 +273,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string VRAutoAdjustment_Legend {
             get {
                 return ResourceManager.GetString("VRAutoAdjustment_Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Won Months.
+        /// </summary>
+        public static string WonMonths {
+            get {
+                return ResourceManager.GetString("WonMonths", resourceCulture);
             }
         }
     }

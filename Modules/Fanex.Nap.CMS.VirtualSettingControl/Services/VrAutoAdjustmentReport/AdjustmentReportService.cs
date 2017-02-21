@@ -289,10 +289,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 {
                     exportExcelInfo.ResetCurrentColumn();
 
-                    exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 0, rowIndex + 1, centerTextStyle);
-                    exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 1, record.Username, _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 2, record.Months, centerTextStyle);
-                    exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 3, record.WonMonths, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(rowIndex + 1, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
 
                     exportExcelInfo.RenderCurrentCell(figureTexts[0], _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Last3Months.Turnover, _excelStyleTemplate.DecimalColorStyle);
@@ -319,7 +319,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     }
 
                     exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 4;
+                    exportExcelInfo.CurrentColumn = 1;
+                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[1], _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Last3Months.Winloss, _excelStyleTemplate.DecimalColorStyle);
                     if (record.Last6Months.Turnover > 0)
@@ -345,7 +348,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     }
 
                     exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 4;
+                    exportExcelInfo.CurrentColumn = 1;
+                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[2], _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(Math.Round(record.Last3Months.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
                     if (record.Last6Months.Turnover > 0)
@@ -371,7 +377,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     }
 
                     exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 4;
+                    exportExcelInfo.CurrentColumn = 1;
+                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[3], _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Last3Months.BetCount, _excelStyleTemplate.IntStyle);
                     if (record.Last6Months.Turnover > 0)

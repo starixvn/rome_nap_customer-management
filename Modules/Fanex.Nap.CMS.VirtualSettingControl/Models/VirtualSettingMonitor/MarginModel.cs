@@ -7,7 +7,6 @@
     {
         public MarginModel()
         {
-
         }
 
         public MarginModel(int month, int year)

@@ -1,21 +1,22 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
-    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
-    using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Helpers;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
-    using NPOI.HSSF.UserModel;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.Nap.CMS.Infrastructure.Extensions;
+    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitor;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
-    using Fanex.Nap.CMS.Infrastructure.Helpers;
+    using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VirtualSettingMonitor;
+    using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
 
     public class VirtualSettingMonitorService : ServiceBase, IVirtualSettingMonitorService
     {
@@ -33,7 +34,7 @@
             var custMarginCriteria = new GetCustomerMarginHistoryCriteria
             {
                 CustIds = string.Join(",", custInfo.Select(l => l.CustId)),
-                MonthToCheck = 12, //criteria.MonthToCheck,
+                MonthToCheck = 12, ////criteria.MonthToCheck,
                 SportId = criteria.SportId,
                 ReportToDate = criteria.ReportToDate
             };
@@ -68,16 +69,17 @@
             ExportVirtualSettingsMonitorHeader(exportExcelInfo, criteria);
             ExportVirtualSettingsMonitorBody(exportExcelInfo, reportData, criteria.MonthToCheck);
             var fileName = string.Format(
-                Labels.VirtualSettingsMonitor_ExcelFileName, 
+                Labels.VirtualSettingsMonitor_ExcelFileName,
                 DateTime.Now.ToShortFormatedDateWithSlash(),
-                criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", 
-                criteria.Rate, 
+                criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports",
+                criteria.Rate,
                 criteria.MonthToSum);
             ExcelHelper.ResponseStream(excelFile, ExcelHelper.FormatFileName(fileName));
         }
 
         #region Utilities
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         public VirtualSettingViewModel BindVirtualSettingData(List<VirtualSettingModel> custInfo, List<VirtualSettingModel> custMargin, int[] monthList)
         {
             var virtualSettingViewModel = new VirtualSettingViewModel();
@@ -99,7 +101,7 @@
                 var currentMonth = DateTime.Now.Month;
                 var encounterFirstDecember = false;
                 var monthLength = monthList.Count() - 1;
-                for (var i = monthLength; i >= 0; i --)
+                for (var i = monthLength; i >= 0; i--)
                 {
                     if (monthList[i] == 12)
                     {
@@ -193,6 +195,7 @@
                 ? rawData.First(l => l.ReportMonth == month && l.ReportYear == year)
                 : null;
         }
+
         private void ExportVirtualSettingsMonitorHeader(
             ExportExcelInfoByNPOI exportExcelInfo,
             GetVirtualSettingMonitorCriteria criteria)
@@ -205,12 +208,12 @@
 
             exportExcelInfo.RenderRow(
                 string.Format(
-                    Labels.VirtualSettingsMonitor_Legend, 
-                    DateTime.Now.ToShortFormatedDateWithSlash(), 
-                    criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports", 
-                    criteria.Rate, 
-                    criteria.TopRows, 
-                    criteria.MonthToSum), 
+                    Labels.VirtualSettingsMonitor_Legend,
+                    DateTime.Now.ToShortFormatedDateWithSlash(),
+                    criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports",
+                    criteria.Rate,
+                    criteria.TopRows,
+                    criteria.MonthToSum),
                 _excelStyleTemplate.TextStyle);
 
             exportExcelInfo.CreateCurrentNPOIRow();
@@ -230,6 +233,7 @@
             exportExcelInfo.CurrentRow++;
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void ExportVirtualSettingsMonitorBody(
             ExportExcelInfoByNPOI exportExcelInfo,
             VirtualSettingViewModel reportData,
@@ -243,7 +247,7 @@
             {
                 var rowIndex = 0;
                 var counter = 0;
-                
+
                 var figureTexts = new string[4] { "Turnover", "Winloss", "Margin", "Bet Count" };
                 foreach (var record in reportData.CustMargin)
                 {
@@ -252,7 +256,7 @@
                     exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 0, rowIndex + 1, centerIntNumberStyle);
                     exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 1, record.Username, _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCellBySpanning(exportExcelInfo.CurrentRow + 3, 2, record.VRate, centerTextStyle);
-                    
+
                     exportExcelInfo.RenderCurrentCell(figureTexts[0], centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.CustMargin[monthsToCheck].Turnover, _excelStyleTemplate.DecimalStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
@@ -273,7 +277,16 @@
                     exportExcelInfo.CurrentColumn = 3;
                     exportExcelInfo.RenderCurrentCell(figureTexts[2], centerTextStyle);
 
-                    exportExcelInfo.RenderCurrentCell((record.CustMargin[monthsToCheck].Turnover == 0 ? 0 : Math.Round(record.CustMargin[monthsToCheck].Winloss / record.CustMargin[monthsToCheck].Turnover * 100, 2)).ToString() + "%", _excelStyleTemplate.DecimalStyle);
+                    if (record.CustMargin[monthsToCheck].Turnover != 0)
+                    {
+                        exportExcelInfo.RenderCurrentCell(
+                            Math.Round(record.CustMargin[monthsToCheck].Winloss / record.CustMargin[monthsToCheck].Turnover * 100, 2).ToString() + "%", _excelStyleTemplate.DecimalStyle);
+                    }
+                    else
+                    {
+                        exportExcelInfo.RenderCurrentCell("0%", _excelStyleTemplate.DecimalStyle);
+                    }
+
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
                         exportExcelInfo.RenderCurrentCell(record.CustMargin.ElementAt(counter).Margin.ToString() + "%", _excelStyleTemplate.DecimalStyle);

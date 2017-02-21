@@ -170,6 +170,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.CurrentRow++;
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void ExportVRAdjustmentReportBody(
             ExportExcelInfoByNPOI exportExcelInfo,
             IEnumerable<LogEntryViewModel> reportData,
@@ -273,6 +274,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.CurrentRow++;
         }
 
+        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void ExportNewVRAdjustmentReportBody(
             ExportExcelInfoByNPOI exportExcelInfo,
             List<CustomerMarginModel> reportData,
@@ -391,6 +393,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     {
                         exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.IntStyle);
                     }
+
                     exportExcelInfo.RenderCurrentCell(record.Total.BetCount, _excelStyleTemplate.IntStyle);
 
                     for (counter = 0; counter < monthsToCheck; counter++)

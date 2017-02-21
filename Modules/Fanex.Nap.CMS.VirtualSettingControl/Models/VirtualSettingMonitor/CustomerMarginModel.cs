@@ -60,7 +60,6 @@
                     result.BetCount = last6Months.Sum(t => t.BetCount);
                     result.Turnover = last6Months.Sum(t => t.Turnover);
                     result.Winloss = last6Months.Sum(t => t.Winloss);
-
                 }
 
                 return result;

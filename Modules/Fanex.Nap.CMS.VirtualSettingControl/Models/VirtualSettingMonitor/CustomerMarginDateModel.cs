@@ -10,7 +10,7 @@
         {
             get
             {
-                return AdjustDate != null ? AdjustDate.ToString("MM/dd/yyyy HH:mm:ss.fff") : "";
+                return AdjustDate != null ? AdjustDate.ToString("MM/dd/yyyy HH:mm:ss.fff") : string.Empty;
             }
         }
 
@@ -18,7 +18,7 @@
         {
             get
             {
-                return AdjustDate != null ? AdjustDate.ToString("MM/dd/yyyy HH:mm:ss.fff") : "";
+                return AdjustDate != null ? AdjustDate.ToString("MM/dd/yyyy HH:mm:ss.fff") : string.Empty;
             }
         }
     }

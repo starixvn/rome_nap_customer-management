@@ -35,7 +35,7 @@
         {
             var result = new
             {
-                Months = Helper.GetDate(criteria.AdjustDate, MonthsToCheck, "MMM - yyyy"),
+                Months = Helper.GetDate(criteria.AdjustDate.AddDays(-1), MonthsToCheck, "MMM - yyyy"),
                 Reports = _adjustmentReportService.GetCustomerMarginHistory(criteria, MonthsToCheck, criteria.AdjustDate)
             };
 

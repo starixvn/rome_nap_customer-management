@@ -59,6 +59,8 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     MarginList = item.ToList()
                 };
 
+                adjustDate = adjustDate.AddDays(-1);
+
                 var lastMonth = new DateTime(adjustDate.Year, adjustDate.Month, 1);
 
                 for (var i = 0; i < monthsToCheck; i++)
@@ -265,7 +267,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.RenderCurrentCell(Labels.Last6m, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Total, _excelStyleTemplate.HeaderTextStyle);
 
-            var months = Helper.GetDate(DateTime.Today, monthsToCheck, "MMM - yyyy");
+            var months = Helper.GetDate(criteria.AdjustDate.AddDays(-1), monthsToCheck, "MMM - yyyy");
             foreach (var month in months)
             {
                 exportExcelInfo.RenderCurrentCell(month, _excelStyleTemplate.HeaderTextStyle);

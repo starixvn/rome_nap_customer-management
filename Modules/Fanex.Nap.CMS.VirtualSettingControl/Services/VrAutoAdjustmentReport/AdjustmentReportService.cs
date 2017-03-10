@@ -49,6 +49,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             var result = new List<CustomerMarginModel>();
             var groupItem = marginList.GroupBy(m => m.Username);
 
+            adjustDate = adjustDate.AddDays(-1);
+
+            var lastMonth = new DateTime(adjustDate.Year, adjustDate.Month, 1);
+
             foreach (var item in groupItem)
             {
                 var marginModelList = new List<MarginModel>();
@@ -58,10 +62,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     Username = item.Key,
                     MarginList = item.ToList()
                 };
-
-                adjustDate = adjustDate.AddDays(-1);
-
-                var lastMonth = new DateTime(adjustDate.Year, adjustDate.Month, 1);
 
                 for (var i = 0; i < monthsToCheck; i++)
                 {

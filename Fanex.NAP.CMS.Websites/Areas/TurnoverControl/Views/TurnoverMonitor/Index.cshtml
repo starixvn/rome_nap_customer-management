@@ -3,6 +3,7 @@
 @using Fanex.NAP.CMS.Services.Implements;
 @using Fanex.Nap.CMS.Infrastructure.Web;
 @using Fanex.Nap.CMS.Infrastructure.Controllers;
+@using Fanex.Nap.CMS.Infrastructure.Configurations
 @using Fanex.Nap.CMS.Infrastructure;
 @using Fanex.NAP.Core.Business;
 @{
@@ -55,7 +56,7 @@
                 </label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-percentageused" class="width-120" maxlength="3" value="60" />
+                <input type="text" id="txt-percentageused" class="width-120" value="@(AppSettings.TurnoverPercentageUsed)" maxlength="3"/>
             </div>
             <div class="submit width-auto col_3">
                 <input id="btn-search" type="button" class="submit" value="@Labels.Submit" />
@@ -108,7 +109,7 @@
         var currentDate = '@DateTime.Today.ToShortFormatedDate()';
         var maxTurnoverValue = @int.MaxValue;
         var minDate = '@(AppSession.BalanceUpDate.BalanceUpDay.ToShortFormatedDate())';
-        var defaultPercentageUsed = 60;
+        var defaultPercentageUsed = '@(AppSettings.TurnoverPercentageUsed)';
         var viewResources = {
             hasHostPermission: @(hasHostPermission ? 1 : 0),
             From_Date: '@Labels.From_Date',
@@ -122,6 +123,6 @@
             Edit: '@Labels.Edit',
             GlobalSetting_EditMaxTurnover_Confirm:'@Labels.GlobalSetting_EditMaxTurnover_Confirm',
             GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover'
-         };       
+         };
     </script>
 }

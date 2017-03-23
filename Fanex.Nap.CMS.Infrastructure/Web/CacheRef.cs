@@ -28,6 +28,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
                 string.Empty);
         }
 
+        public static string GetLeagueName(string leagueId)
+        {
+            return RefData.GetLeagueName(leagueId, LanguageTypeConstants.En);              
+        }
+
         /// <summary>
         /// Saves the cache reference response.
         /// </summary>

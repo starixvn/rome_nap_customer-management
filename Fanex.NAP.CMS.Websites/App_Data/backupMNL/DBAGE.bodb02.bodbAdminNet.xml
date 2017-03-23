@@ -1,18 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="TurnoverControl-GlobalSetting">
-    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Nap_SMATurnoverGlobalSettingList" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="Nap_SMATurnoverGlobalSettingUpd" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="Nap_SMATurnoverGlobalSettingIns" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="Nap_SMATurnoverGlobalSettingDel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Nap_SMATurnoverGlobalSettingList" DbName="DBAGE.bodb02.bodbAdminNet" /> 
   </Function>
   <Function Name="TurnoverControl-TurnoverMonitor">
-    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="Nap_SportTypeSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="Nap_SMATurnoverLeagueSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="Nap_SMATurnoverListSel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="Nap_SMATurnoverBalanceInfoSel" DbName="DBAGE.bodb02.bodbAdminNet">
+    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="NAP_TOControl_SportTypeSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="NAP_TOControl_LeagueSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="NAP_TOControl_BalanceInfoSelect" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="bettype" ObjectProperty="BetType" />
     </Setting>
-    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="Nap_SMATurnoverUpd" DbName="DBAGE.bodb02.bodbAdminNet" />
+   
   </Function>
 </Functions>

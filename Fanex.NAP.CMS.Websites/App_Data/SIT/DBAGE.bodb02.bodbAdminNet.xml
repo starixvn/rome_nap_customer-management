@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
-  <Function Name="TurnoverControl-GlobalSetting">
-    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="Nap_SMATurnoverGlobalSettingList" DbName="DBAGE.bodb02.bodbAdminNet" />
-  </Function>
+
   <Function Name="TurnoverControl-TurnoverMonitor">
     <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="NAP_TOControl_SportTypeSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="NAP_TOControl_LeagueSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="TurnoverControl_TurnoverMonitor_CompanyTurnover" SpName="NAP_TOControl_BalanceInfoSelect" DbName="DBAGE.bodb02.bodbAdminNet">
       <Mapping DataField="bettype" ObjectProperty="BetType" />
     </Setting>

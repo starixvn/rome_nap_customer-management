@@ -107,7 +107,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                         League = new IdNameModel
                         {
                             Id = Converter.ToInt(reader["leagueid"]),
-                            Name = Converter.ToString2(reader["leaguename"])
+                            Name = CacheRef.GetLeagueName(Converter.ToString2(reader["leagueid"]))
                         },
                         MatchInfo = new MatchInfo
                         {

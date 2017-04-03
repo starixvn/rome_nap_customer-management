@@ -210,7 +210,14 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
                     self.params.getGlobalSettingList.SortDirection = sortDirection;
                     self.sortGlobalSettingList();
                 }
-            }
+            },
+            showPager: true,
+            customPager: false,
+            pagerOption: {
+                itemsPerPage: 100,
+                currentPage: 0
+            },
+            gridExpandHeight: 180
         };
 
         self.domElements.tableGlobalSettingList.removeClass(self.configurations.css.displayNone).fanexGrid(gridOptions);

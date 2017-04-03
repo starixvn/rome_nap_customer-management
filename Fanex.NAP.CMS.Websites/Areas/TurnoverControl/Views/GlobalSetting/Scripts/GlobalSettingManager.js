@@ -215,6 +215,7 @@ Fanex.Nap.CMS.TurnoverControl.GlobalSettingManager = function () {
             customPager: false,
             pagerOption: {
                 itemsPerPage: 100,
+                itemsPerPageArray: CMS.pagerRanges,
                 currentPage: 0
             },
             gridExpandHeight: 180

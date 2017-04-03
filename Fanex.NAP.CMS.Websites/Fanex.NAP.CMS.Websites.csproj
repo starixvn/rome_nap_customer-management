@@ -225,7 +225,9 @@
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
@@ -246,7 +248,9 @@
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>

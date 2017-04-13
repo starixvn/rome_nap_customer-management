@@ -241,7 +241,7 @@
     <value>Match Id</value>
   </data>
   <data name="TurnoverMonitor_CompanyTurnover_Title" xml:space="preserve">
-    <value>Company Turnover</value>
+    <value>House Turnover</value>
   </data>
   <data name="TurnoverMonitor_BalanceFormat_1H1X2" xml:space="preserve">
     <value>[1] - [X] - [2]</value>

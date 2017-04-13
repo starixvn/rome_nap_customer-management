@@ -115,7 +115,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Company Turnover.
+        ///   Looks up a localized string similar to House Turnover.
         /// </summary>
         public static string Company_Turnover {
             get {

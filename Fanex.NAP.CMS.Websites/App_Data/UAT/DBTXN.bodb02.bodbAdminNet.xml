@@ -22,7 +22,7 @@
     </Setting>
   </Function>
   <Function Name="Colossus Bets Bonus Ticket">
-    <Setting Key="NAP_ColossusBets_BonusTicket_InsUpd" SpName="NAP_ColossusBets_BonusTicket_InsUpd_xtest" DbName="DBTXN.bodb02.bodbAdminNet">
+    <Setting Key="NAP_ColossusBets_BonusTicket_InsUpd" SpName="NAP_ColossusBets_BonusTicket_InsUpd" DbName="DBTXN.bodb02.bodbAdminNet">
     </Setting>
   </Function>
 </Functions>

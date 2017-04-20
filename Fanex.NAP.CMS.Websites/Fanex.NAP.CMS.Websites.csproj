@@ -225,7 +225,9 @@
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
@@ -235,7 +237,9 @@
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBDW.bodb_dwrs.bodbSPUNet.xml" />
@@ -244,11 +248,17 @@
     <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Master\NAPCommonSpNames.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -261,7 +271,9 @@
     <Content Include="App_Data\Prod\NAPCommonSpNames.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
@@ -274,7 +286,9 @@
     <Content Include="App_Data\SIT\NAPCommonSpNames.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />

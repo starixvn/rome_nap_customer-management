@@ -21,4 +21,15 @@
   <Function Name="Colossus Bets Bet List - Get SiteId">
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="TurnoverControl-TurnoverMonitor">
+    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="NAP_TOControl_MatchTurnoverUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="TurnoverControl-GlobalSetting">
+    />
+    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

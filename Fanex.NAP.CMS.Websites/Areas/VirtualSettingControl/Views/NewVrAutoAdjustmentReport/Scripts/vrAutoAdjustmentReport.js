@@ -56,6 +56,8 @@ Array.prototype.collect = function (collector) {
         var columnHeaders = [
                     { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Member', Width: 180, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: 'Old Rate', Width: 50, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'New Rate', Width: 50, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Months', Width: 50, Name: 'colMonths', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Won Months', Width: 50, Name: 'colWonMonths', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'left' },
@@ -110,10 +112,14 @@ Array.prototype.collect = function (collector) {
 
                 var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
+                var usernameFormat = item.IsBA == null || item.IsBA == "false" ? "" : "<span class='account-ba'>BA</span>";
+
                 var column = {
                     Columns: [
                         { Name: 'colRowNum', Value: page * pageSize + index + 1, MergeRowNumber: 4 },
-                        { Name: 'colUsername', Value: item.Username, MergeRowNumber: 4 },
+                        { Name: 'colUsername', Value: item.Username + usernameFormat, MergeRowNumber: 4 },
+                        { Name: 'colOldRate', Value: item.OldRate, MergeRowNumber: 4 },
+                        { Name: 'colNewRate', Value: item.NewRate, MergeRowNumber: 4 },
                         { Name: 'colMonths', Value: item.Months, MergeRowNumber: 4 },
                         { Name: 'colWonMonths', Value: item.WonMonths, MergeRowNumber: 4 }
                     ].concat([turnoverHeader, last3mTO, last6mTO, totalTO], turnoverRow),

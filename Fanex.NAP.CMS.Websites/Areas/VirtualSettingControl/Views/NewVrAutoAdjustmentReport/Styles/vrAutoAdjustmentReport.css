@@ -1,3 +1,14 @@
 ﻿#auto-adjustment-report-detail {
     width: 872px;
 }
+
+.account-ba {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: #ff7328;
+    color: #fff;
+    padding: 0 4px;
+    font-size: 11px;
+    border-radius: 1px;
+}

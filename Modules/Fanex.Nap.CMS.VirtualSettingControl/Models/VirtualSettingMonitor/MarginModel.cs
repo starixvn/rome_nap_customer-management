@@ -48,6 +48,12 @@
 
         public decimal Turnover { get; set; }
 
+        public int? OldVirtualRate { get; set; }
+
+        public int? NewVirtualRate { get; set; }
+
+        public bool? IsBA { get; set; }
+
         public decimal Margin
         {
             get

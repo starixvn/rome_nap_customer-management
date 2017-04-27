@@ -13,6 +13,12 @@
 
         public string Username { get; set; }
 
+        public int? OldRate { get; set; }
+
+        public int? NewRate { get; set; }
+
+        public bool? IsBA { get; set; }
+
         public List<MarginModel> MarginList { get; set; }
 
         public int Months

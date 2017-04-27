@@ -63,6 +63,10 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     MarginList = item.ToList()
                 };
 
+                model.IsBA = model.MarginList[0].IsBA;
+                model.OldRate = model.MarginList[0].OldVirtualRate;
+                model.NewRate = model.MarginList[0].NewVirtualRate;
+
                 for (var i = 0; i < monthsToCheck; i++)
                 {
                     var month = lastMonth.AddMonths(-i);
@@ -260,6 +264,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.ResetCurrentColumn();
             exportExcelInfo.RenderCurrentCell(Labels.Symbol_No, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Member, _excelStyleTemplate.HeaderTextStyle);
+            exportExcelInfo.RenderCurrentCell("Is BA", _excelStyleTemplate.HeaderTextStyle);
+            exportExcelInfo.RenderCurrentCell(Labels.OldRate, _excelStyleTemplate.HeaderTextStyle);
+            exportExcelInfo.RenderCurrentCell(Labels.NewRate, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Months, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.WonMonths, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Figure, _excelStyleTemplate.HeaderTextStyle);
@@ -295,6 +302,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
 
                     exportExcelInfo.RenderCurrentCell(rowIndex + 1, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
 
@@ -325,6 +335,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     exportExcelInfo.CurrentRow++;
                     exportExcelInfo.CurrentColumn = 1;
                     exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[1], _excelStyleTemplate.TextStyle);
@@ -354,6 +367,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     exportExcelInfo.CurrentRow++;
                     exportExcelInfo.CurrentColumn = 1;
                     exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[2], _excelStyleTemplate.TextStyle);
@@ -383,6 +399,9 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                     exportExcelInfo.CurrentRow++;
                     exportExcelInfo.CurrentColumn = 1;
                     exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[3], _excelStyleTemplate.TextStyle);

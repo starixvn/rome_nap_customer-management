@@ -379,6 +379,9 @@
     <Content Include="Content\Themes\img\actions\site-ico.png" />
     <Content Include="Content\Themes\img\actions\url-ico.png" />
     <Content Include="Content\Themes\img\actions\user-info-ico.png" />
+    <Content Include="Content\Extensions\images\BA.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Themes\img\bgmenu-hover.png" />
     <Content Include="Content\Themes\img\bgmenu-more.png" />
     <Content Include="Content\Themes\img\bg_footer.jpg" />

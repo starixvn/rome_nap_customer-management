@@ -57,7 +57,7 @@ Array.prototype.collect = function (collector) {
                     { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Member', Width: 180, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
                     { HeaderText: 'Old Rate', Width: 50, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
-                    { HeaderText: 'New Rate', Width: 50, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
+                    { HeaderText: 'New Rate', Width: 55, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Months', Width: 50, Name: 'colMonths', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Won Months', Width: 50, Name: 'colWonMonths', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Figure', Width: 80, Name: 'colFigure', HeaderAlign: 'center', CellAlign: 'left' },
@@ -112,7 +112,7 @@ Array.prototype.collect = function (collector) {
 
                 var css = (index & 1) == 1 ? 'freegrid-even' : '';
 
-                var usernameFormat = item.IsBA == null || item.IsBA == "false" ? "" : "<span class='account-ba'>BA</span>";
+                var usernameFormat = item.IsBA == null || item.IsBA.toString() == "false" ? "" : "<span class='account-ba'>BA</span>";
 
                 var column = {
                     Columns: [

@@ -9,6 +9,10 @@
 
 namespace Fanex.NAP.CMS.Services.ApiLogers
 {
+    using System;
+    using System.Globalization;
+    using System.Web;
+    using System.Xml;
     using Fanex.NAP.CMS.Criteria.WriteLogs;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
@@ -24,14 +28,12 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
     public class CasinoApiLogger : IAPILogger
     {
         private readonly byte _systemId;
-        private readonly GetCustId _custIdDelegate;
         private readonly GetUserId _userIdDelegate;
 
         public CasinoApiLogger(byte systemId, GetUserId userIdDelegate, GetCustId custIdDelegate)
         {
             this._systemId = systemId;
             this._userIdDelegate = userIdDelegate;
-            this._custIdDelegate = custIdDelegate;
         }
 
         /// <summary>
@@ -43,22 +45,55 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
         /// <param name="returnValue">The return value.</param>
         /// <param name="returnCode">The return code.</param>
         public void Write(int actionId, string functionName, string strackingValue, string returnValue, int returnCode)
-        {
-            int userId = _userIdDelegate();
-            int custId = _custIdDelegate();
-            IWriteLogsService writeLogsService = new WriteLogsService();
-
-            writeLogsService.WriteCasinoApiLog(new WriteCasinoApiLogCriteria
+        {            
+            var custId = string.IsNullOrWhiteSpace(HttpContext.Current.Request["id"]) ? HttpContext.Current.Request["custid"] : string.Empty;
+            var urlRef = HttpContext.Current.Request.UrlReferrer;
+            if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {
-                SystemID = this._systemId,
-                ActionID = actionId,
-                FuncName = functionName,
-                CustID = custId,
-                UserID = userId,
-                TrackingValue = strackingValue,
-                ReturnValue = returnValue,
-                ReturnCode = returnCode
-            });
+                var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
+                foreach (var item in qryCustId)
+                {
+                    if (item.ToLowerInvariant().Contains("custid"))
+                    {
+                        custId = item.Split('=')[1];
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(custId) || custId == "0")
+                {
+                    var tracking = new XmlDocument();
+                    tracking.LoadXml(strackingValue);
+                    try
+                    {
+                        var id = tracking.GetElementsByTagName("DocumentElement").Item(0).FirstChild;
+                        var nodeId = id.SelectSingleNode("intIBCCustID") ?? id.SelectSingleNode("IBCCustID");                        
+                        nodeId = nodeId ?? id.SelectSingleNode("IBCCustIDList");
+                        custId = nodeId.FirstChild.Value;
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            IWriteLogsService writeLogsService = new WriteLogsService();
+            custId = string.IsNullOrWhiteSpace(custId) ? "0" : custId;
+            var custIds = custId.Split(',');
+            foreach (var id in custIds)
+            {
+                writeLogsService.WriteCasinoApiLog(new WriteCasinoApiLogCriteria
+                {
+                    SystemID = this._systemId,
+                    ActionID = actionId,
+                    FuncName = functionName,
+                    CustID = Convert.ToInt32(id),
+                    UserID = _userIdDelegate(),
+                    TrackingValue = strackingValue,
+                    ReturnValue = returnValue,
+                    ReturnCode = returnCode
+                });
+            }            
         }
     }
 }

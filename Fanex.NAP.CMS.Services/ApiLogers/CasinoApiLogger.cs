@@ -23,9 +23,9 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
     /// </summary>
     public class CasinoApiLogger : IAPILogger
     {
-        private byte _systemId;
-        private GetCustId _custIdDelegate;
-        private GetUserId _userIdDelegate;
+        private readonly byte _systemId;
+        private readonly GetCustId _custIdDelegate;
+        private readonly GetUserId _userIdDelegate;
 
         public CasinoApiLogger(byte systemId, GetUserId userIdDelegate, GetCustId custIdDelegate)
         {

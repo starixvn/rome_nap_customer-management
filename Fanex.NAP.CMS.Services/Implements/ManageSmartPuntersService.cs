@@ -269,7 +269,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             // IpVn
             bool hasReadOrHost = _permissionSerivce.HasPermission(userId, CMSFunctionKeys.ViewIpVn, Constant.Policy.Read);
-            if (hasReadOrHost == false)
+            if (!hasReadOrHost)
             {
                 foreach (ActionMonitoringLog actionMonitoringLog in actionMonitoringLogs)
                 {
@@ -289,7 +289,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             return result;
         }
 
-        private IEnumerable<ActionMonitoringLog> SortActionMonitoringLogs(IEnumerable<ActionMonitoringLog> actionMonitoringLogs, string direction, string propertyName)
+        private static IEnumerable<ActionMonitoringLog> SortActionMonitoringLogs(IEnumerable<ActionMonitoringLog> actionMonitoringLogs, string direction, string propertyName)
         {
             if (propertyName == "RoleName")
             {
@@ -346,7 +346,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="trackingValue">The tracking value.</param>
         /// <returns>SmartPunterDetailLogInfo object.</returns>
-        private SmartPunterDetailLogInfo ConvertTrackingValue(string trackingValue)
+        private static SmartPunterDetailLogInfo ConvertTrackingValue(string trackingValue)
         {
             SmartPunterDetailLogInfo detail = null;
 

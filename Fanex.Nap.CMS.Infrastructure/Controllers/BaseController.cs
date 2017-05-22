@@ -39,7 +39,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 
         private readonly bool _enableDirectLogin;
 
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public BaseController()
         {
@@ -142,7 +142,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         /// <value>
         /// The GMT-4 date.
         /// </value>
-        protected DateTime ServerDate
+        protected static DateTime ServerDate
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 
         protected new JsonResult Json(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
         {
-            return new JsonResult()
+            return new JsonResult
             {
                 JsonRequestBehavior = behavior,
                 Data = data,

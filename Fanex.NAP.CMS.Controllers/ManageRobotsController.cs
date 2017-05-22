@@ -73,12 +73,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageRobots, Policy = Constant.Policy.Host)]
         public JsonResult EditRobotInfo(UpdateRobotInfoFilter filter)
         {
-            GettingRobotAccountResult robotList = new GettingRobotAccountResult();
-
             filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
             filter.UserID = this.CurrentSession.UserId;
             filter.IP = this.CurrentContext.IP;
-            robotList = this._manageRobotService.UpdateRobotInfo(filter);
+            GettingRobotAccountResult  robotList = this._manageRobotService.UpdateRobotInfo(filter);
 
             return Json(robotList);
         }
@@ -92,12 +90,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageRobots, Policy = Constant.Policy.Host)]
         public JsonResult AddRobotAccount(AddRobotInfoFilter filter)
         {
-            GettingRobotAccountResult robotList = new GettingRobotAccountResult();
-
             filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
             filter.UserID = this.CurrentSession.UserId;
             filter.IP = this.CurrentContext.IP;
-            robotList = this._manageRobotService.AddRobotAccount(filter);
+            GettingRobotAccountResult robotList = this._manageRobotService.AddRobotAccount(filter);
 
             return Json(robotList);
         }
@@ -111,12 +107,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageRobots, Policy = Constant.Policy.Host)]
         public JsonResult UpdateRobotStatus(UpdateRobotStatusFilter filter)
         {
-            GettingRobotAccountResult robotList = new GettingRobotAccountResult();
-
             filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
             filter.UserID = this.CurrentSession.UserId;
             filter.IP = this.CurrentContext.IP;
-            robotList = this._manageRobotService.UpdateRobotStatus(filter);
+            GettingRobotAccountResult robotList = this._manageRobotService.UpdateRobotStatus(filter);
 
             return Json(robotList);
         }

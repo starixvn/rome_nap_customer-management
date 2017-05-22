@@ -20,10 +20,6 @@ namespace Fanex.NAP.CMS.Controllers
     [NapSuperAuth]
     public class HomeController : BaseController
     {
-        public HomeController()
-        {
-        }
-
         /// <summary>
         /// Gets Index page.
         /// </summary>

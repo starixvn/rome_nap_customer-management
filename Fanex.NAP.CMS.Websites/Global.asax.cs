@@ -23,10 +23,12 @@ namespace Fanex.NAP.CMS.Websites
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+#pragma warning disable S2325 // Methods and properties that don't access instance data should be static
         /// <summary>
         /// Sets all needed configuration when the application starts.
         /// </summary>
         protected void Application_Start()
+#pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();
@@ -46,9 +48,12 @@ namespace Fanex.NAP.CMS.Websites
         {
             // Don't log 404 error
             Exception ex = Server.GetLastError().GetBaseException();
-            if (ex is HttpException)
+
+            var httpException = ex as HttpException;
+
+            if (httpException != null)
             {
-                if (((HttpException)ex).GetHttpCode() == 404)
+                if (httpException.GetHttpCode() == 404)
                 {
                     Response.Redirect("~/Home");
                 }

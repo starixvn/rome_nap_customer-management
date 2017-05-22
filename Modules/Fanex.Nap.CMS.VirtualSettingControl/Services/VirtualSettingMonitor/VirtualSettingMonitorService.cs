@@ -23,10 +23,6 @@
         private const string VirtualSettingsMonitorSessionKey = "Fanex.NAP.CMS.Reports.VirtualSettingsMonitor";
         private ExcelStyleTemplateByNPOI _excelStyleTemplate;
 
-        public VirtualSettingMonitorService()
-        {
-        }
-
         public VirtualSettingViewModel GetVirtualSettingMonitor(GetVirtualSettingMonitorCriteria criteria, int[] monthList)
         {
             var custInfo = GetData<VirtualSettingModel>(criteria).ToList();
@@ -145,7 +141,7 @@
             return virtualSettingViewModel;
         }
 
-        public IEnumerable<MarginModel> BindCustomerVirtualSettingHistories(List<VirtualSettingModel> rawData, int[] monthList)
+        private static IEnumerable<MarginModel> BindCustomerVirtualSettingHistories(List<VirtualSettingModel> rawData, int[] monthList)
         {
             var custVirtualSettingHistory = new List<MarginModel>();
             var currentYear = DateTime.Now.Year;
@@ -189,7 +185,7 @@
             return custVirtualSettingHistory;
         }
 
-        public VirtualSettingModel FindVirtualSetting(List<VirtualSettingModel> rawData, int month, int year)
+        private static VirtualSettingModel FindVirtualSetting(List<VirtualSettingModel> rawData, int month, int year)
         {
             return rawData.Any(l => l.ReportMonth == month && l.ReportYear == year)
                 ? rawData.First(l => l.ReportMonth == month && l.ReportYear == year)
@@ -200,7 +196,7 @@
             ExportExcelInfoByNPOI exportExcelInfo,
             GetVirtualSettingMonitorCriteria criteria)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new int[] { 60, 160, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
@@ -248,7 +244,7 @@
                 var rowIndex = 0;
                 var counter = 0;
 
-                var figureTexts = new string[4] { "Turnover", "Winloss", "Margin", "Bet Count" };
+                var figureTexts = new [] { "Turnover", "Winloss", "Margin", "Bet Count" };
                 foreach (var record in reportData.CustMargin)
                 {
                     exportExcelInfo.ResetCurrentColumn();

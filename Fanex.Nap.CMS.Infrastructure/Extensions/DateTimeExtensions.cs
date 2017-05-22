@@ -175,7 +175,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Extensions
 
         public static DateTime GetEndOfDate(this DateTime date)
         {
-            if (date == null)
+            if (date == DateTime.MinValue)
             {
                 date = DateTime.Today;
             }

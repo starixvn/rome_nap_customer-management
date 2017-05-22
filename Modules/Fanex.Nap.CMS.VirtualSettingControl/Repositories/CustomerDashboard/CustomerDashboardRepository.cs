@@ -9,10 +9,6 @@
 
     public class CustomerDashboardRepository : ICustomerDashboardRepository
     {
-        public CustomerDashboardRepository()
-        {
-        }
-
         public CustomerDashboardModel GetDashboardInfo(GetDashboardInfoCriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))

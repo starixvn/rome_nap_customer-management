@@ -42,7 +42,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Repositories.TurnoverControlNotifica
                         ToList = Converter.ToString2(reader["tolist"]),
                         CCList = Converter.ToString2(reader["cclist"]),
                         BCCList = Converter.ToString2(reader["bcclist"]),
-                        IsMailExist = Converter.ToInt(reader["isavailabe"]) == 1 ? true : false
+                        IsMailExist = Converter.ToInt(reader["isavailabe"]) == 1
                     };
 
                     mailingList.MailInfo.Add(mailInfo);

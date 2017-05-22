@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Text;
     using System.Threading;
     using System.Web;
     using Fanex.Logging;
@@ -51,10 +52,10 @@
 
         private static string SqlExceptionToString(Exception ex)
         {
-            if (ex is System.Data.SqlClient.SqlException)
-            {
-                System.Data.SqlClient.SqlException sqlException = (System.Data.SqlClient.SqlException)ex;
+            var sqlException = ex as System.Data.SqlClient.SqlException;
 
+            if (sqlException != null)
+            {
                 return string.Join(
                     "\r\n",
                     "PROCEDURE: " + sqlException.Procedure,
@@ -67,16 +68,17 @@
 
         private static string ExceptionDataToString(IDictionary dictionary)
         {
-            string message = string.Empty;
+            var message = new StringBuilder();
+
             if (dictionary != null)
             {
                 foreach (var key in dictionary.Keys)
                 {
-                    message += string.Format("\r\n{0}: {1}", key, dictionary[key]);
+                    message.AppendFormat("\r\n{0}: {1}", key, dictionary[key]);
                 }
             }
 
-            return message;
+            return message.ToString();
         }
 
         private static string BrowserInformation(HttpBrowserCapabilities browser)

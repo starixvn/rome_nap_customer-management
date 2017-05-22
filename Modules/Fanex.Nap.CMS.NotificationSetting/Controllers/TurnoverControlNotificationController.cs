@@ -20,7 +20,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Controllers
     /// </summary>
     public class TurnoverControlNotificationController : BaseController
     {
-        private IMailingListService _mailingListService;
+        private readonly IMailingListService _mailingListService;
 
         public TurnoverControlNotificationController()
             : this(null)

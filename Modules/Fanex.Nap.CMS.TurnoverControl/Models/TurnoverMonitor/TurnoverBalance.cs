@@ -29,7 +29,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
             get
             {
                 var result = new List<decimal>();
-                var amounts = Balance.Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                var amounts = Balance.Split(new [] { '-' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var amount in amounts)
                 {
                     result.Add(Converter.ToDecimal(amount));

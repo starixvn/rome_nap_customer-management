@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.Nap.CMS.VirtualSettingControl.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.Nap.CMS.VirtualSettingControl.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Couchbase">
@@ -126,6 +128,7 @@
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginHistoryDateCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrAdjustmentLogCriteria.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
@@ -154,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Fanex.Nap.CMS.VirtualSettingControl.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +182,11 @@
       <Project>{f204fea9-dc1f-4472-b516-65066b818d00}</Project>
       <Name>Fanex.Nap.CMS.Settings</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

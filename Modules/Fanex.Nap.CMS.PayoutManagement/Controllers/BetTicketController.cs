@@ -20,7 +20,7 @@
         {
         }
 
-        public BetTicketController(IBetTicketService betTicketService = null)
+        public BetTicketController(IBetTicketService betTicketService)
         {
             _betTicketService = betTicketService ?? new BetTicketService();
         }

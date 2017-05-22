@@ -25,7 +25,6 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 
         public SMALossLevelItem(SMALossLevel currentLevel, SMALossLevel higherLevel)
         {
-            int minimum = -1;
             int maximun = -1;
 
             if (higherLevel != null)
@@ -35,17 +34,12 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 
             if (currentLevel != null)
             {
-                minimum = currentLevel.Value;
+                int minimum = currentLevel.Value;
                 this.LevelID = currentLevel.LevelID;
 
-                if (maximun > 0)
-                {
-                    this.Value = string.Format("{0}% - {1}%", minimum, maximun);
-                }
-                else
-                {
-                    this.Value = string.Format("{0}% & {1}", minimum, ViewLang.Above);
-                }
+                this.Value = maximun > 0 ?
+                    string.Format("{0}% - {1}%", minimum, maximun) :
+                    string.Format("{0}% & {1}", minimum, ViewLang.Above);
             }
         }
 

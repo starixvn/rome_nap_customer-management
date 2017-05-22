@@ -21,6 +21,7 @@
     <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.Nap.CMS.NotificationSetting.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.Nap.CMS.NotificationSetting.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BundleTransformer.Core">
@@ -119,6 +121,7 @@
     <Compile Include="Criteria\TurnoverControlNotification\GetMailingCriteria.cs" />
     <Compile Include="Criteria\TurnoverControlNotification\GetUserGroupCriteria.cs" />
     <Compile Include="Criteria\TurnoverControlNotification\UpdateMailingCriteria.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Model\TurnoverControlNotification\MailInfo.cs" />
     <Compile Include="Model\TurnoverControlNotification\MailingList.cs" />
     <Compile Include="NotificationSettingAreaRegistration.cs" />
@@ -138,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Fanex.Nap.CMS.NotificationSetting.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +155,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

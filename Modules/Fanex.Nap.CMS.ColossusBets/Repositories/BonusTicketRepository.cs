@@ -20,8 +20,6 @@
 
         public BonusTicketDetail GetBonusTicketDetailByRefNo(ICriteria criteria)
         {
-            BonusTicketDetail bonusTicketDetail = new BonusTicketDetail();
-
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))

@@ -55,8 +55,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
 
             foreach (var item in groupItem)
             {
-                var marginModelList = new List<MarginModel>();
-
                 var model = new CustomerMarginModel
                 {
                     Username = item.Key,
@@ -147,7 +145,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             GetVrAdjustmentLogCriteria criteria,
             int monthsToCheck)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new int[] { 60, 160, 120, 80, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 120, 80, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
@@ -190,7 +188,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             {
                 var rowIndex = 0;
                 var counter = 0;
-                var figureTexts = new string[4] { "Turnover", "Winloss", "Margin", "Bet Count" };
+                var figureTexts = new [] { "Turnover", "Winloss", "Margin", "Bet Count" };
                 foreach (var record in reportData)
                 {
                     exportExcelInfo.ResetCurrentColumn();
@@ -250,7 +248,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             GetCustomerMarginHistoryCriteria criteria,
             int monthsToCheck)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new int[] { 60, 160, 60, 100, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 60, 100, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
@@ -295,7 +293,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             {
                 var rowIndex = 0;
                 var counter = 0;
-                var figureTexts = new string[4] { "Turnover", "Winloss", "Margin (%)", "Bet Count" };
+                var figureTexts = new [] { "Turnover", "Winloss", "Margin (%)", "Bet Count" };
                 foreach (var record in reportData)
                 {
                     exportExcelInfo.ResetCurrentColumn();

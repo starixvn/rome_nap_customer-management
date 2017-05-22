@@ -22,7 +22,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
     /// </summary>
     public class GlobalSettingController : BaseController
     {
-        private IGlobalSettingService _globalSettingService;
+        private readonly IGlobalSettingService _globalSettingService;
 
         public GlobalSettingController()
             : this(null)

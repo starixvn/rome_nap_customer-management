@@ -25,7 +25,7 @@
         {
             get
             {
-                return MarginList.Where(t => t.Winloss != 0).Count();
+                return MarginList.Count(t => t.Winloss != 0);
             }
         }
 
@@ -33,7 +33,7 @@
         {
             get
             {
-                return MarginList.Where(t => t.Winloss > 0).Count();
+                return MarginList.Count(t => t.Winloss > 0);
             }
         }
 
@@ -59,7 +59,7 @@
             {
                 var result = new MarginModel();
 
-                if (MarginList.Where(t => t.Turnover != 0).Count() >= 6)
+                if (MarginList.Count(t => t.Turnover != 0) >= 6)
                 {
                     var last6Months = MarginList.Where(t => t.Turnover != 0).OrderByDescending(t => t.ReportDate).Take(6);
 

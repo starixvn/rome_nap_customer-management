@@ -39,7 +39,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    result.Add(new IdNameModel()
+                    result.Add(new IdNameModel
                     {
                         Id = Converter.ToInt(reader["sporttype"]),
                         Name = Converter.ToString2(reader["sportname"])
@@ -64,7 +64,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    result.Add(new IdNameModel()
+                    result.Add(new IdNameModel
                     {
                         Id = Converter.ToInt(reader["leagueid"]),
                         Name = CacheRef.GetLeagueName(Converter.ToString2(reader["leagueid"]))

@@ -27,6 +27,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Criteria.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -36,6 +37,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Criteria.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Fanex.Data">
@@ -95,6 +97,7 @@
     <Compile Include="ConfigureTOBySMA\GetSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\InsertSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Ips\GetIpVnCriteria.cs" />
     <Compile Include="LossMonitor\DeleteSMACriteria.cs" />
     <Compile Include="LossMonitor\UpdateSMAMaxLossCriteria.cs" />
@@ -121,7 +124,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Fanex.NAP.CMS.Criteria.ruleset" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

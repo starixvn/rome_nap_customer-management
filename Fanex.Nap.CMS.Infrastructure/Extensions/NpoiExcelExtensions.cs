@@ -35,16 +35,9 @@
         private const string FontName = "Tahoma";
         private const string IntNumberFormat = "#,##0";
         private const string TwoDecimalDigitNumber = "##,##0.00";
-        private const string NegativeNumberFormat = "[>=0]#,##0{0}_);[RED][<0]-#,##0{1}";
-        private const string NormalNumberFormat = "#,##0{0}_);-#,##0{1}";
-        private const string PositiveNumberFormat = "[RED][>0]#,##0{0}_);[<0]-#,##0{1};#,##0{2}";
         private const string NegativePositiveTwoDecimalDigitNumber = "[>=0]##,##0.00;[RED][<0]-##,##0.00";
 
-        private const int VerticalAlignTop = 0;
         private const int VerticalAlignCenter = 1;
-        private const int VerticalAlignBottom = 2;
-        private const int VerticalAlignJustify = 3;
-        private const int VerticalAlignDistributed = 4;
 
         /// <summary>
         /// Style for header.
@@ -222,11 +215,7 @@
             {
                 cell.SetCellValue(Convert.ToInt64(cellValue));
             }
-            else if (cellValue is double)
-            {
-                cell.SetCellValue(Convert.ToDouble(cellValue));
-            }
-            else if (cellValue is decimal)
+            else if (cellValue is double || cellValue is decimal)
             {
                 cell.SetCellValue(Convert.ToDouble(cellValue));
             }

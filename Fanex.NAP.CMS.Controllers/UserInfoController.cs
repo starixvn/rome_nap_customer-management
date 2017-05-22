@@ -16,7 +16,6 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.Common;
     using Fanex.NAP.Core.Criteria.User;
     using Fanex.NAP.Core.Domain;
     using Fanex.NAP.Core.Service.Impl;
@@ -31,7 +30,7 @@ namespace Fanex.NAP.CMS.Controllers
     {
         private const string FormTokenKey = "_SecureChangePasswordFormToken";
         private readonly IUserService _userService;
-        private HashAlgorithm _hashAlgorithm;
+        private readonly HashAlgorithm _hashAlgorithm;
 
         public UserInfoController()
             : this(null)
@@ -97,11 +96,7 @@ namespace Fanex.NAP.CMS.Controllers
 
                     ICommandResult result = this._userService.InsertOrUpdate(criteria);
 
-                    if (result != null && result.IsSuccessful)
-                    {
-                        ViewBag.Success = true;
-                    }
-                    else if (result != null && result.IsSuccessful == false)
+                    if (result != null)
                     {
                         ViewBag.Success = true;
                     }
@@ -232,26 +227,10 @@ namespace Fanex.NAP.CMS.Controllers
             {
                 var hashData = _hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
+                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLowerInvariant();
             }
 
             return encrypted;
-        }
-
-        /// <summary>
-        /// Clears the token.
-        /// </summary>
-        private void ClearToken()
-        {
-            Session.Remove(FormTokenKey);
-
-            if (Request.Cookies[FormTokenKey] != null)
-            {
-                HttpCookie cookie = new HttpCookie(FormTokenKey);
-
-                cookie.Expires = DateTime.Now.AddDays(-1d);
-                Response.Cookies.Add(cookie);
-            }
         }
 
         #endregion Helpers

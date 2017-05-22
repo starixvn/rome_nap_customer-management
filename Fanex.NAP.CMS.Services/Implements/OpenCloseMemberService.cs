@@ -36,7 +36,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         private const int BatchLimitation = 50;
         private const int AccountingSystemId = 3;
 
-        private static int userId = 0;
+        private static int userId;
 
         private readonly IOpenCloseMemberRepository _openCloseMemberRepository;
 
@@ -187,14 +187,14 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <param name="memberList">List of members that need to synchronize status with RNG Casino.</param>
         /// <param name="filter">The filter contains updated data.</param>
         /// <returns>List of members whose status is updated successfully.</returns>
-        private List<UpdatedMemberStatus> UpdateRnGCasinoStatus(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
+        private static List<UpdatedMemberStatus> UpdateRnGCasinoStatus(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
         {
             var updatedMembers = new List<UpdatedMemberStatus>();
 
             if (memberList.Count > 0)
             {
                 var customerManager = new Customer();
-                int numOfUpdatedMembers = memberList.Count();
+                int numOfUpdatedMembers = memberList.Count;
                 int index = 0;
 
                 try

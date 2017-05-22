@@ -40,13 +40,13 @@ namespace Fanex.NAP.CMS.Controllers
 
         private const string LoginFormToken = "_SecureLoginFormToken";
 
-        private IUserService _userService;
-        private IGroupService _groupService;
-        private ISiteService _siteService;
-        private IMenuItemService _menuItemService;
-        private ICurrentSession _currentSession;
-        private ONEbook.UM.Services.IMaintenanceService _maintenanceService;
-        private HashAlgorithm _hashAlgorithm;
+        private readonly IUserService _userService;
+        private readonly IGroupService _groupService;
+        private readonly ISiteService _siteService;
+        private readonly IMenuItemService _menuItemService;
+        private readonly ICurrentSession _currentSession;
+        private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
+        private readonly HashAlgorithm _hashAlgorithm;
 
         #endregion Members
 
@@ -324,7 +324,7 @@ namespace Fanex.NAP.CMS.Controllers
             this._currentSession.UserId = user.Id;
             this._currentSession.Username = user.Username;
             this._currentSession.OnUserId = criteria.OnUserId;
-            this._currentSession.SessionId = Session.SessionID.ToString();
+            this._currentSession.SessionId = Session.SessionID;
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Fanex.NAP.CMS.Controllers
             var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
             var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
 
-            return (group == null || group.IsActive) && siteLevelList.Where(x => x.Site.Id == this.SiteId && x.IsActive).Any();
+            return (group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == this.SiteId && x.IsActive);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Fanex.NAP.CMS.Controllers
             {
                 var hashData = _hashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(input));
 
-                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLower();
+                encrypted = BitConverter.ToString(hashData).Replace("-", string.Empty).ToLowerInvariant();
             }
 
             return encrypted;

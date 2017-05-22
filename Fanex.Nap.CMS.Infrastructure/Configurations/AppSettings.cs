@@ -19,7 +19,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
     {
         private static string serverTimezone;
         private static int? turnoverPercentageUsed;
-        private static int smaTurnoverMailFunctionId;
 
         public static string ServerTimezone
         {
@@ -51,8 +50,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
         {
             get
             {
-                smaTurnoverMailFunctionId = Converter.ToInt(GetValue("Admin_SMATurnover_FunctionId"));
-                return smaTurnoverMailFunctionId;
+                return Converter.ToInt(GetValue("Admin_SMATurnover_FunctionId"));
             }
         }
 

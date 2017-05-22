@@ -49,7 +49,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
             {
                 if (!currentStorage.ContainsKey(identityInfo))
                 {
-                    currentStorage.Add(identityInfo, cacheRefFunction(identityInfo).ToString());
+                    currentStorage.Add(identityInfo, cacheRefFunction(identityInfo));
                 }
             }
 
@@ -92,8 +92,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         {
             switch (lang)
             {
-                case LanguageTypeConstants.EnUS:
-                    return LanguageTypeConstants.En;
                 case LanguageTypeConstants.ZhTW:
                     // Traditional
                     return LanguageTypeConstants.Ch;
@@ -105,6 +103,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
                 case LanguageTypeConstants.ThTh:
                     // Thai
                     return LanguageTypeConstants.Th;
+                case LanguageTypeConstants.EnUS:
                 default:
                     return LanguageTypeConstants.En;
             }

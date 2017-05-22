@@ -9,7 +9,6 @@
 
 namespace Fanex.Nap.CMS.Infrastructure.Helpers
 {
-    using System;
     using System.Web;
     using Fanex.Common;
 
@@ -24,19 +23,12 @@ namespace Fanex.Nap.CMS.Infrastructure.Helpers
         /// <returns>The client IP address.</returns>
         public static string ClientIP()
         {
-            try
+            if (HttpContext.Current.Request.IsLocal)
             {
-                if (HttpContext.Current.Request.IsLocal)
-                {
-                    return "127.0.0.1";
-                }
+                return "127.0.0.1";
+            }
 
-                return Converter.ToString2(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return Converter.ToString2(HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]);
         }
     }
 }

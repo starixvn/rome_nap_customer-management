@@ -34,9 +34,9 @@ namespace Fanex.NAP.CMS.Controllers
 
         private readonly int _timeExipration = 30;
 
-        private IUserService _userService;
-        private IMenuItemService _menuItemService;
-        private ICurrentSession _currentSession;
+        private readonly IUserService _userService;
+        private readonly IMenuItemService _menuItemService;
+        private readonly ICurrentSession _currentSession;
 
         #endregion members
 
@@ -74,12 +74,11 @@ namespace Fanex.NAP.CMS.Controllers
         {
             string currentTime = this._userService.UserSSOGetTime();
             string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
-            TimeSpan expiration = new TimeSpan();
 
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));
             onuserId = Cryptography.CfsDeCrypt(onuserId.Replace(" ", "+"));
             time = Cryptography.CfsDeCrypt(time.Replace(" ", "+"));
-            expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
+            TimeSpan expiration = Convert.ToDateTime(currentTime) - Convert.ToDateTime(time);
 
             if (expiration.TotalSeconds <= this._timeExipration)
             {
@@ -109,7 +108,7 @@ namespace Fanex.NAP.CMS.Controllers
                     this._currentSession.UserId = user.Id;
                     this._currentSession.Username = user.Username;
                     this._currentSession.OnUserId = criteria.OnUserId;
-                    this._currentSession.SessionId = Session.SessionID.ToString();
+                    this._currentSession.SessionId = Session.SessionID;
                     this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
 
                     if (this.SiteId != 0)
@@ -171,7 +170,7 @@ namespace Fanex.NAP.CMS.Controllers
                 this._currentSession.UserId = user.Id;
                 this._currentSession.Username = user.Username;
                 this._currentSession.OnUserId = criteria.OnUserId; ////Convert.ToInt32(onlineUserId);
-                this._currentSession.SessionId = Session.SessionID.ToString();
+                this._currentSession.SessionId = Session.SessionID;
                 this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
 
                 if (this.SiteId != 0)

@@ -19,7 +19,7 @@
                 name: AreaName + "_Default",
                 url: AreaName + "/{controller}/{action}/{id}",
                 defaults: new { controller = "BonusTicket", action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "Fanex.Nap.CMS.ColossusBets.Controllers" });
+                namespaces: new [] { "Fanex.Nap.CMS.ColossusBets.Controllers" });
 
             BundlesConfig.RegisterBundles(BundleTable.Bundles);
         }

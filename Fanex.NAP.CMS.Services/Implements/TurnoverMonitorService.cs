@@ -76,7 +76,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="rawData">The raw data.</param>
         /// <returns>List of SMATurnoverGroup objects.</returns>
-        private IEnumerable<SMATurnoverGroup> GroupTurnoverIntoLeague(IEnumerable<SMATurnoverInfo> rawData)
+        private static IEnumerable<SMATurnoverGroup> GroupTurnoverIntoLeague(IEnumerable<SMATurnoverInfo> rawData)
         {
             List<SMATurnoverGroup> result = null;
 

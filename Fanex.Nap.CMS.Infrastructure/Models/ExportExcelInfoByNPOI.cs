@@ -64,11 +64,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Models
             {
                 cell.SetCellValue(Convert.ToInt64(cellValue));
             }
-            else if (cellValue is double)
-            {
-                cell.SetCellValue(Convert.ToDouble(cellValue));
-            }
-            else if (cellValue is decimal)
+            else if (cellValue is double || cellValue is decimal)
             {
                 cell.SetCellValue(Convert.ToDouble(cellValue));
             }
@@ -121,8 +117,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Models
                 Row = Worksheet.GetRow(i) ?? Worksheet.CreateRow(i);
                 for (var j = CurrentColumn; j <= endColumn; j++)
                 {
-                    ICell cell = Row.GetCell(j) ??
-                        Row.CreateCell(j);
+                    ICell cell = Row.GetCell(j) ?? Row.CreateCell(j);
+
                     if (i == startRow && j == CurrentColumn)
                     {
                         SetCellValue(cell, cellValue);

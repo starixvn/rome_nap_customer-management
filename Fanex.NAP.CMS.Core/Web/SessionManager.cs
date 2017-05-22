@@ -30,8 +30,10 @@ namespace Fanex.NAP.CMS.Core.Web
                 HttpContext.Current.Session[sessionKey] = value;
             }
             catch (IndexOutOfRangeException)
+#pragma warning disable S108 // Nested blocks of code should not be left empty
             {
             }
+#pragma warning restore S108 // Nested blocks of code should not be left empty
         }
 
         /// <summary>

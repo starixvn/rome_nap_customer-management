@@ -32,7 +32,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         private static readonly string GlobalSettingListSessionKey =
             string.Format("Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.ListSessionKey.{0}", AppSession.CurrentUser != null ? AppSession.CurrentUser.Id : 0);
 
-        private IGlobalSettingRepository _globalSettingRepository;
+        private readonly IGlobalSettingRepository _globalSettingRepository;
 
         private ExcelStyleTemplateByNPOI _excelStyleTemplate;
 
@@ -153,7 +153,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         /// <returns>
         /// The global setting list.
         /// </returns>
-        private List<CustomerInfo> SortGlobalSettingListByAscending(
+        private static List<CustomerInfo> SortGlobalSettingListByAscending(
             List<CustomerInfo> result,
             GlobalSettingListCriteria criteria)
         {
@@ -184,7 +184,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         /// <returns>
         /// The global setting list.
         /// </returns>
-        private List<CustomerInfo> SortGlobalSettingListByDescending(
+        private static List<CustomerInfo> SortGlobalSettingListByDescending(
             List<CustomerInfo> result,
             GlobalSettingListCriteria criteria)
         {
@@ -213,7 +213,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         /// <param name="exportExcelInfo">The export excel information.</param>
         private void ExportGlobalSettingListHeader(ExportExcelInfoByNPOI exportExcelInfo)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new int[] { 60, 160, 120, 160, 160 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 120, 160, 160 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 

@@ -48,7 +48,6 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
         /// <returns>The result of update action.</returns>
         public Result UpdateMailingList(MailInfo mailInfo, bool isUpdate)
         {
-            var result = new Result();
             var criteria = new UpdateMailingCriteria
             {
                 IsUpdate = isUpdate,
@@ -65,7 +64,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
                 string.Empty :
                 criteria.MailInfo.BCCList;
 
-            result = _repository.DoAction(criteria);
+            Result result = _repository.DoAction(criteria);
 
             if (result.Code == ErrorCodeConstants.NoneError)
             {
@@ -77,7 +76,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
 
         public int UserGroupId()
         {
-            GetUserGroupCriteria criteria = new GetUserGroupCriteria()
+            GetUserGroupCriteria criteria = new GetUserGroupCriteria
             {
                 UserId = AppSession.CurrentUser.Id
             };

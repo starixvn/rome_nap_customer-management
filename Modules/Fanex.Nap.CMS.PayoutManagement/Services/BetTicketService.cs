@@ -26,7 +26,9 @@
         {
             ColossusBetsTicket colossusbets = _betTicketRepository.GetColossusBets(criteria);
 
-            decimal sold = 0, totalWinLoss = 0, totalWinLossCashout = 0;
+            decimal sold = 0;
+            decimal totalWinLoss = 0;
+            decimal totalWinLossCashout = 0;
             foreach (BetTicketDetail ticket in colossusbets.BetTicketDetails)
             {
                 ticket.TransactionType = CacheRef.GetBetType(ticket.BetType);

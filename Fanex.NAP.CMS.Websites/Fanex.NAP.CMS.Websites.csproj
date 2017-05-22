@@ -31,6 +31,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Websites.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -39,6 +40,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Websites.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -335,18 +337,6 @@
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\VrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\VirtualSettingMonitor.js" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\CurrencySetting.js" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Scripts\EditWinLimitModal.js" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Styles\CurrencySetting.css" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\AddPlayerModal.js" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Scripts\PlayerSetting.js" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Styles\PlayerSetting.css" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\ViewHistoryModal.js" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Scripts\WinLimitMonitor.js" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentageUsed.jpg" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\MaxPercentStatus.png" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound-mute.png" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\Images\sound.png" />
     <Content Include="Content\Extensions\images\dropdown.png" />
     <Content Include="Content\Extensions\images\refresh.png" />
     <Content Include="Content\Extensions\images\sound.jpg" />
@@ -586,10 +576,6 @@
       <Project>{fa19db02-6356-4be1-b7eb-642884adf9e3}</Project>
       <Name>Fanex.Nap.CMS.VirtualSettingControl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.WinLimitControl\Fanex.Nap.CMS.WinLimitControl.csproj">
-      <Project>{946B264B-145F-41F8-9C21-24B4C2B79B07}</Project>
-      <Name>Fanex.Nap.CMS.WinLimitControl</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -721,14 +707,6 @@
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Index.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\PayoutDetail.cshtml" />
     <Content Include="Areas\PayoutManagement\Views\Web.config" />
-    <Content Include="Areas\WinLimitControl\Views\CurrencySetting\Index.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\Index.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\PlayerSetting\_AddPlayerModal.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Shared\_Notes.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\Web.config" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Index.cshtml" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\Styles\WinLimitMonitor.less" />
-    <Content Include="Areas\WinLimitControl\Views\WinLimitMonitor\ViewHistoryModal.cshtml" />
     <Content Include="Areas\ColossusBets\Views\Web.config" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Index.cshtml" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\BonusTicketDetail.cshtml" />
@@ -744,8 +722,13 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
+    <Content Include="Fanex.NAP.CMS.Websites.ruleset" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.5.9.0.1001\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

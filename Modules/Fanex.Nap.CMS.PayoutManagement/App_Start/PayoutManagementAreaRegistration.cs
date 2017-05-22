@@ -19,7 +19,7 @@
                 name: AreaName + "_Default",
                 url: AreaName + "/{controller}/{action}/{id}",
                 defaults: new { controller = "Payout", action = "Index", id = UrlParameter.Optional },
-                namespaces: new string[] { "Fanex.Nap.CMS.PayoutManagement.Controllers" });
+                namespaces: new [] { "Fanex.Nap.CMS.PayoutManagement.Controllers" });
 
             BundlesConfig.RegisterBundles(BundleTable.Bundles);
         }

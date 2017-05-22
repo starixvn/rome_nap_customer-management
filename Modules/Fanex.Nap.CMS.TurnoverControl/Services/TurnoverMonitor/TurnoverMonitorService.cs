@@ -28,7 +28,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
     {
         private const decimal MaxTurnoverPercentage = 100;
 
-        private ITurnoverMonitorRepository _turnoverMonitorRepository;
+        private readonly ITurnoverMonitorRepository _turnoverMonitorRepository;
 
         private Dictionary<object, string> _teamNameCache;
 
@@ -78,7 +78,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
             foreach (var leagueGroup in leagueGroups)
             {
-                result.ChildTurnoverInfo.Add(new TurnoverInfoByGroup()
+                result.ChildTurnoverInfo.Add(new TurnoverInfoByGroup
                 {
                     Id = leagueGroup.Key.Id,
                     Name = leagueGroup.Key.Name,
@@ -89,6 +89,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             return result;
         }
 
+#pragma warning disable S100 // Methods and properties should be named in camel case
         /// <summary>
         /// Gets the SMA turnover list by league.
         /// </summary>
@@ -97,6 +98,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         /// The SMA turnover list.
         /// </returns>
         public List<TurnoverInfoByGroup> SMATurnoverListByLeague(IGrouping<dynamic, CustomerTurnoverInfo> leagueGroup)
+#pragma warning restore S100 // Methods and properties should be named in camel case
         {
             List<TurnoverInfoByGroup> result = new List<TurnoverInfoByGroup>();
             var matchGroups = from turnoverData in leagueGroup
@@ -121,6 +123,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             return result;
         }
 
+#pragma warning disable S100 // Methods and properties should be named in camel case
         /// <summary>
         /// Gets the SMA turnover list by match.
         /// </summary>
@@ -129,6 +132,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         /// The SMA turnover list.
         /// </returns>
         public List<TurnoverInfoByGroup> SMATurnoverListByMatch(IGrouping<dynamic, CustomerTurnoverInfo> matchGroup)
+#pragma warning restore S100 // Methods and properties should be named in camel case
         {
             List<TurnoverInfoByGroup> result = new List<TurnoverInfoByGroup>();
             foreach (var detail in matchGroup)

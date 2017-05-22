@@ -109,12 +109,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
         public JsonResult UpdateSmartPunter(UpdateSmartPunterFilter filter)
         {
-            UpdatingSmartPunterResult smartPunters = new UpdatingSmartPunterResult();
-
             filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
             filter.UserID = this.CurrentSession.UserId;
             filter.IP = this.CurrentContext.IP;
-            smartPunters = this._manageSmartPuntersService.UpdateSmartPunter(filter);
+            UpdatingSmartPunterResult smartPunters = this._manageSmartPuntersService.UpdateSmartPunter(filter);
 
             return Json(smartPunters);
         }
@@ -128,12 +126,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Host)]
         public JsonResult RemoveSmartPunter(DeleteSmartPunterFilter filter)
         {
-            UpdatingSmartPunterResult smartPunters = new UpdatingSmartPunterResult();
-
             filter.SearchedUsername = filter.SearchedUsername ?? string.Empty;
             filter.UserID = this.CurrentSession.UserId;
             filter.IP = this.CurrentContext.IP;
-            smartPunters = this._manageSmartPuntersService.DeleteSmartPunter(filter);
+            UpdatingSmartPunterResult smartPunters = this._manageSmartPuntersService.DeleteSmartPunter(filter);
 
             return Json(smartPunters);
         }
@@ -163,7 +159,7 @@ namespace Fanex.NAP.CMS.Controllers
 
             GetActionMonitoringLogsResult result = _manageSmartPuntersService.GetActionMonitoringLogs(filter, CurrentSession.UserId);
 
-            string json = JsonConvert.SerializeObject(result, new IsoDateTimeConverter() { DateTimeFormat = "MM-dd-yyyy HH:mm:ss" });
+            string json = JsonConvert.SerializeObject(result, new IsoDateTimeConverter { DateTimeFormat = "MM-dd-yyyy HH:mm:ss" });
 
             return Content(json, "application/json");
         }

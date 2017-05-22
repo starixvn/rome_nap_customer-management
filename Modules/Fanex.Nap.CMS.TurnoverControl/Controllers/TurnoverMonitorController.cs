@@ -22,7 +22,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
     /// </summary>
     public class TurnoverMonitorController : BaseController
     {
-        private ITurnoverMonitorService _turnoverMonitorService;
+        private readonly ITurnoverMonitorService _turnoverMonitorService;
 
         public TurnoverMonitorController()
             : this(null)

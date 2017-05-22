@@ -5,7 +5,7 @@
         private readonly decimal _winloss;
 
         private readonly decimal _turnover;
-        private int _totalBetCount;
+        private readonly int _totalBetCount;
 
         public MarginViewModel(decimal winloss, decimal turnover)
         {

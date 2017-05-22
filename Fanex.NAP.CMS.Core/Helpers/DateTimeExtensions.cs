@@ -36,14 +36,7 @@ namespace Fanex.NAP.CMS.Core.Helpers
         /// <returns>Standard short date string, such as: 10/10/2014.</returns>
         public static string ToShortFormatedDate(this DateTime? value)
         {
-            if (value.HasValue)
-            {
-                return string.Format(ShortDateFormat, value);
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return value.HasValue ? string.Format(ShortDateFormat, value) : string.Empty;
         }
 
         /// <summary>
@@ -53,7 +46,9 @@ namespace Fanex.NAP.CMS.Core.Helpers
         /// <returns>Standard full date string, such as: 10/10/2014 10:10:00 AM.</returns>
         public static string ToFullFormatedDate(this DateTime value)
         {
+#pragma warning disable S2275 // Composite format strings should not lead to unexpected behavior at runtime
             return string.Format(FullDateTimeFormat, value);
+#pragma warning restore S2275 // Composite format strings should not lead to unexpected behavior at runtime
         }
 
         /// <summary>
@@ -63,14 +58,9 @@ namespace Fanex.NAP.CMS.Core.Helpers
         /// <returns>Standard full date string, such as: 10/10/2014 10:10:00 AM.</returns>
         public static string ToFullFormatedDate(this DateTime? value)
         {
-            if (value.HasValue)
-            {
-                return string.Format(FullDateTimeFormat, value);
-            }
-            else
-            {
-                return string.Empty;
-            }
+#pragma warning disable S2275 // Composite format strings should not lead to unexpected behavior at runtime
+            return value.HasValue ? string.Format(FullDateTimeFormat, value) : string.Empty;
+#pragma warning restore S2275 // Composite format strings should not lead to unexpected behavior at runtime
         }
     }
 }

@@ -82,7 +82,7 @@ namespace Fanex.NAP.CMS.ViewModels.ManageSmartPunters
         /// <param name="reject">The suspended status.</param>
         /// <param name="closed">The closed status.</param>
         /// <returns>The status name.</returns>
-        private string ConvertStatus(bool reject, bool closed)
+        private static string ConvertStatus(bool reject, bool closed)
         {
             var status = string.Empty;
 

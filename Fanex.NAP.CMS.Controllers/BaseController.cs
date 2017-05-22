@@ -38,7 +38,7 @@ namespace Fanex.NAP.CMS.Controllers
 
         private readonly bool _enableDirectLogin;
 
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public BaseController()
         {
@@ -141,7 +141,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <value>
         /// The GMT-4 date.
         /// </value>
-        protected DateTime ServerDate
+        protected static DateTime ServerDate
         {
             get
             {

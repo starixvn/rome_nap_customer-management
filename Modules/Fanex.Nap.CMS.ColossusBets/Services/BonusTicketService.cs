@@ -69,7 +69,7 @@
 
                 try
                 {
-                    string jsonResult = client.UploadString(model.SettlementUrl, "POST", model.SerializeJSON());
+                    string jsonResult = client.UploadString(model.SettlementLink, "POST", model.SerializeJSON());
 
                     var resultAPI = JsonConvert.DeserializeObject<ResultAPI>(jsonResult);
                     result = new Result { Code = resultAPI.ErrorCode, Message = resultAPI.ErrorMsg };

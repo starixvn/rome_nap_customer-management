@@ -9,7 +9,7 @@
         {
             var appSettings = ConfigurationManager.AppSettings;
 
-            SettlementUrl = appSettings["ColossusBetsAPISettlementURL"];
+            SettlementLink = appSettings["ColossusBetsAPISettlementURL"];
 
             Vendor = appSettings["ColossusBetsAPISettlementVendor"];
             VendorKey = appSettings["ColossusBetsAPISettlementVendorKey"];
@@ -27,7 +27,7 @@
             Ext2 = "0";
         }
 
-        public string SettlementUrl { get; set; }
+        public string SettlementLink { get; set; }
 
         public string Vendor { get; set; }
 

@@ -9,7 +9,6 @@
 
 namespace Fanex.Nap.CMS.Infrastructure.Models
 {
-    using System;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Resources;
     using NPOI.HSSF.UserModel;
@@ -52,30 +51,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Models
         /// <param name="cellValue">The cell value.</param>
         public static void SetCellValue(ICell cell, object cellValue)
         {
-            if (cellValue is string)
-            {
-                cell.SetCellValue(Convert.ToString(cellValue));
-            }
-            else if (cellValue is int)
-            {
-                cell.SetCellValue(Convert.ToInt32(cellValue));
-            }
-            else if (cellValue is long)
-            {
-                cell.SetCellValue(Convert.ToInt64(cellValue));
-            }
-            else if (cellValue is double || cellValue is decimal)
-            {
-                cell.SetCellValue(Convert.ToDouble(cellValue));
-            }
-            else if (cellValue is bool)
-            {
-                cell.SetCellValue(Convert.ToBoolean(cellValue));
-            }
-            else if (cellValue is System.DateTime)
-            {
-                cell.SetCellValue(Convert.ToDateTime(cellValue));
-            }
+            NpoiExcelExtensions.SetCellValue(cell, cellValue);
         }
 
         public void ResetCurrentColumn()

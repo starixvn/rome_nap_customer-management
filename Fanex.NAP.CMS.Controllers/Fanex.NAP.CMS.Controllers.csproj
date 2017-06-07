@@ -128,6 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthInfoUtils.cs" />
     <Compile Include="ConfigureCustomerAccessController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="CloseOpenMemberController.cs" />

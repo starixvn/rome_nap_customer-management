@@ -13,7 +13,6 @@ namespace Fanex.NAP.CMS.Controllers
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
@@ -22,7 +21,6 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
     /// <summary>
@@ -104,24 +102,9 @@ namespace Fanex.NAP.CMS.Controllers
                 {
                     var user = this._userService.GetById(criteria.UserId) as User;
 
-                    // saves user session & auth info
-                    this._currentSession.UserId = user.Id;
-                    this._currentSession.Username = user.Username;
-                    this._currentSession.OnUserId = criteria.OnUserId;
-                    this._currentSession.SessionId = Session.SessionID;
-                    this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
-
-                    if (this.SiteId != 0)
-                    {
-                        this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                user.Id,
-                                                                                SiteId,
-                                                                                this.Environment,
-                                                                                true) as IList<MenuItem>;
-                    }
-
-                    this.CreateAuthInfo(user);
+                    AssignToSession(user, criteria.OnUserId);
                     Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
+
                     return this.Redirect(forwardLink);
                 }
             }
@@ -166,23 +149,7 @@ namespace Fanex.NAP.CMS.Controllers
                 // check-in user
                 this._userService.UserCheckIn(ref criteria);
 
-                // saves user session & auth info
-                this._currentSession.UserId = user.Id;
-                this._currentSession.Username = user.Username;
-                this._currentSession.OnUserId = criteria.OnUserId; ////Convert.ToInt32(onlineUserId);
-                this._currentSession.SessionId = Session.SessionID;
-                this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
-
-                if (this.SiteId != 0)
-                {
-                    this._currentSession.MenuItemList = this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                  user.Id,
-                                                                                  SiteId,
-                                                                                  this.Environment,
-                                                                                  true) as IList<MenuItem>;
-                }
-
-                this.CreateAuthInfo(user);
+                AssignToSession(user, criteria.OnUserId);
                 SessionManager.Set<bool>("ShowMenus", newTab);
 
                 return this.Redirect(redirectUrl.ToString());
@@ -193,41 +160,24 @@ namespace Fanex.NAP.CMS.Controllers
             }
         }
 
-        #region utilities
-
-        /// <summary>
-        /// Create authorize information.
-        /// </summary>
-        /// <param name="user">The user object.</param>
-        private void CreateAuthInfo(User user)
+        private void AssignToSession(User user, int onuserId)
         {
-            var currentDomain = CurrentContext.GetCurrentDomain();
+            _currentSession.UserId = user.Id;
+            _currentSession.Username = user.Username;
+            _currentSession.OnUserId = onuserId;
+            _currentSession.SessionId = Session.SessionID;
+            _currentSession.Level = _userService.GetUserSiteLevel(user.Id, SiteId);
 
-            var authInfo = new AuthInfo();
-
-            authInfo.UserId = user.Id;
-            authInfo.OnUserId = this._currentSession.OnUserId;
-
-            var authTicket = new FormsAuthenticationTicket(
-                 1,
-                user.Username,
-                DateTime.Now,
-                DateTime.Now.AddMinutes(20000),
-                false,
-                authInfo.ToXml(),
-                currentDomain.Path);
-
-            string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-            var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
+            if (SiteId != 0)
             {
-                HttpOnly = true,
-                Path = currentDomain.Path,
-                Name = FormsAuthentication.FormsCookieName
-            };
+                _currentSession.MenuItemList = _menuItemService.GetByUserAndSiteIncludeGroup(
+                    user.Id,
+                    SiteId,
+                    Environment,
+                    true) as IList<MenuItem>;
+            }
 
-            Response.Cookies.Add(authCookie);
+            AuthInfoUtils.CreateAuthInfo(user, _currentSession.OnUserId, CurrentContext, Response);
         }
-
-        #endregion utilities
     }
 }

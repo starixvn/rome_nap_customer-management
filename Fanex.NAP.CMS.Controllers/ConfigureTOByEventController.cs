@@ -276,7 +276,7 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Host)]
         public JsonResult RemoveMatchException(RemoveMatchExceptionFilter filter)
         {
-            var updatingCriteria = new RemoveMatchExceptionCriteria
+            var removeCriteria = new RemoveMatchExceptionCriteria
             {
                 MatchID = filter.MatchID,
                 UserID = this.CurrentSession.UserId,
@@ -289,7 +289,7 @@ namespace Fanex.NAP.CMS.Controllers
                 MatchCode = filter.MatchCode,
                 OnlyShowException = filter.OnlyShowException
             };
-            ICommandResult updatingResult = this._configureTOByEventService.UpdateTurnover(updatingCriteria);
+            ICommandResult updatingResult = this._configureTOByEventService.UpdateTurnover(removeCriteria);
             GotMatchTurnoverResult turnovers = null;
 
             // Get up-to-date data after updating.

@@ -13,12 +13,13 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverUsage
     using Fanex.Common;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.TurnoverUsage;
+    using TurnoverMonitor;
 
     /// <summary>
     /// SMA turnover usage view model.
     /// </summary>
     [Serializable]
-    public class TurnoverUsageItem
+    public class TurnoverUsageItem : SMATurnoverItem
     {
         public TurnoverUsageItem(TurnoverUsageInfo rawData)
         {
@@ -34,21 +35,5 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverUsage
                 this.PercentageUsed = Converter.ToInt(rawData.PercentageUsed);
             }
         }
-
-        public string Username { get; set; }
-
-        public string Level { get; set; }
-
-        public string Currency { get; set; }
-
-        public decimal GivenCredit { get; set; }
-
-        public int MaxTORate { get; set; }
-
-        public decimal MaxTOAmount { get; set; }
-
-        public decimal MemberTO { get; set; }
-
-        public int PercentageUsed { get; set; }
     }
 }

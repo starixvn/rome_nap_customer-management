@@ -20,6 +20,10 @@ namespace Fanex.NAP.CMS.ViewModels.TurnoverMonitor
     [Serializable]
     public class SMATurnoverItem
     {
+        public SMATurnoverItem()
+        {
+        }
+
         public SMATurnoverItem(SMATurnoverInfo rawData)
         {
             if (rawData != null)

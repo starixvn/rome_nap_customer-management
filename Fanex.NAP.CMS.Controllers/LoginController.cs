@@ -151,7 +151,7 @@ namespace Fanex.NAP.CMS.Controllers
                             // Check in user.
                             this.CheckIn(user);
                             this.CreateUserMenu(user);
-                            this.CreateAuthInfo(user);
+                            AuthInfoUtils.CreateAuthInfo(user, _currentSession.OnUserId, CurrentContext, Response);
 
                             Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
                             return Redirect(FormsAuthentication.DefaultUrl);
@@ -262,39 +262,6 @@ namespace Fanex.NAP.CMS.Controllers
                                                                                     SiteId,
                                                                                     this.Environment,
                                                                                     true);
-        }
-
-        /// <summary>
-        /// Create authorize information.
-        /// </summary>
-        /// <param name="user">The login user.</param>
-        private void CreateAuthInfo(User user)
-        {
-            var currentDomain = CurrentContext.GetCurrentDomain();
-
-            var authInfo = new AuthInfo();
-
-            authInfo.UserId = user.Id;
-            authInfo.OnUserId = this._currentSession.OnUserId;
-
-            var authTicket = new FormsAuthenticationTicket(
-                 1,
-                user.Username,
-                DateTime.Now,
-                DateTime.Now.AddMinutes(20000),
-                false,
-                authInfo.ToXml(),
-                currentDomain.Path);
-
-            string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-            var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket)
-            {
-                HttpOnly = true,
-                Path = currentDomain.Path,
-                Name = FormsAuthentication.FormsCookieName
-            };
-
-            Response.Cookies.Add(authCookie);
         }
 
         /// <summary>

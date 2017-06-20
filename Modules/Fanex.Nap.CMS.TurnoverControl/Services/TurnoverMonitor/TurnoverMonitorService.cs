@@ -9,8 +9,6 @@
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Common;
     using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -20,13 +18,14 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
     using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
     using Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor;
     using Fanex.Nap.CMS.TurnoverControl.Resources;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Turnover Monitor Service.
     /// </summary>
     public class TurnoverMonitorService : ServiceBase, ITurnoverMonitorService
     {
-        private const decimal MaxTurnoverPercentage = 100;
 
         private readonly ITurnoverMonitorRepository _turnoverMonitorRepository;
 
@@ -74,7 +73,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             var leagueGroups = from turnoverData in rawData
                                group turnoverData by new { Id = turnoverData.League.Id, Name = turnoverData.League.Name }
                                    into leagueGroup
-                                   select leagueGroup;
+                               select leagueGroup;
 
             foreach (var leagueGroup in leagueGroups)
             {
@@ -90,6 +89,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         }
 
 #pragma warning disable S100 // Methods and properties should be named in camel case
+
         /// <summary>
         /// Gets the SMA turnover list by league.
         /// </summary>
@@ -104,7 +104,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             var matchGroups = from turnoverData in leagueGroup
                               group turnoverData by new { Id = turnoverData.MatchInfo.Id, Name = turnoverData.MatchInfo.Name }
                                   into matchGroup
-                                  select matchGroup;
+                              select matchGroup;
 
             foreach (var matchGroup in matchGroups)
             {
@@ -124,6 +124,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         }
 
 #pragma warning disable S100 // Methods and properties should be named in camel case
+
         /// <summary>
         /// Gets the SMA turnover list by match.
         /// </summary>
@@ -144,11 +145,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
                 customerTurnover.TurnoverInfo.MatchInfo.HomeTeam.Name = _teamNameCache[customerTurnover.TurnoverInfo.MatchInfo.HomeTeam.Id];
                 customerTurnover.TurnoverInfo.MatchInfo.AwayTeam.Name = _teamNameCache[customerTurnover.TurnoverInfo.MatchInfo.AwayTeam.Id];
-                if (customerTurnover.TurnoverInfo.PercentageUsed > MaxTurnoverPercentage)
-                {
-                    customerTurnover.TurnoverInfo.PercentageUsed = MaxTurnoverPercentage;
-                }
-
                 result.Add(customerTurnover);
             }
 

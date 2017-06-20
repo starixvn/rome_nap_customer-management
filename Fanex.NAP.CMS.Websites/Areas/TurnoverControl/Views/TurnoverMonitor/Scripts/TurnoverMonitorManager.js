@@ -410,15 +410,15 @@ Fanex.Nap.CMS.TurnoverControl.TurnoverMonitorManager = function () {
                         </td>';
             }
 
-            var percentageUsed = Math.round(customerTurnoverInfo.PercentageUsed);
-            if (percentageUsed === self.configurations.maxTurnoverPercentage) {
+            var percentageUsed = Math.floor(customerTurnoverInfo.PercentageUsed*100)/100;
+            if (percentageUsed >= self.configurations.maxTurnoverPercentage) {
                 html += '<td>\
-                            <div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + percentageUsed + '%</div>\
+                            <div class="col-percentage-used-body align-center boxPercentUsed_100Percent">' + numeral(percentageUsed).format(CMSConstants.NumberFormat.TwoDecimalNumber) + '%</div>\
                         </td>';
             } else {
                 html += '<td>\
                             <div class="col-percentage-used-body align-center boxPercentUsed_Low boxPercentUsed" style="background-position: -' +
-                                (100 - percentageUsed) + 'px">' + percentageUsed + '%</div>\
+                                (100 - percentageUsed) + 'px">' + numeral(percentageUsed).format(CMSConstants.NumberFormat.TwoDecimalNumber) + '%</div>\
                         </td>';
             }
         }

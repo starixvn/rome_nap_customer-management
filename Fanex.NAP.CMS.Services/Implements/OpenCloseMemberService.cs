@@ -187,6 +187,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <param name="memberList">List of members that need to synchronize status with RNG Casino.</param>
         /// <param name="filter">The filter contains updated data.</param>
         /// <returns>List of members whose status is updated successfully.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2200:RethrowToPreserveStackDetails")]
         private static List<UpdatedMemberStatus> UpdateRnGCasinoStatus(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
         {
             var updatedMembers = new List<UpdatedMemberStatus>();

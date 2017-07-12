@@ -17,6 +17,7 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Sunplus.Libraries.APILogger;
+    using System.Linq;
 
     public delegate int GetUserId();
 
@@ -50,7 +51,7 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
             var urlRef = HttpContext.Current.Request.UrlReferrer;
             if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {
-                var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');
+                var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');                
                 foreach (var item in qryCustId)
                 {
                     if (item.ToLowerInvariant().Contains("custid"))
@@ -73,6 +74,7 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
                     }
                     catch
                     {
+                        // Ignored
                     }
                 }
             }

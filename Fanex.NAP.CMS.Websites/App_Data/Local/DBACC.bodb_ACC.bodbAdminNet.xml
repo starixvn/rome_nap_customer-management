@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions>
+<Functions SiteId="102" SiteName="NAP-CM">
   <Function Name="SMA Turnover - Mailing List">
     <Setting Key="Acc_MailingListIns" SpName="Acc_MailingListIns" DbName="DBACC.bodb_ACC.bodbAdminNet" />
     <Setting Key="Acc_MailingListSel" SpName="Acc_MailingListSel" DbName="DBACC.bodb_ACC.bodbAdminNet" />

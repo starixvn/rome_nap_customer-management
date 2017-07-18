@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
+<Functions SiteId="102" SiteName="NAP-CM">
   <Function Name="Virtual Setting Control">
     <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoring" SpName="NAP_Report_CustMngt_VirtualRateMonitoring" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
     <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
@@ -7,7 +7,7 @@
     <Setting Key="NAP_Report_CustMngt_GetCustomerMarginByMonth" SpName="NAP_Report_CustMngt_GetCustomerMarginByMonth" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
   </Function>
 
-<Function Name="Customer Dashboard">
+  <Function Name="Customer Dashboard">
     <Setting Key="NAP_Report_CustMngt_GetCustomerDashboardInfo" SpName="NAP_Report_CustMngt_GetCustomerDashboardInfo" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
   </Function>
 </Functions>

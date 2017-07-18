@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions SiteId="102" SiteName="NAP-CM">
+<Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Virtual Setting Control">
     <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoring" SpName="NAP_Report_CustMngt_VirtualRateMonitoring" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
     <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" />

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions SiteId="102" SiteName="NAP-CM">
+<Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="TurnoverControl-TurnoverMonitor">
     <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="NAP_TOControl_SportTypeSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="NAP_TOControl_LeagueSelect" DbName="DBAGE.bodb02.bodbAdminNet" />

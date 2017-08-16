@@ -10,14 +10,13 @@
 namespace Fanex.NAP.CMS.Services.ApiLogers
 {
     using System;
-    using System.Globalization;
+    using System.Linq;
     using System.Web;
     using System.Xml;
     using Fanex.NAP.CMS.Criteria.WriteLogs;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Sunplus.Libraries.APILogger;
-    using System.Linq;
 
     public delegate int GetUserId();
 
@@ -52,13 +51,11 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
             if (string.IsNullOrWhiteSpace(custId) || custId == "0")
             {
                 var qryCustId = urlRef.Query.Replace("?", string.Empty).Split('&');                
-                foreach (var item in qryCustId)
+                var item = qryCustId.FirstOrDefault(qry => qry.ToLowerInvariant().Contains("custid"));
+
+                if (!string.IsNullOrWhiteSpace(item))
                 {
-                    if (item.ToLowerInvariant().Contains("custid"))
-                    {
-                        custId = item.Split('=')[1];
-                        break;
-                    }
+                    custId = item.Split('=')[1];
                 }
 
                 if (string.IsNullOrWhiteSpace(custId) || custId == "0")
@@ -79,14 +76,19 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
                 }
             }
 
+            WriteLog(actionId, functionName, strackingValue, returnValue, returnCode, custId);
+        }
+
+        private void WriteLog(int actionId, string functionName, string strackingValue, string returnValue, int returnCode, string customerIds)
+        {
             IWriteLogsService writeLogsService = new WriteLogsService();
-            custId = string.IsNullOrWhiteSpace(custId) ? "0" : custId;
+            string custId = string.IsNullOrWhiteSpace(customerIds) ? "0" : customerIds;
             var custIds = custId.Split(',');
             foreach (var id in custIds)
             {
                 writeLogsService.WriteCasinoApiLog(new WriteCasinoApiLogCriteria
                 {
-                    SystemID = this._systemId,
+                    SystemID = _systemId,
                     ActionID = actionId,
                     FuncName = functionName,
                     CustID = Convert.ToInt32(id),
@@ -95,7 +97,7 @@ namespace Fanex.NAP.CMS.Services.ApiLogers
                     ReturnValue = returnValue,
                     ReturnCode = returnCode
                 });
-            }            
+            }
         }
     }
 }

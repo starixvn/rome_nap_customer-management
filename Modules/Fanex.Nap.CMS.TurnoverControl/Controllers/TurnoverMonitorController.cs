@@ -1,25 +1,18 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TurnoverMonitorController.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2014.10.03">Created</change>
-// </history>
+﻿using System.Web.Mvc;
+using Fanex.Nap.CMS.Infrastructure;
+using Fanex.Nap.CMS.Infrastructure.Controllers;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Resources;
+using Fanex.Nap.CMS.Infrastructure.Web;
+using Fanex.Nap.CMS.TurnoverControl.Criteria;
+using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor;
+using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
-    using System.Web.Mvc;
-    using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
-    using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
-
-    /// <summary>
-    /// Turnover Monitor Controller.
-    /// </summary>
     public class TurnoverMonitorController : BaseController
     {
         private readonly ITurnoverMonitorService _turnoverMonitorService;
@@ -34,96 +27,99 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             _turnoverMonitorService = turnoverMonitorService ?? new TurnoverMonitorService();
         }
 
-        /// <summary>
-        /// Redirects to Index view.
-        /// </summary>
-        /// <returns>Index view.</returns>
-        [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewData["HostPermission"] = HasRight(CMSFunctionKeys.TurnoverMonitor, Constant.Policy.Host);
+
             return View("~/Areas/TurnoverControl/Views/TurnoverMonitor/Index.cshtml");
         }
 
-        /// <summary>
-        /// Gets sport list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>
-        /// Sport list.
-        /// </returns>
-        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult Sports(GetSportsCriteria criteria)
+        public JsonResult GetSports(GetSportsCriteria criteria)
         {
-            var result = _turnoverMonitorService.Sports(criteria);
-            return Json(result);
+            var result = _turnoverMonitorService.GetSports(criteria);
+
+            return JsonData(result);
         }
 
-        /// <summary>
-        /// Gets league list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>
-        /// League list.
-        /// </returns>
-        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult Leagues(GetLeaguesCriteria criteria)
+        public JsonResult GetLeagues(GetLeaguesCriteria criteria)
         {
-            var result = _turnoverMonitorService.Leagues(criteria);
-            return Json(result);
+            criteria.MoveBetsDay = AppSession.BalanceUpDate.MoveBetsDay;
+            var result = _turnoverMonitorService.GetLeagues(criteria);
+
+            return JsonData(result);
         }
 
-        /// <summary>
-        /// Gets SMA turnover list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>
-        /// SMA turnover list.
-        /// </returns>
-        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult SMATurnoverList(GetSMATurnoverListCriteria criteria)
+        public JsonResult GetMatches(GetMatchesCriteria criteria)
         {
-            var result = _turnoverMonitorService.SMATurnoverList(criteria);
-            return Json(result);
+            var result = _turnoverMonitorService.GetMatches(criteria);
+
+            return JsonData(result);
         }
 
-        /// <summary>
-        /// Redirects to Open Add New Setting view.
-        /// </summary>
-        /// <param name="custId">The customer identifier.</param>
-        /// <param name="matchId">The match identifier.</param>
-        /// <returns>
-        /// Index view.
-        /// </returns>
-        [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public ActionResult OpenCompanyTurnoverView(int custId, int matchId)
+        public JsonResult GetCustomerTurnovers(GetCustomerTurnoversCriteria criteria)
         {
-            var companyTurnover = _turnoverMonitorService.CompanyTurnover(new GetCompanyTurnoverCriteria
-            {
-                CustId = custId,
-                MatchId = matchId
-            });
+            criteria.MoveBetsDay = AppSession.BalanceUpDate.MoveBetsDay;
+            var result = _turnoverMonitorService.GetCustomerTurnovers(criteria);
 
-            return View("~/Areas/TurnoverControl/Views/TurnoverMonitor/CompanyTurnover/Index.cshtml", companyTurnover);
+            return JsonData(result);
         }
 
-        /// <summary>
-        /// Gets SMA turnover list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>
-        /// SMA turnover list.
-        /// </returns>
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public ActionResult GetHouseTurnovers(GetHouseTurnoverCriteria criteria)
+        {
+            var result = _turnoverMonitorService.GetHouseTurnovers(criteria);
+
+            return JsonData(result);
+        }
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Host)]
-        public JsonResult UpdateCustomerMaxTurnoverByMatch(UpdateMaxTurnoverByMatchCriteria criteria)
+        public JsonResult UpdateMaxTurnover(UpdateMaxTurnoverCriteria criteria)
         {
-            var result = _turnoverMonitorService.UpdateCustomerMaxTurnoverByMatch(criteria);
-            return Json(result);
+            Result result;
+
+            if (!criteria.IsValid())
+            {
+                result = new Result(400, Labels.BadRequest);
+            }
+            else
+            {
+                AssignUserIdAndIP(criteria);
+                result = _turnoverMonitorService.UpdateMaxTurnover(criteria);
+            }
+
+            return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Host)]
+        public JsonResult UpdateMultipleMaxTurnover(UpdateMultipleMaxTurnoverCriteria criteria)
+        {
+            Result result;
+
+            if (!criteria.IsValid())
+            {
+                result = new Result(400, Labels.BadRequest);
+            }
+            else
+            {
+                AssignUserIdAndIP(criteria);
+                result = _turnoverMonitorService.UpdateMultipleMaxTurnover(criteria);
+            }
+
+            return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [NonAction]
+        private void AssignUserIdAndIP(NonQueryCriteria criteria)
+        {
+            criteria.UserId = ServiceContext.UserId;
+            criteria.IP = ServiceContext.Ip;
         }
     }
 }

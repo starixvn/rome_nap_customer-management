@@ -1,188 +1,135 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TurnoverMonitorService.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
+﻿using System.Collections.Generic;
+using System.Linq;
+using Fanex.Nap.CMS.Infrastructure.Constants;
+using Fanex.Nap.CMS.Infrastructure.Extensions;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Web;
+using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Resources;
+using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 {
-    using Fanex.Common;
-    using Fanex.Nap.CMS.Infrastructure.Constants;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Resources;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    /// <summary>
-    /// Turnover Monitor Service.
-    /// </summary>
-    public class TurnoverMonitorService : ServiceBase, ITurnoverMonitorService
+    public class TurnoverMonitorService : ITurnoverMonitorService
     {
-
         private readonly ITurnoverMonitorRepository _turnoverMonitorRepository;
 
-        private Dictionary<object, string> _teamNameCache;
-
-        public TurnoverMonitorService()
-            : this(null)
-        {
-        }
-
-        public TurnoverMonitorService(ITurnoverMonitorRepository turnoverMonitorRepository)
+        public TurnoverMonitorService(ITurnoverMonitorRepository turnoverMonitorRepository = null)
         {
             _turnoverMonitorRepository = turnoverMonitorRepository ?? new TurnoverMonitorRepository();
         }
 
-        public List<IdNameModel> Sports(GetSportsCriteria criteria)
+        public IEnumerable<IdNameModel> GetSports(ICriteria criteria)
         {
-            return _turnoverMonitorRepository.Sports(criteria);
+            return _turnoverMonitorRepository.GetSports(criteria);
         }
 
-        public List<IdNameModel> Leagues(GetLeaguesCriteria criteria)
+        public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
         {
-            return _turnoverMonitorRepository.Leagues(criteria);
+            var leagues = _turnoverMonitorRepository.GetLeagues(criteria).ToList();
+            leagues.Insert(0, new IdNameModel { Id = 0, Name = Labels.All_Leagues });
+
+            return leagues;
         }
 
-        /// <summary>
-        /// Gets the SMA turnover list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The SMA turnover list.</returns>
-        public TurnoverInfoByGroup SMATurnoverList(GetSMATurnoverListCriteria criteria)
+        public IEnumerable<IdNameModel> GetMatches(ICriteria criteria)
         {
-            var rawData = _turnoverMonitorRepository.SMATurnoverList(criteria);
-            TurnoverInfoByGroup result = new TurnoverInfoByGroup
-            {
-                Name = Labels.TurnoverMonitor_SMATurnoverList_Title,
-                ChildTurnoverInfo = new List<TurnoverInfoByGroup>()
-            };
+            var matches = _turnoverMonitorRepository.GetMatches(criteria).ToList();
+            matches.Insert(0, new IdNameModel { Id = 0, Name = Labels.AllMatches });
 
-            _teamNameCache = new Dictionary<object, string>();
-            var homeIdList = rawData.Select(data => (object)data.MatchInfo.HomeTeam.Id).ToList();
-            _teamNameCache = CacheRef.SaveCacheRefResponse(homeIdList, CacheRef.GetTeamName, _teamNameCache);
-            var awayIdList = rawData.Select(data => (object)data.MatchInfo.AwayTeam.Id).ToList();
-            _teamNameCache = CacheRef.SaveCacheRefResponse(awayIdList, CacheRef.GetTeamName, _teamNameCache);
-            var leagueGroups = from turnoverData in rawData
-                               group turnoverData by new { Id = turnoverData.League.Id, Name = turnoverData.League.Name }
-                                   into leagueGroup
-                               select leagueGroup;
+            return matches;
+        }
 
-            foreach (var leagueGroup in leagueGroups)
+        public IEnumerable<LeagueTurnover> GetCustomerTurnovers(ICriteria criteria)
+        {
+            var rawData = _turnoverMonitorRepository.GetCustomerTurnovers(criteria);
+
+            if (!rawData.Any())
             {
-                result.ChildTurnoverInfo.Add(new TurnoverInfoByGroup
+                return new List<LeagueTurnover>();
+            }
+
+            LeagueTurnover leagueTurnover;
+            MatchTurnover matchTurnover;
+            IList<LeagueTurnover> leagueTurnovers = new List<LeagueTurnover>();
+            var leagueLookup = rawData.ToLookup(kvp => kvp.LeagueId, kvp => kvp);
+
+            foreach (var leagueGroup in leagueLookup)
+            {
+                leagueTurnover = new LeagueTurnover(
+                    leagueGroup.Key,
+                    CacheRef.GetLeagueName(leagueGroup.Key.ToString()));
+
+                var matchLookup = leagueGroup.ToLookup(kvp => kvp.MatchId, kvp => kvp);
+
+                foreach (var matchGroup in matchLookup)
                 {
-                    Id = leagueGroup.Key.Id,
-                    Name = leagueGroup.Key.Name,
-                    ChildTurnoverInfo = SMATurnoverListByLeague(leagueGroup)
-                });
+                    matchTurnover = new MatchTurnover(matchGroup.Key);
+
+                    foreach (var item in matchGroup)
+                    {
+                        matchTurnover.HomeId = item.HomeId;
+                        matchTurnover.HomeName = CacheRef.GetTeamName(item.HomeId);
+
+                        matchTurnover.AwayId = item.AwayId;
+                        matchTurnover.AwayName = CacheRef.GetTeamName(item.AwayId);
+
+                        matchTurnover.IsNeutral = item.IsNeutral;
+
+                        matchTurnover.EventDate = item.EventDate.ToShortFormatedDateWithSlash();
+                        matchTurnover.EventStatus = item.EventStatus;
+
+                        matchTurnover.CustomerTurnovers.Add(item);
+                    }
+
+                    leagueTurnover.MatchTurnovers.Add(matchTurnover);
+                }
+
+                leagueTurnovers.Add(leagueTurnover);
+            }
+
+            return leagueTurnovers;
+        }
+
+        public IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria)
+        {
+            var houseTurnovers = _turnoverMonitorRepository.GetHouseTurnovers(criteria);
+
+            if (houseTurnovers.Any())
+            {
+                houseTurnovers = houseTurnovers.OrderByDescending(ht => ht.BetTypeId);
+            }
+
+            foreach (var item in houseTurnovers)
+            {
+                item.BetTypeName = CacheRef.GetBetType(item.BetTypeId);
+
+                if (string.IsNullOrWhiteSpace(item.BetTypeName))
+                {
+                    item.BetTypeName = Labels.Others;
+                }
+
+                yield return item;
+            }
+        }
+
+        public Result UpdateMaxTurnover(ICriteria criteria)
+        {
+            var result = _turnoverMonitorRepository.UpdateMaxTurnover(criteria);
+
+            if (result.Code == ErrorCodeConstants.NoneError)
+            {
+                result.Message = Labels.GlobalSetting_UpdateMaxTurnover_Success;
             }
 
             return result;
         }
 
-#pragma warning disable S100 // Methods and properties should be named in camel case
-
-        /// <summary>
-        /// Gets the SMA turnover list by league.
-        /// </summary>
-        /// <param name="leagueGroup">The league group.</param>
-        /// <returns>
-        /// The SMA turnover list.
-        /// </returns>
-        public List<TurnoverInfoByGroup> SMATurnoverListByLeague(IGrouping<dynamic, CustomerTurnoverInfo> leagueGroup)
-#pragma warning restore S100 // Methods and properties should be named in camel case
+        public Result UpdateMultipleMaxTurnover(ICriteria criteria)
         {
-            List<TurnoverInfoByGroup> result = new List<TurnoverInfoByGroup>();
-            var matchGroups = from turnoverData in leagueGroup
-                              group turnoverData by new { Id = turnoverData.MatchInfo.Id, Name = turnoverData.MatchInfo.Name }
-                                  into matchGroup
-                              select matchGroup;
+            var result = _turnoverMonitorRepository.UpdateMultipleMaxTurnover(criteria);
 
-            foreach (var matchGroup in matchGroups)
-            {
-                var matchTurnover = new TurnoverInfoByGroup
-                {
-                    Id = matchGroup.Key.Id,
-                    Name = matchGroup.Key.Name,
-                    TurnoverInfo = new CustomerTurnoverInfo(),
-                    ChildTurnoverInfo = SMATurnoverListByMatch(matchGroup)
-                };
-
-                matchTurnover.TurnoverInfo.MatchInfo = matchTurnover.ChildTurnoverInfo[0].TurnoverInfo.MatchInfo;
-                result.Add(matchTurnover);
-            }
-
-            return result;
-        }
-
-#pragma warning disable S100 // Methods and properties should be named in camel case
-
-        /// <summary>
-        /// Gets the SMA turnover list by match.
-        /// </summary>
-        /// <param name="matchGroup">The match group.</param>
-        /// <returns>
-        /// The SMA turnover list.
-        /// </returns>
-        public List<TurnoverInfoByGroup> SMATurnoverListByMatch(IGrouping<dynamic, CustomerTurnoverInfo> matchGroup)
-#pragma warning restore S100 // Methods and properties should be named in camel case
-        {
-            List<TurnoverInfoByGroup> result = new List<TurnoverInfoByGroup>();
-            foreach (var detail in matchGroup)
-            {
-                var customerTurnover = new TurnoverInfoByGroup
-                {
-                    TurnoverInfo = detail
-                };
-
-                customerTurnover.TurnoverInfo.MatchInfo.HomeTeam.Name = _teamNameCache[customerTurnover.TurnoverInfo.MatchInfo.HomeTeam.Id];
-                customerTurnover.TurnoverInfo.MatchInfo.AwayTeam.Name = _teamNameCache[customerTurnover.TurnoverInfo.MatchInfo.AwayTeam.Id];
-                result.Add(customerTurnover);
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the company turnover.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>The company turnover.</returns>
-        public List<TurnoverBalance> CompanyTurnover(GetCompanyTurnoverCriteria criteria)
-        {
-            var rawData = GetRepositoryData<dynamic>(criteria).ToList();
-            var result = new List<TurnoverBalance>();
-            var balanceLength = rawData.Count;
-            for (var i = 0; i < balanceLength; i++)
-            {
-                var balanceData = rawData[i];
-                var turnoverBalance = new TurnoverBalance
-                {
-                    Id = Converter.ToInt(balanceData.bettype),
-                    Balance = Converter.ToString2(balanceData.BalanceInfo)
-                };
-
-                turnoverBalance.Name = CacheRef.GetBetType(turnoverBalance.Id);
-                turnoverBalance.Name = string.IsNullOrEmpty(turnoverBalance.Name) ?
-                    Labels.Others :
-                    turnoverBalance.Name;
-                result.Add(turnoverBalance);
-            }
-
-            return result;
-        }
-
-        public Result UpdateCustomerMaxTurnoverByMatch(UpdateMaxTurnoverByMatchCriteria criteria)
-        {
-            var result = _turnoverMonitorRepository.DoAction(criteria);
             if (result.Code == ErrorCodeConstants.NoneError)
             {
                 result.Message = Labels.GlobalSetting_UpdateMaxTurnover_Success;

@@ -121,13 +121,13 @@
     <value>Add</value>
   </data>
   <data name="Global_Setting" xml:space="preserve">
-    <value>Global Setting</value>
+    <value>Global Setting - Soccer</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
-  <data name="SMA_Name" xml:space="preserve">
-    <value>SMA Name</value>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
   </data>
   <data name="Turnover_Monitor" xml:space="preserve">
     <value>Turnover Monitor</value>
@@ -148,13 +148,13 @@
     <value>#</value>
   </data>
   <data name="GlobalSetting_SheetName" xml:space="preserve">
-    <value>Turnover Control - Global Setting</value>
+    <value>Soccer</value>
   </data>
   <data name="GlobalSetting_ExcelFileName" xml:space="preserve">
-    <value>Turnover Control - Global Setting {0}</value>
+    <value>Turnover_Control_Global_Setting-Soccer_{0}</value>
   </data>
   <data name="GlobalSetting_ExcelTitle" xml:space="preserve">
-    <value>Turnover Control - Global Setting</value>
+    <value>Turnover Control - Global Setting - Soccer</value>
   </data>
   <data name="GlobalSetting_EditMaxTurnover_Confirm" xml:space="preserve">
     <value>Are you sure you want to update max turnover of {0}?</value>
@@ -163,13 +163,13 @@
     <value>Update Max Turnover Successfully!</value>
   </data>
   <data name="GlobalSetting_DeleteMaxTurnover_Confirm" xml:space="preserve">
-    <value>Are you sure you want to remove this customer?</value>
+    <value>Are you sure you want to remove customer {0}?</value>
   </data>
   <data name="GlobalSetting_DeleteMaxTurnover_Success" xml:space="preserve">
     <value>Delete Customer Global Setting Successfully!</value>
   </data>
   <data name="GlobalSetting_AddNewSMA_Title" xml:space="preserve">
-    <value>Add New SMA</value>
+    <value>Add New Setting</value>
   </data>
   <data name="Error_RequiredField" xml:space="preserve">
     <value>Required field!</value>
@@ -181,7 +181,7 @@
     <value>Cancel</value>
   </data>
   <data name="GlobalSetting_AddMaxTurnover_Success" xml:space="preserve">
-    <value>SMA {0} has been added successfully!</value>
+    <value>Customer {0} has been added successfully!</value>
   </data>
   <data name="Invalid_value" xml:space="preserve">
     <value>Invalid value!</value>
@@ -220,7 +220,7 @@
     <value>Percentage Used</value>
   </data>
   <data name="TurnoverMonitor_MaxLevelReachedMessage" xml:space="preserve">
-    <value>Number of SMA reached to 100%</value>
+    <value>Number of accounts reached to 100%</value>
   </data>
   <data name="Not_Refresh" xml:space="preserve">
     <value>Not Refresh</value>
@@ -281,5 +281,101 @@
   </data>
   <data name="GlobalSetting_UpdateMaxTurnover_Success" xml:space="preserve">
     <value>Update Max Turnover Successfully!</value>
+  </data>
+  <data name="Headline" xml:space="preserve">
+    <value>Headline</value>
+  </data>
+  <data name="SMA" xml:space="preserve">
+    <value>SMA</value>
+  </data>
+  <data name="RM" xml:space="preserve">
+    <value>(RM)</value>
+  </data>
+  <data name="GlobalSetting_ExcelFileName_OtherSports" xml:space="preserve">
+    <value>Turnover_Control_Global_Setting-OtherSports_{0}</value>
+  </data>
+  <data name="GlobalSetting_ExcelTitle_OtherSports" xml:space="preserve">
+    <value>Turnover Control - Global Setting - Other Sports</value>
+  </data>
+  <data name="GlobalSetting_SheetName_OtherSports" xml:space="preserve">
+    <value>Other Sports</value>
+  </data>
+  <data name="Global_Setting_OtherSports" xml:space="preserve">
+    <value>Global Setting - Other Sports</value>
+  </data>
+  <data name="ExcludeCompletedEvents" xml:space="preserve">
+    <value>Exclude completed events</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="NewMaxTO" xml:space="preserve">
+    <value>New Max TO [-100;1000]</value>
+  </data>
+  <data name="MultipleEditMaxTurnover" xml:space="preserve">
+    <value>Multiple Edit Max Turnover</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="NonLive" xml:space="preserve">
+    <value>Non-Live</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="AllMatches" xml:space="preserve">
+    <value>All Matches</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="DownloadTemplate" xml:space="preserve">
+    <value>Download Template</value>
+  </data>
+  <data name="ExcelFile" xml:space="preserve">
+    <value>Excel file</value>
+  </data>
+  <data name="ImportGlobalSetting_OtherSportsPageTitle" xml:space="preserve">
+    <value>Import Global Setting - Other Sports</value>
+  </data>
+  <data name="ImportGlobalSetting_SoccerPageTitle" xml:space="preserve">
+    <value>Import Global Setting - Soccer</value>
+  </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Error_ExcessMaxFileSize" xml:space="preserve">
+    <value>The file is too big.</value>
+  </data>
+  <data name="Error_NotExcelFile" xml:space="preserve">
+    <value>The selected file is not in excel format.</value>
+  </data>
+  <data name="Error_IncorrectLayout" xml:space="preserve">
+    <value>The layout of file is not correct.</value>
+  </data>
+  <data name="ErrorSetting" xml:space="preserve">
+    <value>Error Setting</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="ValidSetting" xml:space="preserve">
+    <value>Valid Setting</value>
+  </data>
+  <data name="Error_InvalidHeadlineValue" xml:space="preserve">
+    <value>Invalid Headline value</value>
+  </data>
+  <data name="Error_InvalidMaxTurnover" xml:space="preserve">
+    <value>Invalid Max Turnover</value>
+  </data>
+  <data name="Error_InvalidUsername" xml:space="preserve">
+    <value>Invalid Username</value>
+  </data>
+  <data name="ImportGlobalSettingSuccessfully" xml:space="preserve">
+    <value>The settings have been successfully updated.</value>
+  </data>
+  <data name="Error_NoActionOccured" xml:space="preserve">
+    <value>No action occured.</value>
   </data>
 </root>

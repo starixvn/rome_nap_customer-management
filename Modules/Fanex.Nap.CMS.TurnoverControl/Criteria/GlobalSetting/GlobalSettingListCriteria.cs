@@ -1,31 +1,27 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="GlobalSettingListCriteria.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
+﻿using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 {
-    using System;
-    using Fanex.NAP.Framework.Data;
-
-    /// <summary>
-    /// Global Setting List Criteria.
-    /// </summary>
-    [Serializable]
     public class GlobalSettingListCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "username")]
-        public string SMAName { get; set; }
+        public string UserName { get; set; }
+
+        public short SportType { get; set; }
 
         [SpParam(Ignored = true)]
         public string SortField { get; set; }
 
         [SpParam(Ignored = true)]
         public string SortDirection { get; set; }
+
+        [SpParam(Ignored = true)]
+        public int Page { get; set; }
+
+        [SpParam(Ignored = true)]
+        public int Size { get; set; }
+
+        [SpParam(Ignored = true)]
+        public bool Cache { get; set; }
 
         public override string GetSettingKey()
         {
@@ -34,7 +30,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 
         public override bool IsValid()
         {
-            return true;
+            Enums.SportType type = (Enums.SportType)SportType;
+
+            return (type == Enums.SportType.Soccer || type == Enums.SportType.Others) &&
+                !string.IsNullOrWhiteSpace(SortField) &&
+                !string.IsNullOrWhiteSpace(SortDirection);
         }
     }
 }

@@ -102,8 +102,8 @@
     <Reference Include="NPOI">
       <HintPath>..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="RemotingRef, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RemotingRef.1.0.0.2\lib\net40\RemotingRef.dll</HintPath>
+    <Reference Include="RemotingRef, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RemotingRef.2.0.0.9\lib\net40\RemotingRef.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -156,7 +156,7 @@
     <Compile Include="Helpers\Logs.cs" />
     <Compile Include="Models\Alignment.cs" />
     <Compile Include="Models\BalanceUpDayInfo.cs" />
-    <Compile Include="Models\CustomerInfo.cs" />
+    <Compile Include="Models\ExcelColumn.cs" />
     <Compile Include="Models\ExportExcelInfoByNPOI.cs" />
     <Compile Include="Models\IdNameModel.cs" />
     <Compile Include="Models\MatchInfo.cs" />
@@ -169,7 +169,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Implementations\BaseExcelExporter.cs" />
     <Compile Include="Services\Implementations\ServiceBase.cs" />
+    <Compile Include="Services\Interfaces\IExcelExporter.cs" />
     <Compile Include="Services\Interfaces\IServiceBase.cs" />
     <Compile Include="Web\AppSession.cs" />
     <Compile Include="Web\CacheManager.cs" />

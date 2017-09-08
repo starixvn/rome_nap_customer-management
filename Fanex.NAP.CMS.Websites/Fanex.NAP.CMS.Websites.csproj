@@ -323,9 +323,17 @@
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Scripts\payoutList.js" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutDetail.css" />
     <Content Include="Areas\PayoutManagement\Views\PayoutList\Styles\payoutList.css" />
-    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Scripts\AddSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\AddGlobalSetting.js" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\DeleteGlobalSetting.js" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\EditGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Scripts\GlobalSettingManager.js" />
-    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Scripts\CompanyTurnoverManager.js" />
+    <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Scripts\ErrorSetting.js" />
+    <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Scripts\ImportGlobalSetting.js" />
+    <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Scripts\ValidSetting.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\AutoRefresh.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\EditMaxTurnover.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\EditMultipleMaxTurnover.js" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\HouseTurnoverPopup.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Scripts\TurnoverMonitorManager.js" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\1.jpg" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\arrow.png" />
@@ -652,10 +660,6 @@
       <DependentUpon>Web.AppSettings.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.AppSettings.local.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Web.AppSettings.backupMNL.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
@@ -673,10 +677,6 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.ConnectionString.backupMNL.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.ConnectionString.local.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
@@ -698,12 +698,8 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\Web.config" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Index.cshtml" />
-    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Index.cshtml" />
-    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\AddSetting\Styles\AddSetting.less" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\Styles\GlobalSetting.less" />
-    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\SMATurnoverContent.cshtml" />
-    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Index.cshtml" />
-    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\CompanyTurnover\Styles\CompanyTurnover.less" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\_CustomerTurnover.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\TurnoverMonitor.less" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Index.cshtml" />
     <Content Include="Areas\NotificationSetting\Views\Web.config" />
@@ -724,6 +720,10 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\GlobalSetting\_AddGlobalSetting.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\_MultipleEditMaxTOPopup.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Index.cshtml" />
+    <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Styles\ImportGlobalSetting.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

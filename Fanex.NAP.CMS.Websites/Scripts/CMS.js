@@ -481,6 +481,11 @@ var CMS = (function ($) {
                 charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_c).toLowerCase() ||
                 charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_a).toLowerCase());
         },
+        isNumeric: function (text) {
+            text = text.replace(/\,/g, "");
+            var regExp = /^-?(\d+|\d+\.\d*|\d*\.\d+)$/;
+            return text.match(regExp);
+        },
         // gravity: nw | n | ne | w | e | sw | s | se
         showTipsyError: function ($obj, message, gravity) {
             if ($obj.is(':hidden')) {

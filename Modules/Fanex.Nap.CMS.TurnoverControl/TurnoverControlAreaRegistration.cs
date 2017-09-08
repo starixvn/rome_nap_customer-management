@@ -1,19 +1,7 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TurnoverControlAreaRegistration.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2014.10.03">Created</change>
-// </history>
+﻿using System.Web.Mvc;
 
 namespace Fanex.Nap.CMS.TurnoverControl
 {
-    using System.Web.Mvc;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class TurnoverControlAreaRegistration : AreaRegistration
     {
         public override string AreaName

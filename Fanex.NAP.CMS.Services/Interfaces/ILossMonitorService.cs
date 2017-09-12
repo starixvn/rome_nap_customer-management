@@ -23,5 +23,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         ICommandResult DeleteSMA(DeleteSMACriteria criteria);
 
         ICommandResult UpdateMaxLoss(UpdateSMAMaxLossCriteria criteria);
+
+        List<SMALossItem> GetGroupDownlines(GetGroupDownlinesCriteria criteria);
     }
 }

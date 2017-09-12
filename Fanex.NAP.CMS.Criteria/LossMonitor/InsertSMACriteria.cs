@@ -17,6 +17,9 @@ namespace Fanex.NAP.CMS.Criteria.LossMonitor
 
         public int MaxLoss { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsHeadline { get; set; }
+
         public int Creator { get; set; }
 
         public string IP { get; set; }

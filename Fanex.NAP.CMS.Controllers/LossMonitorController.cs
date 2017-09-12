@@ -61,16 +61,26 @@ namespace Fanex.NAP.CMS.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetGroupDownlines(int custId)
+        {
+            List<SMALossItem> result = this._lossMonitorService.GetGroupDownlines(new GetGroupDownlinesCriteria(custId));
+
+            return Json(result);
+        }
+
         [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
-        public JsonResult AddSMA(string username, int maxLoss)
+        public JsonResult AddSMA(string username, int maxLoss, bool isHeadline)
         {
             var result = this._lossMonitorService.InsertSMA(new InsertSMACriteria
             {
                 Username = username,
                 MaxLoss = maxLoss,
                 Creator = this.CurrentSession.UserId,
-                IP = this.CurrentContext.IP
+                IP = this.CurrentContext.IP,
+                IsHeadline = isHeadline
             });
 
             return Json(result, JsonRequestBehavior.AllowGet);

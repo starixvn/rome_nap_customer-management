@@ -66,6 +66,35 @@ namespace Fanex.NAP.CMS.Services.Implements
             return result;
         }
 
+        public List<SMALossItem> GetGroupDownlines(GetGroupDownlinesCriteria criteria)
+        {
+            var result = new List<SMALossItem>();
+            //var rawData = this.Repository.Fetch<SMALossInfo>(criteria);
+
+            //if (rawData != null && rawData.Any())
+            //{
+            //    foreach (SMALossInfo item in rawData)
+            //    {
+            //        result.Add(new SMALossItem(item));
+            //    }
+            //}
+
+            result.Add(new SMALossItem(new SMALossInfo
+            {
+                RoleID = 4,
+                CustId = 100,
+                Username = "super",
+                Currency = "RM",
+                YesterdayBalance = 200,
+                TotalBalance = 300,
+                MaxLoss = 400,
+                PercentageLoss = 20,
+                Movement = null
+            }));
+
+            return result;
+        }
+
         /// <summary>
         /// Gets the SMA loss levels.
         /// </summary>

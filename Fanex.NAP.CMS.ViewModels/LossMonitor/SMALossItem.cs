@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 {
     using System;
+    using Core.Constants;
     using Fanex.Common;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Models.LossMonitor;
@@ -27,10 +28,12 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
                 this.CustId = rawData.CustId;
                 this.Username = rawData.Username;
                 this.Level = CacheRef.GetLevel(rawData.RoleID);
+                this.IsViewDownline = rawData.RoleID == CustomerLevels.Headline;
+
                 this.Currency = rawData.Currency;
                 this.YesterdayBalance = Converter.ToDecimal(rawData.YesterdayBalance);
                 this.TotalBalance = Converter.ToDecimal(rawData.TotalBalance);
-                this.MaxLoss = Converter.ToDecimal(rawData.MaxLoss);
+                this.MaxLoss = rawData.MaxLoss;
                 this.LossPercentage = Converter.ToInt(rawData.PercentageLoss);
                 this.ChangedLevel = Converter.ToInt(rawData.Movement);
             }
@@ -48,12 +51,14 @@ namespace Fanex.NAP.CMS.ViewModels.LossMonitor
 
         public decimal TotalBalance { get; set; }
 
-        public decimal MaxLoss { get; set; }
+        public decimal? MaxLoss { get; set; }
 
         public int LossPercentage { get; set; }
 
         public int PercentageUsed { get; set; }
 
         public int ChangedLevel { get; set; }
+
+        public bool IsViewDownline { get; set; }
     }
 }

@@ -13,6 +13,13 @@ Namespace.Register("Fanex.CMS.LossMonitor");
 Fanex.CMS.LossMonitor = function () {
     var $this = this;
 
+    var maxLossFormat = '<a class="c hand edit-maxloss" href="JavaScript:void(0);" data-custid="{0}" data-username="{1}">{2}</a>' +
+                              '<input class="display-none width-95 clearable textbox-maxloss" type="text" maxlength="13" value="{3}" />';
+
+    var maxLossFormatNoHost = '<span>{0}</span>';
+    var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}<span></div></div>';
+    var notAvailablePercentage = labels.NotAvailable.toLowerCase() + "<span></span>";
+
     var cachedData = {
         custId: 0,
         username: '',
@@ -25,7 +32,8 @@ Fanex.CMS.LossMonitor = function () {
         GetSMALossReport: CMS.resolveRootUrl('LossMonitor/GetSMALossReport'),
         AddSMA: CMS.resolveRootUrl('LossMonitor/AddSMA'),
         EditMaxLoss: CMS.resolveRootUrl('LossMonitor/EditMaxLoss'),
-        DeleteSMA: CMS.resolveRootUrl('LossMonitor/DeleteSMA')
+        DeleteSMA: CMS.resolveRootUrl('LossMonitor/DeleteSMA'),
+        GetGroupDownlines: CMS.resolveRootUrl('LossMonitor/GetGroupDownlines')
     };
     var domElements = {
         divSMALossMonitor: null,
@@ -80,27 +88,24 @@ Fanex.CMS.LossMonitor = function () {
     };
 
     var bindEvents = function () {
-        if (viewResources.hasHostPermission)
-        {
-            domElements.textboxSMAName.keyup(function (event) {
-                if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
-                    self.btnSearchClick();
-                }
-            });
-
-            if (!viewResources.hasHostPermission) {
-                return;
-            }
-
-            domElements.btnAdd.unbind("click");
-            domElements.btnAdd.click(btnAddClick);
+        if (!viewResources.hasHostPermission) {
+            return;
         }
+
+        domElements.textboxSMAName.keyup(function (event) {
+            if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
+                self.btnSearchClick();
+            }
+        });
+
+        domElements.btnAdd.unbind("click");
+        domElements.btnAdd.click(btnAddClick);
     };
 
     var btnAddClick = function () {
         var form = domElements.divAddSMA.clone();
 
-        CMS.modal("Add New SMA", form, {width : 570, height: 220});
+        CMS.modal(labels.AddNewSetting, form, { width: 570, height: 220 });
         cachePopupElements();
 
         bindPopupEventhandlers();
@@ -133,8 +138,6 @@ Fanex.CMS.LossMonitor = function () {
 
     // Render grid.
     var renderGrid = function (data) {
-        var smaNameFormat = '<span class="{0} level-indicator"></span><span>{1}</span>';
-        var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
         var smaNameCol = '';
         var percentageCol = '';
         var smaCssClass = '';
@@ -142,7 +145,7 @@ Fanex.CMS.LossMonitor = function () {
         var counter = 0;
         var gridOptions = {
             columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
-                      { HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
+                      { HeaderText: labels.Username, Width: 250, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left' },
                       { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
                       { HeaderText: labels.Currency, Width: 70, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
                       {
@@ -166,7 +169,7 @@ Fanex.CMS.LossMonitor = function () {
             showTitle: true,
             titleInfo: {
                 showButtonsWhenNoData: true,
-                customButtons: '<div id="divAutoRefresh"></div>'
+                customButtons: '<div id="divAutoRefresh" class="auto-refresh"><span id="spanRefreshIcon" class="refresh-icon"><span class="refresh-value">' + labels.Refresh + '</span></span></div>'
             }
         };
         var bodyData = [];
@@ -174,51 +177,40 @@ Fanex.CMS.LossMonitor = function () {
         var subRows;
 
         if (data && data.length > 0) {
-            var maxLossFormat = '<a class="c hand edit-maxloss" href="JavaScript:void(0);" data-custid="{0}" data-username="{1}"" >{2}</a>' +
-                                '<input class="display-none width-95 clearable textbox-maxloss" type="text" maxlength="13" value="{3}" />';
-
-            var maxLossFormatNoHost = '<span>{0}</span>';
-
             var deleteButtonFormat = '<a class="c hand ico-delete" href="JavaScript:void(0);" data-custid="{0}" data-username="{1}"></a>';
-
 
             $.each(data, function (groupIndex, group) {
                 subRows = [];
 
                 $.each(group.SMALossItems, function (index, item) {
-                    if (item.ChangedLevel > 0) {
-                        smaCssClass = 'ico-upward-arrow';
-                    } else if (item.ChangedLevel < 0) {
-                        smaCssClass = 'ico-downward-arrow';
-                    } else {
-                        smaCssClass = 'ico-horizontal-line';
-                    }
 
+                    smaCssClass = getChangeLevel(item.ChangedLevel);
                     counter++;
-                    smaNameCol = smaNameFormat.format(smaCssClass, item.Username);
+
+                    var smaNameFormat = '<span class="{0} level-indicator"></span>' +
+                        (item.IsViewDownline ? '<span class="grid-collapse group-expand-indicator" group-id="{1}"></span>' : '') +
+                        '<span>{2}</span>';
+
+                    smaNameCol = smaNameFormat.format(smaCssClass, item.CustId, item.Username);
                     percentageCol = progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat));
 
                     row = {
                         Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
-                                  { Name: 'ColSMAName', Value: smaNameCol },
+                                  { Name: 'ColUsername', Value: smaNameCol, TdClass: 'username-column' },
                                   { Name: 'ColLevel', Value: item.Level },
                                   { Name: 'ColCurrency', Value: item.Currency },
                                   { Name: 'ColYesterdayBalance', Value: item.YesterdayBalance },
                                   { Name: 'ColTotalBalance', Value: item.TotalBalance },
                                   {
-                                      Name: 'ColMaxLoss', Value: viewResources.hasHostPermission ? 
-                                          maxLossFormat.format(item.CustId, item.Username,
-                                          numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
-                                          numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
-                                          :
-                                          maxLossFormatNoHost.format(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
+                                      Name: 'ColMaxLoss', Value: getMaxLoss(item)
                                   },
-                                  { Name: 'ColLossPercentage', Value: percentageCol },
+                                  { Name: 'ColLossPercentage', Value: getPercentageCol(item) },
                                   {
                                       Name: "ColDelete",
                                       Value: deleteButtonFormat.format(item.CustId, item.Username)
                                   }
                         ],
+                        CustomAttr: item.IsViewDownline ? 'row-group-id="' + item.CustId + '"' : ''
                     };
                     subRows.push(row);
                 });
@@ -237,8 +229,7 @@ Fanex.CMS.LossMonitor = function () {
             });
         }
 
-        if (!viewResources.hasHostPermission)
-        {
+        if (!viewResources.hasHostPermission) {
             gridOptions.hiddenColumns = [8];
         }
 
@@ -248,8 +239,20 @@ Fanex.CMS.LossMonitor = function () {
     };
 
     var handleGridEvents = function () {
-        if (viewResources.hasHostPermission)
-        {
+        domElements.divSMALossMonitorContainer.find('#divAutoRefresh').click(function () {
+            getSMALossReport();
+        });
+
+        domElements.divSMALossMonitor.find('[row-group-id] .username-column').click(function () {
+            showHideDownlines($(this));
+        });
+
+        handleSMAEvents();
+
+        domElements.divSMALossMonitor.fanexGrid('resizeGrid');
+    };
+    var handleSMAEvents = function () {
+        if (viewResources.hasHostPermission) {
             var editIcons = domElements.divSMALossMonitor.find(".edit-maxloss");
             editIcons.on('click', function () {
                 var $link = $(this);
@@ -267,33 +270,9 @@ Fanex.CMS.LossMonitor = function () {
             });
         }
 
-        domElements.divSMALossMonitorContainer.find('#divAutoRefresh').each(function () {
-            domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport, true, false);
-
-            if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
-                domElements.divAutoRefresh.run();
-            }
-        });
-
-        domElements.divAutoRefresh.find('li.option').click(function () {
-            var selectedValue = parseInt($(this).attr('data-value'));
-
-            refreshTimer.Default = selectedValue;
-        });
-
         domElements.divSMALossMonitor.find('div.percentage-bar').each(function () {
-            var $obj = $(this);
-            var percentage = parseInt($obj.attr('data-value'));
-
-            $obj.progressbar({
-                value: percentage
-            });
-
-            if (percentage >= 100) {
-                $obj.addClass('full-percents');
-            }
+            bindProgessBar($(this), notAvailablePercentage);
         });
-        domElements.divSMALossMonitor.fanexGrid('resizeGrid');
     };
 
     var editMaxLoss = function (link) {
@@ -362,8 +341,7 @@ Fanex.CMS.LossMonitor = function () {
                 CMS.showConfirmMessage(
                     messages.UpdateMaxLossConfirm.format(cachedData.username, numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
                     function () {
-                        if (isNaN(cachedData.maxLoss))
-                        {
+                        if (isNaN(cachedData.maxLoss)) {
                             CMS.showInlineErrorMsg(messages.MaxLossNeedNegative, domElements.divResult);
                             return;
                         }
@@ -431,6 +409,23 @@ Fanex.CMS.LossMonitor = function () {
     };
 
     var bindPopupEventhandlers = function () {
+        popupElements.divForm.find("#radio-sma").click();
+        popupElements.divForm.find('label[for]').click(function () {
+            var $this = $(this);
+            var forValue = $this.attr("for");
+            var target = popupElements.divForm.find("#" + forValue);
+            target.focus();
+            target.click();
+        });
+
+        popupElements.divForm.find('[name="radio-level"]').click(function () {
+            var $this = $(this);
+            var value = $this.val().toLowerCase();
+
+            popupElements.divForm.find(".lbl-maxloss").addClass("display-none");
+            popupElements.divForm.find("#lbl-maxloss-" + value).removeClass("display-none");
+        });
+
         popupElements.divForm.unbind("keyup");
         popupElements.divForm.keyup(function (e) {
             var code = "";
@@ -445,7 +440,6 @@ Fanex.CMS.LossMonitor = function () {
                 addNewSMA();
             }
         });
-
 
         popupElements.txtMaxLoss.blur(function () {
             formatMaxLoss();
@@ -484,6 +478,8 @@ Fanex.CMS.LossMonitor = function () {
     var addNewSMA = function () {
         var username = popupElements.txtUsername.val();
         var maxLoss = popupElements.txtMaxLoss.val();
+        var isHeadline = popupElements.divForm.find('[name="radio-level"]:checked').val().toLowerCase() === "headline";
+
         maxLoss = parseFloat(maxLoss.replace(/,/g, ""));
 
         if (Validator.validateForm(popupElements.divForm, 'w')) {
@@ -492,7 +488,13 @@ Fanex.CMS.LossMonitor = function () {
                 return;
             }
 
-            $.get(urls.AddSMA, { username: username, maxLoss: maxLoss }).success(function (result) {
+            var params = {
+                username: username,
+                maxLoss: maxLoss,
+                isHeadline: isHeadline
+            };
+
+            $.get(urls.AddSMA, params).success(function (result) {
                 if (result.IsSuccessful) {
                     CMS.showInlineSuccessMsg(messages.AddSMASuccess, popupElements.divErrorSuccessMsg, false, function () {
                         setTimeout(CMS.closePopup, 3000);
@@ -519,6 +521,164 @@ Fanex.CMS.LossMonitor = function () {
         popupElements.txtMaxLoss.prop('disabled', true);
         popupElements.btnSave.prop('disabled', true);
         popupElements.btnCancel.prop('disabled', true);
+    };
+
+    var showHideDownlines = function (groupColumn) {
+        var groupExpandIndicator = groupColumn.find(".group-expand-indicator");
+        var groupdId = groupExpandIndicator.attr('group-id');
+        var currentShow = groupColumn.attr("show-downline") === "true";
+
+        if (currentShow) {
+            domElements.divSMALossMonitor.find('.row-downline[row-group-id="' + groupdId + '"]').addClass("display-none");
+            groupExpandIndicator.removeClass("grid-expand").addClass("grid-collapse");
+        } else {
+            groupExpandIndicator.removeClass("grid-collapse").addClass("grid-expand");
+
+            var loadedDownlines = groupExpandIndicator.attr("loaded-downlines");
+            if (loadedDownlines === "1") {
+                domElements.divSMALossMonitor.find('.row-downline[row-group-id="' + groupdId + '"]').removeClass("display-none");
+            }
+            else {
+                $.ajax({
+                    type: 'POST',
+                    url: urls.GetGroupDownlines,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({ CustId: groupdId }),
+                    success: function (result) {
+                        renderDownlines(groupColumn, groupdId, result);
+                        groupExpandIndicator.attr("loaded-downlines", 1);
+                    },
+                    error: function (xhr) {
+                        CMS.handleAjaxError(xhr);
+                    },
+                    complete: function () {
+                        CMS.enableInput();
+                    }
+                });
+            }
+        }
+
+        groupColumn.attr("show-downline", currentShow ? "false" : "true");
+        domElements.divSMALossMonitor.fanexGrid('resizeGrid');
+    };
+
+    var renderDownlines = function (groupColumn, groupdId, downlines) {
+        var downlinesHtml = '';
+
+        $.each(downlines, function (downlineIndex, downline) {
+            downlinesHtml += '<tr class="highlight-row  divSMALossMonitor_tree_0 child-row row-downline" row-group-id="' + groupdId + '" highlightatt="highlight-att-main-0-0-0-0">\
+                                    <td class="free-grid-td-0" style="height:21px;">\
+                                        <div class="table-cell order-column" style="width:50px;padding-left:20px;" align="center"></div>\
+                                    </td>\
+                                    <td class="free-grid-td-1" style="height:21px;">\
+                                        <div class="table-cell" style="width:250px;" align="left">\
+                                                <span class="' + getChangeLevel(downline.ChangedLevel) + ' level-indicator"></span>\
+                                                <span>' + downline.Username + '</span>\
+                                        </div>\
+                                    </td>\
+                                    <td class="free-grid-td-2" style="height:21px;">\
+                                        <div class="table-cell" style="width:70px;" align="center">' + downline.Level + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-3" style="height:21px;">\
+                                        <div class="table-cell" style="width:70px;" align="center">' + downline.Currency + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-4" style="height:21px;">\
+                                        <div class="table-cell" style="width:150px;" align="right">' + numeral(downline.YesterdayBalance).format(CMS.formats.DecimalFormat) + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-5" style="height:21px;">\
+                                        <div class="table-cell" style="width:150px;" align="right">' + numeral(downline.TotalBalance).format(CMS.formats.DecimalFormat) + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-6" style="height:21px;">\
+                                        <div class="table-cell" style="width:120px;" align="right">' + getMaxLoss(downline) + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-7" style="height:21px;">\
+                                        <div class="table-cell" style="width:150px;" align="center">' + getPercentageCol(downline) + '</div>\
+                                    </td>\
+                                    <td class="free-grid-td-8 " style="height:21px;">\
+                                        <div class="table-cell  " style="width:60px;" align="center">' +
+                                            (downline.MaxLoss === null ? '' :
+                                            '<a class="c hand ico-delete" href="JavaScript:void(0);" data-custid="' + downline.CustId + '" data-username="' + downline.Username + '"></a>') +
+                                        '</div>\
+                                    </td>\
+                               </tr>';
+        });
+
+        var $downlinesHtml = $(downlinesHtml);
+
+        $downlinesHtml.insertAfter(groupColumn.parent());
+
+        handleSMAEvents();
+
+        var addIcons = domElements.divSMALossMonitor.find(".add-maxloss");
+        addIcons.on('click', function () {
+            var $link = $(this);
+
+            addMaxLoss($link);
+        });
+    };
+    var getChangeLevel = function (changedLevel) {
+        if (changedLevel > 0) {
+            return 'ico-upward-arrow';
+        }
+
+        if (changedLevel < 0) {
+            return 'ico-downward-arrow';
+        }
+
+        return 'ico-horizontal-line';
+    };
+    var getMaxLoss = function (item) {
+        if (!viewResources.hasHostPermission && item.MaxLoss === null) {
+            return maxLossFormatNoHost.format(labels.NotAvailable);
+        }
+
+        if (!viewResources.hasHostPermission) {
+            return maxLossFormatNoHost.format(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+        }
+
+        if (item.MaxLoss === null) {
+            return '<a class="c hand add-maxloss" href="JavaScript:void(0);" data-custid="' + item.CustId + '" data-username="' + item.Username + '">' + labels.NotAvailable + '</a>';
+        }
+
+        return maxLossFormat.format(item.CustId, item.Username,
+            numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
+            numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+    };
+    var getPercentageCol = function (item) {
+        if (item.MaxLoss === null) {
+            return progressBarFormat.format(100, labels.NotAvailable);
+        }
+
+        return progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat) + "%");
+    };
+    var bindProgessBar = function ($this, notAvailablePercentage) {
+        var percentage = parseInt($this.attr('data-value'));
+
+        $this.progressbar({
+            value: percentage
+        });
+
+        if ($this.find('span').html().toLowerCase() === notAvailablePercentage) {
+            $this.addClass('not-available-percents');
+            return;
+        }
+
+        if (percentage >= 100) {
+            $this.addClass('full-percents');
+        }
+    };
+    var addMaxLoss = function (link) {
+        var username = link.attr('data-username');
+
+        var form = domElements.divAddSMA.clone();
+        form.find("#txt-username").val(username);
+
+        CMS.modal(labels.AddNewSetting, form, { width: 570, height: 220 });
+        cachePopupElements();
+
+        form.find("#txt-maxloss").focus();
+        bindPopupEventhandlers();
     };
 
     $this.InitPage = function () {

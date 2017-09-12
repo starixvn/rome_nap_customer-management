@@ -14,7 +14,8 @@ namespace Fanex.NAP.CMS.Core.Constants
     /// </summary>
     public static class CustomerLevels
     {
-        public const int Super = 4;
+        public const int Headline = 4;
+        public const int Super = 5;
         public const int Master = 3;
         public const int Agent = 2;
         public const int Member = 1;

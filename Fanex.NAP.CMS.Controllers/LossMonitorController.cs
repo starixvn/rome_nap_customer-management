@@ -1,118 +1,82 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LossMonitorController.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Jason.Ly" date="2014.5.23">Created</change>
-// </history>
-
-namespace Fanex.NAP.CMS.Controllers
+﻿namespace Fanex.NAP.CMS.Controllers
 {
-    using System.Collections.Generic;
     using System.Web.Mvc;
-    using Fanex.NAP.CMS.Core;
-    using Fanex.NAP.CMS.Criteria.LossMonitor;
-    using Fanex.NAP.CMS.Services.Implements;
-    using Fanex.NAP.CMS.Services.Interfaces;
-    using Fanex.NAP.CMS.ViewModels.LossMonitor;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Command;
+    using Core;
+    using Criteria.LossMonitor;
+    using NAP.Core.Business;
+    using NAP.Core.Web.Attribute;
+    using Services.Implements;
+    using Services.Interfaces;
 
-    /// <summary>
-    /// Loss monitor controller.
-    /// </summary>
     public class LossMonitorController : BaseController
     {
         private readonly ILossMonitorService _lossMonitorService;
 
-        public LossMonitorController() :
-            this(null)
+        public LossMonitorController()
+            : this(null)
         {
         }
 
         public LossMonitorController(ILossMonitorService lossMonitorService)
         {
-            this._lossMonitorService = lossMonitorService ?? new LossMonitorService();
+            _lossMonitorService = lossMonitorService ?? new LossMonitorService();
         }
 
-        /// <summary>
-        /// Redirects to Index view.
-        /// </summary>
-        /// <returns>Index view.</returns>
-        [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewData["HostPermission"] = HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Host);
+
             return View();
         }
 
-        /// <summary>
-        /// Gets SMA loss report.
-        /// </summary>
-        /// <returns>JSON result represents the SMA loss report.</returns>
-        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
         public JsonResult GetSMALossReport()
         {
-            List<SMALossGroup> result = this._lossMonitorService.GetSMALoss(new GetSMALossMonitorListCriteria());
+            var result = _lossMonitorService.GetCustomerLoss();
 
-            return Json(result);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
+        public JsonResult GetGroupDownlines(GetGroupDownlinesCriteria criteria)
+        {
+            var result = _lossMonitorService.GetGroupDownlines(criteria);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult GetGroupDownlines(int custId)
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
+        public JsonResult Add(InsertSMACriteria criteria)
         {
-            List<SMALossItem> result = this._lossMonitorService.GetGroupDownlines(new GetGroupDownlinesCriteria(custId));
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+            var result = _lossMonitorService.InsertSMA(criteria);
 
-            return Json(result);
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpGet]
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
-        public JsonResult AddSMA(string username, int maxLoss, bool isHeadline)
+        public JsonResult Update(UpdateSMAMaxLossCriteria criteria)
         {
-            var result = this._lossMonitorService.InsertSMA(new InsertSMACriteria
-            {
-                Username = username,
-                MaxLoss = maxLoss,
-                Creator = this.CurrentSession.UserId,
-                IP = this.CurrentContext.IP,
-                IsHeadline = isHeadline
-            });
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+            var result = _lossMonitorService.UpdateMaxLoss(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
 
-        [HttpGet]
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
-        public JsonResult DeleteSMA(int custId)
+        public JsonResult Remove(DeleteSMACriteria criteria)
         {
-            var result = this._lossMonitorService.DeleteSMA(new DeleteSMACriteria
-            {
-                CustId = custId,
-                Creator = this.CurrentSession.UserId,
-                IP = this.CurrentContext.IP
-            });
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+            var result = _lossMonitorService.DeleteSMA(criteria);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
-        public JsonResult EditMaxLoss(int custId, int maxLoss)
-        {
-            var result = this._lossMonitorService.UpdateMaxLoss(new UpdateSMAMaxLossCriteria
-            {
-                CustId = custId,
-                MaxLoss = maxLoss,
-                Creator = this.CurrentSession.UserId,
-                IP = this.CurrentContext.IP
-            });
-
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.DenyGet);
         }
     }
 }

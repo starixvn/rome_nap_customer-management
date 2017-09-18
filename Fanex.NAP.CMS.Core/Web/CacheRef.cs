@@ -153,10 +153,6 @@ namespace Fanex.NAP.CMS.Core.Web
             {
                 switch (roleID.Value)
                 {
-                    case CustomerLevels.Headline:
-                        level = ViewLang.Headline;
-                        break;
-
                     case CustomerLevels.Super:
                         level = ViewLang.Super;
                         break;

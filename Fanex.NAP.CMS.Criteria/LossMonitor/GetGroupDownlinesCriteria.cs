@@ -1,32 +1,19 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     public class GetGroupDownlinesCriteria : CriteriaBase
     {
-        public GetGroupDownlinesCriteria(int custId)
-        {
-            CustId = custId;
-        }
+        public int GroupHeadlineId { get; set; }
 
-        public int CustId { get; set; }
-
-        /// <summary>
-        /// Gets the setting key.
-        /// </summary>
-        /// <returns>The setting key.</returns>
         public override string GetSettingKey()
         {
-            return "NAP_LimitLoss_MonitorList";
+            return "NAP_LimitLoss_MonitorGroupHeadline";
         }
 
-        /// <summary>
-        /// Determines whether this criteria is valid.
-        /// </summary>
-        /// <returns>Whether this criteria is valid or not.</returns>
         public override bool IsValid()
         {
-            return true;
+            return GroupHeadlineId > 0;
         }
     }
 }

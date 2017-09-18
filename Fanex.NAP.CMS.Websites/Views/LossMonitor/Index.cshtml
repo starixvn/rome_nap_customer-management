@@ -1,14 +1,8 @@
 ﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
-@using Fanex.Nap.CMS.Infrastructure.Controllers;
-@using Fanex.NAP.Core.Business;
-@using Fanex.Nap.CMS.Infrastructure;
 @{
-    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Host);
-}
-
-@{
-    ViewBag.Title = ViewLang.LossMonitor;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewLang.LossMonitor;
+    var hasHostPermission = Convert.ToBoolean(ViewData["HostPermission"]);
 }
 @section Head
 {
@@ -19,103 +13,94 @@
     <div class="title">
         <div>
             <span class="curr">@ViewBag.Title</span>
-            <input id="btn-add" type="button" class="submit display-none btnAdd" value="@Labels.Add" />
+            @if (hasHostPermission)
+            {
+                <button type="button" class="btnAdd" id="btnAddSetting">@Labels.Add</button>
+            }
+            <button type="button" class="green-button" id="btnRefresh">Refresh</button>
         </div>
     </div>
 }
-
-<div id="div-result-message" class="inline-message">
+<div id="div-result-message" class="inline-message"></div>
+<div class="content-grid">
+    <div id="divSMALossMonitor" class="freegrid display-none"></div>
 </div>
-
-<div id="divSMALossMonitorContainer" class="display-none content-grid">
-    <div id="divSMALossMonitor" class="freegrid"></div>
-</div>
-
-<div id="divPopupContent" class="display-none">
-    <div id="divAddSMA" class="form expand-form">
-        <div id="div-result-add-message" class="inline-message">
-        </div>
-        <div class="form-row">
-            <div class="lbl-field normal-label width-100">&nbsp;</div>
-            <div class="lbl-field radio-button">
-                @Html.RadioButton("radio-level", "sma", true, new { id = "radio-sma" })
+@if (hasHostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+        @using (Html.BeginForm("Add", "LossMonitor", FormMethod.Post, new { id = "formAddSetting", @class = "form expand-form" }))
+        {
+            <div id="div-result-add-message" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field normal-label width-100">&nbsp;</div>
+                <div class="lbl-field width-250">
+                    <input type="radio" name="Level" checked="checked" id="rdoSMA" />
+                    <label for="rdoSMA" style="margin-right: 30px;">@ViewLang.SMA</label>
+                    <input type="radio" name="Level" id="rdoHeadline" />
+                    <label for="rdoHeadline">@ViewLang.Headline</label>
+                </div>
             </div>
-            <div class="lbl-field">
-                @Html.Label("radio-sma", ViewLang.SMA)
+            <div class="form-row">
+                <div class="lbl-field normal-label width-100">
+                    <label for="txt-username">@ViewLang.Username</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" id="txt-username" class="width-230 clearable" autocomplete="off" maxlength="30"
+                           data-val-required="Required field!" />
+                </div>
             </div>
-            <div class="lbl-field radio-button">
-                @Html.RadioButton("radio-level", "headline", false, new { id = "radio-headline" })
+            <div class="form-row">
+                <div class="lbl-field normal-label width-100">
+                    <label id="lbl-maxloss" for="txt-maxloss">@ViewLang.MaxLoss</label>
+                </div>
+                <div class="edit-field">
+                    <input type="text" id="txt-maxloss" class="width-230 clearable" autocomplete="off" maxlength="13"
+                           data-val-required="Required field!"
+                           data-val-number="Invalid value!" />
+                </div>
             </div>
-            <div class="lbl-field">
-                @Html.Label("radio-headline", ViewLang.Headline)
+            <div class="form-row button-row">
+                <div class="lbl-field normal-label width-100">&nbsp;</div>
+                <div class="edit-field">
+                    <button type="submit" class="blue-button" id="btnSave">@ViewLang.Add</button>
+                    <button type="button" class="red-button" id="btnCancel">@ViewLang.Cancel</button>
+                </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field normal-label width-100">
-                <label for="txt-username">
-                    @ViewLang.Username
-                </label>
-            </div>
-            <div class="edit-field">
-                <input id="txt-username" class="width-230 clearable" type="text" value="" name="txt-username"
-                       maxlength="30" data-val-required="Required field!" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field normal-label width-100">
-                <label id="lbl-maxloss-sma" for="txt-maxloss" class="lbl-maxloss">
-                    @ViewLang.MaxLoss
-                </label>
-                <label id="lbl-maxloss-headline" for="txt-maxloss" class="lbl-maxloss display-none">
-                    @ViewLang.MaxLoss (@ViewLang.RM)
-                </label>
-            </div>
-            <div class="edit-field">
-                <input id="txt-maxloss" class="width-230 clearable" type="text" value="" name="txt-maxloss"
-                       maxlength="13" data-val-required="Required field!" />
-            </div>
-        </div>
-        <div class="form-row button-row">
-            <div class="lbl-field normal-label width-100">
-            </div>
-            <div class="edit-field">
-                <input id="btnSave" class="blue-button" type="button" value="@ViewLang.Add">
-                <input id="btnCancel" class="red-button" type="button" value="@ViewLang.Cancel">
-            </div>
-        </div>
+        }
     </div>
-</div>
-
+}
 @section Foot
 {
-    @Scripts.Render("~/scripts/lossMonitor")
     <script type="text/javascript">
+        var rootUrl = document.getElementById("CMSRoot").value;
+        var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
+        var minIntValue = @int.MinValue;
         var labels = {
-            No: '#',
-            Username: '@ViewLang.Username',
-            SMAName: '@ViewLang.SMAName',
-            Level: '@ViewLang.Level',
-            Currency: '@ViewLang.Currency',
-            TotalBalance: '@ViewLang.TotalBalance',
-            YesterdayBalance: '@ViewLang.YesterdayBalance',
-            MaxLoss: '@ViewLang.MaxLoss',
-            LossPercentage: '@ViewLang.LossPercentage',
-            AutoRefresh: '@ViewLang.AutoRefresh',
-            NotAvailable: '@ViewLang.NotAvailable',
-            Refresh:'@Labels.Refresh',
-            AddNewSetting:'@ViewLang.AddNewSetting'
+            No: "#",
+            Username: "@ViewLang.Username",
+            SMAName: "@ViewLang.SMAName",
+            Level: "@ViewLang.Level",
+            Currency: "@ViewLang.Currency",
+            TotalBalance: "@ViewLang.TotalBalance",
+            YesterdayBalance: "@ViewLang.YesterdayBalance",
+            MaxLoss: "@ViewLang.MaxLoss",
+            LossPercentage: "@ViewLang.LossPercentage",
+            AutoRefresh: "@ViewLang.AutoRefresh",
+            NotAvailable: "@ViewLang.NotAvailable",
+            Refresh: "@Labels.Refresh",
+            AddNewSetting: "@ViewLang.AddNewSetting",
+            RM: "(@ViewLang.RM)"
         };
-
-        var viewResources = {
-            hasHostPermission: @(hasHostPermission ? 1 : 0)
-            };
         var messages = {
-            UpdateMaxLossConfirm: 'Are you sure you want to update max loss of {0} to {1}?',
-            MaxLossNeedNegative: 'Max Loss should be a negative number!',
-            UpdateMaxLossSuccess: 'Updated Max Loss successfully.',
-            AddSMASuccess: 'Added SMA successfully.',
-            RemoveSMA: 'Are you sure you want to remove {0}?',
-            RemoveSMASuccess: 'Removed Max Loss successfully.'
+            UpdateMaxLossConfirm: "Are you sure you want to update max loss of {0} to {1}?",
+            MaxLossNeedNegative: "Max Loss should be negative!",
+            UpdateMaxLossSuccess: "Updated Max Loss successfully.",
+            AddCustomerSuccess: "Added customer {0} successfully.",
+            RemoveCustomer: "Are you sure you want to remove {0}?",
+            RemoveCustomerSuccess: "Removed Max Loss successfully.",
+            Error_RequiredField: "Required field!",
+            Error_InvalidValue: "Invalid value!",
         };
     </script>
+    @Scripts.Render("~/scripts/lossMonitor")
 }

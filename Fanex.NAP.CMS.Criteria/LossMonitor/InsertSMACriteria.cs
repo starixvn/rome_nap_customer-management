@@ -1,26 +1,17 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="InsertSMACriteria.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Aaron.Cao" date="2016.06.07">Created</change>
-// </history>
-
-namespace Fanex.NAP.CMS.Criteria.LossMonitor
+﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     public class InsertSMACriteria : CriteriaBase
     {
         public string Username { get; set; }
 
-        public int MaxLoss { get; set; }
+        public decimal MaxLoss { get; set; }
 
-        [SpParam(Ignored = true)]
-        public bool IsHeadline { get; set; }
+        [SpParam(SqlParamName = "Mode")]
+        public bool IsGroupHeadline { get; set; }
 
-        public int Creator { get; set; }
+        public int UserId { get; set; }
 
         public string IP { get; set; }
 
@@ -35,7 +26,10 @@ namespace Fanex.NAP.CMS.Criteria.LossMonitor
 
         public override bool IsValid()
         {
-            return MaxLoss > 0;
+            return !string.IsNullOrWhiteSpace(Username) &&
+                MaxLoss <= 0 &&
+                UserId > 0 &&
+                !string.IsNullOrWhiteSpace(IP);
         }
     }
 }

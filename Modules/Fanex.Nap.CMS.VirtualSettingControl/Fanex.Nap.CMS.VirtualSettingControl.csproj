@@ -139,6 +139,7 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
+    <Compile Include="ViewModels\VrAutoAdjustmentReport\VrAdjustmentViewModel.cs" />
     <Compile Include="Models\VrAutoAdjustmentReport\VrAutoAdjustmentLogEntry.cs" />
     <Compile Include="Services\CustomerDashboard\CustomerDashboardService.cs" />
     <Compile Include="Services\CustomerDashboard\ICustomerDashboardService.cs" />

@@ -19,6 +19,8 @@
 
         public bool? IsBA { get; set; }
 
+        public string ServiceName { get; set; }
+
         public List<MarginModel> MarginList { get; set; }
 
         public int Months

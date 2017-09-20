@@ -2,10 +2,18 @@
 
 Array.prototype.collect = function (collector) {
     var result = [];
+    var finalResult = [];
     for (var i = 0; i < this.length; ++i) {
         result = result.concat(collector(this[i], i));
     }
-    return result;
+
+    for (var i = 0; i < result.length; i++) {
+        for (var j = 0; j < 4; j ++) {
+            finalResult = finalResult.concat(result[i][j]);
+        }
+    }
+
+    return finalResult;
 };
 
 (function () {
@@ -56,6 +64,7 @@ Array.prototype.collect = function (collector) {
         var columnHeaders = [
                     { HeaderText: '#', Width: 40, Name: 'colRowNum', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Member', Width: 180, Name: 'colUsername', HeaderAlign: 'center', CellAlign: 'left' },
+                    { HeaderText: 'Service', Width: 70, Name: 'colService', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Old Rate', Width: 50, Name: 'colOldRate', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'New Rate', Width: 55, Name: 'colNewRate', HeaderAlign: 'center', CellAlign: 'center' },
                     { HeaderText: 'Months', Width: 50, Name: 'colMonths', HeaderAlign: 'center', CellAlign: 'center' },
@@ -76,8 +85,7 @@ Array.prototype.collect = function (collector) {
         ].concat(months);
 
         function bodyMapFunc(page, pageSize) {
-
-            return function (item, index) {
+            /*return function (item, index, nextRecord) {
                 var winlossHeader = {
                     Name: 'colFigure', Value: "Winloss"
                 };
@@ -142,6 +150,94 @@ Array.prototype.collect = function (collector) {
                 };
 
                 return [column, winlossCol, marginCol, betCol];
+            };*/
+            return function (item, index) {
+                var rowsData = new Array();
+                var itemCount = item.vrAdjustment.length;
+                var rowIndex = page * pageSize + index + 1;
+
+                for (var i = 0; i < itemCount; i++) {
+                    var winlossHeader = {
+                        Name: 'colFigure', Value: "Winloss"
+                    };
+                    var winlossRow = item.vrAdjustment[i].MarginList.map(getWinlossCell);
+                    var last3mWL = { Name: 'colLast3m', Value: item.vrAdjustment[i].Last3Months.Turnover > 0 ? item.vrAdjustment[i].Last3Months.Winloss : '' };
+                    var last6mWL = { Name: 'colLast6m', Value: item.vrAdjustment[i].Last6Months.Turnover > 0 ? item.vrAdjustment[i].Last6Months.Winloss : '' };
+                    var totalWL = { Name: 'colTotal', Value: item.vrAdjustment[i].Total.Turnover > 0 ? item.vrAdjustment[i].Total.Winloss : '' };
+
+                    var turnoverHeader = {
+                        Name: 'colFigure', Value: "Turnover"
+                    };
+                    var turnoverRow = item.vrAdjustment[i].MarginList.map(getTurnoverCell);
+                    var last3mTO = { Name: 'colLast3m', Value: item.vrAdjustment[i].Last3Months.Turnover > 0 ? item.vrAdjustment[i].Last3Months.Turnover : '' };
+                    var last6mTO = { Name: 'colLast6m', Value: item.vrAdjustment[i].Last6Months.Turnover > 0 ? item.vrAdjustment[i].Last6Months.Turnover : '' };
+                    var totalTO = { Name: 'colTotal', Value: item.vrAdjustment[i].Total.Turnover > 0 ? item.vrAdjustment[i].Total.Turnover : '' };
+
+                    var marginHeader = {
+                        Name: 'colFigure', Value: "Margin (%)"
+                    };
+                    var marginRow = item.vrAdjustment[i].MarginList.map(getMarginCell);
+                    var last3mMG = { Name: 'colLast3m', Value: item.vrAdjustment[i].Last3Months.Turnover > 0 ? item.vrAdjustment[i].Last3Months.Margin : '' };
+                    var last6mMG = { Name: 'colLast6m', Value: item.vrAdjustment[i].Last6Months.Turnover > 0 ? item.vrAdjustment[i].Last6Months.Margin : '' };
+                    var totalMG = { Name: 'colTotal', Value: item.vrAdjustment[i].Total.Turnover > 0 ? item.vrAdjustment[i].Total.Margin : '' };
+
+                    var betcountHeader = {
+                        Name: 'colFigure', Value: "Bet Count"
+                    };
+                    var betRow = item.vrAdjustment[i].MarginList.map(getBetCell);
+                    var last3mBC = { Name: 'colLast3m', Value: item.vrAdjustment[i].Last3Months.Turnover > 0 ? item.vrAdjustment[i].Last3Months.BetCount : '', CustomCellRender: betcountCustomCellRender };
+                    var last6mBC = { Name: 'colLast6m', Value: item.vrAdjustment[i].Last6Months.Turnover > 0 ? item.vrAdjustment[i].Last6Months.BetCount : '', CustomCellRender: betcountCustomCellRender };
+                    var totalBC = { Name: 'colTotal', Value: item.vrAdjustment[i].Total.Turnover > 0 ? item.vrAdjustment[i].Total.BetCount : '', CustomCellRender: betcountCustomCellRender };
+
+                    var css = (index & 1) == 1 ? 'freegrid-even' : '';
+
+                    var winlossCol = {
+                        Columns: [winlossHeader, last3mWL, last6mWL, totalWL].concat(winlossRow),
+                        CssClass: css
+                    };
+
+                    var marginCol = {
+                        Columns: [marginHeader, last3mMG, last6mMG, totalMG].concat(marginRow),
+                        CssClass: css
+                    };
+
+                    var betCol = {
+                        Columns: [betcountHeader, last3mBC, last6mBC, totalBC].concat(betRow),
+                        CssClass: css
+                    };
+
+                    if (i == 0) {
+                        var usernameFormat = item.vrAdjustment[0].IsBA == null || item.vrAdjustment[0].IsBA.toString() == "false" ? "" : "<span class='account-ba'>BA</span>";
+                        var column = {
+                            Columns: [
+                                { Name: 'colRowNum', Value: rowIndex, MergeRowNumber: itemCount > 1 ? 8 : 4 },
+                                { Name: 'colUsername', Value: item.vrAdjustment[0].Username + usernameFormat, MergeRowNumber: itemCount > 1 ? 8 : 4 },
+                                { Name: 'colService', Value: item.vrAdjustment[i].ServiceName, MergeRowNumber: 4 },
+                                { Name: 'colOldRate', Value: item.vrAdjustment[i].OldRate, MergeRowNumber: 4 },
+                                { Name: 'colNewRate', Value: item.vrAdjustment[i].NewRate, MergeRowNumber: 4 },
+                                { Name: 'colMonths', Value: item.vrAdjustment[i].Months, MergeRowNumber: 4 },
+                                { Name: 'colWonMonths', Value: item.vrAdjustment[i].WonMonths, MergeRowNumber: 4 }
+                            ].concat([turnoverHeader, last3mTO, last6mTO, totalTO], turnoverRow),
+                            CssClass: css
+                        };
+                    }
+                    else {
+                        var column = {
+                            Columns: [
+                                { Name: 'colService', Value: item.vrAdjustment[i].ServiceName, MergeRowNumber: 4 },
+                                { Name: 'colOldRate', Value: item.vrAdjustment[i].OldRate, MergeRowNumber: 4 },
+                                { Name: 'colNewRate', Value: item.vrAdjustment[i].NewRate, MergeRowNumber: 4 },
+                                { Name: 'colMonths', Value: item.vrAdjustment[i].Months, MergeRowNumber: 4 },
+                                { Name: 'colWonMonths', Value: item.vrAdjustment[i].WonMonths, MergeRowNumber: 4 }
+                            ].concat([turnoverHeader, last3mTO, last6mTO, totalTO], turnoverRow),
+                            CssClass: css
+                        };
+                    }
+
+                    rowsData.push([column, winlossCol, marginCol, betCol]);
+                }
+
+                return rowsData;
             };
         }
 

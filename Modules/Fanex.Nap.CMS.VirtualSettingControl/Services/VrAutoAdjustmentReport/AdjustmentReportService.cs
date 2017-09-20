@@ -76,11 +76,59 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 }
 
                 model.MarginList = model.MarginList.OrderByDescending(t => t.ReportDate).Take(monthsToCheck).OrderBy(t => t.ReportDate).ToList();
-
                 result.Add(model);
             }
 
             return result.OrderBy(t => t.Months).ToList();
+        }
+
+        public List<VrAdjustmentViewModel> GetNewCustomerMarginHistory(ICriteria criteria, int monthsToCheck, DateTime adjustDate)
+        {
+            var vrAdjustmentViewModel = new List<VrAdjustmentViewModel>();
+            var marginList = this.GetData<MarginModel>(criteria);
+            var result = new List<CustomerMarginModel>();
+            var groupItem = marginList.GroupBy(m => m.Username);
+
+            adjustDate = adjustDate.AddDays(-1);
+
+            var lastMonth = new DateTime(adjustDate.Year, adjustDate.Month, 1);
+
+            foreach (var item in groupItem)
+            {
+                var groupItembyService = item.GroupBy(m => m.ServiceName);
+                var vrAdjustment = new VrAdjustmentViewModel();
+
+                foreach (var groupService in groupItembyService)
+                {
+                    var model = new CustomerMarginModel
+                        {
+                            Username = item.Key,
+                            MarginList = groupService.ToList()
+                        };
+
+                    model.IsBA = model.MarginList[0].IsBA;
+                    model.ServiceName = model.MarginList[0].ServiceName;
+                    model.OldRate = model.MarginList[0].OldVirtualRate;
+                    model.NewRate = model.MarginList[0].NewVirtualRate;
+
+                    for (var i = 0; i < monthsToCheck; i++)
+                    {
+                        var month = lastMonth.AddMonths(-i);
+
+                        if (!model.MarginList.Exists(t => t.ReportDate == month))
+                        {
+                            model.MarginList.Add(new MarginModel { Month = month.Month, Year = month.Year });
+                        }
+                    }
+
+                    model.MarginList = model.MarginList.OrderByDescending(t => t.ReportDate).Take(monthsToCheck).OrderBy(t => t.ReportDate).ToList();
+                    vrAdjustment.vrAdjustment.Add(model);
+                }
+
+                vrAdjustmentViewModel.Add(vrAdjustment);
+            }
+
+            return vrAdjustmentViewModel.ToList();
         }
 
         public void ExportVRAdjustmentReport(GetVrAdjustmentLogCriteria criteria, int monthsToCheck)
@@ -115,14 +163,14 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
 
         public void ExportNewVRAdjustmentReport(ICriteria criteria, int monthsToCheck, DateTime adjustDate)
         {
-            var data = GetCustomerMarginHistory(criteria, monthsToCheck, adjustDate);
+            var data = GetNewCustomerMarginHistory(criteria, monthsToCheck, adjustDate);
 
             HSSFWorkbook excelFile = new HSSFWorkbook();
             ExportExcelInfoByNPOI exportExcelInfo = new ExportExcelInfoByNPOI
             {
                 ExcelFile = excelFile,
                 Worksheet = excelFile.CreateSheet(Labels.VRAutoAdjustment),
-                MaxColumnIndex = 7 + monthsToCheck
+                MaxColumnIndex = 11 + monthsToCheck
             };
 
             _excelStyleTemplate = new ExcelStyleTemplateByNPOI(excelFile);
@@ -248,7 +296,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             GetCustomerMarginHistoryCriteria criteria,
             int monthsToCheck)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 60, 100, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new[] { 60, 160, 60, 70, 100, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
@@ -263,6 +311,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             exportExcelInfo.RenderCurrentCell(Labels.Symbol_No, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Member, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell("Is BA", _excelStyleTemplate.HeaderTextStyle);
+            exportExcelInfo.RenderCurrentCell("Service", _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.OldRate, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.NewRate, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell(Labels.Months, _excelStyleTemplate.HeaderTextStyle);
@@ -284,7 +333,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]
         private void ExportNewVRAdjustmentReportBody(
             ExportExcelInfoByNPOI exportExcelInfo,
-            List<CustomerMarginModel> reportData,
+            List<VrAdjustmentViewModel> reportData,
             int monthsToCheck)
         {
             var centerTextStyle = NpoiExcelExtensions.TextStyle(exportExcelInfo.ExcelFile, _excelStyleTemplate.BodyColorIndex, false, Alignment.Center);
@@ -294,140 +343,151 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
                 var rowIndex = 0;
                 var counter = 0;
                 var figureTexts = new [] { "Turnover", "Winloss", "Margin (%)", "Bet Count" };
-                foreach (var record in reportData)
+                foreach (var item in reportData)
                 {
-                    exportExcelInfo.ResetCurrentColumn();
-
-                    exportExcelInfo.RenderCurrentCell(rowIndex + 1, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
-
-                    exportExcelInfo.RenderCurrentCell(figureTexts[0], _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Last3Months.Turnover, _excelStyleTemplate.DecimalColorStyle);
-                    if (record.Last6Months.Turnover > 0)
+                    var recordIndex = 0;
+                    foreach (var record in item.vrAdjustment)
                     {
-                        exportExcelInfo.RenderCurrentCell(record.Last6Months.Turnover, _excelStyleTemplate.DecimalColorStyle);
-                    }
-                    else
-                    {
-                        exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
-                    }
+                        exportExcelInfo.ResetCurrentColumn();
 
-                    exportExcelInfo.RenderCurrentCell(record.Total.Turnover, _excelStyleTemplate.DecimalColorStyle);
-                    for (counter = 0; counter < monthsToCheck; counter++)
-                    {
-                        if (record.MarginList.ElementAt(counter).Turnover > 0)
+                        exportExcelInfo.RenderCurrentCell(recordIndex == 0 ? (rowIndex + 1).ToString() : "" , centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.ServiceName, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
+
+                        exportExcelInfo.RenderCurrentCell(figureTexts[0], _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Last3Months.Turnover, _excelStyleTemplate.DecimalColorStyle);
+                        if (record.Last6Months.Turnover > 0)
                         {
-                            exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).Turnover, _excelStyleTemplate.DecimalColorStyle);
+                            exportExcelInfo.RenderCurrentCell(record.Last6Months.Turnover, _excelStyleTemplate.DecimalColorStyle);
                         }
                         else
                         {
                             exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
                         }
-                    }
 
-                    exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 1;
-                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(figureTexts[1], _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Last3Months.Winloss, _excelStyleTemplate.DecimalColorStyle);
-                    if (record.Last6Months.Turnover > 0)
-                    {
-                        exportExcelInfo.RenderCurrentCell(record.Last6Months.Winloss, _excelStyleTemplate.DecimalColorStyle);
-                    }
-                    else
-                    {
-                        exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
-                    }
-
-                    exportExcelInfo.RenderCurrentCell(record.Total.Winloss, _excelStyleTemplate.DecimalColorStyle);
-                    for (counter = 0; counter < monthsToCheck; counter++)
-                    {
-                        if (record.MarginList.ElementAt(counter).Turnover > 0)
+                        exportExcelInfo.RenderCurrentCell(record.Total.Turnover, _excelStyleTemplate.DecimalColorStyle);
+                        for (counter = 0; counter < monthsToCheck; counter++)
                         {
-                            exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).Winloss, _excelStyleTemplate.DecimalColorStyle);
+                            if (record.MarginList.ElementAt(counter).Turnover > 0)
+                            {
+                                exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).Turnover, _excelStyleTemplate.DecimalColorStyle);
+                            }
+                            else
+                            {
+                                exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
+                            }
+                        }
+
+                        exportExcelInfo.CurrentRow++;
+                        exportExcelInfo.CurrentColumn = 1;
+                        exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.ServiceName, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(figureTexts[1], _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Last3Months.Winloss, _excelStyleTemplate.DecimalColorStyle);
+                        if (record.Last6Months.Turnover > 0)
+                        {
+                            exportExcelInfo.RenderCurrentCell(record.Last6Months.Winloss, _excelStyleTemplate.DecimalColorStyle);
                         }
                         else
                         {
                             exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
                         }
-                    }
 
-                    exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 1;
-                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(figureTexts[2], _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(Math.Round(record.Last3Months.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
-                    if (record.Last6Months.Turnover > 0)
-                    {
-                        exportExcelInfo.RenderCurrentCell(Math.Round(record.Last6Months.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
-                    }
-                    else
-                    {
-                        exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
-                    }
-
-                    exportExcelInfo.RenderCurrentCell(Math.Round(record.Total.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
-                    for (counter = 0; counter < monthsToCheck; counter++)
-                    {
-                        if (record.MarginList.ElementAt(counter).Turnover > 0)
+                        exportExcelInfo.RenderCurrentCell(record.Total.Winloss, _excelStyleTemplate.DecimalColorStyle);
+                        for (counter = 0; counter < monthsToCheck; counter++)
                         {
-                            exportExcelInfo.RenderCurrentCell(Math.Round(record.MarginList.ElementAt(counter).Margin, 2), _excelStyleTemplate.DecimalColorStyle);
+                            if (record.MarginList.ElementAt(counter).Turnover > 0)
+                            {
+                                exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).Winloss, _excelStyleTemplate.DecimalColorStyle);
+                            }
+                            else
+                            {
+                                exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
+                            }
+                        }
+
+                        exportExcelInfo.CurrentRow++;
+                        exportExcelInfo.CurrentColumn = 1;
+                        exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.ServiceName, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(figureTexts[2], _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(Math.Round(record.Last3Months.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
+                        if (record.Last6Months.Turnover > 0)
+                        {
+                            exportExcelInfo.RenderCurrentCell(Math.Round(record.Last6Months.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
                         }
                         else
                         {
                             exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
                         }
-                    }
 
-                    exportExcelInfo.CurrentRow++;
-                    exportExcelInfo.CurrentColumn = 1;
-                    exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
-                    exportExcelInfo.RenderCurrentCell(figureTexts[3], _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Last3Months.BetCount, _excelStyleTemplate.IntStyle);
-                    if (record.Last6Months.Turnover > 0)
-                    {
-                        exportExcelInfo.RenderCurrentCell(record.Last6Months.BetCount, _excelStyleTemplate.IntStyle);
-                    }
-                    else
-                    {
-                        exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.IntStyle);
-                    }
-
-                    exportExcelInfo.RenderCurrentCell(record.Total.BetCount, _excelStyleTemplate.IntStyle);
-
-                    for (counter = 0; counter < monthsToCheck; counter++)
-                    {
-                        if (record.MarginList.ElementAt(counter).Turnover > 0)
+                        exportExcelInfo.RenderCurrentCell(Math.Round(record.Total.Margin, 2), _excelStyleTemplate.DecimalColorStyle);
+                        for (counter = 0; counter < monthsToCheck; counter++)
                         {
-                            exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).BetCount, _excelStyleTemplate.IntStyle);
+                            if (record.MarginList.ElementAt(counter).Turnover > 0)
+                            {
+                                exportExcelInfo.RenderCurrentCell(Math.Round(record.MarginList.ElementAt(counter).Margin, 2), _excelStyleTemplate.DecimalColorStyle);
+                            }
+                            else
+                            {
+                                exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.DecimalColorStyle);
+                            }
+                        }
+
+                        exportExcelInfo.CurrentRow++;
+                        exportExcelInfo.CurrentColumn = 1;
+                        exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.IsBA == null || record.IsBA == false ? "" : " BA ", centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.ServiceName, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.OldRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.NewRate, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Months, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.WonMonths, centerTextStyle);
+                        exportExcelInfo.RenderCurrentCell(figureTexts[3], _excelStyleTemplate.TextStyle);
+                        exportExcelInfo.RenderCurrentCell(record.Last3Months.BetCount, _excelStyleTemplate.IntStyle);
+
+                        if (record.Last6Months.Turnover > 0)
+                        {
+                            exportExcelInfo.RenderCurrentCell(record.Last6Months.BetCount, _excelStyleTemplate.IntStyle);
                         }
                         else
                         {
                             exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.IntStyle);
                         }
+
+                        exportExcelInfo.RenderCurrentCell(record.Total.BetCount, _excelStyleTemplate.IntStyle);
+
+                        for (counter = 0; counter < monthsToCheck; counter++)
+                        {
+                            if (record.MarginList.ElementAt(counter).Turnover > 0)
+                            {
+                                exportExcelInfo.RenderCurrentCell(record.MarginList.ElementAt(counter).BetCount, _excelStyleTemplate.IntStyle);
+                            }
+                            else
+                            {
+                                exportExcelInfo.RenderCurrentCell(string.Empty, _excelStyleTemplate.IntStyle);
+                            }
+                        }
+
+                        exportExcelInfo.CurrentRow++;
+                        recordIndex++;
                     }
 
-                    exportExcelInfo.CurrentRow++;
                     rowIndex++;
                 }
             }

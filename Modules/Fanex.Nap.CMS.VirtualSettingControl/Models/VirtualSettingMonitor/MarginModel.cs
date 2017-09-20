@@ -54,6 +54,8 @@
 
         public bool? IsBA { get; set; }
 
+        public string ServiceName { get; set; }
+
         public decimal Margin
         {
             get

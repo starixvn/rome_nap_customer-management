@@ -18,6 +18,8 @@
 
         List<CustomerMarginModel> GetCustomerMarginHistory(ICriteria criteria, int monthsToCheck, DateTime adjustDate);
 
+        List<VrAdjustmentViewModel> GetNewCustomerMarginHistory(ICriteria criteria, int monthsToCheck, DateTime adjustDate);
+
         IEnumerable<CustomerMarginDateModel> GetReportDate(ICriteria criteria);
 
         void ExportNewVRAdjustmentReport(ICriteria criteria, int monthsToCheck, DateTime adjustDate);

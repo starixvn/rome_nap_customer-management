@@ -225,7 +225,9 @@
     <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
@@ -345,6 +347,8 @@
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Styles\Images\sprites.png" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Scripts\virtualSettingMonitorAdvance.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Styles\virtualSettingMonitorAdvance.css" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />
@@ -720,6 +724,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\_AddGlobalSetting.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\_MultipleEditMaxTOPopup.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Index.cshtml" />

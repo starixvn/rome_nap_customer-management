@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    
+
     [Serializable]
     public class CustomerVirtualSettingModel
     {
@@ -17,6 +17,6 @@
 
         public decimal VRate { get; set; }
 
-        public List<MarginModel> CustMargin { get; set; }        
+        public List<MarginModel> CustMargin { get; set; }
     }
 }

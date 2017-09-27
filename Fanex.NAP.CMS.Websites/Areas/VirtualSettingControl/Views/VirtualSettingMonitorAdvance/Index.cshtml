@@ -1,0 +1,107 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@{
+    ViewBag.Title = "Virtual Setting Monitor - Advance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head {
+    @Styles.Render("~/bundles/VirtualSettingMonitorAdvance/css")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+
+<form class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label>Sport</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="sport" class="combobox-autocomplete width-100">
+                    <option value="0" selected>All</option>
+                    <option value="1">Soccer</option>
+                    <option value="2">Other Sports</option>
+                </select>
+            </div>
+
+            <div class="lbl-field col_4">
+                <label>Rate</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-rate" class="width-140" maxlength="30" value="200" style="text-align:right;"
+                       data-val-required="Field must not empty"
+                       data-val-regex="Field must be an integer number"
+                       data-val-regex-pattern="^[+\-]?\d+$" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label>Depth</label>
+            </div>
+            <div class="edit-field col_8">
+                <select id="depth" class="combobox-autocomplete width-100">
+                    <option value="0" selected>Super</option>
+                    <option value="1">Master</option>
+                    <option value="2">Agent</option>
+                    <option value="3">Member</option>
+                </select>
+            </div>
+
+            <div class="lbl-field col_4">
+                <label>Account Name</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="width-140" maxlength="30" />
+            </div>
+
+            <div class="submit width-auto col_10">
+                <button type="submit" class="submit" id="btn-generate">Generate</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="virtual-setting-monitor-advance-freegrid"></div>
+</div>
+
+@section Foot {
+    <script type="text/javascript">
+        Date.isLeapYear = function (year) {
+            return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0));
+        };
+
+        Date.getDaysInMonth = function (year, month) {
+            return [31, (Date.isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
+        };
+
+        Date.prototype.isLeapYear = function () {
+            return Date.isLeapYear(this.getFullYear());
+        };
+
+        Date.prototype.getDaysInMonth = function () {
+            return Date.getDaysInMonth(this.getFullYear(), this.getMonth());
+        };
+
+        Date.prototype.addMonths = function (value) {
+            var n = this.getDate();
+            this.setDate(1);
+            this.setMonth(this.getMonth() + value);
+            this.setDate(Math.min(n, this.getDaysInMonth()));
+            return this;
+        };
+
+        var currentDate = '@currentDate.ToShortFormatedDateWithSlash()';
+        var initFromDate = currentDate;
+        var initToDate = currentDate;
+        var minDate = new Date(currentDate).addMonths(-12);
+    </script>
+    @Scripts.Render("~/bundles/VirtualSettingMonitorAdvance/js")
+}

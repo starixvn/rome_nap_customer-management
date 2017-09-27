@@ -121,8 +121,10 @@
     <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
+    <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginByMonthCriteria.cs" />
@@ -135,6 +137,8 @@
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
+    <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerVirtualSettingAdvanceModel.cs" />
+    <Compile Include="Models\VirtualSettingMonitorAdvance\VirtualSettingAdvanceModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginDateModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerVirtualSettingModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
@@ -145,6 +149,8 @@
     <Compile Include="Services\CustomerDashboard\CustomerDashboardService.cs" />
     <Compile Include="Services\CustomerDashboard\ICustomerDashboardService.cs" />
     <Compile Include="Models\CustomerDashboard\CustomerDashboardModel.cs" />
+    <Compile Include="Services\VirtualSettingMonitorAdvance\IVirtualSettingMonitorAdvanceService.cs" />
+    <Compile Include="Services\VirtualSettingMonitorAdvance\VirtualSettingMonitorAdvanceService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\IAdjustmentReportService.cs" />
     <Compile Include="Services\VrAutoAdjustmentReport\AdjustmentReportService.cs" />
     <Compile Include="Utility\Helper.cs" />

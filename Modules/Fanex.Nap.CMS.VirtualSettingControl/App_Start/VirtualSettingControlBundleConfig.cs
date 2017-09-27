@@ -10,6 +10,7 @@
             RegisterVirtualSettingMonitorBundles(bundles);
             RegisterCustomerDashboardBundles(bundles);
             RegisterVrAutoAdjustmentReportBundles(bundles);
+            RegisterVirtualSettingMonitorAdvanceBundles(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -50,6 +51,16 @@
 
             bundles.Add(new ScriptBundle("~/bundles/NewVrAutoAdjustmentReport/js").Include(
                 "~/Areas/VirtualSettingControl/Views/NewVrAutoAdjustmentReport/Scripts/VrAutoAdjustmentReport.js"));
+        }
+
+        private static void RegisterVirtualSettingMonitorAdvanceBundles(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle("~/bundles/VirtualSettingMonitorAdvance/js").Include(
+                "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitorAdvance/Scripts/virtualSettingMonitorAdvance.js"));
+
+            bundles.AddAndInclude(
+                "~/bundles/VirtualSettingMonitorAdvance/css",
+                "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitorAdvance/Styles/virtualSettingMonitorAdvance.css");
         }
     }
 }

@@ -56,6 +56,23 @@
 
         public string ServiceName { get; set; }
 
+        public string AdjustDate { get; set; }
+
+        public DateTime LogDate
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(AdjustDate);
+                }
+                catch
+                {
+                    return DateTime.Now;
+                }
+            }
+        }
+
         public decimal Margin
         {
             get

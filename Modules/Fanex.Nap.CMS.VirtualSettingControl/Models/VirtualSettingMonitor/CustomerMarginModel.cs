@@ -21,6 +21,8 @@
 
         public string ServiceName { get; set; }
 
+        public DateTime LogDate { get; set; }
+
         public List<MarginModel> MarginList { get; set; }
 
         public int Months

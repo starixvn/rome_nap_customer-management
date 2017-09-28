@@ -86,7 +86,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
         {
             var vrAdjustmentViewModel = new List<VrAdjustmentViewModel>();
             var marginList = this.GetData<MarginModel>(criteria);
-            var result = new List<CustomerMarginModel>();
             var groupItem = marginList.GroupBy(m => m.Username);
 
             adjustDate = adjustDate.AddDays(-1);
@@ -95,37 +94,43 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
 
             foreach (var item in groupItem)
             {
-                var groupItembyService = item.GroupBy(m => m.ServiceName);
-                var vrAdjustment = new VrAdjustmentViewModel();
+                var groupItembyLogDate = item.GroupBy(m => m.LogDate);
 
-                foreach (var groupService in groupItembyService)
+                foreach (var groupByLogDate in groupItembyLogDate)
                 {
-                    var model = new CustomerMarginModel
-                        {
-                            Username = item.Key,
-                            MarginList = groupService.ToList()
-                        };
+                    var groupItembyService = groupByLogDate.GroupBy(m => m.ServiceName);
+                    var vrAdjustment = new VrAdjustmentViewModel();
 
-                    model.IsBA = model.MarginList[0].IsBA;
-                    model.ServiceName = model.MarginList[0].ServiceName;
-                    model.OldRate = model.MarginList[0].OldVirtualRate;
-                    model.NewRate = model.MarginList[0].NewVirtualRate;
-
-                    for (var i = 0; i < monthsToCheck; i++)
+                    foreach (var groupService in groupItembyService)
                     {
-                        var month = lastMonth.AddMonths(-i);
+                        var model = new CustomerMarginModel
+                            {
+                                Username = item.Key,
+                                MarginList = groupService.ToList()
+                            };
 
-                        if (!model.MarginList.Exists(t => t.ReportDate == month))
+                        model.IsBA = model.MarginList[0].IsBA;
+                        model.ServiceName = model.MarginList[0].ServiceName;
+                        model.LogDate = model.MarginList[0].LogDate;
+                        model.OldRate = model.MarginList[0].OldVirtualRate;
+                        model.NewRate = model.MarginList[0].NewVirtualRate;
+
+                        for (var i = 0; i < monthsToCheck; i++)
                         {
-                            model.MarginList.Add(new MarginModel { Month = month.Month, Year = month.Year });
+                            var month = lastMonth.AddMonths(-i);
+
+                            if (!model.MarginList.Exists(t => t.ReportDate == month))
+                            {
+                                model.MarginList.Add(new MarginModel { Month = month.Month, Year = month.Year });
+                            }
                         }
+
+                        model.MarginList = model.MarginList.OrderByDescending(t => t.ReportDate).Take(monthsToCheck).OrderBy(t => t.ReportDate).ToList();
+                        vrAdjustment.vrAdjustment.Add(model);
                     }
 
-                    model.MarginList = model.MarginList.OrderByDescending(t => t.ReportDate).Take(monthsToCheck).OrderBy(t => t.ReportDate).ToList();
-                    vrAdjustment.vrAdjustment.Add(model);
+                    vrAdjustmentViewModel.Add(vrAdjustment);
                 }
-
-                vrAdjustmentViewModel.Add(vrAdjustment);
             }
 
             return vrAdjustmentViewModel.ToList();
@@ -177,7 +182,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VrAutoAdjustmentReport
             _excelStyleTemplate.InitAllGeneralStyles();
             ExportNewVRAdjustmentReportHeader(exportExcelInfo, (GetCustomerMarginHistoryCriteria)criteria, monthsToCheck);
             ExportNewVRAdjustmentReportBody(exportExcelInfo, data, monthsToCheck);
-            var fileName = string.Format(Labels.VRAutoAdjustment_ExcelFileName, DateTime.Now.ToShortFormatedDateWithSlash());
+            var fileName = string.Format(Labels.VRAutoAdjustment_ExcelFileName, adjustDate.ToShortFormatedDateWithSlash());
             ExcelHelper.ResponseStream(excelFile, ExcelHelper.FormatFileName(fileName));
         }
 

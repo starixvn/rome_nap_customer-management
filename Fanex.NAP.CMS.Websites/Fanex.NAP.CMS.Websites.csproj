@@ -235,7 +235,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml" />
+    <Content Include="App_Data\Local\DBDW.bodb_dwrs.bodbSPUNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>

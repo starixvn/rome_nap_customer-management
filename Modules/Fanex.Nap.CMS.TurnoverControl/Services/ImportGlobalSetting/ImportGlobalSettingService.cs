@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using Fanex.Logging.Extensions.Web;
 using Fanex.Nap.CMS.Infrastructure.Constants;
-using Fanex.Nap.CMS.Infrastructure.Helpers;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.TurnoverControl.Criteria;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting;
@@ -104,7 +104,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
             }
             catch (Exception ex)
             {
-                Logs.Error(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return null;

@@ -10,13 +10,13 @@
 namespace Fanex.NAP.CMS.Websites
 {
     using System;
-    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Fanex.Data.Configuration;
-    using Fanex.Nap.CMS.Infrastructure.Helpers;
+    using Data.Configuration;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// MVC application configuration.
@@ -24,9 +24,6 @@ namespace Fanex.NAP.CMS.Websites
     public class MvcApplication : System.Web.HttpApplication
     {
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
-        /// <summary>
-        /// Sets all needed configuration when the application starts.
-        /// </summary>
         protected void Application_Start()
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
@@ -37,31 +34,17 @@ namespace Fanex.NAP.CMS.Websites
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ExceptionHandler
+                .UseConfig(new LoggingConfiguration()
+                .GetHttpHeaderInfo()
+                .GetHttpSessionInfo())
+                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
         }
 
-        /// <summary>
-        /// Handles the Error event of the Application.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
-            // Don't log 404 error
-            Exception ex = Server.GetLastError().GetBaseException();
-
-            var httpException = ex as HttpException;
-
-            if (httpException != null)
-            {
-                if (httpException.GetHttpCode() == 404)
-                {
-                    Response.Redirect("~/Home");
-                }
-
-                return;
-            }
-
-            Logs.Error(ex, Request);
+            ExceptionHandler.Handle(Server.GetLastError());
         }
     }
 }

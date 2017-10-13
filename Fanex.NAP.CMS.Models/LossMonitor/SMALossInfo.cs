@@ -25,7 +25,7 @@
 
         public int? Movement { get; set; }
 
-        public int? PercentageLoss { get; set; }
+        public decimal? PercentageLoss { get; set; }
 
         public string RoleName
         {

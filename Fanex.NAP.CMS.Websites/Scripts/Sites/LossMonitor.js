@@ -324,11 +324,11 @@
             html.push("</div></td>");
 
             html.push('<td class="free-grid-td-4" style="height:21px;"><div class="table-cell" style="width:150px;" align="right">');
-            html.push(numeral(item.YesterdayBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+            html.push(formatNegativeZero(numeral(item.YesterdayBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)));
             html.push("</div></td>");
 
             html.push('<td class="free-grid-td-5" style="height:21px;"><div class="table-cell" style="width:150px;" align="right">');
-            html.push(numeral(item.TotalBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+            html.push(formatNegativeZero(numeral(item.TotalBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)));
             html.push("</div></td>");
 
             html.push('<td class="free-grid-td-6" style="height:21px;"><div class="table-cell" style="width:120px;" align="right" id="div');
@@ -343,7 +343,7 @@
 
             if (hasHostPermission) {
                 html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center">');
-                html.push(renderDelete(item));
+                html.push(renderDelete(item, 2));
                 html.push("</div></td>");
             }
 
@@ -378,18 +378,9 @@
             { HeaderText: labels.Username, Width: 250, Name: "ColUsername", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: labels.Level, Width: 70, Name: "ColLevel", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: labels.Currency, Width: 70, Name: "ColCurrency", HeaderAlign: "center", CellAlign: "center" },
-            {
-                HeaderText: labels.YesterdayBalance, Width: 150, Name: "ColYesterdayBalance", HeaderAlign: "center", CellAlign: "right",
-                FormatNumber: CMS.formats.DecimalFormat
-            },
-            {
-                HeaderText: labels.TotalBalance, Width: 150, Name: "ColTotalBalance", HeaderAlign: "center", CellAlign: "right",
-                FormatNumber: CMS.formats.DecimalFormat
-            },
-            {
-                HeaderText: labels.MaxLoss, Width: 120, Name: "ColMaxLoss", HeaderAlign: "center", CellAlign: "right",
-                FormatNumber: CMS.formats.DecimalFormat
-            },
+            { HeaderText: labels.YesterdayBalance, Width: 150, Name: "ColYesterdayBalance", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: labels.TotalBalance, Width: 150, Name: "ColTotalBalance", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: labels.MaxLoss, Width: 120, Name: "ColMaxLoss", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: labels.LossPercentage, Width: 150, Name: "ColLossPercentage", HeaderAlign: "center", CellAlign: "center" }];
 
         if (hasHostPermission) {
@@ -425,15 +416,15 @@
                             },
                             { Name: "ColLevel", Value: item.RoleName },
                             { Name: "ColCurrency", Value: item.Currency },
-                            { Name: "ColYesterdayBalance", Value: item.YesterdayBalance },
-                            { Name: "ColTotalBalance", Value: item.TotalBalance },
+                            { Name: "ColYesterdayBalance", Value: formatNegativeZero(numeral(item.YesterdayBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)) },
+                            { Name: "ColTotalBalance", Value: formatNegativeZero(numeral(item.TotalBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)) },
                             { Name: "ColMaxLoss", Value: renderMaxLoss(item), CustomAttr: 'id="div' + item.CustId + '"' },
                             { Name: "ColLossPercentage", Value: renderPercentage(item) }
                         ], CustomAttr: 'id="tr' + item.CustId + '"'
                     };
 
                     if (hasHostPermission) {
-                        row.Columns.push({ Name: "ColDelete", Value: renderDelete(item) });
+                        row.Columns.push({ Name: "ColDelete", Value: renderDelete(item, item.GroupHeadlineId > 0 ? 1 : 0) });
                     }
 
                     subRows.push(row);
@@ -499,7 +490,7 @@
                 "<span>",
                 item.MaxLoss === null ?
                 labels.NotAvailable :
-                numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
+                formatNegativeZero(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
                 "</span>"
             ].join("");
         }
@@ -512,7 +503,7 @@
             '" data-isgroupheadline="',
             item.GroupHeadlineId > 0,
             '">',
-            item.MaxLoss === null ? labels.NotAvailable : numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
+            item.MaxLoss === null ? labels.NotAvailable : formatNegativeZero(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
             "</a>"
         ].join("");
     }
@@ -535,14 +526,14 @@
         ].join("");
     }
 
-    function renderDelete(item) {
+    function renderDelete(item, mode) {
         return item.MaxLoss === null ? "" : [
             '<a class="c hand ico-delete" href="javascript:;" data-custid="',
             item.CustId,
             '" data-username="',
             item.Username,
-            '" data-isgroupheadline="',
-            item.GroupHeadlineId > 0,
+            '" data-mode="',
+            mode,
             '"></a>'
         ].join("");
     }
@@ -562,6 +553,10 @@
         });
     }
 
+    function formatNegativeZero(value) {
+        return value === "-0.00" ? "0.00" : value;
+    }
+
     function initialize() {
         $("#btnRefresh").click(getSMALossReport).trigger("click");
 
@@ -576,14 +571,14 @@
                 var $this = $(this);
                 var custId = $this.data("custid");
                 var userName = $this.data("username");
-                var isGroupHeadline = $this.data("isgroupheadline");
+                var mode = $this.data("mode");
 
                 var removeSetting = function () {
                     CMS.disableInput();
                     CMS.callAjax(
                         this,
                         rootUrl + "LossMonitor/Remove",
-                        { CustId: custId, IsGroupHeadline: isGroupHeadline },
+                        { CustId: custId, Mode: mode },
                         function (data) {
                             if (!data.IsSuccessful) {
                                 CMS.showInlineErrorMsg(data.Message, resultMessageDiv);

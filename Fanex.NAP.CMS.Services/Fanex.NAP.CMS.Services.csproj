@@ -68,8 +68,17 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.1.0.4\lib\net40\Fanex.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.5\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
@@ -194,6 +203,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Fanex.NAP.CMS.Services.Debug.ruleset" />
     <None Include="Fanex.NAP.CMS.Services.ruleset" />
     <None Include="packages.config" />

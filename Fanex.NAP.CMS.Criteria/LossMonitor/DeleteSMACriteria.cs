@@ -6,8 +6,7 @@
     {
         public int CustId { get; set; }
 
-        [SpParam(SqlParamName = "Mode")]
-        public bool IsGroupHeadline { get; set; }
+        public byte Mode { get; set; }
 
         public int UserId { get; set; }
 

@@ -1,9 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitorAdvance
 {
-    using Fanex.Data.Repository;
     using System;
 
-    public class GetVirtualSettingMonitorAdvanceCriteria : CriteriaBase
+    public class GetVirtualSettingMonitorAdvanceCriteria
     {
         public int SportId { get; set; }
 
@@ -16,10 +15,5 @@
         public int Depth { get; set; }
 
         public string Username { get; set; }
-
-        public override string GetSettingKey()
-        {
-            return "NAP_Report_CustMngt_VirtualSettingMonitorAdvance";
-        }
     }
 }

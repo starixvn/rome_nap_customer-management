@@ -124,6 +124,8 @@
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria.cs" />
+    <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetCustomerVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerVirtualSettingAdvanceModel.cs" />
+    <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\VirtualSettingAdvanceModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginDateModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\CustomerVirtualSettingModel.cs" />

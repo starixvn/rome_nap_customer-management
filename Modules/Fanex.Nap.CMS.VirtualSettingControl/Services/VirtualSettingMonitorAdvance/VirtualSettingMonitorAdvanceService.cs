@@ -21,7 +21,7 @@
 
         public List<CustomerVirtualSettingAdvanceModel> GetVirtualSettingAdvanceMonitor(GetVirtualSettingMonitorAdvanceCriteria criteria, int monthsToCheck)
         {
-            var marginList = GenModels(); ////this.GetData<VirtualSettingAdvanceModel>(criteria);
+            var marginList = GetHistory(criteria);
             var result = new List<CustomerVirtualSettingAdvanceModel>();
 
             var groupItem = marginList.GroupBy(m => m.Username);
@@ -315,53 +315,46 @@
 
             return result;
         }
-        #endregion
 
-        #region Test Data
-        private List<CustomerVirtualSettingAdvanceModel> Gendata()
+        private List<CustomerModel> GetCustomers(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
-            var result = new List<CustomerVirtualSettingAdvanceModel>();
-
-            for (var i = 0; i < 10; i++)
+            var customerCriteria = new GetCustomerVirtualSettingMonitorAdvanceCriteria
             {
-                var item = new CustomerVirtualSettingAdvanceModel
-                {
-                    CustId = 100,
-                    Items = GenModels(),
-                    Username = "Cuong" + i
-                };
+                Rate = criteria.Rate,
+                RoleId = criteria.Depth,
+                SportId = criteria.SportId,
+                Username = criteria.Username
+            };
 
-                result.Add(item);
-            }
+            var result = this.GetData<CustomerModel>(customerCriteria);
 
-            return result;
+            result = result ?? new List<CustomerModel>();
+
+            return result.ToList();
         }
 
-        private List<VirtualSettingAdvanceModel> GenModels()
+        private List<VirtualSettingAdvanceModel> GetHistory(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
-            var result = new List<VirtualSettingAdvanceModel>();
-            var random = new Random();
+            var customers = GetCustomers(criteria);
 
-            for (var i = 0; i < 100; i++)
+            var customerCriteria = new GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria
             {
-                var item = new VirtualSettingAdvanceModel
-                {
-                    BetCount = 1000 + random.Next(1, 1000),
-                    CustId = 100,
-                    ReportMonth = random.Next(1,12),
-                    ReportYear = 2017,
-                    Turnover = 10000 + random.Next(-1000, 1000),
-                    Username = "Cuong" + random.Next(1, 30),
-                    VarianceTurnover = 1000 + random.Next(1, 1000),
-                    VarianceWinloss = 100 + random.Next(-1000, 1000),
-                    Winloss = 1000 + random.Next(-1000, 1000),
+                CustIds = string.Join(",", customers.Select(t => t.CustId)),
+                SportId = criteria.SportId,
+                ReportFromDate = criteria.FromDate,
+                ReportToDate = criteria.ToDate
+            };
 
-                };
+            var result = this.GetData<VirtualSettingAdvanceModel>(customerCriteria);
 
-                result.Add(item);
+            result = result ?? new List<VirtualSettingAdvanceModel>();
+
+            foreach (var item in result)
+            {
+                item.Username = customers.Where(t => t.CustId == item.CustId).First().Username;
             }
 
-            return result;
+            return result.ToList();
         }
         #endregion
     }

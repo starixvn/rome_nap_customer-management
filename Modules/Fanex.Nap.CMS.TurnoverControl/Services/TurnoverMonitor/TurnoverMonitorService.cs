@@ -98,7 +98,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
             if (houseTurnovers.Any())
             {
-                houseTurnovers = houseTurnovers.OrderByDescending(ht => ht.BetTypeId);
+                houseTurnovers = houseTurnovers.OrderBy(x => x.BetTypeId == -1).ThenBy(x => x.BetTypeId);
             }
 
             foreach (var item in houseTurnovers)

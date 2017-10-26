@@ -60,6 +60,12 @@
     <Reference Include="NPOI">
       <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -76,23 +82,39 @@
   <ItemGroup>
     <Compile Include="AppStart\TurnoverControlBundleConfig.cs" />
     <Compile Include="Controllers\GlobalSettingController.cs" />
+    <Compile Include="Controllers\ImportGlobalSettingController.cs" />
     <Compile Include="Controllers\TurnoverMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\DeleteGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\EditGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GlobalSettingListCriteria.cs" />
-    <Compile Include="Criteria\TurnoverMonitor\GetCompanyTurnoverCriteria.cs" />
+    <Compile Include="Criteria\ImportGlobalSetting\AddMultipleGlobalSettingCriteria.cs" />
+    <Compile Include="Criteria\ImportGlobalSetting\ValidateGlobalSettingCriteria.cs" />
+    <Compile Include="Criteria\NonQueryCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\GetHouseTurnoverCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetLeaguesCriteria.cs" />
-    <Compile Include="Criteria\TurnoverMonitor\GetSMATurnoverListCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\GetMatchesCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\GetCustomerTurnoversCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetSportsCriteria.cs" />
-    <Compile Include="Criteria\TurnoverMonitor\UpdateMaxTurnoverByMatchCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\UpdateMultipleMaxTurnoverCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\UpdateMaxTurnoverCriteria.cs" />
+    <Compile Include="Enums\SportType.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Models\TurnoverMonitor\CustomerTurnoverInfo.cs" />
-    <Compile Include="Models\TurnoverMonitor\TurnoverBalance.cs" />
-    <Compile Include="Models\TurnoverMonitor\TurnoverInfoByGroup.cs" />
+    <Compile Include="Models\GlobalSetting\GlobalSettingItem.cs" />
+    <Compile Include="Models\GlobalSetting\GlobalSettingModel.cs" />
+    <Compile Include="Models\ImportGlobalSetting\ErrorGlobalSettingItem.cs" />
+    <Compile Include="Models\ImportGlobalSetting\GlobalSettingExcel.cs" />
+    <Compile Include="Models\ImportGlobalSetting\ImportGlobalSettingModel.cs" />
+    <Compile Include="Models\TurnoverMonitor\LeagueTurnover.cs" />
+    <Compile Include="Models\TurnoverMonitor\MatchTurnover.cs" />
+    <Compile Include="Models\TurnoverMonitor\CustomerTurnover.cs" />
+    <Compile Include="Models\TurnoverMonitor\HouseTurnover.cs" />
+    <Compile Include="Models\TurnoverMonitor\UpdateMaxTurnoverViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GlobalSetting\GlobalSettingRepository.cs" />
     <Compile Include="Repositories\GlobalSetting\IGlobalSettingRepository.cs" />
+    <Compile Include="Repositories\ImportGlobalSetting\ImportGlobalSettingRepository.cs" />
+    <Compile Include="Repositories\ImportGlobalSetting\IImportGlobalSettingRepository.cs" />
     <Compile Include="Repositories\TurnoverMonitor\ITurnoverMonitorRepository.cs" />
     <Compile Include="Repositories\TurnoverMonitor\TurnoverMonitorRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
@@ -100,8 +122,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\GlobalSetting\GlobalSettingExporter.cs" />
     <Compile Include="Services\GlobalSetting\GlobalSettingService.cs" />
     <Compile Include="Services\GlobalSetting\IGlobalSettingService.cs" />
+    <Compile Include="Services\ImportGlobalSetting\GlobalSettingTemplateExporter.cs" />
+    <Compile Include="Services\ImportGlobalSetting\IImportGlobalSettingService.cs" />
+    <Compile Include="Services\ImportGlobalSetting\ImportGlobalSettingService.cs" />
     <Compile Include="Services\TurnoverMonitor\ITurnoverMonitorService.cs" />
     <Compile Include="Services\TurnoverMonitor\TurnoverMonitorService.cs" />
     <Compile Include="TurnoverControlAreaRegistration.cs" />
@@ -129,6 +155,7 @@
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

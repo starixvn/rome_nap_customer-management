@@ -79,6 +79,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Matches.
+        /// </summary>
+        public static string AllMatches {
+            get {
+                return ResourceManager.GetString("AllMatches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Balance.
         /// </summary>
         public static string Balance {
@@ -102,6 +111,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string Bet_Type {
             get {
                 return ResourceManager.GetString("Bet_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
             }
         }
         
@@ -142,11 +160,83 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download Template.
+        /// </summary>
+        public static string DownloadTemplate {
+            get {
+                return ResourceManager.GetString("DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file is too big..
+        /// </summary>
+        public static string Error_ExcessMaxFileSize {
+            get {
+                return ResourceManager.GetString("Error_ExcessMaxFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The layout of file is not correct..
+        /// </summary>
+        public static string Error_IncorrectLayout {
+            get {
+                return ResourceManager.GetString("Error_IncorrectLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Headline value.
+        /// </summary>
+        public static string Error_InvalidHeadlineValue {
+            get {
+                return ResourceManager.GetString("Error_InvalidHeadlineValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Max Turnover.
+        /// </summary>
+        public static string Error_InvalidMaxTurnover {
+            get {
+                return ResourceManager.GetString("Error_InvalidMaxTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Username.
+        /// </summary>
+        public static string Error_InvalidUsername {
+            get {
+                return ResourceManager.GetString("Error_InvalidUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No action occured..
+        /// </summary>
+        public static string Error_NoActionOccured {
+            get {
+                return ResourceManager.GetString("Error_NoActionOccured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected file is not in excel format..
+        /// </summary>
+        public static string Error_NotExcelFile {
+            get {
+                return ResourceManager.GetString("Error_NotExcelFile", resourceCulture);
             }
         }
         
@@ -160,11 +250,38 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error Setting.
+        /// </summary>
+        public static string ErrorSetting {
+            get {
+                return ResourceManager.GetString("ErrorSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Event Date.
         /// </summary>
         public static string Event_Date {
             get {
                 return ResourceManager.GetString("Event_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel file.
+        /// </summary>
+        public static string ExcelFile {
+            get {
+                return ResourceManager.GetString("ExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude completed events.
+        /// </summary>
+        public static string ExcludeCompletedEvents {
+            get {
+                return ResourceManager.GetString("ExcludeCompletedEvents", resourceCulture);
             }
         }
         
@@ -178,7 +295,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Global Setting.
+        ///   Looks up a localized string similar to Global Setting - Soccer.
         /// </summary>
         public static string Global_Setting {
             get {
@@ -187,7 +304,16 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SMA {0} has been added successfully!.
+        ///   Looks up a localized string similar to Global Setting - Other Sports.
+        /// </summary>
+        public static string Global_Setting_OtherSports {
+            get {
+                return ResourceManager.GetString("Global_Setting_OtherSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer {0} has been added successfully!.
         /// </summary>
         public static string GlobalSetting_AddMaxTurnover_Success {
             get {
@@ -196,7 +322,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add New SMA.
+        ///   Looks up a localized string similar to Add New Setting.
         /// </summary>
         public static string GlobalSetting_AddNewSMA_Title {
             get {
@@ -205,7 +331,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to remove this customer?.
+        ///   Looks up a localized string similar to Are you sure you want to remove customer {0}?.
         /// </summary>
         public static string GlobalSetting_DeleteMaxTurnover_Confirm {
             get {
@@ -241,7 +367,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turnover Control - Global Setting {0}.
+        ///   Looks up a localized string similar to Turnover_Control_Global_Setting-Soccer_{0}.
         /// </summary>
         public static string GlobalSetting_ExcelFileName {
             get {
@@ -250,11 +376,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turnover Control - Global Setting.
+        ///   Looks up a localized string similar to Turnover_Control_Global_Setting-OtherSports_{0}.
+        /// </summary>
+        public static string GlobalSetting_ExcelFileName_OtherSports {
+            get {
+                return ResourceManager.GetString("GlobalSetting_ExcelFileName_OtherSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turnover Control - Global Setting - Soccer.
         /// </summary>
         public static string GlobalSetting_ExcelTitle {
             get {
                 return ResourceManager.GetString("GlobalSetting_ExcelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turnover Control - Global Setting - Other Sports.
+        /// </summary>
+        public static string GlobalSetting_ExcelTitle_OtherSports {
+            get {
+                return ResourceManager.GetString("GlobalSetting_ExcelTitle_OtherSports", resourceCulture);
             }
         }
         
@@ -268,11 +412,20 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Turnover Control - Global Setting.
+        ///   Looks up a localized string similar to Soccer.
         /// </summary>
         public static string GlobalSetting_SheetName {
             get {
                 return ResourceManager.GetString("GlobalSetting_SheetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other Sports.
+        /// </summary>
+        public static string GlobalSetting_SheetName_OtherSports {
+            get {
+                return ResourceManager.GetString("GlobalSetting_SheetName_OtherSports", resourceCulture);
             }
         }
         
@@ -282,6 +435,42 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string GlobalSetting_UpdateMaxTurnover_Success {
             get {
                 return ResourceManager.GetString("GlobalSetting_UpdateMaxTurnover_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Headline.
+        /// </summary>
+        public static string Headline {
+            get {
+                return ResourceManager.GetString("Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Global Setting - Other Sports.
+        /// </summary>
+        public static string ImportGlobalSetting_OtherSportsPageTitle {
+            get {
+                return ResourceManager.GetString("ImportGlobalSetting_OtherSportsPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Global Setting - Soccer.
+        /// </summary>
+        public static string ImportGlobalSetting_SoccerPageTitle {
+            get {
+                return ResourceManager.GetString("ImportGlobalSetting_SoccerPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The settings have been successfully updated..
+        /// </summary>
+        public static string ImportGlobalSettingSuccessfully {
+            get {
+                return ResourceManager.GetString("ImportGlobalSettingSuccessfully", resourceCulture);
             }
         }
         
@@ -313,11 +502,38 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match.
+        /// </summary>
+        public static string Match {
+            get {
+                return ResourceManager.GetString("Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match Id.
         /// </summary>
         public static string Match_Id {
             get {
                 return ResourceManager.GetString("Match_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
             }
         }
         
@@ -349,6 +565,33 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiple Edit Max Turnover.
+        /// </summary>
+        public static string MultipleEditMaxTurnover {
+            get {
+                return ResourceManager.GetString("MultipleEditMaxTurnover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Max TO [-100;1000].
+        /// </summary>
+        public static string NewMaxTO {
+            get {
+                return ResourceManager.GetString("NewMaxTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-Live.
+        /// </summary>
+        public static string NonLive {
+            get {
+                return ResourceManager.GetString("NonLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Refresh.
         /// </summary>
         public static string Not_Refresh {
@@ -376,11 +619,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reason.
+        /// </summary>
+        public static string Reason {
+            get {
+                return ResourceManager.GetString("Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refresh.
         /// </summary>
         public static string Refresh {
             get {
                 return ResourceManager.GetString("Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (RM).
+        /// </summary>
+        public static string RM {
+            get {
+                return ResourceManager.GetString("RM", resourceCulture);
             }
         }
         
@@ -394,11 +655,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SMA Name.
+        ///   Looks up a localized string similar to SMA.
         /// </summary>
-        public static string SMA_Name {
+        public static string SMA {
             get {
-                return ResourceManager.GetString("SMA_Name", resourceCulture);
+                return ResourceManager.GetString("SMA", resourceCulture);
             }
         }
         
@@ -453,6 +714,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string To_Date {
             get {
                 return ResourceManager.GetString("To_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
             }
         }
         
@@ -538,7 +808,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Number of SMA reached to 100%.
+        ///   Looks up a localized string similar to Number of accounts reached to 100%.
         /// </summary>
         public static string TurnoverMonitor_MaxLevelReachedMessage {
             get {
@@ -552,6 +822,24 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string TurnoverMonitor_SMATurnoverList_Title {
             get {
                 return ResourceManager.GetString("TurnoverMonitor_SMATurnoverList_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string UserName {
+            get {
+                return ResourceManager.GetString("UserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid Setting.
+        /// </summary>
+        public static string ValidSetting {
+            get {
+                return ResourceManager.GetString("ValidSetting", resourceCulture);
             }
         }
     }

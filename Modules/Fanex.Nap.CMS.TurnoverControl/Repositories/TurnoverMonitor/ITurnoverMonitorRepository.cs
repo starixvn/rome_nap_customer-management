@@ -1,26 +1,24 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="ITurnoverMonitorRepository.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
+﻿using System.Collections.Generic;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
 {
-    using System.Collections.Generic;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-
-    public interface ITurnoverMonitorRepository : IBaseRepository
+    public interface ITurnoverMonitorRepository
     {
-        List<IdNameModel> Sports(GetSportsCriteria criteria);
+        IEnumerable<IdNameModel> GetSports(ICriteria criteria);
 
-        List<IdNameModel> Leagues(GetLeaguesCriteria criteria);
+        IEnumerable<IdNameModel> GetLeagues(ICriteria criteria);
 
-        List<CustomerTurnoverInfo> SMATurnoverList(GetSMATurnoverListCriteria criteria);
+        IEnumerable<IdNameModel> GetMatches(ICriteria criteria);
+
+        IEnumerable<CustomerTurnover> GetCustomerTurnovers(ICriteria criteria);
+
+        IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria);
+
+        Result UpdateMaxTurnover(ICriteria criteria);
+
+        Result UpdateMultipleMaxTurnover(ICriteria criteria);
     }
 }

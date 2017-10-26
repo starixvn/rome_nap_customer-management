@@ -1,140 +1,135 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="TurnoverMonitorRepository.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Louis.Nguyen" date="2012.12.07">Created</change>
-// </history>
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using Fanex.Data;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Web;
+using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
 {
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using Fanex.Common;
-    using Fanex.Data;
-    using Fanex.Nap.CMS.Infrastructure.Extensions;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-    using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-    using Infrastructure.Web;
-
-    /// <summary>
-    /// Turnover Monitor Repository.
-    /// </summary>
-    public class TurnoverMonitorRepository : BaseRepository, ITurnoverMonitorRepository
+    public class TurnoverMonitorRepository : ITurnoverMonitorRepository
     {
-        /// <summary>
-        /// Get sport list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Sport list.</returns>
-        public List<IdNameModel> Sports(GetSportsCriteria criteria)
+        public IEnumerable<IdNameModel> GetSports(ICriteria criteria)
         {
-            List<IdNameModel> result = new List<IdNameModel>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                while (reader.Read())
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    result.Add(new IdNameModel
+                    while (reader.Read())
                     {
-                        Id = Converter.ToInt(reader["sporttype"]),
-                        Name = Converter.ToString2(reader["sportname"])
-                    });
+                        yield return GetSport(reader);
+                    }
                 }
+            }
+        }
+
+        public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetLeague(reader);
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<IdNameModel> GetMatches(ICriteria criteria)
+        {
+            if (!criteria.IsValid())
+            {
+                yield break;
+            }
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetMatch(reader);
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<CustomerTurnover> GetCustomerTurnovers(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerTurnover>(criteria.GetSpParams());
+            }
+        }
+
+        public IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                return db.Query<HouseTurnover>(criteria.GetSpParams());
+            }
+        }
+
+        public Result UpdateMaxTurnover(ICriteria criteria)
+        {
+            return ExecuteNonQuery(criteria);
+        }
+
+        public Result UpdateMultipleMaxTurnover(ICriteria criteria)
+        {
+            return ExecuteNonQuery(criteria);
+        }
+
+        private static Result ExecuteNonQuery(ICriteria criteria)
+        {
+            Result result = new Result();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                result.Code = Convert.ToInt32(outputParams["errcode"]);
+                result.Message = outputParams["errmsg"].ToString();
             }
 
             return result;
         }
 
-        /// <summary>
-        /// Get league list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>League list.</returns>
-        public List<IdNameModel> Leagues(GetLeaguesCriteria criteria)
+        private static IdNameModel GetSport(IDataReader reader)
         {
-            List<IdNameModel> result = new List<IdNameModel>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            return new IdNameModel
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                while (reader.Read())
-                {
-                    result.Add(new IdNameModel
-                    {
-                        Id = Converter.ToInt(reader["leagueid"]),
-                        Name = CacheRef.GetLeagueName(Converter.ToString2(reader["leagueid"]))
-                    });
-                }
-            }
-
-            return result;
+                Id = Convert.ToInt32(reader["sporttype"]),
+                Name = reader["sportname"].ToString()
+            };
         }
 
-        /// <summary>
-        /// Get SMA turnover list.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>SMA turnover list.</returns>
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public List<CustomerTurnoverInfo> SMATurnoverList(GetSMATurnoverListCriteria criteria)
+        private static IdNameModel GetLeague(IDataReader reader)
         {
-            List<CustomerTurnoverInfo> result = new List<CustomerTurnoverInfo>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            int leagueId = Convert.ToInt32(reader["leagueid"]);
+
+            return new IdNameModel
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                while (reader.Read())
-                {
-                    var turnoverInfo = new CustomerTurnoverInfo
-                    {
-                        Id = Converter.ToInt(reader["custid"]),
-                        Name = Converter.ToString2(reader["username"]),
-                        RoleInfo = new IdNameModel
-                        {
-                            Name = Converter.ToString2(reader["level"])
-                        },
-                        Currency = new IdNameModel
-                        {
-                            Name = Converter.ToString2(reader["currency"])
-                        },
-                        League = new IdNameModel
-                        {
-                            Id = Converter.ToInt(reader["leagueid"]),
-                            Name = CacheRef.GetLeagueName(Converter.ToString2(reader["leagueid"]))
-                        },
-                        MatchInfo = new MatchInfo
-                        {
-                            Id = Converter.ToInt(reader["matchid"]),
-                            HomeTeam = new IdNameModel
-                            {
-                                Id = Converter.ToInt(reader["homeid"])
-                            },
-                            AwayTeam = new IdNameModel
-                            {
-                                Id = Converter.ToInt(reader["awayid"])
-                            },
-                            EventDate = Converter.ToDateTime(reader["eventdate"]),
-                            EventStatus = Converter.ToString2(reader["eventstatus"])
-                        },
-                        MaxTurnover = Converter.ToDecimal(reader["maxturnover"]),
-                        MemberTurnover = Converter.ToDecimal(reader["totalturnover"]),
-                        CompanyTurnover = Converter.ToDecimal(reader["houseturnover"]),
-                        PercentageUsed = Converter.ToDecimal(reader["percentageused"])
-                    };
+                Id = leagueId,
+                Name = CacheRef.GetLeagueName(leagueId.ToString())
+            };
+        }
 
-                    turnoverInfo.MatchInfo.EventDateString = turnoverInfo.MatchInfo.EventDate.ToShortFormatedDateWithSlash();
-                    result.Add(turnoverInfo);
-                }
-            }
-
-            return result;
+        private static IdNameModel GetMatch(IDataReader reader)
+        {
+            return new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["matchid"]),
+                Name = string.Format(
+                    "{0} -vs- {1}",
+                    CacheRef.GetTeamName(reader["homeid"]),
+                    CacheRef.GetTeamName(reader["awayid"]))
+            };
         }
     }
 }

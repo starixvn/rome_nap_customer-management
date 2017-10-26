@@ -1,0 +1,40 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources
+
+@using (Html.BeginForm("Add", "GlobalSetting", FormMethod.Post, new { id = "formAddGlobalSetting", @class = "form expand-form" }))
+{
+    <div id="div-popupResult-message" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field normal-label width-120">
+            <label>@Labels.Level</label>
+        </div>
+        <div class="lbl-field width-230">
+            <input type="radio" name="Level" checked="checked" id="rdoSMA" />
+            <label for="rdoSMA" style="margin-right: 30px;">@Labels.SMA</label>
+            <input type="radio" name="Level" id="rdoHeadline" />
+            <label for="rdoHeadline">@Labels.Headline</label>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field normal-label width-120">
+            <label for="txt-popupUsername">@Labels.UserName</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txt-popupUsername" class="width-230 clearable" autocomplete="off" maxlength="30" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field normal-label width-120">
+            <label id="lbl-maxturnover" for="txt-maxturnover">@Labels.Max_Turnover</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txt-maxturnover" class="width-230 clearable" autocomplete="off" maxlength="13" />
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <div class="lbl-field normal-label width-120"></div>
+        <div class="edit-field">
+            <button type="submit" class="blue-button">@Labels.Add</button>
+            <button type="button" id="btn-cancel" class="red-button">@Labels.Cancel</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,23 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
+
+<div id="multiple-edit-maxto-popup" class="form display-none">
+    <div class="popup-title">
+        <div style="float: right;">
+            <a href="javascript:;" class="ui-dialog-titlebar-close ui-corner-all" role="button" id="icon-close">
+                <span class="ui-icon ui-icon-closethick">close</span>
+            </a>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field normal-label width-140">
+            <label for="txt-popup-maxto">@Labels.NewMaxTO</label>
+        </div>
+        <div class="edit-field width-100">
+            <input type="text" class="width-50" autocomplete="off" maxlength="4" id="txt-popup-maxto" />
+            <span>%</span>
+        </div>
+        <div class="edit-field width-100">
+            <button class="blue-button" id="btn-popup-editmaxto">@Labels.Submit</button>
+        </div>
+    </div>
+</div>

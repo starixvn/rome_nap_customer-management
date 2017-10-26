@@ -1,0 +1,82 @@
+﻿@using Fanex.Nap.CMS.TurnoverControl.AppStart;
+@using Fanex.Nap.CMS.TurnoverControl.Enums;
+@using Fanex.Nap.CMS.TurnoverControl.Resources;
+@{
+    short sportType = Convert.ToInt16(ViewData["SportType"]);
+
+    ViewBag.Title = sportType == (short)SportType.Others ?
+        Labels.ImportGlobalSetting_OtherSportsPageTitle :
+        Labels.ImportGlobalSetting_SoccerPageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render(TurnoverControlBundleConfig.ImportGlobalSettingStyles)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-excelfile">@Labels.ExcelFile</label>
+            </div>
+            <div class="edit-field col_12">
+                <input type="text" id="txt-excelfile" style="width: 99%;" readonly />
+            </div>
+            <div class="col_4">
+                <label for="file" class="fileUpload gray-button">@Labels.Browse</label>
+                <input type="file" id="file" class="display-none"
+                       accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3">&nbsp;</div>
+            <div class="edit-field col_12">
+                <div class="float-left">@Html.ActionLink(Labels.DownloadTemplate, "DownloadTemplate", "ImportGlobalSetting")</div>
+                <div class="float-right" style="font-style: italic;">@Labels.Max: 5MB</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div-result-message" class="inline-message"></div>
+<div id="validsetting-list-container" class="content-grid margin-bottom">
+    <div id="validsetting-list" class="freegrid display-none mid-margin-bottom">
+    </div>
+    <div>
+        <button type="button" id="btn-submit" class="blue-button display-none">@Labels.Submit</button>
+        <span id="validsetting-result-message" class="display-none"></span>
+    </div>
+</div>
+<div id="errorsetting-list-container" class="content-grid">
+    <div id="errorsetting-list" class="freegrid display-none">
+    </div>
+</div>
+@section Foot
+{
+    <script type="text/javascript">
+        var rootUrl = document.getElementById("CMSRoot").value;
+        var sportType = @sportType;
+        var viewResources = {
+            Error_RequiredField: "@Labels.Error_RequiredField",
+            Error_NotExcelFile: "@Labels.Error_NotExcelFile",
+            Error_ExcessMaxFileSize: "@Labels.Error_ExcessMaxFileSize",
+            ValidSetting: "@Labels.ValidSetting",
+            ErrorSetting: "@Labels.ErrorSetting",
+            Symbol_No: "@Labels.Symbol_No",
+            UserName: "@Labels.UserName",
+            Level: "@Labels.Level",
+            Currency: "@Labels.Currency",
+            Max_Turnover: "@Labels.Max_Turnover",
+            Headline: "@Labels.Headline",
+            Reason: "@Labels.Reason"
+        };
+    </script>
+    @Scripts.Render(TurnoverControlBundleConfig.ImportGlobalSettingScripts)
+}

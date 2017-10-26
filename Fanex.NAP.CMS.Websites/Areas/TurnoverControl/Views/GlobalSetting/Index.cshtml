@@ -1,15 +1,18 @@
-﻿@using Fanex.Nap.CMS.TurnoverControl.Resources;
-@using Fanex.Nap.CMS.Infrastructure.Controllers;
-@using Fanex.NAP.Core.Business;
-@using Fanex.Nap.CMS.Infrastructure;
+﻿@using Fanex.Nap.CMS.TurnoverControl.AppStart;
+@using Fanex.Nap.CMS.TurnoverControl.Enums;
+@using Fanex.Nap.CMS.TurnoverControl.Resources;
 @{
-    ViewBag.Title = Labels.Global_Setting;
+    short sportType = Convert.ToInt16(ViewData["SportType"]);
+    bool hasHostPermission = Convert.ToBoolean(ViewData["HostPermission"]);
+
+    ViewBag.Title = sportType == (short)SportType.Others ?
+        Labels.Global_Setting_OtherSports :
+        Labels.Global_Setting;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var hasHostPermission = (new BaseController()).HasRight(CMSFunctionKeys.GlobalSetting, Constant.Policy.Host);
 }
 @section Head
 {
-    @Styles.Render("~/areas/turnovercontrol/globalsettingstyles")
+    @Styles.Render(TurnoverControlBundleConfig.GlobalSettingStyles)
 }
 @section Headline
 {
@@ -20,41 +23,49 @@
     </div>
 }
 <div class="filter-bar">
-    <div class="filter-form">
+    @using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
+    {
         <div class="filter-row">
             <div class="lbl-field col_3">
-                <label for="txt-username">
-                    <span>@Labels.SMA_Name</span>
-                </label>
+                <label for="txt-username">@Labels.UserName</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-username" class="width-180" maxlength="30" />
+                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="30" />
             </div>
             <div class="submit width-auto col_3">
-                <input id="btn-search" type="button" class="submit" value="@Labels.Search" />
+                <button type="submit" class="submit">@Labels.Search</button>
             </div>
-            <div class="submit width-auto col_3">
-                <input id="btn-add" type="button" class="submit display-none" value="@Labels.Add" />
-            </div>
+            @if (hasHostPermission)
+            {
+                <div class="submit width-auto col_3">
+                    <button type="button" id="btn-add" class="submit">@Labels.Add</button>
+                </div>
+            }
         </div>
-    </div>
+        <div class="filter-row"></div>
+    }
 </div>
-<div id="div-result-message" class="inline-message">
-</div>
+<div id="div-result-message" class="inline-message"></div>
 <div id="globalsetting-list-container" class="content-grid">
     <div id="globalsetting-list" class="freegrid display-none">
     </div>
 </div>
+@if (hasHostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("_AddGlobalSetting"); }
+    </div>
+}
 @section Foot
 {
-    @Scripts.Render("~/areas/turnovercontrol/globalsettingscripts")
     <script type="text/javascript">
-        window.rootUrl = '@Url.Content("~")';
-        var maxTurnoverValue = @int.MaxValue;
+        var rootUrl = document.getElementById("CMSRoot").value;
+        var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
+        var sportType = @sportType;
+        var maxIntValue = @int.MaxValue;
         var viewResources = {
-            hasHostPermission: @(hasHostPermission ? 1 : 0),
             Symbol_No: '@Labels.Symbol_No',
-            SMA_Name: '@Labels.SMA_Name',
+            UserName: '@Labels.UserName',
             Level: '@Labels.Level',
             Currency: '@Labels.Currency',
             Max_Turnover: '@Labels.Max_Turnover',
@@ -62,7 +73,11 @@
             GlobalSetting_EditMaxTurnover_Confirm: '@Labels.GlobalSetting_EditMaxTurnover_Confirm',
             GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover',
             GlobalSetting_DeleteMaxTurnover_Confirm:'@Labels.GlobalSetting_DeleteMaxTurnover_Confirm',
-            GlobalSetting_AddNewSMA_Title: '@Labels.GlobalSetting_AddNewSMA_Title'
-        };       
+            GlobalSetting_AddNewSMA_Title: '@Labels.GlobalSetting_AddNewSMA_Title',
+            Error_RequiredField: '@Labels.Error_RequiredField',
+            Error_InvalidValue: '@Fanex.NAP.CMS.Core.Resources.Messages.InvalidValueError',
+            RM: '@Labels.RM'
+        };
     </script>
+    @Scripts.Render(TurnoverControlBundleConfig.GlobalSettingScripts)
 }

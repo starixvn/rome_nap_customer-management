@@ -60,7 +60,7 @@
 
             bundles.AddAndInclude(
                 "~/bundles/VirtualSettingMonitorAdvance/css",
-                "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitorAdvance/Styles/virtualSettingMonitorAdvance.css");
+                "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitorAdvance/Styles/virtualSettingMonitorAdvance.less");
         }
     }
 }

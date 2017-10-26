@@ -348,7 +348,6 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Scripts\virtualSettingMonitorAdvance.js" />
-    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Styles\virtualSettingMonitorAdvance.css" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />

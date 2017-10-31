@@ -1,0 +1,159 @@
+.monpickr-wrap-parent {
+    display: inline-block;
+    height: 23px !important;
+    cursor: pointer;
+
+    .monpickr-wrap {
+        display: inline;
+
+        .ui-widget {
+            font-family: Tahoma,Arial,Helvetica,sans-serif;
+        }
+
+        .monpickr {
+            background: none;
+            border: none;
+
+            &.monpickr-arrows {
+                padding: 0;
+
+                .monpickr-prev, .monpickr-next, .monpickr-down {
+                    top: 4px;
+
+                    &:hover {
+                        padding: 2px 1px;
+                    }
+
+                    &.ui-state-disabled {
+                        &:hover {
+                            padding: 1px;
+                        }
+                    }
+                }
+
+                .monpickr-next, .monpickr-down {
+                    right: 5px;
+                }
+
+                .prev {
+                    .ui-icon-circle-triangle-w {
+                        background-image: url("Images/icon-left.png");
+                        background-position: 0;
+                        height: 15px;
+                        width: 15px;
+                    }
+                }
+
+                .next {
+                    .ui-icon-circle-triangle-e {
+                        background-image: url("Images/icon-right.png");
+                        background-position: 0;
+                        height: 15px;
+                        width: 15px;
+                    }
+                }
+
+                input.monpickr-input {
+                    text-align: center;
+                    margin: 0;
+                    padding: 2px;
+                    cursor: pointer;
+                    line-height: 20px;
+
+                    &.ui-widget-content {
+                        border-color: #CECCCD;
+                    }
+                }
+            }
+        }
+
+        .monpickr-dropdown {
+            background: none repeat scroll 0 0 #FFFFFF;
+            border: 1px solid #DDDDDD;
+            box-shadow: 0 0 10px #DDDDDD;
+            -moz-box-shadow: 0 0 10px #DDDDDD;
+            -webkit-box-shadow: 0 0 10px #DDDDDD;
+            margin-left: 1px;
+
+            &.ui-monpickr {
+                li {
+                    padding: 1px;
+                }
+            }
+
+            ul {
+                .month-wrap {
+                    a {
+                        font-size: 100%;
+                    }
+                }
+
+                .ui-state-active {
+                    background: none;
+                    border: 1px solid #FFFFFF;
+                    border-radius: 2px;
+                    -moz-border-radius: 2px;
+                    -webkit-border-radius: 2px;
+
+                    a {
+                        color: #0062AD;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.daypickr-wrap-parent {
+    .daypickr {
+        background: none;
+        border: 0px solid #CECCCD;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+
+        .monpickr-down {
+            margin-right:-2px;
+        }
+
+        .ui-state-hover {
+            background: none;
+            border:none;
+        }
+
+        .daypickr-selected-day {
+            width: 46px;
+            text-align: left;
+            padding-left: 6px;
+        }
+    }
+
+    .daypickr-dropdown {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #DDDDDD;
+        box-shadow: 0 0 10px #DDDDDD;
+        -moz-box-shadow: 0 0 10px #DDDDDD;
+        -webkit-box-shadow:  0 0 10px #DDDDDD;
+
+        .ui-state-hover {
+            background: none repeat scroll 0 0 #FFFFFF;
+            border: solid 1px transparent;
+
+            > a {
+                color: #0062AD;
+                font-weight:bold;
+            }
+        }
+    }
+
+    .ui-widget-header .ui-icon {
+        background-image: url("Images/dropdown-icon.png");
+        background-position: 39px 6px;
+        width: 47px;
+    }
+
+    .ui-state-hover .ui-icon {
+        background-position: 40px 5px;
+    }
+}

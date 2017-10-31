@@ -12,64 +12,76 @@ Array.prototype.collect = function (collector) {
     'use strict';
     var rootUrl = $('#CMSRoot').val();
 
-    var $fromtoDatePicker = $('#fromtodate-picker');
+    var $divMonthFrom = $('#divMonthFrom');
+    var $divMonthTo = $('#divMonthTo');
     var $sport = $('#sport');
     var $rate = $("#txt-rate");
     var $depth = $('#depth');
     var $username = $("#txt-username");
     var criteriaExport = null;
 
+    var options = {
+        minDate: minDate,
+        maxDate: maxDate,
+        defaultFromDate: currentDate,
+        defaultToDate: currentDate,
+        allowYearRange: 1,
+        yearRanges: null
+    };
+
     var $virtualSettingMonitorAdvanceGrid = $("#virtual-setting-monitor-advance-freegrid");
 
     function initDateRangeSelect() {
-        $fromtoDatePicker.nexDatePicker({
-            nexDatePickerType: 'daterange',
-            datePickerFormat: {
-                dateFormat: CMS.formats.DateFormat,
-                changeMonth: true,
-                changeYear: true,
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                minDate: minDate,
-                maxDate: currentDate
-            },
-            firstDatePicker: {
-                Id: 'dpk-fromdate',
-                Label: 'From',
-                LabelCss: 'lbl-field col_4',
-                TextboxCss: 'edit-field col_8'
-            },
-            secondDatePicker: {
-                Id: 'dpk-todate',
-                Label: 'To',
-                InitDate: currentDate,
-                CurrentDate: currentDate,
-                LabelCss: 'lbl-field col_4',
-                TextboxCss: 'edit-field col_8'
-            },
-            onSelectDatePicker: changeDatePicker
+        var changeMonthFromHandler = function () {
+            var selectedDate = $divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
+            var limitedDate = moment(selectedDate).add('month', 12);
+            var maxDate = moment(options.maxDate) > limitedDate ? limitedDate.format('MM/DD/YYYY') : options.maxDate;
+            var minDate = moment(selectedDate).startOf('month').format('MM/DD/YYYY');
+
+            $divMonthTo.monPickr('setMinMaxDate', minDate, maxDate);
+        };
+        var changeMonthToHandler = function () {
+            var selectedDate = $divMonthTo.monPickr('getMonth', 'MM/dd/yyyy');
+            var limitedDate = moment(selectedDate).add('month', -12);
+            var minDate = limitedDate.format('MM/DD/YYYY');
+            var maxDate = moment(selectedDate).endOf('month').format('MM/DD/YYYY');
+
+            $divMonthFrom.monPickr('setMinMaxDate', minDate, maxDate);
+        };
+
+        $divMonthFrom.monPickr({
+            plugInId: '#divMonthFrom',
+            today: options.defaultFromDate,
+            maxDate: options.maxDate,
+            minDate: options.minDate,
+            showDateRange: false,
+            width: 132,
+            zIndex: 1,
+            afterChangeMonth: changeMonthFromHandler
+        });
+        $divMonthTo.monPickr({
+            plugInId: '#divMonthTo',
+            today: options.defaultFromDate,
+            maxDate: options.maxDate,
+            minDate: options.minDate,
+            showDateRange: false,
+            width: 138,
+            zIndex: 1,
+            afterChangeMonth: changeMonthToHandler
         });
 
-        $('#dpk-fromdate').datepicker('setDate', initFromDate);
-    }
-
-    function changeDatePicker() {
-        var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
-        var fromDate = new Date(fromtoDate.FromDate);
-        var toDate = new Date(fromtoDate.ToDate);
-
-        if (fromDate < toDate.addMonths(-12)) {
-            $('#dpk-fromdate').datepicker('setDate', toDate);
-        }
-
-        $('#dpk-fromdate').datepicker('option', 'minDate', toDate);
+        $divMonthFrom.on('click', 'input.monpickr-input', function () {
+            $divMonthTo.monPickr('hideDropDown');
+        });
+        $divMonthTo.on('click', 'input.monpickr-input', function () {
+            $divMonthFrom.monPickr('hideDropDown');
+        });
     }
 
     var getVirtualSettingMonitorAdvance = function () {
-        var fromtoDate = $fromtoDatePicker.nexDatePicker('getDateRange');
         var criteria = {
-            FromDate: fromtoDate.FromDate,
-            ToDate: fromtoDate.ToDate,
+            FromDate: $divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy'),
+            ToDate: $divMonthTo.monPickr('getMonth', 'MM/dd/yyyy'),
             SportId: $sport.val(),
             Rate: $rate.val(),
             Depth: $depth.val(),
@@ -256,11 +268,11 @@ Array.prototype.collect = function (collector) {
         function onPageChangedHandler(index, pageSize) {
             pageSize = parseInt(pageSize);
             index = parseInt(index);
-            gridOptions.pagerOption.currentPage = index;
-            gridOptions.pagerOption.itemsPerPage = pageSize;
-            gridOptions.pagerOption.totalItem = data.Reports.length;
+            gridpagerOption.currentPage = index;
+            gridpagerOption.itemsPerPage = pageSize;
+            gridpagerOption.totalItem = data.Reports.length;
 
-            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
+            gridbodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
 
             $virtualSettingMonitorAdvanceGrid.fanexGrid(gridOptions);
         };

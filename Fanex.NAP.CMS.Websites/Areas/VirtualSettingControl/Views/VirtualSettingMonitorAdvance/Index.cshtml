@@ -39,7 +39,18 @@
             </div>
         </div>
         <div class="filter-row">
-            <div id="fromtodate-picker"></div>
+            <div class="lbl-field col_4">
+                <label>From</label>
+            </div>
+            <div class="edit-field col_8">
+                <div class="ui-month-picker"><div id="divMonthFrom"></div></div>
+            </div>
+            <div class="lbl-field col_4">
+                <label>To</label>
+            </div>
+            <div class="edit-field col_8">
+                <div class="ui-month-picker second-month"><div id="divMonthTo"></div></div>
+            </div>
         </div>
         <div class="filter-row">
             <div class="lbl-field col_4">
@@ -101,6 +112,7 @@
         var currentDate = '@currentDate.ToShortFormatedDateWithSlash()';
         var initFromDate = currentDate;
         var initToDate = currentDate;
+        var maxDate = currentDate;
         var minDate = new Date(currentDate).addMonths(-12);
     </script>
     @Scripts.Render("~/bundles/VirtualSettingMonitorAdvance/js")

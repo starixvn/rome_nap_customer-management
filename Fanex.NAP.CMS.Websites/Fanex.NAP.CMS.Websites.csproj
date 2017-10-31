@@ -359,6 +359,10 @@
     <Content Include="Content\Extensions\images\sound.jpg" />
     <Content Include="Content\Extensions\images\x-icon.png" />
     <Content Include="Content\Extensions\Sound\koekoeksklok.mp3" />
+    <Content Include="Content\MonthPicker\Images\dropdown-icon.png" />
+    <Content Include="Content\MonthPicker\Images\icon-left.png" />
+    <Content Include="Content\MonthPicker\Images\icon-right.png" />
+    <None Include="Content\MonthPicker\monPickr-0.0.3.less" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -458,6 +462,8 @@
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
+    <Content Include="Scripts\Libs\MonthPicker\monPickr-0.0.3.js" />
+    <Content Include="Scripts\Libs\MultipleSelect\jquery.multiselect.js" />
     <Content Include="Scripts\Libs\Popup\dialogbox.js" />
     <Content Include="Scripts\ReCheckIn.js" />
     <Content Include="Scripts\Sites\ManageRobots.js" />
@@ -733,6 +739,8 @@
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Fanex.NAP.CMS.Websites.ruleset" />
+    <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
+    <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />

@@ -5,6 +5,7 @@
     DateTime currentDate = DateTime.Today;
 }
 @section Head {
+    @Styles.Render("~/Content/MonthPicker")
     @Styles.Render("~/bundles/VirtualSettingMonitorAdvance/css")
 }
 @section Headline
@@ -115,5 +116,6 @@
         var maxDate = currentDate;
         var minDate = new Date(currentDate).addMonths(-12);
     </script>
+    @Scripts.Render("~/Scripts/Libs/MonthPicker")
     @Scripts.Render("~/bundles/VirtualSettingMonitorAdvance/js")
 }

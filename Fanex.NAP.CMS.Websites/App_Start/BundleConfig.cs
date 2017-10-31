@@ -66,9 +66,6 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Libs/msgbox/msgbox-0.0.1.css",
                 "~/Content/Extensions/jquery.combobox-ext.less",
                 "~/Content/Extensions/jquery.extensions.less",
-                "~/Content/MultipleSelect/jquery.multiselect.less",
-                "~/Content/MonthPicker/monPickr-0.0.3.less",
-                "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
                 "~/Content/Themes/reset.css",
                 "~/Content/Themes/style.less");
 
@@ -86,8 +83,6 @@ namespace Fanex.NAP.CMS.Websites
                 .Include("~/Scripts/Libs/msgbox/msgbox-0.0.1.js")
                 .Include("~/Scripts/Libs/Tipsy/jquery.tipsy.js")
                 .Include("~/Scripts/Libs/others/Namespace.js")
-                .Include("~/Scripts/Libs/MultipleSelect/jquery.multiselect.js")
-                .Include("~/Scripts/Libs/MonthPicker/monPickr-0.0.3.js")
                 .Include("~/Scripts/Extensions/nativeObjectExtensions.js")
                 .Include("~/Scripts/Extensions/jquery.combobox-ext.js")
                 .Include("~/Scripts/Extensions/jquery.extensions.js")

@@ -210,7 +210,7 @@
                     exportExcelInfo.CurrentColumn = 1;
                     exportExcelInfo.RenderCurrentCell(record.Username, _excelStyleTemplate.TextStyle);
                     exportExcelInfo.RenderCurrentCell(figureTexts[4], _excelStyleTemplate.TextStyle);
-                    exportExcelInfo.RenderCurrentCell(record.Total.Turnover, _excelStyleTemplate.DecimalColorStyle);
+                    exportExcelInfo.RenderCurrentCell(record.Total.VarianceTurnover, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
                         if (record.Items.ElementAt(counter).VarianceTurnover > 0)

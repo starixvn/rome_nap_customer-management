@@ -104,8 +104,8 @@
                     "Sport: {0}, Rate: {1}, From: {2} - To: {3}, Depth: {4}, Account Name: {5}",
                     GetSportString(criteria.SportId),
                     criteria.Rate,
-                    criteria.FromDate.ToShortDateString(),
-                    criteria.ToDate.ToShortDateString(),
+                    criteria.FromDate.ToString("MMM yyyy"),
+                    criteria.ToDate.ToString("MMM yyyy"),
                     GetDepthString(criteria.Depth),
                     criteria.Username),
                 _excelStyleTemplate.TextStyle);
@@ -296,16 +296,16 @@
 
             switch (depth)
             {
-                case 0:
+                case 4:
                     result = "Super";
                     break;
-                case 1:
+                case 3:
                     result = "Master";
                     break;
                 case 2:
                     result = "Agent";
                     break;
-                case 3:
+                case 1:
                     result = "Member";
                     break;
                 default:

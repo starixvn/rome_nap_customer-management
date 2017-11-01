@@ -33,13 +33,9 @@ Array.prototype.collect = function (collector) {
 
     function initDateRangeSelect() {
         var changeMonthFromHandler = function () {
-            var selectedDate = $divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy');
-            var limitedDate = moment(selectedDate).add('month', 12);
-            var maxDate = moment(options.maxDate) > limitedDate ? limitedDate.format('MM/DD/YYYY') : options.maxDate;
-            var minDate = moment(selectedDate).startOf('month').format('MM/DD/YYYY');
 
-            $divMonthTo.monPickr('setMinMaxDate', minDate, maxDate);
         };
+
         var changeMonthToHandler = function () {
             var selectedDate = $divMonthTo.monPickr('getMonth', 'MM/dd/yyyy');
             var limitedDate = moment(selectedDate).add('month', -12);

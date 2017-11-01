@@ -52,7 +52,7 @@
             bundles.Add(new ScriptBundle("~/bundles/NewVrAutoAdjustmentReport/js").Include(
                 "~/Areas/VirtualSettingControl/Views/NewVrAutoAdjustmentReport/Scripts/VrAutoAdjustmentReport.js"));
 
-            bundles.Add(new ScriptBundle("~/Scripts/Libs/MonthPicker").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/Libs/MonthPicker/js").Include(
                "~/Scripts/Libs/MonthPicker/monPickr-0.0.3.js"));
         }
 
@@ -66,7 +66,7 @@
                 "~/Areas/VirtualSettingControl/Views/VirtualSettingMonitorAdvance/Styles/virtualSettingMonitorAdvance.less");
 
             bundles.AddAndInclude(
-                "~/Content/MonthPicker",
+                "~/Content/MonthPicker/css",
                 "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
                 "~/Content/MonthPicker/monPickr-0.0.3.less");
         }

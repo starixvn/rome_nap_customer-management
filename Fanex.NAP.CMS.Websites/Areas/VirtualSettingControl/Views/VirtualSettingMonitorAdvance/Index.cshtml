@@ -5,7 +5,7 @@
     DateTime currentDate = DateTime.Today;
 }
 @section Head {
-    @Styles.Render("~/Content/MonthPicker")
+    @Styles.Render("~/Content/MonthPicker/css")
     @Styles.Render("~/bundles/VirtualSettingMonitorAdvance/css")
 }
 @section Headline
@@ -114,8 +114,8 @@
         var initFromDate = currentDate;
         var initToDate = currentDate;
         var maxDate = currentDate;
-        var minDate = new Date(currentDate).addMonths(-12);
+        var minDate = new Date(2016, 1, 1);
     </script>
-    @Scripts.Render("~/Scripts/Libs/MonthPicker")
+    @Scripts.Render("~/Scripts/Libs/MonthPicker/js")
     @Scripts.Render("~/bundles/VirtualSettingMonitorAdvance/js")
 }

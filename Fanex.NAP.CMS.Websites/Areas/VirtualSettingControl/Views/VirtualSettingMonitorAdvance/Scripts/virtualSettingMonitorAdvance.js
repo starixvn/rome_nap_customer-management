@@ -49,7 +49,7 @@ Array.prototype.collect = function (collector) {
             plugInId: '#divMonthFrom',
             today: options.defaultFromDate,
             maxDate: options.maxDate,
-            minDate: options.minDate,
+            minDate: moment(options.maxDate).add('month', -12),
             showDateRange: false,
             width: 132,
             zIndex: 1,

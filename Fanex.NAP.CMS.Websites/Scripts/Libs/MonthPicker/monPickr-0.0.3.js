@@ -384,8 +384,8 @@
 
         _renderMonthPicker = function (data, target) {
             target.addClass('monpickr monpickr-arrows ui-widget ui-widget-header ui-helper-clearfix ui-corner-all').width(data.width + 8);
-            data.btnPrev = $('<a href="javascript:;" class="prev monpickr-prev ui-corner-all" title="' + data.prevText + '"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a>');
-            data.btnNext = $('<a href="javascript:;" class="next monpickr-next ui-corner-all" title="' + data.nextText + '"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>');
+            data.btnPrev = $('<a class="prev monpickr-prev ui-corner-all" title="' + data.prevText + '"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a>');
+            data.btnNext = $('<a class="next monpickr-next ui-corner-all" title="' + data.nextText + '"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>');
             data.lblSelectedMonth = $('<input type="text" class="monpickr-selected-month monpickr-input ui-widget-content" />').width(data.width + 2);
             _setMonthLabel(data);
             target.append(data.btnPrev, data.lblSelectedMonth, data.btnNext);

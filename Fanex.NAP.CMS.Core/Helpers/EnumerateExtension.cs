@@ -42,5 +42,14 @@ namespace Fanex.NAP.CMS.Core.Helpers
 
             return source.OrderByDescending(x => propInfo.GetValue(x, null));
         }
+
+        public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
+        {
+            while (source.Any())
+            {
+                yield return source.Take(chunksize);
+                source = source.Skip(chunksize);
+            }
+        }
     }
 }

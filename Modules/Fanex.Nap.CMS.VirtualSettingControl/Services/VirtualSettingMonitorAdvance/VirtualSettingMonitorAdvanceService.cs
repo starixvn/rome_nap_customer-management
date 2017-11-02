@@ -9,10 +9,12 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitorAdvance;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitorAdvance;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
+    using Fanex.NAP.CMS.Core.Helpers;
     using NPOI.HSSF.UserModel;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class VirtualSettingMonitorAdvanceService : ServiceBase, IVirtualSettingMonitorAdvanceService
     {
@@ -335,22 +337,59 @@
 
         private List<VirtualSettingAdvanceModel> GetHistory(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
+            var threads = new List<Task<List<VirtualSettingAdvanceModel>>>();
             var customers = GetCustomers(criteria);
+            var customerChunks = customers.Chunk(2000);
 
-            var customerCriteria = new GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria
+            var histories = new List<VirtualSettingAdvanceModel>();
+
+            foreach (var customerChunk in customerChunks)
             {
-                CustIds = string.Join(",", customers.Select(t => t.CustId)),
-                SportId = criteria.SportId,
-                ReportFromDate = criteria.FromDate,
-                ReportToDate = criteria.ToDate
-            };
+                var thread = Task.Factory.StartNew(
+                obj =>
+                {
+                    var customerList = (List<CustomerModel>)obj;
+                    var customerCriteria = new GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria
+                    {
+                        CustIds = string.Join(",", customerList.Select(t => t.CustId)),
+                        SportId = criteria.SportId,
+                        ReportFromDate = criteria.FromDate,
+                        ReportToDate = criteria.ToDate
+                    };
 
-            var result = this.GetData<VirtualSettingAdvanceModel>(customerCriteria);
+                    var result = this.GetData<VirtualSettingAdvanceModel>(customerCriteria);
 
-            result = result ?? new List<VirtualSettingAdvanceModel>();
+                    result = result ?? new List<VirtualSettingAdvanceModel>();
 
-            return result.ToList();
+                    return result.ToList();
+                }, customerChunk.ToList());
+
+                threads.Add(thread);
+
+                if (threads.Count >= 50)
+                {
+                    Task.WaitAll(threads.ToArray());
+
+                    foreach (var item in threads)
+                    {
+                        histories.AddRange(item.Result);
+                    }
+
+                    threads.Clear();
+                }
+            }
+
+            Task.WaitAll(threads.ToArray());
+            foreach (var item in threads)
+            {
+                histories.AddRange(item.Result);
+            }
+
+            histories = histories ?? new List<VirtualSettingAdvanceModel>();
+
+            return histories.ToList();
         }
+
         #endregion
     }
 }

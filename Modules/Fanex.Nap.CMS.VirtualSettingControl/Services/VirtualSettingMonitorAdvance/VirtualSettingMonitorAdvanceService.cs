@@ -349,11 +349,6 @@
 
             result = result ?? new List<VirtualSettingAdvanceModel>();
 
-            foreach (var item in result)
-            {
-                item.Username = customers.Where(t => t.CustId == item.CustId).First().Username;
-            }
-
             return result.ToList();
         }
         #endregion

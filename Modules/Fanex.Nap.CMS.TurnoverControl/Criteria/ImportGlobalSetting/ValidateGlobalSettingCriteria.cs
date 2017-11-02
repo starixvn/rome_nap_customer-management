@@ -19,10 +19,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
         }
 
         [SpParam(Ignored = true)]
-        public short Type { get; }
+        public short Type { get; private set; }
 
         [SpParam(Ignored = true)]
-        public IEnumerable<GlobalSettingExcel> GlobalSettingExcels { get; }
+        public IEnumerable<GlobalSettingExcel> GlobalSettingExcels { get; private set; }
 
         public override string GetSettingKey()
         {

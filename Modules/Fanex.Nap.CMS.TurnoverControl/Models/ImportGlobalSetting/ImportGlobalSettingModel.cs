@@ -20,8 +20,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting
             ErrorSettings = errorSettings;
         }
 
-        public IEnumerable<GlobalSettingItem> ValidSettings { get; }
+        public IEnumerable<GlobalSettingItem> ValidSettings { get; private set; }
 
-        public IEnumerable<ErrorGlobalSettingItem> ErrorSettings { get; }
+        public IEnumerable<ErrorGlobalSettingItem> ErrorSettings { get; private set; }
     }
 }

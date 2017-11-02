@@ -10,7 +10,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
             CustomerTurnovers = new List<CustomerTurnover>();
         }
 
-        public int MatchId { get; }
+        public int MatchId { get; private set; }
 
         public int HomeId { get; set; }
 
@@ -26,6 +26,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
 
         public string EventStatus { get; set; }
 
-        public IList<CustomerTurnover> CustomerTurnovers { get; }
+        public IList<CustomerTurnover> CustomerTurnovers { get; private set; }
     }
 }

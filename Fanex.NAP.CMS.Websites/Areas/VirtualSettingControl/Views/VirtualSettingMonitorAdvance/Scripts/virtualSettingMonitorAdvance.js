@@ -264,11 +264,12 @@ Array.prototype.collect = function (collector) {
         function onPageChangedHandler(index, pageSize) {
             pageSize = parseInt(pageSize);
             index = parseInt(index);
-            gridpagerOption.currentPage = index;
-            gridpagerOption.itemsPerPage = pageSize;
-            gridpagerOption.totalItem = data.Reports.length;
 
-            gridbodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
+            gridOptions.pagerOption.currentPage = index;
+            gridOptions.pagerOption.itemsPerPage = pageSize;
+            gridOptions.pagerOption.totalItem = data.Reports.length;
+
+            gridOptions.bodyRows = data.Reports.slice(index * pageSize, index * pageSize + pageSize).collect(bodyMapFunc(index, pageSize));
 
             $virtualSettingMonitorAdvanceGrid.fanexGrid(gridOptions);
         };

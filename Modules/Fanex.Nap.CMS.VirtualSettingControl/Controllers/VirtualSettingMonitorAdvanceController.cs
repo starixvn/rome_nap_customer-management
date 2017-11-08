@@ -33,11 +33,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitorAdvance, Policy = Constant.Policy.Read)]
         public ActionResult Generate(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
-            var monthsToCheck = (criteria.ToDate.Month + criteria.ToDate.Year * 12) - (criteria.FromDate.Month + criteria.FromDate.Year * 12) + 1;
+            var monthsToCheck = (criteria.ReportToDate.Month + criteria.ReportToDate.Year * 12) - (criteria.ReportFromDate.Month + criteria.ReportFromDate.Year * 12) + 1;
 
             var result = new
             {
-                Months = Helper.GetDate(criteria.ToDate, monthsToCheck, "MMM - yyyy"),
+                Months = Helper.GetDate(criteria.ReportToDate, monthsToCheck, "MMM - yyyy"),
                 Reports = _virtualSettingMonitorAdvanceService.GetVirtualSettingAdvanceMonitor(criteria, monthsToCheck)
             };
 
@@ -47,7 +47,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualSettingMonitorAdvance, Policy = Constant.Policy.Read)]
         public void Export(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
-            var monthsToCheck = (criteria.ToDate.Month + criteria.ToDate.Year * 12) - (criteria.FromDate.Month + criteria.FromDate.Year * 12) + 1;
+            var monthsToCheck = (criteria.ReportToDate.Month + criteria.ReportToDate.Year * 12) - (criteria.ReportFromDate.Month + criteria.ReportFromDate.Year * 12) + 1;
 
             _virtualSettingMonitorAdvanceService.ExportVirtualSettingAdvanceMonitor(criteria, monthsToCheck);
         }

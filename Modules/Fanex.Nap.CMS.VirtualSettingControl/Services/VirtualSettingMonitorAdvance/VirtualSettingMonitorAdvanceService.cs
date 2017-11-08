@@ -28,7 +28,7 @@
 
             var groupItem = marginList.GroupBy(m => m.Username);
 
-            var lastMonth = new DateTime(criteria.ToDate.Year, criteria.ToDate.Month, 1);
+            var lastMonth = new DateTime(criteria.ReportToDate.Year, criteria.ReportToDate.Month, 1);
 
             foreach (var item in groupItem)
             {
@@ -106,9 +106,9 @@
                     "Sport: {0}, Rate: {1}, From: {2} - To: {3}, Depth: {4}, Account Name: {5}",
                     GetSportString(criteria.SportId),
                     criteria.Rate,
-                    criteria.FromDate.ToString("MMM yyyy"),
-                    criteria.ToDate.ToString("MMM yyyy"),
-                    GetDepthString(criteria.Depth),
+                    criteria.ReportFromDate.ToString("MMM yyyy"),
+                    criteria.ReportToDate.ToString("MMM yyyy"),
+                    GetDepthString(criteria.RoleId),
                     criteria.Username),
                 _excelStyleTemplate.TextStyle);
 
@@ -119,7 +119,7 @@
             exportExcelInfo.RenderCurrentCell(Labels.Figure, _excelStyleTemplate.HeaderTextStyle);
             exportExcelInfo.RenderCurrentCell("Avg. Performance", _excelStyleTemplate.HeaderTextStyle);
 
-            var months = Helper.GetDate(criteria.ToDate, monthsToCheck, "MMM - yyyy");
+            var months = Helper.GetDate(criteria.ReportToDate, monthsToCheck, "MMM - yyyy");
             foreach (var month in months)
             {
                 exportExcelInfo.RenderCurrentCell(month, _excelStyleTemplate.HeaderTextStyle);
@@ -318,76 +318,13 @@
             return result;
         }
 
-        private List<CustomerModel> GetCustomers(GetVirtualSettingMonitorAdvanceCriteria criteria)
-        {
-            var customerCriteria = new GetCustomerVirtualSettingMonitorAdvanceCriteria
-            {
-                Rate = criteria.Rate,
-                RoleId = criteria.Depth,
-                SportId = criteria.SportId,
-                Username = criteria.Username
-            };
-
-            var result = this.GetData<CustomerModel>(customerCriteria);
-
-            result = result ?? new List<CustomerModel>();
-
-            return result.ToList();
-        }
-
         private List<VirtualSettingAdvanceModel> GetHistory(GetVirtualSettingMonitorAdvanceCriteria criteria)
         {
-            var threads = new List<Task<List<VirtualSettingAdvanceModel>>>();
-            var customers = GetCustomers(criteria);
-            var customerChunks = customers.Chunk(2000);
+            var result = this.GetData<VirtualSettingAdvanceModel>(criteria);
 
-            var histories = new List<VirtualSettingAdvanceModel>();
+            result = result ?? new List<VirtualSettingAdvanceModel>();
 
-            foreach (var customerChunk in customerChunks)
-            {
-                var thread = Task.Factory.StartNew(
-                obj =>
-                {
-                    var customerList = (List<CustomerModel>)obj;
-                    var customerCriteria = new GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria
-                    {
-                        CustIds = string.Join(",", customerList.Select(t => t.CustId)),
-                        SportId = criteria.SportId,
-                        ReportFromDate = criteria.FromDate,
-                        ReportToDate = criteria.ToDate
-                    };
-
-                    var result = this.GetData<VirtualSettingAdvanceModel>(customerCriteria);
-
-                    result = result ?? new List<VirtualSettingAdvanceModel>();
-
-                    return result.ToList();
-                }, customerChunk.ToList());
-
-                threads.Add(thread);
-
-                if (threads.Count >= 50)
-                {
-                    Task.WaitAll(threads.ToArray());
-
-                    foreach (var item in threads)
-                    {
-                        histories.AddRange(item.Result);
-                    }
-
-                    threads.Clear();
-                }
-            }
-
-            Task.WaitAll(threads.ToArray());
-            foreach (var item in threads)
-            {
-                histories.AddRange(item.Result);
-            }
-
-            histories = histories ?? new List<VirtualSettingAdvanceModel>();
-
-            return histories.ToList();
+            return result.ToList();
         }
 
         #endregion

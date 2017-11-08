@@ -124,8 +124,6 @@
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
-    <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetCustomerHistoryVirtualSettingMonitorAdvanceCriteria.cs" />
-    <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetCustomerVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />

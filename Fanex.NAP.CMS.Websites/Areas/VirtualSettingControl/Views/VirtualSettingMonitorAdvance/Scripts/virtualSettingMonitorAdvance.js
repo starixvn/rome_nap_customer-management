@@ -76,11 +76,11 @@ Array.prototype.collect = function (collector) {
 
     var getVirtualSettingMonitorAdvance = function () {
         var criteria = {
-            FromDate: $divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy'),
-            ToDate: $divMonthTo.monPickr('getMonth', 'MM/dd/yyyy'),
+            ReportFromDate: $divMonthFrom.monPickr('getMonth', 'MM/dd/yyyy'),
+            ReportToDate: $divMonthTo.monPickr('getMonth', 'MM/dd/yyyy'),
             SportId: $sport.val(),
             Rate: $rate.val(),
-            Depth: $depth.val(),
+            RoleId: $depth.val(),
             Username: $username.val()
         };
 

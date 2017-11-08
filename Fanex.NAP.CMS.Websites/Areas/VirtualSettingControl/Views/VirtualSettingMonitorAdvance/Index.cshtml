@@ -33,10 +33,10 @@
                 <label>Rate</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-rate" class="width-140" maxlength="30" value="200" style="text-align:right;"
+                <input type="text" id="txt-rate" class="width-140" maxlength="30" value="200" style="text-align:left;"
                        data-val-required="Field must not empty"
-                       data-val-regex="Field must be an integer number"
-                       data-val-regex-pattern="^[+\-]?\d+$" />
+                       data-val-regex="Field must be a positive integer number"
+                       data-val-regex-pattern="^[1-9][0-9]*$" />
             </div>
         </div>
         <div class="filter-row">

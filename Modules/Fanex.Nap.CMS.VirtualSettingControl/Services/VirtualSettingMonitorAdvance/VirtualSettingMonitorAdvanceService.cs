@@ -147,7 +147,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.Turnover, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).Turnover > 0)
+                        if (record.Items.ElementAt(counter).Turnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).Turnover, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -164,7 +164,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.Winloss, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).Turnover > 0)
+                        if (record.Items.ElementAt(counter).Turnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).Winloss, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -181,7 +181,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.Margin, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).Turnover > 0)
+                        if (record.Items.ElementAt(counter).Turnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).Margin, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -198,7 +198,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.BetCount, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).Turnover > 0)
+                        if (record.Items.ElementAt(counter).Turnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).BetCount, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -215,7 +215,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.VarianceTurnover, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).VarianceTurnover > 0)
+                        if (record.Items.ElementAt(counter).VarianceTurnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).VarianceTurnover, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -232,7 +232,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.VarianceWinloss, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).VarianceTurnover > 0)
+                        if (record.Items.ElementAt(counter).VarianceTurnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).VarianceWinloss, _excelStyleTemplate.DecimalColorStyle);
                         }
@@ -249,7 +249,7 @@
                     exportExcelInfo.RenderCurrentCell(record.Total.VarianceMargin, _excelStyleTemplate.DecimalColorStyle);
                     for (counter = 0; counter < monthsToCheck; counter++)
                     {
-                        if (record.Items.ElementAt(counter).VarianceTurnover > 0)
+                        if (record.Items.ElementAt(counter).VarianceTurnover != 0)
                         {
                             exportExcelInfo.RenderCurrentCell(record.Items.ElementAt(counter).VarianceMargin, _excelStyleTemplate.DecimalColorStyle);
                         }

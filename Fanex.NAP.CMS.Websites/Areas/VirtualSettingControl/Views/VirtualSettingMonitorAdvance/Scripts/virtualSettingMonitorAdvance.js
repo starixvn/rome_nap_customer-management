@@ -118,15 +118,15 @@ Array.prototype.collect = function (collector) {
         }
 
         function getVarianceWinlossCell(dataItem, index) {
-            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover > 0 ? dataItem.VarianceWinloss : '' };
+            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover !== 0 ? dataItem.VarianceWinloss : '' };
         }
 
         function getVarianceTurnoverCell(dataItem, index) {
-            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover > 0 ? dataItem.VarianceTurnover : '' };
+            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover !== 0 ? dataItem.VarianceTurnover : '' };
         }
 
         function getVarianceMarginCell(dataItem, index) {
-            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover > 0 ? dataItem.VarianceMargin : '' };
+            return { Name: 'colMonth' + index, Value: dataItem.VarianceTurnover !== 0 ? dataItem.VarianceMargin : '' };
         }
 
         var months = data.Months.map(getMonthHeaders);
@@ -180,13 +180,13 @@ Array.prototype.collect = function (collector) {
 
                 //Variance
                 var varianceWinlossRow = item.Items.map(getVarianceWinlossCell);
-                var totalVarianceWL = { Name: 'colTotal', Value: item.Total.VarianceTurnover > 0 ? item.Total.VarianceWinloss : '' };
+                var totalVarianceWL = { Name: 'colTotal', Value: item.Total.VarianceTurnover !== 0 ? item.Total.VarianceWinloss : '' };
 
                 var varianceTurnoverRow = item.Items.map(getVarianceTurnoverCell);
-                var totalVarianceTO = { Name: 'colTotal', Value: item.Total.VarianceTurnover > 0 ? item.Total.VarianceTurnover : '' };
+                var totalVarianceTO = { Name: 'colTotal', Value: item.Total.VarianceTurnover !== 0 ? item.Total.VarianceTurnover : '' };
 
                 var varianceMarginRow = item.Items.map(getVarianceMarginCell);
-                var totalVarianceMG = { Name: 'colTotal', Value: item.Total.VarianceTurnover > 0 ? item.Total.VarianceMargin : '' };
+                var totalVarianceMG = { Name: 'colTotal', Value: item.Total.VarianceTurnover !== 0 ? item.Total.VarianceMargin : '' };
                 //
 
                 var css = 'freegrid-even';

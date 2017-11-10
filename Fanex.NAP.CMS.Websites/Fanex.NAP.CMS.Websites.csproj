@@ -225,7 +225,9 @@
     <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
@@ -347,6 +349,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Scripts\virtualSettingMonitorAdvance.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\VrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitor\Scripts\ViewHistoryModal.js" />
@@ -356,6 +359,17 @@
     <Content Include="Content\Extensions\images\sound.jpg" />
     <Content Include="Content\Extensions\images\x-icon.png" />
     <Content Include="Content\Extensions\Sound\koekoeksklok.mp3" />
+    <Content Include="Content\MonthPicker\Images\dropdown-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonthPicker\Images\icon-left.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonthPicker\Images\icon-right.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
+    <Content Include="Content\MonthPicker\monPickr-0.0.3.less" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -455,6 +469,8 @@
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
+    <Content Include="Scripts\Libs\MonthPicker\monPickr-0.0.3.js" />
+    <Content Include="Scripts\Libs\MultipleSelect\jquery.multiselect.js" />
     <Content Include="Scripts\Libs\Popup\dialogbox.js" />
     <Content Include="Scripts\ReCheckIn.js" />
     <Content Include="Scripts\Sites\ManageRobots.js" />
@@ -672,6 +688,7 @@
     </Content>
     <Content Include="Web.ConnectionString.uat.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -720,15 +737,18 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\GlobalSetting\_AddGlobalSetting.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\_MultipleEditMaxTOPopup.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Styles\ImportGlobalSetting.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Styles\virtualSettingMonitorAdvance.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Fanex.NAP.CMS.Websites.ruleset" />
+    <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.3.0.2862\analyzers\Google.Protobuf.dll" />

@@ -28,7 +28,6 @@
         }
     };
 
-
     $.fn.nexDatePicker = function (options) {
         if (methods[options]) {
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
@@ -307,7 +306,7 @@
                         //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
                     }
                     options.onSelectDatePicker(selectedDate);
-                    me.$dropDownList.val(7);                   
+                    me.$dropDownList.val(7);
                 }
             }
             this.Options.datePickerFormat = $.extend({}, this.Options.datePickerFormat, optionSelect);
@@ -397,4 +396,4 @@
             return m[1] + 1;
         }
     };
-} (jQuery));
+}(jQuery));

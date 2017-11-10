@@ -18,8 +18,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
             GlobalSettings = globalSettings;
         }
 
-        public int TotalItems { get; }
+        public int TotalItems { get; private set; }
 
-        public IEnumerable<GlobalSettingItem> GlobalSettings { get; }
+        public IEnumerable<GlobalSettingItem> GlobalSettings { get; private set; }
     }
 }

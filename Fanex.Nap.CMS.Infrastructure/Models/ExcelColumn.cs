@@ -13,8 +13,8 @@
             Width = width;
         }
 
-        public string Name { get; }
+        public string Name { get; private set; }
 
-        public int Width { get; }
+        public int Width { get; private set; }
     }
 }

@@ -11,10 +11,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
             MatchTurnovers = new List<MatchTurnover>();
         }
 
-        public int LeagueId { get; }
+        public int LeagueId { get; private set; }
 
-        public string LeagueName { get; }
+        public string LeagueName { get; private set; }
 
-        public IList<MatchTurnover> MatchTurnovers { get; }
+        public IList<MatchTurnover> MatchTurnovers { get; private set; }
     }
 }

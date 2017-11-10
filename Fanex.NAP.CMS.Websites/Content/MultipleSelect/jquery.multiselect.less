@@ -1,0 +1,238 @@
+.ui-multiselect {
+    padding: 2px 0 2px 4px;
+    text-align: left;
+    height: 26px;
+
+    &.ui-widget {
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+    }
+
+    &.ui-corner-all {
+        border-radius: 0;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+    }
+
+    &.ui-state-default, &.ui-state-active {
+        background: #fff;
+        color: #000;
+        border: 1px solid #cecccd;
+    }
+
+    span.ui-icon {
+        float: right;
+    }
+}
+
+.ui-multiselect-menu {
+    display: none;
+    position: absolute;
+    text-align: left;
+    margin-top: 1px;
+
+    &.ui-dialog {
+        padding: 3px 3px 3px 2px;
+
+        &.ui-front {
+            z-index: 1002;
+        }
+    }
+
+    &.ui-widget {
+        font-family: Tahoma,Arial,Helvetica,sans-serif;
+    }
+
+    &.ui-widget-content {
+        border: 0px solid #dddddd;
+        background: #FFFFFF;
+        box-shadow: 0 0 10px #777;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+    }
+
+    &.ui-corner-all {
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+
+    .ui-multiselect-hasfilter {
+        border: none;
+        border-bottom: 1px solid #9b9a9a !important;
+    }
+
+    .ui-multiselect-header {
+        background: none;
+        margin-bottom: 7px;
+        padding: 3px 0 7px 4px;
+
+        ul {
+            top: 4px;
+            font-size: 0.9em;
+
+            li {
+                float: left;
+                padding: 0 10px 0 0;
+            }
+
+            &.ui-helper-reset {
+                .ui-multiselect-all, .ui-multiselect-none {
+                    color: #0136ac;
+                    font-size: 11px;
+
+                    .ui-icon-closethick, .ui-icon-check {
+                        margin-right: 3px;
+                    }
+                }
+            }
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        span.ui-icon {
+            float: left;
+        }
+
+        .ui-multiselect-close {
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            text-align: right;
+            padding-right: 0;
+        }
+    }
+
+    .ui-multiselect-checkboxes {
+        position: relative; // fixes bug in IE6/7
+        overflow-y: auto;
+
+        label {
+            cursor: default;
+            display: block;
+            border: 1px solid transparent;
+            padding: 3px 1px;
+
+            input {
+                position: relative;
+                top: 1px;
+
+                &:focus, &:hover {
+                    border: none !important;
+                    box-shadow: none !important;
+                    -moz-box-shadow: none !important;
+                    -webkit-box-shadow: none !important;
+                }
+            }
+
+            input[type=radio] {
+                display: none;
+            }
+
+            span {
+                margin-left: 5px;
+            }
+
+            &.ui-state-hover {
+                background: #f5f4f3;
+                color: #1c3f86;
+                /*font-weight: bold;*/
+                cursor: pointer;
+            }
+
+            &.ui-state-active {
+                background: transparent;
+                background-color: #edecea;
+                font-weight: bold;
+                color: #3c5b9b;
+            }
+
+            &.ui-corner-all {
+                border-radius: 0;
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+            }
+        }
+
+        li {
+            clear: both;
+            font-size: 0.9em;
+            /*padding-right:1px;*/
+
+            &.ui-multiselect-optgroup-label {
+                text-align: center;
+                font-weight: bold;
+                border-bottom: 1px solid;
+
+                a {
+                    display: block;
+                    padding: 3px;
+                    margin: 1px 0;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.ie8 {
+    .ui-multiselect-menu {
+        &.ui-widget-content {
+            border: 1px solid #dddddd;
+        }
+
+        &.ui-multiselect-single{
+            .ui-multiselect-checkboxes {
+                position: relative; // fixes bug in IE6/7
+                overflow-y: auto;
+
+                label {
+                    input[type=radio] {
+                        display: inline-block;
+                        left: -9999px;
+                        width: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ui-multiselect-hasfilter ul {
+    position: relative;
+    top: 2px
+}
+.ui-multiselect-filter {
+    float: left;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+
+    input {
+        margin: 0 10px 0 5px;
+        height: 15px;
+        padding: 2px 5px;
+        border: 1px solid #9b9a9a;
+        -webkit-appearance: textfield;
+        box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+    }
+
+    span {
+        display: inline-block;
+        position: absolute;
+        top: 8px;
+        cursor: pointer;
+
+        &.disabled {
+            display: none;
+        }
+    }
+}

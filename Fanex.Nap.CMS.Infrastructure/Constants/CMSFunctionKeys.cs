@@ -81,7 +81,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Virtual Setting Control
         public const string VirtualSettingMonitor = "VirtualSettingMonitor";
-
         public const string AutoAdjustmentReport = "AutoAdjustmentReport";
+        public const string VirtualSettingMonitorAdvance = "VirtualSettingMonitorAdvance";
     }
 }

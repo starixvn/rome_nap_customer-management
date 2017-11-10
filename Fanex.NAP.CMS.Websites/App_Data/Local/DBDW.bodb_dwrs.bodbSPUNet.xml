@@ -5,6 +5,7 @@
     <Setting Key="NAP_Report_CustMngt_CustomerMarginHistory" SpName="NAP_Report_CustMngt_CustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
     <Setting Key="NAP_Report_CustMngt_CustomerMarginLatestMonths" SpName="NAP_Report_CustMngt_CustomerMarginLatestMonths" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
     <Setting Key="NAP_Report_CustMngt_GetCustomerMarginByMonth" SpName="NAP_Report_CustMngt_GetCustomerMarginByMonth" DbName="DBDW.bodb_dwrs.bodbAdminNet" />
+    <Setting Key="NAP_Report_CustMngt_VirtualRateMonitoringAdvanced" SpName="NAP_Report_CustMngt_VirtualRateMonitoringAdvanced_xtest" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
   </Function>
 
   <Function Name="Customer Dashboard">

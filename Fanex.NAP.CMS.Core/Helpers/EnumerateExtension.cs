@@ -48,7 +48,9 @@ namespace Fanex.NAP.CMS.Core.Helpers
             while (source.Any())
             {
                 yield return source.Take(chunksize);
+#pragma warning disable S1226 // Method parameters and caught exceptions should not be reassigned
                 source = source.Skip(chunksize);
+#pragma warning restore S1226 // Method parameters and caught exceptions should not be reassigned
             }
         }
     }

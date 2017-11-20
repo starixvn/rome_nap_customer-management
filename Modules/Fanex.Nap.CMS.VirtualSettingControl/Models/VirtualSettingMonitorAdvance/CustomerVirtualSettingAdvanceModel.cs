@@ -27,8 +27,8 @@
                     BetCount = Items.Sum(t => t.BetCount),
                     Turnover = Items.Sum(t => t.Turnover),
                     Winloss = Items.Sum(t => t.Winloss),
-                    TurnoverVirtual = Items.Sum(t => t.TurnoverVirtual),
-                    WinlossVirtual = Items.Sum(t => t.WinlossVirtual)
+                    VarianceTurnover = Items.Sum(t => t.VarianceTurnover),
+                    VarianceWinloss = Items.Sum(t => t.VarianceWinloss)
                 };
 
                 return result;

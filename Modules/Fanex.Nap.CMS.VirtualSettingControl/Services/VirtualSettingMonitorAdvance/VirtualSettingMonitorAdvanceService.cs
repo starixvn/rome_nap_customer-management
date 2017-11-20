@@ -55,6 +55,8 @@
                 result.Add(model);
             }
 
+            result = result.OrderByDescending(t => t.Total.Turnover).ToList();
+
             SessionManager.Set<List<CustomerVirtualSettingAdvanceModel>>(VirtualSettingsMonitorSessionKey, result);
 
             return result;

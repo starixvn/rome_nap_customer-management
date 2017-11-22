@@ -106,6 +106,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Added By.
         /// </summary>
         public static string AddedBy {
@@ -129,6 +138,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string AddNewRequest {
             get {
                 return ResourceManager.GetString("AddNewRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Setting.
+        /// </summary>
+        public static string AddNewSetting {
+            get {
+                return ResourceManager.GetString("AddNewSetting", resourceCulture);
             }
         }
         
@@ -574,6 +592,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Headline.
+        /// </summary>
+        public static string Headline {
+            get {
+                return ResourceManager.GetString("Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Heinz.
         /// </summary>
         public static string Heinz {
@@ -871,6 +898,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        public static string NotAvailable {
+            get {
+                return ResourceManager.GetString("NotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Offset.
         /// </summary>
         public static string Offset {
@@ -975,6 +1011,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Restricted {
             get {
                 return ResourceManager.GetString("Restricted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RM.
+        /// </summary>
+        public static string RM {
+            get {
+                return ResourceManager.GetString("RM", resourceCulture);
             }
         }
         

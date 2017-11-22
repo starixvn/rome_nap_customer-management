@@ -513,4 +513,19 @@
   <data name="Restricted" xml:space="preserve">
     <value>Restricted</value>
   </data>
+  <data name="Headline" xml:space="preserve">
+    <value>Headline</value>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="AddNewSetting" xml:space="preserve">
+    <value>Add New Setting</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="RM" xml:space="preserve">
+    <value>RM</value>
+  </data>
 </root>

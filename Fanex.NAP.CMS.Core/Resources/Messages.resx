@@ -294,4 +294,7 @@
   <data name="WelcomeMessage" xml:space="preserve">
     <value>Welcome to Customer Management!</value>
   </data>
+  <data name="BadRequest" xml:space="preserve">
+    <value>Bad request!</value>
+  </data>
 </root>

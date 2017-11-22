@@ -1,28 +1,19 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="SMALossInfo.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Jason.Ly" date="2014.5.26">Created</change>
-// </history>
-
-namespace Fanex.NAP.CMS.Models.LossMonitor
+﻿namespace Fanex.NAP.CMS.Models.LossMonitor
 {
-    /// <summary>
-    /// SMA loss model.
-    /// </summary>
+    using Core.Resources;
+    using Core.Web;
+
     public class SMALossInfo
     {
-        public byte LevelID { get; set; }
-
         public int CustId { get; set; }
 
         public string Username { get; set; }
 
-        public byte? RoleID { get; set; }
+        public byte RoleId { get; set; }
 
         public string Currency { get; set; }
+
+        public int GroupHeadlineId { get; set; }
 
         public decimal? YesterdayBalance { get; set; }
 
@@ -30,8 +21,18 @@ namespace Fanex.NAP.CMS.Models.LossMonitor
 
         public decimal? MaxLoss { get; set; }
 
-        public int? PercentageLoss { get; set; }
+        public byte LevelId { get; set; }
 
         public int? Movement { get; set; }
+
+        public decimal? PercentageLoss { get; set; }
+
+        public string RoleName
+        {
+            get
+            {
+                return GroupHeadlineId > 0 ? ViewLang.Headline : CacheRef.GetLevel(RoleId);
+            }
+        }
     }
 }

@@ -4,8 +4,8 @@
     using System.Net;
     using Criteria;
     using Data.Repository;
-    using Infrastructure.Helpers;
     using Infrastructure.Models;
+    using Logging.Extensions.Web;
     using Models;
     using Newtonsoft.Json;
     using Repositories;
@@ -76,7 +76,7 @@
                 }
                 catch (System.Exception ex)
                 {
-                    Logs.Error(ex);
+                    ExceptionHandler.Handle(ex);
                     result = new Result { Code = 500, Message = ex.Message };
                 }
             }

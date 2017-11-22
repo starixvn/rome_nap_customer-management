@@ -1,21 +1,14 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="DeleteSMACriteria.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Aaron.Cao" date="2016.06.07">Created</change>
-// </history>
-
-namespace Fanex.NAP.CMS.Criteria.LossMonitor
+﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using Fanex.Data.Repository;
+    using Data.Repository;
 
     public class DeleteSMACriteria : CriteriaBase
     {
         public int CustId { get; set; }
 
-        public int Creator { get; set; }
+        public byte Mode { get; set; }
+
+        public int UserId { get; set; }
 
         public string IP { get; set; }
 
@@ -30,7 +23,9 @@ namespace Fanex.NAP.CMS.Criteria.LossMonitor
 
         public override bool IsValid()
         {
-            return CustId > 0;
+            return CustId > 0 &&
+                UserId > 0 &&
+                !string.IsNullOrWhiteSpace(IP);
         }
     }
 }

@@ -1,110 +1,92 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="LossMonitorService.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Jason.Ly" date="2014.5.23">Created</change>
-//   <change who="Aaron.Cao" date="2016.6.7">Added Insert, Update, Delete</change>
-// </history>
-
-namespace Fanex.NAP.CMS.Services.Implements
+﻿namespace Fanex.NAP.CMS.Services.Implements
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.NAP.CMS.Criteria.LossMonitor;
-    using Fanex.NAP.CMS.Models.LossMonitor;
-    using Fanex.NAP.CMS.Services.Interfaces;
-    using Fanex.NAP.CMS.ViewModels.LossMonitor;
-    using Fanex.NAP.Framework.Command;
+    using Core.Resources;
+    using Criteria.LossMonitor;
+    using Data.Repository;
+    using Framework.Command;
+    using Interfaces;
+    using Models.LossMonitor;
+    using ViewModels.LossMonitor;
 
-    /// <summary>
-    /// Loss monitor service.
-    /// </summary>
     public class LossMonitorService : CMSBaseService, ILossMonitorService
     {
-        /// <summary>
-        /// Gets the list of SMA who reached the max loss limit.
-        /// </summary>
-        /// <param name="criteria">The criteria that are used to query data.</param>
-        /// <returns>List of SMALossGroup objects.</returns>
-        public List<SMALossGroup> GetSMALoss(GetSMALossMonitorListCriteria criteria)
+        public IEnumerable<SMALossGroup> GetCustomerLoss()
         {
-            IEnumerable<SMALossInfo> rawData = this.Repository.Fetch<SMALossInfo>(criteria);
-            List<SMALossLevelItem> levels = this.GetSMALossLevels();
-            List<SMALossGroup> result = null;
+            var rawdata = Repository.Fetch<SMALossInfo>(new GetSMALossMonitorListCriteria());
+            var lossLevels = GetCustomerLossLevels();
 
-            if (rawData != null && rawData.Any() && levels != null && levels.Count > 0)
+            if (!rawdata.Any() || lossLevels.Count == 0)
             {
-                IEnumerable<IGrouping<byte, SMALossInfo>> groups = rawData.GroupBy(obj => obj.LevelID);
-                SMALossGroup lossGroup = null;
-                SMALossInfo firstItem = null;
-                SMALossLevelItem level = null;
-
-                result = new List<SMALossGroup>();
-
-                foreach (IGrouping<byte, SMALossInfo> group in groups)
-                {
-                    firstItem = group.ElementAt(0);
-                    level = levels.FirstOrDefault(obj => obj.LevelID == firstItem.LevelID);
-                    lossGroup = new SMALossGroup(firstItem, level.Value);
-
-                    foreach (SMALossInfo item in group)
-                    {
-                        lossGroup.SMALossItems.Add(new SMALossItem(item));
-                    }
-
-                    if (lossGroup.SMALossItems.Count > 0)
-                    {
-                        result.Add(lossGroup);
-                    }
-                }
-
-                result = result.OrderByDescending(obj => obj.LossLevel).ToList();
+                yield break;
             }
 
-            return result;
+            string levelName;
+            var levelLookup = rawdata.ToLookup(kvp => kvp.LevelId, kvp => kvp);
+
+            foreach (var level in levelLookup)
+            {
+                if (lossLevels.TryGetValue(level.Key, out levelName))
+                {
+                    yield return new SMALossGroup(level.Key, levelName, level);
+                }
+            }
         }
 
-        /// <summary>
-        /// Gets the SMA loss levels.
-        /// </summary>
-        /// <returns>List of SMALossLevelItem objects.</returns>
-        private List<SMALossLevelItem> GetSMALossLevels()
+        public IEnumerable<SMALossInfo> GetGroupDownlines(ICriteria criteria)
         {
-            IEnumerable<SMALossLevel> rawData = this.Repository.Fetch<SMALossLevel>(new GetSMALossLevelsCriteria());
-            List<SMALossLevelItem> result = null;
+            return !criteria.IsValid() ?
+                Enumerable.Empty<SMALossInfo>() :
+                Repository.Fetch<SMALossInfo>(criteria);
+        }
 
-            if (rawData.Any())
+        public ICommandResult InsertSMA(ICriteria criteria)
+        {
+            return !criteria.IsValid() ?
+                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                UpdateData(criteria);
+        }
+
+        public ICommandResult UpdateMaxLoss(ICriteria criteria)
+        {
+            return !criteria.IsValid() ?
+                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                UpdateData(criteria);
+        }
+
+        public ICommandResult DeleteSMA(ICriteria criteria)
+        {
+            return !criteria.IsValid() ?
+                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                UpdateData(criteria);
+        }
+
+        private static string LossLevelValueToName(int value, int? higherValue)
+        {
+            return higherValue == null ?
+                string.Format("{0}% & {1}", value, ViewLang.Above) :
+                string.Format("{0}% - {1}%", value, higherValue.Value - 1);
+        }
+
+        private IDictionary<byte, string> GetCustomerLossLevels()
+        {
+            IDictionary<byte, string> lossLevels = new Dictionary<byte, string>();
+            var rawdata = Repository.Fetch<SMALossLevel>(new GetSMALossLevelsCriteria());
+
+            if (rawdata.Any())
             {
-                SMALossLevel higherLevel = null;
+                int? higherValue = null;
+                rawdata = rawdata.OrderByDescending(l => l.LevelId);
 
-                rawData = rawData.OrderByDescending(obj => obj.LevelID);
-                result = new List<SMALossLevelItem>();
-
-                foreach (SMALossLevel level in rawData)
+                foreach (var level in rawdata)
                 {
-                    result.Add(new SMALossLevelItem(level, higherLevel));
-                    higherLevel = level;
+                    lossLevels.Add(level.LevelId, LossLevelValueToName(level.Value, higherValue));
+                    higherValue = level.Value;
                 }
             }
 
-            return result;
-        }
-
-        public ICommandResult InsertSMA(InsertSMACriteria criteria)
-        {
-            return this.UpdateData(criteria);
-        }
-
-        public ICommandResult DeleteSMA(DeleteSMACriteria criteria)
-        {
-            return this.UpdateData(criteria);
-        }
-
-        public ICommandResult UpdateMaxLoss(UpdateSMAMaxLossCriteria criteria)
-        {
-            return this.UpdateData(criteria);
+            return lossLevels;
         }
     }
 }

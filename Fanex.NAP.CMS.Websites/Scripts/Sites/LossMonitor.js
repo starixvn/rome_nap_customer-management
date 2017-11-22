@@ -1,530 +1,616 @@
-﻿/* File Created: May 23, 2014 */
-/* global Namespace, viewResources, numeral, Fanex, CMS, labels, keyboardManager, popUpManager */
-/* jshint strict: false */
-// 'use strict';
+﻿(function ($) {
+    "use strict";
+    /* AddSetting()
+     * ==========
+     * Add customer's setting to Loss Monitor page.
+     *
+     * @usage: var instance = new AddCustomer();
+     *
+     */
+    function AddSetting(formatMaxLoss, reloadGridFunction) {
+        var resultAddMessageDiv = null,
+            smaRadio = null,
+            headlineRadio = null,
+            userNameTextbox = null,
+            maxLossLabel = null,
+            maxLossTextbox = null;
 
-$(document).ready(function () {
-    var report = new Fanex.CMS.LossMonitor();
-
-    report.InitPage();
-});
-
-Namespace.Register("Fanex.CMS.LossMonitor");
-Fanex.CMS.LossMonitor = function () {
-    var $this = this;
-
-    var cachedData = {
-        custId: 0,
-        username: '',
-        maxLoss: 0,
-        oldMaxLoss: 0,
-        current: null
-    };
-
-    var urls = {
-        GetSMALossReport: CMS.resolveRootUrl('LossMonitor/GetSMALossReport'),
-        AddSMA: CMS.resolveRootUrl('LossMonitor/AddSMA'),
-        EditMaxLoss: CMS.resolveRootUrl('LossMonitor/EditMaxLoss'),
-        DeleteSMA: CMS.resolveRootUrl('LossMonitor/DeleteSMA')
-    };
-    var domElements = {
-        divSMALossMonitor: null,
-        btnAdd: null,
-        divSMALossMonitorContainer: null,
-        divAutoRefresh: null,
-        divResult: null,
-        divAddSMA: null,
-        divPopup: null
-    };
-    var refreshTimer = {
-        Interval: [90, 120, 150, 180],
-        Default: 90
-    };
-
-    // Cache DOM elements
-    var cacheDOM = function () {
-        domElements.divAutoRefresh = $('#divAutoRefresh');
-        domElements.divSMALossMonitor = $('#divSMALossMonitor');
-        domElements.divSMALossMonitorContainer = $('#divSMALossMonitorContainer');
-        domElements.btnAdd = $('#btn-add');
-        domElements.textboxSMAName = $('#txt-username');
-        domElements.divResult = $("#div-result-message");
-        domElements.divAddSMA = $("#divAddSMA");
-        domElements.divPopup = $("#dialog-popup");
-    };
-
-    var popupElements = {
-        divErrorSuccessMsg: null,
-        divForm: null,
-        txtUsername: null,
-        txtMaxLoss: null,
-        btnSave: null,
-        btnCancel: null
-    };
-
-    var cachePopupElements = function () {
-        popupElements.divErrorSuccessMsg = $('#div-result-add-message', domElements.divPopup);
-        popupElements.divForm = $('#divAddSMA', domElements.divPopup);
-        popupElements.txtUsername = $('#txt-username', domElements.divPopup);
-        popupElements.txtMaxLoss = $('#txt-maxloss', domElements.divPopup);
-        popupElements.btnSave = $('#btnSave', domElements.divPopup);
-        popupElements.btnCancel = $('#btnCancel', domElements.divPopup);
-    };
-
-    var initElements = function () {
-        if (!viewResources.hasHostPermission) {
-            return;
+        function cacheDOM() {
+            resultAddMessageDiv = $("#div-result-add-message");
+            smaRadio = $("#rdoSMA");
+            headlineRadio = $("#rdoHeadline");
+            userNameTextbox = $("#txt-username");
+            maxLossLabel = $("#lbl-maxloss");
+            maxLossTextbox = $("#txt-maxloss");
         }
 
-        domElements.btnAdd.removeClass('display-none');
-    };
+        function addSettingHandler(form) {
+            CMS.disableInput();
+            var addSettingParams = getAddSettingParams();
 
-    var bindEvents = function () {
-        if (viewResources.hasHostPermission)
-        {
-            domElements.textboxSMAName.keyup(function (event) {
-                if (event.keyCode === keyboardManager.Enums.KeyCode.Enter) {
-                    self.btnSearchClick();
-                }
-            });
-
-            if (!viewResources.hasHostPermission) {
+            if (!addSettingParams) {
+                CMS.enableInput();
                 return;
             }
 
-            domElements.btnAdd.unbind("click");
-            domElements.btnAdd.click(btnAddClick);
+            CMS.callAjax(
+                this,
+                form.action,
+                addSettingParams,
+                function (data) {
+                    if (!data.IsSuccessful) {
+                        CMS.showInlineErrorMsg(data.Message, resultAddMessageDiv);
+                    }
+                    else {
+                        CMS.showInlineSuccessMsg(
+                            messages.AddCustomerSuccess.format(addSettingParams.UserName),
+                            resultAddMessageDiv,
+                            true,
+                            function () {
+                                CMS.closePopup();
+                                reloadGridFunction();
+                            });
+                    }
+                });
         }
-    };
 
-    var btnAddClick = function () {
-        var form = domElements.divAddSMA.clone();
+        function getAddSettingParams() {
+            var isValid = true;
+            var maxLoss;
+            var userName = $.trim(userNameTextbox.val());
+            var maxLossValue = $.trim(maxLossTextbox.val().replace(/,/g, ""));
 
-        CMS.modal("Add New SMA", form, {width : 570, height: 220});
-        cachePopupElements();
-
-        bindPopupEventhandlers();
-    };
-
-    // Get SMA turnover report.
-    var getSMALossReport = function () {
-        CMS.disableInput();
-
-        if (domElements.divAutoRefresh && domElements.divAutoRefresh.stop) {
-            domElements.divAutoRefresh.stop();
-        }
-
-        $.ajax({
-            type: 'POST',
-            url: urls.GetSMALossReport,
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (result) {
-                renderGrid(result);
-            },
-            error: function (xhr) {
-                CMS.handleAjaxError(xhr);
-            },
-            complete: function () {
-                CMS.enableInput();
+            if (userName.length === 0) {
+                CMS.showTipsyError(userNameTextbox, messages.Error_RequiredField, "w");
+                isValid = false;
+            } else {
+                CMS.clearTipsyError(userNameTextbox);
             }
-        });
-    };
 
-    // Render grid.
-    var renderGrid = function (data) {
-        var smaNameFormat = '<span class="{0} level-indicator"></span><span>{1}</span>';
-        var progressBarFormat = '<div class="percentage-bar" data-value="{0}"><div class="percentage-label"><span>{1}%<span></div></div>';
-        var smaNameCol = '';
-        var percentageCol = '';
-        var smaCssClass = '';
+            if (maxLossValue.length === 0) {
+                CMS.showTipsyError(maxLossTextbox, messages.Error_RequiredField, "w");
+                isValid = false;
+            } else if (!$.isNumeric(maxLossValue)) {
+                CMS.showTipsyError(maxLossTextbox, messages.Error_InvalidValue, "w");
+                isValid = false;
+            } else {
+                maxLoss = parseInt(maxLossValue);
 
-        var counter = 0;
-        var gridOptions = {
-            columns: [{ HeaderText: labels.No, Width: 70, Name: 'ColNo', HeaderAlign: 'center', CellAlign: 'center', ShowCollapseExpand: true },
-                      { HeaderText: labels.SMAName, Width: 250, Name: 'ColSMAName', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: labels.Level, Width: 70, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Currency, Width: 70, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center' },
-                      {
-                          HeaderText: labels.YesterdayBalance, Width: 150, Name: 'ColYesterdayBalance', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: CMS.formats.DecimalFormat
-                      },
-                      {
-                          HeaderText: labels.TotalBalance, Width: 150, Name: 'ColTotalBalance', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: CMS.formats.DecimalFormat
-                      },
-                      {
-                          HeaderText: labels.MaxLoss, Width: 120, Name: 'ColMaxLoss', HeaderAlign: 'center', CellAlign: 'right',
-                          FormatNumber: CMS.formats.DecimalFormat
-                      },
-                      { HeaderText: labels.LossPercentage, Width: 150, Name: 'ColLossPercentage', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center" }],
-            gridExpandHeight: 110,
-            showDistinctRow: false,
-            enableHiddenColumns: false,
-            showTree: true,
-            showTitle: true,
-            titleInfo: {
-                showButtonsWhenNoData: true,
-                customButtons: '<div id="divAutoRefresh"></div>'
+                if (maxLoss > 0) {
+                    CMS.showTipsyError(maxLossTextbox, messages.MaxLossNeedNegative, "se");
+                    isValid = false;
+                }
+                else if (maxLoss < minIntValue) {
+                    CMS.showTipsyError(maxLossTextbox, messages.Error_InvalidValue, "w");
+                    isValid = false;
+                } else {
+                    CMS.clearTipsyError(maxLossTextbox);
+                }
+            }
+
+            return !isValid ? null : { UserName: userName, MaxLoss: maxLoss, IsGroupHeadline: headlineRadio.is(":checked") };
+        }
+
+        this.initialize = function (userName) {
+            cacheDOM();
+
+            smaRadio
+                .off("change")
+                .on("change", function () {
+                    maxLossLabel.text(labels.MaxLoss);
+                });
+
+            headlineRadio
+                .off("change")
+                .on("change", function () {
+                    maxLossLabel.text(labels.MaxLoss + " " + labels.RM);
+                });
+
+            maxLossTextbox
+                .off()
+                .on("keypress", CMS.forceNegativeNumberInput)
+                .on("keyup", function () {
+                    formatMaxLoss(this);
+                });
+
+            $("#formAddSetting")
+                .off("submit")
+                .on("submit", function (e) {
+                    e.preventDefault();
+                    addSettingHandler(this);
+                });
+
+            $("#btnCancel")
+                .off("click")
+                .on("click", CMS.closePopup);
+
+            if (userName) {
+                userNameTextbox.val(userName);
+                maxLossTextbox.focus();
+            } else {
+                userNameTextbox.focus();
             }
         };
+    }
+    /* EditMaxLoss()
+     * ==========
+     * Edit customer's Max Loss.
+     *
+     * @usage: var instance = new EditMaxLoss();
+     *
+     */
+    function EditMaxLoss() {
+        var self = this;
+
+        function inputMaxLoss_KeyUp(e) {
+            var $this = $(this);
+            var code = e.keyCode || e.which;
+
+            if (code === keyboardManager.Enums.KeyCode.Escape) {
+                escapeEditMaxLoss($this);
+            } else if (code === keyboardManager.Enums.KeyCode.Enter) {
+                var maxLossValue = $.trim($this.val().replace(/,/g, ""));
+
+                if (maxLossValue.length !== 0 && $.isNumeric(maxLossValue)) {
+                    var maxLoss = parseInt(maxLossValue);
+
+                    if (minIntValue <= maxLoss && maxLoss <= 0) {
+                        var custId = $this.data("custid");
+                        var userName = $this.data("username");
+                        var isGroupHeadline = $this.data("isgroupheadline");
+
+                        CMS.showConfirmMessage(
+                            messages.UpdateMaxLossConfirm.format(userName, numeral(maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
+                            function () {
+                                editMaxLossHandler(custId, maxLoss, isGroupHeadline);
+                            });
+                    }
+                }
+            } else {
+                formatMaxLoss(this);
+            }
+        }
+
+        function editMaxLossHandler(custId, maxLoss, isGroupHeadline) {
+            CMS.disableInput();
+            CMS.callAjax(
+                self,
+                rootUrl + "LossMonitor/Update",
+                { CustId: custId, MaxLoss: maxLoss, IsGroupHeadline: isGroupHeadline },
+                function (data) {
+                    if (!data.IsSuccessful) {
+                        CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
+                    }
+                    else {
+                        CMS.showInlineSuccessMsg(
+                            messages.UpdateMaxLossSuccess,
+                            resultMessageDiv,
+                            true,
+                            getSMALossReport);
+                    }
+                });
+        }
+
+        function escapeEditMaxLoss(inputTag) {
+            var custId = inputTag.data("custid");
+
+            inputTag.closest("#tr" + custId).removeClass("current-editing-row");
+            inputTag.prev().removeClass("display-none");
+            inputTag.remove();
+        }
+
+        self.inlineEditing = function (linkTag) {
+            var custId = linkTag.data("custid");
+            var text = linkTag.text();
+            var inputHtml = [
+                '<input type="text" class="clearable x-icon textbox-maxloss width-95" maxlength="13" value="',
+                text.substring(0, text.indexOf(".")),
+                '" data-custid="',
+                custId,
+                '" data-username="',
+                linkTag.data("username"),
+                '" data-isgroupheadline="',
+                linkTag.data("isgroupheadline"),
+                '" />'
+            ].join("");
+
+            linkTag.addClass("display-none");
+            linkTag.closest("#tr" + custId).addClass("current-editing-row");
+            linkTag.closest("#div" + custId).append(inputHtml);
+
+            var $input = linkTag.next();
+            $input
+                .off()
+                .on("keypress", CMS.forceNegativeNumberInput)
+                .on("keyup", inputMaxLoss_KeyUp)
+                .one("blur", function () {
+                    escapeEditMaxLoss($(this));
+                });
+            $input.clearfield().focus();
+        };
+    }
+    /* Loss Monitor.
+     * ==========
+     * ???
+     *
+     * @usage: ???
+     *
+     */
+    var resultMessageDiv = $("#div-result-message"),
+        divSMALossMonitor = $("#divSMALossMonitor"),
+        addSettingForm = $("#formAddSetting");
+    var gridOptions = null;
+
+    function formatMaxLoss(inputTag) {
+        var tagValue = inputTag.value.replace(/,/g, "");
+        var maxLoss = parseInt(tagValue);
+
+        if (maxLoss.toString() === tagValue) {
+            inputTag.value = numeral(maxLoss).format(CMSConstants.NumberFormat.IntNumber);
+        }
+    }
+
+    function toggleGroupDownlines() {
+        var childDiv = $(this).children();
+        var custId = childDiv.data("custid");
+        var icon = childDiv.find("#icon" + custId);
+        var groupDownlines = divSMALossMonitor.find(".group-downlines-" + custId);
+
+        if (icon.hasClass("grid-expand")) {
+            groupDownlines.addClass("display-none");
+            divSMALossMonitor.fanexGrid("resizeGrid");
+            icon.removeClass().addClass("grid-collapse");
+        } else if (groupDownlines.length > 0) {
+            groupDownlines.removeClass("display-none");
+            divSMALossMonitor.fanexGrid("resizeGrid");
+            icon.removeClass().addClass("grid-expand");
+        } else {
+            var groupHeadlineId = childDiv.data("groupheadlineid");
+            CMS.getJson(
+                rootUrl + "LossMonitor/GetGroupDownlines?GroupHeadlineId=" + groupHeadlineId,
+                function (data) {
+                    if (data.length > 0) {
+                        var dataRow = $("#tr" + custId);
+                        dataRow.after(buildGroupDownlines(data, custId, getTreeClass(dataRow.prop("class"))));
+                        divSMALossMonitor.fanexGrid("resizeGrid");
+                        initProgessBar();
+                        icon.removeClass().addClass("grid-expand");
+                    }
+                });
+        }
+    }
+
+    function getTreeClass(className) {
+        var name;
+        var classArray = className.split(" ");
+
+        for (var i = 0, max = classArray.length; i < max; i++) {
+            name = classArray[i];
+
+            if (name.length !== 0 && name.indexOf("divSMALossMonitor_tree_") >= 0) {
+                return name;
+            }
+        }
+
+        return "";
+    }
+
+    function buildGroupDownlines(data, custId, className) {
+        var html = [];
+        $.each(data, function (i, item) {
+            html.push('<tr class="highlight-row group-downlines-');
+            html.push(custId);
+            html.push(" ");
+            html.push(className);
+            html.push(' child-row" id="tr');
+            html.push(item.CustId);
+            html.push('">');
+            html.push('<td class="free-grid-td-0" style="height:21px;"><div class="table-cell order-column" style="width:50px;padding-left:20px;" align="center"></div></td>');
+
+            html.push('<td class="free-grid-td-1 username-column" style="height:21px;"><div class="table-cell" style="width:250px;" align="left" data-custid="');
+            html.push(item.CustId);
+            html.push('" data-groupheadlineid="')
+            html.push(item.GroupHeadlineId);
+            html.push('"><div class="username-column-child">');
+            html.push(renderUserName(item, true));
+            html.push("</div></div></td>");
+
+            html.push('<td class="free-grid-td-2" style="height:21px;"><div class="table-cell" style="width:70px;" align="center">');
+            html.push(item.RoleName);
+            html.push("</div></td>");
+
+            html.push('<td class="free-grid-td-3" style="height:21px;"><div class="table-cell" style="width:70px;" align="center">');
+            html.push(item.Currency);
+            html.push("</div></td>");
+
+            html.push('<td class="free-grid-td-4" style="height:21px;"><div class="table-cell" style="width:150px;" align="right">');
+            html.push(formatNegativeZero(numeral(item.YesterdayBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)));
+            html.push("</div></td>");
+
+            html.push('<td class="free-grid-td-5" style="height:21px;"><div class="table-cell" style="width:150px;" align="right">');
+            html.push(formatNegativeZero(numeral(item.TotalBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)));
+            html.push("</div></td>");
+
+            html.push('<td class="free-grid-td-6" style="height:21px;"><div class="table-cell" style="width:120px;" align="right" id="div');
+            html.push(item.CustId);
+            html.push('">');
+            html.push(renderMaxLoss(item));
+            html.push("</div></td>");
+
+            html.push('<td class="free-grid-td-7" style="height:21px;"><div class="table-cell" style="width:150px;" align="center">');
+            html.push(renderPercentage(item));
+            html.push("</div></td>");
+
+            if (hasHostPermission) {
+                html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center">');
+                html.push(renderDelete(item, 2));
+                html.push("</div></td>");
+            }
+
+            html.push('</tr>');
+        });
+
+        return html.join("");
+    }
+
+    function getSMALossReport() {
+        CMS.hideInlineMsg(resultMessageDiv);
+        CMS.getJson(
+            rootUrl + "LossMonitor/GetSMALossReport",
+            function (data) {
+                gridOptions = gridOptions || getGridOptions();
+                gridOptions.bodyRows = renderBodyRows(data);
+                divSMALossMonitor.removeClass("display-none").fanexGrid(gridOptions);
+
+                if (gridOptions.bodyRows.length > 0) {
+                    initProgessBar();
+
+                    divSMALossMonitor.find(".group-expand-indicator")
+                        .off("click")
+                        .on("click", toggleGroupDownlines);
+                }
+            });
+    }
+
+    function getGridOptions() {
+        var headerColumns = [
+            { HeaderText: labels.No, Width: 70, Name: "ColNo", HeaderAlign: "center", CellAlign: "center", ShowCollapseExpand: true },
+            { HeaderText: labels.Username, Width: 250, Name: "ColUsername", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: labels.Level, Width: 70, Name: "ColLevel", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: labels.Currency, Width: 70, Name: "ColCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: labels.YesterdayBalance, Width: 150, Name: "ColYesterdayBalance", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: labels.TotalBalance, Width: 150, Name: "ColTotalBalance", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: labels.MaxLoss, Width: 120, Name: "ColMaxLoss", HeaderAlign: "center", CellAlign: "right" },
+            { HeaderText: labels.LossPercentage, Width: 150, Name: "ColLossPercentage", HeaderAlign: "center", CellAlign: "center" }];
+
+        if (hasHostPermission) {
+            headerColumns.push({ HeaderText: labels.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center" });
+        }
+
+        return {
+            columns: headerColumns,
+            gridExpandHeight: 110,
+            showDistinctRow: false,
+            showTree: true
+        };
+    }
+
+    function renderBodyRows(data) {
+        var index = 0;
+        var mergeColNumber = hasHostPermission ? 9 : 8;
         var bodyData = [];
-        var row;
-        var subRows;
 
-        if (data && data.length > 0) {
-            var maxLossFormat = '<a class="c hand edit-maxloss" href="JavaScript:void(0);" data-custid="{0}" data-username="{1}"" >{2}</a>' +
-                                '<input class="display-none width-95 clearable textbox-maxloss" type="text" maxlength="13" value="{3}" />';
-
-            var maxLossFormatNoHost = '<span>{0}</span>';
-
-            var deleteButtonFormat = '<a class="c hand ico-delete" href="JavaScript:void(0);" data-custid="{0}" data-username="{1}"></a>';
-
-
-            $.each(data, function (groupIndex, group) {
+        if (data) {
+            var row, subRows;
+            $.each(data, function (i, group) {
                 subRows = [];
+                $.each(group.SMALossItems, function (j, item) {
+                    row = {
+                        Columns: [
+                            { Name: "ColNo", Value: ++index, CssClass: "order-column" },
+                            {
+                                Name: "ColUsername",
+                                Value: renderUserName(item),
+                                TdClass: "username-column" + (item.GroupHeadlineId > 0 ? " group-expand-indicator" : ""),
+                                CustomAttr: 'data-custid="' + item.CustId + '" data-groupheadlineid="' + item.GroupHeadlineId + '"'
+                            },
+                            { Name: "ColLevel", Value: item.RoleName },
+                            { Name: "ColCurrency", Value: item.Currency },
+                            { Name: "ColYesterdayBalance", Value: formatNegativeZero(numeral(item.YesterdayBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)) },
+                            { Name: "ColTotalBalance", Value: formatNegativeZero(numeral(item.TotalBalance).format(CMSConstants.NumberFormat.TwoDecimalNumber)) },
+                            { Name: "ColMaxLoss", Value: renderMaxLoss(item), CustomAttr: 'id="div' + item.CustId + '"' },
+                            { Name: "ColLossPercentage", Value: renderPercentage(item) }
+                        ], CustomAttr: 'id="tr' + item.CustId + '"'
+                    };
 
-                $.each(group.SMALossItems, function (index, item) {
-                    if (item.ChangedLevel > 0) {
-                        smaCssClass = 'ico-upward-arrow';
-                    } else if (item.ChangedLevel < 0) {
-                        smaCssClass = 'ico-downward-arrow';
-                    } else {
-                        smaCssClass = 'ico-horizontal-line';
+                    if (hasHostPermission) {
+                        row.Columns.push({ Name: "ColDelete", Value: renderDelete(item, item.GroupHeadlineId > 0 ? 1 : 0) });
                     }
 
-                    counter++;
-                    smaNameCol = smaNameFormat.format(smaCssClass, item.Username);
-                    percentageCol = progressBarFormat.format(item.LossPercentage, numeral(item.LossPercentage).format(CMS.formats.IntegerFormat));
-
-                    row = {
-                        Columns: [{ Name: 'ColNo', Value: counter, CssClass: 'order-column' },
-                                  { Name: 'ColSMAName', Value: smaNameCol },
-                                  { Name: 'ColLevel', Value: item.Level },
-                                  { Name: 'ColCurrency', Value: item.Currency },
-                                  { Name: 'ColYesterdayBalance', Value: item.YesterdayBalance },
-                                  { Name: 'ColTotalBalance', Value: item.TotalBalance },
-                                  {
-                                      Name: 'ColMaxLoss', Value: viewResources.hasHostPermission ? 
-                                          maxLossFormat.format(item.CustId, item.Username,
-                                          numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber),
-                                          numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
-                                          :
-                                          maxLossFormatNoHost.format(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber))
-                                  },
-                                  { Name: 'ColLossPercentage', Value: percentageCol },
-                                  {
-                                      Name: "ColDelete",
-                                      Value: deleteButtonFormat.format(item.CustId, item.Username)
-                                  }
-                        ],
-                    };
                     subRows.push(row);
                 });
 
                 row = {
                     Columns: [{
-                        Name: 'ColNo',
-                        Value: '{0} ({1})'.format(group.LossLevelRange, group.SMALossItems.length),
-                        CellAlign: 'left',
-                        MergeColNumber: 9
+                        Name: "ColNo",
+                        Value: group.LossLevelRange + " (" + group.SMALossItems.length + ")",
+                        CellAlign: "left",
+                        MergeColNumber: mergeColNumber
                     }],
                     SubRows: subRows,
-                    CssClass: 'loss-level-' + group.LossLevel
+                    CssClass: "loss-level-" + group.LossLevel
                 };
+
                 bodyData.push(row);
             });
         }
 
-        if (!viewResources.hasHostPermission)
-        {
-            gridOptions.hiddenColumns = [8];
+        return bodyData;
+    }
+
+    function renderUserName(item) {
+        var html = [];
+
+        if (item.MaxLoss !== null) {
+            html.push('<span class="');
+            html.push(getUserNameClassName(item.Movement));
+            html.push(' level-indicator"></span>');
+        } else {
+            html.push('<span style="display:inline-block;width:18px"></span>');
         }
 
-        gridOptions.bodyRows = bodyData;
-        domElements.divSMALossMonitor.fanexGrid(gridOptions);
-        handleGridEvents();
-    };
-
-    var handleGridEvents = function () {
-        if (viewResources.hasHostPermission)
-        {
-            var editIcons = domElements.divSMALossMonitor.find(".edit-maxloss");
-            editIcons.on('click', function () {
-                var $link = $(this);
-
-                editMaxLoss($link);
-            });
-
-            var deleteIcons = domElements.divSMALossMonitor.find(".ico-delete");
-            deleteIcons.on('click', function () {
-                var $link = $(this);
-                var custId = $link.attr('data-custid');
-                var username = $link.attr('data-username');
-
-                deleteSMA(username, custId);
-            });
+        if (item.GroupHeadlineId > 0) {
+            html.push('<span class="grid-collapse" id="icon');
+            html.push(item.CustId);
+            html.push('"></span>');
         }
 
-        domElements.divSMALossMonitorContainer.find('#divAutoRefresh').each(function () {
-            domElements.divAutoRefresh = $(this).autoRefresh(refreshTimer.Interval, refreshTimer.Default, getSMALossReport, true, false);
+        html.push("<span>");
+        html.push(item.Username);
+        html.push("</span>");
 
-            if (domElements.divAutoRefresh && domElements.divAutoRefresh.run) {
-                domElements.divAutoRefresh.run();
+        return html.join("");
+    }
+
+    function getUserNameClassName(movement) {
+        if (movement > 0) {
+            return "ico-upward-arrow";
+        }
+
+        if (movement < 0) {
+            return "ico-downward-arrow";
+        }
+
+        return "ico-horizontal-line";
+    }
+
+    function renderMaxLoss(item) {
+        if (!hasHostPermission) {
+            return [
+                "<span>",
+                item.MaxLoss === null ?
+                labels.NotAvailable :
+                formatNegativeZero(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
+                "</span>"
+            ].join("");
+        }
+
+        return [
+            '<a class="c hand edit-maxloss" href="javascript:;" data-custid="',
+            item.CustId,
+            '" data-username="',
+            item.Username,
+            '" data-isgroupheadline="',
+            item.GroupHeadlineId > 0,
+            '">',
+            item.MaxLoss === null ? labels.NotAvailable : formatNegativeZero(numeral(item.MaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
+            "</a>"
+        ].join("");
+    }
+
+    function renderPercentage(item) {
+        if (item.MaxLoss === null) {
+            return [
+                '<div class="percentage-bar original" data-value="100"><div class="percentage-label"><span>',
+                labels.NotAvailable,
+                '<span></div></div>'
+            ].join("");
+        }
+
+        return [
+            '<div class="percentage-bar original" data-value="',
+            item.PercentageLoss,
+            '"><div class="percentage-label"><span>',
+            numeral(item.PercentageLoss).format(CMS.formats.IntegerFormat),
+            '%<span></div></div>'
+        ].join("");
+    }
+
+    function renderDelete(item, mode) {
+        return item.MaxLoss === null ? "" : [
+            '<a class="c hand ico-delete" href="javascript:;" data-custid="',
+            item.CustId,
+            '" data-username="',
+            item.Username,
+            '" data-mode="',
+            mode,
+            '"></a>'
+        ].join("");
+    }
+
+    function initProgessBar() {
+        divSMALossMonitor.find(".percentage-bar.original").each(function () {
+            var $this = $(this);
+            var percentage = parseInt($this.data("value"));
+            $this.removeClass("original")
+                .progressbar({ value: percentage });
+
+            if ($this.find("span").text() === labels.NotAvailable) {
+                $this.addClass("not-available-percents");
+            } else if (percentage >= 100) {
+                $this.addClass("full-percents");
             }
         });
+    }
 
-        domElements.divAutoRefresh.find('li.option').click(function () {
-            var selectedValue = parseInt($(this).attr('data-value'));
+    function formatNegativeZero(value) {
+        return value === "-0.00" ? "0.00" : value;
+    }
 
-            refreshTimer.Default = selectedValue;
-        });
+    function initialize() {
+        $("#btnRefresh").click(getSMALossReport).trigger("click");
 
-        domElements.divSMALossMonitor.find('div.percentage-bar').each(function () {
-            var $obj = $(this);
-            var percentage = parseInt($obj.attr('data-value'));
-
-            $obj.progressbar({
-                value: percentage
+        if (hasHostPermission) {
+            var addHandler = new AddSetting(formatMaxLoss, getSMALossReport);
+            $("#btnAddSetting").click(function () {
+                CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 250, resizable: false });
+                addHandler.initialize();
             });
 
-            if (percentage >= 100) {
-                $obj.addClass('full-percents');
-            }
-        });
-        domElements.divSMALossMonitor.fanexGrid('resizeGrid');
-    };
+            divSMALossMonitor.on("click", ".ico-delete", function () {
+                var $this = $(this);
+                var custId = $this.data("custid");
+                var userName = $this.data("username");
+                var mode = $this.data("mode");
 
-    var editMaxLoss = function (link) {
-        var custId = link.attr('data-custid');
-        var username = link.attr('data-username');
-        var oldMaxLoss = parseInt(link.html().replace(/,/g, ""));
-
-        cachedData.current = link;
-
-        link.addClass("current-editing-row");
-        link.addClass("display-none");
-
-        var textboxEdit = link.next();
-        textboxEdit.attr("align", "center");
-        textboxEdit.removeClass('display-none');
-
-        textboxEdit.focus();
-        textboxEdit.blur(function () {
-            $(this).val(numeral(oldMaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
-            completeEditMaxLoss(link);
-        });
-
-        textboxEdit.clearfield();
-        textboxEdit.addClass('x-icon');
-
-        textboxEdit.unbind("keypress");
-        textboxEdit.keypress(function (e) {
-            var allowInput = CMS.forceNegativeNumberInput(e);
-            if (!allowInput) {
-                return false;
-            }
-
-            textboxEdit.addClass('x-icon');
-        });
-
-        textboxEdit.unbind("keyup");
-        textboxEdit.keyup(function (e) {
-            var textboxValue = $(this).val();
-            var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
-
-            formatMaxLossGrid(textboxEdit);
-
-            cachedData.maxLoss = maxLoss;
-            cachedData.oldMaxLoss = oldMaxLoss;
-
-            var code = "";
-            if (e.which) {
-                code = e.which;
-            }
-            else if (e.keyCode) {
-                code = e.keyCode;
-            }
-
-            if (code === keyboardManager.Enums.KeyCode.Escape) {
-                $(this).val(numeral(oldMaxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
-
-                completeEditMaxLoss(link);
-
-                return;
-            }
-
-            if (code === keyboardManager.Enums.KeyCode.Enter) {
-                cachedData.custId = custId;
-                cachedData.username = username;
-
-                CMS.showConfirmMessage(
-                    messages.UpdateMaxLossConfirm.format(cachedData.username, numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber)),
-                    function () {
-                        if (isNaN(cachedData.maxLoss))
-                        {
-                            CMS.showInlineErrorMsg(messages.MaxLossNeedNegative, domElements.divResult);
-                            return;
-                        }
-
-                        $.get(urls.EditMaxLoss, { custId: cachedData.custId, maxLoss: cachedData.maxLoss }).success(function (result) {
-                            if (result.Code) {
-                                CMS.showInlineErrorMsg(result.Message, domElements.divResult);
-                                return;
+                var removeSetting = function () {
+                    CMS.disableInput();
+                    CMS.callAjax(
+                        this,
+                        rootUrl + "LossMonitor/Remove",
+                        { CustId: custId, Mode: mode },
+                        function (data) {
+                            if (!data.IsSuccessful) {
+                                CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
+                            } else {
+                                CMS.showInlineSuccessMsg(
+                                    messages.RemoveCustomerSuccess,
+                                    resultMessageDiv,
+                                    true,
+                                    getSMALossReport);
                             }
-
-                            CMS.showInlineSuccessMsg(messages.UpdateMaxLossSuccess, domElements.divResult, true);
-
-                            cachedData.current.html(numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
-                            var textboxEdit = cachedData.current.next();
-                            textboxEdit.val(numeral(cachedData.maxLoss).format(CMSConstants.NumberFormat.TwoDecimalNumber));
-
                         });
-                    });
-                return;
-            }
-        });
+                };
 
-        textboxEdit.on("paste", function (e) {
-            setTimeout(function () {
-                formatMaxLossGrid(textboxEdit);
-            }, 100);
-        });
-    };
-    var formatMaxLossGrid = function (textboxEdit) {
-        var textboxValue = textboxEdit.val();
-        var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
-
-        if (!isNaN(maxLoss)) {
-            textboxEdit.val(numeral(maxLoss).format(CMSConstants.NumberFormat.IntNumber));
-        }
-    };
-    var completeEditMaxLoss = function (link) {
-        link.removeClass("current-editing-row");
-        link.removeClass("display-none");
-
-        var textboxEdit = link.next();
-        textboxEdit.addClass('display-none');
-    };
-
-    var deleteSMA = function (username, custId) {
-        cachedData.custId = custId;
-        cachedData.username = username;
-
-        CMS.showConfirmMessage(
-            messages.RemoveSMA.format(cachedData.username),
-            function () {
-                CMS.disableInput();
-                $.get(urls.DeleteSMA, { custId: cachedData.custId }).success(function (result) {
-                    if (result.Code) {
-                        CMS.enableInput();
-                        CMS.showInlineErrorMsg(result.Message, domElements.divResult);
-                        return;
-                    }
-
-                    CMS.showInlineSuccessMsg(messages.RemoveSMASuccess, domElements.divResult, true);
-
-                    getSMALossReport();
-                });
+                CMS.showConfirmMessage(messages.RemoveCustomer.format(userName), removeSetting);
             });
-    };
 
-    var bindPopupEventhandlers = function () {
-        popupElements.divForm.unbind("keyup");
-        popupElements.divForm.keyup(function (e) {
-            var code = "";
-            if (e.which) {
-                code = e.which;
-            }
-            else if (e.keyCode) {
-                code = e.keyCode;
-            }
-
-            if (code === keyboardManager.Enums.KeyCode.Enter) {
-                addNewSMA();
-            }
-        });
-
-
-        popupElements.txtMaxLoss.blur(function () {
-            formatMaxLoss();
-        });
-
-        popupElements.txtMaxLoss.unbind("keypress");
-        popupElements.txtMaxLoss.keypress(function (e) {
-            var allowInput = CMS.forceNegativeNumberInput(e);
-            if (!allowInput) {
-                return false;
-            }
-        });
-
-        popupElements.txtMaxLoss.unbind("keyup");
-        popupElements.txtMaxLoss.keyup(function (e) {
-            setTimeout(function () {
-                formatMaxLoss();
-            }, 100);
-        });
-
-        popupElements.txtMaxLoss.on("paste", function (e) {
-            setTimeout(function () {
-                formatMaxLoss();
-            }, 100);
-        });
-
-        popupElements.btnSave.click(function () {
-            addNewSMA();
-        });
-
-        popupElements.btnCancel.click(function () {
-            CMS.closePopup();
-        });
-    };
-
-    var addNewSMA = function () {
-        var username = popupElements.txtUsername.val();
-        var maxLoss = popupElements.txtMaxLoss.val();
-        maxLoss = parseFloat(maxLoss.replace(/,/g, ""));
-
-        if (Validator.validateForm(popupElements.divForm, 'w')) {
-            if (isNaN(maxLoss)) {
-                CMS.showInlineErrorMsg(messages.MaxLossNeedNegative, popupElements.divErrorSuccessMsg);
-                return;
-            }
-
-            $.get(urls.AddSMA, { username: username, maxLoss: maxLoss }).success(function (result) {
-                if (result.IsSuccessful) {
-                    CMS.showInlineSuccessMsg(messages.AddSMASuccess, popupElements.divErrorSuccessMsg, false, function () {
-                        setTimeout(CMS.closePopup, 3000);
-                    });
-                    disableRequestForm();
-                    getSMALossReport();
+            var editHandler = new EditMaxLoss(resultMessageDiv, getSMALossReport);
+            divSMALossMonitor.on("click", ".edit-maxloss", function () {
+                var $this = $(this);
+                if ($this.text() === labels.NotAvailable) {
+                    CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 250, resizable: false });
+                    addHandler.initialize($this.data("username"));
                 } else {
-                    CMS.showInlineErrorMsg(result.Message, popupElements.divErrorSuccessMsg);
+                    editHandler.inlineEditing($this);
                 }
             });
         }
-    };
 
-    var formatMaxLoss = function () {
-        var textboxValue = popupElements.txtMaxLoss.val();
-        var maxLoss = parseInt(textboxValue.replace(/,/g, ""));
-        if (!isNaN(maxLoss)) {
-            popupElements.txtMaxLoss.val(numeral(maxLoss).format(CMSConstants.NumberFormat.IntNumber));
-        }
-    };
+        // Remove the #divPopupContent element since it was cached.
+        // It also helps to prevent the 'for' attributes do not work correctly in the popup.
+        $("#divPopupContent").empty();
+    }
 
-    var disableRequestForm = function () {
-        popupElements.txtUsername.prop('disabled', true);
-        popupElements.txtMaxLoss.prop('disabled', true);
-        popupElements.btnSave.prop('disabled', true);
-        popupElements.btnCancel.prop('disabled', true);
-    };
-
-    $this.InitPage = function () {
-        cacheDOM();
-        initElements();
-        bindEvents();
-        getSMALossReport();
-    };
-};
+    initialize();
+})(jQuery);

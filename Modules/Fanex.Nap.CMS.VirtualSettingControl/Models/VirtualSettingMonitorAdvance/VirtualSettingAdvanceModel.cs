@@ -24,21 +24,9 @@
 
         public int ReportMonth { get; set; }
 
-        public decimal VarianceWinloss
-        {
-            get
-            {
-                return Winloss - WinlossVirtual;
-            }
-        }
+        public decimal VarianceWinloss { get; set; }
 
-        public decimal VarianceTurnover
-        {
-            get
-            {
-                return Turnover - TurnoverVirtual;
-            }
-        }
+        public decimal VarianceTurnover { get; set; }
 
         public decimal? VarianceMargin
         {
@@ -50,8 +38,5 @@
             get { return ReportYear > 0 && ReportMonth > 0 ? new DateTime(ReportYear, ReportMonth, 1) : new DateTime(1, 1, 1); }
         }
 
-        public decimal WinlossVirtual { get; set; }
-
-        public decimal TurnoverVirtual { get; set; }
     }
 }

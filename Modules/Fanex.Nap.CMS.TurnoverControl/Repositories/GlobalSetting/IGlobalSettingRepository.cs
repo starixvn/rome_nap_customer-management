@@ -7,6 +7,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
 {
     public interface IGlobalSettingRepository
     {
+        IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria);
+
         IEnumerable<GlobalSettingItem> GetList(ICriteria criteria);
 
         Result Add(ICriteria criteria);

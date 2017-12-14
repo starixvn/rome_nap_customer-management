@@ -9,8 +9,6 @@
 
 namespace Fanex.Nap.CMS.Infrastructure
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// CMS Function keys.
     /// </summary>
@@ -56,12 +54,17 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         public const string SystemConfiguration = "SystemConfiguration";
 
-        public const string TurnoverMonitor = "TurnoverMonitor";
-
         public const string TurnoverUsage = "TurnoverUsage";
 
+        // Turnover Control
         public const string GlobalSetting = "GlobalSetting";
+        public const string GlobalSettingSoccer = "GlobalSetting_Soccer";
+        public const string GlobalSettingOtherSports = "GlobalSetting_OtherSports";
+        public const string TurnoverMonitor = "TurnoverMonitor";
+        public const string TurnoverMonitorSoccer = "TurnoverMonitor_Soccer";
+        public const string TurnoverMonitorOtherSports = "TurnoverMonitor_OtherSports";
 
+        // Notification Setting
         public const string TurnoverControlNotification = "TurnoverControlNotification";
 
         // Win Limit Control

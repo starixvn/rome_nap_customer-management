@@ -6,7 +6,7 @@ using Fanex.Nap.CMS.Infrastructure.Resources;
 using Fanex.Nap.CMS.Infrastructure.Web;
 using Fanex.Nap.CMS.TurnoverControl.Criteria;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Enums;
 using Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor;
 using Fanex.NAP.Core.Business;
 using Fanex.NAP.Core.Web.Attribute;
@@ -30,6 +30,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            AssignGlobalSportType();
             ViewData["HostPermission"] = HasRight(CMSFunctionKeys.TurnoverMonitor, Constant.Policy.Host);
 
             return View("~/Areas/TurnoverControl/Views/TurnoverMonitor/Index.cshtml");
@@ -120,6 +121,33 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         {
             criteria.UserId = ServiceContext.UserId;
             criteria.IP = ServiceContext.Ip;
+        }
+
+        [NonAction]
+        private void AssignGlobalSportType()
+        {
+            short globalSportType;
+            bool soccer = HasRight(CMSFunctionKeys.TurnoverMonitorSoccer, Constant.Policy.Read);
+            bool otherSports = HasRight(CMSFunctionKeys.TurnoverMonitorOtherSports, Constant.Policy.Read);
+
+            if (soccer && otherSports)
+            {
+                globalSportType = 0;
+            }
+            else if (soccer)
+            {
+                globalSportType = (short)SportType.Soccer;
+            }
+            else if (otherSports)
+            {
+                globalSportType = (short)SportType.Others;
+            }
+            else
+            {
+                globalSportType = -1;
+            }
+
+            ViewData["GlobalSportType"] = globalSportType;
         }
     }
 }

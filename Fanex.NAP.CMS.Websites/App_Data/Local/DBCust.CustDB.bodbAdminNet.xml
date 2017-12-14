@@ -1,22 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Win Limit Control">
-    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
+    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
   </Function>
   <Function Name="Colossus Bets Bet List - Get SiteId">
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
@@ -27,6 +19,7 @@
     <Setting Key="NAP_TOControl_MatchTurnoverUpdateMultiple" SpName="NAP_TOControl_MatchTurnoverUpdateMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="TurnoverControl-GlobalSetting">
+    <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="TurnoverControl_GlobalSetting_List" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.bodbAdminNet" />

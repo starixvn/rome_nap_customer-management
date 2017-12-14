@@ -31,6 +31,10 @@
     var autoRefresh = new AutoRefresh(domElements.tableTitleDiv, [0, 30, 60, 90, 120], getCustomerTurnovers);
 
     function getSports() {
+        if (globalSportType) {
+            urls.sport += "?sportType=" + globalSportType;
+        }
+
         CMS.getJson(
             urls.sport,
             function (data) {

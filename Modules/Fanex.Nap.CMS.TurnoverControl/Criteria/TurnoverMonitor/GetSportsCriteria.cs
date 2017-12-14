@@ -6,6 +6,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
     {
         public byte Mode { get; set; }
 
+        public short SportType { get; set; }
+
         public override string GetSettingKey()
         {
             return "TurnoverControl_TurnoverMonitor_SportList";

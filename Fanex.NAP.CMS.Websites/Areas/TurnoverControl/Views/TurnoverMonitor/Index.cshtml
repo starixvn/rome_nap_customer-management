@@ -103,6 +103,7 @@
         var currentDate = '@DateTime.Today.ToShortFormatedDate()';
         var minDate = '@(AppSession.BalanceUpDate.BalanceUpDay.ToShortFormatedDate())';
         var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
+        var globalSportType = @ViewData["GlobalSportType"];
         var maxIntValue = @int.MaxValue;
         var viewResources = {
             From_Date: '@Labels.From_Date',

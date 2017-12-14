@@ -39,6 +39,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
+        public JsonResult GetCurrencies()
+        {
+            return JsonData(_globalSettingService.GetCurrencies());
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
         public JsonResult GetList(GlobalSettingListCriteria criteria)
         {
             GlobalSettingModel model = !criteria.IsValid() ?

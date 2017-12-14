@@ -15,6 +15,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 {
     public class GlobalSettingService : IGlobalSettingService
     {
+        private const string CurrencyCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Currency";
+
         private const string SoccerSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Soccer";
         private const string OtherSportsSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.OtherSports";
 
@@ -23,6 +25,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         public GlobalSettingService(IGlobalSettingRepository globalSettingRepository = null)
         {
             _globalSettingRepository = globalSettingRepository ?? new GlobalSettingRepository();
+        }
+
+        public IEnumerable<IdNameModel> GetCurrencies()
+        {
+            var currencies = CacheManager.Get<List<IdNameModel>>(CurrencyCacheKey);
+
+            if (currencies == null)
+            {
+                var rawdata = _globalSettingRepository.GetCurrencies(new CurrencyListCriteria());
+
+                if (rawdata.Any())
+                {
+                    currencies = new List<IdNameModel>
+                    {
+                        new IdNameModel { Id = 0, Name = Infrastructure.Resources.Labels.All }
+                    };
+
+                    currencies.AddRange(rawdata);
+                    CacheManager.Set<List<IdNameModel>>(CurrencyCacheKey, currencies);
+                }
+            }
+
+            return currencies;
         }
 
         public GlobalSettingModel GetList(GlobalSettingListCriteria criteria)

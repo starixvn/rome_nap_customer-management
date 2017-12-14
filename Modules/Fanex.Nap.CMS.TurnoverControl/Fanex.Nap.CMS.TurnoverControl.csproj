@@ -117,6 +117,7 @@
     <Compile Include="Controllers\ImportGlobalSettingController.cs" />
     <Compile Include="Controllers\TurnoverMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalSettingCriteria.cs" />
+    <Compile Include="Criteria\GlobalSetting\CurrencyListCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\DeleteGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\EditGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GlobalSettingListCriteria.cs" />

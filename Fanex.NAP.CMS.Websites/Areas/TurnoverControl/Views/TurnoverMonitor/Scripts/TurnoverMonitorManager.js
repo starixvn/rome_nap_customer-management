@@ -1,6 +1,8 @@
 ﻿(function ($) {
     "use strict";
-    var totalColumns = hasHostPermission ? 8 : 7;
+    var totalColumns;
+    var readPermissionColumnNumber = 7;
+    var hostPermissionColumnNumber = 8;
     var domElements = {
         datePickerPlugin: null,
         sportDropdown: $("#ddl-sport"),
@@ -14,7 +16,8 @@
         maxLevelUsedCounterLabel: $("#lbl-max-level-used-counter"),
         tableBodyDiv: $("#sma-turnover-container"),
         tableBody: $("#sma-turnover-content tbody"),
-        allCheckbox: null
+        allCheckbox: null,
+        multipleEditTHead: $(".th-multipleEdit-container")
     };
     var urls = {
         sport: rootUrl + "TurnoverControl/TurnoverMonitor/GetSports",
@@ -150,6 +153,15 @@
     function getCustomerTurnovers() {
         CMS.hideInlineMsg(domElements.resultMessageDiv);
         isResetScroller = true;
+        var hostPermission = filterParams.SportType === "1" ? soccerHostPermission : otherSportsHostPermission;
+
+        if (hostPermission) {
+            totalColumns = hostPermissionColumnNumber;
+            domElements.multipleEditTHead.removeClass("display-none");
+        } else {
+            totalColumns = readPermissionColumnNumber;
+            domElements.multipleEditTHead.addClass("display-none");
+        }
 
         if (domElements.allCheckbox) {
             domElements.allCheckbox
@@ -273,14 +285,15 @@
         var html = [];
 
         var eventStatus = turnover.EventStatus.toLowerCase();
-        var canEditMaxTurnover = hasHostPermission && eventStatus !== "completed";
+        var hostPermission = turnover.SportType === 1 ? soccerHostPermission : otherSportsHostPermission;
+        var canEditMaxTurnover = hostPermission && eventStatus !== "completed";
         var isGroupHeadline = turnover.Level.toLowerCase() === "headline";
 
         html.push('<tr id="tr');
         html.push(turnover.CustId);
         html.push('">');
 
-        if (hasHostPermission) {
+        if (hostPermission) {
             html.push('<td><div class="col-checkbox-body align-center">');
 
             if (eventStatus !== "completed") {
@@ -292,6 +305,8 @@
                 html.push(turnover.MatchId);
                 html.push('" data-isgroupheadline="');
                 html.push(isGroupHeadline);
+                html.push('" data-sporttype="');
+                html.push(turnover.SportType);
                 html.push('"/>');
             }
 
@@ -337,6 +352,8 @@
             html.push(turnover.MatchId);
             html.push('" data-isgroupheadline="');
             html.push(isGroupHeadline);
+            html.push('" data-sporttype="');
+            html.push(turnover.SportType);
             html.push('"><a class="c hand" href="javascript:;" id="link');
             html.push(turnover.CustId);
             html.push('">');

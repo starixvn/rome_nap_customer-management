@@ -198,4 +198,7 @@
   <data name="All" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="AccessDeniedMessage" xml:space="preserve">
+    <value>You are not authorized on this function.</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
@@ -11,7 +12,6 @@ using Fanex.Nap.CMS.TurnoverControl.Enums;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
@@ -29,37 +29,41 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             _globalSettingService = globalSettingService ?? new GlobalSettingService();
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(short? t)
         {
-            ViewData["SportType"] = t ?? (short)SportType.Soccer;
-            ViewData["HostPermission"] = HasRight(CMSFunctionKeys.GlobalSetting, Constant.Policy.Host);
+            short sporttype = t ?? (short)SportType.Soccer;
+
+            if (!HasReadGlobalSetting(sporttype))
+            {
+                return Redirect("~/Error/AccessDenied");
+            }
+
+            ViewData["SportType"] = sporttype;
+            ViewData["HostPermission"] = HasHostGlobalSetting(sporttype);
 
             return View("~/Areas/TurnoverControl/Views/GlobalSetting/Index.cshtml");
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
         public JsonResult GetCurrencies()
         {
             return JsonData(_globalSettingService.GetCurrencies());
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
         public JsonResult GetList(GlobalSettingListCriteria criteria)
         {
-            GlobalSettingModel model = !criteria.IsValid() ?
+            GlobalSettingModel model = !criteria.IsValid() || !HasReadGlobalSetting(criteria.SportType) ?
                 new GlobalSettingModel(0, Enumerable.Empty<GlobalSettingItem>()) :
                 _globalSettingService.GetList(criteria);
 
             return JsonData(model);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Read)]
         public void ExportList(GlobalSettingListCriteria criteria)
         {
             GlobalSettingModel model;
 
-            if (!criteria.IsValid())
+            if (!criteria.IsValid() || !HasReadGlobalSetting(criteria.SportType))
             {
                 model = new GlobalSettingModel(0, Enumerable.Empty<GlobalSettingItem>());
             }
@@ -75,7 +79,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public JsonResult Add(AddGlobalSettingCriteria criteria)
         {
             Result result;
@@ -83,6 +86,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Labels.BadRequest);
+            }
+            else if (!HasHostGlobalSetting(criteria.SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
             }
             else
             {
@@ -94,7 +101,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public JsonResult Edit(EditGlobalSettingCriteria criteria)
         {
             Result result;
@@ -102,6 +108,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Labels.BadRequest);
+            }
+            else if (!HasHostGlobalSetting(criteria.SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
             }
             else
             {
@@ -113,7 +123,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public JsonResult Delete(DeleteGlobalSettingCriteria criteria)
         {
             Result result;
@@ -121,6 +130,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Labels.BadRequest);
+            }
+            else if (!HasHostGlobalSetting(criteria.SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
             }
             else
             {
@@ -136,6 +149,24 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         {
             criteria.UserId = ServiceContext.UserId;
             criteria.IP = ServiceContext.Ip;
+        }
+
+        private bool HasReadGlobalSetting(short sporttype)
+        {
+            string permissionKey = sporttype == (short)SportType.Soccer ?
+                CMSFunctionKeys.GlobalSettingSoccer :
+                CMSFunctionKeys.GlobalSettingOtherSports;
+
+            return HasRight(permissionKey, Constant.Policy.Read);
+
+        }
+        private bool HasHostGlobalSetting(short sporttype)
+        {
+            string permissionKey = sporttype == (short)SportType.Soccer ?
+                CMSFunctionKeys.GlobalSettingSoccer :
+                CMSFunctionKeys.GlobalSettingOtherSports;
+
+            return HasRight(permissionKey, Constant.Policy.Host);
         }
     }
 }

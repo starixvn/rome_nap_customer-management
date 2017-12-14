@@ -9,5 +9,7 @@
         public bool IsGroupHeadline { get; set; }
 
         public decimal MaxTurnover { get; set; }
+
+        public short SportType { get; set; }
     }
 }

@@ -12,7 +12,7 @@
     var filterParams = {};
     var urls = {
         getList: "",
-        getCurrencies: rootUrl + "TurnoverControl/GlobalSetting/GetCurrencies",
+        getCurrencies: rootUrl + "TurnoverControl/GlobalSetting/GetCurrencies?t=" + sportType,
         exportExcel: rootUrl + "TurnoverControl/GlobalSetting/ExportList"
     };
 

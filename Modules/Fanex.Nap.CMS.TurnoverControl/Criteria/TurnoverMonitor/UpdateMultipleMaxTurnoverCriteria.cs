@@ -46,11 +46,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
         private static string ToXml(UpdateMaxTurnoverViewModel item)
         {
             return string.Format(
-                "<GlobalSetting CustId=\"{0}\" MatchId=\"{1}\" IsGroupHeadline=\"{2}\" MaxTurnover=\"{3}\"/>",
+                "<GlobalSetting CustId=\"{0}\" MatchId=\"{1}\" IsGroupHeadline=\"{2}\" MaxTurnover=\"{3}\" SportType=\"{4}\"/>",
                 item.CustId,
                 item.MatchId,
                 item.IsGroupHeadline ? 1 : 0,
-                item.MaxTurnover);
+                item.MaxTurnover,
+                item.SportType);
         }
     }
 }

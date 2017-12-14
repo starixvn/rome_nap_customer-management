@@ -4,6 +4,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
 {
     public class CustomerTurnover
     {
+        public short SportType { get; set; }
+
         public int LeagueId { get; set; }
 
         public int MatchId { get; set; }

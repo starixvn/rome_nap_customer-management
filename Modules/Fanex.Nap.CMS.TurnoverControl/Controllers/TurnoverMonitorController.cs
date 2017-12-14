@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Net;
+using System.Web.Mvc;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
 using Fanex.Nap.CMS.Infrastructure.Models;
@@ -32,6 +34,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         {
             AssignGlobalSportType();
             ViewData["HostPermission"] = HasRight(CMSFunctionKeys.TurnoverMonitor, Constant.Policy.Host);
+            ViewData["SoccerHostPermission"] = HasRight(CMSFunctionKeys.TurnoverMonitorSoccer, Constant.Policy.Host);
+            ViewData["OtherSportsHostPermission"] = HasRight(CMSFunctionKeys.TurnoverMonitorOtherSports, Constant.Policy.Host);
 
             return View("~/Areas/TurnoverControl/Views/TurnoverMonitor/Index.cshtml");
         }
@@ -79,7 +83,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Host)]
         public JsonResult UpdateMaxTurnover(UpdateMaxTurnoverCriteria criteria)
         {
             Result result;
@@ -87,6 +90,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Labels.BadRequest);
+            }
+            else if (!HasHostTurnoverMonitor(criteria.SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
             }
             else
             {
@@ -98,7 +105,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Host)]
         public JsonResult UpdateMultipleMaxTurnover(UpdateMultipleMaxTurnoverCriteria criteria)
         {
             Result result;
@@ -106,6 +112,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Labels.BadRequest);
+            }
+            else if (!HasHostTurnoverMonitor(criteria.GlobalSettingItems.First().SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
             }
             else
             {
@@ -148,6 +158,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             }
 
             ViewData["GlobalSportType"] = globalSportType;
+        }
+
+        private bool HasHostTurnoverMonitor(short sporttype)
+        {
+            string permissionKey = sporttype == (short)SportType.Soccer ?
+                CMSFunctionKeys.TurnoverMonitorSoccer :
+                CMSFunctionKeys.TurnoverMonitorOtherSports;
+
+            return HasRight(permissionKey, Constant.Policy.Host);
         }
     }
 }

@@ -61,7 +61,7 @@
                 { Name: 'colCurrency', Value: ticket.Currency.Name },
                 { Name: 'colAmount', Value: renderAmount(ticket.Id, ticket.RefNo, ticket.Member.Id, ticket.Product.Id, ticket.Amount) },
                 { Name: 'colStatus', Value: ticket.Status.Name },
-                { Name: 'colDetail', Value: renderDetail(ticket.Id, ticket.Status.Id, ticket.HasNotes) }
+                { Name: 'colDetail', Value: renderDetail(ticket.Id, ticket.Status.Id, ticket.HasNotes, ticket.Product.Id) }
             ];
 
             bodyRows.push({ Columns: cell });
@@ -88,7 +88,7 @@
         return html.join('');
     }
 
-    function renderDetail(id, statusId, hasNotes) {
+    function renderDetail(id, statusId, hasNotes, productId) {
         var html = [
             '<a class="',
             hasNotes ? 'ico-remark' : 'ico-noremark',
@@ -98,6 +98,8 @@
             id,
             '&status=',
             statusId,
+            '&productId=',
+            productId,
             '"></a>'
         ];
 
@@ -130,16 +132,19 @@
 
             var action;
             if (product === 204) {
-                action = 'ColossusBets';
+                action = 'ColossusBets?id=' + id + '&member=' + member;
             }
             else if (product === 205) {
-                action = 'Microgaming';
+                action = 'Microgaming?id=' + id + '&member=' + member;
+            }
+            else if (product === 208 || product === 209 || product === 210) {
+                action = 'RNGCasinoJackpot?refno=' + refno;
             }
             else {
                 return;
             }
 
-            var url = rootUrl + 'PayoutManagement/BetTicket/' + action + '?id=' + id + '&member=' + member;
+            var url = rootUrl + 'PayoutManagement/BetTicket/' + action;
             CMS.getHtml(url, function (data) { successFunc(data); });
         });
     }
@@ -172,7 +177,6 @@
             });
         }
 
-        console.dir(dataList);
         return dataList;
     }
 

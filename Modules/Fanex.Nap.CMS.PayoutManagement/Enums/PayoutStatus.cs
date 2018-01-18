@@ -6,6 +6,7 @@
         Verified,
         Disbursed,
         Completed,
-        Expired
+        Expired,
+        Cancelled
     }
 }

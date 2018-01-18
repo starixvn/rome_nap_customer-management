@@ -7,13 +7,6 @@
     var gridOptions = null,
         freegrid = $('#freegrid');
     var rootUrl = $('#CMSRoot').val();
-    var statusEnum = {
-        Open: 1,
-        Verified: 2,
-        Disbursed: 3,
-        Completed: 4,
-        Expired: 5
-    };
 
     var $payoutlistLink = $('#payoutlist-link'),
         $refno = $('#refno'),
@@ -103,7 +96,7 @@
             gridOptions.bodyRows = buildBodyRows(payoutNotes);
             freegrid.removeClass('display-none').fanexGrid(gridOptions);
 
-            if (currentStatus == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+            if (isDisableStatusDropdown(currentStatus)) {
                 $selectTicketStatus.combobox('disable');
             }
             else {
@@ -139,7 +132,7 @@
 
         $currency.html(payoutDetail.Currency);
 
-        if (currentStatus == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+        if (isDisableStatusDropdown(currentStatus)) {
             $selectTicketStatus.combobox('disable');
         }
         else {
@@ -160,16 +153,19 @@
 
         var action;
         if (product === 204) {
-            action = 'ColossusBets';
+            action = 'ColossusBets?id=' + id + '&member=' + member;
         }
         else if (product === 205) {
-            action = 'Microgaming';
+            action = 'Microgaming?id=' + id + '&member=' + member;
+        }
+        else if (product === 208 || product === 209 || product === 210) {
+            action = 'RNGCasinoJackpot?refno=' + refno;
         }
         else {
             return;
         }
 
-        var url = rootUrl + 'PayoutManagement/BetTicket/' + action + '?id=' + id + '&member=' + member;
+        var url = rootUrl + 'PayoutManagement/BetTicket/' + action;
         CMS.getHtml(url, function (data) { successFunc(data); });
     }
 
@@ -179,7 +175,7 @@
         var formData = getUpdateTicketStatusParams();
         CMS.callAjax(self, url, formData, function (data) {
             var result = $.parseJSON(data);
-            if (statusId == statusEnum.Completed || currentStatus == statusEnum.Expired) {
+            if (isDisableStatusDropdown(statusId)) {
                 $selectTicketStatus.combobox('disable');
             }
 
@@ -188,8 +184,7 @@
         });
     }
 
-    function checkWinningCode()
-    {
+    function checkWinningCode() {
         var url = rootUrl + 'PayoutManagement/PayoutList/CheckWinningCode';
         CMS.callAjax(self, url, { winningCode: $winningCode.val() }, function (result) {
             if (result == 'true') {
@@ -200,13 +195,26 @@
         })
     }
 
-    function getUpdateTicketStatusParams()
-    {
+    function getUpdateTicketStatusParams() {
         return {
             id: payoutDetail.Id,
             status: { id: parseInt($selectTicketStatus.val()), name: $selectTicketStatus.find(':selected').text() },
             note: trimField($ticketNote.val())
         };
+    }
+
+    function isDisableStatusDropdown(statusId) {
+        // Completed = 4
+        // Expired = 5
+        // Cancelled = 6
+        return statusId === 4 || statusId === 5 || statusId === 6;
+    }
+
+    function isShowConfirmMessage(productId, statusId) {
+        // Colossus Bets = 204
+        // Completed = 4
+        // Expired = 5
+        return productId == 204 && (statusId === 4 || statusId === 5);
     }
 
     function initialize() {
@@ -220,7 +228,7 @@
             }
 
             var slectedStatus = parseInt($selectTicketStatus.val());
-            if (payoutDetail.ProductId == 204 && (slectedStatus == statusEnum.Completed || slectedStatus == statusEnum.Expired)) {
+            if (isShowConfirmMessage(payoutDetail.ProductId, slectedStatus)) {
                 CMS.showConfirmMessage(payoutManagementLabels.ConfirmUpdateCompleteMessage, updateTicketStatus);
             } else {
                 updateTicketStatus();

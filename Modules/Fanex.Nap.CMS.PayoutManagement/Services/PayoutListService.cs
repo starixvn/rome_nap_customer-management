@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -23,17 +24,38 @@
             _payoutRepository = payoutRepository ?? new PayoutListRepository();
         }
 
-        public void GetSitesLicenseesProducts(out IList<GroupIdNameModel> sitesLicensees, out IList<IdNameModel> products)
+        public void GetSitesLicenseesProducts(out IList<GroupIdNameModel> sitesLicensees, out IList<ProductModel> products)
         {
             sitesLicensees = SessionManager.Get<IList<GroupIdNameModel>>(SitesLicenseesSessionKey);
-            products = SessionManager.Get<IList<IdNameModel>>(ProductsSessionKey);
+            products = SessionManager.Get<IList<ProductModel>>(ProductsSessionKey);
+
             if (sitesLicensees == null || products == null)
             {
+                IList<ProductModel> productRawData;
                 ICriteria criteria = new GetSitesLicenseesProductsCriteria();
-                _payoutRepository.GetSitesLicenseesProducts(criteria, out sitesLicensees, out products);
+                _payoutRepository.GetSitesLicenseesProducts(criteria, out sitesLicensees, out productRawData);
 
-                SessionManager.Set<IList<GroupIdNameModel>>(SitesLicenseesSessionKey, sitesLicensees);
-                SessionManager.Set<IList<IdNameModel>>(ProductsSessionKey, products);
+                if (sitesLicensees != null && sitesLicensees.Count > 0)
+                {
+                    SessionManager.Set(SitesLicenseesSessionKey, sitesLicensees);
+                }
+
+                if (productRawData != null && productRawData.Count > 0)
+                {
+                    products = new List<ProductModel>();
+                    var productNameGroup = productRawData.ToLookup(kvp => kvp.Name, kvp => kvp);
+
+                    foreach (var group in productNameGroup)
+                    {
+                        products.Add(new ProductModel
+                        {
+                            Id = string.Join(",", group.Select(p => p.Id).ToArray()),
+                            Name = group.Key
+                        });
+                    }
+
+                    SessionManager.Set(ProductsSessionKey, products);
+                }
             }
         }
 
@@ -41,25 +63,22 @@
         {
             string groupSitenamePermissionKey = null;
             IList<GroupIdNameModel> sitesLicensees;
-            IList<IdNameModel> products;
+            IList<ProductModel> products;
             GetSitesLicenseesProducts(out sitesLicensees, out products);
+
             if (sitesLicensees != null)
             {
+                IdNameModel site;
                 string groupSitename = null;
+
                 foreach (GroupIdNameModel group in sitesLicensees)
                 {
-                    if (groupSitename != null)
-                    {
-                        break;
-                    }
+                    site = group.ChildItems.FirstOrDefault(s => s.Name.Equals(sitename, StringComparison.OrdinalIgnoreCase));
 
-                    foreach (IdNameModel site in group.ChildItems)
+                    if (site != null)
                     {
-                        if (site.Name.Equals(sitename, StringComparison.OrdinalIgnoreCase))
-                        {
-                            groupSitename = group.GroupName;
-                            break;
-                        }
+                        groupSitename = group.GroupName;
+                        break;
                     }
                 }
 
@@ -83,7 +102,7 @@
             return groupSitenamePermissionKey;
         }
 
-        public IList<PayoutItem> GetPayoutList(ICriteria criteria)
+        public IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria)
         {
             return _payoutRepository.GetPayoutList(criteria);
         }

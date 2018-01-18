@@ -10,9 +10,9 @@
         void GetSitesLicenseesProducts(
             ICriteria criteria,
             out IList<GroupIdNameModel> sitesLicensees,
-            out IList<IdNameModel> products);
+            out IList<ProductModel> products);
 
-        IList<PayoutItem> GetPayoutList(ICriteria criteria);
+        IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria);
 
         PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode);
 

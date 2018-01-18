@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Repositories
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Common;
@@ -51,6 +50,22 @@
             }
 
             return colossusbets;
+        }
+
+        public string GetRNGCasinoJackpotRefNo2(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    if (reader.Read())
+                    {
+                        return reader["refno2"].ToString();
+                    }
+                }
+            }
+
+            return null;
         }
 
         public string GetSiteIdByCustomerId(ICriteria criteria)

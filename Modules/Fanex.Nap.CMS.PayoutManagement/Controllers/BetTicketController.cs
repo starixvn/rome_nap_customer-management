@@ -52,5 +52,13 @@
 
             return PartialView("~/Areas/PayoutManagement/Views/BetTicket/ColossusBets.cshtml", colossusbets);
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
+        public ActionResult RNGCasinoJackpot(GetJackpotBetTicketCriteria criteria)
+        {
+            var refno2 = _betTicketService.GetRNGCasinoJackpotRefNo2(criteria);
+
+            return PartialView("~/Areas/PayoutManagement/Views/BetTicket/RNGCasinoJackpot.cshtml", refno2);
+        }
     }
 }

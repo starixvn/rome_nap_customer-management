@@ -756,6 +756,7 @@
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Index.cshtml" />
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Styles\ImportGlobalSetting.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Styles\virtualSettingMonitorAdvance.less" />
+    <Content Include="Areas\PayoutManagement\Views\BetTicket\RNGCasinoJackpot.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

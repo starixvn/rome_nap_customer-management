@@ -150,6 +150,7 @@
     <Compile Include="Controllers\BetTicketController.cs" />
     <Compile Include="Controllers\PayoutManagementAPIClient.cs" />
     <Compile Include="Controllers\PayoutListController.cs" />
+    <Compile Include="Criteria\GetJackpotBetTicketCriteria.cs" />
     <Compile Include="Criteria\GetSiteIdByCustomerIdCriteria.cs" />
     <Compile Include="Criteria\GetSitesLicenseesProductsCriteria.cs" />
     <Compile Include="Criteria\GetBetTicketCriteria.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Models\PayoutNote.cs" />
     <Compile Include="Models\PayoutItem.cs" />
     <Compile Include="Models\BetTicketDetail.cs" />
+    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetTicketRepository.cs" />
     <Compile Include="Repositories\IBetTicketRepository.cs" />

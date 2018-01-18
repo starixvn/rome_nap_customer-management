@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Fanex.Common;
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -12,29 +11,29 @@
 
     public class PayoutListRepository : IPayoutListRepository
     {
-        private const int DefaultListCapacity = 32;
-
         public void GetSitesLicenseesProducts(
             ICriteria criteria,
             out IList<GroupIdNameModel> sitesLicensees,
-            out IList<IdNameModel> products)
+            out IList<ProductModel> products)
         {
             string group;
             GroupIdNameModel value;
             IDictionary<string, GroupIdNameModel> sitesLicenseesHash = new Dictionary<string, GroupIdNameModel>();
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        group = Converter.ToString2(reader["SiteControl"]);
+                        group = reader["SiteControl"].ToString();
+
                         if (!sitesLicenseesHash.TryGetValue(group, out value))
                         {
                             value = new GroupIdNameModel 
                             {
                                 GroupName = group,
-                                ChildItems = new List<IdNameModel>(DefaultListCapacity)
+                                ChildItems = new List<IdNameModel>(32)
                             };
 
                             sitesLicenseesHash.Add(group, value);    
@@ -44,7 +43,7 @@
                     }
 
                     sitesLicensees = sitesLicenseesHash.Values.ToList();
-                    products = new List<IdNameModel>(DefaultListCapacity);
+                    products = new List<ProductModel>();
 
                     if (reader.NextResult())
                     {
@@ -57,26 +56,24 @@
             }
         }
 
-        public IList<PayoutItem> GetPayoutList(ICriteria criteria)
+        public IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria)
         {
-            IList<PayoutItem> payouts = new List<PayoutItem>(DefaultListCapacity);
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        payouts.Add(ToPayoutItem(reader));
+                        yield return ToPayoutItem(reader);
                     }    
                 }
             }
-
-            return payouts;
         }
 
         public PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode)
         {
             PayoutDetail payoutDetail = null;
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -87,7 +84,8 @@
 
                         if (reader.NextResult())
                         {
-                            payoutDetail.PayoutNotes = new List<PayoutNote>(DefaultListCapacity);
+                            payoutDetail.PayoutNotes = new List<PayoutNote>();
+
                             while (reader.Read())
                             {
                                 payoutDetail.PayoutNotes.Add(ToPayoutNote(reader));
@@ -103,6 +101,7 @@
         public Result UpdateTicketStatus(ICriteria criteria)
         {
             Result result = new Result();
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
@@ -119,17 +118,17 @@
         {
             return new IdNameModel
             {
-                Id = Converter.ToInt(reader["SiteId"]),
-                Name = Converter.ToString2(reader["SiteName"])
+                Id = Convert.ToInt32(reader["SiteId"]),
+                Name = reader["SiteName"].ToString()
             };
         }
 
-        private IdNameModel ToProduct(IDataReader reader)
+        private ProductModel ToProduct(IDataReader reader)
         {
-            return new IdNameModel
+            return new ProductModel
             {
-                Id = Converter.ToInt(reader["ProductId"]),
-                Name = Converter.ToString2(reader["ProductName"])
+                Id = reader["ProductId"].ToString(),
+                Name = reader["ProductName"].ToString()
             };
         }
 
@@ -137,16 +136,16 @@
         {
             return new PayoutItem
             {
-                Id = Converter.ToInt(reader["payouttransid"]),
-                Product = new IdNameModel { Id = Converter.ToInt(reader["productid"]), Name = Converter.ToString2(reader["productname"]) },
-                Member = new IdNameModel { Id = Converter.ToInt(reader["custid"]), Name = Converter.ToString2(reader["username"]) },
-                Site = Converter.ToString2(reader["sitename"]),
+                Id = Convert.ToInt32(reader["payouttransid"]),
+                Product = new IdNameModel { Id = Convert.ToInt32(reader["productid"]), Name = reader["productname"].ToString() },
+                Member = new IdNameModel { Id = Convert.ToInt32(reader["custid"]), Name = reader["username"].ToString() },
+                Site = reader["sitename"].ToString(),
                 Date = Convert.ToDateTime(reader["winlostdate"]),
-                RefNo = Converter.To<long>(reader["refno"]),
-                Currency = new IdNameModel { Id = Converter.ToInt(reader["currency"]), Name = Converter.ToString2(reader["currencyname"]) },
-                Amount = Converter.ToDecimal(reader["winamount"]),
-                Status = new IdNameModel { Id = Converter.ToInt(reader["payoutstatusid"]), Name = Converter.ToString2(reader["payoutstatus"]) },
-                HasNotes = Converter.ToBool(reader["isnoted"])
+                RefNo = Convert.ToInt64(reader["refno"]),
+                Currency = new IdNameModel { Id = Convert.ToInt32(reader["currency"]), Name = reader["currencyname"].ToString() },
+                Amount = Convert.ToDecimal(reader["winamount"]),
+                Status = new IdNameModel { Id = Convert.ToInt32(reader["payoutstatusid"]), Name = reader["payoutstatus"].ToString() },
+                HasNotes = Convert.ToBoolean(reader["isnoted"])
             };
         }
 
@@ -154,14 +153,14 @@
         {
             return new PayoutDetail
             {
-                RefNo = Converter.To<long>(reader["RefNo"]),
-                TransId3rd = Converter.ToString2(reader["TransId3rd"]),
-                CustomerId = Converter.ToInt(reader["CustId"]),
-                ProductId = Converter.ToInt(reader["ProductId"]),
-                Site = Converter.ToString2(reader["SiteName"]),
-                SecurityCode = viewSecurityCode ? Converter.ToString2(reader["PayoutCode"]) : null,
-                Amount = Converter.ToDecimal(reader["WinAmount"]),
-                Currency = Converter.ToString2(reader["CurrencyName"])
+                RefNo = Convert.ToInt64(reader["RefNo"]),
+                TransId3rd = reader["TransId3rd"].ToString(),
+                CustomerId = Convert.ToInt32(reader["CustId"]),
+                ProductId = Convert.ToInt32(reader["ProductId"]),
+                Site = reader["SiteName"].ToString(),
+                SecurityCode = viewSecurityCode ? reader["PayoutCode"].ToString() : null,
+                Amount = Convert.ToDecimal(reader["WinAmount"]),
+                Currency = reader["CurrencyName"].ToString()
             };
         }
 
@@ -169,10 +168,10 @@
         {
             return new PayoutNote 
             {
-                Date = Converter.ToDateTime(reader["createddate"]),
-                Status = Converter.ToString2(reader["payoutstatus"]),
-                Note = Converter.ToString2(reader["payoutnote"]),
-                Handler = Converter.ToString2(reader["username"])
+                Date = Convert.ToDateTime(reader["createddate"]),
+                Status = reader["payoutstatus"].ToString(),
+                Note = reader["payoutnote"].ToString(),
+                Handler = reader["username"].ToString()
             };
         }
     }

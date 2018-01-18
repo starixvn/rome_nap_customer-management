@@ -51,6 +51,11 @@
             return colossusbets;
         }
 
+        public string GetRNGCasinoJackpotRefNo2(ICriteria criteria)
+        {
+            return _betTicketRepository.GetRNGCasinoJackpotRefNo2(criteria);
+        }
+
         public string GetSiteIdByCustomerId(ICriteria criteria)
         {
             return _betTicketRepository.GetSiteIdByCustomerId(criteria);

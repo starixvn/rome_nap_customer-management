@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Fanex.Nap.CMS.Infrastructure;
@@ -11,7 +12,6 @@ using Fanex.Nap.CMS.TurnoverControl.Enums;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
 using Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting;
 using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
@@ -33,22 +33,26 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             _importService = importService ?? new ImportGlobalSettingService();
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(short? t)
         {
-            ViewData["SportType"] = t ?? (short)SportType.Soccer;
+            short sporttype = t ?? (short)SportType.Soccer;
+            ViewData["SportType"] = sporttype;
+
+            if (!HasHostGlobalSetting(sporttype))
+            {
+                return Redirect("~/Error/AccessDenied");
+            }
 
             return View("~/Areas/TurnoverControl/Views/ImportGlobalSetting/Index.cshtml");
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public void DownloadTemplate()
         {
             _excelExporter.ResponseStream();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public ActionResult Upload(short sportType, HttpPostedFileBase file)
         {
             Result result;
@@ -57,6 +61,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (type != SportType.Soccer && type != SportType.Others)
             {
                 result = new Result(400, Infrastructure.Resources.Labels.BadRequest);
+            }
+            else if (!HasHostGlobalSetting(sportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Infrastructure.Resources.Labels.AccessDeniedMessage);
             }
             else if (file == null || file.ContentLength == 0)
             {
@@ -76,7 +84,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.GlobalSetting, Policy = Constant.Policy.Host)]
         public ActionResult Import(AddMultipleGlobalSettingCriteria criteria)
         {
             Result result;
@@ -84,6 +91,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             if (!criteria.IsValid())
             {
                 result = new Result(400, Infrastructure.Resources.Labels.BadRequest);
+            }
+            else if (!HasHostGlobalSetting(criteria.SportType))
+            {
+                result = new Result((int)HttpStatusCode.Forbidden, Infrastructure.Resources.Labels.AccessDeniedMessage);
             }
             else
             {
@@ -94,6 +105,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             }
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        private bool HasHostGlobalSetting(short sporttype)
+        {
+            string permissionKey = sporttype == (short)SportType.Soccer ?
+                CMSFunctionKeys.GlobalSettingSoccer :
+                CMSFunctionKeys.GlobalSettingOtherSports;
+
+            return HasRight(permissionKey, Constant.Policy.Host);
         }
     }
 }

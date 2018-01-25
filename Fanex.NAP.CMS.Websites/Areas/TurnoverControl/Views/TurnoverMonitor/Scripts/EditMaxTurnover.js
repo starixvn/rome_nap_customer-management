@@ -19,12 +19,12 @@
         inputTag.remove();
     }
 
-    function editHandler(custId, matchId, maxTurnover, isGroupHeadline) {
+    function editHandler(custId, matchId, maxTurnover, isGroupHeadline, sportType) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             editUrl,
-            { CustId: custId, MatchId: matchId, MaxTurnover: maxTurnover, IsGroupHeadline: isGroupHeadline },
+            { CustId: custId, MatchId: matchId, MaxTurnover: maxTurnover, IsGroupHeadline: isGroupHeadline, SportType: sportType },
             function (data) {
                 var result = $.parseJSON(data);
 
@@ -57,6 +57,8 @@
                 $this.data("matchid"),
                 '" data-isgroupheadline="',
                 $this.data("isgroupheadline"),
+                '" data-sporttype="',
+                $this.data("sporttype"),
                 '" />'
             ].join("");
 
@@ -85,11 +87,12 @@
                                 var custId = $this.data("custid");
                                 var matchId = $this.data("matchid");
                                 var isGroupHeadline = $this.data("isgroupheadline");
+                                var sportType = $this.data("sporttype");
 
                                 CMS.showConfirmMessage(
                                     viewResources.GlobalSetting_EditMaxTurnover_Confirm.format($this.data("username")),
                                     function () {
-                                        editHandler(custId, matchId, maxTurnover, isGroupHeadline);
+                                        editHandler(custId, matchId, maxTurnover, isGroupHeadline, sportType);
                                     });
                             }
                         }

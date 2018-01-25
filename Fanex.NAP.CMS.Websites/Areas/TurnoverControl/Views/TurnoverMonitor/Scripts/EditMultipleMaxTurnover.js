@@ -39,7 +39,8 @@
                 CustId: item.data("custid"),
                 MatchId: item.data("matchid"),
                 IsGroupHeadline: item.data("isgroupheadline"),
-                MaxTurnover: parseInt(item.data("maxturnover"))
+                MaxTurnover: parseInt(item.data("maxturnover")),
+                SportType: item.data("sporttype")
             });
         }
 
@@ -143,7 +144,8 @@
                 CustId: setting.CustId,
                 MatchId: setting.MatchId,
                 IsGroupHeadline: setting.IsGroupHeadline,
-                MaxTurnover: maxTOTemp
+                MaxTurnover: maxTOTemp,
+                SportType: setting.SportType
             });
         }
 

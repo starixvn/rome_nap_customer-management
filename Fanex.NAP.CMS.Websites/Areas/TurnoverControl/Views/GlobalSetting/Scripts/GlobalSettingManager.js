@@ -3,6 +3,7 @@
     var domElements = {
         resultMessageDiv: $("#div-result-message"),
         userNameTextbox: $("#txt-username"),
+        currencyDropdown: $("#ddl-currency"),
         table: $("#globalsetting-list"),
         addGlobalSettingForm: $("#formAddGlobalSetting")
     };
@@ -11,11 +12,13 @@
     var filterParams = {};
     var urls = {
         getList: "",
+        getCurrencies: rootUrl + "TurnoverControl/GlobalSetting/GetCurrencies?t=" + sportType,
         exportExcel: rootUrl + "TurnoverControl/GlobalSetting/ExportList"
     };
 
     function resetFilterParams() {
         filterParams.UserName = $.trim(domElements.userNameTextbox.val());
+        filterParams.ExchangeId = domElements.currencyDropdown.val(),
         filterParams.SortField = "UserName";
         filterParams.SortDirection = "asc";
         filterParams.Page = 0;
@@ -199,11 +202,38 @@
             });
     }
 
+    function getCurrencies(resetFilterParamsAndSearch) {
+        CMS.getJson(
+            urls.getCurrencies,
+            function (data) {
+                var currency;
+                var html = [];
+                var result = $.parseJSON(data);
+
+                for (var i = 0, max = result.length; i < max; i++) {
+                    currency = result[i];
+
+                    html.push('<option value="');
+                    html.push(currency.Id);
+                    html.push('">');
+                    html.push(currency.Name);
+                    html.push("</option>");
+                }
+
+                domElements.currencyDropdown.empty().append(html.join("")).val(result[0].Id);
+                $("#ddl-currency.ui-combobox input").val(result[0].Name);
+
+                resetFilterParamsAndSearch();
+            });
+    }
+
     function initialize() {
         var resetFilterParamsAndSearch = function () {
             resetFilterParams();
             getGlobalSettings();
         };
+
+        getCurrencies(resetFilterParamsAndSearch);
 
         var globalSettingForm = $("#formGlobalSetting");
         urls.getList = globalSettingForm.attr("action") + "?";
@@ -212,8 +242,7 @@
                 e.preventDefault();
 
                 resetFilterParamsAndSearch();
-            })
-            .trigger("submit");
+            });
 
         if (hasHostPermission) {
             $("#btn-add").click(function () {

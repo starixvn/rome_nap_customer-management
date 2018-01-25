@@ -61,11 +61,29 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You are not authorized on this function..
+        /// </summary>
+        public static string AccessDeniedMessage {
+            get {
+                return ResourceManager.GetString("AccessDeniedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
             get {
                 return ResourceManager.GetString("Agent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
             }
         }
         

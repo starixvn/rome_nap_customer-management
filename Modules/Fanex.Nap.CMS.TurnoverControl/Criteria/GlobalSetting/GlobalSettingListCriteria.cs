@@ -8,6 +8,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 
         public short SportType { get; set; }
 
+        public int ExchangeId { get; set; }
+
         [SpParam(Ignored = true)]
         public string SortField { get; set; }
 

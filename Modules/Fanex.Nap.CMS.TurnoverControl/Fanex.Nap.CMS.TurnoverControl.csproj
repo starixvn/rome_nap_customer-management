@@ -89,6 +89,10 @@
       <HintPath>..\..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
     </Reference>
@@ -117,6 +121,7 @@
     <Compile Include="Controllers\ImportGlobalSettingController.cs" />
     <Compile Include="Controllers\TurnoverMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalSettingCriteria.cs" />
+    <Compile Include="Criteria\GlobalSetting\CurrencyListCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\DeleteGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\EditGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GlobalSettingListCriteria.cs" />

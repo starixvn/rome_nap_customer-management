@@ -7,6 +7,8 @@
     ViewBag.Title = Labels.Turnover_Monitor;
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool hasHostPermission = Convert.ToBoolean(ViewData["HostPermission"]);
+    bool soccerHostPermission = Convert.ToBoolean(ViewData["SoccerHostPermission"]);
+    bool otherSportsHostPermission = Convert.ToBoolean(ViewData["OtherSportsHostPermission"]);
 }
 @section Head
 {
@@ -87,7 +89,7 @@
             </table>
         </div>
     </div>
-    @{ Html.RenderPartial("_CustomerTurnover", hasHostPermission); }
+    @{ Html.RenderPartial("_CustomerTurnover", soccerHostPermission || otherSportsHostPermission); }
 </div>
 <div id="divPopupContent" class="display-none">
     <div id="divHouseTurnover" style="width: 805px;">
@@ -103,6 +105,9 @@
         var currentDate = '@DateTime.Today.ToShortFormatedDate()';
         var minDate = '@(AppSession.BalanceUpDate.BalanceUpDay.ToShortFormatedDate())';
         var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
+        var soccerHostPermission = @soccerHostPermission.ToString().ToLowerInvariant();
+        var otherSportsHostPermission = @otherSportsHostPermission.ToString().ToLowerInvariant();
+        var globalSportType = @ViewData["GlobalSportType"];
         var maxIntValue = @int.MaxValue;
         var viewResources = {
             From_Date: '@Labels.From_Date',

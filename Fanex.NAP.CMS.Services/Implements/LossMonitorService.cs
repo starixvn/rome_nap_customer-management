@@ -55,6 +55,13 @@
                 UpdateData(criteria);
         }
 
+        public ICommandResult UpdateLetsTalkNotification(ICriteria criteria)
+        {
+            return !criteria.IsValid() ?
+                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                UpdateData(criteria);
+        }
+
         public ICommandResult DeleteSMA(ICriteria criteria)
         {
             return !criteria.IsValid() ?

@@ -457,6 +457,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to disable Let&apos;s Talk Notification for all accounts listed in the table?.
+        /// </summary>
+        public static string DisableLetsTalkAll {
+            get {
+                return ResourceManager.GetString("DisableLetsTalkAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -507,6 +516,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string EditSMASmartPunter {
             get {
                 return ResourceManager.GetString("EditSMASmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to enable Let&apos;s Talk Notification for all accounts listed in the table?.
+        /// </summary>
+        public static string EnableLetsTalkAll {
+            get {
+                return ResourceManager.GetString("EnableLetsTalkAll", resourceCulture);
             }
         }
         
@@ -660,6 +678,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string League {
             get {
                 return ResourceManager.GetString("League", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Let&apos;s Talk.
+        /// </summary>
+        public static string LetsTalk {
+            get {
+                return ResourceManager.GetString("LetsTalk", resourceCulture);
             }
         }
         

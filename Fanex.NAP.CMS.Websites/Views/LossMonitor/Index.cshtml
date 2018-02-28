@@ -59,6 +59,14 @@
                            data-val-number="Invalid value!" />
                 </div>
             </div>
+            <div class="form-row">
+                <div class="lbl-field normal-label width-100">
+                    <label id="lbl-maxloss" for="txt-maxloss">@ViewLang.LetsTalk</label>
+                </div>
+                <div class="edit-field">
+                    <input type="checkbox" id="chk-letstalk-add" class="width-230 clearable" checked="checked" />
+                </div>
+            </div>
             <div class="form-row button-row">
                 <div class="lbl-field normal-label width-100">&nbsp;</div>
                 <div class="edit-field">
@@ -89,7 +97,10 @@
             NotAvailable: "@ViewLang.NotAvailable",
             Refresh: "@Labels.Refresh",
             AddNewSetting: "@ViewLang.AddNewSetting",
-            RM: "(@ViewLang.RM)"
+            RM: "(@ViewLang.RM)",
+			LetsTalk: "@ViewLang.LetsTalk",
+			EnableLetsTalkAll: "@ViewLang.EnableLetsTalkAll",
+			DisableLetsTalkAll: "@ViewLang.DisableLetsTalkAll"
         };
         var messages = {
             UpdateMaxLossConfirm: "Are you sure you want to update max loss of {0} to {1}?",

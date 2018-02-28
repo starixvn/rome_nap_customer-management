@@ -8,6 +8,8 @@
 
         public decimal MaxLoss { get; set; }
 
+        public bool NotifyLetsTalk { get; set; }
+
         [SpParam(SqlParamName = "Mode")]
         public bool IsGroupHeadline { get; set; }
 

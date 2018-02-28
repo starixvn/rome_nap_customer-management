@@ -59,6 +59,7 @@
             var maxLoss;
             var userName = $.trim(userNameTextbox.val());
             var maxLossValue = $.trim(maxLossTextbox.val().replace(/,/g, ""));
+            var notifyLetsTalk = $("#chk-letstalk-add").attr("checked") ? true : false;
 
             if (userName.length === 0) {
                 CMS.showTipsyError(userNameTextbox, messages.Error_RequiredField, "w");
@@ -88,7 +89,13 @@
                 }
             }
 
-            return !isValid ? null : { UserName: userName, MaxLoss: maxLoss, IsGroupHeadline: headlineRadio.is(":checked") };
+            return !isValid ? null :
+                {
+                    UserName: userName,
+                    MaxLoss: maxLoss,
+                    IsGroupHeadline: headlineRadio.is(":checked"),
+                    NotifyLetsTalk: notifyLetsTalk
+                };
         }
 
         this.initialize = function (userName) {
@@ -342,6 +349,8 @@
             html.push("</div></td>");
 
             if (hasHostPermission) {
+                html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center"></div></td>');
+
                 html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center">');
                 html.push(renderDelete(item, 2));
                 html.push("</div></td>");
@@ -363,11 +372,73 @@
                 divSMALossMonitor.removeClass("display-none").fanexGrid(gridOptions);
 
                 if (gridOptions.bodyRows.length > 0) {
+
                     initProgessBar();
 
                     divSMALossMonitor.find(".group-expand-indicator")
                         .off("click")
                         .on("click", toggleGroupDownlines);
+                }
+
+                updateLetsTalkAllChecked();
+
+                if (hasHostPermission) {
+                    $("#chk-letstalk-all").off("click").on("click", toggleLetsTalkAll);
+                    $(".chk-letstalk").off("click")
+                        .on("click", function () {
+                            var $this = $(this);
+                            var custId = $this.data("custid");
+                            var isEnable = $this.attr("checked") ? true : false;
+                            var isGroupHeadline = $this.data("isgroupheadline");
+
+                            updateLetsTalkAllChecked();
+                            updateLetsTalk(custId, isEnable, isGroupHeadline, function () { });
+                        });
+                } else {
+                    $("#chk-letstalk-all").attr("disabled", "disabled");
+                }
+            });
+    }
+
+    function updateLetsTalkAllChecked() {
+        var checkAll = $(".chk-letstalk").length === $(".chk-letstalk:checked").length;
+        $("#chk-letstalk-all").attr("checked", checkAll ? "checked" : null);
+    }
+
+    function toggleLetsTalkAll() {
+        var isEnable = $("#chk-letstalk-all").attr("checked") ? true : false;
+
+        // Revert status because confirm box not allow revert checkbox after cancel
+        $("#chk-letstalk-all").attr("checked", isEnable ? null : "checked");
+
+        var message = isEnable ? labels.EnableLetsTalkAll : labels.DisableLetsTalkAll;
+        CMS.showConfirmMessage(message, function () {
+            updateLetsTalk(0, isEnable, 0, function () {
+                $("#chk-letstalk-all").attr("checked", isEnable ? "checked" : null);
+                $(".chk-letstalk").attr("checked", isEnable ? "checked" : null);
+                CMS.enableInput();
+            });
+        });
+    }
+
+    function updateLetsTalk(custId, isEnable, isGroupHeadline, callback) {
+        custId = custId;
+
+        CMS.disableInput();
+        CMS.callAjax(
+            self,
+            rootUrl + "LossMonitor/UpdateLetsTalkNotification",
+            { CustId: custId, IsEnable: isEnable, IsGroupHeadline: isGroupHeadline },
+            function (data) {
+                if (!data.IsSuccessful) {
+                    CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
+
+                    if (custId === 0) {
+                        callback();
+                    }
+                }
+                else {
+                    CMS.hideInlineMsg(resultMessageDiv, callback);
                 }
             });
     }
@@ -384,6 +455,13 @@
             { HeaderText: labels.LossPercentage, Width: 150, Name: "ColLossPercentage", HeaderAlign: "center", CellAlign: "center" }];
 
         if (hasHostPermission) {
+            headerColumns.push({
+                HeaderText: labels.LetsTalk + '<br /><input id="chk-letstalk-all" type="checkbox" />',
+                Width: 80,
+                Name: "ColLetsTalk",
+                HeaderAlign: "center",
+                CellAlign: "center"
+            });
             headerColumns.push({ HeaderText: labels.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center" });
         }
 
@@ -397,7 +475,7 @@
 
     function renderBodyRows(data) {
         var index = 0;
-        var mergeColNumber = hasHostPermission ? 9 : 8;
+        var mergeColNumber = hasHostPermission ? 10 : 8;
         var bodyData = [];
 
         if (data) {
@@ -424,6 +502,7 @@
                     };
 
                     if (hasHostPermission) {
+                        row.Columns.push({ Name: "ColLetsTalk", Value: renderLetsTalk(item) });
                         row.Columns.push({ Name: "ColDelete", Value: renderDelete(item, item.GroupHeadlineId > 0 ? 1 : 0) });
                     }
 
@@ -526,6 +605,16 @@
         ].join("");
     }
 
+    function renderLetsTalk(item) {
+        return item.MaxLoss === null ?
+            "" :
+            '<input type="checkbox" class="c chk-letstalk" data-custid="' + item.CustId +
+                '" data-username="' + item.Username + '" ' +
+                'data-isgroupheadline="' + (item.GroupHeadlineId > 0) + '"' +
+                (item.NotifyLetsTalk ? ' checked="checked"' : '') +
+                (hasHostPermission ? '' : 'disabled="disabled"') + '" />';
+    }
+
     function renderDelete(item, mode) {
         return item.MaxLoss === null ? "" : [
             '<a class="c hand ico-delete" href="javascript:;" data-custid="',
@@ -563,7 +652,7 @@
         if (hasHostPermission) {
             var addHandler = new AddSetting(formatMaxLoss, getSMALossReport);
             $("#btnAddSetting").click(function () {
-                CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 250, resizable: false });
+                CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 280, resizable: false });
                 addHandler.initialize();
             });
 
@@ -599,7 +688,7 @@
             divSMALossMonitor.on("click", ".edit-maxloss", function () {
                 var $this = $(this);
                 if ($this.text() === labels.NotAvailable) {
-                    CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 250, resizable: false });
+                    CMS.modal(labels.AddNewSetting, addSettingForm.clone(), { width: 570, height: 280, resizable: false });
                     addHandler.initialize($this.data("username"));
                 } else {
                     editHandler.inlineEditing($this);

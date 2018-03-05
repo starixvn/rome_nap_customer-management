@@ -282,6 +282,12 @@
                         divSMALossMonitor.fanexGrid("resizeGrid");
                         initProgessBar();
                         icon.removeClass().addClass("grid-expand");
+
+                        $(".chk-letstalk").off("click")
+                            .on("click", function () {
+                                var $this = $(this);
+                                toggleLetsTalkCheckbox($this);
+                            });
                     }
                 });
         }
@@ -349,7 +355,9 @@
             html.push("</div></td>");
 
             if (hasHostPermission) {
-                html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center"></div></td>');
+                html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:80px;" align="center">');
+                html.push(renderLetsTalk(item));
+                html.push("</div></td>");
 
                 html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center">');
                 html.push(renderDelete(item, 2));
@@ -387,12 +395,7 @@
                     $(".chk-letstalk").off("click")
                         .on("click", function () {
                             var $this = $(this);
-                            var custId = $this.data("custid");
-                            var isEnable = $this.attr("checked") ? true : false;
-                            var isGroupHeadline = $this.data("isgroupheadline");
-
-                            updateLetsTalkAllChecked();
-                            updateLetsTalk(custId, isEnable, isGroupHeadline, function () { });
+                            toggleLetsTalkCheckbox($this);
                         });
                 } else {
                     $("#chk-letstalk-all").attr("disabled", "disabled");
@@ -419,6 +422,15 @@
                 CMS.enableInput();
             });
         });
+    }
+
+    function toggleLetsTalkCheckbox(element) {
+        var custId = element.data("custid");
+        var isEnable = element.attr("checked") ? true : false;
+        var isGroupHeadline = element.data("isgroupheadline");
+
+        updateLetsTalkAllChecked();
+        updateLetsTalk(custId, isEnable, isGroupHeadline, function () { });
     }
 
     function updateLetsTalk(custId, isEnable, isGroupHeadline, callback) {
@@ -612,7 +624,7 @@
                 '" data-username="' + item.Username + '" ' +
                 'data-isgroupheadline="' + (item.GroupHeadlineId > 0) + '"' +
                 (item.NotifyLetsTalk ? ' checked="checked"' : '') +
-                (hasHostPermission ? '' : 'disabled="disabled"') + '" />';
+                (hasHostPermission ? '' : 'disabled="disabled"') + ' />';
     }
 
     function renderDelete(item, mode) {

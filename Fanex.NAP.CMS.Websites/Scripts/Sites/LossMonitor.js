@@ -484,7 +484,8 @@
 
     function renderBodyRows(data) {
         var index = 0;
-        var mergeColNumber = hasHostPermission ? 10 : 8;
+        var mergeColNumber = hasHostPermission ? 10 :
+            hasReadPermission ? 9 : 8;
         var bodyData = [];
 
         if (data) {

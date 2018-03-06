@@ -390,8 +390,6 @@
                         .on("click", toggleGroupDownlines);
                 }
 
-                updateLetsTalkAllChecked();
-
                 if (hasHostPermission) {
                     $("#chk-letstalk-all").off("click").on("click", toggleLetsTalkAll);
                     $(".chk-letstalk").off("click")
@@ -403,11 +401,6 @@
                     $("#chk-letstalk-all").attr("disabled", "disabled");
                 }
             });
-    }
-
-    function updateLetsTalkAllChecked() {
-        var checkAll = $(".chk-letstalk").length === $(".chk-letstalk:checked").length;
-        $("#chk-letstalk-all").attr("checked", checkAll ? "checked" : null);
     }
 
     function toggleLetsTalkAll() {
@@ -431,7 +424,6 @@
         var isEnable = element.attr("checked") ? true : false;
         var isGroupHeadline = element.data("isgroupheadline");
 
-        updateLetsTalkAllChecked();
         updateLetsTalk(custId, isEnable, isGroupHeadline, function () { });
     }
 
@@ -470,7 +462,7 @@
 
         if (hasReadPermission) {
             headerColumns.push({
-                HeaderText: labels.LetsTalk + '<br /><input id="chk-letstalk-all" type="checkbox"' + (hasHostPermission ? '' : ' disabled=""disabled"') + ' />',
+                HeaderText: labels.LetsTalk + '<br /><input id="chk-letstalk-all" type="checkbox"' + (hasHostPermission ? '' : ' disabled=""disabled"') + ' checked="checked" />',
                 Width: 80,
                 Name: "ColLetsTalk",
                 HeaderAlign: "center",

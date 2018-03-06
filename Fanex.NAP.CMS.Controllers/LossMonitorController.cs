@@ -26,6 +26,7 @@
         public ActionResult Index()
         {
             ViewData["HostPermission"] = HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Host);
+            ViewData["ReadPermission"] = HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Read);
 
             return View();
         }

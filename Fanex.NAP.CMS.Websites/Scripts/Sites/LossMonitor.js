@@ -354,11 +354,13 @@
             html.push(renderPercentage(item));
             html.push("</div></td>");
 
-            if (hasHostPermission) {
+            if (hasReadPermission) {
                 html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:80px;" align="center">');
                 html.push(renderLetsTalk(item));
                 html.push("</div></td>");
+            }
 
+            if (hasHostPermission) {
                 html.push('<td class="free-grid-td-8" style="height:21px;"><div class="table-cell" style="width:60px;" align="center">');
                 html.push(renderDelete(item, 2));
                 html.push("</div></td>");
@@ -466,14 +468,17 @@
             { HeaderText: labels.MaxLoss, Width: 120, Name: "ColMaxLoss", HeaderAlign: "center", CellAlign: "right" },
             { HeaderText: labels.LossPercentage, Width: 150, Name: "ColLossPercentage", HeaderAlign: "center", CellAlign: "center" }];
 
-        if (hasHostPermission) {
+        if (hasReadPermission) {
             headerColumns.push({
-                HeaderText: labels.LetsTalk + '<br /><input id="chk-letstalk-all" type="checkbox" />',
+                HeaderText: labels.LetsTalk + '<br /><input id="chk-letstalk-all" type="checkbox"' + (hasHostPermission ? '' : ' disabled=""disabled"') + ' />',
                 Width: 80,
                 Name: "ColLetsTalk",
                 HeaderAlign: "center",
                 CellAlign: "center"
             });
+        }
+
+        if (hasHostPermission) {
             headerColumns.push({ HeaderText: labels.Delete, Width: 60, Name: "ColDelete", HeaderAlign: "center", CellAlign: "center" });
         }
 
@@ -513,8 +518,11 @@
                         ], CustomAttr: 'id="tr' + item.CustId + '"'
                     };
 
-                    if (hasHostPermission) {
+                    if (hasReadPermission) {
                         row.Columns.push({ Name: "ColLetsTalk", Value: renderLetsTalk(item) });
+                    }
+
+                    if (hasHostPermission) {
                         row.Columns.push({ Name: "ColDelete", Value: renderDelete(item, item.GroupHeadlineId > 0 ? 1 : 0) });
                     }
 

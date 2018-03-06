@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ViewLang.LossMonitor;
     var hasHostPermission = Convert.ToBoolean(ViewData["HostPermission"]);
+    var hasReadPermission = Convert.ToBoolean(ViewData["ReadPermission"]);
 }
 @section Head
 {
@@ -82,6 +83,7 @@
     <script type="text/javascript">
         var rootUrl = document.getElementById("CMSRoot").value;
         var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
+        var hasReadPermission = @hasReadPermission.ToString().ToLowerInvariant();
         var minIntValue = @int.MinValue;
         var labels = {
             No: "#",

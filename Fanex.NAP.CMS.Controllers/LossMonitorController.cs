@@ -26,6 +26,7 @@
         public ActionResult Index()
         {
             ViewData["HostPermission"] = HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Host);
+            ViewData["ReadPermission"] = HasRight(CMSFunctionKeys.LossMonitor, Constant.Policy.Read);
 
             return View();
         }
@@ -75,6 +76,17 @@
             criteria.UserId = CurrentSession.UserId;
             criteria.IP = CurrentContext.IP;
             var result = _lossMonitorService.DeleteSMA(criteria);
+
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LossMonitor, Policy = Constant.Policy.Host)]
+        public JsonResult UpdateLetsTalkNotification(UpdateLetsTalkNotificationCriteria criteria)
+        {
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
+            var result = _lossMonitorService.UpdateLetsTalkNotification(criteria);
 
             return Json(result, JsonRequestBehavior.DenyGet);
         }

@@ -27,6 +27,8 @@
 
         public decimal? PercentageLoss { get; set; }
 
+        public bool NotifyLetsTalk { get; set; }
+
         public string RoleName
         {
             get

@@ -16,6 +16,8 @@
 
         ICommandResult UpdateMaxLoss(ICriteria criteria);
 
+        ICommandResult UpdateLetsTalkNotification(ICriteria criteria);
+
         IEnumerable<SMALossInfo> GetGroupDownlines(ICriteria criteria);
     }
 }

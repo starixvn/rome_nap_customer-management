@@ -528,4 +528,13 @@
   <data name="RM" xml:space="preserve">
     <value>RM</value>
   </data>
+  <data name="LetsTalk" xml:space="preserve">
+    <value>Let's Talk</value>
+  </data>
+  <data name="EnableLetsTalkAll" xml:space="preserve">
+    <value>Are you sure you want to enable Let's Talk Notification for all accounts listed in the table?</value>
+  </data>
+  <data name="DisableLetsTalkAll" xml:space="preserve">
+    <value>Are you sure you want to disable Let's Talk Notification for all accounts listed in the table?</value>
+  </data>
 </root>

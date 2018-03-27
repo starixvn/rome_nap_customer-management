@@ -88,6 +88,8 @@
     <Setting Key="NAP_LimitLoss_SMAIns" SpName="NAP_LimitLoss_SMAIns" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="NAP_LimitLoss_SMADel" SpName="NAP_LimitLoss_SMADel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="NAP_LimitLoss_SMAMaxLossUpd" SpName="NAP_LimitLoss_SMAMaxLossUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+    <Setting Key="NAP_LimitLoss_SMANotificationUpd" SpName="NAP_LimitLoss_SMANotificationUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
+
     <Setting Key="NAP_LimitLoss_MonitorList" SpName="NAP_LimitLoss_MonitorList" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="NAP_LimitLoss_ActionConfigSel" SpName="NAP_LimitLoss_ActionConfigSel" DbName="DBAGE.bodb_AGE.bodbAdminNet" />
     <Setting Key="NAP_LimitLoss_MonitorGroupHeadline" SpName="NAP_LimitLoss_MonitorGroupHeadline" DbName="DBAGE.bodb_AGE.bodbAdminNet" />

@@ -101,6 +101,7 @@
     <Compile Include="Ips\GetIpVnCriteria.cs" />
     <Compile Include="LossMonitor\DeleteSMACriteria.cs" />
     <Compile Include="LossMonitor\GetGroupDownlinesCriteria.cs" />
+    <Compile Include="LossMonitor\UpdateLetsTalkNotificationCriteria.cs" />
     <Compile Include="LossMonitor\UpdateSMAMaxLossCriteria.cs" />
     <Compile Include="LossMonitor\InsertSMACriteria.cs" />
     <Compile Include="LossMonitor\GetSMALossLevelsCriteria.cs" />

@@ -46,7 +46,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             APILogManager apiLogManager = new APILogManager(casinoLogger);
             apiLogManager.Register(
                               typeof(CasinoLibrary.SBAgent.Customer),
-                              "Update*|Insert*|AutoInsert*|Move*|Remove*|Reset*|FullSettlementResetMaxTransfer|Rollback*");
+                              "Update*|Insert*|AutoInsert*|Move*|Remove*|Reset*|Rollback*");
         }
 
         public OpenCloseMemberService() :
@@ -236,7 +236,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 {
                     // Assum that any exception occurs during calling API is a failure and CasinoApiLogger will write log for this.
                     // No need to throw exception here.
-                    Logging.LogService.Debug(ex.Message);
+                   Logging.LogService.Debug(ex.Message);
                 }
             }
 

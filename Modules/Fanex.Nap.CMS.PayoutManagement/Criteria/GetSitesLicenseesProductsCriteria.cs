@@ -18,29 +18,34 @@
 
         public override Hashtable GetSpParams()
         {
-            int userId = AppSession.CurrentUser.Id;
-            int siteId = NapSettings.Settings.SiteId;
-            int readPolicy = (int)Constant.Policy.Read;
-
-            IUserService userService = new UserService();
-            int boping = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForBopingLicensees);
-            int oneworks = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForONEworksLicensees);
-            int credit = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForCredit);
-
+            int userId = 0;
             int payoutControl = 0;
-            if (boping >= readPolicy)
-            {
-                payoutControl += 2;    
-            }
 
-            if (oneworks >= readPolicy)
+            if (AppSession.CurrentUser != null)
             {
-                payoutControl += 4;
-            }
+                userId = AppSession.CurrentUser.Id;
+                int siteId = NapSettings.Settings.SiteId;
+                int readPolicy = (int)Constant.Policy.Read;
 
-            if (credit >= readPolicy)
-            {
-                payoutControl += 8;
+                IUserService userService = new UserService();
+                int boping = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForBopingLicensees);
+                int oneworks = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForONEworksLicensees);
+                int credit = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForCredit);
+
+                if (boping >= readPolicy)
+                {
+                    payoutControl += 2;
+                }
+
+                if (oneworks >= readPolicy)
+                {
+                    payoutControl += 4;
+                }
+
+                if (credit >= readPolicy)
+                {
+                    payoutControl += 8;
+                }
             }
 
             return new Hashtable 

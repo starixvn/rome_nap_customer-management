@@ -1,5 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Controllers
 {
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Constants;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
@@ -12,8 +14,6 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure.Web;
     using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     public class PayoutListController : BaseController
     {
@@ -36,6 +36,7 @@
                 GetPayoutListFilter(),
                 Formatting.None,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
             return View("~/Areas/PayoutManagement/Views/PayoutList/Index.cshtml", null, jsonString);
         }
 
@@ -43,19 +44,21 @@
         public ActionResult GetPayoutList(GetPayoutListCriteria criteria)
         {
             var tickets = _payoutService.GetPayoutList(criteria);
+
             return JsonData(tickets);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
-        public ActionResult PayoutDetail(int id, int status)
+        public ActionResult PayoutDetail(int id, int status, int productId)
         {
             bool updateTicketStatus = false;
             bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewWinningCode, Constant.Policy.Read);
-            
+
             var criteria = new GetPayoutDetailCriteria { Id = id };
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
 
             string groupSitenamePermissionKey = _payoutService.GetGroupSitenamePermissionKey(payoutDetail.Site);
+
             if (!string.IsNullOrEmpty(groupSitenamePermissionKey))
             {
                 updateTicketStatus = HasRight(groupSitenamePermissionKey, Constant.Policy.Host);
@@ -65,14 +68,15 @@
             payoutDetail.PayoutNotes = null;
             ViewBag.ViewSecuriyCodePermission = viewSecurityCode;
             ViewBag.UpdateTicketStatusPermission = updateTicketStatus;
-            
+
             ViewBag.Status = status;
-            ViewBag.Statuses = new SelectList(GetStatuses(), "Id", "Name");
+            ViewBag.Statuses = new SelectList(GetStatuses(productId), "Id", "Name");
 
             string jsonString = JsonConvert.SerializeObject(
                 payoutDetail,
                 Formatting.None,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+
             return View("~/Areas/PayoutManagement/Views/PayoutList/PayoutDetail.cshtml", null, jsonString);
         }
 
@@ -82,6 +86,7 @@
             bool viewSecurityCode = HasRight(CMSFunctionKeys.PayoutViewWinningCode, Constant.Policy.Read);
             var payoutDetail = _payoutService.GetPayoutDetail(criteria, viewSecurityCode);
             SessionManager.Set(PayoutManagementConst.WinningCode, payoutDetail.SecurityCode);
+
             return JsonData(payoutDetail.PayoutNotes);
         }
 
@@ -90,6 +95,7 @@
         public ActionResult UpdateTicketStatus(UpdateTicketStatusCriteria criteria)
         {
             var result = _payoutService.UpdateTicketStatus(criteria);
+
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
@@ -103,10 +109,10 @@
         private dynamic GetPayoutListFilter()
         {
             IList<GroupIdNameModel> sitesLicensees;
-            IList<IdNameModel> products;
+            IList<ProductModel> products;
             _payoutService.GetSitesLicenseesProducts(out sitesLicensees, out products);
 
-            return new 
+            return new
             {
                 SitesLicensees = sitesLicensees,
                 Products = products,
@@ -115,16 +121,23 @@
         }
 
         [NonAction]
-        private IList<IdNameModel> GetStatuses()
+        private IEnumerable<IdNameModel> GetStatuses(int? productId = null)
         {
-            return new List<IdNameModel>(5) 
+            yield return new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutStatus.Open.ToString() };
+            yield return new IdNameModel { Id = (int)PayoutStatus.Verified, Name = PayoutStatus.Verified.ToString() };
+            yield return new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutStatus.Disbursed.ToString() };
+            yield return new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutStatus.Completed.ToString() };
+            yield return new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutStatus.Expired.ToString() };
+
+            if (productId == null || IsRnGCasino(productId.Value))
             {
-                new IdNameModel { Id = (int)PayoutStatus.Open, Name = PayoutStatus.Open.ToString() },
-                new IdNameModel { Id = (int)PayoutStatus.Verified, Name = PayoutStatus.Verified.ToString() },
-                new IdNameModel { Id = (int)PayoutStatus.Disbursed, Name = PayoutStatus.Disbursed.ToString() },
-                new IdNameModel { Id = (int)PayoutStatus.Completed, Name = PayoutStatus.Completed.ToString() },
-                new IdNameModel { Id = (int)PayoutStatus.Expired, Name = PayoutStatus.Expired.ToString() }
-            };
+                yield return new IdNameModel { Id = (int)PayoutStatus.Cancelled, Name = PayoutStatus.Cancelled.ToString() };
+            }
+        }
+
+        private static bool IsRnGCasino(int productId)
+        {
+            return productId == 208 || productId == 209 || productId == 210;
         }
     }
 }

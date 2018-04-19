@@ -9,6 +9,8 @@
 
         ColossusBetsTicket GetColossusBets(ICriteria criteria);
 
+        string GetRNGCasinoJackpotRefNo2(ICriteria criteria);
+
         string GetSiteIdByCustomerId(ICriteria criteria);
     }
 }

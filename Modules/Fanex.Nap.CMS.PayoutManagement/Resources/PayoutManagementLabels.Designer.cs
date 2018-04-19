@@ -196,6 +196,15 @@ namespace Fanex.Nap.CMS.PayoutManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member Winning RefNo.
+        /// </summary>
+        public static string MemberWinningRefNo {
+            get {
+                return ResourceManager.GetString("MemberWinningRefNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Note.
         /// </summary>
         public static string Note {

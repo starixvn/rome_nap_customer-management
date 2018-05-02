@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.PayoutManagement.Services;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Infrastructure.Web;
 
     public class BetTicketController : BaseController
     {
@@ -30,8 +31,8 @@
         {
             var microgaming = _betTicketService.GetMicrogaming(criteria);
             var microgamingResult = PayoutManagementAPIClient.MicrogamingResult(
-                microgaming.Sitename, 
-                microgaming.CustomerId, 
+                microgaming.Sitename,
+                microgaming.CustomerId,
                 microgaming.TransId3rd);
 
             return PartialView("~/Areas/PayoutManagement/Views/BetTicket/Microgaming.cshtml", microgamingResult);
@@ -56,6 +57,10 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
         public ActionResult RNGCasinoJackpot(GetJackpotBetTicketCriteria criteria)
         {
+            var balanceUpdate = AppSession.BalanceUpDate;
+            criteria.MoveBetsDay = balanceUpdate.MoveBetsDay;
+            criteria.BalanceUpDay = balanceUpdate.BalanceUpDay;
+
             var refno2 = _betTicketService.GetRNGCasinoJackpotRefNo2(criteria);
 
             return PartialView("~/Areas/PayoutManagement/Views/BetTicket/RNGCasinoJackpot.cshtml", refno2);

@@ -763,6 +763,10 @@
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Fanex.NAP.CMS.Websites.ruleset" />
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
+    <None Include="Web.ConnectionString.dev.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />

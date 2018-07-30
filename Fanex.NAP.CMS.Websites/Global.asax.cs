@@ -42,7 +42,10 @@ namespace Fanex.NAP.CMS.Websites
                 .GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
-            RefDataTypeContainer.ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]));
+            RefDataTypeContainer
+                .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))
+                .FromApplication("Fanex.NAP.CMS")
+                .SupportOnlyDefaultLanguage();
         }
 
         protected void Application_Error(object sender, EventArgs e)

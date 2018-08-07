@@ -8,7 +8,7 @@
 // </summary>
 //
 // <history>
-// Lasted generated date: 7/25/2014 11:53:48 AM
+// Lasted generated date: 5/11/2018 10:58:30 AM
 // </history>
 namespace Fanex.NAP.CMS.Core
 {
@@ -19,6 +19,8 @@ namespace Fanex.NAP.CMS.Core
     /// </summary>
     public static class CMSFunctionKeys
     {
+        public const string ActionMonitoringLog = "ActionMonitoringLog";
+
         public const string Administration = "Administration";
 
         public const string AssignFunctionToGroup = "AssignFunctionToGroup";
@@ -39,7 +41,11 @@ namespace Fanex.NAP.CMS.Core
 
         public const string ControlTurnover = "ControlTurnover";
 
+        public const string CurrencyWinLimitSetting = "CurrencyWinLimitSetting";
+
         public const string Customer = "Customer";
+
+        public const string GlobalSetting = "GlobalSetting";
 
         public const string LossControl = "LossControl";
 
@@ -55,16 +61,35 @@ namespace Fanex.NAP.CMS.Core
 
         public const string ManageSmartPunters = "ManageSmartPunters";
 
-        public const string ActionMonitoringLog = "SmartPunterActionMonitoring";
-
         public const string ManageUser = "ManageUser";
 
+        public const string NotificationSetting = "NotificationSetting";
+
+        public const string PlayerWinLimitManagement = "PlayerWinLimitManagement";
+
+        public const string SMAPTControl = "SMAPTControl";
+
+        public const string SmartPunterActionMonitoring = "SmartPunterActionMonitoring";
+
         public const string SystemConfiguration = "SystemConfiguration";
+
+        public const string TurnoverControl = "TurnoverControl";
+
+        public const string TurnoverControlNotification = "TurnoverControlNotification";
 
         public const string TurnoverMonitor = "TurnoverMonitor";
 
         public const string TurnoverUsage = "TurnoverUsage";
 
         public const string ViewIpVn = "ViewIPVN";
+
+        public const string VirtualSettingControl = "VirtualSettingControl";
+
+        public const string VitualSettingMonitor = "VitualSettingMonitor";
+
+        public const string WinLimitControl = "WinLimitControl";
+
+        public const string WinLimitMonitor = "WinLimitMonitor";
+
     }
 }

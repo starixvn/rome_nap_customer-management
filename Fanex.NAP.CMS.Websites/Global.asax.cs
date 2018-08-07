@@ -10,6 +10,7 @@
 namespace Fanex.NAP.CMS.Websites
 {
     using System;
+    using System.Configuration;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -17,6 +18,7 @@ namespace Fanex.NAP.CMS.Websites
     using Data.Configuration;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
+    using RemotingRef;
 
     /// <summary>
     /// MVC application configuration.
@@ -39,6 +41,11 @@ namespace Fanex.NAP.CMS.Websites
                 .GetHttpHeaderInfo()
                 .GetHttpSessionInfo())
                 .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+
+            RefDataTypeContainer
+                .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))
+                .FromApplication("Fanex.NAP.CMS")
+                .SupportOnlyDefaultLanguage();
         }
 
         protected void Application_Error(object sender, EventArgs e)

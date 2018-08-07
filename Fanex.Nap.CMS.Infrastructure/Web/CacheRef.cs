@@ -12,7 +12,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
     using System;
     using System.Collections.Generic;
     using Fanex.Common;
-    using Fanex.Nap.CMS.Infrastructure.Constants;
     using RemotingRef;
 
     /// <summary>
@@ -24,13 +23,13 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         {
             return RefData.GetTeamName(
                 Converter.ToString2(teamId),
-                GetSimpleLanguage(LanguageTypeConstants.EnUS),
+                "en-US",
                 string.Empty);
         }
 
         public static string GetLeagueName(string leagueId)
         {
-            return RefData.GetLeagueName(leagueId, LanguageTypeConstants.En);              
+            return RefData.GetLeagueName(leagueId, "en-US");              
         }
 
         /// <summary>
@@ -78,35 +77,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
 
             return RefData.GetBetTypeName(
                 betTypeId.ToString(),
-                GetSimpleLanguage(LanguageTypeConstants.EnUS),
+                "en-US",
                 string.Empty,
                 resourceId);
         }
 
-        /// <summary>
-        /// Gets the simple language.
-        /// </summary>
-        /// <param name="lang">The language.</param>
-        /// <returns>The simple language.</returns>
-        private static string GetSimpleLanguage(string lang)
-        {
-            switch (lang)
-            {
-                case LanguageTypeConstants.ZhTW:
-                    // Traditional
-                    return LanguageTypeConstants.Ch;
-                case LanguageTypeConstants.ZhCn:
-                    // Simplified
-                    return LanguageTypeConstants.CS;
-                case LanguageTypeConstants.JaJp:
-                    return LanguageTypeConstants.Jp;
-                case LanguageTypeConstants.ThTh:
-                    // Thai
-                    return LanguageTypeConstants.Th;
-                case LanguageTypeConstants.EnUS:
-                default:
-                    return LanguageTypeConstants.En;
-            }
-        }
+        private static IRemotingRefService RefData => new RemotingRefService();
     }
 }

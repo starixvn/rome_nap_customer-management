@@ -275,21 +275,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\backupMNL\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBAGE.bodb02.bodbAdminNet.xml">
+    <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\backupMNL\DBCust.CustDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\backupMNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+    <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
+    <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\backupMNL\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\backupMNL\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\backupMNL\NAPCommonSpNames.xml" />
+    <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\NAPCMSSPNames.xml" />
+    <Content Include="App_Data\MNL\NAPCommonSpNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -734,7 +734,7 @@
       <DependentUpon>Web.AppSettings.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.AppSettings.backupMNL.config">
+    <Content Include="Web.AppSettings.mnl.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.sit.config">
@@ -751,7 +751,7 @@
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.backupMNL.config">
+    <Content Include="Web.ConnectionString.mnl.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
@@ -766,7 +766,7 @@
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.backupMNL.config">
+    <Content Include="Web.mnl.config">
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -56,6 +56,8 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         public const string TurnoverUsage = "TurnoverUsage";
 
+        public const string CreditCollection = "CreditCollection";
+
         // Turnover Control
         public const string GlobalSettingSoccer = "GlobalSetting_Soccer";
         public const string GlobalSettingOtherSports = "GlobalSetting_OtherSports";

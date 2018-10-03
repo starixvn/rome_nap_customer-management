@@ -277,7 +277,7 @@
         /// <returns>
         /// The cell style.
         /// </returns>
-        private static ICellStyle StyleWithFormula(
+        public static ICellStyle StyleWithFormula(
             HSSFWorkbook excelFile,
             short cellColor,
             bool bold,
@@ -305,6 +305,12 @@
             cellStyle.SetFont(font);
             cellStyle = SetBorderToCell(cellStyle);
             return cellStyle;
+        }
+
+        public static void SetColorAtIndex(HSSFWorkbook excelFile, short index, byte red, byte green, byte blue)
+        {
+            HSSFPalette palette = excelFile.GetCustomPalette();
+            palette.SetColorAtIndex(index, red, green, blue);
         }
 
         /// <summary>

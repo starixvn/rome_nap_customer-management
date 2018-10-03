@@ -1,0 +1,108 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.NAP.CMS.Models.CreditCollectionSummary;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewLang.CreditCollectionSummary;
+}
+@section Head
+{
+    @Styles.Render("~/styles/credit-collection-summary")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <span id="note-info" class="note-info-message" title="@Messages.CreditCollectionNote"></span>
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <label for="txt-username">@ViewLang.Code</label>
+            </div>
+            <div class="edit-field col_7">
+                <input type="text" id="txt-username" />
+            </div>
+            <div class="lbl-field col_6 align-right">
+                <label for="ddl-code">@ViewLang.Type</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <select id="ddl-code" class="combobox-autocomplete ddl-code">
+                    <option value="@CodeType.All">@ViewLang.All</option>
+                    <option value="@CodeType.OldCodes">@ViewLang.OLDcodes</option>
+                    <option value="@CodeType.OtherCodes">@ViewLang.Othercodes</option>
+                </select>
+            </div>
+            <div class="lbl-field col_3 align-right">
+                <label for="ddl-status">@ViewLang.Status</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <select id="ddl-status" class="ddl-status">
+                    <option value="@CreditStatus.All">@ViewLang.All</option>
+                    <option value="@CreditStatus.Alert">@ViewLang.Alert</option>
+                    <option value="@CreditStatus.Normal">@ViewLang.Normal</option>
+                    <option value="@CreditStatus.Unused">@ViewLang.Unused</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+            <div class="lbl-field col_3 align-right"></div>
+            <div class="lbl-field col_4 align-left">
+                <input id="chk-exclude-test-data" type="checkbox" />
+                <label for="chk-exclude-test-data">@ViewLang.ExcludeUUS</label>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_5 align-right"></div>
+            <div class="submit width-auto col_4">
+                <input id="btn-generate" type="button" class="submit" value="@ViewLang.Generate" />
+                <input id="btn-export" type="button" class="submit" value="@ViewLang.Export" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-grid">
+    <div id="div-report" class="freegrid display-none"></div>
+</div>
+
+@section Foot
+{
+    <script type="text/javascript">
+        var currentDate = '@DateTime.Today.ToString("MMM dd, yyyy")';
+        var yesterday = '@DateTime.Today.AddDays(-1).ToString("MMM dd, yyyy")';
+        var initFromDate = currentDate;
+        var hasEditAccessRight = @(ViewBag.HasEditAccessRight ? 1 : 0);
+        var viewResources = {
+            LastBalanceDate: "@ViewLang.LastBalanceDate",
+            CurrentBalanceDate: "@ViewLang.CurrentBalanceDate",
+            RequiredFieldError: "@Messages.RequiredFieldError",
+
+            No: "@ViewLang.No",
+            All: "@ViewLang.All",
+            Code: "@ViewLang.Code",
+            Headline: "@ViewLang.Headline",
+            Direct: "@ViewLang.Direct",
+            Status: "@ViewLang.Status",
+            Edit: "@ViewLang.Edit",
+            LastBalance: "@ViewLang.LastBalance",
+            CurrentBalance: "@ViewLang.CurrentBalance",
+            DebtMovement: "@ViewLang.DebtMovement",
+            Collection: "@ViewLang.Collection",
+            Payment: "@ViewLang.Payment",
+            NetMovement: "@ViewLang.NetMovement",
+            CollectionBreakdown: "@ViewLang.CollectionBreakdown",
+            To: "@ViewLang.To",
+            Alert: "@ViewLang.Alert",
+            Normal: "@ViewLang.Normal",
+            Unused: "@ViewLang.Unused",
+            Save: "@ViewLang.Save",
+            Revert: "@ViewLang.Revert",
+            CreditCollectionSummary:"@ViewLang.CreditCollectionSummary"
+        }
+    </script>
+    @Scripts.Render("~/scripts/credit-collection-summary")
+}

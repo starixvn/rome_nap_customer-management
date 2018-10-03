@@ -172,10 +172,14 @@
   <ItemGroup>
     <Compile Include="ApiLogers\CasinoApiLogger.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Implements\CreditCollectionSummaryService.cs" />
+    <Compile Include="Implements\StatusLogService.cs" />
+    <Compile Include="Interfaces\ICreditCollectionSummaryService.cs" />
     <Compile Include="Interfaces\IIpService.cs" />
     <Compile Include="Implements\IpService.cs" />
     <Compile Include="Interfaces\IPermissionSerivce.cs" />
     <Compile Include="Implements\PermissionSerivce.cs" />
+    <Compile Include="Interfaces\IStatusLogService.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Implements\ConfigureCustomerAccessService.cs" />
     <Compile Include="Implements\CMSBaseService.cs" />

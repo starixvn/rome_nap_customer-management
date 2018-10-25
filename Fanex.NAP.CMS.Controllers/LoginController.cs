@@ -284,8 +284,18 @@ namespace Fanex.NAP.CMS.Controllers
                 Platform = CurrentContext.Platform
             };
 
-            this._userService.UserCheckIn(ref criteria);
-
+            try
+            {
+                this._userService.UserCheckIn(ref criteria);
+            }
+            catch (Exception ex)
+            {
+                if (criteria.OnUserId == 0)
+                {
+                    throw;
+                }
+                Logging.LogService.Error(ex.Message);
+            }
             // saves user session
             this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
             this._currentSession.UserId = user.Id;

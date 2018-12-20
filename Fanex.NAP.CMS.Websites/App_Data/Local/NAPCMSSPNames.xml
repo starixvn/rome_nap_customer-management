@@ -39,15 +39,11 @@
     </Setting>
     <Setting Key="NAP_SMATurnover_SpecialLeagueSel" SpName="NAP_SMATurnover_SpecialLeagueSel" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_SMATurnover_LeagueControlSel" SpName="NAP_SMATurnover_LeagueControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
-    </Setting>
     <Setting Key="NAP_SMATurnover_LeagueControlUpd" SpName="NAP_SMATurnover_LeagueControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_LeagueControlDel" SpName="NAP_SMATurnover_LeagueControlDel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_LeagueSel" SpName="NAP_SMATurnover_LeagueSel" DbName="DBAGE.bodb02.bodbAdminNet">
-    </Setting>
-    <Setting Key="NAP_SMATurnover_MatchControlSel" SpName="NAP_SMATurnover_MatchControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_MatchControlUpd" SpName="NAP_SMATurnover_MatchControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
@@ -55,8 +51,6 @@
     </Setting>
   </Function>
   <Function Name="ConfigureTOBySMA">
-    <Setting Key="NAP_SMATurnover_SMAControlSel" SpName="NAP_SMATurnover_SMAControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
-    </Setting>
     <Setting Key="NAP_SMATurnover_SMAControlIns" SpName="NAP_SMATurnover_SMAControlIns" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_SMAControlUpd" SpName="NAP_SMATurnover_SMAControlUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet">
@@ -65,8 +59,6 @@
     </Setting>
   </Function>
   <Function Name="ConfigureSMATOByEvent">
-    <Setting Key="NAP_SMATurnover_SMAControlByEventSel" SpName="NAP_SMATurnover_SMAControlByEventSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">
-    </Setting>
     <Setting Key="NAP_SMATurnover_SMAControlByEventIns" SpName="NAP_SMATurnover_SMAControlByEventIns" DbName="DBAGE.bodb_AGE.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_SMAControlByEventUpd" SpName="NAP_SMATurnover_SMAControlByEventUpd" DbName="DBAGE.bodb_AGE.bodbAdminNet">
@@ -78,10 +70,6 @@
     <Setting Key="NAP_SMATurnover_MatchSel" SpName="NAP_SMATurnover_MatchSel" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_SMATurnover_UsageList" SpName="NAP_SMATurnover_UsageList" DbName="DBAGE.bodb02.bodbAdminNet">
-    </Setting>
-  </Function>
-  <Function Name="TurnoverMonitor">
-    <Setting Key="NAP_SMATurnover_MonitorList" SpName="NAP_SMATurnover_MonitorList" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
   </Function>
   <Function Name="LossMonitor">

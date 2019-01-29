@@ -99,6 +99,8 @@
     <Compile Include="ConfigureTOBySMA\GetSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\InsertSMAOffsetCriteria.cs" />
     <Compile Include="ConfigureTOBySMA\UpdateSMAOffsetCriteria.cs" />
+    <Compile Include="CreditCollectionSummary\CreditCollectionSummaryCriteria.cs" />
+    <Compile Include="CreditCollectionSummary\SaveCreditStatusCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Ips\GetIpVnCriteria.cs" />
     <Compile Include="LossMonitor\DeleteSMACriteria.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="OpenCloseMember\GetMembersStatusCriteria.cs" />
     <Compile Include="OpenCloseMember\UpdateMembersStatusCriteria.cs" />
     <Compile Include="LossMonitor\GetSMALossMonitorListCriteria.cs" />
+    <Compile Include="StatusLog\LogCriteria.cs" />
     <Compile Include="TurnoverMonitor\GetSMATurnoverMonitorListCriteria.cs" />
     <Compile Include="TurnoverUsage\GetTurnoverUsageCriteria.cs" />
     <Compile Include="WriteLogs\WriteCasinoApiLogCriteria.cs" />

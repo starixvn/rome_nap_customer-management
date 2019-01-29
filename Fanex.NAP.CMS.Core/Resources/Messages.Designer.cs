@@ -187,6 +187,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - Debt is reflected as POSITIVE in this report; while the balance in NAP Accounting is reflected as NEGATIVE..
+        /// </summary>
+        public static string CreditCollectionNote {
+            get {
+                return ResourceManager.GetString("CreditCollectionNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to DEACTIVATE {0} selected Robot(s)?.
         /// </summary>
         public static string DeactivateRobotsConfirmationMessage {

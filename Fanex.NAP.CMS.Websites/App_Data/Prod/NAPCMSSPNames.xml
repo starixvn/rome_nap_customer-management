@@ -108,4 +108,14 @@
     <Setting Key="Nap_CustomerSelIDByUserNameNickName" SpName="Nap_CustomerSelIDByUserNameNickName" DbName="DBACC.bodb02.bodbAdminNet">
     </Setting>
   </Function>
+  <Function Name="Credit Collection Summary">
+    <Setting Key="Acc_Rpt_CreditCollection" SpName="Acc_Rpt_CreditCollection" DbName="DBACC.bodb02.bodbAdminNet" TimeOut="300">
+    </Setting>
+    <Setting Key="Acc_CreditCollStatusUpd" SpName="Acc_CreditCollStatusUpd" DbName="DBCust.CustDB.bodbAdminNet">
+    </Setting>
+  </Function>
+  <Function Name="Status Log">
+    <Setting Key="NAP_StatusLog_CreditCollection_List" SpName="NAP_StatusLog_CreditCollection_List" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
+    </Setting>
+  </Function>
 </Functions>

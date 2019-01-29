@@ -537,4 +537,91 @@
   <data name="DisableLetsTalkAll" xml:space="preserve">
     <value>Are you sure you want to disable Let's Talk Notification for all accounts listed in the table?</value>
   </data>
+  <data name="CreditCollectionSummary" xml:space="preserve">
+    <value>Credit Collection Summary</value>
+  </data>
+  <data name="Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Headlines" xml:space="preserve">
+    <value>Headlines</value>
+  </data>
+  <data name="DirectAccounts" xml:space="preserve">
+    <value>Direct Accounts</value>
+  </data>
+  <data name="Alert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="Unused" xml:space="preserve">
+    <value>Unused</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="LastBalance" xml:space="preserve">
+    <value>Last Balance</value>
+  </data>
+  <data name="CurrentBalance" xml:space="preserve">
+    <value>Current Balance</value>
+  </data>
+  <data name="DebtMovement" xml:space="preserve">
+    <value>Debt Movement</value>
+  </data>
+  <data name="Collection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="NetMovement" xml:space="preserve">
+    <value>Net Movement</value>
+  </data>
+  <data name="CollectionBreakdown" xml:space="preserve">
+    <value>Collection Breakdown</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Revert" xml:space="preserve">
+    <value>Revert</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="OLDcodes" xml:space="preserve">
+    <value>OLD codes</value>
+  </data>
+  <data name="Othercodes" xml:space="preserve">
+    <value>Other codes</value>
+  </data>
+  <data name="LastBalanceDate" xml:space="preserve">
+    <value>Last Balance Date</value>
+  </data>
+  <data name="CurrentBalanceDate" xml:space="preserve">
+    <value>Current Balance Date</value>
+  </data>
+  <data name="ExcludeUUS" xml:space="preserve">
+    <value>Exclude UUS</value>
+  </data>
+  <data name="Direct" xml:space="preserve">
+    <value>Direct</value>
+  </data>
+  <data name="StatusLog" xml:space="preserve">
+    <value>Status Log</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Old" xml:space="preserve">
+    <value>Old</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>New</value>
+  </data>
 </root>

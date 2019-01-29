@@ -121,6 +121,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Implements\CreditCollectionSummaryRepository.cs" />
+    <Compile Include="Implements\StatusLogRepository.cs" />
+    <Compile Include="Interfaces\ICreditCollectorSummaryRepository.cs" />
+    <Compile Include="Interfaces\IStatusLogRepository.cs" />
     <Compile Include="Properties\GlobalSuppressions.cs" />
     <Compile Include="Implements\OpenCloseMemberRepository.cs" />
     <Compile Include="Interfaces\IOpenCloseMemberRepository.cs" />

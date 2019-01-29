@@ -479,6 +479,7 @@
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
     <Content Include="Content\Themes\img\cms.ico" />
+    <Content Include="Content\Themes\img\save.jpg" />
     <Content Include="Content\Themes\img\seperation.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
     <Content Include="Content\Themes\img\sprites.png" />
@@ -487,6 +488,7 @@
     <Content Include="Content\Themes\img\textures\scratches.png" />
     <Content Include="Content\Themes\img\tick-ico-16.png" />
     <Content Include="Content\Themes\img\tree-view.png" />
+    <Content Include="Content\Themes\img\undo.png" />
     <Content Include="Content\Themes\img\user.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_60_4264ac_40x100.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_75_5476bb_40x100.png" />
@@ -531,6 +533,7 @@
     <Content Include="Scripts\Libs\MultipleSelect\jquery.multiselect.js" />
     <Content Include="Scripts\Libs\Popup\dialogbox.js" />
     <Content Include="Scripts\ReCheckIn.js" />
+    <Content Include="Scripts\Sites\status-log.js" />
     <Content Include="Scripts\Sites\ManageRobots.js" />
     <Content Include="Scripts\Sites\LossMonitor.js" />
     <Content Include="Scripts\Sites\ConfigureTOByEvent\MatchPage.js" />
@@ -543,6 +546,7 @@
     <Content Include="Scripts\Sites\ManageSmartPunters\ManageSmartPunters.js" />
     <Content Include="Scripts\Sites\ManageSmartPunters\ControlSmartPuntersLog.js" />
     <Content Include="Scripts\Sites\ManageSmartPunters\PageManager.js" />
+    <Content Include="Scripts\Sites\credit-collection-summary.js" />
     <Content Include="Scripts\Sites\TurnoverUsage.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />
     <Content Include="Scripts\Sites\Login.js" />
@@ -808,6 +812,9 @@
     <Content Include="Content\Themes\PopupCustomStyle.less" />
     <Content Include="Fanex.NAP.CMS.Websites.ruleset" />
     <Content Include="Content\MultipleSelect\jquery.multiselect.less" />
+    <Content Include="Views\CreditCollectionSummary\Index.cshtml" />
+    <Content Include="Content\Sites\credit-collection-summary.less" />
+    <Content Include="Views\StatusLog\Index.cshtml" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -818,6 +825,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

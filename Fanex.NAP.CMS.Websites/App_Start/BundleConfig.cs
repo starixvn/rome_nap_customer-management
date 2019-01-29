@@ -30,6 +30,7 @@ namespace Fanex.NAP.CMS.Websites
             RegisterCustomerBundles(bundles);
             RegisterTurnoverControlBundles(bundles);
             RegisterLossControlBundles(bundles);
+            RegisterCreditCollectionBundles(bundles);
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
             NotificationSettingBundleConfig.RegisterAll(bundles);
@@ -136,6 +137,7 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Sites/ManageSmartPunters/ManageSmartPunters.js",
                 "~/Scripts/Sites/ManageSmartPunters/ControlSmartPuntersLog.js",
                 "~/Scripts/Sites/ManageSmartPunters/ActionMonitoring.js"));
+
         }
 
         /// <summary>
@@ -202,6 +204,24 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/lossMonitor").Include(
                 "~/Scripts/Libs/Popup/dialogbox.js",
                 "~/Scripts/Sites/LossMonitor.js"));
+        }
+
+        public static void RegisterCreditCollectionBundles(BundleCollection bundles)
+        {
+            // Credit Collection Summary
+            bundles.AddAndInclude(
+                "~/styles/credit-collection-summary",
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Content/Sites/credit-collection-summary.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/credit-collection-summary").Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Scripts/Sites/credit-collection-summary.js"));
+
+            // Status Log
+            bundles.Add(new ScriptBundle("~/scripts/status-log").Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Scripts/Sites/status-log.js"));
         }
     }
 }

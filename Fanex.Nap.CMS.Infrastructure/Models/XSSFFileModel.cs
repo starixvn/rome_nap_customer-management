@@ -79,7 +79,11 @@
                 }
             }
 
-            Worksheet.AddMergedRegion(new CellRangeAddress(startRow, endRow, CurrentColumn, endColumn));
+            if (startRow != endRow || CurrentColumn != endColumn)
+            {
+                Worksheet.AddMergedRegion(new CellRangeAddress(startRow, endRow, CurrentColumn, endColumn));
+            }
+
             CurrentColumn = endColumn + 1;
         }
 

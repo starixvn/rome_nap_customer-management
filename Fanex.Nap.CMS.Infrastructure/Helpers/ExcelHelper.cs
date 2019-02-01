@@ -82,7 +82,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Helpers
             response.AddHeader("content-disposition", string.Format("attachment; filename={0}", sFileName));
             response.ContentType = sContentType;
             response.BinaryWrite(fileContent);
-            response.Flush();
+            //response.Flush();
+            response.End();
             HttpContext.Current.ApplicationInstance.CompleteRequest();
         }
     }

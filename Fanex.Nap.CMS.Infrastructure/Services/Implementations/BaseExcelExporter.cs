@@ -20,7 +20,7 @@
 
             _exportExcel = new ExportExcelInfoByNPOI
             {
-                ExcelFile = workbook,
+                ExcelFile = workbook
             };
 
             _excelStyleTemplate = new ExcelStyleTemplateByNPOI(workbook);

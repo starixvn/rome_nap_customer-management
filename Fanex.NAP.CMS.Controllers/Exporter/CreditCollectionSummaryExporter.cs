@@ -4,39 +4,43 @@
     using Core.Resources;
     using Models.CreditCollectionSummary;
     using Nap.CMS.Infrastructure.Extensions;
+    using Nap.CMS.Infrastructure.Helpers;
     using Nap.CMS.Infrastructure.Models;
-    using Nap.CMS.Infrastructure.Services.Implementations;
-    using Nap.CMS.Infrastructure.Services.Interfaces;
-    using NPOI.HSSF.Util;
+    using Nap.CMS.Infrastructure.Web;
+    using NPOI.XSSF.UserModel;
 
-    public class CreditCollectionSummaryExporter : BaseExcelExporter, IExcelExporter
+    public class CreditCollectionSummaryExporter
     {
+        private const int TitleHeight = 400;
         private readonly CreditCollectionSummaryReport report;
         private readonly CreditCollectionSummaryFilter filter;
 
-        public CreditCollectionSummaryExporter(CreditCollectionSummaryReport report, CreditCollectionSummaryFilter filter)
+        private readonly XSSFFileModel _exportExcel;
+        private readonly XSSFTemplate _excelStyleTemplate;
+
+        public CreditCollectionSummaryExporter(
+            CreditCollectionSummaryReport report,
+            CreditCollectionSummaryFilter filter)
         {
             this.report = report;
             this.filter = filter;
-        }
 
-        public override string FileNameWithoutExtension
-        {
-            get
+            var workbook = new XSSFWorkbook();
+            _excelStyleTemplate = new XSSFTemplate(workbook);
+            _excelStyleTemplate.InitAllGeneralStyles();
+            _exportExcel = new XSSFFileModel
             {
-                return Core.Resources.ViewLang.CreditCollectionSummary;
-            }
+                ExcelFile = workbook
+            };
         }
 
-        public override string SheetName
-        {
-            get
-            {
-                return Core.Resources.ViewLang.CreditCollectionSummary;
-            }
-        }
+        public static string FileNameWithoutExtension => ViewLang.CreditCollectionSummary;
 
-        public override string Title
+        public static string SheetName => ViewLang.CreditCollectionSummary;
+        public XSSFFileModel ExportExcel => _exportExcel;
+        public XSSFTemplate ExcelStyleTemplate => _excelStyleTemplate;
+
+        public string Title
         {
             get
             {
@@ -56,7 +60,7 @@
             }
         }
 
-        public override ExcelColumn[] ExcelColumns
+        public ExcelColumn[] ExcelColumns
         {
             get
             {
@@ -81,7 +85,49 @@
             }
         }
 
-        protected override void ExportBody()
+        public void ResponseStream()
+        {
+            Export();
+
+            ExcelHelper.ResponseStreamWithPassword(_exportExcel.ExcelFile, ExcelHelper.FormatFileName(FileNameWithoutExtension));
+        }
+
+        public void Export()
+        {
+            _exportExcel.Worksheet = _exportExcel.ExcelFile.CreateSheet(SheetName);
+
+            ExportHeader();
+            ExportBody();
+        }
+
+        public void ExportHeader()
+        {
+            var excelColumns = ExcelColumns;
+            _exportExcel.MaxColumnIndex = excelColumns.Length - 1;
+            _exportExcel.SetColumnWidthByFontWidth(excelColumns.Select(c => c.Width).ToArray());
+
+            if (!string.IsNullOrEmpty(Title))
+            {
+                _exportExcel.CreateCurrentRow();
+                _exportExcel.SetCurrentRowHeight(TitleHeight);
+
+                _exportExcel.RenderRow(Title, _excelStyleTemplate.HeaderTextStyle);
+
+                _exportExcel.RenderEmptyRow(_excelStyleTemplate.TextStyle);
+            }
+
+            _exportExcel.CreateCurrentRow();
+            _exportExcel.ResetCurrentColumn();
+
+            foreach (ExcelColumn column in excelColumns)
+            {
+                _exportExcel.RenderCurrentCell(column.Name, _excelStyleTemplate.HeaderTextStyle);
+            }
+
+            _exportExcel.CurrentRow++;
+        }
+
+        public void ExportBody()
         {
             ExportExcel.CurrentColumn = 0;
             ExportExcel.CurrentRow = 2;
@@ -117,24 +163,26 @@
             {
                 int number = 0;
 
-                NpoiExcelExtensions.SetColorAtIndex(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, 228, 241, 252);
-                var headlineNoStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, true, Alignment.Center);
-                var headlineCodeStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, false, Alignment.Left);
-                var headlineNegativeNumberStyle = NpoiExcelExtensions.StyleWithFormula(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, false, "[>=0]##,##0;[RED][<0](##,##0)");
-                var headlineStatusStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, false, Alignment.Center);
-                var headlineAlertStatusStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.CornflowerBlue.Index, false, Alignment.Center, HSSFColor.Red.Index);
-                var unusedHeadlineStatusStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.DarkTeal.Index, false, Alignment.Center);
+                var headlineColor = new XSSFColor(new byte[] { 228, 241, 252 });
+                var unusedColor = new XSSFColor(new byte[] { 237, 236, 234 });
+                var notedColor = new XSSFColor(new byte[] { 255, 0, 0 });
 
-                NpoiExcelExtensions.SetColorAtIndex(ExportExcel.ExcelFile, HSSFColor.DarkTeal.Index, 237, 236, 234);
-                var unusedHeadlineNoStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.DarkTeal.Index, true, Alignment.Center);
-                var unusedHeadlineCodeStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, HSSFColor.DarkTeal.Index, false, Alignment.Left);
-                var unusedHeadlineNegativeNumberStyle = NpoiExcelExtensions.StyleWithFormula(ExportExcel.ExcelFile, HSSFColor.DarkTeal.Index, false, "[>=0]##,##0;[RED][<0](##,##0)");
+                var headlineNoStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, headlineColor, true, Alignment.Center);
+                var headlineCodeStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, headlineColor, false, Alignment.Left);
+                var headlineNegativeNumberStyle = XSSFExtensions.StyleWithFormula(ExportExcel.ExcelFile, headlineColor, false, "[>=0]##,##0;[RED][<0](##,##0)");
+                var headlineStatusStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, headlineColor, false, Alignment.Center);
+                var headlineAlertStatusStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, headlineColor, false, Alignment.Center, notedColor);
+                var unusedHeadlineStatusStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, unusedColor, false, Alignment.Center);
 
-                var noStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, true, Alignment.Center);
-                var codeStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Left);
-                var statusStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center);
-                var alertStatusStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center, HSSFColor.Red.Index);
-                var negativeNumberStyle = NpoiExcelExtensions.StyleWithFormula(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, "[>=0]##,##0;[RED][<0](##,##0)");
+                var unusedHeadlineNoStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, unusedColor, true, Alignment.Center);
+                var unusedHeadlineCodeStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, unusedColor, false, Alignment.Left);
+                var unusedHeadlineNegativeNumberStyle = XSSFExtensions.StyleWithFormula(ExportExcel.ExcelFile, unusedColor, false, "[>=0]##,##0;[RED][<0](##,##0)");
+
+                var noStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, true, Alignment.Center);
+                var codeStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, false, Alignment.Left);
+                var statusStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, false, Alignment.Center);
+                var alertStatusStyle = XSSFExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, false, Alignment.Center, notedColor);
+                var negativeNumberStyle = XSSFExtensions.StyleWithFormula(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, false, "[>=0]##,##0;[RED][<0](##,##0)");
 
                 foreach (var group in report.Groups)
                 {
@@ -188,7 +236,7 @@
             }
             else
             {
-                ExportExcel.RenderEmptyReport(NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, true, Alignment.Center));
+                ExportExcel.RenderEmptyReport(XSSFExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColor, true, Alignment.Center));
             }
         }
 

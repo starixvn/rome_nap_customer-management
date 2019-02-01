@@ -4,19 +4,14 @@
     using Core.Resources;
     using Models.CreditCollectionSummary;
     using Nap.CMS.Infrastructure.Extensions;
-    using Nap.CMS.Infrastructure.Helpers;
     using Nap.CMS.Infrastructure.Models;
-    using Nap.CMS.Infrastructure.Web;
+    using Nap.CMS.Infrastructure.Services.Implementations;
     using NPOI.XSSF.UserModel;
 
-    public class CreditCollectionSummaryExporter
+    public class CreditCollectionSummaryExporter : XSSFExporter
     {
-        private const int TitleHeight = 400;
         private readonly CreditCollectionSummaryReport report;
         private readonly CreditCollectionSummaryFilter filter;
-
-        private readonly XSSFFileModel _exportExcel;
-        private readonly XSSFTemplate _excelStyleTemplate;
 
         public CreditCollectionSummaryExporter(
             CreditCollectionSummaryReport report,
@@ -24,23 +19,14 @@
         {
             this.report = report;
             this.filter = filter;
-
-            var workbook = new XSSFWorkbook();
-            _excelStyleTemplate = new XSSFTemplate(workbook);
-            _excelStyleTemplate.InitAllGeneralStyles();
-            _exportExcel = new XSSFFileModel
-            {
-                ExcelFile = workbook
-            };
+            _passwordProtection = true;
         }
 
-        public static string FileNameWithoutExtension => ViewLang.CreditCollectionSummary;
+        public override string FileNameWithoutExtension => ViewLang.CreditCollectionSummary;
 
-        public static string SheetName => ViewLang.CreditCollectionSummary;
-        public XSSFFileModel ExportExcel => _exportExcel;
-        public XSSFTemplate ExcelStyleTemplate => _excelStyleTemplate;
+        public override string SheetName => ViewLang.CreditCollectionSummary;
 
-        public string Title
+        public override string Title
         {
             get
             {
@@ -60,7 +46,7 @@
             }
         }
 
-        public ExcelColumn[] ExcelColumns
+        public override ExcelColumn[] ExcelColumns
         {
             get
             {
@@ -85,60 +71,30 @@
             }
         }
 
-        public void ResponseStream()
+        protected override void ExportHeader()
         {
-            Export();
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 0, 0));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 1, 1));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 2, 2));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 3, 3));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 6, 6));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 7, 7));
+            ExportExcel.Worksheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(2, 3, 8, 8));
 
-            ExcelHelper.ResponseStreamWithPassword(_exportExcel.ExcelFile, ExcelHelper.FormatFileName(FileNameWithoutExtension));
-        }
+            base.ExportHeader();
 
-        public void Export()
-        {
-            _exportExcel.Worksheet = _exportExcel.ExcelFile.CreateSheet(SheetName);
-
-            ExportHeader();
-            ExportBody();
-        }
-
-        public void ExportHeader()
-        {
-            var excelColumns = ExcelColumns;
-            _exportExcel.MaxColumnIndex = excelColumns.Length - 1;
-            _exportExcel.SetColumnWidthByFontWidth(excelColumns.Select(c => c.Width).ToArray());
-
-            if (!string.IsNullOrEmpty(Title))
+            ExportExcel.CreateCurrentRow();
+            ExportExcel.ResetCurrentColumn();
+            foreach (ExcelColumn column in ExcelColumns)
             {
-                _exportExcel.CreateCurrentRow();
-                _exportExcel.SetCurrentRowHeight(TitleHeight);
-
-                _exportExcel.RenderRow(Title, _excelStyleTemplate.HeaderTextStyle);
-
-                _exportExcel.RenderEmptyRow(_excelStyleTemplate.TextStyle);
+                ExportExcel.RenderCurrentCell(string.Empty, ExcelStyleTemplate.HeaderTextStyle);
             }
-
-            _exportExcel.CreateCurrentRow();
-            _exportExcel.ResetCurrentColumn();
-
-            foreach (ExcelColumn column in excelColumns)
-            {
-                _exportExcel.RenderCurrentCell(column.Name, _excelStyleTemplate.HeaderTextStyle);
-            }
-
-            _exportExcel.CurrentRow++;
         }
 
-        public void ExportBody()
+        protected override void ExportBody()
         {
-            ExportExcel.CurrentColumn = 0;
+            ExportExcel.CurrentColumn = 9;
             ExportExcel.CurrentRow = 2;
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.No, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.Code, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.Headline + "/" + ViewLang.Direct, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.Status, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.CurrentColumn += 2;
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.DebtMovement, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, $"({ViewLang.Collection})/{ViewLang.Payment}", ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, ViewLang.NetMovement, ExcelStyleTemplate.HeaderTextStyle);
 
             if (report.BreakDowns.Any())
             {

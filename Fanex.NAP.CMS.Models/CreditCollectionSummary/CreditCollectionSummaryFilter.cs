@@ -14,8 +14,6 @@
 
         public DateTime CurrentBalanceDate { get; set; }
 
-        public bool ExcludeTestData { get; set; }
-
         public DateTime BalanceUpDay { get; set; }
 
         public DateTime MoveBetsDay { get; set; }

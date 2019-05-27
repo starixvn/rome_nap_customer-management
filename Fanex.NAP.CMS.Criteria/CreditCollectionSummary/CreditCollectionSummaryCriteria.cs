@@ -9,9 +9,6 @@
 
         public string Status { get; set; }
 
-        [SpParam(SqlParamName = "ExcludeTest")]
-        public bool ExcludeTestData { get; set; }
-
         [SpParam(SqlParamName = "FromDate")]
         public DateTime LastBalanceDate { get; set; }
 

@@ -624,4 +624,19 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="CreditCollection_MonthlyRangeError" xml:space="preserve">
+    <value>Maximum report period must be upto 6 months.</value>
+  </data>
+  <data name="CreditCollection_WeeklyRangeError" xml:space="preserve">
+    <value>Maximum report period must be upto 15 weeks.</value>
+  </data>
 </root>

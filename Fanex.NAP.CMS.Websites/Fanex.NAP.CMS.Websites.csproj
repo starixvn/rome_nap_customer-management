@@ -512,6 +512,8 @@
     <Content Include="Scripts\CMSConstants.js" />
     <Content Include="Scripts\KeyboardManager.js" />
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
+    <Content Include="Scripts\Libs\DateRangePicker\weekly-picker.js" />
+    <Content Include="Scripts\Libs\DateRangePicker\monthly-picker.js" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\fanex.multiSelect.css" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\fanex.multiSelect.js" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\BottomLine.png" />

@@ -6,12 +6,14 @@ $(document).ready(function () {
 });
 
 var creditCollectionSummary = {
-    $fromtoDatePicker: null,
     $ddlCode: null,
     $ddlStatus: null,
+    $ddlMode: null,
     $username: null,
     $divReport: null,
-    $chkExcludeTestData: null,
+    $divResult: null,
+    monthlyPicker: null,
+    weeklyPicker: null,
 
     pageSize: 100,
     pageIndex: 1,
@@ -21,7 +23,6 @@ var creditCollectionSummary = {
         Status: "",
         LastBalanceDate: "",
         CurrentBalanceDate: "",
-        ExcludeTestData: false,
         PageSize: 100,
         PageIndex: 1
     },
@@ -60,36 +61,10 @@ var creditCollectionSummary = {
         creditCollectionSummary.$ddlStatus = $("#ddl-status");
         creditCollectionSummary.$username = $("#txt-username");
         creditCollectionSummary.$divReport = $("#div-report");
-        creditCollectionSummary.$chkExcludeTestData = $("#chk-exclude-test-data");
+        creditCollectionSummary.$divResult = $("#div-result-message");
     },
     bindEvents: function () {
         $(".ui-combobox-input").attr("readonly", "readonly");
-        creditCollectionSummary.$fromtoDatePicker.nexDatePicker({
-            nexDatePickerType: 'daterange',
-            datePickerFormat: {
-                dateFormat: "M dd, yy",
-                changeMonth: true,
-                changeYear: true,
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                minDate: null,
-                maxDate: yesterday
-            },
-            firstDatePicker: {
-                Id: 'dpk-fromdate',
-                Label: viewResources.LastBalanceDate,
-                LabelCss: 'col_5 lbl-field',
-                TextboxCss: 'edit-field col_7'
-            },
-            secondDatePicker: {
-                Id: 'dpk-todate',
-                Label: viewResources.CurrentBalanceDate,
-                InitDate: currentDate,
-                CurrentDate: currentDate,
-                LabelCss: 'col_6 lbl-field',
-                TextboxCss: 'edit-field col_6'
-            }
-        });
         creditCollectionSummary.$ddlStatus.fanexMultiSelect({
             minWidth: 180,
             checkAllText: viewResources.All,
@@ -99,23 +74,28 @@ var creditCollectionSummary = {
 
         creditCollectionSummary.$ddlStatus = $("#ddl-status");
 
-        $('#dpk-fromdate').datepicker('setDate', initFromDate);
-
         $("#btn-generate").off("click").on('click', () => {
+            if (!creditCollectionSummary.validateFilter()) {
+                return;
+            }
+
             creditCollectionSummary.pageSize = 100;
             creditCollectionSummary.pageIndex = 1;
             creditCollectionSummary.generate();
         });
         $("#btn-export").off("click").on('click', function () {
-            var dateRange = creditCollectionSummary.$fromtoDatePicker.nexDatePicker("getDateRange");
+            if (!creditCollectionSummary.validateFilter()) {
+                return;
+            }
+
+            var dateRange = creditCollectionSummary.getDateRange();
 
             var parameters = {
                 Code: creditCollectionSummary.$username.val(),
                 AccountType: creditCollectionSummary.$ddlCode.val(),
                 Status: creditCollectionSummary.getSelectedStatus(),
-                LastBalanceDate: dateRange.FromDate,
-                CurrentBalanceDate: dateRange.ToDate,
-                ExcludeTestData: creditCollectionSummary.$chkExcludeTestData.is(":checked"),
+                LastBalanceDate: dateRange.fromDate,
+                CurrentBalanceDate: dateRange.toDate,
                 PageSize: -1,
                 PageIndex: -1
             };
@@ -128,19 +108,44 @@ var creditCollectionSummary = {
             gravity: 'ne'
         });
 
+        creditCollectionSummary.$ddlMode = $("#ddl-mode");
+        creditCollectionSummary.$ddlMode.change(creditCollectionSummary.changeDateMode);
+        creditCollectionSummary.monthlyPicker = new MonthlyPicker();
+        creditCollectionSummary.monthlyPicker.render({
+            $: $,
+            fromDateId: "dpk-fromdate-monthly",
+            toDateId: "dpk-todate-monthly",
+            minDate: minMonthly,
+            maxDate: maxMonthly,
+            maxRange: 6
+        });
+
+        creditCollectionSummary.weeklyPicker = new WeeklyPicker();
+        creditCollectionSummary.weeklyPicker.render({
+            $: $,
+            fromDateId: "dpk-fromdate-weekly",
+            minFromDate: minFromDateWeekly,
+            maxFromDate: maxFromDateWeekly,
+
+            toDateId: "dpk-todate-weekly",
+            minToDate: minToDateWeekly,
+            maxToDate: maxToDateWeekly,
+            maxRange: 15
+        });
+
+        creditCollectionSummary.changeDateMode();
     },
     generate: function () {
         // Delay 70ms for jQuery-UI combo-box to verify its state.
         setTimeout(function () {
             CMS.closeMsgBox();
-            var dateRange = creditCollectionSummary.$fromtoDatePicker.nexDatePicker("getDateRange");
+            var dateRange = creditCollectionSummary.getDateRange();
             creditCollectionSummary.parameters = {
                 Code: creditCollectionSummary.$username.val(),
                 AccountType: creditCollectionSummary.$ddlCode.val(),
                 Status: creditCollectionSummary.getSelectedStatus(),
-                LastBalanceDate: dateRange.FromDate,
-                CurrentBalanceDate: dateRange.ToDate,
-                ExcludeTestData: creditCollectionSummary.$chkExcludeTestData.is(":checked"),
+                LastBalanceDate: dateRange.fromDate,
+                CurrentBalanceDate: dateRange.toDate,
                 PageSize: creditCollectionSummary.pageSize,
                 PageIndex: creditCollectionSummary.pageIndex
             };
@@ -295,7 +300,6 @@ var creditCollectionSummary = {
                         Status: creditCollectionSummary.parameters.Status,
                         LastBalanceDate: creditCollectionSummary.parameters.LastBalanceDate,
                         CurrentBalanceDate: creditCollectionSummary.parameters.CurrentBalanceDate,
-                        ExcludeTestData: creditCollectionSummary.parameters.ExcludeTestData,
                         PageSize: -1,
                         PageIndex: -1
                     };
@@ -464,5 +468,43 @@ var creditCollectionSummary = {
         }
 
         return statusParam.join(',');
+    },
+    changeDateMode: () => {
+        var mode = creditCollectionSummary.$ddlMode.val();
+        switch (mode) {
+            case "1":
+                creditCollectionSummary.weeklyPicker.hide();
+                creditCollectionSummary.monthlyPicker.show();
+                break;
+            case "2":
+                creditCollectionSummary.monthlyPicker.hide();
+                creditCollectionSummary.weeklyPicker.show();
+                break;
+            default:
+                break;
+        }
+    },
+    validateFilter: () => {
+        var mode = creditCollectionSummary.$ddlMode.val();
+        if (mode == "1" && !creditCollectionSummary.monthlyPicker.isValidRange()) {
+            CMS.showInlineErrorMsg(viewResources.CreditCollection_MonthlyRangeError, creditCollectionSummary.$divResult);
+            return false;
+        }
+
+        if (mode == "2" && !creditCollectionSummary.weeklyPicker.isValidRange()) {
+            CMS.showInlineErrorMsg(viewResources.CreditCollection_WeeklyRangeError, creditCollectionSummary.$divResult);
+            return false;
+        }
+
+        CMS.hideInlineMsg(creditCollectionSummary.$divResult);
+        return true;
+    },
+    getDateRange: () => {
+        var mode = creditCollectionSummary.$ddlMode.val();
+        if (mode == "1") {
+            return creditCollectionSummary.monthlyPicker.getDateRange();
+        }
+
+        return creditCollectionSummary.weeklyPicker.getDateRange();
     }
 };

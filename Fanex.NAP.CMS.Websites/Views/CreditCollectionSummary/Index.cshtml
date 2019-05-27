@@ -1,5 +1,6 @@
 ﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
 @using Fanex.NAP.CMS.Models.CreditCollectionSummary;
+@using Fanex.NAP.CMS.ViewModels.CreditCollectionSummary;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ViewLang.CreditCollectionSummary;
@@ -16,6 +17,7 @@
         </div>
     </div>
 }
+<div id="div-result-message" class="inline-message"></div>
 <div class="filter-bar">
     <span id="note-info" class="note-info-message" title="@Messages.CreditCollectionNote"></span>
     <div class="filter-form">
@@ -36,7 +38,7 @@
                     <option value="@CodeType.OtherCodes">@ViewLang.Othercodes</option>
                 </select>
             </div>
-            <div class="lbl-field col_3 align-right">
+            <div class="lbl-field col_5 align-right">
                 <label for="ddl-status">@ViewLang.Status</label>
             </div>
             <div class="edit-field col_8 align-left">
@@ -48,14 +50,29 @@
                 </select>
             </div>
         </div>
+
         <div class="filter-row">
-            <div id="fromtodate-picker"></div>
-            <div class="lbl-field col_3 align-right"></div>
-            <div class="lbl-field col_4 align-left">
-                <input id="chk-exclude-test-data" type="checkbox" />
-                <label for="chk-exclude-test-data">@ViewLang.ExcludeUUS</label>
+            <div class="lbl-field col_5 align-right">
+                <label for="ddl-mode">@ViewLang.Mode</label>
+            </div>
+            <div class="edit-field col_7 align-left">
+                <select id="ddl-mode" class="combobox-autocomplete ddl-mode">
+                    <option value="1">@ViewLang.Monthly</option>
+                    <option value="2">@ViewLang.Weekly</option>
+                </select>
+            </div>
+            <div class="ui_nexdatepicker_lbl_field col_6 lbl-field">@ViewLang.LastBalanceDate</div>
+            <div class="ui_nexdatepicker_edit_field edit-field col_6">
+                <input id="dpk-fromdate-monthly" name="dpk-fromdate-monthly" type="text" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" value="@CreditCollectionSummaryViewModel.InitFromDateMonthlyMode">
+                <input id="dpk-fromdate-weekly" name="dpk-fromdate-weekly" type="text" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate display-none" value="@CreditCollectionSummaryViewModel.InitFromDateWeeklyMode">
+            </div>
+            <div class="ui_nexdatepicker_lbl_field col_5 lbl-field">@ViewLang.CurrentBalanceDate</div>
+            <div class="ui_nexdatepicker_edit_field edit-field col_6">
+                <input id="dpk-todate-monthly" name="dpk-todate-monthly" type="text" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" value="@CreditCollectionSummaryViewModel.InitToDateMonthlyMode">
+                <input id="dpk-todate-weekly" name="dpk-todate-weekly" type="text" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate display-none" value="@CreditCollectionSummaryViewModel.InitToDateWeeklyMode">
             </div>
         </div>
+
         <div class="filter-row">
             <div class="lbl-field col_5 align-right"></div>
             <div class="submit width-auto col_4">
@@ -76,6 +93,15 @@
         var yesterday = '@DateTime.Today.AddDays(-1).ToString("MMM dd, yyyy")';
         var initFromDate = currentDate;
         var hasEditAccessRight = @(ViewBag.HasEditAccessRight ? 1 : 0);
+
+        var minMonthly = '@Fanex.Nap.CMS.Infrastructure.Extensions.DateTimeExtensions.FirstDayOfMonth(DateTime.Today.AddMonths(-12)).ToString("MMM dd, yyyy")';
+        var maxMonthly = '@Fanex.Nap.CMS.Infrastructure.Extensions.DateTimeExtensions.LastDayOfMonth(DateTime.Today).ToString("MMM dd, yyyy")';
+        var minFromDateWeekly = '@CreditCollectionSummaryViewModel.MinFromDateWeekly';
+        var maxFromDateWeekly = '@CreditCollectionSummaryViewModel.MaxFromDateWeekly';
+        var minToDateWeekly = '@CreditCollectionSummaryViewModel.MinToDateWeekly';
+        var maxToDateWeekly = '@CreditCollectionSummaryViewModel.MaxToDateWeekly';
+
+
         var viewResources = {
             LastBalanceDate: "@ViewLang.LastBalanceDate",
             CurrentBalanceDate: "@ViewLang.CurrentBalanceDate",
@@ -101,7 +127,9 @@
             Unused: "@ViewLang.Unused",
             Save: "@ViewLang.Save",
             Revert: "@ViewLang.Revert",
-            CreditCollectionSummary:"@ViewLang.CreditCollectionSummary"
+            CreditCollectionSummary:"@ViewLang.CreditCollectionSummary",
+            CreditCollection_MonthlyRangeError:"@ViewLang.CreditCollection_MonthlyRangeError",
+            CreditCollection_WeeklyRangeError:"@ViewLang.CreditCollection_WeeklyRangeError"
         }
     </script>
     @Scripts.Render("~/scripts/credit-collection-summary")

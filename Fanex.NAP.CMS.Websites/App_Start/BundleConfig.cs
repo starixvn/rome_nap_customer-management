@@ -216,6 +216,8 @@ namespace Fanex.NAP.CMS.Websites
 
             bundles.Add(new ScriptBundle("~/scripts/credit-collection-summary").Include(
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Scripts/Libs/DateRangePicker/monthly-picker.js",
+                "~/Scripts/Libs/DateRangePicker/weekly-picker.js",
                 "~/Scripts/Sites/credit-collection-summary.js"));
 
             // Status Log

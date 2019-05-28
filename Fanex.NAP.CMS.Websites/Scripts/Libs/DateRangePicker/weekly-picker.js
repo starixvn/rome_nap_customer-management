@@ -17,8 +17,8 @@ function WeeklyPicker() {
 
     this.getDateRange = () => {
         return {
-            fromDate: this.$fromDate.datepicker("getDate"),
-            toDate: this.$toDate.datepicker("getDate")
+            fromDate: this.$fromDate.val(),
+            toDate: this.$toDate.val()
         };
     };
     this.hide = () => {

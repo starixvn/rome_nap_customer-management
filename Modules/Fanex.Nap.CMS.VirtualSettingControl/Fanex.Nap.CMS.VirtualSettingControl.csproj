@@ -135,6 +135,7 @@
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateDetailsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\SaveAssociatedAccountsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\ValidateAssociatedAccountsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\ViewRealValuesCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginHistoryDateCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrAdjustmentLogCriteria.cs" />
+    <Compile Include="Extensions\IDataReaderExtension.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Models\VirtualRateDetails\VirtualRateDetailsReport.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateLog.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateRealValues.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateLogReport.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerVirtualSettingAdvanceModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerModel.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsData.cs" />
     <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
+    <Compile Include="Services\VirtualRateDetails\VirtualRateRealValuesExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\VirtualRateDetailsExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\VirtualRateDetailsService.cs" />
     <Compile Include="ViewModels\VrAutoAdjustmentReport\VrAdjustmentViewModel.cs" />

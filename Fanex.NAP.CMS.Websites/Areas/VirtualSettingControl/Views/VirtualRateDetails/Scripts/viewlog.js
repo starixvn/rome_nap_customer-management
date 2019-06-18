@@ -71,9 +71,6 @@
         });
     };
 
-    this.collapseReport = function () {
-        var isCollapse = this.elements.iconCollapse.hasClass("ico-collapse");
-    };
     this.enterSearch = function () {
         var username = this.elements.txtUsername.val().trim();
         if (username == "") {
@@ -85,6 +82,7 @@
         var fromtoDate = this.elements.fromtoDatePicker.nexDatePicker('getDateRange');
         var param = {
             username: username,
+            sportType: resources.SportType,
             includeUpline: this.elements.chkIncludeUpline.is(":checked"),
             fromDate: fromtoDate.FromDate,
             toDate: fromtoDate.ToDate
@@ -137,91 +135,95 @@
         }
 
         this.elements.tblVirtualRateReport.find("tbody").empty().html(html);
-        $(".group-toggle").on("click touchend", function () {
-            self.toggleGroup($(this));
+        $("#tbl-virtual-rate-report tr").on("click touchend", function () {
+            self.toggleGroup($(this).find(".group-toggle"));
         });
-
+        this.collapseAll();
         this.elements.reportContainer.removeClass("display-none");
     };
     this.renderLog = function (log) {
         var html = "";
-        html += "<tr data-level='0' data-log-date='" + log.UpdatedDateText + "'>\
+        html += "<tr data-level='0' data-log-id='" + log.LogId + "'>\
                     <td colspan='3'>\
-                        <span class='group-toggle group-expand'>[−]</span>" + log.UpdatedDateText + " - " + resources.Update + " " + log.Username + " - " + resources.By + " " + log.Editor +
-            "<span class='lbl-exchange-rate'>" + resources.ExchangeRate + ": " + numeral(log.ActualRate).format("#,##0.0000") + "</span>\
-                    </td>\
-                </tr>";
+                        <span class='group-toggle group-expand'>[−]</span>" + log.UpdatedDateText + " - " + resources.Update + " " + log.Username + " - " + resources.By + " " + log.Editor;
 
-        for (var i = 0; i < log.NewSports.length; i++) {
-            html += this.renderSportLog(log, log.NewSports[i], log.OldSports[i]);
+        if (log.ExchangeRate != -1) {
+            html += "<span class='lbl-exchange-rate'>" + resources.ExchangeRate + ": " + log.ExchangeRateText + "</span>";
+        }
+
+        html += "</td></tr>";
+
+        for (var i = 0; i < log.Sports.length; i++) {
+            html += this.renderSportLog(log, log.Sports[i]);
         }
 
         return html;
     };
-    this.renderSportLog = function (log, newSport, oldSport) {
+    this.renderSportLog = function (log, sport) {
         var html = "";
-        html += "<tr data-level='1' data-log-date='" + log.UpdatedDateText + "' data-sport-id='" + newSport.GroupId + "'>\
-                    <td><span class='group-toggle group-expand'>[−]</span>" + newSport.GroupName + "</td>\
-                    <td>" + this.renderRate(newSport.NonliveLog, oldSport.NonliveLog) + "</td>\
-                    <td>" + this.renderRate(newSport.LiveLog, oldSport.LiveLog) + "</td>\
-                </tr>";
-
-        for (var i = 0; i < newSport.Childs.length; i++) {
-            html += this.renderLeagueLog(log, newSport, oldSport, newSport.Childs[i], oldSport.Childs[i]);
+        html += "<tr data-level='1' data-log-id='" + log.LogId + "' data-sport-id='" + sport.GroupId + "'>\
+                    <td><span class='group-toggle group-expand'>[−]</span>" + sport.GroupName + "</td>"
+            + this.renderRate(sport.NewNonliveLog, sport.NonliveLog)
+            + this.renderRate(sport.NewLiveLog, sport.LiveLog) +
+            "</tr>";
+        for (var i = 0; i < sport.Childs.length; i++) {
+            html += this.renderLeagueLog(log, sport, sport.Childs[i]);
         }
 
         return html;
     };
     this.renderRate = function (newRate, oldRate) {
-        return newRate == oldRate ? newRate : "<div class='new-value'>" + newRate + "</div><div class='old-value'>" + oldRate + "</div>";
+        return newRate == oldRate
+            ? ("<td>" + newRate + "</td>")
+            : ("<td class='has-changes'><div class='new-value'>" + newRate + "</div><div class='old-value'>" + oldRate + "</div></td>");
     };
-    this.renderLeagueLog = function (log, newSport, oldSport, newLeague, oldLeague) {
+    this.renderLeagueLog = function (log, sport, league) {
         var html = "";
-        html += "<tr data-level='2' data-log-date='" + log.UpdatedDateText +
-            "' data-sport-id='" + newSport.GroupId + "'" +
-            " data-league-id='" + newLeague.GroupId + "'>\
-                    <td><span class='group-toggle group-expand'>[−]</span>" + newLeague.GroupName + "</td>\
-                    <td>" + this.renderRate(newLeague.NonliveLog, oldLeague.NonliveLog) + "</td>\
-                    <td>" + this.renderRate(newLeague.LiveLog, oldLeague.LiveLog) + "</td>\
-                </tr > ";
+        html += "<tr data-level='2' data-log-id='" + log.LogId +
+            "' data-sport-id='" + sport.GroupId + "'" +
+            " data-league-id='" + league.GroupId + "'>\
+                    <td><span class='group-toggle group-expand'>[−]</span>" + league.GroupName + "</td>"
+            + this.renderRate(league.NewNonliveLog, league.NonliveLog)
+            + this.renderRate(league.NewLiveLog, league.LiveLog) +
+            "</tr> ";
 
-        for (var i = 0; i < newLeague.Childs.length; i++) {
-            html += this.renderBetTypeGroupLog(log, newSport, oldSport, newLeague, oldLeague, newLeague.Childs[i], oldLeague.Childs[i]);
+        for (var i = 0; i < league.Childs.length; i++) {
+            html += this.renderBetTypeGroupLog(log, sport, league, league.Childs[i]);
         }
 
         return html;
     };
     this.renderBetTypeGroupLog =
-        function (log, newSport, oldSport, newLeague, oldLeague, newBetTypeGroup, oldBetTypeGroup) {
+        function (log, sport, league, betTypeGroup) {
             var html = "";
-            html += "<tr data-level='3' data-log-date='" + log.UpdatedDateText +
-                "' data-sport-id='" + newSport.GroupId + "'" +
-                " data-league-id='" + newLeague.GroupId + "'" +
-                " data-bet-type-group-id='" + newBetTypeGroup.GroupId + "'" +
+            html += "<tr data-level='3' data-log-id='" + log.LogId +
+                "' data-sport-id='" + sport.GroupId + "'" +
+                " data-league-id='" + league.GroupId + "'" +
+                " data-bet-type-group-id='" + betTypeGroup.GroupId + "'" +
                 ">\
-                    <td><span class='group-toggle group-expand'>[−]</span>" + newBetTypeGroup.GroupName + "</td>\
-                    <td>" + this.renderRate(newBetTypeGroup.NonliveLog, oldBetTypeGroup.NonliveLog) + "</td>\
-                    <td>" + this.renderRate(newBetTypeGroup.LiveLog, oldBetTypeGroup.LiveLog) + "</td>\
-                </tr > ";
+                    <td><span class='group-toggle group-expand'>[−]</span>" + betTypeGroup.GroupName + "</td>"
+                + this.renderRate(betTypeGroup.NewNonliveLog, betTypeGroup.NonliveLog)
+                + this.renderRate(betTypeGroup.NewLiveLog, betTypeGroup.LiveLog) +
+                "</tr> ";
 
-            for (var i = 0; i < newBetTypeGroup.Childs.length; i++) {
-                html += this.renderBetTypeLog(log, newSport, oldSport, newLeague, oldLeague, newBetTypeGroup, oldBetTypeGroup, newBetTypeGroup.Childs[i], oldBetTypeGroup.Childs[i]);
+            for (var i = 0; i < betTypeGroup.Childs.length; i++) {
+                html += this.renderBetTypeLog(log, sport, league, betTypeGroup, betTypeGroup.Childs[i]);
             }
 
             return html;
         };
     this.renderBetTypeLog =
-        function (log, newSport, oldSport, newLeague, oldLeague, newBetTypeGroup, oldBetTypeGroup, newBetType, oldBetType) {
+        function (log, sport, league, betTypeGroup, betType) {
             var html = "";
-            html += "<tr data-level='4' data-log-date='" + log.UpdatedDateText +
-                "' data-sport-id='" + newSport.GroupId + "'" +
-                " data-league-id='" + newLeague.GroupId + "'" +
-                " data-bet-type-group-id='" + newBetTypeGroup.GroupId + "'" +
+            html += "<tr data-level='4' data-log-id='" + log.LogId +
+                "' data-sport-id='" + sport.GroupId + "'" +
+                " data-league-id='" + league.GroupId + "'" +
+                " data-bet-type-group-id='" + betTypeGroup.GroupId + "'" +
                 ">\
-                    <td>" + newBetType.GroupName + "</td>\
-                    <td>" + this.renderRate(newBetType.NonliveLog, oldBetType.NonliveLog) + "</td>\
-                    <td>" + this.renderRate(newBetType.LiveLog, oldBetType.LiveLog) + "</td>\
-                </tr > ";
+                    <td>" + betType.GroupName + "</td>"
+                + this.renderRate(betType.NewNonliveLog, betType.NonliveLog)
+                + this.renderRate(betType.NewLiveLog, betType.LiveLog) +
+                "</tr > ";
 
             return html;
         };
@@ -272,19 +274,19 @@
         elem.html(text);
     };
     this.getRowSelector = function (row, level) {
-        var logDate = row.attr("data-log-date");
-        var selector = "[data-log-date='" + logDate + "']";
-        if (selector >= 1) {
+        var logId = row.attr("data-log-id");
+        var selector = "[data-log-id='" + logId + "']";
+        if (level >= 1) {
             var sportId = row.attr("data-sport-id");
             selector += "[data-sport-id='" + sportId + "']";
         }
 
-        if (selector >= 2) {
+        if (level >= 2) {
             var leagueId = row.attr("data-league-id");
             selector += "[data-league-id='" + leagueId + "']";
         }
 
-        if (selector >= 3) {
+        if (level >= 3) {
             var betTypeGroupId = row.attr("data-bet-type-group-id");
             selector += "[data-bet-type-group-id='" + betTypeGroupId + "']";
         }
@@ -323,6 +325,17 @@
         var isExpandAll = $("tr .group-toggle.group-expand").length == $("tr .group-toggle").length;
         if (isExpandAll) {
             this.elements.iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
+        }
+    };
+    this.collapseAll = function () {
+        this.elements.iconCollapse.removeClass("ico-collapse").addClass("ico-expand");
+
+        var toggles = $("tr[data-level='0'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            var elem = $(toggles[i]);
+            this.forceToggle(elem, false);
+            var parent = elem.parent().parent();
+            this.hideAllChild(0, parent);
         }
     };
 };

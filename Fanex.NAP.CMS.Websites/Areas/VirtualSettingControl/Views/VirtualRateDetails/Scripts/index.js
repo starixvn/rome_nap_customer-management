@@ -7,6 +7,7 @@
         reportTitle: null,
         btnSubmitChanges: null,
         lnkViewUpline: null,
+        lnkViewRealValues: null,
         btnExportExcel: null,
 
         btnViewCompactMode: null,
@@ -25,6 +26,7 @@
     };
     this.oldReport = null;
     this.followParentValue = -200;
+    this.realValueCustId = 0;
 
     this.init = function () {
         this.cachedElements();
@@ -44,6 +46,7 @@
         this.elements.reportTitle = $("#report-tile");
         this.elements.btnSubmitChanges = $(".btn-submit-changes");
         this.elements.lnkViewUpline = $("#lnk-view-upline");
+        this.elements.lnkViewRealValues = $("#lnk-view-real-values");
         this.elements.btnExportExcel = $("#btn-export-excel");
 
         this.elements.btnViewCompactMode = $("#btn-view-compact-mode");
@@ -73,6 +76,9 @@
         });
         this.elements.lnkViewUpline.on("click touchend", function () {
             self.viewUpline($(this).attr("custname"));
+        });
+        this.elements.lnkViewRealValues.on("click touchend", function () {
+            self.viewRealValues($(this).attr("cust-id"));
         });
         this.elements.btnViewCompactMode.on("click touchend", function () { self.viewCompactMode(); });
         this.elements.btnViewFullMode.on("click touchend", function () { self.viewFullMode(); });
@@ -162,9 +168,11 @@
 
         if (this.isGlobalSetting()) {
             this.elements.lnkViewUpline.addClass("display-none");
+            this.elements.lnkViewRealValues.addClass("display-none");
             this.elements.divAssociatedAccounts.addClass("display-none");
         } else {
             this.elements.lnkViewUpline.attr("custname", rs.UplineCustName).removeClass("display-none");
+            this.elements.lnkViewRealValues.attr("cust-id", rs.CustId).removeClass("display-none");
             this.elements.divAssociatedAccounts.removeClass("display-none");
         }
 
@@ -462,12 +470,12 @@
         var gameId = parent.attr("data-gameid");
         if (level == 3) {
             var betTypeGroupId = parent.attr("data-bettypegroupid");
-            $("tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").addClass("display-none");
+            $("#tbl-virtual-rate-report tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").addClass("display-none");
             return;
         }
 
-        $("tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
-        $("tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
+        $("#tbl-virtual-rate-report tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
+        $("#tbl-virtual-rate-report tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
     };
     this.showAllChild = function (level, parent) {
         var sportId = parent.attr("data-sportid");
@@ -475,7 +483,7 @@
 
         if (level == 3) {
             var betTypeGroupId = parent.attr("data-bettypegroupid");
-            $("tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").removeClass("display-none");
+            $("#tbl-virtual-rate-report tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").removeClass("display-none");
             return;
         }
 
@@ -484,8 +492,8 @@
             this.forceToggle($(toggles[i]), true);
         }
 
-        $("tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
-        $("tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
+        $("#tbl-virtual-rate-report tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
+        $("#tbl-virtual-rate-report tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
     };
     this.forceToggle = function (elem, isExpand) {
         var parent = elem.parent().parent();
@@ -732,13 +740,13 @@
         }
     };
     this.checkCollapseExpandAll = function () {
-        var isCollapseAll = $("tr[data-level='2'] .group-toggle.group-collapse").length == $("tr[data-level='2'] .group-toggle").length;
+        var isCollapseAll = $("#tbl-virtual-rate-report tr[data-level='2'] .group-toggle.group-collapse").length == $("tr[data-level='2'] .group-toggle").length;
         if (isCollapseAll) {
             this.elements.iconCollapse.removeClass("ico-collapse").addClass("ico-expand");
             return;
         }
 
-        var isExpandAll = $("tr .group-toggle.group-expand").length == $("tr .group-toggle").length;
+        var isExpandAll = $("#tbl-virtual-rate-report tr .group-toggle.group-expand").length == $("tr .group-toggle").length;
         if (isExpandAll) {
             this.elements.iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
         }
@@ -748,7 +756,7 @@
             this.hideFollowParentRows(i);
         }
 
-        var copyRelateds = $("tr:not(.hide-compact-mode) .icon-copy2related");
+        var copyRelateds = $("#tbl-virtual-rate-report tr:not(.hide-compact-mode) .icon-copy2related");
         for (var i = 0; i < copyRelateds.length; i++) {
             var elem = $(copyRelateds[i]);
 
@@ -759,15 +767,15 @@
             switch (level) {
                 case 2:
                     var gameId = row.attr("data-gameid");
-                    selector = "tr[data-level='2'][data-gameid='" + gameId + "']";
+                    selector = "#tbl-virtual-rate-report tr[data-level='2'][data-gameid='" + gameId + "']";
                     break;
                 case 3:
                     var betTypeGroupId = row.attr("data-bettypegroupid");
-                    selector = "tr[data-level='3'][data-bettypegroupid='" + betTypeGroupId + "']";
+                    selector = "#tbl-virtual-rate-report tr[data-level='3'][data-bettypegroupid='" + betTypeGroupId + "']";
                     break;
                 case 4:
                     var betTypeId = row.attr("data-bettypeid");
-                    selector = "tr[data-level='4'][data-bettypeid='" + betTypeId + "']";
+                    selector = "#tbl-virtual-rate-report tr[data-level='4'][data-bettypeid='" + betTypeId + "']";
                     break;
             }
 
@@ -792,7 +800,7 @@
             var betTypeGroupId = elem.attr("data-bettypegroupid");
             var betTypeId = elem.attr("data-bettypegroupid");
 
-            var selector = "tr[data-level='" + (layerId + 1) + "'][data-sportid='" + sportId + "']";
+            var selector = "#tbl-virtual-rate-report tr[data-level='" + (layerId + 1) + "'][data-sportid='" + sportId + "']";
             if (layerId >= 2) {
                 selector += "[data-gameid='" + gameId + "']";
             }
@@ -972,6 +980,85 @@
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
+    };
+
+    this.viewRealValues = function (custId) {
+        this.realValueCustId = custId;
+        CMS.closeMsgBox();
+        var url = CMS.resolveRootUrl("VirtualRateDetails/ViewRealValues?custId=" + custId + "&sportType=" + resources.SportType);
+        CMS.getHtml(url, this.showRealValues);
+    };
+    this.showRealValues = function (html) {
+        CMS.nonResizableModal(resources.VirtualRateDetails, html, { height: 600 });
+
+        $("#btn-export-real-values").on("click touchend", function () {
+            self.exportRealValue();
+        });
+
+        $(".tbl-real-values .group-toggle").on("click touchend", function () {
+            self.toggleRealValue($(this));
+        });
+    };
+    this.exportRealValue = function () {
+        var param = { custId: this.realValueCustId, sportType: resources.SportType };
+        CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportRealValues"), param);
+    };
+    this.toggleRealValue = function (elem) {
+        var isExpand = elem.hasClass("group-expand");
+        var parent = elem.parent().parent();
+        var level = parseInt(parent.attr("data-level"));
+
+        if (isExpand) {
+            this.hideAllChildValue(level, parent);
+            elem.removeClass("group-expand").addClass("group-collapse");
+            elem.html("[+]");
+        } else {
+            this.showAllChildValue(level, parent);
+            elem.removeClass("group-collapse").addClass("group-expand");
+            elem.html("[−]");
+        }
+    };
+    this.hideAllChildValue = function (level, parent) {
+        var sportId = parent.attr("data-sportid");
+        var gameId = parent.attr("data-gameid");
+        if (level == 3) {
+            var betTypeGroupId = parent.attr("data-bettypegroupid");
+            $(".tbl-real-values tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").addClass("display-none");
+            return;
+        }
+
+        $(".tbl-real-values tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
+        $(".tbl-real-values tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").addClass("display-none");
+    };
+    this.showAllChildValue = function (level, parent) {
+        var sportId = parent.attr("data-sportid");
+        var gameId = parent.attr("data-gameid");
+
+        if (level == 3) {
+            var betTypeGroupId = parent.attr("data-bettypegroupid");
+            $(".tbl-real-values tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'][data-bettypegroupid='" + betTypeGroupId + "']").removeClass("display-none");
+            return;
+        }
+
+        var toggles = $(".tbl-real-values tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            this.forceToggleValue($(toggles[i]), true);
+        }
+
+        $(".tbl-real-values tr[data-level='4'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
+        $(".tbl-real-values tr[data-level='3'][data-sportid='" + sportId + "'][data-gameid='" + gameId + "']").removeClass("display-none");
+    };
+    this.forceToggleValue = function (elem, isExpand) {
+        var parent = elem.parent().parent();
+
+        if (isExpand) {
+            elem.removeClass("group-collapse").addClass("group-expand");
+        } else {
+            elem.removeClass("group-expand").addClass("group-collapse");
+        }
+
+        var text = elem.parent().parent().hasClass("group-nonchild-compact-mode") ? "" : isExpand ? "[−]" : "[+]";
+        elem.html(text);
     };
 };
 

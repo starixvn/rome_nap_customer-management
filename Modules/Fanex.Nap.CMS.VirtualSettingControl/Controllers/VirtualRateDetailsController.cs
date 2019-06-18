@@ -111,5 +111,20 @@
 
             return Json(result);
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
+        public ActionResult ViewRealValues(ViewRealValuesCriteria criteria)
+        {
+            var model = _virtualRateDetailsService.ViewRealValues(criteria);
+            return View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/ViewRealValues.cshtml", model);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
+        public void ExportRealValues(ViewRealValuesCriteria criteria)
+        {
+            var report = _virtualRateDetailsService.ViewRealValues(criteria);
+            var exporter = new VirtualRateRealValuesExporter(report);
+            exporter.ResponseStream();
+        }
     }
 }

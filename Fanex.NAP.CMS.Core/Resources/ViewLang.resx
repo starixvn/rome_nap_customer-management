@@ -639,7 +639,7 @@
   <data name="CreditCollection_WeeklyRangeError" xml:space="preserve">
     <value>Maximum report period must be upto 15 weeks.</value>
   </data>
-   <data name="Account" xml:space="preserve">
+  <data name="Account" xml:space="preserve">
     <value>Account</value>
   </data>
   <data name="SubmitAllChanges" xml:space="preserve">
@@ -755,5 +755,11 @@
   </data>
   <data name="VirtualRate_AssociatedAccounts_Empty" xml:space="preserve">
     <value>Please insert accounts!</value>
+  </data>
+  <data name="ViewRealValues" xml:space="preserve">
+    <value>View Real Values</value>
+  </data>
+  <data name="ExRate" xml:space="preserve">
+    <value>Ex.Rate</value>
   </data>
 </root>

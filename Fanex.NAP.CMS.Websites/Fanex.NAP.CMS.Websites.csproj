@@ -815,6 +815,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalSetting.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\index.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewLog.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewRealValues.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

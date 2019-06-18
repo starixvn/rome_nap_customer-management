@@ -15,5 +15,7 @@
         Result SaveAssociatedAccounts(SaveAssociatedAccountsCriteria criteria);
 
         VirtualRateLogReport GetLogs(GetVirtualRateLogsCriteria criteria);
+
+        VirtualRateRealValues ViewRealValues(ViewRealValuesCriteria criteria);
     }
 }

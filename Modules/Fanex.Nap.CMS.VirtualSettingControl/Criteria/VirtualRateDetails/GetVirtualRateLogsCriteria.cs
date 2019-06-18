@@ -7,16 +7,22 @@
     {
         public string Username { get; set; }
 
-        public DateTime FromDate { get; set; }
+        public int SportType { get; set; }
 
-        public DateTime ToDate { get; set; }
-
+        [SpParam(SqlParamName = "IncludingUpline")]
         public bool IncludeUpline { get; set; }
 
-        public int ErrCode { get; set; }
+        [SpParam(SqlParamName = "StartLogTime")]
+        public DateTime FromDate { get; set; }
 
-        public string ErrMsg { get; set; }
+        [SpParam(SqlParamName = "EndLogTime")]
+        public DateTime ToDate { get; set; }
 
-        public override string GetSettingKey() => string.Empty;
+        public int ErrCode { get; set; } = 0;
+
+        public string ErrMsg { get; set; } = string.Empty;
+
+        public override string GetSettingKey()
+            => "Acc_CustVirtualMultiplier_ViewLog";
     }
 }

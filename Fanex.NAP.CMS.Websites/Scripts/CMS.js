@@ -230,6 +230,20 @@ var CMS = (function ($) {
             }
         },
 
+        nonResizableModal: function (title, html, option) {
+            CMS.dialogPopup.html(html).dialog({
+                width: 'auto',
+                modal: true,
+                height: option.height,
+                resizable: false,
+                position: ['center', 160 - CMS.popupTopMargin], //['center', 160],
+                title: title
+            });
+
+            if (option) {
+                CMS.dialogPopup.dialog('option', option);
+            }
+        },
         modal: function (title, html, option) {
             CMS.dialogPopup.html(html).dialog({
                 width: 'auto',

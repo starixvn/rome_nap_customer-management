@@ -23,7 +23,7 @@
                 <label for="txt-username">@ViewLang.Account</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-username" maxlength="50" />
+                <input type="text" id="txt-username" class="txt-username" maxlength="50" />
             </div>
             <div class="submit width-auto col_4">
                 <input id="btn-search" type="button" class="submit" value="@ViewLang.Search" />
@@ -81,7 +81,8 @@
             VirtualRateLog: '@ViewLang.VirtualRateLog',
             Update: '@ViewLang.Update',
             By: '@ViewLang.By',
-            ExchangeRate: '@ViewLang.ExchangeRate'
+            ExchangeRate: '@ViewLang.ExchangeRate',
+            SportType: 43
         };
     </script>
     @Scripts.Render("~/bundles/virtual-rate-details/viewlog")

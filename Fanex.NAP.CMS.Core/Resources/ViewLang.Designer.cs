@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -70,6 +70,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {
@@ -111,6 +120,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Add {
             get {
                 return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add asociated accounts.
+        /// </summary>
+        public static string AddAssociatedAccounts {
+            get {
+                return ResourceManager.GetString("AddAssociatedAccounts", resourceCulture);
             }
         }
         
@@ -259,11 +277,38 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to apply the displaying VR setting above to the valid accounts?.
+        /// </summary>
+        public static string Apply2AssociatedAccounts {
+            get {
+                return ResourceManager.GetString("Apply2AssociatedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply above setting to.
+        /// </summary>
+        public static string ApplyAboveSettingTo {
+            get {
+                return ResourceManager.GetString("ApplyAboveSettingTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Refresh.
         /// </summary>
         public static string AutoRefresh {
             get {
                 return ResourceManager.GetString("AutoRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By.
+        /// </summary>
+        public static string By {
+            get {
+                return ResourceManager.GetString("By", resourceCulture);
             }
         }
         
@@ -394,6 +439,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy to all.
+        /// </summary>
+        public static string CopyToAll {
+            get {
+                return ResourceManager.GetString("CopyToAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy to all children.
+        /// </summary>
+        public static string CopyToAllChildren {
+            get {
+                return ResourceManager.GetString("CopyToAllChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         public static string Country {
@@ -502,6 +565,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date of Report.
+        /// </summary>
+        public static string DateOfReport {
+            get {
+                return ResourceManager.GetString("DateOfReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DEACTIVATE {0} selected account(s).
         /// </summary>
         public static string DeactivateSelectedAccounts {
@@ -561,6 +633,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string DirectAccounts {
             get {
                 return ResourceManager.GetString("DirectAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to disabled.
+        /// </summary>
+        public static string disabled {
+            get {
+                return ResourceManager.GetString("disabled", resourceCulture);
             }
         }
         
@@ -628,11 +709,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to enabled.
+        /// </summary>
+        public static string enabled {
+            get {
+                return ResourceManager.GetString("enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to enable Let&apos;s Talk Notification for all accounts listed in the table?.
         /// </summary>
         public static string EnableLetsTalkAll {
             get {
                 return ResourceManager.GetString("EnableLetsTalkAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports.
+        /// </summary>
+        public static string ESports {
+            get {
+                return ResourceManager.GetString("ESports", resourceCulture);
             }
         }
         
@@ -664,6 +763,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exchange Rate.
+        /// </summary>
+        public static string ExchangeRate {
+            get {
+                return ResourceManager.GetString("ExchangeRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude UUS.
         /// </summary>
         public static string ExcludeUUS {
@@ -687,6 +795,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Export {
             get {
                 return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow parent.
+        /// </summary>
+        public static string FollowParent {
+            get {
+                return ResourceManager.GetString("FollowParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow upline.
+        /// </summary>
+        public static string FollowUpline {
+            get {
+                return ResourceManager.GetString("FollowUpline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -723,6 +858,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string GivenCredit {
             get {
                 return ResourceManager.GetString("GivenCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Setting.
+        /// </summary>
+        public static string GlobalSetting {
+            get {
+                return ResourceManager.GetString("GlobalSetting", resourceCulture);
             }
         }
         
@@ -786,6 +930,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Inactive {
             get {
                 return ResourceManager.GetString("Inactive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Including upline.
+        /// </summary>
+        public static string IncludingUpline {
+            get {
+                return ResourceManager.GetString("IncludingUpline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid accounts.
+        /// </summary>
+        public static string InvalidAccounts {
+            get {
+                return ResourceManager.GetString("InvalidAccounts", resourceCulture);
             }
         }
         
@@ -858,6 +1020,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Level {
             get {
                 return ResourceManager.GetString("Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
             }
         }
         
@@ -1123,6 +1294,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Non-Live.
+        /// </summary>
+        public static string NonLive {
+            get {
+                return ResourceManager.GetString("NonLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Non-Live Events.
         /// </summary>
         public static string NonLiveEvents {
@@ -1258,6 +1438,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remark.
         /// </summary>
         public static string Remark {
@@ -1281,6 +1470,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string RemoveException {
             get {
                 return ResourceManager.GetString("RemoveException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required Field!.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
         
@@ -1456,6 +1654,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit All Changes.
+        /// </summary>
+        public static string SubmitAllChanges {
+            get {
+                return ResourceManager.GetString("SubmitAllChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super.
         /// </summary>
         public static string Super {
@@ -1564,6 +1780,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update successfully!.
+        /// </summary>
+        public static string UpdateSuccessfull {
+            get {
+                return ResourceManager.GetString("UpdateSuccessfull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Used.
         /// </summary>
         public static string Used {
@@ -1578,6 +1812,123 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid accounts.
+        /// </summary>
+        public static string ValidAccounts {
+            get {
+                return ResourceManager.GetString("ValidAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Compact Mode.
+        /// </summary>
+        public static string ViewCompactMode {
+            get {
+                return ResourceManager.GetString("ViewCompactMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Full Mode.
+        /// </summary>
+        public static string ViewFullMode {
+            get {
+                return ResourceManager.GetString("ViewFullMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View upline.
+        /// </summary>
+        public static string ViewUpline {
+            get {
+                return ResourceManager.GetString("ViewUpline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please insert accounts!.
+        /// </summary>
+        public static string VirtualRate_AssociatedAccounts_Empty {
+            get {
+                return ResourceManager.GetString("VirtualRate_AssociatedAccounts_Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of accounts exceeds 50.
+        /// </summary>
+        public static string VirtualRate_AssociatedAccounts_Error {
+            get {
+                return ResourceManager.GetString("VirtualRate_AssociatedAccounts_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are unsaved changes. Are you sure you want to leave without saving them?.
+        /// </summary>
+        public static string VirtualRateChangedWarning {
+            get {
+                return ResourceManager.GetString("VirtualRateChangedWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Details.
+        /// </summary>
+        public static string VirtualRateDetails {
+            get {
+                return ResourceManager.GetString("VirtualRateDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave Site? \n\nChanges you made might not be saved.
+        /// </summary>
+        public static string VirtualRateDetails_LeaveSiteWarning {
+            get {
+                return ResourceManager.GetString("VirtualRateDetails_LeaveSiteWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Log.
+        /// </summary>
+        public static string VirtualRateLog {
+            get {
+                return ResourceManager.GetString("VirtualRateLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Setting Details.
+        /// </summary>
+        public static string VirtualRateSettingDetails {
+            get {
+                return ResourceManager.GetString("VirtualRateSettingDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to update this Virtual Rate settings for this account?.
+        /// </summary>
+        public static string VirtualRateSubmitChangesConfirm {
+            get {
+                return ResourceManager.GetString("VirtualRateSubmitChangesConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VR setting.
+        /// </summary>
+        public static string VRSetting {
+            get {
+                return ResourceManager.GetString("VRSetting", resourceCulture);
             }
         }
         

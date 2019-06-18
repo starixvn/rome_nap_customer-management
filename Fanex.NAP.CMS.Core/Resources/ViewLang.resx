@@ -639,4 +639,121 @@
   <data name="CreditCollection_WeeklyRangeError" xml:space="preserve">
     <value>Maximum report period must be upto 15 weeks.</value>
   </data>
+   <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="SubmitAllChanges" xml:space="preserve">
+    <value>Submit All Changes</value>
+  </data>
+  <data name="VirtualRateDetails" xml:space="preserve">
+    <value>Virtual Rate Details</value>
+  </data>
+  <data name="ViewUpline" xml:space="preserve">
+    <value>View upline</value>
+  </data>
+  <data name="ViewCompactMode" xml:space="preserve">
+    <value>View Compact Mode</value>
+  </data>
+  <data name="CopyToAll" xml:space="preserve">
+    <value>Copy to all</value>
+  </data>
+  <data name="CopyToAllChildren" xml:space="preserve">
+    <value>Copy to all children</value>
+  </data>
+  <data name="NonLive" xml:space="preserve">
+    <value>Non-Live</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
+  </data>
+  <data name="ViewFullMode" xml:space="preserve">
+    <value>View Full Mode</value>
+  </data>
+  <data name="FollowUpline" xml:space="preserve">
+    <value>Follow upline</value>
+  </data>
+  <data name="FollowParent" xml:space="preserve">
+    <value>Follow parent</value>
+  </data>
+  <data name="VirtualRateChangedWarning" xml:space="preserve">
+    <value>There are unsaved changes. Are you sure you want to leave without saving them?</value>
+  </data>
+  <data name="VirtualRateSubmitChangesConfirm" xml:space="preserve">
+    <value>Are you sure that you want to update this Virtual Rate settings for this account?</value>
+  </data>
+  <data name="VRSetting" xml:space="preserve">
+    <value>VR setting</value>
+  </data>
+  <data name="VirtualRateSettingDetails" xml:space="preserve">
+    <value>Virtual Rate Setting Details</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ESports" xml:space="preserve">
+    <value>E-Sports</value>
+  </data>
+  <data name="DateOfReport" xml:space="preserve">
+    <value>Date of Report</value>
+  </data>
+  <data name="enabled" xml:space="preserve">
+    <value>enabled</value>
+  </data>
+  <data name="disabled" xml:space="preserve">
+    <value>disabled</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="ApplyAboveSettingTo" xml:space="preserve">
+    <value>Apply above setting to</value>
+  </data>
+  <data name="AddAssociatedAccounts" xml:space="preserve">
+    <value>Add asociated accounts</value>
+  </data>
+  <data name="InvalidAccounts" xml:space="preserve">
+    <value>Invalid accounts</value>
+  </data>
+  <data name="ValidAccounts" xml:space="preserve">
+    <value>Valid accounts</value>
+  </data>
+  <data name="Apply2AssociatedAccounts" xml:space="preserve">
+    <value>Are you sure you want to apply the displaying VR setting above to the valid accounts?</value>
+  </data>
+  <data name="GlobalSetting" xml:space="preserve">
+    <value>Global Setting</value>
+  </data>
+  <data name="VirtualRateDetails_LeaveSiteWarning" xml:space="preserve">
+    <value>Leave Site? \n\nChanges you made might not be saved</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required Field!</value>
+  </data>
+  <data name="UpdateSuccessfull" xml:space="preserve">
+    <value>Update successfully!</value>
+  </data>
+  <data name="IncludingUpline" xml:space="preserve">
+    <value>Including upline</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="VirtualRate_AssociatedAccounts_Error" xml:space="preserve">
+    <value>The number of accounts exceeds 50</value>
+  </data>
+  <data name="VirtualRateLog" xml:space="preserve">
+    <value>Virtual Rate Log</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="By" xml:space="preserve">
+    <value>By</value>
+  </data>
+  <data name="ExchangeRate" xml:space="preserve">
+    <value>Exchange Rate</value>
+  </data>
+  <data name="VirtualRate_AssociatedAccounts_Empty" xml:space="preserve">
+    <value>Please insert accounts!</value>
+  </data>
 </root>

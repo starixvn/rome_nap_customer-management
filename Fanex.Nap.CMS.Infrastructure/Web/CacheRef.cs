@@ -29,7 +29,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
 
         public static string GetLeagueName(string leagueId)
         {
-            return RefData.GetLeagueName(leagueId, "en-US");              
+            return RefData.GetLeagueName(leagueId, "en-US");
         }
 
         /// <summary>
@@ -58,6 +58,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         public static string GetBetType(object bettypeId)
         {
             return GetBetType(bettypeId, null);
+        }
+
+        public static string GetSportName(object sportId)
+        {
+            return RefData.GetSportName(sportId.ToString(), "en-US");
         }
 
         /// <summary>

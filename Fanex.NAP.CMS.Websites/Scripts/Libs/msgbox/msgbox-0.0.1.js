@@ -1,4 +1,4 @@
-/*
+﻿/*
 * msgBox - jQuery Plugin
 * msgBox is a jQuery plugin that makes managing notifications easier than ever
 *
@@ -71,8 +71,8 @@
                 beforeClose: function (opts) { }, // Before closing
                 afterClose: function (opts) { } // After closing
             }, options),
-            this.fixed = this.options.containerId == undefined,
-            this.timeout = null;
+                this.fixed = this.options.containerId == undefined,
+                this.timeout = null;
             //this.dragObject = null;
 
             // Constructor code.
@@ -282,6 +282,25 @@
             $this.find('.cancel').click(function () { _this.close(); });
         },
 
+        error: function (msg, callback, options) {
+            this.checkDomExistence();
+            var _this = this,
+                $this = _this.target,
+                header = $('<div class="msgbox-header">Error</div>'),
+                cmdBtns = '<div class="msgbox-btn-wrap"><a href="javascript:;" class="msgbox-btn back">Back</a></div>';
+
+            _this.show(msg, $.extend(options, { type: 'confirm' }));
+            _this.target.append(cmdBtns);
+
+            if (options.header) {
+                $(_this.options.tpl.closeBtn).appendTo(header).click(function () { _this.close(); });
+                _this.target.prepend(header);
+            }
+
+            clearTimeout(_this.timeout);
+            $this.find('.back').click(function () { _this.close(); });
+        },
+
         yesNoConfirm: function (title, msg, yesCallback, noCallback, options) {
             var _this = this,
                 $this = _this.target,
@@ -370,4 +389,4 @@
         else this.css('visibility', 'hidden');
     };
 
-} (window, document, jQuery));
+}(window, document, jQuery));

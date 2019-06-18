@@ -135,6 +135,18 @@ var CMS = (function ($) {
             };
             CMS.headlineMsgBox.confirm(message, callbackFunc, options);
         },
+        showErrorBox: function (message, callbackFunc) {
+            var options = {
+                modal: true,
+                closeBtn: false,
+                header: true,
+                css: 'custom-confirm'
+            };
+
+            callbackFunc = callbackFunc || function () {
+            };
+            CMS.headlineMsgBox.error(message, callbackFunc, options);
+        },
         closeMsgBox: function () {
             CMS.headlineMsgBox.close();
         },
@@ -288,11 +300,11 @@ var CMS = (function ($) {
         },
 
         callAjax: function (reportHandler,
-                            url,
-                            requestParams,
-                            successFunction,
-                            errorFunction,
-                            completeFunction) {
+            url,
+            requestParams,
+            successFunction,
+            errorFunction,
+            completeFunction) {
             $.ajax({
                 type: 'POST',
                 url: url,
@@ -321,9 +333,9 @@ var CMS = (function ($) {
             });
         },
         getJson: function (url,
-                           successFunction,
-                           errorFunction,
-                           completeFunction) {
+            successFunction,
+            errorFunction,
+            completeFunction) {
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -354,9 +366,9 @@ var CMS = (function ($) {
             });
         },
         getHtml: function (url,
-                           successFunction,
-                           errorFunction,
-                           completeFunction) {
+            successFunction,
+            errorFunction,
+            completeFunction) {
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -478,8 +490,8 @@ var CMS = (function ($) {
             var charFromCode = String.fromCharCode(code).toLowerCase();
             return e.ctrlKey &&
                 (charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_v).toLowerCase() ||
-                charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_c).toLowerCase() ||
-                charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_a).toLowerCase());
+                    charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_c).toLowerCase() ||
+                    charFromCode === String.fromCharCode(keyboardManager.Enums.KeyCode.Character_a).toLowerCase());
         },
         isNumeric: function (text) {
             text = text.replace(/\,/g, "");
@@ -535,44 +547,44 @@ var CMS = (function ($) {
 
         getData: function (url, criteria, successFunction, errorFunction, completeFunction) {
             $.ajax(
-            {
-                url: url,
-                type: 'GET',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: criteria,
-                beforeSend: function () {
-                    CMS.disableInput();
-                },
-                success: function (result) {
-                    if (successFunction && typeof (successFunction) === 'function') {
-                        successFunction(result);
+                {
+                    url: url,
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: criteria,
+                    beforeSend: function () {
+                        CMS.disableInput();
+                    },
+                    success: function (result) {
+                        if (successFunction && typeof (successFunction) === 'function') {
+                            successFunction(result);
+                        }
+                    },
+                    error: function (xhr) {
+                        if (errorFunction && typeof (errorFunction) === 'function') {
+                            errorFunction(xhr);
+                        } else {
+                            CMS.handleAjaxError(xhr);
+                        }
+                    },
+                    complete: function () {
+                        if (completeFunction && typeof (completeFunction) === 'function') {
+                            completeFunction();
+                        } else {
+                            CMS.enableInput();
+                        }
                     }
-                },
-                error: function (xhr) {
-                    if (errorFunction && typeof (errorFunction) === 'function') {
-                        errorFunction(xhr);
-                    } else {
-                        CMS.handleAjaxError(xhr);
-                    }
-                },
-                complete: function () {
-                    if (completeFunction && typeof (completeFunction) === 'function') {
-                        completeFunction();
-                    } else {
-                        CMS.enableInput();
-                    }
-                }
-            });
+                });
         },
 
         renderGrid: function (target,
-                              gridOptions,
-                              bodyData,
-                              bodyMapFunc,
-                              footerData,
-                              footerMapFunc,
-                              callback) {
+            gridOptions,
+            bodyData,
+            bodyMapFunc,
+            footerData,
+            footerMapFunc,
+            callback) {
             gridOptions.bodyRows = bodyData.map(bodyMapFunc);
             if (footerData) {
                 gridOptions.footerRows = footerData.map(footerMapFunc);

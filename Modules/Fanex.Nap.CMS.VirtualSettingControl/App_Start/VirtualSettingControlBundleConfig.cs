@@ -11,6 +11,7 @@
             RegisterCustomerDashboardBundles(bundles);
             RegisterVrAutoAdjustmentReportBundles(bundles);
             RegisterVirtualSettingMonitorAdvanceBundles(bundles);
+            RegisterVirtualRateDetailsBundles(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -69,6 +70,19 @@
                 "~/Content/MonthPicker/css",
                 "~/Content/MonthPicker/monPickr-0.0.3-custom.less",
                 "~/Content/MonthPicker/monPickr-0.0.3.less");
+        }
+
+        private static void RegisterVirtualRateDetailsBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/bundles/virtual-rate-details/index-styles",
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Styles/index.less");
+
+            bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/index")
+                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/viewlog")
+                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/viewlog.js"));
         }
     }
 }

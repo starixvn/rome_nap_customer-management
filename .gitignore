@@ -24,6 +24,7 @@ Thumbs.db
 *.dic
 *.orig
 *.suo
+*.sh
 obj/*
 .vs/*
 *.[Cc]ache

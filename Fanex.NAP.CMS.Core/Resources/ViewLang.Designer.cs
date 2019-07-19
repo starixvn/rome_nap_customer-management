@@ -430,6 +430,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum report period must be upto 6 months..
+        /// </summary>
+        public static string CreditCollection_MonthlyRangeError {
+            get {
+                return ResourceManager.GetString("CreditCollection_MonthlyRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum report period must be upto 15 weeks..
+        /// </summary>
+        public static string CreditCollection_WeeklyRangeError {
+            get {
+                return ResourceManager.GetString("CreditCollection_WeeklyRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit Collection Summary.
         /// </summary>
         public static string CreditCollectionSummary {
@@ -1024,6 +1042,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        public static string Mode {
+            get {
+                return ResourceManager.GetString("Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Modified By.
         /// </summary>
         public static string ModifiedBy {
@@ -1038,6 +1065,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ModifiedDate {
             get {
                 return ResourceManager.GetString("ModifiedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Monthly.
+        /// </summary>
+        public static string Monthly {
+            get {
+                return ResourceManager.GetString("Monthly", resourceCulture);
             }
         }
         
@@ -1551,6 +1587,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Vs {
             get {
                 return ResourceManager.GetString("Vs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weekly.
+        /// </summary>
+        public static string Weekly {
+            get {
+                return ResourceManager.GetString("Weekly", resourceCulture);
             }
         }
         

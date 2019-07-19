@@ -62,5 +62,27 @@ namespace Fanex.NAP.CMS.Core.Helpers
             return value.HasValue ? string.Format(FullDateTimeFormat, value) : string.Empty;
 #pragma warning restore S2275 // Composite format strings should not lead to unexpected behavior at runtime
         }
+
+        public static DateTime FirstDayOfMonth(this DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, 1);
+        }
+
+        public static DateTime LastDayOfMonth(this DateTime dateTime)
+        {
+            return dateTime.FirstDayOfMonth().AddMonths(1).AddDays(-1);
+        }
+
+        public static DateTime StartDayOfWeek(this DateTime dt, DayOfWeek startDateOfWeek = 0)
+        {
+            int diff = (7 + (dt.DayOfWeek - startDateOfWeek)) % 7;
+            return dt.AddDays(-1 * diff).Date;
+        }
+
+        public static DateTime LastDayOfWeek(this DateTime dt, DayOfWeek startDateOfWeek = 0)
+        {
+            int diff = (7 + (dt.DayOfWeek - startDateOfWeek)) % 7;
+            return dt.AddDays(-1 * diff + 6).Date;
+        }
     }
 }

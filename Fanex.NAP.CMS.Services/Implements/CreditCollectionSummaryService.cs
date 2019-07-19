@@ -33,7 +33,6 @@
                 Status = filter.Status,
                 LastBalanceDate = filter.LastBalanceDate,
                 CurrentBalanceDate = filter.CurrentBalanceDate,
-                ExcludeTestData = filter.ExcludeTestData,
                 BalanceUpDay = filter.BalanceUpDay,
                 MoveBetsDay = filter.MoveBetsDay,
                 PageIndex = filter.PageIndex,

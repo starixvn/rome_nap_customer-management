@@ -158,7 +158,7 @@
             }
         };
 
-        var getSelectedText = function(element) {
+        var getSelectedText = function (element) {
             var ctrl = element.get(0);
             var value = ctrl.value;
 
@@ -330,7 +330,7 @@
             }
         };
 
-        callbackFunction = callbackFunction || function () {};
+        callbackFunction = callbackFunction || function () { };
         auto = auto === undefined ? true : auto;
         hasNotRefresh = hasNotRefresh === undefined ? true : hasNotRefresh;
 

@@ -121,12 +121,20 @@
   <ItemGroup>
     <Compile Include="App_Start\VirtualSettingControlAreaRegistration.cs" />
     <Compile Include="App_Start\VirtualSettingControlBundleConfig.cs" />
+    <Compile Include="Constants\VirtualRateDetails\VirtualRateDetailsLevelConstant.cs" />
     <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
+    <Compile Include="Controllers\VirtualRateDetailsController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateLogsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateRangesCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\SaveVirtualRateDetailsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateDetailsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\SaveAssociatedAccountsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\ValidateAssociatedAccountsCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitor\GetVirtualSettingMonitorCriteria.cs" />
@@ -140,6 +148,14 @@
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
+    <Compile Include="Models\VirtualRateDetails\LogDTO.cs" />
+    <Compile Include="Models\VirtualRateDetails\RateInfo.cs" />
+    <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsResult.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateDetailsByGroup.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateDetailsReport.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateDTO.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateLog.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateLogReport.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerVirtualSettingAdvanceModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\VirtualSettingAdvanceModel.cs" />
@@ -148,6 +164,12 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsData.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
+    <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
+    <Compile Include="Services\VirtualRateDetails\VirtualRateDetailsExporter.cs" />
+    <Compile Include="Services\VirtualRateDetails\VirtualRateDetailsService.cs" />
     <Compile Include="ViewModels\VrAutoAdjustmentReport\VrAdjustmentViewModel.cs" />
     <Compile Include="Models\VrAutoAdjustmentReport\VrAutoAdjustmentLogEntry.cs" />
     <Compile Include="Services\CustomerDashboard\CustomerDashboardService.cs" />
@@ -173,7 +195,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Constants\" />
     <Folder Include="Resources\" />
     <Folder Include="ViewModels\CustomerDashboard\" />
   </ItemGroup>

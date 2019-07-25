@@ -12,4 +12,8 @@
     <Setting Key="NAP_ColossusBets_BonusTicket_SelDetail" SpName="NAP_ColossusBets_BonusTicket_SelDetail" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ColossusBets_BonusTicket_SelRefInfo" SpName="NAP_ColossusBets_BonusTicket_SelRefInfo" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="VirtualRateDetails">
+    <Setting Key="Acc_VirtualMultiplierList_Sel" SpName="Acc_VirtualMultiplierList_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplierInvalid_Check" SpName="Acc_CustVirtualMultiplierInvalid_Check" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

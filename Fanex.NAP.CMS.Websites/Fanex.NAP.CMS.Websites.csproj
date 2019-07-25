@@ -23,6 +23,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -407,6 +408,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Scripts\virtualSettingMonitorAdvance.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Scripts\VrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VrAutoAdjustmentReport\Styles\VrAutoAdjustmentReport.css" />
@@ -808,6 +811,10 @@
     <Content Include="Areas\TurnoverControl\Views\ImportGlobalSetting\Styles\ImportGlobalSetting.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Styles\virtualSettingMonitorAdvance.less" />
     <Content Include="Areas\PayoutManagement\Views\BetTicket\RNGCasinoJackpot.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalSetting.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\index.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewLog.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -2,16 +2,20 @@
 {
     using System;
 
-    public class LogDTO
+    public class LogDTO : VirtualRateDTO
     {
+        public string LogId { get; set; }
+
         public string Username { get; set; }
 
-        public string Editor { get; set; }
+        public decimal ExchangeRate { get; set; }
+
+        public string ExchangeRateText { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 
-        public string OldValue { get; set; }
+        public string Editor { get; set; }
 
-        public string NewValue { get; set; }
+        public bool IsNew { get; set; }
     }
 }

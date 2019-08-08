@@ -4,6 +4,34 @@
 
     public class VirtualRateDetailsByGroup
     {
+        public VirtualRateDetailsByGroup()
+        {
+        }
+
+        public VirtualRateDetailsByGroup(VirtualRateDTO dto, int minRange, int maxRange, int groupLevel)
+        {
+            LevelId = dto.Level;
+            NonliveId = dto.NonliveId;
+            NonLiveValue = (dto.NonliveValue - 1) * 100;
+            LiveId = dto.LiveId;
+            LiveValue = (dto.LiveValue - 1) * 100;
+            MinRate = minRange;
+            MaxRate = maxRange;
+
+            LiveLog = dto.LiveLog;
+            NonliveLog = dto.NonliveLog;
+            GroupLevel = groupLevel;
+        }
+
+        public VirtualRateDetailsByGroup(LogDTO dto, int groupLevel)
+        {
+            LevelId = dto.Level;
+            GroupLevel = groupLevel;
+
+            LiveLog = dto.LiveLog;
+            NonliveLog = dto.NonliveLog;
+        }
+
         public int GroupLevel { get; set; }
 
         public int GroupId { get; set; }
@@ -30,20 +58,10 @@
 
         public string NonliveLog { get; set; }
 
+        public string NewLiveLog { get; set; }
+
+        public string NewNonliveLog { get; set; }
+
         public IEnumerable<VirtualRateDetailsByGroup> Childs { get; set; }
-
-        public void AssignData(VirtualRateDTO dto, int minRange, int maxRange)
-        {
-            LevelId = dto.Level;
-            NonliveId = dto.NonliveId;
-            NonLiveValue = (dto.NonliveValue - 1) * 100;
-            LiveId = dto.LiveId;
-            LiveValue = (dto.LiveValue - 1) * 100;
-            MinRate = minRange;
-            MaxRate = maxRange;
-
-            LiveLog = dto.LiveLog;
-            NonliveLog = dto.NonliveLog;
-        }
     }
 }

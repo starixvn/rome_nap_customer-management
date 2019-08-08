@@ -799,6 +799,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ex.Rate.
+        /// </summary>
+        public static string ExRate {
+            get {
+                return ResourceManager.GetString("ExRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow parent.
         /// </summary>
         public static string FollowParent {
@@ -1839,6 +1848,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ViewFullMode {
             get {
                 return ResourceManager.GetString("ViewFullMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Real Values.
+        /// </summary>
+        public static string ViewRealValues {
+            get {
+                return ResourceManager.GetString("ViewRealValues", resourceCulture);
             }
         }
         

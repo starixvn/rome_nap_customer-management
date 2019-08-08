@@ -28,5 +28,8 @@
 
         public VirtualRateLogReport GetLogs(GetVirtualRateLogsCriteria criteria)
             => _repository.GetLogs(criteria);
+
+        public VirtualRateRealValues ViewRealValues(ViewRealValuesCriteria criteria)
+            => _repository.ViewRealValues(criteria);
     }
 }

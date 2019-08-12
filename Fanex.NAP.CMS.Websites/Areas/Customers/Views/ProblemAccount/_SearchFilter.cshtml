@@ -1,0 +1,61 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount.IndexViewModel
+@using (Html.BeginForm("Search", "ProblemAccount", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+{
+    <div class="filter-row">
+        <div id="fromtodate-picker"></div>
+        <div class="lbl-field col_3">
+            <label>@ProblemAccountResource.Level</label>
+        </div>
+        <div class="edit-field col_6">
+            @Html.DropDownList("level", Model.Levels, new { id = "ddl-level", @class = "combobox-autocomplete width-100" })
+        </div>
+        <div class="lbl-field col_3">
+            <label>@ProblemAccountResource.Currency</label>
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-80" })
+        </div>
+        <div class="lbl-field col_5">
+            <label>@ProblemAccountResource.AccountStatus</label>
+        </div>
+        <div class="edit-field col_6">
+            @Html.DropDownList("accountStatus", Model.AccountStatus, new { id = "ddl-accountStatus", @class = "combobox-autocomplete width-100" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@ProblemAccountResource.IsReduced</label>
+        </div>
+        <div class="edit-field col_6">
+            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-80" })
+        </div>
+    </div>
+    <div class="filter-row last-row">
+        <div class="lbl-field col_3">
+            <label>@ProblemAccountResource.Reason</label>
+        </div>
+        <div class="edit-field col_13">
+            <div id="ddl-reason"></div>
+        </div>
+        <div class="lbl-field col_3">
+            <label for="username">@ProblemAccountResource.Username</label>
+        </div>
+        <div class="edit-field col_6">
+            <input type="text" id="username" autocomplete="off" maxlength="50" value="@Model.SearchFilter.Username" />
+        </div>
+        <div class="edit-field col_1 checkbox">
+            <input type="checkbox" id="chk-seachDownlines" @(Model.SearchFilter.IsSearchDownlines ? "checked=checked": string.Empty) />
+        </div>
+        <div class="lbl-field col_8 align-left">
+            <label for="chk-seachDownlines" class="small-margin-left">@ProblemAccountResource.SearchDownlines</label>
+        </div>
+        <div class="lbl-field col_4">
+            <label>@ProblemAccountResource.OrderBy</label>
+        </div>
+        <div class="edit-field col_6">
+            @Html.DropDownList("orderBy", Model.OrderBy, new { id = "ddl-orderBy", @class = "combobox-autocomplete width-100" })
+        </div>
+        <div class="lbl-field col_4">&nbsp;</div>
+        <div class="submit width-auto col_4">
+            <button type="submit" class="submit">@ProblemAccountResource.Search</button>
+        </div>
+    </div>
+}

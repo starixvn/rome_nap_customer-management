@@ -1,0 +1,53 @@
+﻿@using (Html.BeginForm("RemoveReduceBL", "ProblemAccount", FormMethod.Post, new { id = "formRemoveReduceBLMemmber", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <p><span class="text-red">*</span> @ProblemAccountResource.RemoveReduceBLHint</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.OK</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}
+@using (Html.BeginForm("RemoveReduceBL", "ProblemAccount", FormMethod.Post, new { id = "formRemoveReduceBLSMA", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row min-height-25">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row min-height-25">
+        <p class="no-margin-bottom">@ProblemAccountResource.RemoveReduceBLOnSelectedAccountsAndDownlines</p>
+    </div>
+    <div class="form-row min-height-25">
+        <div class="lbl-field width-35 exclude">
+            <label>@ProblemAccountResource.Exclude:</label>
+        </div>
+        <div class="edit-field checkbox">
+            <input type="checkbox" name="abnormalBet" value="true" id="chk-removeReduceBLAbnormalBetsMembers" />
+            <label for="chk-removeReduceBLAbnormalBetsMembers">@ProblemAccountResource.AbnormalBetsMembers</label>
+        </div>
+    </div>
+    <div class="form-row min-height-25">
+        <div class="lbl-field width-35">
+            <label>&nbsp;</label>
+        </div>
+        <div class="edit-field checkbox">
+            <input type="checkbox" name="unmarkByOPS" value="true" id="chk-removeReduceBLByOPSAndDownlines" />
+            <label for="chk-removeReduceBLByOPSAndDownlines">@ProblemAccountResource.UnmarkByOPSAndDownlines</label>
+        </div>
+    </div>
+    <div class="form-row min-height-25">
+        <p><span class="text-red">*</span> @ProblemAccountResource.RemoveReduceBLHint</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

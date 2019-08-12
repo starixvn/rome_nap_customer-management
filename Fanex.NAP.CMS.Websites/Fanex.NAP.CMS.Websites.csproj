@@ -375,6 +375,11 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
+    <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-helper.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-marknew.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -657,6 +662,10 @@
       <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
       <Name>Fanex.Nap.CMS.ColossusBets</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.Customers\Fanex.Nap.CMS.Customers.csproj">
+      <Project>{5ca24f84-6331-4a98-8124-7c40bbd3d84d}</Project>
+      <Name>Fanex.Nap.CMS.Customers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
@@ -816,6 +825,18 @@
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\index.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewRealValues.cshtml" />
+    <Content Include="Areas\Customers\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Customers\Views\ProblemAccount\Index.cshtml" />
+    <Content Include="Areas\Customers\Styles\problemAccount.less" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_MarkNew.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_SearchFilter.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_ReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_InactivateAccount.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_Unmark.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_RemoveReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\BetList\AbnormalBetTicket.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -831,11 +852,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

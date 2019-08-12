@@ -43,4 +43,8 @@
     <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Problem Accounts">
+    <Setting Key="CS_ProblemAccount_AddCustomer" SpName="CS_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_ReduceBetLimit" SpName="CS_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

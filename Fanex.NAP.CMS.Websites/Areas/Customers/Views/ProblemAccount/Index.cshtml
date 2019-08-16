@@ -3,6 +3,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = ProblemAccountResource.ManageProblemAccount;
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
 @model IndexViewModel
 @section Head
@@ -34,13 +35,12 @@
             inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
-            fromDate = "@Model.SearchFilter.From.ToShortFormatedDateWithSlash()",
-            toDate = "@Model.SearchFilter.To.ToShortFormatedDateWithSlash()",
             defaultMinDate = "@IndexViewModel.DefaultMinDate.ToShortFormatedDateWithSlash()",
             maxInputUsernames = @IndexViewModel.MaxInputUsernames,
             showSelectColumn = @Model.HasHostPermission.ToString().ToLowerInvariant(),
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
-        var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, Formatting.None))');
+        var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
+        var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
     </script>
     @Scripts.Render(CustomersBundlesConfig.ProblemAccountScript)
 }

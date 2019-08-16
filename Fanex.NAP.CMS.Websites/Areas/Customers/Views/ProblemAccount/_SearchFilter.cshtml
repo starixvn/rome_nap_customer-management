@@ -39,10 +39,10 @@
             <label for="username">@ProblemAccountResource.Username</label>
         </div>
         <div class="edit-field col_6">
-            <input type="text" id="username" autocomplete="off" maxlength="50" value="@Model.SearchFilter.Username" />
+            <input type="text" id="username" autocomplete="off" maxlength="50" />
         </div>
         <div class="edit-field col_1 checkbox">
-            <input type="checkbox" id="chk-seachDownlines" @(Model.SearchFilter.IsSearchDownlines ? "checked=checked": string.Empty) />
+            <input type="checkbox" id="chk-seachDownlines" />
         </div>
         <div class="lbl-field col_8 align-left">
             <label for="chk-seachDownlines" class="small-margin-left">@ProblemAccountResource.SearchDownlines</label>

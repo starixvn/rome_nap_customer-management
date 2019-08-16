@@ -61,7 +61,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to These Sportsbook tickets have Win Loss Date from {0} to {1}.
+        ///   Looks up a localized string similar to These Sportsbook tickets have Win Loss Date from {0} to {1}..
         /// </summary>
         public static string AbnormalBetTicketHint {
             get {
@@ -111,6 +111,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string TotalSportsbookBetTickets {
             get {
                 return ResourceManager.GetString("TotalSportsbookBetTickets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These tickets&apos; details can be found on NAP Accounting Site &gt; Member Bet List (accessed by going to NAP Accounting site, search this member on the left panel, click Bet List button, search all tickets during the same period)..
+        /// </summary>
+        public static string ViewBetListOnNAPHint {
+            get {
+                return ResourceManager.GetString("ViewBetListOnNAPHint", resourceCulture);
             }
         }
         

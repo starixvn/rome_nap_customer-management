@@ -1,16 +1,16 @@
-﻿using Fanex.Data.Repository;
-
-namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
+﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
 {
-    public class ReduceBLCriteria : InactivateCriteria
+    using Data.Repository;
+
+    public class ReduceBLCriteria : NonQueryCriteriaBase
     {
         public ReduceBLCriteria(
-            string custIds,
+            string usernames,
             byte roleId,
             int maxPerEvent,
             int maxPerBet,
             int userId,
-            string ip) : base(custIds, roleId, userId, ip)
+            string ip) : base(usernames, roleId, userId, ip)
         {
             MaxPerEvent = maxPerEvent;
             MaxPerBet = maxPerBet;
@@ -25,6 +25,6 @@ namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
             => "CS_ProblemAccount_ReduceBetLimit";
 
         public override bool IsValid()
-            => base.IsValid() && MaxPerEvent > 0 && MaxPerBet > 0;
+            => base.IsValid() && MaxPerEvent >= 0 && MaxPerBet >= 0;
     }
 }

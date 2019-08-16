@@ -1,7 +1,12 @@
 @red-color: #ff0000;
+@blue-color: #0000ff;
 
 .text-red {
     color: @red-color;
+}
+
+.text-blue {
+    color: @blue-color;
 }
 
 .filter-bar {
@@ -86,6 +91,8 @@
 #formMarkNew {
     width: 500px;
     padding: 0;
+    float: none;
+    word-wrap: break-word;
 
     .inline-message {
         margin: 10px 0;
@@ -150,4 +157,9 @@
             line-height: 1.5;
         }
     }
+}
+
+.custom-confirm {
+    width: 500px!important;
+    word-wrap: break-word;
 }

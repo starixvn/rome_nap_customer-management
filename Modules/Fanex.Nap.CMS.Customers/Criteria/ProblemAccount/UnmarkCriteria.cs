@@ -1,21 +1,24 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
 {
-    public class UnmarkCriteria : InactivateCriteria
+    public class UnmarkCriteria : NonQueryCriteriaBase
     {
         public UnmarkCriteria(
-            bool? abnormalBet,
-            bool? unmarkByOPS,
-            string custIds,
+            string usernames,
             byte roleId,
+            bool excludeAbnormalMember,
+            bool excludeDirectMark,
             int userId,
-            string ip) : base(custIds, roleId, userId, ip)
+            string ip) : base(usernames, roleId, userId, ip)
         {
-            AbnormalBet = abnormalBet;
-            UnmarkByOPS = unmarkByOPS;
+            ExcludeAbnormalMember = excludeAbnormalMember;
+            ExcludeDirectMark = excludeDirectMark;
         }
 
-        public bool? AbnormalBet { get; }
+        public bool ExcludeAbnormalMember { get; }
 
-        public bool? UnmarkByOPS { get; }
+        public bool ExcludeDirectMark { get; }
+
+        public override string GetSettingKey()
+            => "CS_ProblemAccount_RemoveCustomer";
     }
 }

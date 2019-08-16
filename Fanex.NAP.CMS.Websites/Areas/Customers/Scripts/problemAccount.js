@@ -1,5 +1,4 @@
-﻿/* global CMS, resources */
-(function ($, CMS, resources, helper) {
+﻿(function ($, resources) {
     "use strict";
     var elements = {
         formMarkNew: $("#formMarkNew"),
@@ -13,89 +12,58 @@
 
     function bindEvents() {
         $("#btn-markNew").click(function () {
-            problemAccountMarkNew.init(this.textContent, elements.formMarkNew.clone());
+            var markNew = new ProblemAccountMarkNew(elements.formMarkNew.clone(), problemAccountSearch.reloadDataForMarkNew);
+            markNew.init(this.textContent);
         });
 
-        $("#btn-unmark").click(unmarkHandler);
-
-        $("#btn-reduceBetLimit").click(reduceBLHandler);
-
-        $("#btn-inactivate").click(inactivateHandler);
-
-        $("#btn-removeReducedBetLimit").click(removeReduceBLHandler);
-    }
-
-    function unmarkHandler() {
-        var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-
-        if (isSelectedAccount(problemAccount.usernames)) {
-            var isMember = isMemberLevel(problemAccount.level);
-            var form = isMember ? elements.formUnmarkMember.clone() : elements.formUnmarkSMA.clone();
-
-            openModal(resources.unmarkProblemAccount, form, problemAccount);
-
-            if (!isMember) {
-                form.find("#divUnmarkNote").tipsy({
-                    className: "unmark-note",
-                    html: true,
-                    opacity: 1,
-                    gravity: "w"
-                });
-            }
-        }
-    }
-
-    function reduceBLHandler() {
-        var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-
-        if (isSelectedAccount(problemAccount.usernames)) {
-            var form = elements.formReduceBL.clone();
-
-            CMS.modal(this.textContent, form, { resizable: false });
-            var maxPerEvent = form.find("#txt-maxPerEvent"),
-                maxPerBet = form.find("#txt-maxPerBet");
-            helper.showSelectedAccounts(form, problemAccount);
-            helper.restrictInputMaxPerEventMaxPerBet(maxPerEvent, maxPerBet);
-
-            helper.bindEvents(form, function () {
-                return helper.validateMaxPerEventMaxPerBet(maxPerEvent, maxPerBet);
+        $("#btn-unmark").click(function () {
+            handleActions(function (usernames, level) {
+                var unmark = new ProblemAccountUnmark(getUnmarkForm(level).clone(), problemAccountSearch.reloadData);
+                unmark.init(resources.unmarkProblemAccount, usernames, level);
             });
-        }
+        });
+
+        $("#btn-reduceBetLimit").click(function () {
+            var modalTitle = this.textContent;
+
+            handleActions(function (usernames, level) {
+                var reduceBL = new ProblemAccountReduceBL(elements.formReduceBL.clone(), problemAccountSearch.reloadData);
+                reduceBL.init(modalTitle, usernames, level);
+            });
+        });
+
+        $("#btn-inactivate").click(function () {
+            handleActions(function (usernames, level) {
+                var inactivate = new ProblemAccountConfirmAction(elements.formInactivateAccount.clone(), problemAccountSearch.reloadData);
+                inactivate.init(resources.inactivateAccount, usernames, level);
+            });
+        });
+
+        $("#btn-removeReducedBetLimit").click(function () {
+            var modalTitle = this.textContent;
+
+            handleActions(function (usernames, level) {
+                var removeReduceBL = new ProblemAccountConfirmAction(getRemoveReducedBLForm(level).clone(), problemAccountSearch.reloadData);
+                removeReduceBL.init(modalTitle, usernames, level);
+            });
+        });
     }
 
-    function inactivateHandler() {
+    function handleActions(handleActionCallback) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-
-        if (isSelectedAccount(problemAccount.usernames)) {
-            openModal(resources.inactivateAccount, elements.formInactivateAccount.clone(), problemAccount);
-        }
+        problemAccount.usernames.length > 0 && handleActionCallback(problemAccount.usernames, problemAccount.level);
     }
 
-    function removeReduceBLHandler(event) {
-        var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-
-        if (isSelectedAccount(problemAccount.usernames)) {
-            var form = isMemberLevel(problemAccount.level)
-                ? elements.formRemoveReduceBLMemmber
-                : elements.formRemoveReduceBLSMA;
-
-            openModal(this.textContent, form.clone(), problemAccount);
-        }
+    function getUnmarkForm(level) {
+        return isMemberLevel(level) ? elements.formUnmarkMember : elements.formUnmarkSMA;
     }
 
-    function isSelectedAccount(usernames) {
-        return usernames.length > 0;
+    function getRemoveReducedBLForm(level) {
+        return isMemberLevel(level) ? elements.formRemoveReduceBLMemmber : elements.formRemoveReduceBLSMA;
     }
 
     function isMemberLevel(level) {
         return level === "1";
-    }
-
-    function openModal(modalTitle, form, problemAccount) {
-        CMS.modal(modalTitle, form, { resizable: false });
-
-        helper.showSelectedAccounts(form, problemAccount);
-        helper.bindEvents(form);
     }
 
     function initialize() {
@@ -105,8 +73,12 @@
         // It also helps to prevent the 'for' attributes do not work correctly in the popup.
         $("#divPopupContent").remove();
 
-        autoReload && problemAccountSearch.reloadData();
+        if (autoReload) {
+            setTimeout(function () {
+                problemAccountSearch.autoReloadData(searchFilter.PageIndex, searchFilter.PageSize);
+            }, 200);
+        }
     }
 
     initialize();
-})(jQuery, CMS, resources, problemAccountHelper);
+})(jQuery, resources);

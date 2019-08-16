@@ -8,10 +8,6 @@
 
         public byte Level { get; set; }
 
-        public int UserId { get; set; }
-
-        public string IP { get; set; }
-
         public virtual bool IsInvalid()
             => string.IsNullOrWhiteSpace(Usernames)
             || Level < RoleIdConstants.Member || Level > RoleIdConstants.Super;

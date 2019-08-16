@@ -376,9 +376,11 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
-    <Content Include="Areas\Customers\Scripts\problemAccount-helper.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-confirmAction.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-marknew.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-reduceBL.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
@@ -484,6 +486,7 @@
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
+	<Content Include="Content\Themes\img\light-information-icon2.png" />
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
     <Content Include="Content\Themes\img\cms.ico" />

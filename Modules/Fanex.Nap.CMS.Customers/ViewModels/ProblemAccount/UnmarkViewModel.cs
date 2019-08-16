@@ -2,8 +2,8 @@
 {
     public class UnmarkViewModel : ActionViewModel
     {
-        public bool? AbnormalBet { get; set; }
+        public bool? ExcludeAbnormalMember { get; set; }
 
-        public bool? UnmarkByOPS { get; set; }
+        public bool? ExcludeDirectMark { get; set; }
     }
 }

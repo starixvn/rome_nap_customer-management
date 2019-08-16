@@ -17,4 +17,9 @@
     <Setting Key="Acc_VirtualMultiplierList_Sel" SpName="Acc_VirtualMultiplierList_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="Acc_CustVirtualMultiplierInvalid_Check" SpName="Acc_CustVirtualMultiplierInvalid_Check" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Problem Accounts">
+    <Setting Key="CS_ProblemAccount_ReasonSel" SpName="CS_ProblemAccount_ReasonSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_MonitorList" SpName="CS_ProblemAccount_MonitorList_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_VoidedTransactionList" SpName="CS_ProblemAccount_VoidedTransactionList_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

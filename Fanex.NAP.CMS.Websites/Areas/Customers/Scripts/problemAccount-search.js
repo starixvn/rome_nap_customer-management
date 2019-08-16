@@ -1,8 +1,8 @@
-﻿/* global CMS, CMSConstants, numeral, resources, currentDate, fromDate, toDate, defaultMinDate, reasons */
-var problemAccountSearch = (function ($, resources) {
+﻿var problemAccountSearch = (function ($, resources) {
     "use strict";
     var pagerRanges = [10, 20, 50, 100],
         defaultPageSize = 50,
+        roleMapper = { 0: "&nbsp;&nbsp;S:", 1: "&nbsp;&nbsp;M:", 2: "&nbsp;&nbsp;A:", 3: "mb:" },
         filterParams = null,
         gridOptions = null,
         searchProblemAccountUrl = null;
@@ -23,10 +23,17 @@ var problemAccountSearch = (function ($, resources) {
     function initSearchFilter() {
         setTimeout(initDateRange, 100);
 
+        elements.ddlLevel.val(searchFilter.Level);
+        elements.ddlCurrency.val(searchFilter.Currency);
+        elements.ddlAccountStatus.val(searchFilter.Status);
+        elements.ddlIsReduced.val(searchFilter.IsReduced);
+        elements.txtUsername.val(searchFilter.Username);
+        elements.chkSearchDownlines.prop("checked", searchFilter.IsSearchDownlines);
+        elements.ddlOrderBy.val(searchFilter.OrderBy);
+
         elements.ddlReason.fanexMultiSelect({
             minWidth: 306,
             checkAllText: "All",
-            //isCheckAll: true,
             listData: reasons.map(function (item) {
                 return { id: item.Value, value: item.Value, text: item.Text, checked: item.Selected, enable: true };
             })
@@ -53,14 +60,13 @@ var problemAccountSearch = (function ($, resources) {
             secondDatePicker: {
                 Id: "dpk-todate",
                 Label: "To ",
-                InitDate: toDate,
-                CurrentDate: currentDate,
                 LabelCss: "lbl-field col_1",
                 TextboxCss: "edit-field col_6"
             }
         });
 
-        $("#dpk-fromdate").datepicker("setDate", fromDate);
+        $("#dpk-fromdate").datepicker("setDate", new Date(searchFilter.From));
+        $("#dpk-todate").datepicker("setDate", new Date(searchFilter.To));
     }
 
     function bindEvents() {
@@ -68,8 +74,9 @@ var problemAccountSearch = (function ($, resources) {
         elements.formSearch.submit(function (event) {
             event.preventDefault();
 
+            var pageSize = filterParams ? filterParams.PageSize : defaultPageSize;
             filterParams = getFilterParams();
-            getProblemAccounts(0, defaultPageSize, true);
+            getProblemAccounts(0, pageSize, true);
         });
     }
 
@@ -91,70 +98,13 @@ var problemAccountSearch = (function ($, resources) {
     }
 
     function getProblemAccounts(pageIndex, pageSize, isSearchButtionClick) {
+        // PageIndex of Fanex.Grid begin at 0 whereas server site begin at 1.
+        filterParams.PageIndex = pageIndex + 1;
+        filterParams.PageSize = pageSize;
         CMS.getJson(
             searchProblemAccountUrl + $.param(filterParams),
             function (data) {
                 var jsonData = $.parseJSON(data);
-                var jsonData = {
-                    ProblemAccounts: [
-                        {
-                            Headline: "headline",
-                            Super: "super",
-                            Master: "master",
-                            Agent: "agent",
-                            Member: "member",
-                            AccountStatus: "Active",
-                            IsReduced: "No",
-                            MaxPerEvent: "",
-                            MaxPerBet: "",
-                            MarkDate: "01/31/2019 23:59:59",
-                            Reasons: ["01/31/2019: Arbitrage", "02/01/2019: Hedging", "08/12/2019: Group Betting"],
-                            Comment: "",
-                            AbnormalBet: "5"
-                        },
-                        {
-                            Headline: "headline",
-                            Super: "super",
-                            Master: "master",
-                            Agent: "agent",
-                            AccountStatus: "View Only",
-                            IsReduced: "Yes",
-                            MaxPerEvent: "",
-                            MaxPerBet: "",
-                            MarkDate: "01/31/2019 23:59:59",
-                            Reasons: ["01/31/2019: Hedging"],
-                            Comment: "Comment B",
-                            AbnormalBet: "10"
-                        },
-                        {
-                            Headline: "headline",
-                            Super: "super",
-                            Master: "master",
-                            AccountStatus: "Suspended",
-                            IsReduced: "No",
-                            MaxPerEvent: "",
-                            MaxPerBet: "",
-                            MarkDate: "01/31/2019 23:59:59",
-                            Reasons: ["01/31/2019: Group Betting"],
-                            Comment: "Comment C",
-                            AbnormalBet: "100"
-                        },
-                        {
-                            Headline: "headline",
-                            Super: "super",
-                            AccountStatus: "Inactive",
-                            IsReduced: "Yes",
-                            MaxPerEvent: "",
-                            MaxPerBet: "",
-                            MarkDate: "01/31/2019 23:59:59",
-                            Comment: "Comment D",
-                            AbnormalBet: "1000"
-                        }
-                    ],
-                    Page: 1,
-                    Size: 50,
-                    TotalItems: 4
-                };
 
                 if (isSearchButtionClick) {
                     gridOptions = initGridOptions(filterParams.level !== "1");
@@ -163,10 +113,9 @@ var problemAccountSearch = (function ($, resources) {
                 gridOptions.pagerOption.currentPage = pageIndex;
                 gridOptions.pagerOption.itemsPerPage = pageSize;
                 gridOptions.pagerOption.totalItem = jsonData.TotalItems;
-
                 gridOptions.bodyRows = renderProblemAccounts(jsonData.ProblemAccounts);
-                elements.dataGrid.removeClass("display-none").fanexGrid(gridOptions);
 
+                elements.dataGrid.removeClass("display-none").fanexGrid(gridOptions);
                 $(".light-note-info-message").tipsy({
                     className: "custom-grid-colheader-note",
                     html: true,
@@ -181,18 +130,17 @@ var problemAccountSearch = (function ($, resources) {
     }
 
     function initGridOptions(hideAbnormalBetColumn) {
-        var hiddenColumns = showSelectColumn ? [] : [9],
-            reasonAndCommentWidth = 380;
+        var hiddenColumns = showSelectColumn ? [] : [8],
+            reasonAndCommentWidth = 420;
 
         if (hideAbnormalBetColumn) {
-            hiddenColumns.push(8);
-            reasonAndCommentWidth += 50;
+            hiddenColumns.push(7);
+            reasonAndCommentWidth += 53;
         }
 
         var columns = [
             { HeaderText: resources.account + renderAccountNote(), Width: 320, Name: "colAccount", HeaderAlign: "center", CellAlign: "left", CssClass: "custom-grid-colheader" },
             { HeaderText: resources.accountStatus, Width: 100, Name: "colAccountStatus", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.isReduced, Width: 80, Name: "colIsReduced", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.maxPerEvent, Width: 160, Name: "colMaxPerEvent", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.maxPerBet, Width: 160, Name: "colMaxPerBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.markDate, Width: 80, Name: "colMarkDate", HeaderAlign: "center", CellAlign: "center" },
@@ -208,14 +156,12 @@ var problemAccountSearch = (function ($, resources) {
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 190,
+            gridExpandHeight: 200,
             columns: columns,
             showPager: true,
             customPager: true,
             pagerOption: {
                 itemsPerPageArray: pagerRanges,
-                currentPage: 0,
-                itemsPerPage: defaultPageSize,
                 pagerSelectCallBack: getProblemAccounts
             },
             enableHiddenColumns: false,
@@ -224,7 +170,7 @@ var problemAccountSearch = (function ($, resources) {
     }
 
     function renderAccountNote() {
-        return '<span class="light-note-info-message" title="<p>Black username: Normal account</p><p>Blue username: Problem account</p>"></span>';
+        return '<span class="light-note-info-message" title="<p>Black username: Normal account</p><p><span class=\'text-blue\'>Blue username</span>: Problem account</p>"></span>';
     }
 
     function renderAbnormalBetNote() {
@@ -233,21 +179,23 @@ var problemAccountSearch = (function ($, resources) {
 
     function renderProblemAccounts(data) {
         var bodyRows = [];
-        var cell, problemAccount;
+        var cell, problemAccount, maxPerEvents, maxPerBets;
+        var roleId = parseInt(filterParams.level);
         var dataLength = data ? data.length : 0;
         for (var i = 0; i < dataLength; i++) {
             problemAccount = data[i];
+            maxPerEvents = buildMaxPerEvents(problemAccount, roleId);
+            maxPerBets = buildMaxPerBets(problemAccount, roleId);
             cell = [
-                { Name: "colAccount", Value: renderAccountCell([problemAccount.Headline, problemAccount.Super, problemAccount.Master, problemAccount.Agent, problemAccount.Member]) },
-                { Name: "colAccountStatus", Value: problemAccount.AccountStatus },
-                { Name: "colIsReduced", Value: problemAccount.IsReduced },
-                { Name: "colMaxPerEvent", Value: problemAccount.MaxPerEvent },
-                { Name: "colMaxPerBet", Value: problemAccount.MaxPerBet },
-                { Name: "colMarkDate", Value: problemAccount.MarkDate },
+                { Name: "colAccount", Value: renderAccountCell(problemAccount, roleId) },
+                { Name: "colAccountStatus", Value: problemAccount.StatusName },
+                { Name: "colMaxPerEvent", Value: renderMaxPerEventOrMaxPerBet(maxPerEvents) },
+                { Name: "colMaxPerBet", Value: renderMaxPerEventOrMaxPerBet(maxPerBets) },
+                { Name: "colMarkDate", Value: problemAccount.MarkDateString },
                 { Name: "colReason", Value: renderReasonCell(problemAccount.Reasons || []) },
                 { Name: "colComment", Value: problemAccount.Comment },
-                { Name: "colAbnormalBet", Value: renderAbnormalBetCell(1, "member 1.11", problemAccount.AbnormalBet) },
-                { Name: "colSelect", Value: renderSelectCell("member 1.11") }
+                { Name: "colAbnormalBet", Value: renderAbnormalBetCell(problemAccount) },
+                { Name: "colSelect", Value: renderSelectCell(problemAccount.Username) }
             ];
 
             bodyRows.push({ Columns: cell });
@@ -256,12 +204,89 @@ var problemAccountSearch = (function ($, resources) {
         return bodyRows;
     }
 
-    function renderAccountCell(accounts) {
-        return accounts.map(function (item, index) {
-            if (item) {
-                return '<p class="level-' + index + '">' + item + '</p>';
+    function buildMaxPerEvents(problemAccount, roleId) {
+        var maxPerEvents = [problemAccount.SuperMPM];
+        if (roleId <= 3) maxPerEvents.push(problemAccount.MasterMPM);
+        if (roleId <= 2) maxPerEvents.push(problemAccount.AgentMPM);
+        if (roleId <= 1) maxPerEvents.push(problemAccount.MPM);
+
+        return maxPerEvents;
+    }
+
+    function buildMaxPerBets(problemAccount, roleId) {
+        var maxPerBets = [problemAccount.SuperMaxBet];
+        if (roleId <= 3) maxPerBets.push(problemAccount.MasterMaxBet);
+        if (roleId <= 2) maxPerBets.push(problemAccount.AgentMaxBet);
+        if (roleId <= 1) maxPerBets.push(problemAccount.MaxBet);
+
+        return maxPerBets;
+    }
+
+    function renderAccountCell(problemAccount, roleId) {
+        var cells = [
+            '<p>', problemAccount.Headline, '</p>',
+            '<p class="level-1', problemAccount.IsProblemAccSuper ? ' text-blue' : '', '">', problemAccount.Super, '</p>'
+        ];
+
+        if (roleId <= 3) {
+            cells.push('<p class="level-2', problemAccount.IsProblemAccMaster ? ' text-blue' : '', '">', problemAccount.Master, '</p>');
+        }
+
+        if (roleId <= 2) {
+            cells.push('<p class="level-3', problemAccount.IsProblemAccAgent ? ' text-blue' : '', '">', problemAccount.Agent, '</p>');
+        }
+
+        if (roleId <= 1) {
+            cells.push('<p class="level-4', problemAccount.IsProblemAcc ? ' text-blue' : '', '">', problemAccount.Username, '</p>');
+        }
+
+        return cells.join("");
+    }
+
+    function renderMaxPerEventOrMaxPerBet(values) {
+        var lastIndex = lastIndexOfMinValue(values);
+
+        if (lastIndex === -1) {
+            return "";
+        }
+
+        var cells = ['<p>&nbsp;</p>'];
+
+        for (var i = 0, max = values.length; i < max; i++) {
+            cells.push('<p class="clear-fix');
+            cells.push(i === lastIndex ? " text-blue" : "");
+            cells.push('">');
+            cells.push('<span class="float-left">');
+            cells.push(roleMapper[i]);
+            cells.push('</span>');
+            cells.push('<span class="float-right">');
+
+            if (typeof values[i] === "undefined") {
+                cells.push("N/A");
+            } else if (values[i] === 0) {
+                cells.push("0");
+            } else {
+                cells.push(numeral(values[i]).format(CMSConstants.NumberFormat.IntNumber));
             }
-        }).join("");
+
+            cells.push('</span></p>');
+        }
+
+        return cells.join("");
+    }
+
+    function lastIndexOfMinValue(values) {
+        var minValue = values[0];
+        var lastIndex = 0;
+
+        for (var i = 1, max = values.length; i < max; i++) {
+            if (typeof minValue === "undefined" || (typeof values[i] !== "undefined" && values[i] <= minValue)) {
+                minValue = values[i];
+                lastIndex = i;
+            }
+        }
+
+        return typeof minValue === "undefined" ? -1 : lastIndex;
     }
 
     function renderReasonCell(reasons) {
@@ -270,16 +295,16 @@ var problemAccountSearch = (function ($, resources) {
         }).join("");
     }
 
-    function renderAbnormalBetCell(custId, custName, betCount) {
-        return [
-            '<a href="javascript:;" class="abnormal-bet-item" data-custid="',
-            custId,
-            '" data-custname="',
-            custName,
-            '">',
-            numeral(betCount).format(CMSConstants.NumberFormat.IntNumber),
-            '</a>'
-        ].join("");
+    function renderAbnormalBetCell(problemAccount) {
+        return problemAccount.AbnormalBetNumber > 0
+            ? ['<a href="javascript:;" class="abnormal-bet-item" data-custid="',
+                problemAccount.CustId,
+                '" data-custname="',
+                problemAccount.Username,
+                '">',
+                numeral(problemAccount.AbnormalBetNumber).format(CMSConstants.NumberFormat.IntNumber),
+                '</a>'].join("")
+            : "0";
     }
 
     function renderSelectCell(username) {
@@ -345,7 +370,16 @@ var problemAccountSearch = (function ($, resources) {
         init: init,
         getCheckedProblemAccount: getCheckedProblemAccount,
         reloadData: function () {
-            elements.formSearch.trigger("submit");
+            getProblemAccounts(0, filterParams.PageSize);
+        },
+        autoReloadData: function (pageIndex, pageSize) {
+            filterParams = getFilterParams();
+            getProblemAccounts(pageIndex - 1, pageSize, true);
+        },
+        reloadDataForMarkNew: function () {
+            filterParams
+                ? getProblemAccounts(0, filterParams.PageSize)
+                : elements.formSearch.trigger("submit");
         }
     };
 })(jQuery, resources);

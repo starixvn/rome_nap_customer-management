@@ -3,11 +3,18 @@
     public class InactivateCriteria : NonQueryCriteriaBase
     {
         public InactivateCriteria(
-            string custIds,
+            string usernames,
             byte roleId,
+            bool confirmed,
             int userId,
-            string ip) : base(custIds, roleId, userId, ip)
+            string ip) : base(usernames, roleId, userId, ip)
         {
+            IsConfirmed = confirmed;
         }
+
+        public bool IsConfirmed { get; }
+
+        public override string GetSettingKey()
+            => "CS_ProblemAccount_InactiveAccount";
     }
 }

@@ -30,8 +30,8 @@
             <label>@ProblemAccountResource.Exclude:</label>
         </div>
         <div class="edit-field checkbox">
-            <input type="checkbox" name="abnormalBet" value="true" id="chk-unmarkAbnormalBetsMembers" />
-            <label for="chk-unmarkAbnormalBetsMembers">@ProblemAccountResource.AbnormalBetsMembers</label>
+            <input type="checkbox" name="excludeAbnormalMember" value="true" id="chk-excludeAbnormalMember" />
+            <label for="chk-excludeAbnormalMember">@ProblemAccountResource.ExcludeAbnomalBetMember</label>
         </div>
     </div>
     <div class="form-row min-height-25">
@@ -39,8 +39,8 @@
             <label>&nbsp;</label>
         </div>
         <div class="edit-field checkbox">
-            <input type="checkbox" name="unmarkByOPS" value="true" id="chk-unmarkByOPSAndDownlines" />
-            <label for="chk-unmarkByOPSAndDownlines">@ProblemAccountResource.UnmarkByOPSAndDownlines</label>
+            <input type="checkbox" name="excludeDirectMark" value="true" id="chk-excludeDirectMark" />
+            <label for="chk-excludeDirectMark">@ProblemAccountResource.ExcludeDirectMarkedCust</label>
             <div id="divUnmarkNote" class="note-info-message" title="<p>Example:</p><p>- Master1: Directly marked by OPS</p><p>&nbsp;&nbsp;- Agent1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member2: Indirectly marked because of Agent1</p><p>&nbsp;&nbsp;- Agent2: Indirectly marked because of Master1</p><p>Unmarking Master1 using this option will unmark Master1 and Agent2.<br/>Member2 will still be marked for it belongs to a directly marked upline (Agent1).</p>"></div>
         </div>
     </div>

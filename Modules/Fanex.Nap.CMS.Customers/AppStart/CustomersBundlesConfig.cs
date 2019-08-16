@@ -25,8 +25,10 @@
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
                 "~/Areas/Customers/Scripts/problemAccount-search.js",
-                "~/Areas/Customers/Scripts/problemAccount-helper.js",
                 "~/Areas/Customers/Scripts/problemAccount-marknew.js",
+                "~/Areas/Customers/Scripts/problemAccount-unmark.js",
+                "~/Areas/Customers/Scripts/problemAccount-reduceBL.js",
+                "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
                 "~/Areas/Customers/Scripts/problemAccount.js"));
 
             return bundles;

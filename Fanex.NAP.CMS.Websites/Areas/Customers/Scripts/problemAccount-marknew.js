@@ -1,44 +1,48 @@
-﻿var problemAccountMarkNew = (function ($, CMS, resources, reloadData) {
-    "use strict";
-    var elements = null;
+﻿"use strict";
+function ProblemAccountMarkNew(form, reloadData) {
+    var successInlineMessage = null,
+        errorInlineMessage = null,
+        level = null,
+        spanLevel = null,
+        usernames = null,
+        reason = null,
+        spanReason = null;
 
-    function cacheElements(form) {
-        elements = {
-            form: form,
-            successInlineMessage: form.find("#div-successInlineMessage"),
-            errorInlineMessage: form.find("#div-errorInlineMessage"),
-            level: form.find("#ddl-level").combobox(),
-            spanLevel: form.find('span[id="ddl-level"]'),
-            usernames: form.find("#txt-usernames"),
-            reason: form.find("#ddl-reason").combobox(),
-            spanReason: form.find('span[id="ddl-reason"]')
-        };
+    function cacheElements() {
+        successInlineMessage = form.find("#div-successInlineMessage");
+        errorInlineMessage = form.find("#div-errorInlineMessage");
+        level = form.find("#ddl-level").combobox();
+        spanLevel = form.find('span[id="ddl-level"]');
+        usernames = form.find("#txt-usernames");
+        reason = form.find("#ddl-reason").combobox();
+        spanReason = form.find('span[id="ddl-reason"]');
     }
 
     function bindEvents() {
-        var buttonCancel = elements.form.find("#btn-cancel");
+        var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
-        elements.form.off("submit").on("submit", function (event) {
+        form.off("submit").on("submit", function (event) {
             event.preventDefault();
-
-            var validLevel = validateDropdownList(elements.level, elements.spanLevel),
-                validUsernames = validateUsernames(elements.usernames),
-                validReason = validateDropdownList(elements.reason, elements.spanReason);
-
-            if (validLevel && validUsernames && validReason) {
-                CMS.disableInput();
-                var url = elements.form.attr("action"),
-                    formData = elements.form.serialize();
-
-                $.post(url, formData, successHandler, "json")
-                    .fail(function (xhr) { CMS.handleAjaxError(xhr); })
-                    .always(function () { CMS.enableInput(); });
-            }
+            isValidFormData() && submitForm();
         });
     }
 
-    function validateDropdownList(ddlTag, span) {
+    function isValidFormData() {
+        var isValidLevel = isValidDropdownList(level, spanLevel),
+            isValidInputUsernames = isValidUsernames(),
+            isValidReason = isValidDropdownList(reason, spanReason);
+        return isValidLevel && isValidInputUsernames && isValidReason;
+    }
+
+    function submitForm() {
+        CMS.disableInput();
+        $.post(form.attr("action"), form.serialize(), successHandler, "json")
+            .fail(CMS.handleAjaxError)
+            .always(CMS.enableInput);
+    }
+
+    function isValidDropdownList(ddlTag, span) {
         if (ddlTag.val() === "0") {
             CMS.showTipsyError(span, resources.requiredFieldError, "w");
             return false;
@@ -48,10 +52,10 @@
         return true;
     }
 
-    function validateUsernames(inputTag) {
-        var usernamesValue = $.trim(inputTag.val());
+    function isValidUsernames() {
+        var usernamesValue = $.trim(usernames.val());
         if (usernamesValue.length === 0) {
-            CMS.showTipsyError(inputTag, resources.requiredFieldError, "ne");
+            CMS.showTipsyError(usernames, resources.requiredFieldError, "ne");
             return false;
         }
 
@@ -59,13 +63,13 @@
         if (usernamesValue.indexOf("\n") >= 0
             || usernamesValue.indexOf("\r") >= 0
             || usernamesValue.indexOf("\\") >= 0) {
-            CMS.showTipsyError(inputTag, resources.inputInvalidUsernamesError, "ne");
+            CMS.showTipsyError(usernames, resources.inputInvalidUsernamesError.replace("{0}", "'\\'"), "ne");
             return false;
         }
 
         var usernamesArray = usernamesValue.split(",");
         if (usernamesArray.length > maxInputUsernames) {
-            CMS.showTipsyError(inputTag, resources.usernamesOutOfRangeError.replace("{0}", maxInputUsernames), "ne");
+            CMS.showTipsyError(usernames, resources.usernamesOutOfRangeError.replace("{0}", maxInputUsernames), "ne");
             return false;
         }
 
@@ -80,12 +84,12 @@
         });
 
         if (duplicatedUsernames.length > 0) {
-            CMS.showTipsyError(inputTag, resources.duplicatedUsernamesError.replace("{0}", duplicatedUsernames.join(", ")), "ne");
+            CMS.showTipsyError(usernames, resources.duplicatedUsernamesError.replace("{0}", duplicatedUsernames.join(", ")), "ne");
             return false;
         }
 
-        CMS.clearTipsyError(inputTag);
-        inputTag.val(trimUsernames.join(","));
+        CMS.clearTipsyError(usernames);
+        usernames.val(trimUsernames.join(","));
         return true;
     }
 
@@ -93,29 +97,26 @@
         var jsonData = $.parseJSON(data);
 
         if (jsonData.Code === 0) {
-            CMS.hideInlineMsg(elements.errorInlineMessage);
+            CMS.hideInlineMsg(errorInlineMessage);
             CMS.showInlineSuccessMsg(
                 jsonData.Message,
-                elements.successInlineMessage,
+                successInlineMessage,
                 true,
                 function () {
                     CMS.closePopup();
                     reloadData();
                 });
         } else {
-            CMS.hideInlineMsg(elements.successInlineMessage);
-            jsonData.Message && CMS.showInlineSuccessMsg(jsonData.Message, elements.successInlineMessage, false);
-            jsonData.ErrorMessage && CMS.showInlineErrorMsg(jsonData.ErrorMessage, elements.errorInlineMessage);
+            CMS.hideInlineMsg(successInlineMessage);
+            jsonData.Message && CMS.showInlineSuccessMsg(jsonData.Message, successInlineMessage, false);
+            jsonData.ErrorMessage && CMS.showInlineErrorMsg(jsonData.ErrorMessage, errorInlineMessage);
         }
     }
 
-    function init(modalTitle, form) {
+    this.init = function (modalTitle) {
         CMS.modal(modalTitle, form, { resizable: false });
-        cacheElements(form);
-        bindEvents();
-    }
 
-    return {
-        init: init
+        cacheElements();
+        bindEvents();
     };
-})(jQuery, CMS, resources, problemAccountSearch.reloadData);
+}

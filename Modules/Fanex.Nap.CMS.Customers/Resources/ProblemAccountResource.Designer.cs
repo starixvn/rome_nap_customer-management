@@ -70,15 +70,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Members with abnormal bets..
-        /// </summary>
-        public static string AbnormalBetsMembers {
-            get {
-                return ResourceManager.GetString("AbnormalBetsMembers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Account.
         /// </summary>
         public static string Account {
@@ -111,6 +102,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All of the selected accounts are inactive already. No action has been done..
+        /// </summary>
+        public static string AllAccountsAlreadyInactivate {
+            get {
+                return ResourceManager.GetString("AllAccountsAlreadyInactivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is no account with reduced bet limit to be removed. No action has been done..
+        /// </summary>
+        public static string AllAccountsAlreadyRemoveReduceBL {
+            get {
+                return ResourceManager.GetString("AllAccountsAlreadyRemoveReduceBL", resourceCulture);
             }
         }
         
@@ -169,6 +178,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Members with abnormal bets..
+        /// </summary>
+        public static string ExcludeAbnomalBetMember {
+            get {
+                return ResourceManager.GetString("ExcludeAbnomalBetMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ones directly marked by OPS and any downline belonging to them..
+        /// </summary>
+        public static string ExcludeDirectMarkedCust {
+            get {
+                return ResourceManager.GetString("ExcludeDirectMarkedCust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inactivate.
         /// </summary>
         public static string Inactivate {
@@ -196,6 +223,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;The following account(s) are already inactive: {0}.&lt;/p&gt;&lt;div&gt;Therefore, no action will be applied for them.&lt;/div&gt;&lt;div&gt;Do you want to proceed the action for the rest?&lt;/div&gt;.
+        /// </summary>
+        public static string InactivateConfirmMessage {
+            get {
+                return ResourceManager.GetString("InactivateConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All accounts have been successfully inactivated..
         /// </summary>
         public static string InactivateSuccessfully {
@@ -205,7 +241,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash &apos;\\&apos; into the Username field..
+        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash {0} into the Username field..
         /// </summary>
         public static string InputInvalidUsernamesError {
             get {
@@ -385,20 +421,47 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;The following account(s) don&apos;t have their bet limit reduced: {0}.&lt;/p&gt;&lt;div&gt;Therefore, no action will be applied for them.&lt;/div&gt;&lt;div&gt;Do you want to proceed the action for the rest?&lt;/div&gt;.
+        /// </summary>
+        public static string RemoveReduceBLConfirmMessage {
+            get {
+                return ResourceManager.GetString("RemoveReduceBLConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove reduced bet limit for.
+        /// </summary>
+        public static string RemoveReduceBLFor {
+            get {
+                return ResourceManager.GetString("RemoveReduceBLFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected account(s) only.
+        /// </summary>
+        public static string RemoveReduceBLForSelectedAccounts {
+            get {
+                return ResourceManager.GetString("RemoveReduceBLForSelectedAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected account(s) and all downlines.
+        /// </summary>
+        public static string RemoveReduceBLForSelectedAccountsAndAllDownlines {
+            get {
+                return ResourceManager.GetString("RemoveReduceBLForSelectedAccountsAndAllDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to After removing Reduced Bet Limit, members will be able to place bet by their original bet limit..
         /// </summary>
         public static string RemoveReduceBLHint {
             get {
                 return ResourceManager.GetString("RemoveReduceBLHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove reduced bet limit on the selected account(s) and all downlines.
-        /// </summary>
-        public static string RemoveReduceBLOnSelectedAccountsAndDownlines {
-            get {
-                return ResourceManager.GetString("RemoveReduceBLOnSelectedAccountsAndDownlines", resourceCulture);
             }
         }
         
@@ -498,15 +561,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Unmark {
             get {
                 return ResourceManager.GetString("Unmark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ones directly marked by OPS and any downline belonging to them..
-        /// </summary>
-        public static string UnmarkByOPSAndDownlines {
-            get {
-                return ResourceManager.GetString("UnmarkByOPSAndDownlines", resourceCulture);
             }
         }
         

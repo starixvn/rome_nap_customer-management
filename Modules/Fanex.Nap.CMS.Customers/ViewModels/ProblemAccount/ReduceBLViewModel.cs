@@ -31,20 +31,18 @@
 
         public override bool IsInvalid()
             => base.IsInvalid()
-            || MaxPerEventValue <= 0
-            || MaxPerBetValue <= 0;
+            || MaxPerEventValue < 0
+            || MaxPerBetValue < 0;
 
         private static int ParseNumber(string text)
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                return 0;
+                return -1;
             }
 
             int value;
-            int.TryParse(text.Replace(",", string.Empty), out value);
-
-            return value;
+            return int.TryParse(text.Replace(",", string.Empty), out value) ? value : -1;
         }
     }
 }

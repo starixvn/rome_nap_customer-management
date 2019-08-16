@@ -3,12 +3,12 @@
     public class MarkNewCriteria : NonQueryCriteriaBase
     {
         public MarkNewCriteria(
-            string customerList,
+            string usernames,
             byte roleId,
             byte reasonId,
             string comment,
             int userId,
-            string ip) : base(customerList, roleId, userId, ip)
+            string ip) : base(usernames, roleId, userId, ip)
         {
             ReasonId = reasonId;
             Comment = comment;

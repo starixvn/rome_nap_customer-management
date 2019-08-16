@@ -23,24 +23,18 @@
         <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
     </div>
     <div class="form-row min-height-25">
-        <p class="no-margin-bottom">@ProblemAccountResource.RemoveReduceBLOnSelectedAccountsAndDownlines</p>
+        <p class="no-margin-bottom">@ProblemAccountResource.RemoveReduceBLFor</p>
     </div>
     <div class="form-row min-height-25">
-        <div class="lbl-field width-35 exclude">
-            <label>@ProblemAccountResource.Exclude:</label>
-        </div>
-        <div class="edit-field checkbox">
-            <input type="checkbox" name="abnormalBet" value="true" id="chk-removeReduceBLAbnormalBetsMembers" />
-            <label for="chk-removeReduceBLAbnormalBetsMembers">@ProblemAccountResource.AbnormalBetsMembers</label>
+        <div class="edit-field">
+            <input type="radio" name="isAllDownlines" id="rdo-selectedAccounts" value="false" checked="checked" />
+            <label for="rdo-selectedAccounts">@ProblemAccountResource.RemoveReduceBLForSelectedAccounts</label>
         </div>
     </div>
     <div class="form-row min-height-25">
-        <div class="lbl-field width-35">
-            <label>&nbsp;</label>
-        </div>
-        <div class="edit-field checkbox">
-            <input type="checkbox" name="unmarkByOPS" value="true" id="chk-removeReduceBLByOPSAndDownlines" />
-            <label for="chk-removeReduceBLByOPSAndDownlines">@ProblemAccountResource.UnmarkByOPSAndDownlines</label>
+        <div class="edit-field">
+            <input type="radio" name="isAllDownlines" id="rdo-selectedAccountsAndDownlines" value="true" />
+            <label for="rdo-selectedAccountsAndDownlines">@ProblemAccountResource.RemoveReduceBLForSelectedAccountsAndAllDownlines</label>
         </div>
     </div>
     <div class="form-row min-height-25">

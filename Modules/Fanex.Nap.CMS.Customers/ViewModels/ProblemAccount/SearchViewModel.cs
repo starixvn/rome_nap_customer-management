@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount
 {
     using System;
-    using Constants;
     using Infrastructure.Constants;
 
     [Serializable]
@@ -14,8 +13,8 @@
             To = DateTime.Today;
             From = To.AddDays(FromDate);
             Level = RoleIdConstants.Member;
-            Currency = CurrencyConst.CY;
-            OrdeBy = OrderByConst.SMALine;
+            Currency = IndexViewModel.CY;
+            OrderBy = IndexViewModel.OrderBySMALine;
         }
 
         public DateTime From { get; set; }
@@ -28,7 +27,7 @@
 
         public int Currency { get; set; }
 
-        public bool? IsReduced { get; set; }
+        public byte IsReduced { get; set; }
 
         public string Reason { get; set; }
 
@@ -36,7 +35,7 @@
 
         public bool IsSearchDownlines { get; set; }
 
-        public byte OrdeBy { get; set; }
+        public byte OrderBy { get; set; }
 
         public int PageIndex { get; set; }
 

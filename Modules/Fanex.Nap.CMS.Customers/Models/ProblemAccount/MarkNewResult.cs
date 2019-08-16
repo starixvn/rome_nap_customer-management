@@ -5,6 +5,8 @@
 
     public class MarkNewResult : Result
     {
+        private const int ErrorStatusCode = 500;
+
         public MarkNewResult(int code, string message, string successUsernames, string errorUsernames)
         {
             Code = code;
@@ -13,7 +15,7 @@
             {
                 Message = ProblemAccountResource.MarkNewSuccessfully;
             }
-            else if (code == 500)
+            else if (code == ErrorStatusCode)
             {
                 if (!string.IsNullOrWhiteSpace(successUsernames))
                 {

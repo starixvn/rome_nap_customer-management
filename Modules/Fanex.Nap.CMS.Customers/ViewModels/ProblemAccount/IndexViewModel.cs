@@ -6,23 +6,40 @@
     using System.Web.Mvc;
     using Constants;
     using Infrastructure.Constants;
+    using Infrastructure.Models;
     using Resources;
 
     public class IndexViewModel
     {
         public const int MaxInputUsernames = 100;
+
         public const int MaxPerEvent = 5000;
         public const int MaxPerBet = 1000;
+
+        public const int CY = 81;
+        private const int UUS = 20;
+
+        private const byte No = 1;
+        private const byte Yes = 2;
+
+        public const int OrderBySMALine = 1;
+        private const int OrderByMarkDate = 2;
+        private const int OrderByAccountStatus = 3;
+
         // The release date of this feature.
         public static readonly DateTime DefaultMinDate = new DateTime(2019, 8, 1);
 
-        private IEnumerable<SelectListItem> markNewReasons;
-
-        public IndexViewModel(bool hasHostPermission, SearchViewModel searchViewModel)
+        public IndexViewModel(
+            bool hasHostPermission,
+            SearchViewModel searchViewModel,
+            IEnumerable<IdNameModel> filterReasons,
+            IEnumerable<IdNameModel> markNewReasons)
         {
             HasHostPermission = hasHostPermission;
             AutoReload = searchViewModel != null;
-            SearchFilter= searchViewModel ?? new SearchViewModel();
+            SearchFilter = searchViewModel ?? new SearchViewModel();
+            Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
+            MarkNewReasons = BuildMarkNewReasons(markNewReasons);
         }
 
         public bool HasHostPermission { get; }
@@ -33,134 +50,73 @@
 
         public DateTime CurrentDate { get; } = DateTime.Today;
 
-        public IEnumerable<SelectListItem> Levels
+        public IEnumerable<SelectListItem> Levels { get; } = new[]
         {
-            get
-            {
-                var selectedLevel = SearchFilter.Level;
-
-                return new[]
-                {
-                    BuildSelectListItem(RoleIdConstants.Headline, nameof(RoleIdConstants.Headline), RoleIdConstants.Headline == selectedLevel),
-                    BuildSelectListItem(RoleIdConstants.Super, nameof(RoleIdConstants.Super), RoleIdConstants.Super == selectedLevel),
-                    BuildSelectListItem(RoleIdConstants.Master, nameof(RoleIdConstants.Master), RoleIdConstants.Master == selectedLevel),
-                    BuildSelectListItem(RoleIdConstants.Agent, nameof(RoleIdConstants.Agent), RoleIdConstants.Agent == selectedLevel),
-                    BuildSelectListItem(RoleIdConstants.Member, nameof(RoleIdConstants.Member), RoleIdConstants.Member == selectedLevel)
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> Currencies
-        {
-            get
-            {
-                var selectedCurrency = SearchFilter.Currency;
-
-                return new[]
-                {
-                    BuildSelectListItem(CurrencyConst.CY, nameof(CurrencyConst.CY), CurrencyConst.CY == selectedCurrency),
-                    BuildSelectListItem(CurrencyConst.UUS, nameof(CurrencyConst.UUS), CurrencyConst.UUS == selectedCurrency)
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> AccountStatus
-        {
-            get
-            {
-                var selectedStatus = SearchFilter.Status;
-
-                return new[]
-                {
-                    BuildSelectListItem(0, ProblemAccountResource.All, 0 == selectedStatus),
-                    BuildSelectListItem(AccountStatusConst.Active, nameof(AccountStatusConst.Active), AccountStatusConst.Active == selectedStatus),
-                    BuildSelectListItem(AccountStatusConst.ViewOnly, ProblemAccountResource.ViewOnly, AccountStatusConst.ViewOnly == selectedStatus),
-                    BuildSelectListItem(AccountStatusConst.Suspended, nameof(AccountStatusConst.Suspended), AccountStatusConst.Suspended == selectedStatus),
-                    BuildSelectListItem(AccountStatusConst.Inactive, nameof(AccountStatusConst.Inactive), AccountStatusConst.Inactive == selectedStatus)
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> IsReduced
-        {
-            get
-            {
-                var selectedIsReduced = SearchFilter.IsReduced;
-
-                return new[]
-                {
-                    BuildSelectListItem(0, ProblemAccountResource.All, null == selectedIsReduced),
-                    BuildSelectListItem(IsReducedConst.Yes, nameof(IsReducedConst.Yes), true == selectedIsReduced),
-                    BuildSelectListItem(IsReducedConst.No, nameof(IsReducedConst.No), false == selectedIsReduced)
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> Reasons
-        {
-            get
-            {
-                var reasonHash = ToDictionary(SearchFilter.Reason);
-
-                return new[]
-                {
-                    BuildSelectListItem(1, "all reasons of void abnormal", reasonHash.ContainsKey(1)),
-                    BuildSelectListItem(2, "add manual problem reasons define by CSD", reasonHash.ContainsKey(1))
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> OrderBy
-        {
-            get
-            {
-                var selectedOrderBy = SearchFilter.OrdeBy;
-
-                return new[]
-                {
-                    BuildSelectListItem(OrderByConst.SMALine, ProblemAccountResource.SMALine, OrderByConst.SMALine == selectedOrderBy),
-                    BuildSelectListItem(OrderByConst.MarkDate, ProblemAccountResource.MarkDate, OrderByConst.MarkDate == selectedOrderBy),
-                    BuildSelectListItem(OrderByConst.AccountStatus, ProblemAccountResource.AccountStatus, OrderByConst.AccountStatus == selectedOrderBy)
-                };
-            }
-        }
-
-        public IEnumerable<SelectListItem> MarkNewLevels { get; } = new[]
-        {
-            BuildSelectListItem(0, ProblemAccountResource.PleaseSelect, true),
             BuildSelectListItem(RoleIdConstants.Super, nameof(RoleIdConstants.Super)),
             BuildSelectListItem(RoleIdConstants.Master, nameof(RoleIdConstants.Master)),
             BuildSelectListItem(RoleIdConstants.Agent, nameof(RoleIdConstants.Agent)),
             BuildSelectListItem(RoleIdConstants.Member, nameof(RoleIdConstants.Member))
         };
 
-        public IEnumerable<SelectListItem> MarkNewReasons
+        public IEnumerable<SelectListItem> Currencies { get; } = new[]
         {
-            get
-            {
-                if (markNewReasons == null)
-                {
-                    markNewReasons = new[]
-                        { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect, true) }
-                        .Concat(Reasons.Select(r =>
-                        {
-                            r.Selected = false;
-                            return r;
-                        })).ToList();
-                }
+            BuildSelectListItem(CY, nameof(CY)),
+            BuildSelectListItem(UUS, nameof(UUS))
+        };
 
-                return markNewReasons;
-            }
-        }
+        public IEnumerable<SelectListItem> AccountStatus { get; } = new[]
+        {
+            BuildSelectListItem(0, ProblemAccountResource.All),
+            BuildSelectListItem(AccountStatusConst.Active, nameof(AccountStatusConst.Active)),
+            BuildSelectListItem(AccountStatusConst.ViewOnly, ProblemAccountResource.ViewOnly),
+            BuildSelectListItem(AccountStatusConst.Suspended, nameof(AccountStatusConst.Suspended)),
+            BuildSelectListItem(AccountStatusConst.Inactive, nameof(AccountStatusConst.Inactive))
+        };
+
+        public IEnumerable<SelectListItem> IsReduced { get; } = new[]
+        {
+            BuildSelectListItem(0, ProblemAccountResource.All),
+            BuildSelectListItem(Yes, nameof(Yes)),
+            BuildSelectListItem(No, nameof(No))
+        };
+
+        public IEnumerable<SelectListItem> Reasons { get; }
+
+        public IEnumerable<SelectListItem> OrderBy { get; } = new[]
+        {
+            BuildSelectListItem(OrderBySMALine, ProblemAccountResource.SMALine),
+            BuildSelectListItem(OrderByMarkDate, ProblemAccountResource.MarkDate),
+            BuildSelectListItem(OrderByAccountStatus, ProblemAccountResource.AccountStatus)
+        };
+
+        public IEnumerable<SelectListItem> MarkNewLevels
+            => new[] { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect) }.Concat(Levels).ToList();
+
+        public IEnumerable<SelectListItem> MarkNewReasons { get; }
 
         private static SelectListItem BuildSelectListItem(int value, string name, bool selected = false)
             => new SelectListItem { Value = value.ToString(), Text = name, Selected = selected };
 
-        private static IDictionary<byte, bool> ToDictionary(string text)
+        private static IEnumerable<SelectListItem> BuildFilterReasons(IEnumerable<IdNameModel> reasons, string selectedReasons)
+        {
+            var reasonHash = ToDictionary(selectedReasons);
+            var isSelectAll = reasonHash.Count == 0;
+
+            return reasons
+                .Select(r => BuildSelectListItem(r.Id, r.Name, isSelectAll || reasonHash.ContainsKey(r.Id)))
+                .ToList();
+        }
+
+        private static IDictionary<int, bool> ToDictionary(string text)
             => string.IsNullOrWhiteSpace(text)
-            ? new Dictionary<byte, bool>()
+            ? new Dictionary<int, bool>()
             : text
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .ToDictionary(kvp => byte.Parse(kvp), kvp => true);
+                .ToDictionary(kvp => int.Parse(kvp), kvp => true);
+
+        private static IEnumerable<SelectListItem> BuildMarkNewReasons(IEnumerable<IdNameModel> reasons)
+            => new[] { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect) }
+            .Concat(reasons.Select(r => BuildSelectListItem(r.Id, r.Name)))
+            .ToList();
     }
 }

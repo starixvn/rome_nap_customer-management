@@ -1,0 +1,14 @@
+﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
+{
+    using Fanex.Data.Repository;
+
+    public class GetAccountDetailCriteria : CriteriaBase
+    {
+        public int CustId { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_BetRestriction_CustomerSelDetail";
+        }
+    }
+}

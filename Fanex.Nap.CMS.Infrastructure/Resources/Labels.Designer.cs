@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -57,6 +57,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8RM Account.
+        /// </summary>
+        public static string _8RMAccount {
+            get {
+                return ResourceManager.GetString("_8RMAccount", resourceCulture);
             }
         }
         
@@ -106,6 +115,105 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove selected account {0} ?.
+        /// </summary>
+        public static string BetRestriction_ConfirmRemoveAccount {
+            get {
+                return ResourceManager.GetString("BetRestriction_ConfirmRemoveAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove selected currency {0} ?.
+        /// </summary>
+        public static string BetRestriction_ConfirmRemoveCurrency {
+            get {
+                return ResourceManager.GetString("BetRestriction_ConfirmRemoveCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove selected site {0} ?.
+        /// </summary>
+        public static string BetRestriction_ConfirmRemoveSite {
+            get {
+                return ResourceManager.GetString("BetRestriction_ConfirmRemoveSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account {0} has already had one or many downlines existing in the list..
+        /// </summary>
+        public static string BetRestriction_DownlinesExisted {
+            get {
+                return ResourceManager.GetString("BetRestriction_DownlinesExisted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upline {0}: {1} of the selected account has already exists in the bet restriction list..
+        /// </summary>
+        public static string BetRestriction_UplineExisted {
+            get {
+                return ResourceManager.GetString("BetRestriction_UplineExisted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet must be less than or equal to Max per Match..
+        /// </summary>
+        public static string BetRestriction_ValidateMaxBetMaxPerMatchError {
+            get {
+                return ResourceManager.GetString("BetRestriction_ValidateMaxBetMaxPerMatchError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Seize Bet Ticket % of downlines ({0}) is lower than the Seize Bet Ticket of this account..
+        /// </summary>
+        public static string BetRestriction_WarningDownlineSeizeBetLower {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningDownlineSeizeBetLower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to proceed?.
+        /// </summary>
+        public static string BetRestriction_WarningProceed {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningProceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Seize Bet Ticket % of upline ({0}) is higher than the Seize Bet Ticket of this account..
+        /// </summary>
+        public static string BetRestriction_WarningUplineSeizeBetHigher {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningUplineSeizeBetHigher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        public static string Credit {
+            get {
+                return ResourceManager.GetString("Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        public static string Credits {
+            get {
+                return ResourceManager.GetString("Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Figure.
         /// </summary>
         public static string Figure {
@@ -133,11 +241,56 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Licensee.
+        /// </summary>
+        public static string Licensee {
+            get {
+                return ResourceManager.GetString("Licensee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Licensees.
+        /// </summary>
+        public static string Licensees {
+            get {
+                return ResourceManager.GetString("Licensees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live Bet Accept (Secs).
+        /// </summary>
+        public static string LiveBetAccept {
+            get {
+                return ResourceManager.GetString("LiveBetAccept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Master.
         /// </summary>
         public static string Master {
             get {
                 return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet.
+        /// </summary>
+        public static string MaxBet {
+            get {
+                return ResourceManager.GetString("MaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match.
+        /// </summary>
+        public static string MaxPerMatch {
+            get {
+                return ResourceManager.GetString("MaxPerMatch", resourceCulture);
             }
         }
         
@@ -201,6 +354,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string RequiredFieldError {
             get {
                 return ResourceManager.GetString("RequiredFieldError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seize Bet Ticket (%).
+        /// </summary>
+        public static string SeizeBetTicket {
+            get {
+                return ResourceManager.GetString("SeizeBetTicket", resourceCulture);
             }
         }
         

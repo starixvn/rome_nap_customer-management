@@ -72,7 +72,7 @@ namespace Fanex.NAP.CMS.Controllers
             UpdatedMembersStatusResult result = null;
 
             filter.AdminId = this.CurrentSession.UserId;
-            filter.AdminUsername = this.CurrentSession.Username;
+            filter.AdminUsername = this.CurrentSession.Username;    
             filter.IP = this.CurrentContext.IP;
             result = this._openCloseMemberService.UpdateMembersStatus(filter);
 

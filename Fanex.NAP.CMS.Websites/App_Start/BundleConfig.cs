@@ -31,6 +31,8 @@ namespace Fanex.NAP.CMS.Websites
             RegisterTurnoverControlBundles(bundles);
             RegisterLossControlBundles(bundles);
             RegisterCreditCollectionBundles(bundles);
+            RegisterBetRestrictionBundles(bundles);
+            RegisterBetRestrictionManagementBundles(bundles);
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
             NotificationSettingBundleConfig.RegisterAll(bundles);
@@ -224,6 +226,27 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/status-log").Include(
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
                 "~/Scripts/Sites/status-log.js"));
+        }
+
+        public static void RegisterBetRestrictionBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/BetRestriction",
+                "~/Areas/BetRestriction/Styles/Index.less");
+            bundles.Add(new ScriptBundle("~/scripts/BetRestriction").Include(
+                "~/Areas/BetRestriction/Scripts/Index.js",
+                "~/Areas/BetRestriction/Scripts/AccountManagement.js",
+                "~/Areas/BetRestriction/Scripts/SiteManagement.js",
+                "~/Areas/BetRestriction/Scripts/CurrencyManagement.js"));
+        }
+
+        public static void RegisterBetRestrictionManagementBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/BetRestrictionManagement",
+                "~/Areas/BetRestrictionManagement/Styles/Index.less");
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionManagement").Include(
+                "~/Areas/BetRestrictionManagement/Scripts/Index.js"));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.Websites", "Fanex.NAP.CMS.Websites\Fanex.NAP.CMS.Websites.csproj", "{14C507F3-3AEF-4BFF-B597-EA9FC46B75C1}"
 EndProject
@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.Customers", "Modules\Fanex.Nap.CMS.Customers\Fanex.Nap.CMS.Customers.csproj", "{5CA24F84-6331-4A98-8124-7C40BBD3D84D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.BetRestriction", "Fanex.Nap.CMS.BetRestriction\Fanex.Nap.CMS.BetRestriction.csproj", "{F4A2DF08-F986-45F7-928C-8EB0581338A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{5CA24F84-6331-4A98-8124-7C40BBD3D84D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA24F84-6331-4A98-8124-7C40BBD3D84D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA24F84-6331-4A98-8124-7C40BBD3D84D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,5 +147,9 @@ Global
 		{68353271-9457-411A-A5CC-398F9D0B5FE7} = {AC68E51B-75F0-473C-9153-67AC782E4825}
 		{FA19DB02-6356-4BE1-B7EB-642884ADF9E3} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{5CA24F84-6331-4A98-8124-7C40BBD3D84D} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{F4A2DF08-F986-45F7-928C-8EB0581338A8} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E08A2867-264F-4443-BC13-A4DD81DAB9FC}
 	EndGlobalSection
 EndGlobal

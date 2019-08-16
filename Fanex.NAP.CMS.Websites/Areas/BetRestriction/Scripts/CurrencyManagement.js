@@ -1,0 +1,172 @@
+﻿$(document).ready(function () {
+    currencyManagement = new Fanex.CMS.BetRestriction.CurrencyManagement();
+    currencyManagement.Init();
+});
+
+Namespace.Register('Fanex.CMS.BetRestriction.CurrencyManagement');
+
+Fanex.CMS.BetRestriction.CurrencyManagement = function () {
+    var $this = $(this);
+
+    var DOMElements = {
+        formCurrencyManagement: null,
+        hidExchangeId: null,
+        txtPopupCurrency: null,
+        ddlPopupCurrency: null,
+        ddlPopupCurrencyType: null,
+        hidCurrentType: null,
+        chkPopupCurrencyLiveBetAccept: null,
+        chkPopupCurrencySeizeBetTicket: null,
+        txtPopupCurrency8RMAccount: null,
+        btnCurrencySave: null,
+        btnCurrencyCancel: null,
+        htmlformCurrencyManagement: null
+    };
+
+    var cacheDOMElements = function () {
+        DOMElements.formCurrencyManagement = $('#formCurrencyManagement');
+        DOMElements.hidExchangeId = $('#hidExchangeId');
+        DOMElements.txtPopupCurrency = $('#txtPopupCurrency');
+        DOMElements.ddlPopupCurrency = $('#ddlPopupCurrency');
+        DOMElements.ddlPopupCurrencyType = $('#ddlPopupCurrencyType');
+        DOMElements.hidCurrentType = $('#hidCurrentType');
+        DOMElements.chkPopupCurrencyLiveBetAccept = $('#chkPopupCurrencyLiveBetAccept');
+        DOMElements.chkPopupCurrencySeizeBetTicket = $('#chkPopupCurrencySeizeBetTicket');
+        DOMElements.txtPopupCurrency8RMAccount = $('#txtPopupCurrency8RMAccount');
+        DOMElements.btnCurrencySave = $('#btnCurrencySave');
+        DOMElements.btnCurrencyCancel = $('#btnCurrencyCancel');
+    }
+
+    var bindingEvents = function () {
+        DOMElements.btnCurrencyCancel.click(function () { CMS.closePopup(); });
+        DOMElements.chkPopupCurrencySeizeBetTicket.change(function () {
+            if ($(this).val() == '') {
+                DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(DOMElements.txtPopupCurrency8RMAccount);
+            }
+            else
+                DOMElements.txtPopupCurrency8RMAccount.removeAttr('disabled');
+        });
+
+    }
+
+    var validateForm = function (isEdit) {
+        if (!isEdit && DOMElements.ddlPopupCurrency.val().length <= 0) {
+            CMS.showTipsyError(DOMElements.ddlPopupCurrency, messages.RequiredFieldError);
+            return false;
+        }
+
+        if (DOMElements.ddlPopupCurrencyType.val().length <= 0) {
+            CMS.showTipsyError(DOMElements.ddlPopupCurrencyType, messages.RequiredFieldError);
+            return false;
+        }
+
+        if (DOMElements.chkPopupCurrencyLiveBetAccept.val().length <= 0) {
+            CMS.showTipsyError(DOMElements.chkPopupCurrencyLiveBetAccept, messages.RequiredFieldError);
+            return false;
+        }
+
+        if (DOMElements.chkPopupCurrencySeizeBetTicket.val() == '') {
+            DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+        }
+        else if (DOMElements.txtPopupCurrency8RMAccount.val().length <= 0) {
+            CMS.showTipsyError(DOMElements.txtPopupCurrency8RMAccount, messages.RequiredFieldError);
+            return false;
+        }
+
+        return true;
+    }
+
+    var saveAddEditCurrency = function (isEdit) {
+        CMS.disableInput();
+        if (!validateForm(isEdit)) {
+            CMS.enableInput();
+            return;
+        }
+
+        var params = {
+            ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
+            Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
+            NewType: DOMElements.ddlPopupCurrencyType.val(),
+            LiveBetAccept: DOMElements.chkPopupCurrencyLiveBetAccept.val(),
+            SeizeBetTicket: DOMElements.chkPopupCurrencySeizeBetTicket.val(),
+            FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' :  DOMElements.txtPopupCurrency8RMAccount.val()
+        }
+
+        CMS.callAjax(
+            this,
+            isEdit ? 'EditCurrency' : 'AddCurrency',
+            params,
+            function (result) {
+                if (result.Code == 0) {
+                    CMS.showSuccessMessage(isEdit ? messages.UpdateCurrencySuccessfully : messages.AddCurrencySuccessfully);
+                }
+                else {
+                    CMS.showErrorMessage(result.Message);
+                }
+            }
+        );
+    }
+
+    var loadCurrencyDetailForEdit = function (exchangeId, type) {
+        CMS.callAjax(
+            this,
+            'GetCurrencyDetail',
+            { ExchangeId: exchangeId, Type: type },
+            function (result) {
+                DOMElements.hidExchangeId.val(result.ExchangeId);
+                DOMElements.txtPopupCurrency.val(result.Currency);
+                DOMElements.ddlPopupCurrency.val(result.Currency);
+                DOMElements.ddlPopupCurrencyType.val(result.Type);
+                DOMElements.hidCurrentType.val(result.Type);
+                DOMElements.chkPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
+                DOMElements.chkPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
+                DOMElements.txtPopupCurrency8RMAccount.val(result.FollowAccount);
+            }
+        );
+    }
+
+    this.Init = function () {
+        DOMElements.htmlformCurrencyManagement = $('#containerFormCurrencyManager').html();//.replace('display-none', '');
+        $('#containerFormCurrencyManager').remove();
+    }
+
+    this.ShowAddCurrencyPopup = function () {
+        CMS.modal('Add Bet Restricted Currency', DOMElements.htmlformCurrencyManagement);
+        cacheDOMElements();
+        bindingEvents();
+        DOMElements.hidExchangeId.remove();
+        DOMElements.txtPopupCurrency.remove();
+        DOMElements.formCurrencyManagement.removeClass('display-none');
+        DOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(false); });
+    }
+
+    this.ShowEditCurrencyPopup = function (exchangeId, type) {
+        CMS.disableInput();
+        CMS.modal('Edit Bet Restricted Currency', DOMElements.htmlformCurrencyManagement);
+        cacheDOMElements();
+        bindingEvents();
+        DOMElements.txtPopupCurrency.remove();
+        loadCurrencyDetailForEdit(exchangeId, type)
+        DOMElements.formCurrencyManagement.removeClass('display-none');
+        DOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(true); });
+    }
+
+    this.RemoveCurrency = function (exchangeId, currency, type) {
+        CMS.showConfirmMessage(messages.ConfirmRemoveCurrency.replace('{0}', currency), function () {
+            CMS.callAjax(
+                this,
+                'RemoveCurrency',
+                { ExchangeId: exchangeId, Type: type },
+                function (result) {
+                    if (result.Code == 0) {
+                        CMS.showSuccessMessage(messages.RemoveCurrencySuccessfully);
+                    }
+                    else {
+                        CMS.showErrorMessage(result.Message);
+                    }
+                }
+            );
+        });
+    }
+}

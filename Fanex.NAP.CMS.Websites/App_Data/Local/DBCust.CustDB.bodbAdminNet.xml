@@ -42,4 +42,18 @@
     <Setting Key="CS_ProblemAccount_InactiveAccount" SpName="CS_ProblemAccount_InactiveAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Bet Restriction">
+    <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CustomerIns" SpName="NAP_BetRestriction_CustomerIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CurrencyDel" SpName="NAP_BetRestriction_CurrencyDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CustomerUpd" SpName="NAP_BetRestriction_CustomerUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_SiteUpd" SpName="NAP_BetRestriction_SiteUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CustomerDel" SpName="NAP_BetRestriction_CustomerDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CurrencyIns" SpName="NAP_BetRestriction_CurrencyIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_SiteIns" SpName="NAP_BetRestriction_SiteIns" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Bet Restriction Management">
+    <Setting Key="NAP_BetRestriction_SettingUpd" SpName="NAP_BetRestriction_SettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

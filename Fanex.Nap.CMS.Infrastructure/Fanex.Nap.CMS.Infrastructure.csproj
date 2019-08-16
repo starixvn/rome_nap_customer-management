@@ -180,7 +180,9 @@
     <Compile Include="Constants\SortDirectionConstants.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Criteria\GetBalanceUpDayCriteria.cs" />
+    <Compile Include="Criteria\PagingCriteria.cs" />
     <Compile Include="Extensions\BundleExtensions.cs" />
+    <Compile Include="Extensions\CMSConverter.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />
     <Compile Include="Extensions\StringExtentions.cs" />

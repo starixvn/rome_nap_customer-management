@@ -1,0 +1,16 @@
+﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
+{
+    using Fanex.Data.Repository;
+
+    public class GetCurrencyDetailCriteria : CriteriaBase
+    {
+        public int ExchangeId { get; set; }
+
+        public int Type { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_BetRestriction_CurrencySelDetail";
+        }
+    }
+}

@@ -7,13 +7,26 @@
 //   <change who="Louis.Nguyen" date="2014.10.03">Created</change>
 // </history>
 
+using Fanex.Nap.CMS.Infrastructure.Resources;
 namespace Fanex.Nap.CMS.Infrastructure.Constants
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Role Identify Constants.
     /// </summary>
     public static class RoleIdConstants
     {
+        private static Dictionary<int, string> _roleName = new Dictionary<int, string>
+        {
+            { 1, Labels.Member },
+            { 2, Labels.Agent },
+            { 3, Labels.Master },
+            { 4, Labels.Super }
+        };
+
+        public static string GetRoleName(int roleId) => _roleName[roleId];
+
         public const int Super = 4;
         public const int Master = 3;
         public const int Agent = 2;

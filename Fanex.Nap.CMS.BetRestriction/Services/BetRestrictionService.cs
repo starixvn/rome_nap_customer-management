@@ -124,7 +124,7 @@
                 result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
             }
 
-            if (checkResult.IsUplineExists && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
+            if (checkResult.IsDownlineExists && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
             {
                 result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
             }

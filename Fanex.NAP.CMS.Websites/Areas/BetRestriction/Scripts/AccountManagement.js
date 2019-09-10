@@ -145,6 +145,10 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
             function (result) {
                 if (result.Code == 0) {
                     CMS.showSuccessMessage(isEdit ? messages.UpdateAccountSuccessfully : messages.AddAccountSuccessfully);
+                    setTimeout(function () {
+                        CMS.closePopup();
+                        betRestriction.Search();
+                    }, 3000);
                 }
                 else {
                     CMS.showErrorMessage(result.Message);
@@ -160,13 +164,13 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
             { CustId: custId },
             function (result) {
                 oldData = {
-                    CustId: result.CustId.toString(),
+                    CustId: result.CustId + '',
                     UserName: result.Account,
-                    LiveBetAccept: result.LiveBetAccept == null ? '' : result.LiveBetAccept.toString(),
-                    SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket.toString(),
-                    MaxBet: result.MaxBet == null ? '' : result.MaxBet.toString(),
-                    MaxPerMatch: result.MaxPerMatch == null ? '' : result.MaxPerMatch.toString(),
-                    FollowAccount: result.FollowAccount
+                    LiveBetAccept: result.LiveBetAccept == null ? '' : result.LiveBetAccept + '',
+                    SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket + '',
+                    MaxBet: result.MaxBet == null ? '' : result.MaxBet + '',
+                    MaxPerMatch: result.MaxPerMatch == null ? '' : result.MaxPerMatch + '',
+                    FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
                 };
 
                 DOMElements.txtPopupAccUsername.val(result.Account);
@@ -215,6 +219,9 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 function (result) {
                     if (result.Code == 0) {
                         CMS.showSuccessMessage(messages.RemoveAccountSuccessfully);
+                        setTimeout(function () {
+                            betRestriction.Search();
+                        }, 3000);
                     }
                     else {
                         CMS.showErrorMessage(result.Message);

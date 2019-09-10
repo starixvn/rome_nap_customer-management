@@ -8,7 +8,7 @@
 
         public int LiveBetAccept { get; set; }
 
-        public int SeizeBetTicket { get; set; }
+        public byte? SeizeBetTicket { get; set; }
 
         public string FollowAccount { get; set; }
     }

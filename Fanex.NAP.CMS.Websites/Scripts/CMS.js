@@ -279,7 +279,7 @@ var CMS = (function ($) {
             }
         },
         closePopup: function () {
-            CMS.dialogPopup.dialog('destroy').remove();
+            CMS.dialogPopup.dialog('close');
         },
         downloadFile: function (url, data) {
             //url and data options required

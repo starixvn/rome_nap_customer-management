@@ -119,12 +119,12 @@
         private string ComposeCheckEditAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
             var result = string.Empty;
-            if (checkResult.IsUplineExists && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
+            if (checkResult.IsUplineExists && checkResult.UplineSeizeBetTicket.HasValue && request.SeizeBetTicket.HasValue && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
             {
                 result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
             }
 
-            if (checkResult.IsDownlineExists && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
+            if (checkResult.IsDownlineExists && request.SeizeBetTicket.HasValue && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
             {
                 result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
             }

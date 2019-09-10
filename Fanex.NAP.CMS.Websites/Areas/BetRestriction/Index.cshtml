@@ -47,6 +47,8 @@
                     <option value="@ViewLang.ViewOnly">@ViewLang.ViewOnly</option>
                     <option value="@ViewLang.Suspended">@ViewLang.Suspended</option>
                     <option value="@ViewLang.Inactive">@ViewLang.Inactive</option>
+                    <option value="@ViewLang.Closed">@ViewLang.Closed</option>
+                    <option value="@ViewLang.Open">@ViewLang.Open</option>
                 </select>
             </div>
             <div class="lbl-field col_3">
@@ -74,14 +76,19 @@
         <div class="filter-row"></div>
     </div>
 </div>
-<div class="display-none content-grid">
-    <div id="grdAccount" class="freegrid"></div>
-    <div class="free-row"></div>
-    <div id="grdSite" class="freegrid"></div>
-    <div class="free-row"></div>
-    <div id="grdCurrency" class="freegrid"></div>
+<div id="result-content" style="overflow:auto; clear:both;">
+    <div class="display-none content-grid">
+        <div id="grdAccount" class="freegrid"></div>
+    </div>
+    <div class="display-none content-grid">
+        <div class="free-row"></div>
+        <div id="grdSite" class="freegrid"></div>
+    </div>
+    <div class="display-none content-grid">
+        <div class="free-row"></div>
+        <div id="grdCurrency" class="freegrid"></div>
+    </div>
 </div>
-
 @Html.Partial("~/Areas/BetRestriction/AccountManagement.cshtml")
 @Html.Partial("~/Areas/BetRestriction/SiteManagement.cshtml", Model)
 @Html.Partial("~/Areas/BetRestriction/CurrencyManagement.cshtml", Model)

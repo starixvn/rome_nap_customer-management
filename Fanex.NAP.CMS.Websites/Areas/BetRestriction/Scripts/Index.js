@@ -18,6 +18,8 @@ Fanex.CMS.BetRestriction = function () {
         btnAddAccount: null,
         btnAddSite: null,
         btnAddCurrency: null,
+        content: null,
+        resultContent: null,
         grdAccount: null,
         grdSite: null,
         grdCurrency: null
@@ -38,18 +40,20 @@ Fanex.CMS.BetRestriction = function () {
         DOMElements.grdAccount = $('#grdAccount');
         DOMElements.grdSite = $('#grdSite');
         DOMElements.grdCurrency = $('#grdCurrency');
+        DOMElements.resultContent = $('#result-content');
+        DOMElements.content = $('.content').eq(0);
     }
 
     var bindingEvents = function () {
         DOMElements.txtUserName.keypress(function (e) {
             var key = e.which;
             if (key == 13) {
-                search();
+                betRestriction.Search();
                 return false;
             }
         });
 
-        DOMElements.btnSearch.click(search);
+        DOMElements.btnSearch.click(betRestriction.Search);
     }
 
     var bindingGridEvents = function (data) {
@@ -119,9 +123,11 @@ Fanex.CMS.BetRestriction = function () {
         $('#btnAddCurrency').click(function () {
             currencyManagement.ShowAddCurrencyPopup();
         });
+
+        DOMElements.resultContent.height(DOMElements.content.height() * 0.95);
     }
 
-    var search = function () {
+    this.Search = function () {
         CMS.disableInput();
         cacheParamsForPaging = {
             UserName: DOMElements.txtUserName.val(),
@@ -148,7 +154,9 @@ Fanex.CMS.BetRestriction = function () {
 
     var renderAccountGrid = function (viewModel, pageIndex, pageSize) {
         var accountGridOptions = {
-            gridExpandHeight: 565,
+            fullHeight: false,
+            gridHeight: window.innerHeight * 0.3,
+            //gridExpandHeight: window.innerHeight * 0.61,
             customizeHeader: true,
             groupHeaderRows: [
                 {
@@ -176,13 +184,13 @@ Fanex.CMS.BetRestriction = function () {
                 { HeaderText: 'Level', Width: 70, Name: 'Level', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Status', Width: 70, Name: 'Status', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Site', Width: 80, Name: 'Site', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'LiveBetAccept', Width: 80, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'SeizeBetTicket', Width: 85, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Live Bet Accept (Secs)', Width: 80, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Seize Bet Ticket (%)', Width: 85, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Currency', Width: 60, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'MaxBet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
-                { HeaderText: 'MaxPerMatch', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
-                { HeaderText: 'ProblemAccount', Width: 60, Name: 'ProblemAccount', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'FollowAccount', Width: 200, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
+                { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
+                { HeaderText: 'Problem Account', Width: 60, Name: 'ProblemAccount', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Follow Account', Width: 200, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Action', Width: 60, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
@@ -214,10 +222,10 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'Status', Value: viewModel.DataList[i].Status },
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
                     { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
-                    { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet },
-                    { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch },
+                    { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
+                    { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
                     { Name: 'ProblemAccount', Value: viewModel.DataList[i].ProblemAccount },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-account" data-cust-id="' + viewModel.DataList[i].CustId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-account" data-cust-id="' + viewModel.DataList[i].CustId + '" data-user-name="' + viewModel.DataList[i].Account + '"></span>' }
@@ -248,7 +256,9 @@ Fanex.CMS.BetRestriction = function () {
 
     var renderSiteGrid = function (viewModel, pageIndex, pageSize) {
         var siteGridOptions = {
-            gridExpandHeight: 772,
+            fullHeight: false,
+            gridHeight: window.innerHeight * 0.15,
+            //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
                 { HeaderText: 'Site', Width: 200, Name: 'Site', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -282,7 +292,7 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'RowNum', Value: i + pageIndex * pageSize + 1 },
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
                     { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-site" data-site-id="' + viewModel.DataList[i].SiteId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-site" data-site-id="' + viewModel.DataList[i].SiteId + '" data-site-name="' + viewModel.DataList[i].Site + '"></span>' }
                 ]
@@ -313,7 +323,9 @@ Fanex.CMS.BetRestriction = function () {
 
     var renderCurrencyGrid = function (viewModel, pageIndex, pageSize) {
         var currencyGridOptions = {
-            gridExpandHeight: 772,
+            fullHeight: false,
+            gridHeight: window.innerHeight * 0.15,
+            //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
                 { HeaderText: 'Currency', Width: 200, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -349,7 +361,7 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'Type', Value: viewModel.DataList[i].TypeName },
                     { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-type="' + viewModel.DataList[i].Type + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-currency-name="' + viewModel.DataList[i].Currency + '" data-type="' + viewModel.DataList[i].Type + '"></span>' }
                 ]

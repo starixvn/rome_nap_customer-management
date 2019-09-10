@@ -8,6 +8,8 @@ Namespace.Register('Fanex.CMS.BetRestriction.CurrencyManagement');
 Fanex.CMS.BetRestriction.CurrencyManagement = function () {
     var $this = $(this);
 
+    var oldData = {};
+
     var DOMElements = {
         formCurrencyManagement: null,
         hidExchangeId: null,
@@ -74,6 +76,23 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             return false;
         }
 
+        if (oldData) {
+            oldData.NewType = DOMElements.ddlPopupCurrencyType.val();
+            var newData = {
+                ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
+                Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
+                NewType: DOMElements.ddlPopupCurrencyType.val(),
+                LiveBetAccept: DOMElements.chkPopupCurrencyLiveBetAccept.val(),
+                SeizeBetTicket: DOMElements.chkPopupCurrencySeizeBetTicket.val(),
+                FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
+            }
+
+            if (CMS.isValueEqual(oldData, newData)) {
+                CMS.showErrorMessage(messages.NothingChanged);
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -90,7 +109,7 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             NewType: DOMElements.ddlPopupCurrencyType.val(),
             LiveBetAccept: DOMElements.chkPopupCurrencyLiveBetAccept.val(),
             SeizeBetTicket: DOMElements.chkPopupCurrencySeizeBetTicket.val(),
-            FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' :  DOMElements.txtPopupCurrency8RMAccount.val()
+            FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
         }
 
         CMS.callAjax(
@@ -100,6 +119,10 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             function (result) {
                 if (result.Code == 0) {
                     CMS.showSuccessMessage(isEdit ? messages.UpdateCurrencySuccessfully : messages.AddCurrencySuccessfully);
+                    setTimeout(function () {
+                        CMS.closePopup();
+                        betRestriction.Search();
+                    }, 3000);
                 }
                 else {
                     CMS.showErrorMessage(result.Message);
@@ -114,9 +137,18 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             'GetCurrencyDetail',
             { ExchangeId: exchangeId, Type: type },
             function (result) {
+                oldData = {
+                    ExchangeId: result.ExchangeId + '',
+                    Type: result.Type + '',
+                    NewType: result.Type + '',
+                    LiveBetAccept: result.LiveBetAccept + '',
+                    SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket,
+                    FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount
+                };
+
                 DOMElements.hidExchangeId.val(result.ExchangeId);
                 DOMElements.txtPopupCurrency.val(result.Currency);
-                DOMElements.ddlPopupCurrency.val(result.Currency);
+                DOMElements.ddlPopupCurrency.val(result.ExchangeId);
                 DOMElements.ddlPopupCurrencyType.val(result.Type);
                 DOMElements.hidCurrentType.val(result.Type);
                 DOMElements.chkPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
@@ -146,7 +178,7 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
         CMS.modal('Edit Bet Restricted Currency', DOMElements.htmlformCurrencyManagement);
         cacheDOMElements();
         bindingEvents();
-        DOMElements.txtPopupCurrency.remove();
+        DOMElements.ddlPopupCurrency.remove();
         loadCurrencyDetailForEdit(exchangeId, type)
         DOMElements.formCurrencyManagement.removeClass('display-none');
         DOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(true); });
@@ -161,6 +193,9 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
                 function (result) {
                     if (result.Code == 0) {
                         CMS.showSuccessMessage(messages.RemoveCurrencySuccessfully);
+                        setTimeout(function () {
+                            betRestriction.Search();
+                        }, 3000);
                     }
                     else {
                         CMS.showErrorMessage(result.Message);

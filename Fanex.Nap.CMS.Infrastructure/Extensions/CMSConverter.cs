@@ -20,6 +20,8 @@
 
         int ToInt32(object value);
 
+        int? ToInt32Nullable(object value);
+
         long ToInt64(object value);
 
         decimal Format(object value, int prec = 2);
@@ -140,6 +142,16 @@
             return val;
         }
 
+        public int? ToInt32Nullable(object value)
+        {
+            if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
+            {
+                return null;
+            }
+
+            return ToInt32(value);
+        }
+
         public long ToInt64(object value)
         {
             var val = 0L;
@@ -162,6 +174,16 @@
             }
 
             return val;
+        }
+
+        public long? ToInt64Nullable(object value)
+        {
+            if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
+            {
+                return null;
+            }
+
+            return ToInt64(value);
         }
 
         public decimal Format(object value, int prec = 2)

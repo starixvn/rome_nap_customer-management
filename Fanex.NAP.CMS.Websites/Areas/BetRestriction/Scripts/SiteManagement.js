@@ -89,6 +89,10 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
             function (result) {
                 if (result.Code == 0) {
                     CMS.showSuccessMessage(isEdit ? messages.UpdateSiteSuccessfully : messages.AddSiteSuccessfully);
+                    setTimeout(function () {
+                        CMS.closePopup();
+                        betRestriction.Search();
+                    }, 3000);
                 }
                 else {
                     CMS.showErrorMessage(result.Message);
@@ -147,6 +151,9 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
                 function (result) {
                     if (result.Code == 0) {
                         CMS.showSuccessMessage(messages.RemoveSiteSuccessfully);
+                        setTimeout(function () {
+                            betRestriction.Search();
+                        }, 3000);
                     }
                     else {
                         CMS.showErrorMessage(result.Message);

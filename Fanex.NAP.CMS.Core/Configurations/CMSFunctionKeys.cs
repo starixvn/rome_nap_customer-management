@@ -12,8 +12,6 @@
 // </history>
 namespace Fanex.NAP.CMS.Core
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// Function keys.
     /// </summary>

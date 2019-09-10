@@ -208,7 +208,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Fanex.NAP.CMS.Services.Debug.ruleset" />
     <None Include="Fanex.NAP.CMS.Services.ruleset" />
     <None Include="packages.config" />

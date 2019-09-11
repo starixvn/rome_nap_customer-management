@@ -27,7 +27,7 @@
         private const int OrderByAccountStatus = 3;
 
         // The release date of this feature.
-        public static readonly DateTime DefaultMinDate = new DateTime(2019, 8, 1);
+        public static readonly DateTime DefaultMinDate = new DateTime(2019, 9, 12);
 
         public IndexViewModel(
             bool hasHostPermission,

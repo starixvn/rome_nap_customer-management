@@ -54,7 +54,7 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
 
     var validateForm = function (isEdit) {
         if (!isEdit && DOMElements.ddlPopupCurrency.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.ddlPopupCurrency, messages.RequiredFieldError);
+            CMS.showTipsyError(DOMElements.ddlPopupCurrency, messages.RequiredFieldError, 'ne');
             return false;
         }
 

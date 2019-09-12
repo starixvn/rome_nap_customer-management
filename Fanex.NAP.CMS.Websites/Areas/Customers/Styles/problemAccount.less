@@ -1,0 +1,165 @@
+@red-color: #ff0000;
+@blue-color: #0000ff;
+
+.text-red {
+    color: @red-color;
+}
+
+.text-blue {
+    color: @blue-color;
+}
+
+.filter-bar {
+    margin-bottom: 10px;
+
+    .filter-row.last-row {
+        margin-bottom: 10px;
+
+        #username {
+            width: 135px;
+        }
+
+        .checkbox input[type="checkbox"] {
+            margin: 6px 0 6px 12px;
+        }
+
+        input[type="checkbox"] {
+            &:active, &:focus, &:hover {
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        .edit-field input[type="text"].fanex-multiselect-state-default {
+            &:hover, &:focus {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.button-list {
+    margin: 0 25px 0 10px;
+}
+
+.content-grid {
+    margin-top: 10px;
+
+    .freegrid {
+        .custom-grid-colheader .light-note-info-message {
+            margin-left: 3px;
+        }
+
+        p {
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+
+        p.level-1 {
+            margin-left: 10px;
+        }
+
+        p.level-2 {
+            margin-left: 20px;
+        }
+
+        p.level-3 {
+            margin-left: 30px;
+        }
+
+        p.level-4 {
+            margin-left: 40px;
+        }
+    }
+}
+
+.ui-dialog .ui-dialog-content .form {
+    padding-bottom: 0;
+
+    .button-row {
+        float: none;
+        margin-top: 10px;
+        text-align: right;
+    }
+
+    .inline-message {
+        margin: 0 0 15px 0;
+    }
+}
+
+#formMarkNew {
+    width: 500px;
+    padding: 0;
+    float: none;
+    word-wrap: break-word;
+
+    .inline-message {
+        margin: 10px 0;
+    }
+
+    .form-row {
+        float: none;
+
+        .lbl-field, .edit-field {
+            float: none;
+            padding-bottom: 5px;
+            width: 98%;
+
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        }
+
+        .lbl-field.padding-top12 {
+            padding-top: 12px;
+        }
+    }
+}
+
+#formUnmarkSMA, #formRemoveReduceBLSMA {
+    width: 500px;
+
+    .min-height-25 {
+        min-height: 25px;
+
+        .width-35 {
+            width: 35px;
+        }
+
+        .exclude {
+            color: #222;
+            padding-top: 0;
+            text-shadow: none;
+        }
+    }
+}
+
+#formUnmarkMember, #formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber {
+    width: 450px;
+}
+
+.unmark-note {
+    .tipsy-inner {
+        p {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+    }
+}
+
+.custom-grid-colheader-note {
+    .tipsy-inner {
+        p {
+            font-size: 12px;
+            margin-bottom: 0;
+            line-height: 1.5;
+        }
+    }
+}
+
+.custom-confirm {
+    width: 500px!important;
+    word-wrap: break-word;
+}

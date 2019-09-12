@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountStatus" xml:space="preserve">
+    <value>Account Status</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="ManageProblemAccount" xml:space="preserve">
+    <value>Manage Problem Account - CN88</value>
+  </data>
+  <data name="MarkDate" xml:space="preserve">
+    <value>Mark Date</value>
+  </data>
+  <data name="OrderBy" xml:space="preserve">
+    <value>Order by</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SMALine" xml:space="preserve">
+    <value>SMA Line</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="ViewOnly" xml:space="preserve">
+    <value>View Only</value>
+  </data>
+  <data name="ActionsOnSelectedAccounts" xml:space="preserve">
+    <value>Actions on selected accounts:</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Inactivate" xml:space="preserve">
+    <value>Inactivate</value>
+  </data>
+  <data name="MarkNewProblemAccount" xml:space="preserve">
+    <value>Mark New Problem Account</value>
+  </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>Please select</value>
+  </data>
+  <data name="ReduceBetLimit" xml:space="preserve">
+    <value>Reduce Bet Limit</value>
+  </data>
+  <data name="RemoveReducedBetLimit" xml:space="preserve">
+    <value>Remove Reduced Bet Limit</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Unmark" xml:space="preserve">
+    <value>Unmark</value>
+  </data>
+  <data name="DuplicatedUsernamesError" xml:space="preserve">
+    <value>The username {0} is duplicated.</value>
+  </data>
+  <data name="InactivateAccount" xml:space="preserve">
+    <value>Inactivate Account</value>
+  </data>
+  <data name="InactivateAccountConfimMessage" xml:space="preserve">
+    <value>Are you sure you want to inactivate selected account(s)?</value>
+  </data>
+  <data name="InputInvalidUsernamesError" xml:space="preserve">
+    <value>You are not allowed to input [Enter] and backslash {0} into the Username field.</value>
+  </data>
+  <data name="InvalidValueError" xml:space="preserve">
+    <value>Invalid value!</value>
+  </data>
+  <data name="MaxPerBet" xml:space="preserve">
+    <value>Max per Bet</value>
+  </data>
+  <data name="MaxPerEvent" xml:space="preserve">
+    <value>Max per Event</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ReduceBetLimitHint" xml:space="preserve">
+    <value>This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types/products.</value>
+  </data>
+  <data name="RequiredFieldError" xml:space="preserve">
+    <value>Required field!</value>
+  </data>
+  <data name="SelectedAccounts" xml:space="preserve">
+    <value>Selected account(s)</value>
+  </data>
+  <data name="SeperatedByComma" xml:space="preserve">
+    <value>(seperated by comma ',')</value>
+  </data>
+  <data name="UnmarkHint" xml:space="preserve">
+    <value>Unmarking problem accounts will set them back to be normal accounts.</value>
+  </data>
+  <data name="UnmarkProblemAccount" xml:space="preserve">
+    <value>Unmark Problem Account</value>
+  </data>
+  <data name="Usernames" xml:space="preserve">
+    <value>Username(s)</value>
+  </data>
+  <data name="UsernamesOutOfRangeError" xml:space="preserve">
+    <value>The function can only mark up to {0} accounts per request.</value>
+  </data>
+  <data name="Exclude" xml:space="preserve">
+    <value>Exclude</value>
+  </data>
+  <data name="RemoveReduceBLHint" xml:space="preserve">
+    <value>After removing Reduced Bet Limit, members will be able to place bet by their original bet limit.</value>
+  </data>
+  <data name="ExcludeAbnomalBetMember" xml:space="preserve">
+    <value>Members with abnormal bets.</value>
+  </data>
+  <data name="ExcludeDirectMarkedCust" xml:space="preserve">
+    <value>Ones directly marked by OPS and any downline belonging to them.</value>
+  </data>
+  <data name="UnmarkTheSelectedAccountsAndAllDownlines" xml:space="preserve">
+    <value>Unmark the selected account(s) and all downlines</value>
+  </data>
+  <data name="AbnormalBet" xml:space="preserve">
+    <value>Abnormal Bet</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="IsReduced" xml:space="preserve">
+    <value>Is Reduced</value>
+  </data>
+  <data name="RemoveReduceBLFor" xml:space="preserve">
+    <value>Remove reduced bet limit for</value>
+  </data>
+  <data name="SearchDownlines" xml:space="preserve">
+    <value>Search downlines of this account</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="BadRequest" xml:space="preserve">
+    <value>Bad Request.</value>
+  </data>
+  <data name="InvalidMaxPerBetError" xml:space="preserve">
+    <value>Max per Bet must be less than or equal to Max per Event.</value>
+  </data>
+  <data name="InactivateSuccessfully" xml:space="preserve">
+    <value>All accounts have been successfully inactivated.</value>
+  </data>
+  <data name="MarkNewPartialError" xml:space="preserve">
+    <value>The following account(s) cannot be added due to an error occurred: {0}</value>
+  </data>
+  <data name="MarkNewPartialSuccessfully" xml:space="preserve">
+    <value>Successfully added accounts: {0}</value>
+  </data>
+  <data name="MarkNewSuccessfully" xml:space="preserve">
+    <value>All accounts have been successfully marked.</value>
+  </data>
+  <data name="ReduceBLSuccessfully" xml:space="preserve">
+    <value>All accounts' bet limit have been successfully reduced.</value>
+  </data>
+  <data name="RemoveReduceBLSuccessfully" xml:space="preserve">
+    <value>The bet limit's restriction of the selected accounts have been successfully removed.</value>
+  </data>
+  <data name="UnmarkSuccessfully" xml:space="preserve">
+    <value>All accounts have been successfully unmarked.</value>
+  </data>
+  <data name="RemoveReduceBLConfirmMessage" xml:space="preserve">
+    <value>&lt;p&gt;The following account(s) don't have their bet limit reduced: {0}.&lt;/p&gt;&lt;div&gt;Therefore, no action will be applied for them.&lt;/div&gt;&lt;div&gt;Do you want to proceed the action for the rest?&lt;/div&gt;</value>
+  </data>
+  <data name="InactivateConfirmMessage" xml:space="preserve">
+    <value>&lt;p&gt;The following account(s) are already inactive: {0}.&lt;/p&gt;&lt;div&gt;Therefore, no action will be applied for them.&lt;/div&gt;&lt;div&gt;Do you want to proceed the action for the rest?&lt;/div&gt;</value>
+  </data>
+  <data name="RemoveReduceBLForSelectedAccounts" xml:space="preserve">
+    <value>Selected account(s) only</value>
+  </data>
+  <data name="RemoveReduceBLForSelectedAccountsAndAllDownlines" xml:space="preserve">
+    <value>Selected account(s) and all downlines</value>
+  </data>
+  <data name="AllAccountsAlreadyInactivate" xml:space="preserve">
+    <value>All of the selected accounts are inactive already. No action has been done.</value>
+  </data>
+  <data name="AllAccountsAlreadyRemoveReduceBL" xml:space="preserve">
+    <value>There is no account with reduced bet limit to be removed. No action has been done.</value>
+  </data>
+</root>

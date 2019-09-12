@@ -144,7 +144,7 @@ important
 */
 .fanex-multiselect {
     font-weight: normal !important;
-    display: -moz-inline-block;
+    /*display: -moz-inline-block;*/
     display: inline-block;
     cursor: pointer;
     text-decoration: none !important;
@@ -453,7 +453,7 @@ Rad tree view css
 }
 
 .fanex-multiselect-options input {
-    vertical-align: -moz-calc();
+    /*vertical-align: -moz-calc();*/
     margin: 3px;
 }
 

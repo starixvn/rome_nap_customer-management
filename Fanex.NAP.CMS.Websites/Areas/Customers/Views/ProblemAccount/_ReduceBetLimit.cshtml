@@ -1,0 +1,45 @@
+﻿@using Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount
+@using (Html.BeginForm("ReduceBL", "ProblemAccount", FormMethod.Post, new { id = "formReduceBL", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-100">
+            <label for="txt-maxPerEvent">@ProblemAccountResource.MaxPerEvent<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text"
+                   class="align-right width-160 clearable"
+                   value="@IndexViewModel.MaxPerEvent.ToString("N0")"
+                   autocomplete="off"
+                   maxlength="20"
+                   name="maxperevent"
+                   id="txt-maxPerEvent" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-100">
+            <label for="txt-maxPerBet">@ProblemAccountResource.MaxPerBet<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text"
+                   class="align-right width-160 clearable"
+                   value="@IndexViewModel.MaxPerBet.ToString("N0")"
+                   autocomplete="off"
+                   maxlength="20"
+                   name="maxperbet"
+                   id="txt-maxPerBet" />
+        </div>
+    </div>
+    <div class="form-row">
+        <p><span class="text-red">*</span> @ProblemAccountResource.ReduceBetLimitHint</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

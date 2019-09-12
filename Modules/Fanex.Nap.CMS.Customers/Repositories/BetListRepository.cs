@@ -1,0 +1,49 @@
+﻿namespace Fanex.Nap.CMS.Customers.Repositories
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using Data;
+    using Data.Repository;
+    using Models.BetList;
+
+    public class BetListRepository : IBetListRepository
+    {
+        public Tuple<int, IEnumerable<AbnormalBetTicket>> GetAbnormalBetTickets(ICriteria criteria)
+        {
+            IList<AbnormalBetTicket> abnormalBetTickets = new List<AbnormalBetTicket>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        abnormalBetTickets.Add(ToAbnormalBetTicket(reader));
+                    }
+                }
+
+                return new Tuple<int, IEnumerable<AbnormalBetTicket>>(
+                    Convert.ToInt32(db.GetOuputParams()["totalrows"]),
+                    abnormalBetTickets);
+            }
+        }
+
+        public int GetTotalSporksbookBetTickets(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteScalar(criteria.GetSpParams());
+
+                return Convert.ToInt32(db.GetOuputParams()["totalbettickets"]);
+            }
+        }
+
+        private static AbnormalBetTicket ToAbnormalBetTicket(IDataReader reader)
+            => new AbnormalBetTicket(
+                Convert.ToDateTime(reader["createddate"]),
+                Convert.ToInt64(reader["transid"]),
+                reader["abnormalreason"].ToString());
+
+    }
+}

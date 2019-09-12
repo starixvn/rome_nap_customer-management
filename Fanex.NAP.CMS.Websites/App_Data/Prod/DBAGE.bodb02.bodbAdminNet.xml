@@ -6,4 +6,7 @@
     <Setting Key="NAP_TOControl_HouseTOByBettypeSelect" SpName="NAP_TOControl_HouseTOByBettypeSelect" DbName="DB054.bodb02.bodbAdminNet" />
     <Setting Key="NAP_TOControl_MatchSelect" SpName="NAP_TOControl_MatchSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Problem Accounts">
+    <Setting Key="CS_ProblemAccount_TotalSportsbookTickets" SpName="CS_ProblemAccount_TotalSportsbookTickets" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

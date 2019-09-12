@@ -1,0 +1,47 @@
+﻿@using Newtonsoft.Json;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = BetListResource.ProblemAccountCN88;
+}
+@model Fanex.Nap.CMS.Customers.ViewModels.BetList.AbnormalBetTicketViewModel
+@section Head
+{
+    <style>p { margin-bottom: 5px; width: 800px; }</style>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            abnormalBetTicketTitle: "@Model.AbnormalBetTicketTitle",
+            voidDate: "@BetListResource.VoidDate",
+            betId: "@BetListResource.BetId",
+            abnormalReason: "@BetListResource.AbnormalReason"
+        };
+        var abnormalBetTickets = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.AbnormalBetTickets, Formatting.None))');
+        var totalAbnormalBetTickets = @Model.TotalAbnormalBetTickets;
+        var filter = {
+            custId: @Model.CustId,
+            fromDate: "@Model.From.ToShortFormatedDateWithSlash()",
+            toDate: "@Model.To.ToShortFormatedDateWithSlash()",
+            pageSize: @Model.PageSize
+        };
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.AbnormalBetTicketScript)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="content-grid margin-top">
+    <div class="freegrid display-none" id="freegrid"></div>
+    <div class="margin-top">
+        <p class="bold">@BetListResource.TotalSportsbookBetTickets:
+            <span class="margin-left">@Model.TotalSportsbookBetTickets.ToString("N0")</span></p>
+        <p>@Model.AbnormalBetTicketHint</p>
+        <p><span style="color:#ff0000">*</span>&nbsp;@BetListResource.ViewBetListOnNAPHint</p>
+    </div>
+</div>

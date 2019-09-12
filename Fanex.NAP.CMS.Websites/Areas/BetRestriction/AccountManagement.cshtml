@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources;
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 <div id="containerFormAccountManager">
-    @using (Html.BeginForm("AddAccount", "BetRestriction", FormMethod.Post, new { id = "formAccountManager", @class = "form display-none" }))
+    @using (Html.BeginForm("AddAccount", "BetRestriction", FormMethod.Post, new { id = "formAccountManager", @class = "form display-none", @onsubmit = "return false;" }))
     {
         <div class="form-row">
             <div class="lbl-field normal-label width-160">

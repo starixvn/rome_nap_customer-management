@@ -62,7 +62,6 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
     }
 
     var validateForm = function () {
-
         if (!Validator.validateForm(DOMElements.formAccountManager, 'ne'))
             return false;
 
@@ -80,7 +79,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         }
 
         if ((DOMElements.txtPopupAccMaxBet.val().length > 0 || DOMElements.txtPopupAccMaxPerMatch.val().length > 0)
-            && DOMElements.txtPopupAccMaxBet.val() > DOMElements.txtPopupAccMaxPerMatch.val()) {
+            && parseInt(DOMElements.txtPopupAccMaxBet.val()) > parseInt(DOMElements.txtPopupAccMaxPerMatch.val())) {
             CMS.showTipsyError(DOMElements.txtPopupAccMaxBet, messages.ValidateMaxBetMaxPerMatchError);
             return false;
         }

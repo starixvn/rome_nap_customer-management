@@ -2,7 +2,7 @@
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 <div id="containerFormCurrencyManager">
-    @using (Html.BeginForm("", "BetRestriction", FormMethod.Post, new { id = "formCurrencyManagement", @class = "form display-none" }))
+    @using (Html.BeginForm("", "BetRestriction", FormMethod.Post, new { id = "formCurrencyManagement", @class = "form display-none", @onsubmit = "return false;" }))
     {
         <div id="div-popupResult-message" class="inline-message"></div>
         <div class="form-row">

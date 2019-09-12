@@ -77,7 +77,6 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
         }
 
         if (oldData) {
-            oldData.NewType = DOMElements.ddlPopupCurrencyType.val();
             var newData = {
                 ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
                 Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),

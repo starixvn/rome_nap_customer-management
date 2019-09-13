@@ -5,7 +5,7 @@
 
     public class GetAllSettingCriteria: CriteriaBase
     {
-        public bool IsTest { get; set; }
+        public bool IsTest => AppSettings.IsTest;
 
         public override string GetSettingKey()
         {

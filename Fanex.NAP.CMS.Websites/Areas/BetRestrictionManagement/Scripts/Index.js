@@ -97,8 +97,7 @@ Fanex.CMS.BetRestrictionManagement = function () {
                 { HeaderText: 'Sport Type', Width: 100, Name: 'SportName', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Type', Width: 100, Name: 'Type', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Live Bet Accept', Width: 100, Name: 'LiveBetAcceptStatus', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Seize Bet Ticket', Width: 100, Name: 'SeizeBetTicketStatus', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Bet Limit', Width: 100, Name: 'BetLimitStatus', HeaderAlign: 'center', CellAlign: 'center' }
+                { HeaderText: 'Seize Bet Ticket', Width: 100, Name: 'SeizeBetTicketStatus', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
             titleInfo:
@@ -115,8 +114,7 @@ Fanex.CMS.BetRestrictionManagement = function () {
                     { Name: 'SportName', Value: viewModel[i].SportName },
                     { Name: 'Type', Value: viewModel[i].Type },
                     { Name: 'LiveBetAcceptStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].LiveBetAcceptStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-live-bet-accept-status="' + viewModel[i].LiveBetAcceptStatus + '" />' },
-                    { Name: 'SeizeBetTicketStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].SeizeBetTicketStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-seize-bet-ticket-status="' + viewModel[i].SeizeBetTicketStatus + '" />' },
-                    { Name: 'BetLimitStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].BetLimitStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-bet-limit-status="' + viewModel[i].BetLimitStatus + '" />' }
+                    { Name: 'SeizeBetTicketStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].SeizeBetTicketStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-seize-bet-ticket-status="' + viewModel[i].SeizeBetTicketStatus + '" />' }
                 ]
             };
 
@@ -134,8 +132,7 @@ Fanex.CMS.BetRestrictionManagement = function () {
                 { HeaderText: 'Sport Type', Width: 100, Name: 'SportName', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Type', Width: 100, Name: 'Type', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Live Bet Accept', Width: 100, Name: 'LiveBetAcceptStatus', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Seize Bet Ticket', Width: 100, Name: 'SeizeBetTicketStatus', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Bet Limit', Width: 100, Name: 'BetLimitStatus', HeaderAlign: 'center', CellAlign: 'center' }
+                { HeaderText: 'Seize Bet Ticket', Width: 100, Name: 'SeizeBetTicketStatus', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
             titleInfo:
@@ -152,8 +149,7 @@ Fanex.CMS.BetRestrictionManagement = function () {
                     { Name: 'SportName', Value: viewModel[i].SportName },
                     { Name: 'Type', Value: viewModel[i].Type },
                     { Name: 'LiveBetAcceptStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].LiveBetAcceptStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-live-bet-accept-status="' + viewModel[i].LiveBetAcceptStatus + '" />' },
-                    { Name: 'SeizeBetTicketStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].SeizeBetTicketStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-seize-bet-ticket-status="' + viewModel[i].SeizeBetTicketStatus + '" />' },
-                    { Name: 'BetLimitStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].BetLimitStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-bet-limit-status="' + viewModel[i].BetLimitStatus + '" />' }
+                    { Name: 'SeizeBetTicketStatus', Value: '<div class="toggle-on-off ' + (viewModel[i].SeizeBetTicketStatus ? 'status-on' : 'status-off') + '" data-setting-' + viewModel[i].SettingId + '-seize-bet-ticket-status="' + viewModel[i].SeizeBetTicketStatus + '" />' }
                 ]
             };
 
@@ -212,6 +208,9 @@ Fanex.CMS.BetRestrictionManagement = function () {
 
     var getSettingStatusChange = function (statusElementId) {
         var $status = $('div[' + statusElementId + ']');
+        if ($status.length == 0)
+            return null;
+
         var newStatus = $status.hasClass('status-on') ? true : false;
         var oldStatus = $status.attr(statusElementId) === 'true';
         if (newStatus != oldStatus)

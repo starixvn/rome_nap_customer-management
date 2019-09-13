@@ -17,17 +17,21 @@
         </div>
     </div>
 }
-<div class="width-609">
-    <div class="free-row"><input type="button" id="btnSubmit" class="submit" value="@ViewLang.Submit" /></div>
-    <div class="free-row"></div>
-    <div class="display-none content-grid">
-        <div id="grdAccount" class="freegrid"></div>
+    <div class="width-609">
+        <div class="free-row"><input type="button" id="btnSubmit" class="submit" value="@ViewLang.Submit" /></div>
         <div class="free-row"></div>
-        <div id="grdSite" class="freegrid"></div>
-        <div class="free-row"></div>
-        <div id="grdCurrency" class="freegrid"></div>
+        <div class="display-none content-grid">
+            <div id="grdAccount" class="freegrid"></div>
+            <div class="free-row"></div>
+        </div>
+        <div class="display-none content-grid">
+            <div id="grdSite" class="freegrid"></div>
+            <div class="free-row"></div>
+        </div>
+        <div class="display-none content-grid">
+            <div id="grdCurrency" class="freegrid"></div>
+        </div>
     </div>
-</div>
 @section Foot
 {
     @Scripts.Render("~/scripts/BetRestrictionManagement")

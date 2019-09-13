@@ -25,15 +25,15 @@
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.OnOffBetRestriction, Policy = Constant.Policy.Read)]
         public ActionResult Index() => View(_indexPath);
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.OnOffBetRestriction, Policy = Constant.Policy.Read)]
         public JsonResult GetAllSettings() => Json(_betRestrictionManagementService.GetAllSettings(new GetAllSettingCriteria()));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.OnOffBetRestriction, Policy = Constant.Policy.Host)]
         public JsonResult EditSettings(EditSettingsRequest request) => Json(_betRestrictionManagementService.ExecuteNonQuery(new EditSettingsCriteria
         {
             UserId = CurrentSession.UserId,

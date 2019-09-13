@@ -92,6 +92,8 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string VirtualRateLog = "VirtualRateLog";
 
         public const string BetRestriction = "BetRestriction";
+        public const string OnOffBetRestriction = "OnOffBetRestriction";
+        
         // Problem Account
         public const string ManageProblemAccountCN88 = "ManageProblemAccount_CN88";
     }

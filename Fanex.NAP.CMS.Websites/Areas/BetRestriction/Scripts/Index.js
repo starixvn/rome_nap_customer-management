@@ -155,7 +155,7 @@ Fanex.CMS.BetRestriction = function () {
     var renderAccountGrid = function (viewModel, pageIndex, pageSize) {
         var accountGridOptions = {
             fullHeight: false,
-            gridHeight: window.innerHeight * 0.3,
+            gridHeight: 365,
             //gridExpandHeight: window.innerHeight * 0.61,
             customizeHeader: true,
             groupHeaderRows: [
@@ -257,7 +257,7 @@ Fanex.CMS.BetRestriction = function () {
     var renderSiteGrid = function (viewModel, pageIndex, pageSize) {
         var siteGridOptions = {
             fullHeight: false,
-            gridHeight: window.innerHeight * 0.15,
+            gridHeight: 155,
             //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
@@ -324,7 +324,7 @@ Fanex.CMS.BetRestriction = function () {
     var renderCurrencyGrid = function (viewModel, pageIndex, pageSize) {
         var currencyGridOptions = {
             fullHeight: false,
-            gridHeight: window.innerHeight * 0.15,
+            gridHeight: 155,
             //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },

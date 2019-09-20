@@ -169,6 +169,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Seize Bet Ticket % of downline has setting as: ({0})..
+        /// </summary>
+        public static string BetRestriction_WarningDownlineHadSeizeBet {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningDownlineHadSeizeBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Seize Bet Ticket % of downlines ({0}) is lower than the Seize Bet Ticket of this account..
         /// </summary>
         public static string BetRestriction_WarningDownlineSeizeBetLower {
@@ -183,6 +192,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string BetRestriction_WarningProceed {
             get {
                 return ResourceManager.GetString("BetRestriction_WarningProceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Seize Bet Ticket % of upline has setting as: ({0})..
+        /// </summary>
+        public static string BetRestriction_WarningUplineHadSeizeBet {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningUplineHadSeizeBet", resourceCulture);
             }
         }
         
@@ -219,6 +237,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string Figure {
             get {
                 return ResourceManager.GetString("Figure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Follow upper level.
+        /// </summary>
+        public static string FollowUpperLevel {
+            get {
+                return ResourceManager.GetString("FollowUpperLevel", resourceCulture);
             }
         }
         
@@ -336,6 +363,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string NewVRAutoAdjustment_Legend {
             get {
                 return ResourceManager.GetString("NewVRAutoAdjustment_Legend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        public static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
             }
         }
         

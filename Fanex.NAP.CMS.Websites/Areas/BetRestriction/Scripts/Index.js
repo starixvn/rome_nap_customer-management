@@ -134,7 +134,7 @@ Fanex.CMS.BetRestriction = function () {
             RoleId: DOMElements.ddlLevel.val(),
             Status: DOMElements.ddlStatus.val(),
             SiteId: DOMElements.ddlSite.val(),
-            CurrencyId: DOMElements.ddlCurrency.val(),
+            CurrencyIds: DOMElements.ddlCurrency.fanexMultiSelect('getItems', true).join(','),
             PageSize: CMS.pageSize,
             PageIndex: 1
         };
@@ -221,8 +221,8 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'Level', Value: viewModel.DataList[i].Level },
                     { Name: 'Status', Value: viewModel.DataList[i].Status },
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
-                    { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
+                    { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
                     { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
@@ -258,7 +258,6 @@ Fanex.CMS.BetRestriction = function () {
         var siteGridOptions = {
             fullHeight: false,
             gridHeight: 155,
-            //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
                 { HeaderText: 'Site', Width: 200, Name: 'Site', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -291,8 +290,8 @@ Fanex.CMS.BetRestriction = function () {
                 Columns: [
                     { Name: 'RowNum', Value: i + pageIndex * pageSize + 1 },
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
-                    { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
+                    { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-site" data-site-id="' + viewModel.DataList[i].SiteId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-site" data-site-id="' + viewModel.DataList[i].SiteId + '" data-site-name="' + viewModel.DataList[i].Site + '"></span>' }
                 ]
@@ -325,7 +324,6 @@ Fanex.CMS.BetRestriction = function () {
         var currencyGridOptions = {
             fullHeight: false,
             gridHeight: 155,
-            //gridExpandHeight: window.innerHeight * 0.83,
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
                 { HeaderText: 'Currency', Width: 200, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
@@ -360,8 +358,8 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'RowNum', Value: i + pageIndex * pageSize + 1 },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'Type', Value: viewModel.DataList[i].TypeName },
-                    { Name: 'LiveBetAccept', Value: viewModel.DataList[i].LiveBetAccept },
-                    { Name: 'SeizeBetTicket', Value: viewModel.DataList[i].SeizeBetTicket == null ? '' : viewModel.DataList[i].SeizeBetTicket },
+                    { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
+                    { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-type="' + viewModel.DataList[i].Type + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-currency-name="' + viewModel.DataList[i].Currency + '" data-type="' + viewModel.DataList[i].Type + '"></span>' }
                 ]
@@ -389,8 +387,45 @@ Fanex.CMS.BetRestriction = function () {
         );
     }
 
+    var getDisplayValueOfLiveBetAccept = function (value) {
+        if (value == undefined)
+            return resources.FollowUpperLevel;
+
+        return value;
+    }
+
+    var getDisplayValueOfSeizeBetTicket = function (value) {
+        if (value == undefined)
+            return resources.FollowUpperLevel;
+
+        if (value == '0' || value == 0)
+            return resources.None;
+
+        return value;
+    }
+
+    var getCurrencyItems = function () {
+        var result = [];
+        DOMElements.ddlCurrency.find('option').each(function () {
+            result.push({
+                id: this.value,
+                value: this.value,
+                text: this.text,
+                checked: this.text != 'UUS',
+                enable: true
+            });
+        });
+
+        return result;
+    }
+
     this.Init = function () {
         cacheDOMElements();
         bindingEvents();
+        DOMElements.ddlCurrency.fanexMultiSelect({
+            minWidth: DOMElements.ddlCurrency.width(),
+            checkAllText: "All",
+            listData: getCurrencyItems()
+        });
     }
 }

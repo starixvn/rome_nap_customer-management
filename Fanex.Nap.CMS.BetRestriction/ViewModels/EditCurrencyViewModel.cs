@@ -8,7 +8,7 @@
 
         public int Type { get; set; }
 
-        public int LiveBetAccept { get; set; }
+        public short? LiveBetAccept { get; set; }
 
         public byte? SeizeBetTicket { get; set; }
 

@@ -255,4 +255,16 @@
   <data name="Licensee" xml:space="preserve">
     <value>Licensee</value>
   </data>
+  <data name="BetRestriction_WarningDownlineHadSeizeBet" xml:space="preserve">
+    <value>The Seize Bet Ticket % of downline has setting as: ({0}).</value>
+  </data>
+  <data name="BetRestriction_WarningUplineHadSeizeBet" xml:space="preserve">
+    <value>The Seize Bet Ticket % of upline has setting as: ({0}).</value>
+  </data>
+  <data name="FollowUpperLevel" xml:space="preserve">
+    <value>Follow upper level</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

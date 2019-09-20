@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
             ExistingUplineUserName = _converter.ToString(reader["ExistingUplineUserName"]);
             UplineSeizeBetTicket = _converter.ToInt32Nullable(reader["Upline_SeizeBetTicket"]);
             IsDownlineExists = _converter.ToBoolean(reader["IsDownlineExists"]);
-            MinDownlineSeizeBetTicket = _converter.ToInt32(reader["Min_Downline_SeizeBetTicket"]);
+            MinDownlineSeizeBetTicket = _converter.ToInt32Nullable(reader["Min_Downline_SeizeBetTicket"]);
             UserName = userName;
         }
 
@@ -37,6 +37,6 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
 
         public bool IsDownlineExists { get; }
 
-        public int MinDownlineSeizeBetTicket { get; }
+        public int? MinDownlineSeizeBetTicket { get; }
     }
 }

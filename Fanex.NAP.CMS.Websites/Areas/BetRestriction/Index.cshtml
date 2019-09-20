@@ -1,6 +1,7 @@
 ﻿@using System.Linq;
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @using Fanex.NAP.CMS.Core.Resources;
+@using System.Text;
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -63,10 +64,10 @@
             <div class="lbl-field col_3">
                 <label for="ddlCurrency">@ViewLang.Currency</label>
             </div>
-            <div class="edit-field col_5">
+            <div class="col_5">
                 @Html.DropDownList(
                     "ddlCurrency",
-                    (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true } }).Union(Model.Currency),
+                    Model.Currency,
                     new { @id = "ddlCurrency", @class = "combobox level-combobox col_5" })
             </div>
             <div class="submit width-auto col_3">
@@ -96,8 +97,6 @@
 {
     @Scripts.Render("~/scripts/BetRestriction")
     <script type="text/javascript">
-        var labels = {
-        };
         var messages = {
             RequiredFieldError: '@Messages.RequiredFieldError',
             NoteInfoMaxBet: '@Messages.BetRestriction_NoteInfoMaxBet',
@@ -114,7 +113,12 @@
             ConfirmRemoveSite: '@Labels.BetRestriction_ConfirmRemoveSite',
             ConfirmRemoveCurrency: '@Labels.BetRestriction_ConfirmRemoveCurrency',
             ValidateMaxBetMaxPerMatchError: '@Labels.BetRestriction_ValidateMaxBetMaxPerMatchError',
-            NothingChanged: '@Messages.NothingChanged'
+            NothingChanged: '@Messages.NothingChanged',
+        };
+
+        var resources = {
+            FollowUpperLevel: '@Labels.FollowUpperLevel',
+            None: '@Labels.None'
         };
 
         var betRestriction, accountManagement, siteManagement, currencyManagement;

@@ -232,8 +232,10 @@ namespace Fanex.NAP.CMS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/BetRestriction",
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
                 "~/Areas/BetRestriction/Styles/Index.less");
             bundles.Add(new ScriptBundle("~/scripts/BetRestriction").Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
                 "~/Areas/BetRestriction/Scripts/Index.js",
                 "~/Areas/BetRestriction/Scripts/AccountManagement.js",
                 "~/Areas/BetRestriction/Scripts/SiteManagement.js",

@@ -14,8 +14,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         formAccountManager: null,
         hidCustId: null,
         txtPopupAccUsername: null,
-        chkPopupAccLiveBetAccept: null,
-        chkPopupAccSeizeBetTicket: null,
+        selPopupAccLiveBetAccept: null,
+        selPopupAccSeizeBetTicket: null,
         txtPopupAccMaxBet: null,
         txtPopupAccMaxPerMatch: null,
         txtPopupAcc8RMAccount: null,
@@ -29,8 +29,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         DOMElements.formAccountManager = $('#formAccountManager');
         DOMElements.hidCustId = $('#hidCustId');
         DOMElements.txtPopupAccUsername = $('#txtPopupAccUsername');
-        DOMElements.chkPopupAccLiveBetAccept = $('#chkPopupAccLiveBetAccept');
-        DOMElements.chkPopupAccSeizeBetTicket = $('#chkPopupAccSeizeBetTicket');
+        DOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
+        DOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
         DOMElements.txtPopupAccMaxBet = $('#txtPopupAccMaxBet');
         DOMElements.txtPopupAccMaxPerMatch = $('#txtPopupAccMaxPerMatch');
         DOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
@@ -50,8 +50,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         });
         DOMElements.btnCancel.click(function () { CMS.closePopup(); });
         DOMElements.noteInfoMessage.click(function () { CMS.showInfoMessage(messages.NoteInfoMaxBet); });
-        DOMElements.chkPopupAccSeizeBetTicket.change(function () {
-            if ($(this).val() == '') {
+        DOMElements.selPopupAccSeizeBetTicket.change(function () {
+            if ($(this).val() == '0' || $(this).val() == '') {
                 DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
                 CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
             }
@@ -65,12 +65,12 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         if (!Validator.validateForm(DOMElements.formAccountManager, 'ne'))
             return false;
 
-        if (DOMElements.chkPopupAccLiveBetAccept.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.chkPopupAccLiveBetAccept, messages.RequiredFieldError);
+        if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(DOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
-        if (DOMElements.chkPopupAccSeizeBetTicket.val() == '') {
+        if (DOMElements.selPopupAccSeizeBetTicket.val() == '' || DOMElements.selPopupAccSeizeBetTicket.val() == '0') {
             DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
         }
         else if (DOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
@@ -88,8 +88,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
             var newData = {
                 CustId: DOMElements.hidCustId.val(),
                 UserName: DOMElements.txtPopupAccUsername.val(),
-                LiveBetAccept: DOMElements.chkPopupAccLiveBetAccept.val(),
-                SeizeBetTicket: DOMElements.chkPopupAccSeizeBetTicket.val(),
+                LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
+                SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
                 MaxBet: DOMElements.txtPopupAccMaxBet.val(),
                 MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
                 FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
@@ -114,8 +114,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         var params = {
             CustId: DOMElements.hidCustId.val(),
             UserName: DOMElements.txtPopupAccUsername.val(),
-            LiveBetAccept: DOMElements.chkPopupAccLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.chkPopupAccSeizeBetTicket.val(),
+            LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
+            SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
             MaxBet: DOMElements.txtPopupAccMaxBet.val(),
             MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
             FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
@@ -174,8 +174,8 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
 
                 DOMElements.txtPopupAccUsername.val(result.Account);
                 DOMElements.hidCustId.val(result.CustId);
-                DOMElements.chkPopupAccLiveBetAccept.val(result.LiveBetAccept);
-                DOMElements.chkPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
+                DOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
+                DOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
                 DOMElements.txtPopupAccMaxBet.val(result.MaxBet);
                 DOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
                 DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);

@@ -187,7 +187,7 @@
                 RoleId = request.RoleId,
                 Status = request.Status,
                 SiteId = request.SiteId,
-                CurrencyId = request.CurrencyId,
+                CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize
             };

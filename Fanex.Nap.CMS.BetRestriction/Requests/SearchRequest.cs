@@ -10,7 +10,7 @@
 
         public int SiteId { get; set; }
 
-        public int CurrencyId { get; set; }
+        public string CurrencyIds { get; set; }
 
         public int PageSize { get; set; }
 

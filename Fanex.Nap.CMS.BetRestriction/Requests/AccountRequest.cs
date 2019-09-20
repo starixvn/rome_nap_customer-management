@@ -6,7 +6,7 @@
 
         public string UserName { get; set; }
 
-        public int LiveBetAccept { get; set; }
+        public short? LiveBetAccept { get; set; }
 
         public int? SeizeBetTicket { get; set; }
 

@@ -21,10 +21,10 @@
         </div>
         <div class="form-row">
             <div class="lbl-field normal-label width-160">
-                <label for="chkPopupSiteLiveBetAccept">@Labels.LiveBetAccept</label><span class="red float-right">*</span>
+                <label for="selPopupSiteLiveBetAccept">@Labels.LiveBetAccept</label><span class="red float-right">*</span>
             </div>
             <div class="edit-field">
-                <select id="chkPopupSiteLiveBetAccept">
+                <select id="selPopupSiteLiveBetAccept">
                     <option value="">Please select</option>
                     @for (int i = -5; i <= 60; i++)
                     {
@@ -35,11 +35,11 @@
         </div>
         <div class="form-row">
             <div class="lbl-field normal-label width-160">
-                <label for="chkPopupSiteSeizeBetTicket">@Labels.SeizeBetTicket</label>
+                <label for="selPopupSiteSeizeBetTicket">@Labels.SeizeBetTicket</label>
             </div>
             <div class="edit-field">
-                <select id="chkPopupSiteSeizeBetTicket">
-                    <option value="">None</option>
+                <select id="selPopupSiteSeizeBetTicket">
+                    <option value="0">None</option>
                     @for (int i = 10; i <= 100; i += 5)
                     {
                         <option value="@i.ToString()">@i.ToString() %</option>

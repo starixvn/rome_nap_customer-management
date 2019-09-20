@@ -17,8 +17,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
         ddlPopupCurrency: null,
         ddlPopupCurrencyType: null,
         hidCurrentType: null,
-        chkPopupCurrencyLiveBetAccept: null,
-        chkPopupCurrencySeizeBetTicket: null,
+        selPopupCurrencyLiveBetAccept: null,
+        selPopupCurrencySeizeBetTicket: null,
         txtPopupCurrency8RMAccount: null,
         btnCurrencySave: null,
         btnCurrencyCancel: null,
@@ -32,8 +32,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
         DOMElements.ddlPopupCurrency = $('#ddlPopupCurrency');
         DOMElements.ddlPopupCurrencyType = $('#ddlPopupCurrencyType');
         DOMElements.hidCurrentType = $('#hidCurrentType');
-        DOMElements.chkPopupCurrencyLiveBetAccept = $('#chkPopupCurrencyLiveBetAccept');
-        DOMElements.chkPopupCurrencySeizeBetTicket = $('#chkPopupCurrencySeizeBetTicket');
+        DOMElements.selPopupCurrencyLiveBetAccept = $('#selPopupCurrencyLiveBetAccept');
+        DOMElements.selPopupCurrencySeizeBetTicket = $('#selPopupCurrencySeizeBetTicket');
         DOMElements.txtPopupCurrency8RMAccount = $('#txtPopupCurrency8RMAccount');
         DOMElements.btnCurrencySave = $('#btnCurrencySave');
         DOMElements.btnCurrencyCancel = $('#btnCurrencyCancel');
@@ -41,8 +41,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
 
     var bindingEvents = function () {
         DOMElements.btnCurrencyCancel.click(function () { CMS.closePopup(); });
-        DOMElements.chkPopupCurrencySeizeBetTicket.change(function () {
-            if ($(this).val() == '') {
+        DOMElements.selPopupCurrencySeizeBetTicket.change(function () {
+            if ($(this).val() == '0' || $(this).val() == '') {
                 DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
                 CMS.clearTipsyError(DOMElements.txtPopupCurrency8RMAccount);
             }
@@ -63,12 +63,12 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             return false;
         }
 
-        if (DOMElements.chkPopupCurrencyLiveBetAccept.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.chkPopupCurrencyLiveBetAccept, messages.RequiredFieldError);
+        if (DOMElements.selPopupCurrencyLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(DOMElements.selPopupCurrencyLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
-        if (DOMElements.chkPopupCurrencySeizeBetTicket.val() == '') {
+        if (DOMElements.selPopupCurrencySeizeBetTicket.val() == '' || DOMElements.selPopupCurrencySeizeBetTicket.val() == '0') {
             DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
         }
         else if (DOMElements.txtPopupCurrency8RMAccount.val().length <= 0) {
@@ -81,8 +81,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
                 ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
                 Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
                 NewType: DOMElements.ddlPopupCurrencyType.val(),
-                LiveBetAccept: DOMElements.chkPopupCurrencyLiveBetAccept.val(),
-                SeizeBetTicket: DOMElements.chkPopupCurrencySeizeBetTicket.val(),
+                LiveBetAccept: DOMElements.selPopupCurrencyLiveBetAccept.val(),
+                SeizeBetTicket: DOMElements.selPopupCurrencySeizeBetTicket.val(),
                 FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
             }
 
@@ -106,8 +106,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
             ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
             Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
             NewType: DOMElements.ddlPopupCurrencyType.val(),
-            LiveBetAccept: DOMElements.chkPopupCurrencyLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.chkPopupCurrencySeizeBetTicket.val(),
+            LiveBetAccept: DOMElements.selPopupCurrencyLiveBetAccept.val(),
+            SeizeBetTicket: DOMElements.selPopupCurrencySeizeBetTicket.val(),
             FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
         }
 
@@ -150,8 +150,8 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
                 DOMElements.ddlPopupCurrency.val(result.ExchangeId);
                 DOMElements.ddlPopupCurrencyType.val(result.Type);
                 DOMElements.hidCurrentType.val(result.Type);
-                DOMElements.chkPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
-                DOMElements.chkPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
+                DOMElements.selPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
+                DOMElements.selPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
                 DOMElements.txtPopupCurrency8RMAccount.val(result.FollowAccount);
             }
         );

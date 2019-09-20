@@ -12,7 +12,7 @@
 
         public int SiteId { get; set; }
 
-        public int CurrencyId { get; set; }
+        public string CurrencyIds { get; set; }
 
         public SearchAccountCriteria() : this(0, 0) { }
 

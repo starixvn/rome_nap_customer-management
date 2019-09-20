@@ -119,14 +119,50 @@
         private string ComposeCheckEditAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
             var result = string.Empty;
-            if (checkResult.IsUplineExists && checkResult.UplineSeizeBetTicket.HasValue && request.SeizeBetTicket.HasValue && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
+            if (request.SeizeBetTicket.HasValue
+                && request.SeizeBetTicket != 0)
             {
-                result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
+                if (checkResult.IsUplineExists
+                    && checkResult.UplineSeizeBetTicket.HasValue
+                    && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
+                {
+                    result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
+                }
+
+                if (checkResult.IsDownlineExists
+                    && checkResult.MinDownlineSeizeBetTicket.HasValue
+                    && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
+                {
+                    result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+                }
             }
 
-            if (checkResult.IsDownlineExists && request.SeizeBetTicket.HasValue && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
+            // Seize Bet = None
+            if (request.SeizeBetTicket.HasValue
+                && request.SeizeBetTicket == 0)
             {
-                result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+                if (checkResult.IsUplineExists
+                    && checkResult.UplineSeizeBetTicket.HasValue)
+                {
+                    result += string.Format(Labels.BetRestriction_WarningUplineHadSeizeBet, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
+                }
+
+                if (checkResult.IsDownlineExists
+                    && checkResult.MinDownlineSeizeBetTicket.HasValue)
+                {
+                    result += string.Format(Labels.BetRestriction_WarningDownlineHadSeizeBet, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+                }
+            }
+
+            // Seize Bet = Follow Upper Level
+            if (!request.SeizeBetTicket.HasValue)
+            {
+                if (checkResult.IsDownlineExists
+                    && checkResult.MinDownlineSeizeBetTicket.HasValue
+                    && checkResult.MinDownlineSeizeBetTicket < checkResult.UplineSeizeBetTicket)
+                {
+                    result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+                }
             }
 
             return result;

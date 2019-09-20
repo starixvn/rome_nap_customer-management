@@ -13,8 +13,8 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
         hidSiteId: null,
         txtPopupSite: null,
         ddlPopupSite: null,
-        chkPopupSiteLiveBetAccept: null,
-        chkPopupSiteSeizeBetTicket: null,
+        selPopupSiteLiveBetAccept: null,
+        selPopupSiteSeizeBetTicket: null,
         txtPopupSite8RMAccount: null,
         btnSiteSave: null,
         btnSiteCancel: null,
@@ -26,8 +26,8 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
         DOMElements.hidSiteId = $('#hidSiteId');
         DOMElements.txtPopupSite = $('#txtPopupSite');
         DOMElements.ddlPopupSite = $('#ddlPopupSite');
-        DOMElements.chkPopupSiteLiveBetAccept = $('#chkPopupSiteLiveBetAccept');
-        DOMElements.chkPopupSiteSeizeBetTicket = $('#chkPopupSiteSeizeBetTicket');
+        DOMElements.selPopupSiteLiveBetAccept = $('#selPopupSiteLiveBetAccept');
+        DOMElements.selPopupSiteSeizeBetTicket = $('#selPopupSiteSeizeBetTicket');
         DOMElements.txtPopupSite8RMAccount = $('#txtPopupSite8RMAccount');
         DOMElements.btnSiteSave = $('#btnSiteSave');
         DOMElements.btnSiteCancel = $('#btnSiteCancel');
@@ -35,8 +35,8 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
 
     var bindingEvents = function () {
         DOMElements.btnSiteCancel.click(function () { CMS.closePopup(); });
-        DOMElements.chkPopupSiteSeizeBetTicket.change(function () {
-            if ($(this).val() == '') {
+        DOMElements.selPopupSiteSeizeBetTicket.change(function () {
+            if ($(this).val() == '0') {
                 DOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
                 CMS.clearTipsyError(DOMElements.txtPopupSite8RMAccount);
             }
@@ -52,12 +52,12 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
             return false;
         }
 
-        if (DOMElements.chkPopupSiteLiveBetAccept.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.chkPopupSiteLiveBetAccept, messages.RequiredFieldError);
+        if (DOMElements.selPopupSiteLiveBetAccept.val().length <= 0) {
+            CMS.showTipsyError(DOMElements.selPopupSiteLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
-        if (DOMElements.chkPopupSiteSeizeBetTicket.val() == '') {
+        if (DOMElements.selPopupSiteSeizeBetTicket.val() == '0') {
             DOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
         }
         else if (DOMElements.txtPopupSite8RMAccount.val().length <= 0) {
@@ -77,8 +77,8 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
 
         var params = {
             SiteId: isEdit ? DOMElements.hidSiteId.val() : DOMElements.ddlPopupSite.val(),
-            LiveBetAccept: DOMElements.chkPopupSiteLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.chkPopupSiteSeizeBetTicket.val(),
+            LiveBetAccept: DOMElements.selPopupSiteLiveBetAccept.val(),
+            SeizeBetTicket: DOMElements.selPopupSiteSeizeBetTicket.val(),
             FollowAccount: DOMElements.txtPopupSite8RMAccount.attr('disabled') ? '' :   DOMElements.txtPopupSite8RMAccount.val()
         }
 
@@ -109,8 +109,8 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
             function (result) {
                 DOMElements.hidSiteId.val(result.SiteId);
                 DOMElements.txtPopupSite.val(result.Site);
-                DOMElements.chkPopupSiteLiveBetAccept.val(result.LiveBetAccept);
-                DOMElements.chkPopupSiteSeizeBetTicket.val(result.SeizeBetTicket).change();
+                DOMElements.selPopupSiteLiveBetAccept.val(result.LiveBetAccept);
+                DOMElements.selPopupSiteSeizeBetTicket.val(result.SeizeBetTicket).change();
                 DOMElements.txtPopupSite8RMAccount.val(result.FollowAccount);
             }
         );

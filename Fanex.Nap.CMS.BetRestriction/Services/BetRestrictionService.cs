@@ -124,6 +124,7 @@
             {
                 if (checkResult.IsUplineExists
                     && checkResult.UplineSeizeBetTicket.HasValue
+                    && checkResult.UplineSeizeBetTicket != 0
                     && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
                 {
                     result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
@@ -131,6 +132,7 @@
 
                 if (checkResult.IsDownlineExists
                     && checkResult.MinDownlineSeizeBetTicket.HasValue
+                    && checkResult.MinDownlineSeizeBetTicket != 0
                     && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
                 {
                     result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
@@ -141,14 +143,14 @@
             if (request.SeizeBetTicket.HasValue
                 && request.SeizeBetTicket == 0)
             {
-                if (checkResult.IsUplineExists
-                    && checkResult.UplineSeizeBetTicket.HasValue)
+                if (checkResult.UplineSeizeBetTicket.HasValue
+                    && checkResult.UplineSeizeBetTicket != 0)
                 {
                     result += string.Format(Labels.BetRestriction_WarningUplineHadSeizeBet, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
                 }
 
-                if (checkResult.IsDownlineExists
-                    && checkResult.MinDownlineSeizeBetTicket.HasValue)
+                if (checkResult.MinDownlineSeizeBetTicket.HasValue
+                    && checkResult.MinDownlineSeizeBetTicket != 0)
                 {
                     result += string.Format(Labels.BetRestriction_WarningDownlineHadSeizeBet, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
                 }
@@ -157,8 +159,8 @@
             // Seize Bet = Follow Upper Level
             if (!request.SeizeBetTicket.HasValue)
             {
-                if (checkResult.IsDownlineExists
-                    && checkResult.MinDownlineSeizeBetTicket.HasValue
+                if (checkResult.MinDownlineSeizeBetTicket.HasValue
+                    && checkResult.MinDownlineSeizeBetTicket != 0
                     && checkResult.MinDownlineSeizeBetTicket < checkResult.UplineSeizeBetTicket)
                 {
                     result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;

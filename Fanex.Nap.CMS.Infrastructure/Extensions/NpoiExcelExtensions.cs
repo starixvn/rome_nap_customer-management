@@ -64,16 +64,7 @@
             return cellStyle;
         }
 
-        /// <summary>
-        /// Style for text.
-        /// </summary>
-        /// <param name="excelFile">The excel file.</param>
-        /// <param name="cellColor">The color of cell.</param>
-        /// <param name="bold">Check bold.</param>
-        /// <param name="align">Align text(value is right, left or center).</param>
-        /// <param name="fontColor">The color of font.</param>
-        /// <returns>The cell style.</returns>
-        public static ICellStyle TextStyle(
+        public static ICellStyle TextStyleWithoutBorder(
             HSSFWorkbook excelFile,
             short cellColor,
             bool bold,
@@ -110,6 +101,26 @@
 
             cellStyle.VerticalAlignment = (VerticalAlignment)VerticalAlignCenter;
             cellStyle.SetFont(font);
+            return cellStyle;
+        }
+
+        /// <summary>
+        /// Style for text.
+        /// </summary>
+        /// <param name="excelFile">The excel file.</param>
+        /// <param name="cellColor">The color of cell.</param>
+        /// <param name="bold">Check bold.</param>
+        /// <param name="align">Align text(value is right, left or center).</param>
+        /// <param name="fontColor">The color of font.</param>
+        /// <returns>The cell style.</returns>
+        public static ICellStyle TextStyle(
+            HSSFWorkbook excelFile,
+            short cellColor,
+            bool bold,
+            Alignment align,
+            short fontColor = 8)
+        {
+            var cellStyle = TextStyleWithoutBorder(excelFile, cellColor, bold, align, fontColor);
             cellStyle = SetBorderToCell(cellStyle);
             return cellStyle;
         }

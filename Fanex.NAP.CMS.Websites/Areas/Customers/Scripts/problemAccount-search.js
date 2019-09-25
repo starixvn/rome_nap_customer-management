@@ -32,7 +32,7 @@
         elements.ddlOrderBy.val(searchFilter.OrderBy);
 
         elements.ddlReason.fanexMultiSelect({
-            minWidth: 306,
+            minWidth: 281,
             checkAllText: "All",
             listData: reasons.map(function (item) {
                 return { id: item.Value, value: item.Value, text: item.Text, checked: item.Selected, enable: true };
@@ -54,14 +54,14 @@
             firstDatePicker: {
                 Id: "dpk-fromdate",
                 Label: "From ",
-                LabelCss: "lbl-field col_3",
-                TextboxCss: "edit-field col_6"
+                LabelCss: "lbl-field col_2",
+                TextboxCss: "edit-field col_5"
             },
             secondDatePicker: {
                 Id: "dpk-todate",
                 Label: "To ",
                 LabelCss: "lbl-field col_1",
-                TextboxCss: "edit-field col_6"
+                TextboxCss: "edit-field col_5"
             }
         });
 
@@ -151,12 +151,20 @@
         ];
 
         return {
+            showTitle: true,
+            titleInfo: {
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("Customers/ProblemAccount/Export"), filterParams);
+                }
+            },
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 200,
+            gridExpandHeight: 250,
             columns: columns,
             showPager: true,
             customPager: true,

@@ -5,6 +5,7 @@
     using Infrastructure;
     using Infrastructure.Controllers;
     using Infrastructure.Models;
+    using Infrastructure.Services.Interfaces;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
     using Resources;
@@ -54,6 +55,27 @@
                 vm.OrderBy,
                 vm.PageIndex,
                 vm.PageSize));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
+        public void Export(SearchViewModel vm)
+        {
+            var data = service.GetProblemAccounts(
+                vm.From,
+                vm.To,
+                vm.Level,
+                vm.Currency,
+                vm.Status,
+                vm.IsReduced,
+                vm.Reason,
+                vm.Username,
+                vm.IsSearchDownlines,
+                vm.OrderBy,
+                1,
+                int.MaxValue - 1);
+
+            IExcelExporter exporter = new ProblemAccountExporter(vm, data, service.GetReasons(true));
+            exporter.ResponseStream();
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]

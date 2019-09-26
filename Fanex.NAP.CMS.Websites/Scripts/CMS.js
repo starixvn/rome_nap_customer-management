@@ -86,6 +86,16 @@ var CMS = (function ($) {
 
             CMS.showErrorMessage(message);
         },
+        showInfoMessage: function (message) {
+            var msgWrapper = '<div id="divError" class="info">' + message + '</div>';
+            var options = {
+                sticky: true,
+                position: ['top: ' + (40 - CMS.popupTopMargin), 'center'], //['top: 40', 'center'],
+                css: 'custom-msgbox'
+            };
+
+            CMS.headlineMsgBox.showInfo(msgWrapper, options);
+        },
         showErrorMessage: function (message) {
             var msgWrapper = '<div id="divError" class="error">' + message + '</div>';
             var options = {
@@ -607,6 +617,23 @@ var CMS = (function ($) {
             if (callback) {
                 callback(target, gridOptions);
             }
+        },
+        isValueEqual: function (a, b) {
+            var aProps = Object.getOwnPropertyNames(a);
+            var bProps = Object.getOwnPropertyNames(b);
+
+            if (aProps.length != bProps.length) {
+                return false;
+            }
+
+            for (var i = 0; i < aProps.length; i++) {
+                var propName = aProps[i];
+                if (a[propName] !== b[propName]) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     };
 

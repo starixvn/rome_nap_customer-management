@@ -61,6 +61,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 8RM Account.
+        /// </summary>
+        public static string _8RMAccount {
+            get {
+                return ResourceManager.GetString("_8RMAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Above.
         /// </summary>
         public static string Above {
@@ -300,6 +309,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string AutoRefresh {
             get {
                 return ResourceManager.GetString("AutoRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Restriction.
+        /// </summary>
+        public static string BetRestriction {
+            get {
+                return ResourceManager.GetString("BetRestriction", resourceCulture);
             }
         }
         
@@ -1159,11 +1177,29 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Bet.
+        /// </summary>
+        public static string MaxBet {
+            get {
+                return ResourceManager.GetString("MaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Loss.
         /// </summary>
         public static string MaxLoss {
             get {
                 return ResourceManager.GetString("MaxLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Per Match.
+        /// </summary>
+        public static string MaxPerMatch {
+            get {
+                return ResourceManager.GetString("MaxPerMatch", resourceCulture);
             }
         }
         
@@ -1380,6 +1416,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string OnlyShowException {
             get {
                 return ResourceManager.GetString("OnlyShowException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On - Off Bet Restriction.
+        /// </summary>
+        public static string OnOffBetRestriction {
+            get {
+                return ResourceManager.GetString("OnOffBetRestriction", resourceCulture);
             }
         }
         
@@ -1848,6 +1893,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ViewFullMode {
             get {
                 return ResourceManager.GetString("ViewFullMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Only.
+        /// </summary>
+        public static string ViewOnly {
+            get {
+                return ResourceManager.GetString("ViewOnly", resourceCulture);
             }
         }
         

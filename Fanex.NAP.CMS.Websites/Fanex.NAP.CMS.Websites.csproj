@@ -372,6 +372,10 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\NAPCommonSpNames.xml" />
+    <Content Include="Areas\BetRestrictionManagement\Scripts\Index.js" />
+    <Content Include="Areas\BetRestriction\Scripts\CurrencyManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\SiteManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\AccountManagement.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
@@ -498,6 +502,8 @@
     <Content Include="Content\Themes\img\textures\grid.png" />
     <Content Include="Content\Themes\img\textures\scratches.png" />
     <Content Include="Content\Themes\img\tick-ico-16.png" />
+    <Content Include="Content\Themes\img\toggleOFF.png" />
+    <Content Include="Content\Themes\img\toggleON.png" />
     <Content Include="Content\Themes\img\tree-view.png" />
     <Content Include="Content\Themes\img\undo.png" />
     <Content Include="Content\Themes\img\user.png" />
@@ -633,6 +639,9 @@
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
     <Content Include="Scripts\Sites\ConfigureCustomerAccess.js" />
     <Content Include="Scripts\Sites\OpenCloseMember.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Index.js" />
+    <Content Include="Areas\BetRestriction\SiteManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\CurrencyManagement.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -649,6 +658,10 @@
     <Content Include="WhoamI.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Nap.CMS.BetRestriction\Fanex.Nap.CMS.BetRestriction.csproj">
+      <Project>{f4a2df08-f986-45f7-928c-8eb0581338a8}</Project>
+      <Name>Fanex.Nap.CMS.BetRestriction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.Controllers\Fanex.NAP.CMS.Controllers.csproj">
       <Project>{2C4A415A-8958-443C-A2FA-A82B3E001B25}</Project>
       <Name>Fanex.NAP.CMS.Controllers</Name>
@@ -761,6 +774,9 @@
     <Content Include="Web.AppSettings.sit.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
+    <Content Include="Web.AppSettings.master.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.ConnectionString.prod.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -828,6 +844,12 @@
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\index.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewRealValues.cshtml" />
+    <Content Include="Areas\BetRestriction\AccountManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Styles\Index.less" />
+    <Content Include="Areas\BetRestriction\Web.config" />
+    <Content Include="Areas\BetRestrictionManagement\Index.cshtml" />
+    <Content Include="Areas\BetRestrictionManagement\Web.config" />
+    <Content Include="Areas\BetRestrictionManagement\Styles\Index.less" />
     <Content Include="Areas\Customers\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -849,6 +871,7 @@
     <Content Include="Views\CreditCollectionSummary\Index.cshtml" />
     <Content Include="Content\Sites\credit-collection-summary.less" />
     <Content Include="Views\StatusLog\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Index.cshtml" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

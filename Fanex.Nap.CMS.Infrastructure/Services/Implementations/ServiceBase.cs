@@ -1,50 +1,39 @@
 ﻿// --------------------------------------------------------------------------
 // <copyright file="ServiceBase.cs">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-// <history>
-//   <change who="Anders.Le" date="2012.10.9">Created</change>
-//   <change who="Ricky.Nguyen" date="2012.11.6">Move</change>
-// </history>
-
 namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 {
+    using Fanex.Common.Helper;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
-    using Fanex.Common.Helper;
-    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-    using Fanex.NAP.Framework.Data;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class ServiceBase : IServiceBase
     {
-        public ServiceBase(IDynamicRepository repository = null)
+        public ServiceBase() : this(null, null)
+        {
+
+        }
+
+        public ServiceBase(IDynamicRepository repository, CMSConverter converter)
         {
             DynamicRepository = repository ?? new DynamicRepository();
+            CMSConverter = converter ?? new CMSConverterImplement();
+
         }
 
         protected IDynamicRepository DynamicRepository { get; set; }
 
-        /// <summary>
-        /// Gets the repository.
-        /// </summary>
-        /// <value>
-        /// The repository.
-        /// </value>
+        protected CMSConverter CMSConverter { get; set; }
+
         protected IDynamicRepository Repository
         {
             get { return DynamicRepository; }
         }
 
-        /// <summary>
-        /// Get Report Data with Criteria.
-        /// </summary>
-        /// <typeparam name="T">Type of Object return.</typeparam>
-        /// <param name="criteria">Criteria to Query DB.</param>
-        /// <returns>Enumerable of Type T.</returns>
         [SuppressMessage("Microsoft.Design",
             "CA1031:DoNotCatchGeneralExceptionTypes",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -59,9 +48,22 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
             return new List<T>();
         }
 
-        public virtual IEnumerable<T> GetData<T>(Fanex.Data.Repository.ICriteria criteria)
+        public virtual IEnumerable<T> GetData<T>(ICriteria criteria)
         {
-            return (new Fanex.Data.Repository.DynamicRepository()).Fetch<T>(criteria);
+            return (new DynamicRepository()).Fetch<T>(criteria);
+        }
+
+        public virtual Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                objDb.AddOutParameter("errcode", System.Data.DbType.Int32, sizeof(int));
+                objDb.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
+                objDb.ExecuteNonQuery();
+                var outputs = objDb.GetOuputParams();
+                return new Result(CMSConverter.ToInt32(outputs["errcode"]), CMSConverter.ToString(outputs["errmsg"]));
+            }
         }
     }
 }

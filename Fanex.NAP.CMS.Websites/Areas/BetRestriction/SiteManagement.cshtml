@@ -1,0 +1,66 @@
+﻿@using Fanex.NAP.CMS.Core.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Resources;
+@model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
+<div id="containerFormSiteManager">
+    @using (Html.BeginForm("", "BetRestriction", FormMethod.Post, new { id = "formSiteManagement", @class = "form display-none", @onsubmit = "return false;" }))
+    {
+        <div id="div-popupResult-message" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="ddlPopupSite">@ViewLang.Site</label><span class="red float-right">*</span>
+            </div>
+            <div class="edit-field">
+                @Html.DropDownList(
+                    "ddlPopupSite",
+                    (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "", Selected = true } }).Union(Model.Sites),
+                    new { @id = "ddlPopupSite" })
+
+                <input id="txtPopupSite" type="text" readonly="readonly" disabled="disabled" />
+                <input id="hidSiteId" type="hidden" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="selPopupSiteLiveBetAccept">@Labels.LiveBetAccept</label><span class="red float-right">*</span>
+            </div>
+            <div class="edit-field">
+                <select id="selPopupSiteLiveBetAccept">
+                    <option value="">Please select</option>
+                    @for (int i = -5; i <= 60; i++)
+                    {
+                        <option value="@i.ToString()">@i.ToString()</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="selPopupSiteSeizeBetTicket">@Labels.SeizeBetTicket</label>
+            </div>
+            <div class="edit-field">
+                <select id="selPopupSiteSeizeBetTicket">
+                    <option value="0">None</option>
+                    @for (int i = 10; i <= 100; i += 5)
+                    {
+                        <option value="@i.ToString()">@i.ToString() %</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="txtPopupSite8RMAccount">@ViewLang._8RMAccount</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtPopupSite8RMAccount" autocomplete="off" disabled="disabled" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field normal-label width-120"></div>
+            <div class="edit-field">
+                <button type="button" id="btnSiteSave" class="blue-button">@ViewLang.Save</button>
+                <button type="button" id="btnSiteCancel" class="red-button">@ViewLang.Cancel</button>
+            </div>
+        </div>
+    }
+</div>

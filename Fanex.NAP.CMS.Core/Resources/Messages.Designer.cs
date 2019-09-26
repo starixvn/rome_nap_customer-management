@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Messages {
@@ -138,6 +138,96 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string BadRequest {
             get {
                 return ResourceManager.GetString("BadRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account has been successfully added..
+        /// </summary>
+        public static string BetRestriction_AddAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_AddAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency has been successfully added..
+        /// </summary>
+        public static string BetRestriction_AddCurrencySuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_AddCurrencySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site has been successfully added..
+        /// </summary>
+        public static string BetRestriction_AddSiteSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_AddSiteSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can leave Max Bet field and Max Per Match field blank incase you don&apos;t want to apply bet limit for this account. If you input 0 on Max Bet field or Max Per Match field, the Bet limit will be applied 0 for this account..
+        /// </summary>
+        public static string BetRestriction_NoteInfoMaxBet {
+            get {
+                return ResourceManager.GetString("BetRestriction_NoteInfoMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account has been successfully removed..
+        /// </summary>
+        public static string BetRestriction_RemoveAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_RemoveAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency has been successfully removed..
+        /// </summary>
+        public static string BetRestriction_RemoveCurrencySuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_RemoveCurrencySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site has been successfully removed..
+        /// </summary>
+        public static string BetRestriction_RemoveSiteSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_RemoveSiteSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account has been successfully updated..
+        /// </summary>
+        public static string BetRestriction_UpdateAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_UpdateAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency has been successfully updated..
+        /// </summary>
+        public static string BetRestriction_UpdateCurrencySuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_UpdateCurrencySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site has been successfully updated..
+        /// </summary>
+        public static string BetRestriction_UpdateSiteSuccessfully {
+            get {
+                return ResourceManager.GetString("BetRestriction_UpdateSiteSuccessfully", resourceCulture);
             }
         }
         
@@ -318,6 +408,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string NotFoundMessage {
             get {
                 return ResourceManager.GetString("NotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing changed..
+        /// </summary>
+        public static string NothingChanged {
+            get {
+                return ResourceManager.GetString("NothingChanged", resourceCulture);
             }
         }
         

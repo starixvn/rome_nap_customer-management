@@ -1,0 +1,15 @@
+﻿namespace Fanex.Nap.CMS.BetRestriction.Models
+{
+    public class SiteModel
+    {
+        public int SiteId { get; set; }
+
+        public string Site { get; set; }
+
+        public short? LiveBetAccept { get; set; }
+
+        public byte? SeizeBetTicket { get; set; }
+
+        public string FollowAccount { get; set; }
+    }
+}

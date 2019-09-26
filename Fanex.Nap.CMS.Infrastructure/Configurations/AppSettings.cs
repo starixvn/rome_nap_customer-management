@@ -62,6 +62,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
             }
         }
 
+        public static bool IsTest => Converter.ToInt(GetValue("IsTest")) == 1;
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

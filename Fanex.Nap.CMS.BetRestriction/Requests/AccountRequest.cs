@@ -1,0 +1,19 @@
+﻿namespace Fanex.Nap.CMS.BetRestriction.Requests
+{
+    public class AccountRequest
+    {
+        public int CustId { get; set; }
+
+        public string UserName { get; set; }
+
+        public short? LiveBetAccept { get; set; }
+
+        public int? SeizeBetTicket { get; set; }
+
+        public decimal? MaxBet { get; set; }
+
+        public decimal? MaxPerMatch { get; set; }
+
+        public string FollowAccount { get; set; }
+    }
+}

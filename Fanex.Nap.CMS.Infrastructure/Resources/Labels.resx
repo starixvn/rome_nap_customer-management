@@ -201,4 +201,70 @@
   <data name="AccessDeniedMessage" xml:space="preserve">
     <value>You are not authorized on this function.</value>
   </data>
+  <data name="Credits" xml:space="preserve">
+    <value>Credits</value>
+  </data>
+  <data name="Licensees" xml:space="preserve">
+    <value>Licensees</value>
+  </data>
+  <data name="LiveBetAccept" xml:space="preserve">
+    <value>Live Bet Accept (Secs)</value>
+  </data>
+  <data name="MaxBet" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MaxPerMatch" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="SeizeBetTicket" xml:space="preserve">
+    <value>Seize Bet Ticket (%)</value>
+  </data>
+  <data name="_8RMAccount" xml:space="preserve">
+    <value>8RM Account</value>
+  </data>
+  <data name="BetRestriction_ConfirmRemoveAccount" xml:space="preserve">
+    <value>Are you sure you want to remove selected account {0} ?</value>
+  </data>
+  <data name="BetRestriction_ConfirmRemoveCurrency" xml:space="preserve">
+    <value>Are you sure you want to remove selected currency {0} ?</value>
+  </data>
+  <data name="BetRestriction_ConfirmRemoveSite" xml:space="preserve">
+    <value>Are you sure you want to remove selected site {0} ?</value>
+  </data>
+  <data name="BetRestriction_DownlinesExisted" xml:space="preserve">
+    <value>Account {0} has already had one or many downlines existing in the list.</value>
+  </data>
+  <data name="BetRestriction_UplineExisted" xml:space="preserve">
+    <value>Upline {0}: {1} of the selected account has already exists in the bet restriction list.</value>
+  </data>
+  <data name="BetRestriction_WarningDownlineSeizeBetLower" xml:space="preserve">
+    <value>The Seize Bet Ticket % of downlines ({0}) is lower than the Seize Bet Ticket of this account.</value>
+  </data>
+  <data name="BetRestriction_WarningUplineSeizeBetHigher" xml:space="preserve">
+    <value>The Seize Bet Ticket % of upline ({0}) is higher than the Seize Bet Ticket of this account.</value>
+  </data>
+  <data name="BetRestriction_ValidateMaxBetMaxPerMatchError" xml:space="preserve">
+    <value>Max Bet must be less than or equal to Max per Match.</value>
+  </data>
+  <data name="BetRestriction_WarningProceed" xml:space="preserve">
+    <value>Do you want to proceed?</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Licensee" xml:space="preserve">
+    <value>Licensee</value>
+  </data>
+  <data name="BetRestriction_WarningDownlineHadSeizeBet" xml:space="preserve">
+    <value>The Seize Bet Ticket % of downline has setting as: ({0}).</value>
+  </data>
+  <data name="BetRestriction_WarningUplineHadSeizeBet" xml:space="preserve">
+    <value>The Seize Bet Ticket % of upline has setting as: ({0}).</value>
+  </data>
+  <data name="FollowUpperLevel" xml:space="preserve">
+    <value>Follow upper level</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

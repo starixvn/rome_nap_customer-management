@@ -762,4 +762,22 @@
   <data name="ExRate" xml:space="preserve">
     <value>Ex.Rate</value>
   </data>
+  <data name="BetRestriction" xml:space="preserve">
+    <value>Bet Restriction</value>
+  </data>
+  <data name="ViewOnly" xml:space="preserve">
+    <value>View Only</value>
+  </data>
+  <data name="MaxBet" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MaxPerMatch" xml:space="preserve">
+    <value>Max Per Match</value>
+  </data>
+  <data name="_8RMAccount" xml:space="preserve">
+    <value>8RM Account</value>
+  </data>
+  <data name="OnOffBetRestriction" xml:space="preserve">
+    <value>On - Off Bet Restriction</value>
+  </data>
 </root>

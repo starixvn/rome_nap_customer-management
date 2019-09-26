@@ -300,4 +300,37 @@
   <data name="CreditCollectionNote" xml:space="preserve">
     <value>- Debt is reflected as POSITIVE in this report; while the balance in NAP Accounting is reflected as NEGATIVE.</value>
   </data>
+  <data name="BetRestriction_AddAccountSuccessfully" xml:space="preserve">
+    <value>Account has been successfully added.</value>
+  </data>
+  <data name="BetRestriction_AddCurrencySuccessfully" xml:space="preserve">
+    <value>Currency has been successfully added.</value>
+  </data>
+  <data name="BetRestriction_AddSiteSuccessfully" xml:space="preserve">
+    <value>Site has been successfully added.</value>
+  </data>
+  <data name="BetRestriction_NoteInfoMaxBet" xml:space="preserve">
+    <value>You can leave Max Bet field and Max Per Match field blank incase you don't want to apply bet limit for this account. If you input 0 on Max Bet field or Max Per Match field, the Bet limit will be applied 0 for this account.</value>
+  </data>
+  <data name="BetRestriction_RemoveAccountSuccessfully" xml:space="preserve">
+    <value>Account has been successfully removed.</value>
+  </data>
+  <data name="BetRestriction_RemoveCurrencySuccessfully" xml:space="preserve">
+    <value>Currency has been successfully removed.</value>
+  </data>
+  <data name="BetRestriction_RemoveSiteSuccessfully" xml:space="preserve">
+    <value>Site has been successfully removed.</value>
+  </data>
+  <data name="BetRestriction_UpdateAccountSuccessfully" xml:space="preserve">
+    <value>Account has been successfully updated.</value>
+  </data>
+  <data name="BetRestriction_UpdateCurrencySuccessfully" xml:space="preserve">
+    <value>Currency has been successfully updated.</value>
+  </data>
+  <data name="BetRestriction_UpdateSiteSuccessfully" xml:space="preserve">
+    <value>Site has been successfully updated.</value>
+  </data>
+  <data name="NothingChanged" xml:space="preserve">
+    <value>Nothing changed.</value>
+  </data>
 </root>

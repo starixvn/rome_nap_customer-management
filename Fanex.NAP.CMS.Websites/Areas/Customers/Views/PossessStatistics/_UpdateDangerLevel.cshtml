@@ -1,0 +1,35 @@
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.ViewModels.PossessStatistics
+@model UpdateDangerLevelViewModel
+@using (Html.BeginForm("UpdateDangerLevel", "PossessStatistics", FormMethod.Post, new { id = "formUpdateDangerLevel", @class = "form" }))
+{
+    @*@Html.HiddenFor(m => m.SelectedCustomers)*@
+    <input id="SelectedCustomers" name="SelectedCustomers" type="hidden" value="@JsonConvert.SerializeObject(Model.SelectedCustomers)" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@PossessStatisticsResource.SelectedAccounts: <span class="bold" id="spanSelectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-100">
+            <label>@PossessStatisticsResource.Category</label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownListFor(m => m.Category, Model.Categories, new { id = "ddlCategory", @class = "combobox-autocomplete width-120" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-100">
+            <label>@PossessStatisticsResource.DangerLevel<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownListFor(m => m.DangerLevel, Model.DangerLevels, new { id = "ddlDangerLevel", @class = "combobox-autocomplete width-120" })
+        </div>
+    </div>
+    <div class="form-row">
+        @Html.CheckBoxFor(m => m.ApplyForAllMembers) <span>@PossessStatisticsResource.ApplyForAllMembers</span>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

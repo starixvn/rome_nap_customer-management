@@ -1,0 +1,22 @@
+﻿@using Fanex.Nap.CMS.Customers.ViewModels.PossessStatistics
+@model UpdateMonitorStatusViewModel
+@using (Html.BeginForm("UpdateMonitorStatus", "PossessStatistics", FormMethod.Post, new { id = "formUpdateMonitorStatus", @class = "form" }))
+{
+    @Html.HiddenFor(m => m.SelectedCustIds)
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@PossessStatisticsResource.SelectedAccounts: <span class="bold" id="spanSelectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-100">
+            <label>@PossessStatisticsResource.MonitorStatus</label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownListFor(m => m.MonitorStatus, Model.MonitorStatusOptions, new { id = "ddlMonitorStatus", @class = "combobox-autocomplete width-60" })
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

@@ -1,0 +1,73 @@
+﻿@using Fanex.Nap.CMS.Customers.ViewModels.PossessStatistics
+@model FilterViewModel
+@using (Html.BeginForm("GetPossessStatistics", "PossessStatistics", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+{
+    <div class="filter-row">
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.TotalSBPercentFrom</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.TextBoxFor(m => m.TotalSBPercentFrom, new { id = "txtSBPercentFrom", @class = "width-60" })
+        </div>
+        <div class="lbl-field col_1">
+            <label>@PossessStatisticsResource.To</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.TextBoxFor(m => m.TotalSBPercentTo, new { id = "txtSBPercentTo", @class = "width-60" })
+        </div>
+        <div class="edit-field col_3">
+            @Html.DropDownListFor(m => m.PTConditionLogic, Model.PTConditionLogics, new { id = "ddlPTConditionLogic", @class = "combobox-autocomplete width-30" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.TotalNSPercentFrom</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.TextBoxFor(m => m.TotalNSPercentFrom, new { id = "txtNSPercentFrom", @class = "width-60" })
+        </div>
+        <div class="lbl-field col_1">
+            <label>@PossessStatisticsResource.To</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.TextBoxFor(m => m.TotalNSPercentTo, new { id = "txtNSPercentTo", @class = "width-60" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.Username</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.TextBoxFor(m => m.Username, new { id = "txtUsername", maxlength = "50", @class = "width-160" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.DangerLevel</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.DropDownListFor(m => m.DangerLevelOperator, Model.DangerLevelOperators, new { id = "ddlDangerLevelOperator", @class = "combobox-autocomplete width-30" })
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownListFor(m => m.DangerLevelValue, Model.DangerLevelValues, new { id = "ddlDangerLevelValue", @class = "combobox-autocomplete width-60" })
+        </div>
+    </div>
+    <div class="filter-row">
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.AgentStatus</label>
+        </div>
+        <div class="edit-field col_10">
+            <div id="ddlAgentStatus"></div>
+        </div>
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.Monitored</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.DropDownListFor(m => m.Monitored, Model.MonitoredOptions, new { id = "ddlMonitored", @class = "combobox-autocomplete width-30" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@PossessStatisticsResource.Sortby</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.DropDownListFor(m => m.SortBy, Model.SortSequences, new { id = "ddlSortBy", @class = "combobox-autocomplete width-120" })
+        </div>
+        <div class="lbl-field col_1">&nbsp;</div>
+        <div class="submit width-auto col_4">
+            <button type="submit" class="submit">@ProblemAccountResource.Search</button>
+        </div>
+    </div>
+}

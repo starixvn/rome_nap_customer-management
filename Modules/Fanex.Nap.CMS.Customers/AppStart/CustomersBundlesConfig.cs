@@ -7,12 +7,15 @@
     {
         public const string ProblemAccountStyles = "~/bundles/customers/problem-account-styles";
         public const string ProblemAccountScript = "~/bundles/customers/problem-account-scripts";
-
         public const string AbnormalBetTicketScript = "~/bundles/customers/betlist-abnormalbetticket-scripts";
+        public const string PossessStatisticsStyles = "~/bundles/customers/possess-statistics-styles";
+        public const string PossessStatisticsScript = "~/bundles/customers/possess-statistics-scripts";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.RegisterProblemAccountBundles().RegisterBetListBundles();
+            bundles.RegisterProblemAccountBundles()
+                .RegisterBetListBundles()
+                .RegisterPossessStatisticsBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -55,6 +58,23 @@
                 .Include(
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
                 "~/Areas/Customers/Views/ManageRobots2/Scripts/index.js"));
+        }
+
+        private static BundleCollection RegisterPossessStatisticsBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                PossessStatisticsStyles,
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Areas/Customers/Styles/possessStatistics.less");
+
+            bundles.Add(new ScriptBundle(PossessStatisticsScript).Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Areas/Customers/Scripts/PossessStatistics/data-grid.js",
+                "~/Areas/Customers/Scripts/PossessStatistics/filter.js",
+                "~/Areas/Customers/Scripts/PossessStatistics/update-action.js",
+                "~/Areas/Customers/Scripts/PossessStatistics/index.js"));
+
+            return bundles;
         }
     }
 }

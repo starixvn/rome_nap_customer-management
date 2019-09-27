@@ -417,6 +417,10 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
+    <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
+    <Content Include="Areas\Customers\Scripts\PossessStatistics\filter.js" />
+    <Content Include="Areas\Customers\Scripts\PossessStatistics\index.js" />
+    <Content Include="Areas\Customers\Scripts\PossessStatistics\update-action.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-confirmAction.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-marknew.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-reduceBL.js" />
@@ -901,6 +905,11 @@
     <Content Include="Areas\Customers\Views\BetList\AbnormalBetTicket.cshtml" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Index.cshtml" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Styles\index.less" />
+    <Content Include="Areas\Customers\Views\PossessStatistics\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\PossessStatistics\_Filter.cshtml" />
+    <Content Include="Areas\Customers\Styles\possessStatistics.less" />
+    <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateDangerLevel.cshtml" />
+    <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateMonitorStatus.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -921,6 +930,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -168,8 +168,14 @@
     <Compile Include="Constants\CurrencyConst.cs" />
     <Compile Include="Constants\IsReducedConst.cs" />
     <Compile Include="Constants\OrderByConst.cs" />
+    <Compile Include="Constants\CustomerFunctionKeys.cs" />
+    <Compile Include="Constants\DangerLevelCategoryConst.cs" />
+    <Compile Include="Constants\DangerLevelConst.cs" />
+    <Compile Include="Constants\PossessStatisticsSortSequence.cs" />
+    <Compile Include="Constants\PTConditionLogicConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
+    <Compile Include="Controllers\PossessStatisticsController.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
@@ -177,6 +183,10 @@
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetCurrenciesCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetRobotsCriteria.cs" />
+    <Compile Include="Criteria\PossessStatistics\GetPossessStatisticsCriteria.cs" />
+    <Compile Include="Criteria\PossessStatistics\NonQueryBaseCriteria.cs" />
+    <Compile Include="Criteria\PossessStatistics\UpdateDangerLevelCritera.cs" />
+    <Compile Include="Criteria\PossessStatistics\UpdateMonitorStatusCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetSitesCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\GetReasonCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\NonQueryCriteriaBase.cs" />
@@ -189,6 +199,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\PossessStatistics\PossessStatisticsModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotReport.cs" />
     <Compile Include="Models\ManageRobots2\RobotSitesModel.cs" />
@@ -196,12 +207,17 @@
     <Compile Include="Models\ProblemAccount\ProblemAccountItem.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Params\LogParam.cs" />
+    <Compile Include="Params\PossessStatistics\GetPossessStatisticsParam.cs" />
+    <Compile Include="Params\PossessStatistics\UpdateDangerLevelParam.cs" />
+    <Compile Include="Params\PossessStatistics\UpdateMonitorStatusParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
     <Compile Include="Repositories\IManageRobots2Repository.cs" />
     <Compile Include="Repositories\IProblemAccountRepository.cs" />
     <Compile Include="Repositories\ManageRobots2Repository.cs" />
+    <Compile Include="Repositories\PossessStatisticsRepository.cs" />
     <Compile Include="Repositories\ProblemAccountRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -213,6 +229,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\PossessStatisticsResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PossessStatisticsResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ProblemAccountResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -222,11 +243,18 @@
     <Compile Include="Services\IBetListService.cs" />
     <Compile Include="Services\IManageRobots2Service.cs" />
     <Compile Include="Services\IProblemAccountService.cs" />
+    <Compile Include="Services\PossessStatisticsExporter.cs" />
     <Compile Include="Services\ProblemAccountExporter.cs" />
     <Compile Include="Services\ManageRobots2Service.cs" />
+    <Compile Include="Services\PossessStatisticsService.cs" />
     <Compile Include="Services\ProblemAccountService.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />
+    <Compile Include="ViewModels\PossessStatistics\FilterViewModel.cs" />
+    <Compile Include="ViewModels\PossessStatistics\IndexViewModel.cs" />
+    <Compile Include="ViewModels\PossessStatistics\UpdateDangerLevelViewModel.cs" />
+    <Compile Include="ViewModels\PossessStatistics\UpdateMonitorStatusViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\ActionViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\InactivateViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\IndexViewModel.cs" />
@@ -251,6 +279,10 @@
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PossessStatisticsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PossessStatisticsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

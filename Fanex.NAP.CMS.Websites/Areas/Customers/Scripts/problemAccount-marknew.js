@@ -19,6 +19,29 @@ function ProblemAccountMarkNew(form, reloadData) {
     }
 
     function bindEvents() {
+        usernames.off("change").on("change", function () {
+            var usernamesValue = $.trim(usernames.val());
+
+            if (usernamesValue.length > 0) {
+                if (usernamesValue.indexOf("\n") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\n/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\r") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\r/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\t") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\t/g, " ");
+                }
+
+                usernamesValue = usernamesValue.replace(/\s/g, ",");
+                var usernamesArray = usernamesValue.split(",").filter(item => item.length > 0);
+
+                usernames.val(usernamesArray.join(","));
+            }
+        });
+
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
@@ -60,9 +83,7 @@ function ProblemAccountMarkNew(form, reloadData) {
         }
 
         // Check usernames contains '\'.
-        if (usernamesValue.indexOf("\n") >= 0
-            || usernamesValue.indexOf("\r") >= 0
-            || usernamesValue.indexOf("\\") >= 0) {
+        if (usernamesValue.indexOf("\\") >= 0) {
             CMS.showTipsyError(usernames, resources.inputInvalidUsernamesError.replace("{0}", "'\\'"), "ne");
             return false;
         }
@@ -74,13 +95,8 @@ function ProblemAccountMarkNew(form, reloadData) {
         }
 
         // Check duplicate.
-        var trimUsernames = usernamesArray
-            .map(function (item) {
-                return $.trim(item);
-            });
-
-        var duplicatedUsernames = trimUsernames.filter(function (item, index) {
-            return trimUsernames.indexOf(item) !== index;
+        var duplicatedUsernames = usernamesArray.filter(function (item, index) {
+            return usernamesArray.indexOf(item) !== index;
         });
 
         if (duplicatedUsernames.length > 0) {
@@ -89,7 +105,6 @@ function ProblemAccountMarkNew(form, reloadData) {
         }
 
         CMS.clearTipsyError(usernames);
-        usernames.val(trimUsernames.join(","));
         return true;
     }
 

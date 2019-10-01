@@ -309,4 +309,16 @@
   <data name="AllAccountsAlreadyRemoveReduceBL" xml:space="preserve">
     <value>There is no account with reduced bet limit to be removed. No action has been done.</value>
   </data>
+  <data name="ExcelFileName" xml:space="preserve">
+    <value>Manage Problem Account CN88 {0}</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="SearchDownlineExcel" xml:space="preserve">
+    <value>Search downline?</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount
 {
     using System;
+    using Constants;
     using Infrastructure.Constants;
 
     [Serializable]
@@ -13,8 +14,8 @@
             To = DateTime.Today;
             From = To.AddDays(FromDate);
             Level = RoleIdConstants.Member;
-            Currency = IndexViewModel.CY;
-            OrderBy = IndexViewModel.OrderBySMALine;
+            Currency = CurrencyConst.CY;
+            OrderBy = OrderByConst.OrderBySMALine;
         }
 
         public DateTime From { get; set; }

@@ -169,6 +169,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Problem Account CN88 {0}.
+        /// </summary>
+        public static string ExcelFileName {
+            get {
+                return ResourceManager.GetString("ExcelFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude.
         /// </summary>
         public static string Exclude {
@@ -192,6 +201,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ExcludeDirectMarkedCust {
             get {
                 return ResourceManager.GetString("ExcludeDirectMarkedCust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From {
+            get {
+                return ResourceManager.GetString("From", resourceCulture);
             }
         }
         
@@ -511,6 +529,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search downline?.
+        /// </summary>
+        public static string SearchDownlineExcel {
+            get {
+                return ResourceManager.GetString("SearchDownlineExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search downlines of this account.
         /// </summary>
         public static string SearchDownlines {
@@ -552,6 +579,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string SMALine {
             get {
                 return ResourceManager.GetString("SMALine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To {
+            get {
+                return ResourceManager.GetString("To", resourceCulture);
             }
         }
         

@@ -160,5 +160,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Models
         {
             Row.Height = height;
         }
+
+        public void RenderCurrentCellText(ICellStyle cellStyle, IRichTextString richText)
+        {
+            Row = Worksheet.GetRow(CurrentRow) ?? Worksheet.CreateRow(CurrentRow);
+            ICell cell = Row.GetCell(CurrentColumn) ?? Row.CreateCell(CurrentColumn);
+            cell.CellStyle = cellStyle;
+            cell.SetCellValue(richText);
+
+            CurrentColumn++;
+        }
     }
 }

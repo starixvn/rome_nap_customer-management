@@ -16,16 +16,6 @@
         public const int MaxPerEvent = 5000;
         public const int MaxPerBet = 1000;
 
-        public const int CY = 81;
-        private const int UUS = 20;
-
-        private const byte No = 1;
-        private const byte Yes = 2;
-
-        public const int OrderBySMALine = 1;
-        private const int OrderByMarkDate = 2;
-        private const int OrderByAccountStatus = 3;
-
         // The release date of this feature.
         public static readonly DateTime DefaultMinDate = new DateTime(2019, 9, 12);
 
@@ -58,36 +48,19 @@
             BuildSelectListItem(RoleIdConstants.Member, nameof(RoleIdConstants.Member))
         };
 
-        public IEnumerable<SelectListItem> Currencies { get; } = new[]
-        {
-            BuildSelectListItem(CY, nameof(CY)),
-            BuildSelectListItem(UUS, nameof(UUS))
-        };
+        public IEnumerable<SelectListItem> Currencies
+            => CurrencyConst.CurrencyList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
-        public IEnumerable<SelectListItem> AccountStatus { get; } = new[]
-        {
-            BuildSelectListItem(0, ProblemAccountResource.All),
-            BuildSelectListItem(AccountStatusConst.Active, nameof(AccountStatusConst.Active)),
-            BuildSelectListItem(AccountStatusConst.ViewOnly, ProblemAccountResource.ViewOnly),
-            BuildSelectListItem(AccountStatusConst.Suspended, nameof(AccountStatusConst.Suspended)),
-            BuildSelectListItem(AccountStatusConst.Inactive, nameof(AccountStatusConst.Inactive))
-        };
+        public IEnumerable<SelectListItem> AccountStatus
+            => AccountStatusConst.AccountStatusList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
-        public IEnumerable<SelectListItem> IsReduced { get; } = new[]
-        {
-            BuildSelectListItem(0, ProblemAccountResource.All),
-            BuildSelectListItem(Yes, nameof(Yes)),
-            BuildSelectListItem(No, nameof(No))
-        };
+        public IEnumerable<SelectListItem> IsReduced
+            => IsReducedConst.IsReducedList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
         public IEnumerable<SelectListItem> Reasons { get; }
 
-        public IEnumerable<SelectListItem> OrderBy { get; } = new[]
-        {
-            BuildSelectListItem(OrderBySMALine, ProblemAccountResource.SMALine),
-            BuildSelectListItem(OrderByMarkDate, ProblemAccountResource.MarkDate),
-            BuildSelectListItem(OrderByAccountStatus, ProblemAccountResource.AccountStatus)
-        };
+        public IEnumerable<SelectListItem> OrderBy
+            => OrderByConst.OrderByList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
         public IEnumerable<SelectListItem> MarkNewLevels
             => new[] { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect) }.Concat(Levels).ToList();

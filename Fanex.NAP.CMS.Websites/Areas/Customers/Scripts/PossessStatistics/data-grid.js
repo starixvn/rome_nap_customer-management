@@ -50,7 +50,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
                     { Name: "SuperUsername", Value: item.SuperUsername },
                     { Name: "SuperSB", Value: item.SuperSB },
                     { Name: "SuperNS", Value: item.SuperNS },
-                    { Name: "MasterUsername", Value: item.SuperUsername },
+                    { Name: "MasterUsername", Value: item.MasterUsername },
                     { Name: "MasterSB", Value: item.MasterSB },
                     { Name: "MasterNS", Value: item.MasterNS },
                     { Name: "AgentUsername", Value: item.AgentUsername },

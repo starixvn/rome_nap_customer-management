@@ -31,7 +31,7 @@
                 var reader = objDb.ExecuteReader();
                 while (reader.Read())
                 {
-                    var level = reader["RestrictionLevel"];
+                    var level = reader["RestrictionLevel"].ToString();
                     switch (level)
                     {
                         case "BetRestriction_Customer":

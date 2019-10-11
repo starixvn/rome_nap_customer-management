@@ -2,8 +2,6 @@
 {
     using Interfaces;
     using Models.StatusLog;
-    using NAP.Core.Service.Impl;
-    using NAP.Core.Service.Interface;
     using Repositories.Implements;
     using Repositories.Interfaces;
 
@@ -11,14 +9,12 @@
     {
         private readonly IStatusLogRepository _statusLogRepository;
 
-        public StatusLogService(IServiceContext serviceContext) :
-            this(serviceContext, null)
+        public StatusLogService() : this( null)
         {
         }
 
-        public StatusLogService(IServiceContext serviceContext, IStatusLogRepository statusLogRepository)
+        public StatusLogService(IStatusLogRepository statusLogRepository)
         {
-            ServiceContext = serviceContext ?? new ServiceContext();
             _statusLogRepository = statusLogRepository ?? new StatusLogRepository();
         }
 

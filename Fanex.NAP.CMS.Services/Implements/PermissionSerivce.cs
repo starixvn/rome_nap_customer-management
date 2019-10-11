@@ -16,7 +16,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
         public bool HasPermission(int userId, string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = _userService.GetUserSiteFunctionKeyPolicy(userId, NapSettings.Settings.SiteId, functionKey);
+            int functionPolicy = _userService.GetPermission(userId, NapSettings.Settings.SiteId, functionKey);
 
             bool hasPermission = functionPolicy >= (int)policy;
 

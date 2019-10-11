@@ -98,8 +98,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             }
             else
             {
-                criteria.UserId = ServiceContext.UserId;
-                criteria.IP = ServiceContext.Ip;
+                criteria.UserId = CurrentSession.UserId;
+                criteria.IP = CurrentContext.IP;
 
                 result = _importService.ImportGlobalSettings(criteria);
             }

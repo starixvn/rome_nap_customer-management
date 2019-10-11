@@ -18,6 +18,7 @@ namespace Fanex.NAP.CMS.Websites
     using Data.Configuration;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
+    using Nap.CMS.Infrastructure.Web;
     using RemotingRef;
 
     /// <summary>
@@ -29,6 +30,10 @@ namespace Fanex.NAP.CMS.Websites
         protected void Application_Start()
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
+            LoggingConfig.Init(
+                  new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" },
+                  getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();
 

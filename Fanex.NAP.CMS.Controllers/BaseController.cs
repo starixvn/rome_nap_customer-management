@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Controllers
 {
     using System;
     using System.Web.Mvc;
+    using Core.Helpers;
     using Fanex.NAP.CMS.Core.Configurations;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.Core.Business;
@@ -20,6 +21,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using NAP.Core.Context;
 
     /// <summary>
     /// Base controller.
@@ -29,8 +31,6 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly ICurrentContext _currentContext;
 
         private readonly ICurrentSession _currentSession;
-
-        private readonly IServiceContext _serviceContext;
 
         private readonly string _environment;
 
@@ -44,12 +44,6 @@ namespace Fanex.NAP.CMS.Controllers
         {
             this._currentContext = new CurrentContext();
             this._currentSession = new CurrentSession();
-            this._serviceContext = new ServiceContext
-            {
-                UserId = this.CurrentSession.UserId,
-                SiteId = this.SiteId,
-                Ip = this.CurrentContext.IP
-            };
             this._environment = NapSettings.Settings.Environment;
             this._siteId = NapSettings.Settings.SiteId;
             this._enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
@@ -66,7 +60,7 @@ namespace Fanex.NAP.CMS.Controllers
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
 
-            this._userService = new UserService { ServiceContext = this.ServiceContext };
+            this._userService = new UserService();
         }
 
         /// <summary>
@@ -95,14 +89,6 @@ namespace Fanex.NAP.CMS.Controllers
             get
             {
                 return this._currentSession;
-            }
-        }
-
-        public IServiceContext ServiceContext
-        {
-            get
-            {
-                return this._serviceContext;
             }
         }
 
@@ -159,7 +145,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>Whether the specified user has the right on a function.</returns>
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this.CurrentSession.UserId, this.SiteId, functionKey);
+            int functionPolicy = this._userService.GetPermission(this.CurrentSession.UserId, this.SiteId, functionKey);
             return functionPolicy >= (int)policy;
         }
     }

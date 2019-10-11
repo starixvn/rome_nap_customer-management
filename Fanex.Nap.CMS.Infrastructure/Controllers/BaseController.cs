@@ -11,6 +11,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 {
     using System;
     using System.Web.Mvc;
+    using Extensions;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.Core.Business;
@@ -20,6 +21,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using NAP.Core.Context;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -30,8 +32,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         private readonly ICurrentSession _currentSession;
 
         private readonly ICurrentContext _currentContext;
-
-        private readonly IServiceContext _serviceContext;
 
         private readonly string _environment;
 
@@ -45,12 +45,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         {
             this._currentContext = new CurrentContext();
             this._currentSession = new CurrentSession();
-            this._serviceContext = new ServiceContext
-            {
-                UserId = this._currentSession.UserId,
-                SiteId = this.SiteId,
-                Ip = this.CurrentContext.IP
-            };
             this._environment = NapSettings.Settings.Environment;
             this._siteId = NapSettings.Settings.SiteId;
             this._enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
@@ -67,7 +61,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
 
-            this._userService = new UserService { ServiceContext = this.ServiceContext };
+            this._userService = new UserService();
         }
 
         /// <summary>
@@ -96,14 +90,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
             get
             {
                 return this._currentSession;
-            }
-        }
-
-        public IServiceContext ServiceContext
-        {
-            get
-            {
-                return this._serviceContext;
             }
         }
 
@@ -160,7 +146,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         /// <returns>Whether the specified user has the right on a function.</returns>
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = this._userService.GetUserSiteFunctionKeyPolicy(this._currentSession.UserId, this.SiteId, functionKey);
+            int functionPolicy = this._userService.GetPermission(this._currentSession.UserId, this.SiteId, functionKey);
             return functionPolicy >= (int)policy;
         }
 

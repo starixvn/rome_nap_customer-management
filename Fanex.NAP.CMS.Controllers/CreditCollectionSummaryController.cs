@@ -21,7 +21,7 @@
 
         public CreditCollectionSummaryController(ICreditCollectionSummaryService creditCollectionSummary)
         {
-            _creditCollectionSummary = creditCollectionSummary ?? new CreditCollectionSummaryService(this.ServiceContext);
+            _creditCollectionSummary = creditCollectionSummary ?? new CreditCollectionSummaryService();
             ViewBag.HasEditAccessRight = HasRight(CMSFunctionKeys.CreditCollection, Constant.Policy.Host);
         }
 

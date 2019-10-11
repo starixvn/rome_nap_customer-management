@@ -23,9 +23,8 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Services.ApiLogers;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Command;
+    using NAP.Core.Web.Session;
     using Sunplus.Libraries.APILogger;
 
     /// <summary>
@@ -50,21 +49,13 @@ namespace Fanex.NAP.CMS.Services.Implements
         }
 
         public OpenCloseMemberService() :
-            this(null, null)
+            this(null)
         {
         }
 
-        public OpenCloseMemberService(IServiceContext serviceContext) :
-            this(serviceContext, null)
+        public OpenCloseMemberService(IOpenCloseMemberRepository openCloseMemberRepository)
         {
-        }
-
-        public OpenCloseMemberService(IServiceContext serviceContext, IOpenCloseMemberRepository openCloseMemberRepository)
-        {
-            this.ServiceContext = serviceContext ?? new ServiceContext();
             this._openCloseMemberRepository = openCloseMemberRepository ?? new OpenCloseMemberRepository();
-
-            userId = this.ServiceContext.UserId;
         }
 
         /// <summary>
@@ -178,6 +169,11 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>The user ID.</returns>
         private static int GetUserId()
         {
+            if (userId == 0)
+            {
+                userId = new CurrentSession().UserId;
+            }
+
             return userId;
         }
 

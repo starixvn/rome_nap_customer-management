@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Model
+﻿@using Fanex.NAP.Core.Models
 @{
     var menuItemList = ViewBag.MenuItemList != null ? ViewBag.MenuItemList as List<MenuItem> : new List<MenuItem>();
     var lvl0MenuItemList = menuItemList.Where(m => m.Parent == null).OrderBy(m => m.DisplayOrder).ToList();
@@ -24,7 +24,7 @@
 
     if (!lvl1MenuItemList.Any())
     {
-        <li class="@className"><a href="@Url.Content(menuItem.GetValidUrl())">@menuItem.Name</a></li>
+        <li class="@className"><a href="@Url.Content(menuItem.ValidUrl)">@menuItem.Name</a></li>
     }
     else
     {
@@ -34,7 +34,7 @@
             <ul>
                 @foreach (var subMenuItem in lvl1MenuItemList)
                 {
-                    <li><a href="@Url.Content(subMenuItem.GetValidUrl())">@subMenuItem.Name</a></li>
+                    <li><a href="@Url.Content(subMenuItem.ValidUrl)">@subMenuItem.Name</a></li>
                 }
             </ul>
         </li>

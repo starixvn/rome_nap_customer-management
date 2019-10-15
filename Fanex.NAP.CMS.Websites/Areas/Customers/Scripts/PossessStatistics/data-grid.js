@@ -8,6 +8,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
         return [
             {
                 Columns: [
+                    { HeaderText: resources.Numero, Name: "Numero", MergeRowNumber: 2 },
                     { HeaderText: resources.TotalPercent, Name: "TotalSB", MergeColNumber: 2 },
                     { HeaderText: resources.Super, Name: "SuperUsername", MergeColNumber: 3 },
                     { HeaderText: resources.Master, Name: "MasterUsername", MergeColNumber: 3 },
@@ -19,6 +20,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
 
     var initColumns = function () {
         return [
+            { HeaderText: resources.Numero, Width: 50, Name: "Numero", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.Sportsbook, Width: 100, Name: "TotalSB", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.NonSport, Width: 100, Name: "TotalNS", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.Username, Width: 200, Name: "SuperUsername", HeaderAlign: "center", CellAlign: "left" },
@@ -32,8 +34,8 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
             { HeaderText: resources.NonSport, Width: 100, Name: "AgentNS", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.Status, Width: 100, Name: "AgentStatus", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.ABIDangerLevel, Width: 100, Name: "DangerLevel", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.Monitored, Width: 100, Name: "Monitored", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.ThisPage + '<br/><input type="checkbox" id="chk-select-all">', Width: 90, Name: "ThisPage", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.Monitored, Width: 80, Name: "Monitored", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.ThisPage + '<br/><input type="checkbox" id="chk-select-all">', Width: 70, Name: "ThisPage", HeaderAlign: "center", CellAlign: "center" },
         ];
     }
 
@@ -45,6 +47,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
             var item = data[i];
             var row = {
                 Columns: [
+                    { Name: "Numero", Value: item.No },
                     { Name: "TotalSB", Value: '<span class="bold">' + item.TotalSB + '</span>' },
                     { Name: "TotalNS", Value: '<span class="bold">' + item.TotalNS + '</span>' },
                     { Name: "SuperUsername", Value: item.SuperUsername },

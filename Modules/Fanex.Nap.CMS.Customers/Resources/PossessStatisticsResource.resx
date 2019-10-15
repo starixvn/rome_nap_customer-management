@@ -258,4 +258,7 @@
   <data name="UpdateErrorMessage" xml:space="preserve">
     <value>Account(s) with errors occured : {0}. Please try again for these accounts.</value>
   </data>
+  <data name="numero" xml:space="preserve">
+    <value>No.</value>
+  </data>
 </root>

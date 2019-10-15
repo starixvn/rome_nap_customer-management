@@ -68,6 +68,7 @@
 
         private static PossessStatisticsModel ToPossessStatisticsModel(IDataReader reader)
             => new PossessStatisticsModel(
+                Convert.ToInt32(reader["rn"]),
                 Convert.ToInt32(reader["custid"]),
                 Convert.ToInt32(reader["totalpt_sb"]),
                 Convert.ToInt32(reader["totalpt_ns"]),

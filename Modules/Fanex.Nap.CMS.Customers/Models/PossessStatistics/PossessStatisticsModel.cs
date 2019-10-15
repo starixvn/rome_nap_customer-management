@@ -6,6 +6,7 @@ namespace Fanex.Nap.CMS.Customers.Models.PossessStatistics
     public class PossessStatisticsModel
     {
         public PossessStatisticsModel(
+            int no,
             int custId,
             int totalSB,
             int totalNS,
@@ -22,6 +23,7 @@ namespace Fanex.Nap.CMS.Customers.Models.PossessStatistics
             int dangerLevel,
             bool monitored)
         {
+            No = no;
             CustId = custId;
             TotalSB = totalSB;
             TotalNS = totalNS;
@@ -42,6 +44,8 @@ namespace Fanex.Nap.CMS.Customers.Models.PossessStatistics
             DangerLevel = dangerLevel;
             Monitored = monitored;
         }
+
+        public int No { get; }
 
         public int CustId { get; }
 

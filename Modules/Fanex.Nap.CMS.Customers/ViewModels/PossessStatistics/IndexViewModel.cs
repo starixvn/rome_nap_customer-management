@@ -2,13 +2,16 @@
 {
     public class IndexViewModel
     {
-        public IndexViewModel(bool hasHostPermission)
+        public IndexViewModel(bool hasUpdateMonitorStatusPermission, bool hasUpdateDangerLevelPermission)
         {
-            HasHostPermission = hasHostPermission;
+            HasUpdateMonitorStatusPermission = hasUpdateMonitorStatusPermission;
+            HasUpdateDangerLevelPermission = hasUpdateDangerLevelPermission;
             FilterViewModel = new FilterViewModel();
         }
 
-        public bool HasHostPermission { get; }
+        public bool HasUpdateMonitorStatusPermission { get; }
+
+        public bool HasUpdateDangerLevelPermission { get; }
 
         public FilterViewModel FilterViewModel { get; }
     }

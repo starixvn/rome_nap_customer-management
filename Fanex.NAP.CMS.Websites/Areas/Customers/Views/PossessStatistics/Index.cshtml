@@ -20,23 +20,36 @@
 <div class="filter-bar">
     @Html.Partial("_Filter", Model.FilterViewModel)
 </div>
-@if (Model.HasHostPermission)
+@if (Model.HasUpdateDangerLevelPermission || Model.HasUpdateMonitorStatusPermission)
 {
     <div class="button-list clear-fix">
         <div class="float-right">
-            <button type="button" class="blue-button" id="btnUpdateDangerLevel">@PossessStatisticsResource.UpdateDangerLevel</button>
-            <button type="button" class="blue-button" id="btnUpdateMonitorStatus">@PossessStatisticsResource.UpdateMonitorStatus</button>
+            @if (Model.HasUpdateDangerLevelPermission)
+            {
+                <button type="button" class="blue-button" id="btnUpdateDangerLevel">@PossessStatisticsResource.UpdateDangerLevel</button>
+            }
+
+            @if (Model.HasUpdateMonitorStatusPermission)
+            {
+                <button type="button" class="blue-button" id="btnUpdateMonitorStatus">@PossessStatisticsResource.UpdateMonitorStatus</button>
+            }
         </div>
     </div>
 }
 <div class="content-grid">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>
-@if (Model.HasHostPermission)
+@if (Model.HasUpdateDangerLevelPermission || Model.HasUpdateMonitorStatusPermission)
 {
     <div id="divPopupContent" class="display-none">
-        @Html.Partial("_UpdateDangerLevel", new UpdateDangerLevelViewModel())
-        @Html.Partial("_UpdateMonitorStatus", new UpdateMonitorStatusViewModel())
+        @if (Model.HasUpdateDangerLevelPermission)
+        {
+            @Html.Partial("_UpdateDangerLevel", new UpdateDangerLevelViewModel())
+        }
+        @if (Model.HasUpdateMonitorStatusPermission)
+        {
+            @Html.Partial("_UpdateMonitorStatus", new UpdateMonitorStatusViewModel())
+        }
     </div>
 }
 @section Foot

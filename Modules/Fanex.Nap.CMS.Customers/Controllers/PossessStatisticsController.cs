@@ -27,7 +27,9 @@
         public ActionResult Index()
             => View(
                 "~/Areas/Customers/Views/PossessStatistics/Index.cshtml",
-                new IndexViewModel(HasRight(CustomerFunctionKeys.PossessStatisticsCN88, Constant.Policy.Host)));
+                new IndexViewModel(
+                    HasRight(CustomerFunctionKeys.PossessStatisticsCN88, Constant.Policy.Host),
+                    HasRight(CustomerFunctionKeys.PossessStatisticsCN88DangerLevel, Constant.Policy.Host)));
 
         [NapAuth(FunctionKey = CustomerFunctionKeys.PossessStatisticsCN88, Policy = Constant.Policy.Read)]
         public ActionResult GetPossessStatistics(FilterViewModel vm)
@@ -52,7 +54,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CustomerFunctionKeys.PossessStatisticsCN88, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CustomerFunctionKeys.PossessStatisticsCN88DangerLevel, Policy = Constant.Policy.Host)]
         public ActionResult UpdateDangerLevel(UpdateDangerLevelViewModel vm)
             => JsonData(
                 service.UpdateDangerLevel(

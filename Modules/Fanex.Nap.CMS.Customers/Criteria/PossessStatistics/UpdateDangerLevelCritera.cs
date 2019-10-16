@@ -25,6 +25,8 @@
 
         public int DangerLevel { get; }
 
+        public static string System => "NAP-CM";
+
         public override string GetSettingKey() => "Acc_CustomerUpdDangercust";
 
         public override bool IsValid() => CustId > 0;

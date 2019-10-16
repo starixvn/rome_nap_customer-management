@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualRateDetails
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
@@ -96,6 +97,9 @@
         public ValidateAssociatedAccountsResult ValidateAssociatedAccounts(ValidateAssociatedAccountsCriteria criteria)
         {
             var result = new ValidateAssociatedAccountsResult();
+            var accounts = criteria.Accounts.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim());
+            criteria.Accounts = string.Join(",", accounts);
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {

@@ -47,7 +47,7 @@
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.ResetCurrentColumn();
 
-            ExportExcel.RenderCell(ExportExcel.CurrentRow, ExportExcel.CurrentRow + 1, ExportExcel.CurrentColumn, PossessStatisticsResource.numero, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(ExportExcel.CurrentRow, ExportExcel.CurrentRow + 1, ExportExcel.CurrentColumn, "#", ExcelStyleTemplate.HeaderTextStyle);
             ExportExcel.RenderCell(ExportExcel.CurrentRow, ExportExcel.CurrentRow, ExportExcel.CurrentColumn + 1, PossessStatisticsResource.TotalPercent, ExcelStyleTemplate.HeaderTextStyle);
             ExportExcel.RenderCell(ExportExcel.CurrentRow, ExportExcel.CurrentRow, ExportExcel.CurrentColumn + 2, PossessStatisticsResource.Super, ExcelStyleTemplate.HeaderTextStyle);
             ExportExcel.RenderCell(ExportExcel.CurrentRow, ExportExcel.CurrentRow, ExportExcel.CurrentColumn + 2, PossessStatisticsResource.Master, ExcelStyleTemplate.HeaderTextStyle);

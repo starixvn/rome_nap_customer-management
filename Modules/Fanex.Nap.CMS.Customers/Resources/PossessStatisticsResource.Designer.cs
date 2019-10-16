@@ -214,15 +214,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No..
-        /// </summary>
-        public static string numero {
-            get {
-                return ResourceManager.GetString("numero", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Or.
         /// </summary>
         public static string Or {

@@ -8,7 +8,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
         return [
             {
                 Columns: [
-                    { HeaderText: resources.Numero, Name: "Numero", MergeRowNumber: 2 },
+                    { HeaderText: "#", Name: "Numero", MergeRowNumber: 2 },
                     { HeaderText: resources.TotalPercent, Name: "TotalSB", MergeColNumber: 2 },
                     { HeaderText: resources.Super, Name: "SuperUsername", MergeColNumber: 3 },
                     { HeaderText: resources.Master, Name: "MasterUsername", MergeColNumber: 3 },
@@ -20,7 +20,7 @@ Fanex.CMS.Customer.PossessStatistics.DataGrid = function () {
 
     var initColumns = function () {
         return [
-            { HeaderText: resources.Numero, Width: 50, Name: "Numero", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "#", Width: 45, Name: "Numero", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.Sportsbook, Width: 100, Name: "TotalSB", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.NonSport, Width: 100, Name: "TotalNS", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.Username, Width: 200, Name: "SuperUsername", HeaderAlign: "center", CellAlign: "left" },

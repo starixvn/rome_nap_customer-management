@@ -60,7 +60,6 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
         public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request));
 
-        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
         public JsonResult AddAccount(AccountRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new AddAccountCriteria
         {

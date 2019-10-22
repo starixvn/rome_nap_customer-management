@@ -333,6 +333,7 @@ var CMS = (function ($) {
                 type: 'POST',
                 url: url,
                 contentType: 'application/json; charset=utf-8',
+                headers: { 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-origin' },
                 dataType: 'json',
                 data: JSON.stringify(requestParams),
                 success: function (result) {

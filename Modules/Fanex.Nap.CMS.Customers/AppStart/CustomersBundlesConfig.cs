@@ -11,9 +11,11 @@
         public const string AbnormalBetTicketScript = "~/bundles/customers/betlist-abnormalbetticket-scripts";
 
         public static void RegisterBundles(BundleCollection bundles)
-            => bundles
-                .RegisterProblemAccountBundles()
-                .RegisterBetListBundles();
+        {
+            bundles.RegisterProblemAccountBundles().RegisterBetListBundles();
+
+            RegisterManageRobots2(bundles);
+        }
 
         private static BundleCollection RegisterProblemAccountBundles(this BundleCollection bundles)
         {
@@ -40,6 +42,19 @@
                 "~/Areas/Customers/Scripts/betlist-abnormalbetticket.js"));
 
             return bundles;
+        }
+
+        private static void RegisterManageRobots2(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/bundles/manage-robots-2/index-styles",
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Areas/Customers/Views/ManageRobots2/Styles/index.less");
+
+            bundles.Add(new ScriptBundle("~/bundles/manage-robots-2/index-scripts")
+                .Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Areas/Customers/Views/ManageRobots2/Scripts/index.js"));
         }
     }
 }

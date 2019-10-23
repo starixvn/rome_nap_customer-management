@@ -169,9 +169,15 @@
     <Compile Include="Constants\IsReducedConst.cs" />
     <Compile Include="Constants\OrderByConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
+    <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\GetCurrenciesCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\GetRobotsCriteria.cs" />
+    <Compile Include="Criteria\ManageRobots2\GetSitesCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\GetReasonCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\NonQueryCriteriaBase.cs" />
     <Compile Include="Criteria\ProblemAccount\InactivateCriteria.cs" />
@@ -182,18 +188,30 @@
     <Compile Include="Criteria\ProblemAccount\UnmarkCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
+    <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\ManageRobots2\RobotModel.cs" />
+    <Compile Include="Models\ManageRobots2\RobotReport.cs" />
+    <Compile Include="Models\ManageRobots2\RobotSitesModel.cs" />
     <Compile Include="Models\ProblemAccount\MarkNewResult.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountItem.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
+    <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
+    <Compile Include="Repositories\IManageRobots2Repository.cs" />
     <Compile Include="Repositories\IProblemAccountRepository.cs" />
+    <Compile Include="Repositories\ManageRobots2Repository.cs" />
     <Compile Include="Repositories\ProblemAccountRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>BetListResource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.Designer.cs">
+      <DependentUpon>Labels.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Resources\ProblemAccountResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -202,10 +220,13 @@
     </Compile>
     <Compile Include="Services\BetListService.cs" />
     <Compile Include="Services\IBetListService.cs" />
+    <Compile Include="Services\IManageRobots2Service.cs" />
     <Compile Include="Services\IProblemAccountService.cs" />
     <Compile Include="Services\ProblemAccountExporter.cs" />
+    <Compile Include="Services\ManageRobots2Service.cs" />
     <Compile Include="Services\ProblemAccountService.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
+    <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\ActionViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\InactivateViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\IndexViewModel.cs" />
@@ -226,6 +247,10 @@
     <EmbeddedResource Include="Resources\BetListResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BetListResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Labels.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

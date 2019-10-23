@@ -276,6 +276,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Local\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Local\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Master\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
@@ -285,6 +297,12 @@
     <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
@@ -334,6 +352,12 @@
     <Content Include="App_Data\Prod\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\Prod\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
@@ -347,6 +371,12 @@
     <Content Include="App_Data\SIT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\SIT\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\SIT\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\NAPCMSSPNames.xml">
@@ -362,6 +392,12 @@
     <Content Include="App_Data\UAT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\UAT\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\UAT\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml">
@@ -380,6 +416,7 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-confirmAction.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-marknew.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-reduceBL.js" />
@@ -490,7 +527,7 @@
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
-	<Content Include="Content\Themes\img\light-information-icon2.png" />
+    <Content Include="Content\Themes\img\light-information-icon2.png" />
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
     <Content Include="Content\Themes\img\cms.ico" />
@@ -862,6 +899,8 @@
     <Content Include="Areas\Customers\Views\ProblemAccount\_Unmark.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccount\_RemoveReduceBetLimit.cshtml" />
     <Content Include="Areas\Customers\Views\BetList\AbnormalBetTicket.cshtml" />
+    <Content Include="Areas\Customers\Views\ManageRobots2\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ManageRobots2\Styles\index.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

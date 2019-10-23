@@ -31,5 +31,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
         public const int Master = 3;
         public const int Agent = 2;
         public const int Member = 1;
+        public const int All = 0;
     }
 }

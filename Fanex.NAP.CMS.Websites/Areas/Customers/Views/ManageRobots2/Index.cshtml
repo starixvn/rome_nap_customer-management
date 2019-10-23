@@ -1,0 +1,149 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+@using Fanex.Nap.CMS.Infrastructure.Constants
+@using Fanex.Nap.CMS.Customers.ViewModels.ManageRobots2
+@model ManageRobots2IndexViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Manage Robots";
+}
+@section Head
+{
+    @Styles.Render("~/bundles/manage-robots-2/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@Labels.ManageRobots</span></div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">@Labels.Username</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="txt-username" maxlength="50" />
+            </div>
+            <div class="lbl-field col_3">
+                <label for="txt-username">@Labels.Level</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <select id="ddl-level" class="combobox-autocomplete ddl-level">
+                    <option value="@RoleIdConstants.All">@Labels.All</option>
+                    <option value="@RoleIdConstants.Super">@Labels.Super</option>
+                    <option value="@RoleIdConstants.Master">@Labels.Master</option>
+                    <option value="@RoleIdConstants.Agent">@Labels.Agent</option>
+                    <option value="@RoleIdConstants.Member">@Labels.Member</option>
+                </select>
+            </div><div class="lbl-field col_3">
+                <label for="txt-username">@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <select id="ddl-currency" class="combobox-autocomplete ddl-currency">
+                    <option value="0">@Labels.All</option>
+                    @foreach (var currency in Model.Currencies)
+                    {
+                        <option value="@currency.CurrencyId">@currency.CurrencyName</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="txt-username">@Labels.Site</label>
+            </div>
+            <div class="edit-field col_8 align-left">
+                <select id="ddl-site" class="ddl-site"></select>
+            </div>
+            <div class="submit width-auto col_4">
+                <input id="btn-search" type="button" class="submit" value="@Labels.Search" />
+                @if (Model.HasEditRight)
+                {
+                    <input id="btn-add-robot" type="button" class="submit" value="@Labels.AddRobot" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div id="report-container" class="display-none content-grid">
+    <div id="div-robots" class="freegrid"></div>
+</div>
+@if (Model.HasEditRight)
+{
+    <div class="display-none">
+        <div id="div-add-robot" class="div-add-robot form expand-form">
+            <div id="div-add-result" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field col-label">
+                    <label for="ddl-level-add-robot">@Labels.Level<span class="note-text">*</span></label>
+                </div>
+                <div class="edit-field">
+                    <select id="ddl-level-add-robot" class="ddl-level-add-robot">
+                        <option value="@RoleIdConstants.All">@Labels.PleaseSelect</option>
+                        <option value="@RoleIdConstants.Super">@Labels.Super</option>
+                        <option value="@RoleIdConstants.Master">@Labels.Master</option>
+                        <option value="@RoleIdConstants.Agent">@Labels.Agent</option>
+                        <option value="@RoleIdConstants.Member">@Labels.Member</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field col-label">
+                    <label for="txt-username-add-robot">@Labels.Usernames<span class="note-text">*</span></label>
+                </div>
+                <div class="edit-field">
+                    <textarea id="txt-username-add-robot" class="txt-username-add-robot" maxlength="4000" rows="6" cols="65" data-val-required="@Labels.RequiredFieldError"></textarea>
+                    <div id="div-add-instruction" class="div-add-instruction">@Labels.AddRobotInstruction</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field col-label">
+                    <label for="txt-remark-add-robot">@Labels.Remark</label>
+                </div>
+                <div class="edit-field">
+                    <input id="txt-remark-add-robot" class="txt-remark-add-robot" maxlength="500" />
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <div class="lbl-field normal-label col-label"></div>
+                <div class="edit-field">
+                    <input type="button" id="btn-save-add-robot" class="blue-button" value="@Labels.Save" />
+                    <input type="button" id="btn-cancel-add-robot" class="red-button" value="@Labels.Cancel" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Foot
+{
+    @Scripts.Render("~/bundles/manage-robots-2/index-scripts")
+    <script type="text/javascript">
+        var resources = {
+            CustId:'@Labels.CustId',
+            Username:'@Labels.Username',
+            Level:'@Labels.Level',
+            Currency:'@Labels.Currency',
+            Site:'@Labels.Site',
+            IP:'@Labels.IP',
+            LastChangeTime:'@Labels.LastChangeTime',
+            Counter:'@Labels.Counter',
+            ServerIP:'@Labels.ServerIP',
+            AddedBy:'@Labels.AddedBy',
+            AddedDate:'@Labels.AddedDate',
+            Remark:'@Labels.Remark',
+            Del: '@Labels.Del',
+            Delete: '@Labels.Delete',
+            DeleteConfirmation: '@Labels.DeleteConfirmation',
+            HasEditRight: @(Model.HasEditRight ? 1 : 0),
+            AddRobot: '@Labels.AddRobot',
+            ThisFieldIsRequired: '@Labels.ThisFieldIsRequired',
+            AddRobot_UsernameError:"@Html.Raw(Labels.AddRobot_UsernameError)",
+            AddRobot_UsernameExceeds: "@Html.Raw(Labels.AddRobot_UsernameExceeds)",
+            AddRobot_Success: "@Html.Raw(Labels.AddRobot_Success)",
+            ProcceedConfirm: "@Html.Raw(Labels.ProcceedConfirm)",
+            Message_DeleteSuccessfully: "@Html.Raw(Labels.Message_DeleteSuccessfully)",
+            All: '@Labels.All',
+            Credit: '@Labels.Credit',
+            Licensee: '@Labels.Licensee'
+        };
+    </script>
+}

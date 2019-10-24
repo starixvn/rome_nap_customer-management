@@ -27,6 +27,7 @@
     this.oldReport = null;
     this.followParentValue = -200;
     this.realValueCustId = 0;
+    this.isFirstSearch = false;
 
     this.init = function () {
         this.cachedElements();
@@ -97,6 +98,10 @@
             self.enableAssociatedAccounts();
         });
 
+        this.elements.txtAssociatedAccounts.on("blur", function () {
+            self.formatAssociatedAccounts();
+        });
+
         window.onbeforeunload = function () {
             if (self.oldReport == null) {
                 return;
@@ -137,6 +142,8 @@
     this.getVirtualRateDetails = function (username, custId) {
         Validator.clearError(self.elements.txtUsername);
         CMS.closeMsgBox();
+        this.isFirstSearch = true;
+
         $.ajax({
             type: 'POST',
             url: CMS.resolveRootUrl("VirtualRateDetails/GetVirtualRateDetails"),
@@ -147,11 +154,15 @@
                 CMS.disableInput();
             },
             success: function (rs) {
-                if (rs.ResultCode == 0) {
-                    self.renderReport(rs);
-                } else {
+                if (rs.ResultCode != 0) {
                     self.elements.reportContainer.addClass("display-none");
                     Validator.showError(self.elements.txtUsername, rs.ResultMessage, "n");
+                    return;
+                }
+
+                self.renderReport(rs);
+                if (!self.isGlobalSetting()) {
+                    self.viewFullMode();
                 }
             },
             error: function (xhr) {
@@ -787,6 +798,12 @@
 
         this.elements.btnViewCompactMode.addClass("display-none");
         this.elements.btnViewFullMode.removeClass("display-none");
+
+        if (this.isFirstSearch || this.isGlobalSetting()) {
+            return;
+        }
+
+        this.expandAllChild();
     };
     this.hideFollowParentRows = function (layerId) {
         var rows = this.elements.tblVirtualRateReport.find("tbody tr[data-level='" + layerId + "'] ");
@@ -840,6 +857,40 @@
 
         this.elements.btnViewFullMode.addClass("display-none");
         this.elements.btnViewCompactMode.removeClass("display-none");
+
+        if (this.isGlobalSetting()) {
+            return;
+        }
+
+        this.expandAllChild();
+    };
+    this.expandAllChild = function () {
+        var toggles = $("tr[data-level='2'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            var elem = $(toggles[i]);
+            this.forceToggle(elem, true);
+            var parent = elem.parent().parent();
+            this.showAllChild(2, parent);
+        }
+
+        toggles = $("tr[data-level='3'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            var elem = $(toggles[i]);
+            this.forceToggle(elem, !this.isFirstSearch);
+            var parent = elem.parent().parent();
+
+            if (this.isFirstSearch) {
+                this.hideAllChild(3, parent);
+            } else {
+                this.showAllChild(3, parent);
+            }
+        }
+
+        if (!this.isFirstSearch) {
+            this.elements.iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
+        }
+
+        this.isFirstSearch = false;
     };
 
     this.saveChanges = function () {
@@ -972,6 +1023,11 @@
                 CMS.enableInput();
             }
         });
+    };
+    this.formatAssociatedAccounts = function () {
+        var accounts = this.elements.txtAssociatedAccounts.val();
+        accounts = accounts.replace(/\r\n/g, "\n").replace(/\n/g, ",");
+        this.elements.txtAssociatedAccounts.val(accounts);
     };
     this.escapeHtml = function (unsafe) {
         return unsafe

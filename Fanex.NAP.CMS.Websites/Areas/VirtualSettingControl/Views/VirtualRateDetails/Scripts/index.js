@@ -120,7 +120,13 @@
         });
     };
     this.exportExcel = function (username) {
-        CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportVirtualRateDetails"), { username: username, sportType: resources.SportType });
+        var param = {
+            username: username,
+            sportType: resources.SportType,
+            IsGlobalSetting: resources.isGlobalSetting
+        };
+
+        CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportVirtualRateDetails"), param);
     };
     this.checkNonLive = function () {
         this.updateEnableNonlive();
@@ -149,7 +155,12 @@
             url: CMS.resolveRootUrl("VirtualRateDetails/GetVirtualRateDetails"),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify({ username: username, sportType: resources.SportType, custId: custId }),
+            data: JSON.stringify({
+                username: username,
+                sportType: resources.SportType,
+                custId: custId,
+                IsGlobalSetting: resources.isGlobalSetting
+            }),
             beforeSend: function () {
                 CMS.disableInput();
             },
@@ -161,7 +172,7 @@
                 }
 
                 self.renderReport(rs);
-                if (!self.isGlobalSetting()) {
+                if (!resources.isGlobalSetting) {
                     self.viewFullMode();
                 }
             },
@@ -799,7 +810,7 @@
         this.elements.btnViewCompactMode.addClass("display-none");
         this.elements.btnViewFullMode.removeClass("display-none");
 
-        if (this.isFirstSearch || this.isGlobalSetting()) {
+        if (this.isFirstSearch || resources.isGlobalSetting) {
             return;
         }
 
@@ -858,7 +869,7 @@
         this.elements.btnViewFullMode.addClass("display-none");
         this.elements.btnViewCompactMode.removeClass("display-none");
 
-        if (this.isGlobalSetting()) {
+        if (resources.isGlobalSetting) {
             return;
         }
 
@@ -911,7 +922,8 @@
             data: JSON.stringify({
                 Rates: currentValue,
                 sportType: resources.SportType,
-                custId: this.oldReport.CustId
+                custId: this.oldReport.CustId,
+                IsGlobalSetting: resources.isGlobalSetting
             }),
             beforeSend: function () {
                 CMS.disableInput();
@@ -1045,6 +1057,11 @@
         CMS.getHtml(url, this.showRealValues);
     };
     this.showRealValues = function (html) {
+        if (html == "\"\"") {
+            CMS.showErrorMessage(resources.AccessDeniedMessage);
+            return;
+        }
+
         CMS.nonResizableModal(resources.VirtualRateDetails, html, { height: 600 });
 
         $("#btn-export-real-values").on("click touchend", function () {

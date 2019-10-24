@@ -10,7 +10,7 @@ var Recheckin = (function ($) {
         kickedOutMsg: null,
 
         init: function () {
-            Recheckin.time = 50000000;
+            Recheckin.time = 5000;
             Recheckin.root = location.protocol + '//' + location.host + $('#CMSRoot').val();
             Recheckin.kickedOutMsg = 'You have logged in from another session or your login session has expired!';
         },

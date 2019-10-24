@@ -15,6 +15,9 @@
 
         public string ErrMsg { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsGlobalSetting { get; set; }
+
         public override string GetSettingKey()
             => Username == null ? "Acc_CustVirtualMultiplier_Sel" : "Acc_CustVirtualMultiplierByUsername_Sel";
 

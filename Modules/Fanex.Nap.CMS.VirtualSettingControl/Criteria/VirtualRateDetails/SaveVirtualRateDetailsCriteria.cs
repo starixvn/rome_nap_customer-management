@@ -19,6 +19,9 @@
         [SpParam(Ignored = true)]
         public bool IsGlobalSetting { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsMember { get; set; }
+
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplier_Upd";
 
@@ -48,7 +51,7 @@
 
                         foreach (var betType in betTypeGroup.Childs)
                         {
-                            xml += GetRowXML(betType);
+                            xml += GetRowXML(betType, isBetType: true);
                         }
                     }
                 }
@@ -60,9 +63,27 @@
             return result;
         }
 
-        private string GetRowXML(VirtualRateDetailsByGroup rate)
-            => rate.LiveId == 0 && rate.NonliveId == 0
-            ? string.Empty
-            : $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\" />";
+        private string GetRowXML(VirtualRateDetailsByGroup rate, bool isBetType = false)
+        {
+            if (IsMember && isBetType)
+            {
+                if (rate.LiveId == 0 && rate.NonliveId == 0
+                    && rate.DisableNonliveAutoSuspend && rate.DisableLiveAutoSuspend)
+                {
+                    return string.Empty;
+                }
+
+                return $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\"" +
+                    (rate.DisableNonliveAutoSuspend ? string.Empty : " IsNonLiveAutoSuspend=\"" + (rate.NonliveAutoSuspend ? 1 : 0) + "\"") +
+                    (rate.DisableLiveAutoSuspend ? string.Empty : " IsLiveAutoSuspend=\"" + (rate.LiveAutoSuspend ? 1 : 0) + "\"") + " />";
+            }
+
+            if (rate.LiveId == 0 && rate.NonliveId == 0)
+            {
+                return string.Empty;
+            }
+
+            return $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\" />";
+        }
     }
 }

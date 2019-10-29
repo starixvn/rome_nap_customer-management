@@ -17,5 +17,7 @@
         VirtualRateLogReport GetLogs(GetVirtualRateLogsCriteria criteria);
 
         VirtualRateRealValues ViewRealValues(ViewRealValuesCriteria criteria);
+
+        AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria);
     }
 }

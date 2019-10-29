@@ -21,6 +21,13 @@
             LiveLog = dto.LiveLog;
             NonliveLog = dto.NonliveLog;
             GroupLevel = groupLevel;
+
+            DisableNonliveAutoSuspend = dto.DisableNonliveAutoSuspend;
+            DisableLiveAutoSuspend = dto.DisableLiveAutoSuspend;
+            NonliveAutoSuspend = dto.NonliveAutoSuspend;
+            LiveAutoSuspend = dto.LiveAutoSuspend;
+            NonliveAutoSuspendThreshold = (dto.NonliveAutoSuspendThreshold - 1) * 100;
+            LiveAutoSuspendThreshold = (dto.LiveAutoSuspendThreshold - 1) * 100;
         }
 
         public VirtualRateDetailsByGroup(LogDTO dto, int groupLevel)
@@ -30,6 +37,11 @@
 
             LiveLog = dto.LiveLog;
             NonliveLog = dto.NonliveLog;
+
+            NewNonliveAutoSuspend = dto.NewNonliveAutoSuspend;
+            NewLiveAutoSuspend = dto.NewLiveAutoSuspend;
+            NonliveAutoSuspend = dto.NonliveAutoSuspend;
+            LiveAutoSuspend = dto.LiveAutoSuspend;
         }
 
         public int GroupLevel { get; set; }
@@ -61,6 +73,22 @@
         public string NewLiveLog { get; set; }
 
         public string NewNonliveLog { get; set; }
+
+        public bool NonliveAutoSuspend { get; set; }
+
+        public bool LiveAutoSuspend { get; set; }
+
+        public bool DisableNonliveAutoSuspend { get; set; }
+
+        public bool DisableLiveAutoSuspend { get; set; }
+
+        public bool? NewNonliveAutoSuspend { get; set; }
+
+        public bool? NewLiveAutoSuspend { get; set; }
+
+        public decimal NonliveAutoSuspendThreshold { get; set; }
+
+        public decimal LiveAutoSuspendThreshold { get; set; }
 
         public IEnumerable<VirtualRateDetailsByGroup> Childs { get; set; }
     }

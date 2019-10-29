@@ -1,0 +1,78 @@
+﻿.tbl-auto-suspend-log {
+    width: 1003px;
+
+    th {
+        background: #3c5ea5;
+        color: #fff;
+        height: 25px;
+        vertical-align: middle;
+        border: solid 1px #c5c5c5;
+        border-top: none;
+        padding: 5px;
+    }
+
+    .col-group {
+        width: 500px;
+    }
+
+    .col-nonlive {
+        width: 250px;
+    }
+
+    .col-live {
+        width: 250px;
+    }
+
+    td {
+        background-color: #fff;
+        line-height: inherit;
+        vertical-align: middle;
+        white-space: normal;
+        border-color: #c5c5c5;
+        border-style: solid;
+        border-width: 1px;
+        padding: 2px;
+        height: 21px;
+        box-sizing: content-box;
+    }
+
+    tr[data-level="0"] {
+        cursor: pointer;
+
+        td {
+            background-color: #4F81BD;
+            color: #FFFFFF;
+            font-weight: bold;
+
+            .group-toggle {
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    tr[data-level="1"] {
+        td {
+            padding-left: 40px;
+        }
+    }
+
+    .group-toggle {
+        color: #0000FF;
+        cursor: pointer;
+        padding: 0 5px;
+    }
+
+    .group-toggle[disabled] {
+        color: #c5c5c5;
+        cursor: pointer;
+        padding: 0 5px;
+    }
+
+    .has-changes {
+        background-color: #FFFF99 !important;
+    }
+
+    .old-value {
+        color: #808080;
+    }
+}

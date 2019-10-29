@@ -780,4 +780,43 @@
   <data name="OnOffBetRestriction" xml:space="preserve">
     <value>On - Off Bet Restriction</value>
   </data>
+  <data name="SwitchAutoSuspendEdit" xml:space="preserve">
+    <value>Switch to Auto Suspend's Edit Mode</value>
+  </data>
+  <data name="SwitchAutoSuspendView" xml:space="preserve">
+    <value>Switch to Auto Suspend's View Mode</value>
+  </data>
+  <data name="VirtualRate" xml:space="preserve">
+    <value>Virtual Rate</value>
+  </data>
+  <data name="AutoSuspend" xml:space="preserve">
+    <value>Auto Suspend</value>
+  </data>
+  <data name="TickAll" xml:space="preserve">
+    <value>Tick All</value>
+  </data>
+  <data name="UntickAll" xml:space="preserve">
+    <value>Untick All</value>
+  </data>
+  <data name="AutoSuspend_Nonlive" xml:space="preserve">
+    <value>Auto Suspend Non-Live</value>
+  </data>
+  <data name="AutoSuspend_Live" xml:space="preserve">
+    <value>Auto Suspend Live</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="AutoSuspendLog" xml:space="preserve">
+    <value>Auto Suspend Log</value>
+  </data>
+  <data name="BetType" xml:space="preserve">
+    <value>Bet Type</value>
+  </data>
+  <data name="ApplyAboveSettingToVR" xml:space="preserve">
+    <value>Apply above setting (Virtual Rate only) to</value>
+  </data>
+  <data name="ApplyAboveSettingToVR_AS" xml:space="preserve">
+    <value>Apply above setting (Virtual Rate and AutoSuspend) to</value>
+  </data>
 </root>

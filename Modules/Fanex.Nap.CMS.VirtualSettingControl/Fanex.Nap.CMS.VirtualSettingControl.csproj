@@ -154,6 +154,7 @@
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateRangesCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\SaveVirtualRateDetailsCriteria.cs" />
@@ -175,6 +176,8 @@
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
+    <Compile Include="Models\VirtualRateDetails\AutoSuspendLog.cs" />
+    <Compile Include="Models\VirtualRateDetails\AutoSuspendLogReport.cs" />
     <Compile Include="Models\VirtualRateDetails\LogDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\RateInfo.cs" />
     <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsResult.cs" />
@@ -192,6 +195,8 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\AutoSuspendRepository.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />

@@ -76,13 +76,21 @@
         {
             bundles.AddAndInclude(
                 "~/bundles/virtual-rate-details/index-styles",
-                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Styles/index.less");
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Styles/index.less",
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Styles/member-report.less",
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Styles/auto-suspend-log.less");
 
-            bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/index")
-                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/index.js"));
+            bundles.Add(
+                new ScriptBundle("~/bundles/virtual-rate-details/index")
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/index.js",
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/member-vr.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/viewlog")
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/viewlog.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/autosuspend-log")
+                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/autosuspend-log.js"));
         }
     }
 }

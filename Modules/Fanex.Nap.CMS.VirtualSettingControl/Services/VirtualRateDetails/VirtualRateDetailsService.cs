@@ -8,10 +8,14 @@
     public class VirtualRateDetailsService : IVirtualRateDetailsService
     {
         private readonly IVirtualRateDetailsRepository _repository;
+        private readonly IAutoSuspendRepository _autoSuspendRepository;
 
-        public VirtualRateDetailsService(IVirtualRateDetailsRepository repository = null)
+        public VirtualRateDetailsService(
+            IVirtualRateDetailsRepository repository = null,
+            IAutoSuspendRepository autoSuspendRepository = null)
         {
             _repository = repository ?? new VirtualRateDetailsRepository();
+            _autoSuspendRepository = autoSuspendRepository ?? new AutoSuspendRepository();
         }
 
         public VirtualRateDetailsReport GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
@@ -31,5 +35,8 @@
 
         public VirtualRateRealValues ViewRealValues(ViewRealValuesCriteria criteria)
             => _repository.ViewRealValues(criteria);
+
+        public AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria)
+            => _autoSuspendRepository.GetAutoSuspendLogs(criteria);
     }
 }

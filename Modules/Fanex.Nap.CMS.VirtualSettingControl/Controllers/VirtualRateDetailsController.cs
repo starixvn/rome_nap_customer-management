@@ -32,19 +32,30 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
         public JsonResult GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
+            var hasRight =
+                (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails_GlobalSetting, Constant.Policy.Read)) ||
+                (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Read));
+
+            if (!hasRight)
+            {
+                return Json(new Result { Code = 1, Message = Labels.AccessDeniedMessage });
+            }
+
             var result = _virtualRateDetailsService.GetVirtualRateDetails(criteria);
 
             return Json(result);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
         public JsonResult SaveVirtualRateDetails(SaveVirtualRateDetailsCriteria criteria)
         {
-            if (!HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Host))
+            var hasEditRight =
+                (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails_GlobalSetting, Constant.Policy.Host)) ||
+                (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Host));
+
+            if (!hasEditRight)
             {
                 return Json(new Result { Code = 1, Message = Labels.AccessDeniedMessage });
             }
@@ -64,9 +75,17 @@
             return View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/GlobalSetting.cshtml");
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
         public void ExportVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
+            var hasRight =
+                (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails_GlobalSetting, Constant.Policy.Read)) ||
+                (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Read));
+
+            if (!hasRight)
+            {
+                return;
+            }
+
             var report = _virtualRateDetailsService.GetVirtualRateDetails(criteria);
             var exporter = new VirtualRateDetailsExporter(report);
             exporter.ResponseStream();
@@ -112,9 +131,13 @@
             return Json(result);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
         public ActionResult ViewRealValues(ViewRealValuesCriteria criteria)
         {
+            if (!HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Read))
+            {
+                return Json(string.Empty);
+            }
+
             var model = _virtualRateDetailsService.ViewRealValues(criteria);
             return View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/ViewRealValues.cshtml", model);
         }

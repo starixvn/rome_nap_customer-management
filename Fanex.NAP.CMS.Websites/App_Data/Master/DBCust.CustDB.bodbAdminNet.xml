@@ -57,4 +57,9 @@
   <Function Name="Bet Restriction Management">
     <Setting Key="NAP_BetRestriction_SettingUpd" SpName="NAP_BetRestriction_SettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Possess Statistics">
+    <Setting Key="CS_Customer_PossessStatistics_Sel" SpName="CS_Customer_PossessStatistics_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_Customer_MonitorPT_Upd" SpName="CS_Customer_MonitorPT_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

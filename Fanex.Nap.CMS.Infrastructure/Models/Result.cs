@@ -33,5 +33,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Models
         public int Code { get; set; }
 
         public string Message { get; set; }
+
+        public bool IsSuccess => Code == ErrorCodeConstants.NoneError;
     }
 }

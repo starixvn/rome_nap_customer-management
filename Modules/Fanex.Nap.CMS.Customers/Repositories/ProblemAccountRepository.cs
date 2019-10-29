@@ -78,6 +78,7 @@
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
                     db.ExecuteNonQuery(criteria.GetSpParams());
+
                     var ouputParams = db.GetOuputParams();
 
                     return new Result(

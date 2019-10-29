@@ -27,6 +27,7 @@
     this.oldReport = null;
     this.followParentValue = -200;
     this.realValueCustId = 0;
+    this.isFirstSearch = false;
 
     this.init = function () {
         this.cachedElements();
@@ -97,6 +98,10 @@
             self.enableAssociatedAccounts();
         });
 
+        this.elements.txtAssociatedAccounts.on("blur", function () {
+            self.formatAssociatedAccounts();
+        });
+
         window.onbeforeunload = function () {
             if (self.oldReport == null) {
                 return;
@@ -115,7 +120,13 @@
         });
     };
     this.exportExcel = function (username) {
-        CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportVirtualRateDetails"), { username: username, sportType: resources.SportType });
+        var param = {
+            username: username,
+            sportType: resources.SportType,
+            IsGlobalSetting: resources.isGlobalSetting
+        };
+
+        CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportVirtualRateDetails"), param);
     };
     this.checkNonLive = function () {
         this.updateEnableNonlive();
@@ -137,21 +148,32 @@
     this.getVirtualRateDetails = function (username, custId) {
         Validator.clearError(self.elements.txtUsername);
         CMS.closeMsgBox();
+        this.isFirstSearch = true;
+
         $.ajax({
             type: 'POST',
             url: CMS.resolveRootUrl("VirtualRateDetails/GetVirtualRateDetails"),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            data: JSON.stringify({ username: username, sportType: resources.SportType, custId: custId }),
+            data: JSON.stringify({
+                username: username,
+                sportType: resources.SportType,
+                custId: custId,
+                IsGlobalSetting: resources.isGlobalSetting
+            }),
             beforeSend: function () {
                 CMS.disableInput();
             },
             success: function (rs) {
-                if (rs.ResultCode == 0) {
-                    self.renderReport(rs);
-                } else {
+                if (rs.ResultCode != 0) {
                     self.elements.reportContainer.addClass("display-none");
                     Validator.showError(self.elements.txtUsername, rs.ResultMessage, "n");
+                    return;
+                }
+
+                self.renderReport(rs);
+                if (!resources.isGlobalSetting) {
+                    self.viewFullMode();
                 }
             },
             error: function (xhr) {
@@ -787,6 +809,12 @@
 
         this.elements.btnViewCompactMode.addClass("display-none");
         this.elements.btnViewFullMode.removeClass("display-none");
+
+        if (this.isFirstSearch || resources.isGlobalSetting) {
+            return;
+        }
+
+        this.expandAllChild();
     };
     this.hideFollowParentRows = function (layerId) {
         var rows = this.elements.tblVirtualRateReport.find("tbody tr[data-level='" + layerId + "'] ");
@@ -840,6 +868,40 @@
 
         this.elements.btnViewFullMode.addClass("display-none");
         this.elements.btnViewCompactMode.removeClass("display-none");
+
+        if (resources.isGlobalSetting) {
+            return;
+        }
+
+        this.expandAllChild();
+    };
+    this.expandAllChild = function () {
+        var toggles = $("tr[data-level='2'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            var elem = $(toggles[i]);
+            this.forceToggle(elem, true);
+            var parent = elem.parent().parent();
+            this.showAllChild(2, parent);
+        }
+
+        toggles = $("tr[data-level='3'] .group-toggle");
+        for (var i = 0; i < toggles.length; i++) {
+            var elem = $(toggles[i]);
+            this.forceToggle(elem, !this.isFirstSearch);
+            var parent = elem.parent().parent();
+
+            if (this.isFirstSearch) {
+                this.hideAllChild(3, parent);
+            } else {
+                this.showAllChild(3, parent);
+            }
+        }
+
+        if (!this.isFirstSearch) {
+            this.elements.iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
+        }
+
+        this.isFirstSearch = false;
     };
 
     this.saveChanges = function () {
@@ -860,7 +922,8 @@
             data: JSON.stringify({
                 Rates: currentValue,
                 sportType: resources.SportType,
-                custId: this.oldReport.CustId
+                custId: this.oldReport.CustId,
+                IsGlobalSetting: resources.isGlobalSetting
             }),
             beforeSend: function () {
                 CMS.disableInput();
@@ -973,6 +1036,11 @@
             }
         });
     };
+    this.formatAssociatedAccounts = function () {
+        var accounts = this.elements.txtAssociatedAccounts.val();
+        accounts = accounts.replace(/\r\n/g, "\n").replace(/\n/g, ",");
+        this.elements.txtAssociatedAccounts.val(accounts);
+    };
     this.escapeHtml = function (unsafe) {
         return unsafe
             .replace(/&/g, "&amp;")
@@ -989,6 +1057,11 @@
         CMS.getHtml(url, this.showRealValues);
     };
     this.showRealValues = function (html) {
+        if (html == "\"\"") {
+            CMS.showErrorMessage(resources.AccessDeniedMessage);
+            return;
+        }
+
         CMS.nonResizableModal(resources.VirtualRateDetails, html, { height: 600 });
 
         $("#btn-export-real-values").on("click touchend", function () {

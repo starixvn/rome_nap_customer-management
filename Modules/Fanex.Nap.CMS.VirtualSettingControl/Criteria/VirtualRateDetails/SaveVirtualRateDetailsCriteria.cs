@@ -16,6 +16,9 @@
 
         public VirtualRateDetailsReport Rates { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsGlobalSetting { get; set; }
+
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplier_Upd";
 

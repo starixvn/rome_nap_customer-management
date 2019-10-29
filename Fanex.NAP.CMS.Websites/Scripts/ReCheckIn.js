@@ -42,7 +42,7 @@ var Recheckin = (function ($) {
         }
     };
 
-} (jQuery));
+}(jQuery));
 
 $(document).ready(function () {
     Recheckin.init();

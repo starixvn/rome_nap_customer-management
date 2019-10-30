@@ -283,6 +283,12 @@
         this.elements.txtUsernameAddRobot = form.find("#txt-username-add-robot");
         this.elements.divAddResult = form.find("#div-add-result");
 
+        this.elements.txtUsernameAddRobot.on("blur", function () {
+            var usernamesValue = self.elements.txtUsernameAddRobot.val();
+            usernamesValue = usernamesValue.replace(/\r\n/g, "\n").replace(/\n/g, ",");
+            self.elements.txtUsernameAddRobot.val(usernamesValue);
+        });
+
         form.find("#btn-cancel-add-robot").on("click touchend", function () {
             CMS.closePopup();
         });

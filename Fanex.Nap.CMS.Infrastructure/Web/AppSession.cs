@@ -15,7 +15,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
     using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Core.Model;
+    using NAP.Core.Models;
 
     /// <summary>
     /// App Session.

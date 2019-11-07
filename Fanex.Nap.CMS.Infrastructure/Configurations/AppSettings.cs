@@ -64,6 +64,18 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
 
         public static bool IsTest => Converter.ToInt(GetValue("IsTest")) == 1;
 
+        public static string LoggingDefaultCategory => GetValue("Fanex.Logging:DefaultCategory");
+
+        public static string LogLibs => GetValue("LogLibs");
+
+        public static string RabbitMQConnectionStrings => GetValue("Fanex.Logging:RabbitMQConnectionStrings");
+
+        public static string SentryBackendUrl => GetValue("Fanex.Logging:SentryBackendUrl");
+
+        public static string SentryUrl => GetValue("Fanex.Logging:SentryUrl");
+
+        public static string RavenLibPath => GetValue("RavenLibPath");
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

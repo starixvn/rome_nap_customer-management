@@ -17,7 +17,6 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Models.Common;
-    using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Framework.Command;
 
     /// <summary>
@@ -29,8 +28,6 @@ namespace Fanex.NAP.CMS.Services.Implements
         private const string CachedCountryList = "Fanex.CMS.Service.Common.CountryList";
 
         private readonly IDynamicRepository _repository = new DynamicRepository();
-
-        public IServiceContext ServiceContext { get; set; }
 
         public IDynamicRepository Repository
         {

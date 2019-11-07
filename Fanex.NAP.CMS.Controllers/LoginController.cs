@@ -9,13 +9,9 @@
 //   <change who="Jason.Ly" date="2014.7.29">Separate Login action into some private functions.</change>
 // </history>
 
-using Fanex.NAP.Core.Service.Impl;
-using ONEbook.UM.Models;
-
 namespace Fanex.NAP.CMS.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -24,12 +20,13 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Web.Security;
     using Fanex.Common.Extensions;
     using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Model;
+    using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
+    using NAP.Core.Models;
+    using NAP.Core.Models.ParameterObject;
+    using ONEbook.UM.Models;
 
     /// <summary>
     /// Login controller.
@@ -43,10 +40,10 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly IUserService _userService;
         private readonly IGroupService _groupService;
         private readonly ISiteService _siteService;
-        private readonly IMenuItemService _menuItemService;
         private readonly ICurrentSession _currentSession;
         private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
         private readonly HashAlgorithm _hashAlgorithm;
+        private readonly ISecurityService _securityService;
 
         #endregion Members
 
@@ -61,17 +58,17 @@ namespace Fanex.NAP.CMS.Controllers
             IUserService userService,
             IGroupService groupService,
             ISiteService siteService,
-            IMenuItemService menuItemService,
             ICurrentSession currentSession,
-           ONEbook.UM.Services.IMaintenanceService maintenanceService)
+           ONEbook.UM.Services.IMaintenanceService maintenanceService,
+           ISecurityService securityService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
             this._siteService = siteService ?? new SiteService();
-            this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
             this._maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
             _hashAlgorithm = new SHA256Managed();
+            _securityService = securityService ?? new SecurityService();
         }
 
         #endregion Constructors
@@ -136,7 +133,7 @@ namespace Fanex.NAP.CMS.Controllers
         {
             if (!username.IsNullOrTrimEmpty() && !password.IsNullOrTrimEmpty() && CheckValidToken(loginToken))
             {
-                var user = this._userService.GetByUsername(username.Trim()) as User;
+                var user = this._userService.Get(username.Trim());
 
                 if (user != null)
                 {
@@ -151,7 +148,7 @@ namespace Fanex.NAP.CMS.Controllers
                             // Check in user.
                             this.CheckIn(user);
                             this.CreateUserMenu(user);
-                            AuthInfoUtils.CreateAuthInfo(user, _currentSession.OnUserId, CurrentContext, Response);
+                            AuthInfoUtils.CreateAuthInfo(_currentSession, HttpContext);
 
                             Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
                             return Redirect(FormsAuthentication.DefaultUrl);
@@ -214,7 +211,7 @@ namespace Fanex.NAP.CMS.Controllers
             // check if not nap hub
             if (SiteId != 0)
             {
-                var siteStatus = _siteService.GetStatusById(SiteId);
+                var siteStatus = _siteService.IsActivated(SiteId);
 
                 if (!siteStatus)
                 {
@@ -222,11 +219,10 @@ namespace Fanex.NAP.CMS.Controllers
                 }
             }
 
-            UserReCheckInUserCriteria criteria = new UserReCheckInUserCriteria();
-            criteria.OnUserId = Convert.ToInt32(_currentSession.OnUserId);
-            _userService.ReUserCheckIn(ref criteria);
+            var isKickedOut = NapSettings.Settings.EnableReCheckIn
+                && _securityService.ReCheckIn(_currentSession.OnUserId, SiteId) > 0;
 
-            return Json(criteria.IsKickedOut ? "1" : "0");
+            return Json(isKickedOut ? "1" : "0");
         }
 
         /// <summary>
@@ -256,13 +252,7 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         /// <param name="user">The login user.</param>
         private void CreateUserMenu(User user)
-        {
-            this._currentSession.MenuItemList = (IList<MenuItem>)this._menuItemService.GetByUserAndSiteIncludeGroup(
-                                                                                    user.Id,
-                                                                                    SiteId,
-                                                                                    this.Environment,
-                                                                                    true);
-        }
+            => _currentSession.MenuItemList = _userService.GetMenuItem(user.Id, SiteId, Environment, true).ToList();
 
         /// <summary>
         /// Checks in an user.
@@ -271,7 +261,7 @@ namespace Fanex.NAP.CMS.Controllers
         private void CheckIn(User user)
         {
             // check-in user
-            var criteria = new UserCheckInUserCriteria
+            var loginParameter = new LoginParameter
             {
                 UserId = user.Id,
                 SiteId = this.SiteId,
@@ -284,23 +274,27 @@ namespace Fanex.NAP.CMS.Controllers
                 Platform = CurrentContext.Platform
             };
 
+            int onlineUserId = 0;
+
             try
             {
-                this._userService.UserCheckIn(ref criteria);
+                onlineUserId = _securityService.Login(loginParameter);
             }
             catch (Exception ex)
             {
-                if (criteria.OnUserId == 0)
+                if (onlineUserId == 0)
                 {
                     throw;
                 }
+
                 Logging.LogService.Error(ex.Message);
             }
+
             // saves user session
-            this._currentSession.Level = this._userService.GetUserSiteLevel(user.Id, this.SiteId);
+            this._currentSession.Level = this._userService.GetUserLevel(user.Id, this.SiteId);
             this._currentSession.UserId = user.Id;
             this._currentSession.Username = user.Username;
-            this._currentSession.OnUserId = criteria.OnUserId;
+            this._currentSession.OnUserId = onlineUserId;
             this._currentSession.SessionId = Session.SessionID;
         }
 
@@ -311,10 +305,10 @@ namespace Fanex.NAP.CMS.Controllers
         /// <returns>If an user has permission on a specific site or not.</returns>
         private bool CheckUserSitePermission(User user)
         {
-            var group = user.Group == null ? null : this._groupService.GetById(user.Group.Id);
-            var siteLevelList = this._siteService.GetSiteLevelByUser(user.Id, this.Environment); // gets all sites of logging-in user
+            var group = user.Group == null ? null : _groupService.Get(user.Group.Id);
+            var siteLevelList = _userService.GetSiteLevel(user.Id, Environment);
 
-            return (group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == this.SiteId && x.IsActive);
+            return (group == null || group.IsActive) && siteLevelList.Any(x => x.Site.Id == SiteId && x.IsActive);
         }
 
         /// <summary>
@@ -322,12 +316,13 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         private void DoSignOut()
         {
-            this._userService.UserLogOut(new LogOutUserCriteria
-            {
-                OnUserId = this._currentSession.OnUserId
-            });
+            _securityService.Logout(_currentSession.OnUserId);
+
+            _currentSession.ClearAll();
             Session.Clear();
+
             Response.Cookies.Clear();
+
             FormsAuthentication.SignOut();
         }
 

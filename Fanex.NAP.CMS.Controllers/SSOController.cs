@@ -11,17 +11,16 @@
 namespace Fanex.NAP.CMS.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
-    using Fanex.NAP.CMS.Core.Web;
-    using Fanex.NAP.Core.Criteria.User;
-    using Fanex.NAP.Core.Model;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web.Session;
+    using NAP.Core.Models;
+    using NAP.Core.Models.ParameterObject;
 
     /// <summary>
     /// SSO controller.
@@ -33,8 +32,8 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly int _timeExipration = 30;
 
         private readonly IUserService _userService;
-        private readonly IMenuItemService _menuItemService;
         private readonly ICurrentSession _currentSession;
+        private readonly ISecurityService _securityService;
 
         #endregion members
 
@@ -47,12 +46,12 @@ namespace Fanex.NAP.CMS.Controllers
 
         public SSOController(
             IUserService userService,
-            IMenuItemService menuItemService,
-            ICurrentSession currentSession)
+            ICurrentSession currentSession,
+            ISecurityService securityService)
         {
             this._userService = userService ?? new UserService();
-            this._menuItemService = menuItemService ?? new MenuItemService();
             this._currentSession = currentSession ?? new CurrentSession();
+            _securityService = securityService ?? new SecurityService();
         }
 
         #endregion ctors
@@ -70,7 +69,7 @@ namespace Fanex.NAP.CMS.Controllers
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
         public ActionResult Index(string userId, string onuserId, string time, Uri redirectUrl = null)
         {
-            string currentTime = this._userService.UserSSOGetTime();
+            string currentTime = _securityService.GetTime();
             string forwardLink = redirectUrl == null ? FormsAuthentication.DefaultUrl : redirectUrl.ToString();
 
             userId = Cryptography.CfsDeCrypt(userId.Replace(" ", "+"));
@@ -81,7 +80,7 @@ namespace Fanex.NAP.CMS.Controllers
             if (expiration.TotalSeconds <= this._timeExipration)
             {
                 // do SSO check-in
-                var criteria = new UserSSOCheckInUserCriteria
+                var loginParam = new SSOLoginParameter
                 {
                     UserId = Convert.ToInt32(userId),
                     SiteId = SiteId,
@@ -95,14 +94,14 @@ namespace Fanex.NAP.CMS.Controllers
                     Domain = CurrentContext.DomainName,
                     Platform = CurrentContext.Platform
                 };
+                
+                var onlineUserId = _securityService.SSOLogin(loginParam);
 
-                this._userService.UserSSOCheckIn(ref criteria);
-
-                if (criteria.OnUserId != 0)
+                if (onlineUserId != 0)
                 {
-                    var user = this._userService.GetById(criteria.UserId) as User;
+                    var user = this._userService.Get(loginParam.UserId);
 
-                    AssignToSession(user, criteria.OnUserId);
+                    AssignToSession(user, onlineUserId);
                     Fanex.Nap.CMS.Infrastructure.Web.AppSession.CurrentUser = user;
 
                     return this.Redirect(forwardLink);
@@ -112,72 +111,24 @@ namespace Fanex.NAP.CMS.Controllers
             return this.Redirect(FormsAuthentication.LoginUrl);
         }
 
-        /// <summary>
-        /// Login from Accounting site.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="onlineUserId">The online user identifier.</param>
-        /// <param name="redirectUrl">The redirect URL.</param>
-        /// <param name="newTab">Open in new tab and show menus or not.</param>
-        /// <returns>The login result page.</returns>
-        [HttpGet]
-        [AllowAnonymous]
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Reviewed. Suppression is OK here.")]
-        public ActionResult AccountingLogin(string username, string onlineUserId, Uri redirectUrl, bool newTab = false)
-        {
-            Session.Clear();
-            username = Cryptography.CfsDeCrypt(username.Replace(" ", "+"));
-            onlineUserId = Cryptography.CfsDeCrypt(onlineUserId.Replace(" ", "+"));
-
-            var user = this._userService.GetByUsername(username) as User;
-
-            if (user != null)
-            {
-                var criteria = new UserCheckInUserCriteria
-                {
-                    UserId = user.Id,
-                    SiteId = this.SiteId,
-                    NetSessionId = Session.SessionID,
-                    Ip = CurrentContext.IP,
-                    LoginDate = DateTime.Now,
-                    BrowserName = CurrentContext.BrowserName,
-                    CountryCode = CurrentContext.CountryCode,
-                    Domain = CurrentContext.DomainName,
-                    Platform = CurrentContext.Platform
-                };
-
-                // check-in user
-                this._userService.UserCheckIn(ref criteria);
-
-                AssignToSession(user, criteria.OnUserId);
-                SessionManager.Set<bool>("ShowMenus", newTab);
-
-                return this.Redirect(redirectUrl.ToString());
-            }
-            else
-            {
-                return this.Redirect(FormsAuthentication.LoginUrl);
-            }
-        }
-
         private void AssignToSession(User user, int onuserId)
         {
             _currentSession.UserId = user.Id;
             _currentSession.Username = user.Username;
             _currentSession.OnUserId = onuserId;
             _currentSession.SessionId = Session.SessionID;
-            _currentSession.Level = _userService.GetUserSiteLevel(user.Id, SiteId);
+            _currentSession.Level = _userService.GetUserLevel(user.Id, SiteId);
 
             if (SiteId != 0)
             {
-                _currentSession.MenuItemList = _menuItemService.GetByUserAndSiteIncludeGroup(
+                _currentSession.MenuItemList = _userService.GetMenuItem(
                     user.Id,
                     SiteId,
                     Environment,
-                    true) as IList<MenuItem>;
+                    true).ToList();
             }
 
-            AuthInfoUtils.CreateAuthInfo(user, _currentSession.OnUserId, CurrentContext, Response);
+            AuthInfoUtils.CreateAuthInfo(_currentSession, HttpContext);
         }
     }
 }

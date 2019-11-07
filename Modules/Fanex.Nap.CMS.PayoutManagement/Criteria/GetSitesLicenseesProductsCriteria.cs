@@ -28,9 +28,9 @@
                 int readPolicy = (int)Constant.Policy.Read;
 
                 IUserService userService = new UserService();
-                int boping = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForBopingLicensees);
-                int oneworks = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForONEworksLicensees);
-                int credit = userService.GetUserSiteFunctionKeyPolicy(userId, siteId, CMSFunctionKeys.PayoutForCredit);
+                int boping = userService.GetPermission(userId, siteId, CMSFunctionKeys.PayoutForBopingLicensees);
+                int oneworks = userService.GetPermission(userId, siteId, CMSFunctionKeys.PayoutForONEworksLicensees);
+                int credit = userService.GetPermission(userId, siteId, CMSFunctionKeys.PayoutForCredit);
 
                 if (boping >= readPolicy)
                 {

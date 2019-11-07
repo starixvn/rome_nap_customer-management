@@ -4,8 +4,6 @@
     using Framework.Command;
     using Interfaces;
     using Models.CreditCollectionSummary;
-    using NAP.Core.Service.Impl;
-    using NAP.Core.Service.Interface;
     using Repositories.Implements;
     using Repositories.Interfaces;
 
@@ -13,14 +11,13 @@
     {
         private readonly ICreditCollectionSummaryRepository _creditCollectionSummaryRepository;
 
-        public CreditCollectionSummaryService(IServiceContext serviceContext) :
-            this(serviceContext, null)
+        public CreditCollectionSummaryService()
+            : this(null)
         {
         }
 
-        public CreditCollectionSummaryService(IServiceContext serviceContext, ICreditCollectionSummaryRepository creditCollectionSummaryRepository)
+        public CreditCollectionSummaryService(ICreditCollectionSummaryRepository creditCollectionSummaryRepository)
         {
-            ServiceContext = serviceContext ?? new ServiceContext();
             _creditCollectionSummaryRepository = creditCollectionSummaryRepository ?? new CreditCollectionSummaryRepository();
         }
 

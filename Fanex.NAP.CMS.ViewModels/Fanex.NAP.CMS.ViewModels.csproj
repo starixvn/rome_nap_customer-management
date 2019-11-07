@@ -43,10 +43,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Common">
-      <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
+    <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -109,6 +111,8 @@
     <Compile Include="TurnoverMonitor\SMATurnoverGroup.cs" />
     <Compile Include="TurnoverMonitor\SMATurnoverReport.cs" />
     <Compile Include="TurnoverUsage\TurnoverUsageItem.cs" />
+    <Compile Include="UserInfo\ChangePasswordViewModel.cs" />
+    <Compile Include="UserInfo\ProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">

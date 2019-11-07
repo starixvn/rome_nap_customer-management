@@ -147,8 +147,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         [NonAction]
         private void AssignUserIdAndIP(NonQueryCriteria criteria)
         {
-            criteria.UserId = ServiceContext.UserId;
-            criteria.IP = ServiceContext.Ip;
+            criteria.UserId = CurrentSession.UserId;
+            criteria.IP = CurrentContext.IP;
         }
 
         private bool HasReadGlobalSetting(short sporttype)

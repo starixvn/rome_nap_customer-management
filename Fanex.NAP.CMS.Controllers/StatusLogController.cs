@@ -19,7 +19,7 @@
 
         public StatusLogController(IStatusLogService statusLogService)
         {
-            _statusLogService = statusLogService ?? new StatusLogService(this.ServiceContext);
+            _statusLogService = statusLogService ?? new StatusLogService();
         }
 
         [HttpGet]

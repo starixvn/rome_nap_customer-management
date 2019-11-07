@@ -219,19 +219,22 @@ namespace Fanex.NAP.CMS.Controllers
                 }
             }
 
-            var isKickedOut = false;
+            if (_currentSession.OnUserId <= 0)
+            {
+                return Json("1");
+            }
 
             try
             {
-                isKickedOut = NapSettings.Settings.EnableReCheckIn
+                var isKickedOut = NapSettings.Settings.EnableReCheckIn
                     && _securityService.ReCheckIn(_currentSession.OnUserId, SiteId) > 0;
+
+                return Json(isKickedOut ? "1" : "0");
             }
             catch (Exception)
             {
-                isKickedOut = true;
+                return Json("1");
             }
-
-            return Json(isKickedOut ? "1" : "0");
         }
 
         /// <summary>
@@ -325,7 +328,10 @@ namespace Fanex.NAP.CMS.Controllers
         /// </summary>
         private void DoSignOut()
         {
-            _securityService.Logout(_currentSession.OnUserId);
+            if (_currentSession.OnUserId > 0)
+            {
+                _securityService.Logout(_currentSession.OnUserId);
+            }
 
             _currentSession.ClearAll();
             Session.Clear();

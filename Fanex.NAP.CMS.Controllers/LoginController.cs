@@ -219,8 +219,17 @@ namespace Fanex.NAP.CMS.Controllers
                 }
             }
 
-            var isKickedOut = NapSettings.Settings.EnableReCheckIn
-                && _securityService.ReCheckIn(_currentSession.OnUserId, SiteId) > 0;
+            var isKickedOut = false;
+
+            try
+            {
+                isKickedOut = NapSettings.Settings.EnableReCheckIn
+                    && _securityService.ReCheckIn(_currentSession.OnUserId, SiteId) > 0;
+            }
+            catch (Exception)
+            {
+                isKickedOut = true;
+            }
 
             return Json(isKickedOut ? "1" : "0");
         }

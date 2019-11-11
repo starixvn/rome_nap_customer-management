@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions SiteId="102" SiteName="NAP - CM">
+  <Function Name="User">
+    <Setting Key="NAP_User_GetById" SpName="NAP_User_GetById" DbName="DBPOL.Nap_UserControl.bodbAdminNet">
+      <Mapping DataField="UserId" ObjectProperty="Id" />
+      <Mapping DataField="userpwd" ObjectProperty="Password" />
+      <Mapping DataField="GroupId" ObjectProperty="Id" />
+      <Mapping DataField="GroupName" ObjectProperty="Name" />
+      <Mapping DataField="CreatorId" ObjectProperty="Id" />
+      <Mapping DataField="CreatorUsername" ObjectProperty="Username" />
+      <Mapping DataField="ModifierId" ObjectProperty="Id" />
+      <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
+    </Setting>
+  </Function>
+</Functions>

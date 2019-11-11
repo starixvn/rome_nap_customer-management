@@ -284,12 +284,14 @@
     <Content Include="App_Data\Local\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Local\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Master\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Master\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
@@ -307,6 +309,7 @@
     <Content Include="App_Data\MNL\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\NAPCMSSPNames.xml" />
@@ -358,6 +361,7 @@
     <Content Include="App_Data\Prod\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
@@ -376,6 +380,7 @@
     <Content Include="App_Data\SIT\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\SIT\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\NAPCMSSPNames.xml">
@@ -396,6 +401,7 @@
     <Content Include="App_Data\UAT\DBONUSER.ON_USER.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\UAT\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\NAPCMSSPNames.xml">

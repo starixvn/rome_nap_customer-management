@@ -41,12 +41,6 @@ namespace Fanex.NAP.CMS.Websites
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ExceptionHandler
-                .UseConfig(new LoggingConfiguration()
-                .GetHttpHeaderInfo()
-                .GetHttpSessionInfo())
-                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
-
             RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))
                 .FromApplication("Fanex.NAP.CMS")

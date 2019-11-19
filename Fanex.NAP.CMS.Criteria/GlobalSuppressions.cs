@@ -41,3 +41,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S1694:An abstract class should have both abstract and concrete methods", Justification = "<Pending>", Scope = "type", Target = "~T:Fanex.NAP.CMS.Criteria.Common.PagingCriteria")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S3898:Value types should implement \"IEquatable<T>\"", Justification = "<Pending>", Scope = "type", Target = "~T:Fanex.NAP.CMS.Criteria.Common.PagingQueryResult`1")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Code Smell", "S103:Lines should not be too long", Justification = "<Pending>")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S109:Magic numbers should not be used", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.NAP.CMS.Criteria.ManageSmartPunters.GetTotalSmartPunterLogsCriteria.#ctor")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S109:Magic numbers should not be used", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.NAP.CMS.Criteria.ManageSmartPunters.GetSmartPunterLogsCriteria.#ctor")]
+

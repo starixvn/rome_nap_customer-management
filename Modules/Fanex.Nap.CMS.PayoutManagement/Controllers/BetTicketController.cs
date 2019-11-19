@@ -6,7 +6,6 @@
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
-    using Fanex.Nap.CMS.PayoutManagement.Models.API;
     using Fanex.Nap.CMS.PayoutManagement.Services;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -39,17 +38,14 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
-        public ActionResult ColossusBets(GetBetTicketCriteria criteria)
+        public async Task<ActionResult> ColossusBetsAsync(GetBetTicketCriteria criteria)
         {
             int userId = CurrentSession.UserId;
-            var task = Task.Factory.StartNew<ColossusBetsAuthorization>(
-                () => PayoutManagementAPIClient.ColossusBetsAuthorize(userId, criteria.Member));
-
             var colossusbets = _betTicketService.GetColossusBets(criteria);
 
             string siteIdByCustomer = _betTicketService.GetSiteIdByCustomerId(new GetSiteIdByCustomerIdCriteria(criteria.Member));
             ViewBag.CBDomain = PayoutManagementConst.GetColossusBetsDomainBySiteId(siteIdByCustomer);
-            ViewBag.CBAuthorization = task.Result;
+            ViewBag.CBAuthorization = await PayoutManagementAPIClient.ColossusBetsAuthorize(userId, criteria.Member);
 
             return PartialView("~/Areas/PayoutManagement/Views/BetTicket/ColossusBets.cshtml", colossusbets);
         }

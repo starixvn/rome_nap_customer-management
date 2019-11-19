@@ -1,6 +1,4 @@
-﻿/// <reference path="../PayoutDetail.cshtml" />
-/// <reference path="D:\Gitlab\NAP\customer-management\Fanex.NAP.CMS.Websites\Scripts/CMS.js" />
-/* global payoutManagementLabels, payoutDetail, currentStatus, CMS, numeral, CMSConstants */
+﻿/* global payoutManagementLabels, payoutDetail, currentStatus, CMS, numeral, CMSConstants */
 (function () {
     'use strict';
     var self = this;
@@ -75,7 +73,7 @@
         for (var i = 0; i < resultLength; i++) {
             note = payoutNotes[i];
             cell = [
-                { Name: 'colNumber', Value: (i + 1) },
+                { Name: 'colNumber', Value: i + 1 },
                 { Name: 'colDate', Value: note.DateDisplay },
                 { Name: 'colStatus', Value: note.Status },
                 { Name: 'colNote', Value: stripLinebreak(note.Note), CssClass: 'word-wrap' },
@@ -192,7 +190,7 @@
             } else {
                 CMS.showErrorMessage('WINNING CODE IS INVALID.');
             }
-        })
+        });
     }
 
     function getUpdateTicketStatusParams() {

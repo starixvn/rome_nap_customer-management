@@ -74,7 +74,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 PageIndex = filter.PageIndex + 1
             };
             IEnumerable<MemberStatusInfo> memberList = this._openCloseMemberRepository.GetMembersStatusData(criteria);
-            var groups = memberList.GroupBy(member => new { Master = member.Master, Agent = member.Agent }).GroupBy(agent => agent.Key.Master);
+            var groups = memberList.GroupBy(member => new { member.Master, member.Agent }).GroupBy(agent => agent.Key.Master);
 
             result.ErrorCode = criteria.ErrorCode;
             result.ErrorMsg = criteria.ErrorMsg;

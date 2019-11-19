@@ -19,17 +19,19 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
     /// </summary>
     public static class CacheRef
     {
+        private const string LanguageCode = "en-US";
+
         public static string GetTeamName(object teamId)
         {
             return RefData.GetTeamName(
                 Converter.ToString2(teamId),
-                "en-US",
+                LanguageCode,
                 string.Empty);
         }
 
         public static string GetLeagueName(string leagueId)
         {
-            return RefData.GetLeagueName(leagueId, "en-US");
+            return RefData.GetLeagueName(leagueId, LanguageCode);
         }
 
         /// <summary>
@@ -62,7 +64,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
 
         public static string GetSportName(object sportId)
         {
-            return RefData.GetSportName(sportId.ToString(), "en-US");
+            return RefData.GetSportName(sportId.ToString(), LanguageCode);
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
 
             return RefData.GetBetTypeName(
                 betTypeId.ToString(),
-                "en-US",
+                LanguageCode,
                 string.Empty,
                 resourceId);
         }

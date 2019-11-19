@@ -16,8 +16,7 @@
             out IList<GroupIdNameModel> sitesLicensees,
             out IList<ProductModel> products)
         {
-            string group;
-            GroupIdNameModel value;
+            string group;        
             IDictionary<string, GroupIdNameModel> sitesLicenseesHash = new Dictionary<string, GroupIdNameModel>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -28,7 +27,7 @@
                     {
                         group = reader["SiteControl"].ToString();
 
-                        if (!sitesLicenseesHash.TryGetValue(group, out value))
+                        if (!sitesLicenseesHash.TryGetValue(group, out GroupIdNameModel value))
                         {
                             value = new GroupIdNameModel 
                             {

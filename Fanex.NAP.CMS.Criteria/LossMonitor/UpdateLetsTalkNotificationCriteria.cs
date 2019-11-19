@@ -36,9 +36,7 @@
 
         public override Hashtable GetSpParams()
         {
-            var mode = CustId == 0 ? UpdateAllMode :
-                IsGroupHeadline ? UpdateHeadlineMode :
-                UpdateSMAMode;
+            var mode = GetUpdateMode();
 
             var result = new Hashtable
             {
@@ -51,5 +49,11 @@
 
             return result;
         }
+
+        private int GetUpdateMode() => CustId == 0 ? UpdateAllMode :
+                            GetHeadlineMode();
+
+        private int GetHeadlineMode() => IsGroupHeadline ? UpdateHeadlineMode :
+                                        UpdateSMAMode;
     }
 }

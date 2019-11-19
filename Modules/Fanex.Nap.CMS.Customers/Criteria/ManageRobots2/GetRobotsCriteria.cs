@@ -18,24 +18,26 @@
         public int PageIndex { get; set; }
 
         [SpParam(Ignored = true)]
-        public int ErrCode { get; set; } = 0;
+        public int ErrCode { get; set; }
 
         [SpParam(Ignored = true)]
         public string ErrMsg { get; set; } = string.Empty;
 
-        public int TotalItems { get; set; } = 0;
+        public int TotalItems { get; set; }
 
         public override string GetSettingKey()
             => "NAP_Customer_RobotAccountNew_Sel";
 
         public override Hashtable GetSpParams()
         {
-            var result = new Hashtable();
-            result.Add("username", Username);
-            result.Add("site", Site);
-            result.Add("pagesize", PageSize);
-            result.Add("pageindex", PageIndex);
-            result.Add("totalitems", 0);
+            var result = new Hashtable
+            {
+                { "username", Username },
+                { "site", Site },
+                { "pagesize", PageSize },
+                { "pageindex", PageIndex },
+                { "totalitems", 0 }
+            };
 
             if (Level != 0)
             {

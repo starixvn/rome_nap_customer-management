@@ -21,6 +21,7 @@
     public class VirtualSettingMonitorService : ServiceBase, IVirtualSettingMonitorService
     {
         private const string VirtualSettingsMonitorSessionKey = "Fanex.NAP.CMS.Reports.VirtualSettingsMonitor";
+        private const int DecemberNumber = 12;
         private ExcelStyleTemplateByNPOI _excelStyleTemplate;
 
         public VirtualSettingViewModel GetVirtualSettingMonitor(GetVirtualSettingMonitorCriteria criteria, int[] monthList)
@@ -67,7 +68,7 @@
             var fileName = string.Format(
                 Labels.VirtualSettingsMonitor_ExcelFileName,
                 DateTime.Now.ToShortFormatedDateWithSlash(),
-                criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports",
+                criteria.SportId == 0 ? "All" : GetSportName(criteria),
                 criteria.Rate,
                 criteria.MonthToSum);
             ExcelHelper.ResponseStream(excelFile, ExcelHelper.FormatFileName(fileName));
@@ -99,9 +100,9 @@
                 var monthLength = monthList.Count() - 1;
                 for (var i = monthLength; i >= 0; i--)
                 {
-                    if (monthList[i] == 12)
+                    if (monthList[i] == DecemberNumber)
                     {
-                        if (currentMonth == 12)
+                        if (currentMonth == DecemberNumber)
                         {
                             if (!encounterFirstDecember)
                             {
@@ -150,9 +151,9 @@
             var monthLength = monthList.Count() - 1;
             for (var i = monthLength; i >= 0; i--)
             {
-                if (monthList[i] == 12)
+                if (monthList[i] == DecemberNumber)
                 {
-                    if (currentMonth == 12)
+                    if (currentMonth == DecemberNumber)
                     {
                         if (!encounterFirstDecember)
                         {
@@ -196,7 +197,7 @@
             ExportExcelInfoByNPOI exportExcelInfo,
             GetVirtualSettingMonitorCriteria criteria)
         {
-            exportExcelInfo.SetColumnWidthByFontWidth(new [] { 60, 160, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
+            exportExcelInfo.SetColumnWidthByFontWidth(new[] { 60, 160, 80, 80, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150 });
             exportExcelInfo.CreateCurrentNPOIRow();
             exportExcelInfo.SetCurrentRowHeight(400);
 
@@ -206,7 +207,7 @@
                 string.Format(
                     Labels.VirtualSettingsMonitor_Legend,
                     DateTime.Now.ToShortFormatedDateWithSlash(),
-                    criteria.SportId == 0 ? "All" : criteria.SportId == 1 ? "Soccer" : "Other Sports",
+                    criteria.SportId == 0 ? "All" : GetSportName(criteria),
                     criteria.Rate,
                     criteria.TopRows,
                     criteria.MonthToSum),
@@ -227,6 +228,11 @@
             }
 
             exportExcelInfo.CurrentRow++;
+        }
+
+        private static string GetSportName(GetVirtualSettingMonitorCriteria criteria)
+        {
+            return criteria.SportId == 1 ? "Soccer" : "Other Sports";
         }
 
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules", "SP2101:MethodMustNotContainMoreLinesThan", Justification = "Need to review here.")]

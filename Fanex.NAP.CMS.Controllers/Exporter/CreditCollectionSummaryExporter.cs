@@ -146,7 +146,7 @@
 
                     var style = group.Status == CreditStatus.Unused
                         ? unusedHeadlineStatusStyle
-                        : group.Status == CreditStatus.Alert ? headlineAlertStatusStyle : headlineStatusStyle;
+                        : GetStatus(headlineStatusStyle, headlineAlertStatusStyle, group);
                     ExportExcel.RenderCurrentCell(GetStatusText(group.Status), style);
 
                     ExportExcel.RenderCurrentCell(group.LastBalance, group.Status == CreditStatus.Unused ? unusedHeadlineNegativeNumberStyle : headlineNegativeNumberStyle);
@@ -190,6 +190,11 @@
             {
                 ExportExcel.RenderEmptyReport(NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, true, Alignment.Center));
             }
+        }
+
+        private static NPOI.SS.UserModel.ICellStyle GetStatus(NPOI.SS.UserModel.ICellStyle headlineStatusStyle, NPOI.SS.UserModel.ICellStyle headlineAlertStatusStyle, CreditCollectionSummaryItem group)
+        {
+            return group.Status == CreditStatus.Alert ? headlineAlertStatusStyle : headlineStatusStyle;
         }
 
         private static string GetStatusText(int status)

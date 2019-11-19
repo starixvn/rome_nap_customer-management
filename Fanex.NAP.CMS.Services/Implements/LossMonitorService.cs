@@ -12,6 +12,8 @@
 
     public class LossMonitorService : CMSBaseService, ILossMonitorService
     {
+        private const int BadRequestErrorCode = 400;
+
         public IEnumerable<SMALossGroup> GetCustomerLoss()
         {
             var rawdata = Repository.Fetch<SMALossInfo>(new GetSMALossMonitorListCriteria());
@@ -22,12 +24,11 @@
                 yield break;
             }
 
-            string levelName;
             var levelLookup = rawdata.ToLookup(kvp => kvp.LevelId, kvp => kvp);
 
             foreach (var level in levelLookup)
             {
-                if (lossLevels.TryGetValue(level.Key, out levelName))
+                if (lossLevels.TryGetValue(level.Key, out string levelName))
                 {
                     yield return new SMALossGroup(level.Key, levelName, level);
                 }
@@ -44,28 +45,28 @@
         public ICommandResult InsertSMA(ICriteria criteria)
         {
             return !criteria.IsValid() ?
-                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
         public ICommandResult UpdateMaxLoss(ICriteria criteria)
         {
             return !criteria.IsValid() ?
-                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
         public ICommandResult UpdateLetsTalkNotification(ICriteria criteria)
         {
             return !criteria.IsValid() ?
-                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
         public ICommandResult DeleteSMA(ICriteria criteria)
         {
             return !criteria.IsValid() ?
-                new CommandResult { Code = 400, Message = Messages.BadRequest } :
+                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 

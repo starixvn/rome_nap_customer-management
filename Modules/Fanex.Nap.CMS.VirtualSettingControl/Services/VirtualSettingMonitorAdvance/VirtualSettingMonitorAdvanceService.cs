@@ -130,7 +130,9 @@
             exportExcelInfo.CurrentRow++;
         }
 
+#pragma warning disable S138 // Functions should not have too many lines of code
         private void ExportBody(ExportExcelInfoByNPOI exportExcelInfo, List<CustomerVirtualSettingAdvanceModel> reportData, int monthsToCheck)
+#pragma warning restore S138 // Functions should not have too many lines of code
         {
             var centerTextStyle = NpoiExcelExtensions.TextStyle(exportExcelInfo.ExcelFile, _excelStyleTemplate.BodyColorIndex, false, Alignment.Center);
 

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public interface CMSConverter
+    public interface ICMSConverter
     {
         byte ToByte(object value);
 
@@ -29,7 +29,7 @@
         string ToStringFormat(object value, int prec = 2);
     }
 
-    public class CMSConverterImplement: CMSConverter
+    public class CMSConverterImplement: ICMSConverter
     {
         public byte ToByte(object value)
         {
@@ -57,19 +57,17 @@
 
         public decimal ToDecimal(object value)
         {
-            var val = 0.0m;
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
             {
                 return 0.0m;
             }
 
-            decimal.TryParse(value.ToString(), out val);
+            decimal.TryParse(value.ToString(), out decimal val);
             return val;
         }
 
         public bool ToBoolean(object value)
         {
-            var val = false;
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
             {
                 return false;
@@ -80,7 +78,7 @@
                 return true;
             }
 
-            bool.TryParse(value.ToString(), out val);
+            bool.TryParse(value.ToString(), out bool val);
             return val;
         }
 
@@ -95,26 +93,24 @@
         }
 
         public double ToDouble(object value)
-        {
-            var val = 0.0d;
+        {          
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
             {
                 return 0.0d;
             }
 
-            double.TryParse(value.ToString(), out val);
+            double.TryParse(value.ToString(), out double val);
             return val;
         }
 
         public DateTime ToDateTime(object value)
         {
-            var val = DateTime.MinValue;
             if (value == null || value == DBNull.Value || value.ToString() == string.Empty)
             {
                 return DateTime.MinValue;
             }
 
-            DateTime.TryParse(value.ToString(), out val);
+            DateTime.TryParse(value.ToString(), out DateTime val);
             return val;
         }
 

@@ -12,12 +12,12 @@
 
     public class BetRestrictionManagementService : ServiceBase, IBetRestrictionManagementService
     {
-        private CMSConverter _cMSConverter;
+        private readonly ICMSConverter _cMSConverter;
 
         public BetRestrictionManagementService() : this(null)
         { }
 
-        public BetRestrictionManagementService(CMSConverter cMSConverter)
+        public BetRestrictionManagementService(ICMSConverter cMSConverter)
         {
             _cMSConverter = cMSConverter ?? new CMSConverterImplement();
         }
@@ -59,9 +59,18 @@
             foreach (var item in request.EditSettings)
             {
                 xml.Append($"<Setting SettingId=\"{item.SettingId}\" ");
-                if (item.LiveBetAcceptStatus != null) xml.Append($" LiveBetAccept=\"{_cMSConverter.ToInt32(item.LiveBetAcceptStatus)}\" ");
-                if (item.SeizeBetTicketStatus != null) xml.Append($" SeizeBetTicket=\"{_cMSConverter.ToInt32(item.SeizeBetTicketStatus)}\" ");
-                if (item.BetLimitStatus != null) xml.Append($" BetLimit=\"{_cMSConverter.ToInt32(item.BetLimitStatus)}\" ");
+                if (item.LiveBetAcceptStatus != null)
+                {
+                    xml.Append($" LiveBetAccept=\"{_cMSConverter.ToInt32(item.LiveBetAcceptStatus)}\" ");
+                }
+                if (item.SeizeBetTicketStatus != null)
+                {
+                    xml.Append($" SeizeBetTicket=\"{_cMSConverter.ToInt32(item.SeizeBetTicketStatus)}\" ");
+                }
+                if (item.BetLimitStatus != null)
+                {
+                    xml.Append($" BetLimit=\"{_cMSConverter.ToInt32(item.BetLimitStatus)}\" ");
+                }
                 xml.Append(" />");
             }
 

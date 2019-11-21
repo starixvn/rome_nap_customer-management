@@ -10,12 +10,16 @@
         ddlLevelAddRobot: null,
         txtUsernameAddRobot: null,
         divAddResult: null,
-        ddCurrency: null
+        ddCurrency: null,
+        ddCounter: null
     };
 
     this.searchParam = {
         pageSize: 50,
-        pageIndex: 1
+        pageIndex: 1,
+        counter: 1,
+        sortColumnName: null,
+        sortDirection: null
     };
     this.alreadyGetRobots = false;
     this.currentRecordsNumber = 0;
@@ -34,6 +38,7 @@
         this.elements.reportContainer = $("#report-container");
         this.elements.divAddRobot = $("#div-add-robot");
         this.elements.ddCurrency = $("#ddl-currency");
+        this.elements.ddCounter = $("#ddl-counter");
     };
 
     this.bindEvents = function () {
@@ -113,6 +118,15 @@
             items: group
         });
 
+        sites.push({
+            id: 2,
+            value: 2,
+            text: resources.NoSite,
+            checked: true,
+            enable: true,
+            items: []
+        });
+
         this.elements.ddlSite.fanexMultiSelect({
             minWidth: 180,
             checkAllText: resources.All,
@@ -121,13 +135,21 @@
         });
     };
     this.enterSearch = function () {
+        var sites = this.elements.ddlSite.fanexMultiSelect('getSelectedTexts', true);
+        if (sites.length && sites[sites.length - 1] === resources.NoSite) {
+            sites[sites.length - 1] = "NULL";
+        }
+
         self.searchParam = {
             username: this.elements.txtUsername.val().trim(),
             level: this.elements.ddLevel.val(),
-            site: this.elements.ddlSite.fanexMultiSelect('getSelectedTexts', true).join(','),
+            site: sites.join(','),
             pageSize: 50,
             pageIndex: 1,
-            currency: this.elements.ddCurrency.val()
+            currency: this.elements.ddCurrency.val(),
+            counter: this.elements.ddCounter.val(),
+            sortColumnName: null,
+            sortDirection: null
         };
 
         this.getRobots(self.searchParam);
@@ -166,11 +188,13 @@
                 { HeaderText: resources.CustId, Width: 80, Name: 'ColCustId', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: resources.Username, Width: 200, Name: 'ColUsername', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: resources.Level, Width: 80, Name: 'ColLevel', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: resources.Currency, Width: 80, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: resources.Site, Width: 80, Name: 'ColSite', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: resources.Currency, Width: 80, Name: 'ColCurrency', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColCurrency") },
+                { HeaderText: resources.Site, Width: 80, Name: 'ColSite', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColSite") },
                 { HeaderText: resources.IP, Width: 120, Name: 'ColIP', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-                { HeaderText: resources.LastChangeTime, Width: 140, Name: 'ColLastChangeTime', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: resources.Counter, Width: 80, Name: 'ColCounter', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
+                { HeaderText: resources.Country, Width: 100, Name: 'ColCountry', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColCountry") },
+                { HeaderText: resources.Region, Width: 100, Name: 'ColRegion', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColRegion") },
+                { HeaderText: resources.LastChangeTime, Width: 140, Name: 'ColLastChangeTime', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColLastChangeTime") },
+                { HeaderText: resources.Counter, Width: 80, Name: 'ColCounter', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true, Sort: true, SortDirection: self.getSortDirection("ColCounter") },
                 { HeaderText: resources.ServerIP, Width: 80, Name: 'ColServerIP', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: resources.AddedBy, Width: 140, Name: 'ColAddedBy', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: resources.AddedDate, Width: 80, Name: 'ColAddedDate', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
@@ -187,7 +211,15 @@
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: self.changePager
             },
-            gridExpandHeight: 200
+            gridExpandHeight: 200,
+            sortOption: {
+                serverSortFunction: function (sortColumnName, sortDirection) {
+                    self.searchParam.sortColumnName = sortColumnName;
+                    self.searchParam.sortDirection = sortDirection;
+                    self.searchParam.pageIndex = 1;
+                    self.getRobots(self.searchParam);
+                }
+            }
         };
 
         var bodyData = [];
@@ -202,6 +234,8 @@
                 { Name: 'ColCurrency', Value: robot.Currency },
                 { Name: 'ColSite', Value: robot.Site },
                 { Name: 'ColIP', Value: robot.IP },
+                { Name: 'ColCountry', Value: robot.Country },
+                { Name: 'ColRegion', Value: robot.Region },
                 { Name: 'ColLastChangeTime', Value: robot.LastChangeTimeStr },
                 { Name: 'ColCounter', Value: robot.CounterStr },
                 { Name: 'ColServerIP', Value: robot.ServerIP },
@@ -399,6 +433,9 @@
         if (self.alreadyGetRobots) {
             self.getRobots(self.searchParam);
         }
+    };
+    this.getSortDirection = function (columnName) {
+        return this.searchParam.sortColumnName == columnName ? this.searchParam.sortDirection : null;
     };
 };
 

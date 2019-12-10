@@ -264,4 +264,7 @@
   <data name="NoSite" xml:space="preserve">
     <value>No Site</value>
   </data>
+  <data name="RobotRulesTitle" xml:space="preserve">
+    <value>Robot Identification Rules &amp; Actions</value>
+  </data>
 </root>

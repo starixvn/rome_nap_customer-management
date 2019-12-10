@@ -412,6 +412,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Robot Identification Rules &amp; Actions.
+        /// </summary>
+        public static string RobotRulesTitle {
+            get {
+                return ResourceManager.GetString("RobotRulesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {

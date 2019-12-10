@@ -51,6 +51,9 @@
         });
 
         $("#btn-add-robot").on("click touchend", function () { self.addRobot(); });
+        $("#note-info").off("click touchend").on("click touchend", function () {
+            CMS.popup(resources.RobotRulesTitle, $("#robot-rules-container").html(), { resizable: false });
+        });
     };
     this.getSites = function () {
         CMS.disableInput();

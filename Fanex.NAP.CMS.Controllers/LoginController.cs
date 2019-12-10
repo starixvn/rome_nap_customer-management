@@ -110,11 +110,6 @@ namespace Fanex.NAP.CMS.Controllers
                 return Redirect(NapSettings.Settings.HubUrl);
             }
 
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RedirectToAction("Offline");
-            }
-
             GenerateToken();
 
             return View();

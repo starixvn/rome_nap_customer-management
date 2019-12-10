@@ -19,6 +19,7 @@ namespace Fanex.NAP.CMS.Websites
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
+    using ONEbook.UM.Filters;
     using RemotingRef;
 
     /// <summary>
@@ -33,6 +34,7 @@ namespace Fanex.NAP.CMS.Websites
             LoggingConfig.Init(
                   new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" },
                   getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+            GlobalFilters.Filters.Add(new CheckUMFilter());
 
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();

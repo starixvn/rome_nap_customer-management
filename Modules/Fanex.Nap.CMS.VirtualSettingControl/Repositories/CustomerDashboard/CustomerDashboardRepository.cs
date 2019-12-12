@@ -9,6 +9,11 @@
 
     public class CustomerDashboardRepository : ICustomerDashboardRepository
     {
+        private const string TurnOver = "turnover";
+        private const string Winloss = "winloss";
+        private const string Margin = "margin";
+        private const string BetCount = "betcount";
+
         public CustomerDashboardModel GetDashboardInfo(GetDashboardInfoCriteria criteria)
         {
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -22,12 +27,14 @@
 
         public CustomerDashboardModel ParseDashboardData(DataSet dataSet)
         {
-            var customerDashboardModel = new CustomerDashboardModel();
-            customerDashboardModel.DashboardGeneralInfo = ParseGeneralInfo(dataSet.Tables[0]);
-            customerDashboardModel.DashboardBetCountByMonth = ParseBetCount(dataSet.Tables[1]);
-            customerDashboardModel.DashboardTopSports = ParseSportPerformance(dataSet.Tables[2]);
-            customerDashboardModel.DashboardTopBettypes = ParseBetTypePerformance(dataSet.Tables[3]);
-            customerDashboardModel.DashboardTopEventChoice = ParseEventChoice(dataSet.Tables[4]);
+            var customerDashboardModel = new CustomerDashboardModel
+            {
+                DashboardGeneralInfo = ParseGeneralInfo(dataSet.Tables[0]),
+                DashboardBetCountByMonth = ParseBetCount(dataSet.Tables[1]),
+                DashboardTopSports = ParseSportPerformance(dataSet.Tables[2]),
+                DashboardTopBettypes = ParseBetTypePerformance(dataSet.Tables[3]),
+                DashboardTopEventChoice = ParseEventChoice(dataSet.Tables[4])
+            };
 
             return customerDashboardModel;
         }
@@ -38,10 +45,10 @@
         {
             var generalInfo = new GeneralInfo
             {
-                Turnover = Convert.ToDecimal(data.Rows[0]["turnover"].ToString()),
-                Winloss = Convert.ToDecimal(data.Rows[0]["winloss"].ToString()),
-                Margin = Convert.ToDecimal(data.Rows[0]["margin"].ToString()),
-                BetCount = Convert.ToInt32(data.Rows[0]["betcount"].ToString())
+                Turnover = Convert.ToDecimal(data.Rows[0][TurnOver].ToString()),
+                Winloss = Convert.ToDecimal(data.Rows[0][Winloss].ToString()),
+                Margin = Convert.ToDecimal(data.Rows[0][Margin].ToString()),
+                BetCount = Convert.ToInt32(data.Rows[0][BetCount].ToString())
             };
 
             return generalInfo;
@@ -56,7 +63,7 @@
                 {
                     ReportYear = Convert.ToInt16(dataRow["reportyear"].ToString()),
                     ReportMonth = Convert.ToInt16(dataRow["reportmonth"].ToString()),
-                    BetCount = Convert.ToInt16(dataRow["betcount"].ToString())
+                    BetCount = Convert.ToInt16(dataRow[BetCount].ToString())
                 });
             }
 
@@ -72,9 +79,9 @@
                 {
                     SportType = Convert.ToInt16(dataRow["sporttype"].ToString()),
                     SportName = dataRow["sportname"].ToString(),
-                    Turnover = Convert.ToDecimal(dataRow["turnover"].ToString()),
-                    Winloss = Convert.ToDecimal(dataRow["winloss"].ToString()),
-                    Margin = Convert.ToDecimal(dataRow["margin"].ToString())
+                    Turnover = Convert.ToDecimal(dataRow[TurnOver].ToString()),
+                    Winloss = Convert.ToDecimal(dataRow[Winloss].ToString()),
+                    Margin = Convert.ToDecimal(dataRow[Margin].ToString())
                 });
             }
 
@@ -90,9 +97,9 @@
                 {
                     BetType = Convert.ToInt16(dataRow["bettype"].ToString()),
                     BetTypeName = dataRow["bettypename"].ToString(),
-                    Turnover = Convert.ToDecimal(dataRow["turnover"].ToString()),
-                    Winloss = Convert.ToDecimal(dataRow["winloss"].ToString()),
-                    Margin = Convert.ToDecimal(dataRow["margin"].ToString())
+                    Turnover = Convert.ToDecimal(dataRow[TurnOver].ToString()),
+                    Winloss = Convert.ToDecimal(dataRow[Winloss].ToString()),
+                    Margin = Convert.ToDecimal(dataRow[Margin].ToString())
                 });
             }
 
@@ -107,9 +114,9 @@
                 topEventChoices.Add(new EventChoice
                 {
                     IsLive = Convert.ToBoolean(dataRow["islive"].ToString()),
-                    Turnover = Convert.ToDecimal(dataRow["turnover"].ToString()),
-                    Winloss = Convert.ToDecimal(dataRow["winloss"].ToString()),
-                    Margin = Convert.ToDecimal(dataRow["margin"].ToString())
+                    Turnover = Convert.ToDecimal(dataRow[TurnOver].ToString()),
+                    Winloss = Convert.ToDecimal(dataRow[Winloss].ToString()),
+                    Margin = Convert.ToDecimal(dataRow[Margin].ToString())
                 });
             }
 

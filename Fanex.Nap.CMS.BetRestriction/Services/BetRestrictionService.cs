@@ -6,7 +6,6 @@
     using Fanex.Nap.CMS.BetRestriction.Requests;
     using Fanex.Nap.CMS.BetRestriction.ViewModels;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
-    using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -53,10 +52,13 @@
 
         public BetRestrictionSearchViewModel Search(SearchAccountCriteria criteria)
         {
-            var result = new BetRestrictionSearchViewModel();
-            result.AccountViewModel = SearchDataGrid<AccountModel>(criteria);
-            result.CurrencyViewModel = SearchDataGrid<CurrencyModel>(new SearchCurrencyCriteria(criteria.PageSize, criteria.PageIndex));
-            result.SiteViewModel = SearchDataGrid<SiteModel>(new SearchSiteCriteria(criteria.PageSize, criteria.PageIndex));
+            var result = new BetRestrictionSearchViewModel
+            {
+                AccountViewModel = SearchDataGrid<AccountModel>(criteria),
+                CurrencyViewModel = SearchDataGrid<CurrencyModel>(new SearchCurrencyCriteria(criteria.PageSize, criteria.PageIndex)),
+                SiteViewModel = SearchDataGrid<SiteModel>(new SearchSiteCriteria(criteria.PageSize, criteria.PageIndex))
+
+            };           
             return result;
         }
 
@@ -75,7 +77,12 @@
 
         public EditSiteViewModel GetSiteDetailForEdit(int siteId) => Repository.Get<EditSiteViewModel>(new GetSiteDetailCriteria { SiteId = siteId });
 
-        public EditCurrencyViewModel GetCurrencyDetailForEdit(int exchangeId, int type) => Repository.Get<EditCurrencyViewModel>(new GetCurrencyDetailCriteria { ExchangeId = exchangeId, Type = type });
+        public EditCurrencyViewModel GetCurrencyDetailForEdit(int exchangeId, int type) 
+        => Repository.Get<EditCurrencyViewModel>(new GetCurrencyDetailCriteria
+        {
+            ExchangeId = exchangeId,
+            Type = type
+        });
 
         private Result CheckAccount(AccountRequest request, Func<AccountRequest, CheckAddAccountResultModel, string> composeMsgFunction)
         {
@@ -113,61 +120,107 @@
                 result += string.Format(Labels.BetRestriction_UplineExisted, checkResult.UplineLevel, checkResult.ExistingUplineUserName) + Environment.NewLine;
             }
 
-            return result += ComposeCheckEditAccountMessage(request, checkResult);
+            return result + ComposeCheckEditAccountMessage(request, checkResult);
         }
 
         private string ComposeCheckEditAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
             var result = string.Empty;
-            if (request.SeizeBetTicket.HasValue
-                && request.SeizeBetTicket != 0)
+            if (HasTickeValue(request))
             {
-                if (checkResult.IsUplineExists
-                    && checkResult.UplineSeizeBetTicket.HasValue
-                    && checkResult.UplineSeizeBetTicket != 0
-                    && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket)
-                {
-                    result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
-                }
-
-                if (checkResult.IsDownlineExists
-                    && checkResult.MinDownlineSeizeBetTicket.HasValue
-                    && checkResult.MinDownlineSeizeBetTicket != 0
-                    && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket)
-                {
-                    result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
-                }
+                result = ComposeHasValueMessage(request, checkResult, result);
             }
 
             // Seize Bet = None
-            if (request.SeizeBetTicket.HasValue
-                && request.SeizeBetTicket == 0)
+            if (HasTicketNoValue(request))
             {
-                if (checkResult.UplineSeizeBetTicket.HasValue
-                    && checkResult.UplineSeizeBetTicket != 0)
-                {
-                    result += string.Format(Labels.BetRestriction_WarningUplineHadSeizeBet, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
-                }
-
-                if (checkResult.MinDownlineSeizeBetTicket.HasValue
-                    && checkResult.MinDownlineSeizeBetTicket != 0)
-                {
-                    result += string.Format(Labels.BetRestriction_WarningDownlineHadSeizeBet, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
-                }
+                result = ComposeHasNoValueMessage(checkResult, result);
             }
 
             // Seize Bet = Follow Upper Level
             if (!request.SeizeBetTicket.HasValue)
             {
-                if (checkResult.MinDownlineSeizeBetTicket.HasValue
-                    && checkResult.MinDownlineSeizeBetTicket != 0
-                    && checkResult.MinDownlineSeizeBetTicket < checkResult.UplineSeizeBetTicket)
-                {
-                    result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
-                }
+                result = ComposeFollowUpperMessage(checkResult, result);
             }
 
             return result;
+        }
+
+        private static string ComposeFollowUpperMessage(CheckAddAccountResultModel checkResult, string result)
+        {
+            if (IsFollowUpper(checkResult))
+            {
+                result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+            }
+
+            return result;
+        }
+
+        private static bool IsFollowUpper(CheckAddAccountResultModel checkResult)
+        {
+            return checkResult.MinDownlineSeizeBetTicket.HasValue
+                                            && checkResult.MinDownlineSeizeBetTicket != 0
+                                            && checkResult.MinDownlineSeizeBetTicket < checkResult.UplineSeizeBetTicket;
+        }
+
+        private static string ComposeHasNoValueMessage(CheckAddAccountResultModel checkResult, string result)
+        {
+            if (checkResult.UplineSeizeBetTicket.HasValue
+                                && checkResult.UplineSeizeBetTicket != 0)
+            {
+                result += string.Format(Labels.BetRestriction_WarningUplineHadSeizeBet, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
+            }
+
+            if (checkResult.MinDownlineSeizeBetTicket.HasValue
+                && checkResult.MinDownlineSeizeBetTicket != 0)
+            {
+                result += string.Format(Labels.BetRestriction_WarningDownlineHadSeizeBet, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+            }
+
+            return result;
+        }
+
+        private static string ComposeHasValueMessage(AccountRequest request, CheckAddAccountResultModel checkResult, string result)
+        {
+            if (IsUplineHigher(request, checkResult))
+            {
+                result += string.Format(Labels.BetRestriction_WarningUplineSeizeBetHigher, checkResult.UplineSeizeBetTicket) + Environment.NewLine;
+            }
+
+            if (IsDownlineLower(request, checkResult))
+            {
+                result += string.Format(Labels.BetRestriction_WarningDownlineSeizeBetLower, checkResult.MinDownlineSeizeBetTicket) + Environment.NewLine;
+            }
+
+            return result;
+        }
+
+        private static bool IsDownlineLower(AccountRequest request, CheckAddAccountResultModel checkResult)
+        {
+            return checkResult.IsDownlineExists
+                            && checkResult.MinDownlineSeizeBetTicket.HasValue
+                            && checkResult.MinDownlineSeizeBetTicket != 0
+                            && checkResult.MinDownlineSeizeBetTicket < request.SeizeBetTicket;
+        }
+
+        private static bool IsUplineHigher(AccountRequest request, CheckAddAccountResultModel checkResult)
+        {
+            return checkResult.IsUplineExists
+                            && checkResult.UplineSeizeBetTicket.HasValue
+                            && checkResult.UplineSeizeBetTicket != 0
+                            && checkResult.UplineSeizeBetTicket > request.SeizeBetTicket;
+        }
+
+        private static bool HasTicketNoValue(AccountRequest request)
+        {
+            return request.SeizeBetTicket.HasValue
+                            && request.SeizeBetTicket == 0;
+        }
+
+        private static bool HasTickeValue(AccountRequest request)
+        {
+            return request.SeizeBetTicket.HasValue
+                            && request.SeizeBetTicket != 0;
         }
     }
 }

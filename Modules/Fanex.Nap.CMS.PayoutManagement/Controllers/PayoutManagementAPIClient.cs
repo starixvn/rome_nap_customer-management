@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Controllers
 {
     using System.Net;
+    using System.Threading.Tasks;
     using System.Xml;
     using Fanex.Nap.CMS.PayoutManagement.Constants;
     using Fanex.Nap.CMS.PayoutManagement.Models.API;
@@ -8,11 +9,12 @@
 
     public static class PayoutManagementAPIClient
     {
-        public static ColossusBetsAuthorization ColossusBetsAuthorize(int customerId, int memberId)
+        public static async Task<ColossusBetsAuthorization> ColossusBetsAuthorize(int customerId, int memberId)
         {
             using (WebClient client = new WebClient())
             {
-                string json = client.DownloadString(string.Format(PayoutManagementConst.ColossusBetsAPIAuthorizationURL, customerId, memberId));
+                string json = await client.DownloadStringTaskAsync(
+                    string.Format(PayoutManagementConst.ColossusBetsAPIAuthorizationURL, customerId, memberId));
 
                 return JsonConvert.DeserializeObject<ColossusBetsAuthorization>(json);
             }

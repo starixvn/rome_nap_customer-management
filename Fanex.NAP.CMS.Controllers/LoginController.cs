@@ -110,11 +110,6 @@ namespace Fanex.NAP.CMS.Controllers
                 return Redirect(NapSettings.Settings.HubUrl);
             }
 
-            if (_maintenanceService.IsUnderMaintenance())
-            {
-                return RedirectToAction("Offline");
-            }
-
             GenerateToken();
 
             return View();
@@ -418,9 +413,10 @@ namespace Fanex.NAP.CMS.Controllers
 
             if (Request.Cookies[LoginFormToken] != null)
             {
-                HttpCookie cookie = new HttpCookie(LoginFormToken);
-
-                cookie.Expires = DateTime.Now.AddDays(-1d);
+                HttpCookie cookie = new HttpCookie(LoginFormToken)
+                {
+                    Expires = DateTime.Now.AddDays(-1d)
+                };
                 Response.Cookies.Add(cookie);
             }
         }

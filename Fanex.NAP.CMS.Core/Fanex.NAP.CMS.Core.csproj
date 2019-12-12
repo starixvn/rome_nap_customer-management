@@ -162,6 +162,7 @@
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\CustomerLevels.cs" />
     <Compile Include="Constants\UpdateStatusType.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\DateTimeExtensions.cs" />
     <Compile Include="Helpers\EnumerateExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

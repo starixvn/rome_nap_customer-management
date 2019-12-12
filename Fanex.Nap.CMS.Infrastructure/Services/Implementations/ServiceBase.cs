@@ -18,7 +18,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 
         }
 
-        public ServiceBase(IDynamicRepository repository, CMSConverter converter)
+        public ServiceBase(IDynamicRepository repository, ICMSConverter converter)
         {
             DynamicRepository = repository ?? new DynamicRepository();
             CMSConverter = converter ?? new CMSConverterImplement();
@@ -27,7 +27,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 
         protected IDynamicRepository DynamicRepository { get; set; }
 
-        protected CMSConverter CMSConverter { get; set; }
+        protected ICMSConverter CMSConverter { get; set; }
 
         protected IDynamicRepository Repository
         {

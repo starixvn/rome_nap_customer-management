@@ -19,6 +19,8 @@ namespace Fanex.NAP.CMS.Core.Web
     /// </summary>
     public static class CacheRef
     {
+        private const string LanguageCode = "en-US";
+
         /// <summary>
         /// Gets bet type name.
         /// </summary>
@@ -44,7 +46,7 @@ namespace Fanex.NAP.CMS.Core.Web
                 resourceId = betID.ToString().Substring(1);
             }
 
-            return RefData.GetBetTypeName(bettypeId.ToString(), "en-US", string.Empty, resourceId);
+            return RefData.GetBetTypeName(bettypeId.ToString(), LanguageCode, string.Empty, resourceId);
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace Fanex.NAP.CMS.Core.Web
         /// <returns>Sport name.</returns>
         public static string GetSportName(object sportID)
         {
-            return RefData.GetSportName(Converter.ToString2(sportID), "en-US", string.Empty);
+            return RefData.GetSportName(Converter.ToString2(sportID), LanguageCode, string.Empty);
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace Fanex.NAP.CMS.Core.Web
         /// <returns>Team name.</returns>
         public static string GetTeamName(object teamID)
         {
-            return RefData.GetTeamName(Converter.ToString2(teamID), "en-US", string.Empty);
+            return RefData.GetTeamName(Converter.ToString2(teamID), LanguageCode, string.Empty);
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace Fanex.NAP.CMS.Core.Web
         /// <returns>League name.</returns>
         public static string GetLeagueName(object leagueID)
         {
-            return RefData.GetLeagueName(Converter.ToString2(leagueID), "en-US", string.Empty);
+            return RefData.GetLeagueName(Converter.ToString2(leagueID), LanguageCode, string.Empty);
         }
 
         /// <summary>
@@ -84,7 +86,7 @@ namespace Fanex.NAP.CMS.Core.Web
         /// <returns>Odd type name.</returns>
         public static string GetOddsTypeName(object oddsType)
         {
-            return RefData.GetOddsTypeName(Converter.ToString2(oddsType), "en-US");
+            return RefData.GetOddsTypeName(Converter.ToString2(oddsType), LanguageCode);
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace Fanex.NAP.CMS.Core.Web
         /// <returns>The country name.</returns>
         public static string GetCountryName(string countryCode)
         {
-            return RefData.GetCountryName(countryCode, "en-US", string.Empty);
+            return RefData.GetCountryName(countryCode, LanguageCode, string.Empty);
         }
 
         /// <summary>

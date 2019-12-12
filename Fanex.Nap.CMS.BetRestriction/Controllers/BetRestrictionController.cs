@@ -32,9 +32,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var viewModel = new BetRestrictionViewModel();
-            viewModel.Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria());
-            viewModel.Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria());
+            var viewModel = new BetRestrictionViewModel
+            {
+                Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
+                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria())
+            };
             return View(_indexPath, viewModel);
         }
 
@@ -181,7 +183,7 @@
         }));
 
         private SearchAccountCriteria CreateSearchCriteriaFromRequest(SearchRequest request)
-            => new SearchAccountCriteria()
+            => new SearchAccountCriteria
             {
                 UserName = request.UserName,
                 RoleId = request.RoleId,

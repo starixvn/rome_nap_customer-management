@@ -13,7 +13,7 @@
     {
         private readonly string _indexPath = "~/Areas/BetRestrictionManagement/Index.cshtml";
 
-        private IBetRestrictionManagementService _betRestrictionManagementService;
+        private readonly IBetRestrictionManagementService _betRestrictionManagementService;
 
         public BetRestrictionManagementController() : this(null)
         {

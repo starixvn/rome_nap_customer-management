@@ -1,7 +1,5 @@
 ﻿/* File Created: November 14, 2012 */
-/// <reference path="../jquery-1.8.2.js" />
-/// <reference path="../jquery-ui-1.9.1.js" />
-
+/// <reference path="../jQuery/jquery-1.8.2.min.js" />
 
 (function () {
 
@@ -139,10 +137,10 @@
         RenderNexDatePicker: function () {
             var options = this.Options;
             var html = [];
-            var firstDatePickerLabelCss = (typeof options.firstDatePicker.LabelCss != "undefined") ? options.firstDatePicker.LabelCss : "";
-            var firstDatePickerTextboxCss = (typeof options.firstDatePicker.TextboxCss != "undefined") ? options.firstDatePicker.TextboxCss : "";
-            var secondDatePickerLabelCss = (typeof options.secondDatePicker.LabelCss != "undefined") ? options.secondDatePicker.LabelCss : "";
-            var secondDatePickerTextboxCss = (typeof options.secondDatePicker.TextboxCss != "undefined") ? options.secondDatePicker.TextboxCss : "";
+            var firstDatePickerLabelCss = typeof options.firstDatePicker.LabelCss != "undefined" ? options.firstDatePicker.LabelCss : "";
+            var firstDatePickerTextboxCss = typeof options.firstDatePicker.TextboxCss != "undefined" ? options.firstDatePicker.TextboxCss : "";
+            var secondDatePickerLabelCss = typeof options.secondDatePicker.LabelCss != "undefined" ? options.secondDatePicker.LabelCss : "";
+            var secondDatePickerTextboxCss = typeof options.secondDatePicker.TextboxCss != "undefined" ? options.secondDatePicker.TextboxCss : "";
 
             //// Render DropdownList time
             if (options.nexDatePickerType == "quickchoose") {
@@ -156,7 +154,7 @@
                     + options.dropDownList.OptionCss
                     + '">');
                 html.push('<select id="' + options.dropDownList.Id +
-                                '" class="' + options.dropDownList.Id + '">');
+                    '" class="' + options.dropDownList.Id + '">');
                 for (var i = 0; i < options.optionItems.length; i++) {
                     var optionItem = options.optionItems[i];
                     if (selectedItem == optionItem.Value) {
@@ -172,20 +170,20 @@
 
             //// Render First DatePiker Element
             html.push(
-              '<div class="ui_nexdatepicker_lbl_field ' + firstDatePickerLabelCss + '">' + options.firstDatePicker.Label + '</div>'
-             + '<div class="ui_nexdatepicker_edit_field ' + firstDatePickerTextboxCss + '">'
-             + '<input type="text" id="' + options.firstDatePicker.Id + '" name="' + options.firstDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" />'
-             + '</div>'
-             );
+                '<div class="ui_nexdatepicker_lbl_field ' + firstDatePickerLabelCss + '">' + options.firstDatePicker.Label + '</div>'
+                + '<div class="ui_nexdatepicker_edit_field ' + firstDatePickerTextboxCss + '">'
+                + '<input type="text" id="' + options.firstDatePicker.Id + '" name="' + options.firstDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" />'
+                + '</div>'
+            );
 
 
             //// Render Second DatePicker Element
             if (options.nexDatePickerType != "single") {
                 html.push(
-                  '<div class="ui_nexdatepicker_lbl_field ' + secondDatePickerLabelCss + '">' + options.secondDatePicker.Label + '</div>'
-                 + '<div class="ui_nexdatepicker_edit_field ' + secondDatePickerTextboxCss + '">'
-                 + '<input type="text" id="' + options.secondDatePicker.Id + '" name="' + options.secondDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" />'
-                 + '</div>'
+                    '<div class="ui_nexdatepicker_lbl_field ' + secondDatePickerLabelCss + '">' + options.secondDatePicker.Label + '</div>'
+                    + '<div class="ui_nexdatepicker_edit_field ' + secondDatePickerTextboxCss + '">'
+                    + '<input type="text" id="' + options.secondDatePicker.Id + '" name="' + options.secondDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" />'
+                    + '</div>'
                 );
             }
 
@@ -201,7 +199,7 @@
             }
             else {
                 ids += "#" + options.firstDatePicker.Id + ", "
-                + "#" + options.secondDatePicker.Id;
+                    + "#" + options.secondDatePicker.Id;
             }
             this.$datePickers = $(ids);
             this.DatePickerOnSelect();
@@ -287,31 +285,31 @@
             var options = this.Options;
             var $datePickers = this.$datePickers;
             var optionSelect =
-            {
-                onSelect: function (selectedDate) {
-                    if (options.nexDatePickerType != "single") {
-                        var option = this.id == options.firstDatePicker.Id ? "minDate" : "maxDate";
-                        var instance = $(this).data("datepicker");
-                        var date = $.datepicker.parseDate(instance.settings.dateFormat
-                                                        || $.datepicker._defaults.dateFormat,
-                                                            selectedDate,
-                                                            instance.settings);
-                        var nothis = $datePickers.not(this);
-                        //.datepicker("disable")
+                {
+                    onSelect: function (selectedDate) {
+                        if (options.nexDatePickerType != "single") {
+                            var option = this.id == options.firstDatePicker.Id ? "minDate" : "maxDate";
+                            var instance = $(this).data("datepicker");
+                            var date = $.datepicker.parseDate(instance.settings.dateFormat
+                                || $.datepicker._defaults.dateFormat,
+                                selectedDate,
+                                instance.settings);
+                            var nothis = $datePickers.not(this);
+                            //.datepicker("disable")
 
-                        setTimeout(function () {
-                            nothis.datepicker("option", option, date);
-                        }, 200);
-                        //.datepicker("close");
-                        //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
+                            setTimeout(function () {
+                                nothis.datepicker("option", option, date);
+                            }, 200);
+                            //.datepicker("close");
+                            //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
+                        }
+                        options.onSelectDatePicker(selectedDate);
+                        me.$dropDownList.val(7);
                     }
-                    options.onSelectDatePicker(selectedDate);
-                    me.$dropDownList.val(7);
-                }
-            }
+                };
             this.Options.datePickerFormat = $.extend({}, this.Options.datePickerFormat, optionSelect);
         }
-    }
+    };
 
     //// Helper for Calculation Date
     var NexDatePickerHelper =

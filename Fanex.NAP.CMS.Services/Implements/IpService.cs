@@ -37,7 +37,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
         public bool IsValidIp(string ipAddress)
         {
-            string pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" + @"(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";
+            const string pattern = @"^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])" + @"(\.([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])){3}$";
             Regex check = new Regex(pattern);
             if (string.IsNullOrEmpty(ipAddress))
             {

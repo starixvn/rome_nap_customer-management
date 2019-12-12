@@ -18,6 +18,7 @@
     public class PayoutListController : BaseController
     {
         private readonly IPayoutListService _payoutService;
+        private static List<int> RNGProductId = new List<int> { 208, 209, 210 };
 
         public PayoutListController()
             : this(null)
@@ -107,10 +108,8 @@
 
         [NonAction]
         private dynamic GetPayoutListFilter()
-        {
-            IList<GroupIdNameModel> sitesLicensees;
-            IList<ProductModel> products;
-            _payoutService.GetSitesLicenseesProducts(out sitesLicensees, out products);
+        {           
+            _payoutService.GetSitesLicenseesProducts(out IList<GroupIdNameModel> sitesLicensees, out IList<ProductModel> products);
 
             return new
             {
@@ -137,7 +136,7 @@
 
         private static bool IsRnGCasino(int productId)
         {
-            return productId == 208 || productId == 209 || productId == 210;
+            return RNGProductId.Contains(productId);
         }
     }
 }

@@ -61,7 +61,7 @@
 
         public string SerializeJSON()
         {
-            string jsonFormat = "{{" +
+            const string jsonFormat = "{{" +
                 "\"vendor\":\"{0}\"," +
                 "\"vendorKey\":\"{1}\"," +
                 "\"data\":" +

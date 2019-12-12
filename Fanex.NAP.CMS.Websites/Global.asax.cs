@@ -19,6 +19,7 @@ namespace Fanex.NAP.CMS.Websites
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
+    using ONEbook.UM.Filters;
     using RemotingRef;
 
     /// <summary>
@@ -33,6 +34,7 @@ namespace Fanex.NAP.CMS.Websites
             LoggingConfig.Init(
                   new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" },
                   getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+            GlobalFilters.Filters.Add(new CheckUMFilter());
 
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();
@@ -40,12 +42,6 @@ namespace Fanex.NAP.CMS.Websites
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            ExceptionHandler
-                .UseConfig(new LoggingConfiguration()
-                .GetHttpHeaderInfo()
-                .GetHttpSessionInfo())
-                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))

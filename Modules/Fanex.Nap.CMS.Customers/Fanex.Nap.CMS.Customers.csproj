@@ -188,6 +188,7 @@
     <Compile Include="AppStart\CustomersAreaRegistration.cs" />
     <Compile Include="AppStart\CustomersBundlesConfig.cs" />
     <Compile Include="Constants\AccountStatusConst.cs" />
+    <Compile Include="Constants\CounterOptionConstants.cs" />
     <Compile Include="Constants\CurrencyConst.cs" />
     <Compile Include="Constants\IsReducedConst.cs" />
     <Compile Include="Constants\OrderByConst.cs" />

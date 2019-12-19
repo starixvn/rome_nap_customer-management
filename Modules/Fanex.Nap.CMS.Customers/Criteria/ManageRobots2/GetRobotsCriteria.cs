@@ -17,6 +17,12 @@
 
         public int PageIndex { get; set; }
 
+        public int Counter { get; set; }
+
+        public string SortColumnName { get; set; }
+
+        public string SortDirection { get; set; } = string.Empty;
+
         [SpParam(Ignored = true)]
         public int ErrCode { get; set; }
 
@@ -39,6 +45,10 @@
                 { "totalitems", 0 }
             };
 
+            result.Add("counter", Counter);
+            result.Add("ordertype", SortDirection);
+            result.Add("orderoption", GetOrderOption());
+
             if (Level != 0)
             {
                 result.Add("level", Level);
@@ -50,6 +60,27 @@
             }
 
             return result;
+        }
+
+        private int GetOrderOption()
+        {
+            switch (SortColumnName)
+            {
+                case "ColCurrency":
+                    return 1;
+                case "ColSite":
+                    return 2;
+                case "ColCountry":
+                    return 3;
+                case "ColRegion":
+                    return 4;
+                case "ColLastChangeTime":
+                    return 5;
+                case "ColCounter":
+                    return 6;
+                default:
+                    return 0;
+            }
         }
     }
 }

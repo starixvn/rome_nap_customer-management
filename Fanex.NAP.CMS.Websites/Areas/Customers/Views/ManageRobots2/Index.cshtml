@@ -1,6 +1,7 @@
 ﻿@using Fanex.Nap.CMS.Customers.Resources
 @using Fanex.Nap.CMS.Infrastructure.Constants
 @using Fanex.Nap.CMS.Customers.ViewModels.ManageRobots2
+@using Fanex.Nap.CMS.Customers.Constants
 @model ManageRobots2IndexViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,6 +18,7 @@
     </div>
 }
 <div class="filter-bar">
+    <span id="note-info" class="note-info-message" title=""></span>
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_3">
@@ -26,7 +28,7 @@
                 <input type="text" id="txt-username" class="txt-username" maxlength="50" />
             </div>
             <div class="lbl-field col_3">
-                <label for="txt-username">@Labels.Level</label>
+                <label for="ddl-level">@Labels.Level</label>
             </div>
             <div class="edit-field col_6 align-left">
                 <select id="ddl-level" class="combobox-autocomplete ddl-level">
@@ -36,8 +38,9 @@
                     <option value="@RoleIdConstants.Agent">@Labels.Agent</option>
                     <option value="@RoleIdConstants.Member">@Labels.Member</option>
                 </select>
-            </div><div class="lbl-field col_3">
-                <label for="txt-username">@Labels.Currency</label>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="ddl-currency">@Labels.Currency</label>
             </div>
             <div class="edit-field col_8 align-left">
                 <select id="ddl-currency" class="combobox-autocomplete ddl-currency">
@@ -49,10 +52,20 @@
                 </select>
             </div>
             <div class="lbl-field col_3">
-                <label for="txt-username">@Labels.Site</label>
+                <label for="ddl-site">@Labels.Site</label>
             </div>
             <div class="edit-field col_8 align-left">
                 <select id="ddl-site" class="ddl-site"></select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="ddl-counter">@Labels.Counter</label>
+            </div>
+            <div class="edit-field col_6 align-left">
+                <select id="ddl-counter" class="combobox-autocomplete ddl-counter">
+                    <option value="@CounterOptionConstants.All">@Labels.All</option>
+                    <option value="@CounterOptionConstants.NotLessThan10">>=10</option>
+                    <option value="@CounterOptionConstants.LessThan10"><10</option>
+                </select>
             </div>
             <div class="submit width-auto col_4">
                 <input id="btn-search" type="button" class="submit" value="@Labels.Search" />
@@ -111,6 +124,39 @@
                 </div>
             </div>
         </div>
+        <div id="robot-rules-container" class="robot-rules-container display-none">
+            <ul class="robot-rules">
+                <li>
+                    <ul class="count-rules">
+                        Rules to add count (Apply to Credit 2.0 & Licensee 2.0):
+                        <li>
+                            1. Page Calling Count
+                            <ul>
+                                <li>1.1. Odds clicked more than 45 times within 45s</li>
+                                <li>1.2. Menu called more than 45 times within 45s</li>
+                            </ul>
+                        </li>
+                        <li>
+                            2. Parameter Format mismatch:
+                            <ul>
+                                <li>2.1. Get Ticket without user id</li>
+                                <li>2.2. Contain non-essentials field or suspicious parameters</li>
+                            </ul>
+                        </li>
+                        <li>
+                            3. Everytime adding the counter, user will be disconnected and re-login
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <ul class="action-rules">
+                        Action & Condition of Robot Users (Only apply to NOVA & 789Y 2.0 for now)
+                        <li>1. Counter >=10,</li>
+                        <li>2. Redirect credit user to Robot Server for future login</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 }
 @section Foot
@@ -143,7 +189,11 @@
             Message_DeleteSuccessfully: "@Html.Raw(Labels.Message_DeleteSuccessfully)",
             All: '@Labels.All',
             Credit: '@Labels.Credit',
-            Licensee: '@Labels.Licensee'
+            Licensee: '@Labels.Licensee',
+            Country: '@Labels.Country',
+            Region: '@Labels.Region',
+            NoSite: '@Labels.NoSite',
+            RobotRulesTitle: '@Labels.RobotRulesTitle'
         };
     </script>
 }

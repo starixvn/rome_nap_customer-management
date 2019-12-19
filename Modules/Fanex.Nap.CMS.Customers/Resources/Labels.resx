@@ -255,4 +255,16 @@
   <data name="Currency" xml:space="preserve">
     <value>Currency</value>
   </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="NoSite" xml:space="preserve">
+    <value>No Site</value>
+  </data>
+  <data name="RobotRulesTitle" xml:space="preserve">
+    <value>Robot Identification Rules &amp; Actions</value>
+  </data>
 </root>

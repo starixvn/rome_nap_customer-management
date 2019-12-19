@@ -9,6 +9,8 @@
         public string Level { get; set; }
         public string Site { get; set; }
         public string IP { get; set; }
+        public string Country { get; set; }
+        public string Region { get; set; }
 
         public DateTime? LastChangeTime { get; set; }
         public string LastChangeTimeStr => LastChangeTime?.ToString("MM/dd/yyyy HH:mm:ss") ?? string.Empty;

@@ -69,6 +69,8 @@
                         AddedDate = reader["AddedDate"] == DBNull.Value ? (DateTime?)null : Converter.ToDateTime(reader["AddedDate"]),
                         Remark = Converter.ToString2(reader["Remark"]),
                         IP = Converter.ToString2(reader["IP"]),
+                        Country = Converter.ToString2(reader["Country"]),
+                        Region = Converter.ToString2(reader["Region"]),
                         Currency = Converter.ToString2(reader["Currency"])
                     });
                 }

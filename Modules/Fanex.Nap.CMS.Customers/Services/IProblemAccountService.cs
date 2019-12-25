@@ -57,5 +57,13 @@
             bool confirmed,
             int userId,
             string ip);
+
+        Result UpdateInformingStatus(
+            string usernames,
+            byte roleId,
+            int informType,
+            bool applyDownlines,
+            int userId,
+            string ip);
     }
 }

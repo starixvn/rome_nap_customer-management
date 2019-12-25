@@ -169,6 +169,25 @@
             return result;
         }
 
+        public Result UpdateInformingStatus(
+            string usernames,
+            byte roleId,
+            int informType,
+            bool applyDownlines,
+            int userId,
+            string ip)
+        {
+            var result = repository.ExecuteNonQuery(
+                new UpdateInformingStatusCriteria(usernames, roleId, informType, applyDownlines, userId, ip));
+
+            if (IsSuccessResult(result))
+            {
+                result.Message = ProblemAccountResource.UpdateInformingStatusSuccessfully;
+            }
+
+            return result;
+        }
+
         private static IDictionary<int, IList<string>> BuildProblemAccountReasons(
             IEnumerable<ProblemAccountReason> reasons)
         {

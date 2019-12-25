@@ -34,7 +34,8 @@
             inactivateAccount: "@ProblemAccountResource.InactivateAccount",
             inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
             _1stWeekInformed: "@ProblemAccountResource._1stWeekInformed",
-            _2ndWeekInformed: "@ProblemAccountResource._2ndWeekInformed"
+            _2ndWeekInformed: "@ProblemAccountResource._2ndWeekInformed",
+            thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
             defaultMinDate = "@IndexViewModel.DefaultMinDate.ToShortFormatedDateWithSlash()",
@@ -43,6 +44,7 @@
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
         var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
         var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
+        var updater = '@Model.Updater';
     </script>
     @Scripts.Render(CustomersBundlesConfig.ProblemAccountScript)
 }
@@ -69,6 +71,7 @@
             <button type="button" class="blue-button" id="btn-reduceBetLimit">@ProblemAccountResource.ReduceBetLimit</button>
             <button type="button" class="blue-button" id="btn-inactivate">@ProblemAccountResource.Inactivate</button>
             <button type="button" class="blue-button" id="btn-removeReducedBetLimit">@ProblemAccountResource.RemoveReducedBetLimit</button>
+            <button type="button" class="blue-button" id="btn-informing-status">@ProblemAccountResource.UpdateInformingStatus</button>
         </div>
     </div>
 }
@@ -84,6 +87,7 @@
             Html.RenderPartial("_ReduceBetLimit");
             Html.RenderPartial("_InactivateAccount");
             Html.RenderPartial("_RemoveReduceBetLimit");
+            Html.RenderPartial("_InformingStatus", Model);
         }
     </div>
 }

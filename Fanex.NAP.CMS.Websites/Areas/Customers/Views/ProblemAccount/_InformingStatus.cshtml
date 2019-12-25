@@ -1,0 +1,32 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount.IndexViewModel
+@using (Html.BeginForm("UpdateInformingStatus", "ProblemAccount", FormMethod.Post, new { id = "formInformingStatus", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row min-height-25">
+        <div class="edit-field">
+            <select id="ddl-inform-type" class="width-250" name="InformedType">
+                <option value="0">@ProblemAccountResource.PleaseSelect</option>
+                <option value="1">@ProblemAccountResource._1stWeekInformedBy @Model.Updater</option>
+                <option value="2">@ProblemAccountResource._2ndWeekInformedBy @Model.Updater</option>
+                <option value="3">@ProblemAccountResource.BothWeeksInformedBy @Model.Updater</option>
+                <option value="4">@ProblemAccountResource.NoneWeekInformed</option>
+            </select>
+            <span class="note-text">*</span>
+        </div>
+    </div>
+    <div class="form-row min-height-25 row-downlines">
+        <div class="edit-field checkbox">
+            <input type="checkbox" name="applyDownlines" value="true" id="chk-apply-downlines" />
+            <label for="chk-apply-downlines">@ProblemAccountResource.ApplyDownlines</label>
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.OK</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

@@ -7,7 +7,8 @@
         formReduceBL: $("#formReduceBL"),
         formInactivateAccount: $("#formInactivateAccount"),
         formRemoveReduceBLMemmber: $("#formRemoveReduceBLMemmber"),
-        formRemoveReduceBLSMA: $("#formRemoveReduceBLSMA")
+        formRemoveReduceBLSMA: $("#formRemoveReduceBLSMA"),
+        formInformingStatus: $("#formInformingStatus")
     };
 
     function bindEvents() {
@@ -47,11 +48,20 @@
                 removeReduceBL.init(modalTitle, usernames, level);
             });
         });
+
+        $("#btn-informing-status").click(function () {
+            var modalTitle = this.textContent;
+
+            handleActions(function (usernames, level, updater) {
+                var reduceBL = new ProblemAccountInformingStatus(elements.formInformingStatus.clone(), problemAccountSearch.reloadData);
+                reduceBL.init(modalTitle, usernames, level, updater);
+            });
+        });
     }
 
     function handleActions(handleActionCallback) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        problemAccount.usernames.length > 0 && handleActionCallback(problemAccount.usernames, problemAccount.level);
+        problemAccount.usernames.length > 0 && handleActionCallback(problemAccount.usernames, problemAccount.level, updater);
     }
 
     function getUnmarkForm(level) {

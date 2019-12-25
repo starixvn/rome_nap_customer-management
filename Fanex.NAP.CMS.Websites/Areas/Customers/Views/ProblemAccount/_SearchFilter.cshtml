@@ -12,7 +12,7 @@
         <div class="lbl-field col_3">
             <label>@ProblemAccountResource.Currency</label>
         </div>
-        <div class="edit-field col_4">
+        <div class="edit-field col_5">
             @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-50" })
         </div>
         <div class="lbl-field col_5">
@@ -44,13 +44,13 @@
         <div class="lbl-field col_3">
             <label for="username">@ProblemAccountResource.Username</label>
         </div>
-        <div class="edit-field col_5">
+        <div class="edit-field col_7">
             <input type="text" id="username" autocomplete="off" maxlength="50" />
         </div>
         <div class="edit-field col_1 checkbox">
             <input type="checkbox" id="chk-seachDownlines" />
         </div>
-        <div class="lbl-field col_9 align-left">
+        <div class="lbl-field col_8 align-left">
             <label for="chk-seachDownlines" class="small-margin-left">@ProblemAccountResource.SearchDownlines</label>
         </div>
         <div class="lbl-field col_3">

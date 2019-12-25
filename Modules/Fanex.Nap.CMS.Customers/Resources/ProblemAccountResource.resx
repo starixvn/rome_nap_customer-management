@@ -336,4 +336,28 @@
   <data name="_2ndWeekInformed" xml:space="preserve">
     <value>2nd Week Informed</value>
   </data>
+  <data name="UpdateInformingStatus" xml:space="preserve">
+    <value>Update Informing Status</value>
+  </data>
+  <data name="ApplyDownlines" xml:space="preserve">
+    <value>Apply for the selected account(s) and all downlines.</value>
+  </data>
+  <data name="_1stWeekInformedBy" xml:space="preserve">
+    <value>1st week informed by</value>
+  </data>
+  <data name="_2ndWeekInformedBy" xml:space="preserve">
+    <value>2nd week informed by</value>
+  </data>
+  <data name="BothWeeksInformedBy" xml:space="preserve">
+    <value>Both weeks informed by</value>
+  </data>
+  <data name="NoneWeekInformed" xml:space="preserve">
+    <value>None week informed</value>
+  </data>
+  <data name="thisFieldIsRequired" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="UpdateInformingStatusSuccessfully" xml:space="preserve">
+    <value>The informing statuses of the selected accounts have been successfully updated.</value>
+  </data>
 </root>

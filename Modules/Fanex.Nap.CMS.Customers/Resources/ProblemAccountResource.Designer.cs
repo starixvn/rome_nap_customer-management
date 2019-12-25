@@ -70,11 +70,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1st week informed by.
+        /// </summary>
+        public static string _1stWeekInformedBy {
+            get {
+                return ResourceManager.GetString("_1stWeekInformedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2nd Week Informed.
         /// </summary>
         public static string _2ndWeekInformed {
             get {
                 return ResourceManager.GetString("_2ndWeekInformed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2nd week informed by.
+        /// </summary>
+        public static string _2ndWeekInformedBy {
+            get {
+                return ResourceManager.GetString("_2ndWeekInformedBy", resourceCulture);
             }
         }
         
@@ -142,11 +160,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply for the selected account(s) and all downlines..
+        /// </summary>
+        public static string ApplyDownlines {
+            get {
+                return ResourceManager.GetString("ApplyDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bad Request..
         /// </summary>
         public static string BadRequest {
             get {
                 return ResourceManager.GetString("BadRequest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Both weeks informed by.
+        /// </summary>
+        public static string BothWeeksInformedBy {
+            get {
+                return ResourceManager.GetString("BothWeeksInformedBy", resourceCulture);
             }
         }
         
@@ -412,6 +448,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to None week informed.
+        /// </summary>
+        public static string NoneWeekInformed {
+            get {
+                return ResourceManager.GetString("NoneWeekInformed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string OK {
@@ -619,6 +664,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This field is required..
+        /// </summary>
+        public static string thisFieldIsRequired {
+            get {
+                return ResourceManager.GetString("thisFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         public static string To {
@@ -669,6 +723,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string UnmarkTheSelectedAccountsAndAllDownlines {
             get {
                 return ResourceManager.GetString("UnmarkTheSelectedAccountsAndAllDownlines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Informing Status.
+        /// </summary>
+        public static string UpdateInformingStatus {
+            get {
+                return ResourceManager.GetString("UpdateInformingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The informing statuses of the selected accounts have been successfully updated..
+        /// </summary>
+        public static string UpdateInformingStatusSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateInformingStatusSuccessfully", resourceCulture);
             }
         }
         

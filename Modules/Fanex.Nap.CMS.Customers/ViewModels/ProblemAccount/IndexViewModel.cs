@@ -23,13 +23,15 @@
             bool hasHostPermission,
             SearchViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
-            IEnumerable<IdNameModel> markNewReasons)
+            IEnumerable<IdNameModel> markNewReasons,
+            string updater)
         {
             HasHostPermission = hasHostPermission;
             AutoReload = searchViewModel != null;
             SearchFilter = searchViewModel ?? new SearchViewModel();
             Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
             MarkNewReasons = BuildMarkNewReasons(markNewReasons);
+            Updater = updater;
         }
 
         public bool HasHostPermission { get; }
@@ -39,6 +41,8 @@
         public SearchViewModel SearchFilter { get; }
 
         public DateTime CurrentDate { get; } = DateTime.Today;
+
+        public string Updater { get; }
 
         public IEnumerable<SelectListItem> Levels { get; } = new[]
         {

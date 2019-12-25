@@ -424,6 +424,7 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\problemAccount-informingStatus.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\filter.js" />
@@ -928,6 +929,7 @@
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateDangerLevel.cshtml" />
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateMonitorStatus.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\member-report.less" />
+    <Content Include="Areas\Customers\Views\ProblemAccount\_InformingStatus.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\AutoSuspendLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\auto-suspend-log.less" />
     <None Include="BundleTransformer.Configuration.xsd">

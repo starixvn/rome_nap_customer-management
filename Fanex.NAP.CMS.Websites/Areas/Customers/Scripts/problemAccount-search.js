@@ -132,11 +132,11 @@
     }
 
     function initGridOptions(hideAbnormalBetColumn) {
-        var hiddenColumns = showSelectColumn ? [] : [8],
-            reasonAndCommentWidth = 420;
+        var hiddenColumns = showSelectColumn ? [] : [10],
+            reasonAndCommentWidth = 340;
 
         if (hideAbnormalBetColumn) {
-            hiddenColumns.push(7);
+            hiddenColumns.push(9);
             reasonAndCommentWidth += 53;
         }
 
@@ -148,8 +148,8 @@
             { HeaderText: resources.markDate, Width: 80, Name: "colMarkDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.reason, Width: reasonAndCommentWidth, Name: "colReason", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: resources.comment, Width: reasonAndCommentWidth, Name: "colComment", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: resources._1stWeekInformed, Width: 100, Name: "col1stWeekInformed", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources._2ndWeekInformed, Width: 100, Name: "col2ndWeekInformed", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources._1stWeekInformed, Width: 80, Name: "col1stWeekInformed", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources._2ndWeekInformed, Width: 80, Name: "col2ndWeekInformed", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.abnormalBet + renderAbnormalBetNote(), Width: 100, Name: "colAbnormalBet", HeaderAlign: "center", CellAlign: "right", CssClass: "custom-grid-colheader" },
             { HeaderText: resources.select + '<br/><input type="checkbox" id="chk-select-all">', Width: 60, Name: "colSelect", HeaderAlign: "center", CellAlign: "center" }
         ];

@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ProblemAccountResource {
@@ -57,6 +57,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1st Week Informed.
+        /// </summary>
+        public static string _1stWeekInformed {
+            get {
+                return ResourceManager.GetString("_1stWeekInformed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2nd Week Informed.
+        /// </summary>
+        public static string _2ndWeekInformed {
+            get {
+                return ResourceManager.GetString("_2ndWeekInformed", resourceCulture);
             }
         }
         
@@ -156,6 +174,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Currency {
             get {
                 return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directly Marked.
+        /// </summary>
+        public static string DirectlyMarked {
+            get {
+                return ResourceManager.GetString("DirectlyMarked", resourceCulture);
             }
         }
         
@@ -372,6 +399,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string MaxPerEvent {
             get {
                 return ResourceManager.GetString("MaxPerEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
             }
         }
         
@@ -669,6 +705,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ViewOnly {
             get {
                 return ResourceManager.GetString("ViewOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

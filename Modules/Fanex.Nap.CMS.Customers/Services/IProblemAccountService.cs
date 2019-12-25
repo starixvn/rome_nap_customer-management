@@ -21,7 +21,8 @@
             bool isSearchDownlines,
             byte orderBy,
             int pageIndex,
-            int pageSize);
+            int pageSize,
+            int directlyMarked);
 
         Result MarkNew(
             string usernames,

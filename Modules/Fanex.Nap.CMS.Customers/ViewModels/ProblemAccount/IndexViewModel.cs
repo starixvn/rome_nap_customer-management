@@ -48,6 +48,14 @@
             BuildSelectListItem(RoleIdConstants.Member, nameof(RoleIdConstants.Member))
         };
 
+        public IEnumerable<SelectListItem> MarkTypes { get; } = new[]
+        {
+            BuildSelectListItem(MarkTypeConst.All,ProblemAccountResource.All),
+            BuildSelectListItem(MarkTypeConst.Yes,ProblemAccountResource.Yes),
+            BuildSelectListItem(MarkTypeConst.No, ProblemAccountResource.No)
+        };
+
+
         public IEnumerable<SelectListItem> Currencies
             => CurrencyConst.CurrencyList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 

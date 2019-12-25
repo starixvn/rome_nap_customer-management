@@ -17,7 +17,8 @@
             bool isSearchDownlines,
             byte orderBy,
             int pageIndex,
-            int pageSize)
+            int pageSize,
+            int directlyMarked)
         {
             FromDate = from;
             ToDate = to;
@@ -31,6 +32,7 @@
             OrderType = orderBy;
             PageIndex = pageIndex;
             PageSize = pageSize;
+            DirectlyMarked = directlyMarked;
         }
 
         public DateTime FromDate { get; }
@@ -58,6 +60,9 @@
         public int PageSize { get; }
 
         public int TotalItems { get; set; }
+
+        [SpParam(Ignored = true)]
+        public int DirectlyMarked { get; }
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_MonitorList";

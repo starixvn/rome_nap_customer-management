@@ -32,7 +32,9 @@
             duplicatedUsernamesError: "@ProblemAccountResource.DuplicatedUsernamesError",
             unmarkProblemAccount: "@ProblemAccountResource.UnmarkProblemAccount",
             inactivateAccount: "@ProblemAccountResource.InactivateAccount",
-            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage"
+            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
+            _1stWeekInformed: "@ProblemAccountResource._1stWeekInformed",
+            _2ndWeekInformed: "@ProblemAccountResource._2ndWeekInformed"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
             defaultMinDate = "@IndexViewModel.DefaultMinDate.ToShortFormatedDateWithSlash()",
@@ -76,12 +78,12 @@
 @if (Model.HasHostPermission)
 {
     <div id="divPopupContent" class="display-none">
-    @{
-        Html.RenderPartial("_MarkNew", Model);
-        Html.RenderPartial("_Unmark");
-        Html.RenderPartial("_ReduceBetLimit");
-        Html.RenderPartial("_InactivateAccount");
-        Html.RenderPartial("_RemoveReduceBetLimit");
-    }
+        @{
+            Html.RenderPartial("_MarkNew", Model);
+            Html.RenderPartial("_Unmark");
+            Html.RenderPartial("_ReduceBetLimit");
+            Html.RenderPartial("_InactivateAccount");
+            Html.RenderPartial("_RemoveReduceBetLimit");
+        }
     </div>
 }

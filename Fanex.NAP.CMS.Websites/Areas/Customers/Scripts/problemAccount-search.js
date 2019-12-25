@@ -17,7 +17,8 @@
         txtUsername: $("#username"),
         chkSearchDownlines: $("#chk-seachDownlines"),
         ddlOrderBy: $("#ddl-orderBy"),
-        dataGrid: $("#freegrid")
+        dataGrid: $("#freegrid"),
+        directlyMarked: $("#ddl-mark-type")
     };
 
     function initSearchFilter() {
@@ -93,7 +94,8 @@
             reason: elements.ddlReason.fanexMultiSelect("getItems", true).join(","),
             username: $.trim(elements.txtUsername.val()),
             isSearchDownlines: elements.chkSearchDownlines.is(":checked"),
-            orderBy: elements.ddlOrderBy.val()
+            orderBy: elements.ddlOrderBy.val(),
+            directlyMarked: elements.directlyMarked.val()
         };
     }
 
@@ -146,6 +148,8 @@
             { HeaderText: resources.markDate, Width: 80, Name: "colMarkDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.reason, Width: reasonAndCommentWidth, Name: "colReason", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: resources.comment, Width: reasonAndCommentWidth, Name: "colComment", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: resources._1stWeekInformed, Width: 100, Name: "col1stWeekInformed", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources._2ndWeekInformed, Width: 100, Name: "col2ndWeekInformed", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.abnormalBet + renderAbnormalBetNote(), Width: 100, Name: "colAbnormalBet", HeaderAlign: "center", CellAlign: "right", CssClass: "custom-grid-colheader" },
             { HeaderText: resources.select + '<br/><input type="checkbox" id="chk-select-all">', Width: 60, Name: "colSelect", HeaderAlign: "center", CellAlign: "center" }
         ];
@@ -202,6 +206,8 @@
                 { Name: "colMarkDate", Value: problemAccount.MarkDateString },
                 { Name: "colReason", Value: renderReasonCell(problemAccount.Reasons || []) },
                 { Name: "colComment", Value: problemAccount.Comment },
+                { Name: "col1stWeekInformed", Value: problemAccount._1stWeekInformed || "<div class='ico-noninformed'></div>" },
+                { Name: "col2ndWeekInformed", Value: problemAccount._2ndWeekInformed || "<div class='ico-noninformed'></div>" },
                 { Name: "colAbnormalBet", Value: renderAbnormalBetCell(problemAccount) },
                 { Name: "colSelect", Value: renderSelectCell(problemAccount.Username) }
             ];

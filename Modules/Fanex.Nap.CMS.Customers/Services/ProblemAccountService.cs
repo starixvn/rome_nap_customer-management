@@ -37,7 +37,8 @@
             bool isSearchDownlines,
             byte orderBy,
             int pageIndex,
-            int pageSize)
+            int pageSize,
+            int directlyMarked)
         {
             var criteria = new SearchCriteria(
                 from,
@@ -51,7 +52,8 @@
                 isSearchDownlines,
                 orderBy,
                 pageIndex,
-                pageSize);
+                pageSize,
+                directlyMarked);
 
             var rawData = repository.GetProblemAccounts(criteria);
             var reasonHash = BuildProblemAccountReasons(rawData.Item2);

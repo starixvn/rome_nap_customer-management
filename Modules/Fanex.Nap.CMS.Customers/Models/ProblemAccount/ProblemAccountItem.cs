@@ -27,7 +27,9 @@
             byte status,
             DateTime markDate,
             string comment,
-            int? abnormalBetNumber)
+            int? abnormalBetNumber,
+            string _1stWeekInformed,
+            string _2ndWeekInformed)
         {
             CustId = custId;
             Username = username;
@@ -51,6 +53,8 @@
             MarkDate = markDate;
             Comment = comment;
             AbnormalBetNumber = abnormalBetNumber;
+            this._1stWeekInformed = _1stWeekInformed;
+            this._2ndWeekInformed = _2ndWeekInformed;
         }
 
         public int CustId { get; }
@@ -100,6 +104,10 @@
         public string StatusName { get; set; }
 
         public string MarkDateString { get; set; }
+
+        public string _1stWeekInformed { get; set; }
+
+        public string _2ndWeekInformed { get; set; }
 
         public IEnumerable<string> Reasons { get; set; }
     }

@@ -54,7 +54,8 @@
                 vm.IsSearchDownlines,
                 vm.OrderBy,
                 vm.PageIndex,
-                vm.PageSize));
+                vm.PageSize,
+                vm.DirectlyMarked));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
         public void Export(SearchViewModel vm)
@@ -71,7 +72,8 @@
                 vm.IsSearchDownlines,
                 vm.OrderBy,
                 1,
-                int.MaxValue - 1);
+                int.MaxValue - 1,
+                vm.DirectlyMarked);
 
             IExcelExporter exporter = new ProblemAccountExporter(vm, data, service.GetReasons(true));
             exporter.ResponseStream();

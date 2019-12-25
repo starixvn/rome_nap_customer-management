@@ -3,7 +3,7 @@
 {
     <div class="filter-row">
         <div id="fromtodate-picker"></div>
-        <div class="lbl-field col_3">
+        <div class="lbl-field col_5">
             <label>@ProblemAccountResource.Level</label>
         </div>
         <div class="edit-field col_5">
@@ -28,12 +28,18 @@
             @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-50" })
         </div>
     </div>
-    <div class="filter-row last-row">
+    <div class="filter-row">
         <div class="lbl-field col_2">
             <label>@ProblemAccountResource.Reason</label>
         </div>
         <div class="edit-field col_11">
             <div id="ddl-reason"></div>
+        </div>
+        <div class="lbl-field col_5">
+            <label>@ProblemAccountResource.DirectlyMarked</label>
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownList("mark-type", Model.MarkTypes, new { id = "ddl-mark-type", @class = "combobox-autocomplete width-80" })
         </div>
         <div class="lbl-field col_3">
             <label for="username">@ProblemAccountResource.Username</label>
@@ -44,7 +50,7 @@
         <div class="edit-field col_1 checkbox">
             <input type="checkbox" id="chk-seachDownlines" />
         </div>
-        <div class="lbl-field col_8 align-left">
+        <div class="lbl-field col_9 align-left">
             <label for="chk-seachDownlines" class="small-margin-left">@ProblemAccountResource.SearchDownlines</label>
         </div>
         <div class="lbl-field col_3">
@@ -53,9 +59,11 @@
         <div class="edit-field col_6">
             @Html.DropDownList("orderBy", Model.OrderBy, new { id = "ddl-orderBy", @class = "combobox-autocomplete width-100" })
         </div>
-        <div class="lbl-field col_3">&nbsp;</div>
+    </div>
+    <div class="filter-row last-row">
+        <div class="lbl-field col_2"></div>
         <div class="submit width-auto col_4">
-            <button type="submit" class="submit">@ProblemAccountResource.Search</button>
+            <button type="submit" class="submit btn-search">@ProblemAccountResource.Search</button>
         </div>
     </div>
 }

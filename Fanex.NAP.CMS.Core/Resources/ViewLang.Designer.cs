@@ -304,6 +304,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply above setting (Virtual Rate only) to.
+        /// </summary>
+        public static string ApplyAboveSettingToVR {
+            get {
+                return ResourceManager.GetString("ApplyAboveSettingToVR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply above setting (Virtual Rate and AutoSuspend) to.
+        /// </summary>
+        public static string ApplyAboveSettingToVR_AS {
+            get {
+                return ResourceManager.GetString("ApplyAboveSettingToVR_AS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Refresh.
         /// </summary>
         public static string AutoRefresh {
@@ -313,11 +331,56 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Suspend.
+        /// </summary>
+        public static string AutoSuspend {
+            get {
+                return ResourceManager.GetString("AutoSuspend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Suspend Live.
+        /// </summary>
+        public static string AutoSuspend_Live {
+            get {
+                return ResourceManager.GetString("AutoSuspend_Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Suspend Non-Live.
+        /// </summary>
+        public static string AutoSuspend_Nonlive {
+            get {
+                return ResourceManager.GetString("AutoSuspend_Nonlive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto Suspend Log.
+        /// </summary>
+        public static string AutoSuspendLog {
+            get {
+                return ResourceManager.GetString("AutoSuspendLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Restriction.
         /// </summary>
         public static string BetRestriction {
             get {
                 return ResourceManager.GetString("BetRestriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type.
+        /// </summary>
+        public static string BetType {
+            get {
+                return ResourceManager.GetString("BetType", resourceCulture);
             }
         }
         
@@ -1753,6 +1816,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch to Auto Suspend&apos;s Edit Mode.
+        /// </summary>
+        public static string SwitchAutoSuspendEdit {
+            get {
+                return ResourceManager.GetString("SwitchAutoSuspendEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch to Auto Suspend&apos;s View Mode.
+        /// </summary>
+        public static string SwitchAutoSuspendView {
+            get {
+                return ResourceManager.GetString("SwitchAutoSuspendView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tick All.
+        /// </summary>
+        public static string TickAll {
+            get {
+                return ResourceManager.GetString("TickAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         public static string To {
@@ -1821,6 +1911,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Unlimited {
             get {
                 return ResourceManager.GetString("Unlimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untick All.
+        /// </summary>
+        public static string UntickAll {
+            get {
+                return ResourceManager.GetString("UntickAll", resourceCulture);
             }
         }
         
@@ -1920,6 +2019,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string ViewUpline {
             get {
                 return ResourceManager.GetString("ViewUpline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate.
+        /// </summary>
+        public static string VirtualRate {
+            get {
+                return ResourceManager.GetString("VirtualRate", resourceCulture);
             }
         }
         
@@ -2037,6 +2145,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Yankee {
             get {
                 return ResourceManager.GetString("Yankee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
         

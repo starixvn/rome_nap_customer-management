@@ -149,5 +149,18 @@
             var exporter = new VirtualRateRealValuesExporter(report);
             exporter.ResponseStream();
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.AutoSuspendLog, Policy = Constant.Policy.Read)]
+        public ActionResult AutoSuspendLog()
+            => View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/AutoSuspendLog.cshtml");
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.AutoSuspendLog, Policy = Constant.Policy.Read)]
+        public JsonResult GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria)
+        {
+            var result = _virtualRateDetailsService.GetAutoSuspendLogs(criteria);
+
+            return Json(result);
+        }
     }
 }

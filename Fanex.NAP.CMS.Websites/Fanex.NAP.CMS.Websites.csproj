@@ -468,6 +468,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\member-vr.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\autosuspend-log.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualSettingMonitorAdvance\Scripts\virtualSettingMonitorAdvance.js" />
@@ -536,6 +538,7 @@
     <Content Include="Content\Themes\img\icon-calendar.png" />
     <Content Include="Content\Themes\img\icon-error-message.png" />
     <Content Include="Content\Themes\img\icon-info-message.png" />
+    <Content Include="Content\Themes\img\icon-no.png" />
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
@@ -924,6 +927,9 @@
     <Content Include="Areas\Customers\Styles\possessStatistics.less" />
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateDangerLevel.cshtml" />
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateMonitorStatus.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\member-report.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\AutoSuspendLog.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\auto-suspend-log.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

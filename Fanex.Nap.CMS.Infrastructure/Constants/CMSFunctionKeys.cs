@@ -90,11 +90,12 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ESports_VirtualRateDetails = "E_Sports_VirtualRateDetails";
         public const string ESports_VirtualRateDetails_GlobalSetting = "E_Sports_VirtualRateDetails_GlobalSetting";
         public const string VirtualRateLog = "VirtualRateLog";
+        public const string AutoSuspendLog = "AutoSuspendLog";
 
         public const string ManageRobots2 = "ManageRobots2";
         public const string BetRestriction = "BetRestriction";
         public const string OnOffBetRestriction = "OnOffBetRestriction";
-        
+
         // Problem Account
         public const string ManageProblemAccountCN88 = "ManageProblemAccount_CN88";
     }

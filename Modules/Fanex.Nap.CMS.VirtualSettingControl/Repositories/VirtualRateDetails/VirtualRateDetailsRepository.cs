@@ -46,7 +46,7 @@
                     result.CustId = Converter.ToInt(reader["CustId"]);
                     result.Username = Converter.ToString2(reader[Username]);
                     result.UplineCustName = Converter.ToString2(reader["UplineUsername"]);
-                    result.ReportLevel = string.IsNullOrWhiteSpace(result.Username) ? 0 : 1;
+                    result.ReportLevel = string.IsNullOrWhiteSpace(result.Username) ? 0 : Converter.ToInt(reader["RoleId"]);
                 }
 
                 if (reader.NextResult())
@@ -65,7 +65,13 @@
                             NonliveId = Converter.ToInt(reader["ValueIdNonLive"]),
                             NonliveValue = Converter.ToDecimal(reader["ValueNonLive"], -1),
                             LiveId = Converter.ToInt(reader["ValueIdLive"]),
-                            LiveValue = Converter.ToDecimal(reader["ValueLive"], -1)
+                            LiveValue = Converter.ToDecimal(reader["ValueLive"], -1),
+                            NonliveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThreshold"], -1),
+                            LiveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThreshold"], -1),
+                            DisableNonliveAutoSuspend = Converter.ToInt(reader["IsDisableNonLiveAutoSuspend"]) == 1,
+                            DisableLiveAutoSuspend = Converter.ToInt(reader["IsDisableLiveAutoSuspend"]) == 1,
+                            NonliveAutoSuspend = Converter.ToBool(reader["IsNonLiveAutoSuspend"], true),
+                            LiveAutoSuspend = Converter.ToBool(reader["IsLiveAutoSuspend"], true)
                         };
 
                         dto.SportName = CacheRef.GetSportName(dto.SportType);
@@ -150,7 +156,8 @@
                     SportType = criteria.SportType,
                     UserId = criteria.UserId,
                     IP = criteria.IP,
-                    Rates = criteria.Rates
+                    Rates = criteria.Rates,
+                    IsMember = criteria.IsMember
                 });
 
                 if (updateResult.Code != 0)
@@ -289,12 +296,13 @@
             {
                 var leagues = virtualRateDTOs.Where(d => d.SportType == sport.SportType && d.LeagueGroupId != -1);
 
-                var group = new VirtualRateDetailsByGroup(sport, minRange, maxRange, 1) {
+                var group = new VirtualRateDetailsByGroup(sport, minRange, maxRange, 1)
+                {
                     GroupId = sport.SportType,
                     GroupName = sport.SportName,
                     Childs = GetLeagues(virtualRateDTOs, leagues, minRange, maxRange),
                     HasRepetition = false
-            };
+                };
                 result.Add(group);
             }
 

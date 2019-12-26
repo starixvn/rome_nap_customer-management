@@ -26,13 +26,13 @@
                 <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export">
             </div>
         </div>
-        <table id="tbl-virtual-rate-report">
+        <table id="tbl-virtual-rate-report" class="tbl-report">
             <thead>
                 <tr>
                     <th class="col-group">
-                        <input id="btn-view-compact-mode" type="button" class="submit" value="@ViewLang.ViewCompactMode" />
-                        <input id="btn-view-full-mode" type="button" class="submit display-none" value="@ViewLang.ViewFullMode" />
-                        <span id="ico-collapse" class="ico-collapse"></span>
+                        <input type="button" class="submit btn-view-compact-mode" value="@ViewLang.ViewCompactMode" />
+                        <input type="button" class="submit display-none btn-view-full-mode" value="@ViewLang.ViewFullMode" />
+                        <span class="ico-collapse"></span>
                     </th>
                     <th class="col-nonlive">
                         @ViewLang.NonLive

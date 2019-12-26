@@ -31,5 +31,21 @@
         public string NonliveLog { get; set; }
 
         public string LiveLog { get; set; }
+
+        public bool DisableNonliveAutoSuspend { get; set; }
+
+        public bool DisableLiveAutoSuspend { get; set; }
+
+        public bool NewNonliveAutoSuspend { get; set; }
+
+        public bool NewLiveAutoSuspend { get; set; }
+
+        public bool NonliveAutoSuspend { get; set; }
+
+        public bool LiveAutoSuspend { get; set; }
+
+        public decimal NonliveAutoSuspendThreshold { get; set; }
+
+        public decimal LiveAutoSuspendThreshold { get; set; }
     }
 }

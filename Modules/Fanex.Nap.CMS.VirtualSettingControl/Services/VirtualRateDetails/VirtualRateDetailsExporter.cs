@@ -15,6 +15,7 @@
     {
         private readonly VirtualRateDetailsReport _report;
         private readonly bool _isGlobalSetting;
+        private readonly bool _isMember;
 
         private IFont _font { get; set; }
         private ICellStyle HeaderTextStyle { get; set; }
@@ -34,6 +35,7 @@
         {
             _report = report;
             _isGlobalSetting = report.ReportLevel == 0;
+            _isMember = report.ReportLevel == 1;
 
             InitStyles();
         }
@@ -66,19 +68,30 @@
         {
             get
             {
-                return new[]
-                {
-                    new ExcelColumn(ViewLang.Level, 400),
-                    new ExcelColumn(ViewLang.NonLive, 150),
-                    new ExcelColumn(ViewLang.Live, 150)
-                };
+                var result = _isMember
+                    ? new[] {
+                        new ExcelColumn(ViewLang.Level, 400),
+                        new ExcelColumn(ViewLang.NonLive, 200),
+                        new ExcelColumn(ViewLang.AutoSuspend_Nonlive, 200),
+                        new ExcelColumn(ViewLang.Live, 200),
+                        new ExcelColumn(ViewLang.AutoSuspend_Live, 200)
+                    }
+                    : new[] {
+                        new ExcelColumn(ViewLang.Level, 400),
+                        new ExcelColumn(ViewLang.NonLive, 200),
+                        new ExcelColumn(ViewLang.Live, 200)
+                    };
+
+                return result;
             }
         }
 
         protected override void ExportHeader()
         {
-            ExportExcel.SetColumnWidthByFontWidth(new[] { 100, 400, 200, 200 });
-            ExportExcel.MaxColumnIndex = 3;
+            ExportExcel.SetColumnWidthByFontWidth(
+                _isMember ? new[] { 100, 400, 200, 200, 200, 200 } : new[] { 100, 400, 200, 200 });
+
+            ExportExcel.MaxColumnIndex = _isMember ? 5 : 3;
 
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderRow(Title, BodyTextStyle);
@@ -87,6 +100,8 @@
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(ViewLang.Product + ":", BodyTextStyle);
             ExportExcel.RenderCurrentCell(ViewLang.ESports, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.CurrentRow++;
@@ -99,6 +114,8 @@
                 ExportExcel.RenderCurrentCell(_report.Username, BodyTextStyle);
                 ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
                 ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
+                ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
+                ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
                 ExportExcel.CurrentRow++;
                 ExportExcel.ResetCurrentColumn();
             }
@@ -106,6 +123,8 @@
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(ViewLang.DateOfReport + ":", BodyTextStyle);
             ExportExcel.RenderCurrentCell(DateTime.Today.ToString("MM/dd/yyyy"), BodyTextStyle);
+            ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.CurrentRow++;
@@ -117,9 +136,20 @@
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(ViewLang.Level, HeaderTextStyle);
-
             ExportExcel.RenderCurrentCell(ViewLang.NonLive, _report.EnableNonLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+
+            if (_isMember)
+            {
+                ExportExcel.RenderCurrentCell(ViewLang.AutoSuspend_Nonlive, _report.EnableNonLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+            }
+
             ExportExcel.RenderCurrentCell(ViewLang.Live, _report.EnableLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+
+            if (_isMember)
+            {
+                ExportExcel.RenderCurrentCell(ViewLang.AutoSuspend_Live, _report.EnableLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+            }
+
             ExportExcel.CurrentRow++;
             ExportExcel.ResetCurrentColumn();
         }
@@ -146,7 +176,7 @@
 
                         foreach (var betType in betTypeGroup.Childs)
                         {
-                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3]);
+                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3], isBetType: true);
                         }
                     }
                 }
@@ -227,11 +257,12 @@
         }
 
         private void RenderRate(
-            VirtualRateDetailsByGroup rate,
-            ICellStyle enabledStyle,
-            ICellStyle disabledStyle,
-            string followParentText,
-            string paddingText)
+           VirtualRateDetailsByGroup rate,
+           ICellStyle enabledStyle,
+           ICellStyle disabledStyle,
+           string followParentText,
+           string paddingText,
+           bool isBetType = false)
         {
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
@@ -247,9 +278,34 @@
                 _isGlobalSetting ? $"{rate.LiveValue.ToString("#,##0")}" : $"{rate.LiveValue.ToString("#,##0")} ({GetRateText(rate.LiveValue)})";
 #pragma warning restore S3358 // Ternary operators should not be nested
             ExportExcel.RenderCurrentCell(paddingText + nonliveText, _report.EnableNonLive ? enabledStyle : disabledStyle);
+            if (_isMember)
+            {
+                var text = isBetType ? AutoSuspendText(rate.NonliveAutoSuspend) : string.Empty;
+
+                var style = ExportExcel.ExcelFile.CreateCellStyle();
+                style.CloneStyleFrom(_report.EnableNonLive ? enabledStyle : disabledStyle);
+                style.Alignment = HorizontalAlignment.Center;
+
+                ExportExcel.RenderCurrentCell(text, style);
+            }
+
             ExportExcel.RenderCurrentCell(paddingText + liveText, _report.EnableLive ? enabledStyle : disabledStyle);
+
+            if (_isMember)
+            {
+                var text = isBetType ? AutoSuspendText(rate.LiveAutoSuspend) : string.Empty;
+                var style = ExportExcel.ExcelFile.CreateCellStyle();
+                style.CloneStyleFrom(_report.EnableLive ? enabledStyle : disabledStyle);
+                style.Alignment = HorizontalAlignment.Center;
+
+                ExportExcel.RenderCurrentCell(text, style);
+            }
+
             ExportExcel.CurrentRow++;
             ExportExcel.ResetCurrentColumn();
         }
+
+        private string AutoSuspendText(bool? autoSuspend)
+            => autoSuspend == null ? string.Empty : autoSuspend.Value ? ViewLang.Yes : ViewLang.No;
     }
 }

@@ -13,5 +13,7 @@
         public int UserId { get; set; }
 
         public string IP { get; set; }
+
+        public bool IsMember { get; set; }
     }
 }

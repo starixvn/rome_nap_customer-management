@@ -1,20 +1,20 @@
 ﻿"use strict";
 function ProblemAccountInformingStatus(form, reloadData) {
     var inlineMessage = null,
-        rowDonwlines = null,
         ddlInformType = null,
-        spanUpdater = null;
+        spanInformType = null;
 
-    function initForm(usernames, level, updater) {
+    function initForm(usernames, level) {
         form.find("#txt-level").val(level);
         form.find("#txt-usernames").val(usernames.join(","));
         form.find("#span-selectedAccounts").text(usernames.join(", "));
         inlineMessage = form.find("#div-inlineMessage");
-        rowDonwlines = form.find(".row-downlines");
-        ddlInformType = form.find("#ddl-inform-type");
 
-        if (level == 1) {
-            rowDonwlines.addClass("display-none");
+        ddlInformType = form.find("#ddl-inform-type").combobox();
+        spanInformType = form.find('span[id="ddl-inform-type"]');
+
+        if (1 !== parseInt(level)) {
+            form.find("#row-downlines").removeClass("display-none");
         }
     }
 
@@ -22,23 +22,24 @@ function ProblemAccountInformingStatus(form, reloadData) {
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
-        ddlInformType.addClass('combobox-autocomplete').combobox();
-
         form.off("submit").on("submit", function (event) {
             event.preventDefault();
-            submitForm();
+            validateInformType() && submitForm();
         });
+    }
+
+    function validateInformType() {
+        if (ddlInformType.val() === "-1") {
+            CMS.showTipsyError(spanInformType, resources.thisFieldIsRequired, "w");
+            return false;
+        }
+
+        CMS.clearTipsyError(spanInformType);
+        return true;
     }
 
     function submitForm() {
         CMS.disableInput();
-        Validator.clearErrors(form);
-
-        if (ddlInformType.val() === "0") {
-            Validator.showError(form.find("#ddl-inform-type.ui-combobox"), resources.thisFieldIsRequired, 'w');
-            CMS.enableInput();
-            return;
-        }
 
         $.post(form.attr("action"), form.serialize(), successHandler, "json")
             .fail(CMS.handleAjaxError)
@@ -58,10 +59,10 @@ function ProblemAccountInformingStatus(form, reloadData) {
         }
     }
 
-    this.init = function (modalTitle, usernames, level, updater) {
+    this.init = function (modalTitle, usernames, level) {
         CMS.modal(modalTitle, form, { height: "auto" });
 
-        initForm(usernames, level, updater);
+        initForm(usernames, level);
         bindEvents();
     };
 }

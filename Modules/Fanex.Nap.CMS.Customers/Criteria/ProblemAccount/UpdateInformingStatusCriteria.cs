@@ -5,20 +5,20 @@
         public UpdateInformingStatusCriteria(
             string usernames,
             byte roleId,
-            int informedType,
-            bool applyDownlines,
+            byte informedType,
+            bool isApplyDownlines,
             int userId,
             string ip) : base(usernames, roleId, userId, ip)
         {
             InformedType = informedType;
-            ApplyDownlines = applyDownlines;
+            IsApplyDownlines = isApplyDownlines;
         }
 
-        public int InformedType { get; }
+        public byte InformedType { get; }
 
-        public bool ApplyDownlines { get; }
+        public bool IsApplyDownlines { get; }
 
         public override string GetSettingKey()
-            => "CS_ProblemAccount_InformingStatus";
+            => "CS_ProblemAccount_InformStatusUpd";
     }
 }

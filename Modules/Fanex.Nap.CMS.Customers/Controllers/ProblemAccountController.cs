@@ -36,7 +36,7 @@
                 (SearchViewModel)TempData[SearchFilterSessionKey],
                 service.GetReasons(true),
                 service.GetReasons(false),
-                this.CurrentSession.Username);
+                CurrentSession.Username);
 
             return View("~/Areas/Customers/Views/ProblemAccount/Index.cshtml", vm);
         }
@@ -54,9 +54,9 @@
                 vm.Username,
                 vm.IsSearchDownlines,
                 vm.OrderBy,
+                vm.IsDirectlyMarked,
                 vm.PageIndex,
-                vm.PageSize,
-                vm.DirectlyMarked));
+                vm.PageSize));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
         public void Export(SearchViewModel vm)
@@ -72,9 +72,9 @@
                 vm.Username,
                 vm.IsSearchDownlines,
                 vm.OrderBy,
+                vm.IsDirectlyMarked,
                 1,
-                int.MaxValue - 1,
-                vm.DirectlyMarked);
+                int.MaxValue - 1);
 
             IExcelExporter exporter = new ProblemAccountExporter(vm, data, service.GetReasons(true));
             exporter.ResponseStream();
@@ -169,7 +169,7 @@
                     vm.Usernames,
                     vm.Level,
                     vm.InformedType,
-                    vm.ApplyDownlines,
+                    vm.IsApplyDownlines,
                     CurrentSession.UserId,
                     CurrentContext.IP);
 

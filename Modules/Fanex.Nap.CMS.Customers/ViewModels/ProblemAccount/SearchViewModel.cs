@@ -38,10 +38,10 @@
 
         public byte OrderBy { get; set; }
 
+        public byte IsDirectlyMarked { get; set; }
+
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }
-
-        public int DirectlyMarked { get; set; }
     }
 }

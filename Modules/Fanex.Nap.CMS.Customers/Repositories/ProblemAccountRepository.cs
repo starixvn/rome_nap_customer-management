@@ -121,8 +121,8 @@
                 Convert.ToDateTime(reader["markdate"]),
                 reader["comment"].ToString(),
                 ToNullableInt32(reader["abnormalbetnumber"]),
-                reader["comment"].ToString(),
-                reader["comment"].ToString());
+                reader["informed1by"].ToString(),
+                reader["informed2by"].ToString());
 
         private static ProblemAccountReason ToProblemAccountReason(IDataReader reader)
             => new ProblemAccountReason(

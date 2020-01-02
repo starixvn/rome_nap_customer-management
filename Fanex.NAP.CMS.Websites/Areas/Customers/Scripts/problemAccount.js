@@ -52,16 +52,16 @@
         $("#btn-informing-status").click(function () {
             var modalTitle = this.textContent;
 
-            handleActions(function (usernames, level, updater) {
-                var reduceBL = new ProblemAccountInformingStatus(elements.formInformingStatus.clone(), problemAccountSearch.reloadData);
-                reduceBL.init(modalTitle, usernames, level, updater);
+            handleActions(function (usernames, level) {
+                var updateInformStatus = new ProblemAccountInformingStatus(elements.formInformingStatus.clone(), problemAccountSearch.reloadData);
+                updateInformStatus.init(modalTitle, usernames, level);
             });
         });
     }
 
     function handleActions(handleActionCallback) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        problemAccount.usernames.length > 0 && handleActionCallback(problemAccount.usernames, problemAccount.level, updater);
+        problemAccount.usernames.length > 0 && handleActionCallback(problemAccount.usernames, problemAccount.level);
     }
 
     function getUnmarkForm(level) {

@@ -190,8 +190,9 @@
     <Compile Include="Constants\AccountStatusConst.cs" />
     <Compile Include="Constants\CounterOptionConstants.cs" />
     <Compile Include="Constants\CurrencyConst.cs" />
+    <Compile Include="Constants\InformStatusConst.cs" />
     <Compile Include="Constants\IsReducedConst.cs" />
-    <Compile Include="Constants\MarkTypeConst.cs" />
+    <Compile Include="Constants\DirectlyMarkedConst.cs" />
     <Compile Include="Constants\OrderByConst.cs" />
     <Compile Include="Constants\CustomerFunctionKeys.cs" />
     <Compile Include="Constants\DangerLevelCategoryConst.cs" />

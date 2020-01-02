@@ -33,8 +33,8 @@
             unmarkProblemAccount: "@ProblemAccountResource.UnmarkProblemAccount",
             inactivateAccount: "@ProblemAccountResource.InactivateAccount",
             inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
-            _1stWeekInformed: "@ProblemAccountResource._1stWeekInformed",
-            _2ndWeekInformed: "@ProblemAccountResource._2ndWeekInformed",
+            FirstWeekInformed: "@ProblemAccountResource._1stWeekInformed",
+            SecondWeekInformed: "@ProblemAccountResource._2ndWeekInformed",
             thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
@@ -44,7 +44,6 @@
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
         var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
         var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
-        var updater = '@Model.Updater';
     </script>
     @Scripts.Render(CustomersBundlesConfig.ProblemAccountScript)
 }

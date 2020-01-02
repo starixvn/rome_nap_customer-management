@@ -16,9 +16,7 @@
 .filter-bar {
     margin-bottom: 10px;
 
-    .filter-row.last-row {
-        margin-bottom: 10px;
-
+    .filter-row {
         #username {
             width: 115px;
         }
@@ -39,6 +37,10 @@
                 border: none;
                 box-shadow: none;
             }
+        }
+
+        &.last-row {
+            margin-bottom: 10px;
         }
     }
 }
@@ -140,7 +142,7 @@
     }
 }
 
-#formUnmarkMember, #formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber {
+#formUnmarkMember, #formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber, #formInformingStatus {
     width: 450px;
 }
 
@@ -185,8 +187,4 @@
 
 .note-text {
     color: #FF0000;
-}
-
-.row-downlines {
-    width: 450px;
 }

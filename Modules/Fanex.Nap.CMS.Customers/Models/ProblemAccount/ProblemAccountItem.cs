@@ -28,8 +28,8 @@
             DateTime markDate,
             string comment,
             int? abnormalBetNumber,
-            string _1stWeekInformed,
-            string _2ndWeekInformed)
+            string firstWeekInformed,
+            string secondWeekInformed)
         {
             CustId = custId;
             Username = username;
@@ -53,8 +53,8 @@
             MarkDate = markDate;
             Comment = comment;
             AbnormalBetNumber = abnormalBetNumber;
-            this._1stWeekInformed = _1stWeekInformed;
-            this._2ndWeekInformed = _2ndWeekInformed;
+            FirstWeekInformed = firstWeekInformed;
+            SecondWeekInformed = secondWeekInformed;
         }
 
         public int CustId { get; }
@@ -101,13 +101,13 @@
 
         public int? AbnormalBetNumber { get; }
 
+        public string FirstWeekInformed { get; }
+
+        public string SecondWeekInformed { get; }
+
         public string StatusName { get; set; }
 
         public string MarkDateString { get; set; }
-
-        public string _1stWeekInformed { get; set; }
-
-        public string _2ndWeekInformed { get; set; }
 
         public IEnumerable<string> Reasons { get; set; }
     }

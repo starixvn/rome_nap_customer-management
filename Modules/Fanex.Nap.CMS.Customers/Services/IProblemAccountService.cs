@@ -20,9 +20,9 @@
             string username,
             bool isSearchDownlines,
             byte orderBy,
+            byte isDirectlyMarked,
             int pageIndex,
-            int pageSize,
-            int directlyMarked);
+            int pageSize);
 
         Result MarkNew(
             string usernames,
@@ -61,8 +61,8 @@
         Result UpdateInformingStatus(
             string usernames,
             byte roleId,
-            int informType,
-            bool applyDownlines,
+            byte informType,
+            bool isApplyDownlines,
             int userId,
             string ip);
     }

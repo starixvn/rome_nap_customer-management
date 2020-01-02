@@ -2,8 +2,8 @@
 {
     public class UpdateInformingStatusViewModel : ActionViewModel
     {
-        public int InformedType { get; set; }
+        public byte InformedType { get; set; }
 
-        public bool ApplyDownlines { get; set; }
+        public bool IsApplyDownlines { get; set; }
     }
 }

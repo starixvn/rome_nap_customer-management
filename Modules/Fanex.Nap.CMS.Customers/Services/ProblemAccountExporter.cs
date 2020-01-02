@@ -32,9 +32,9 @@ namespace Fanex.Nap.CMS.Customers.Services
 
         private static readonly IDictionary<int, string> DirectlyMarkedMapper = new Dictionary<int, string>
         {
-            [MarkTypeConst.All] = nameof(MarkTypeConst.All),
-            [MarkTypeConst.Yes] = nameof(MarkTypeConst.Yes),
-            [MarkTypeConst.No] = nameof(MarkTypeConst.No)
+            [DirectlyMarkedConst.All] = nameof(DirectlyMarkedConst.All),
+            [DirectlyMarkedConst.Yes] = nameof(DirectlyMarkedConst.Yes),
+            [DirectlyMarkedConst.No] = nameof(DirectlyMarkedConst.No)
         };
 
         private readonly SearchViewModel searchFilter;
@@ -114,7 +114,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             ExportSearchFilter(ProblemAccountResource.AccountStatus, AccountStatusConst.AccountStatusList[searchFilter.Status], textStyle);
             ExportSearchFilter(ProblemAccountResource.IsReduced, IsReducedConst.IsReducedList[searchFilter.IsReduced], textStyle);
             ExportSearchFilter(ProblemAccountResource.Reason, reasonNames, textStyle);
-            ExportSearchFilter(ProblemAccountResource.DirectlyMarked, DirectlyMarkedMapper[searchFilter.DirectlyMarked], textStyle);
+            ExportSearchFilter(ProblemAccountResource.DirectlyMarked, DirectlyMarkedMapper[searchFilter.IsDirectlyMarked], textStyle);
             ExportSearchFilter(ProblemAccountResource.Username, searchFilter.Username, textStyle);
             ExportSearchFilter(ProblemAccountResource.SearchDownlineExcel, searchFilter.IsSearchDownlines ? nameof(IsReducedConst.Yes) : nameof(IsReducedConst.No), textStyle);
             ExportSearchFilter(ProblemAccountResource.OrderBy, OrderByConst.OrderByList[searchFilter.OrderBy], textStyle);
@@ -173,8 +173,8 @@ namespace Fanex.Nap.CMS.Customers.Services
                 ExportExcel.RenderCurrentCell(item.MarkDateString, centerTextStyle);
                 ExportExcel.RenderCurrentCell(Join(item.Reasons, NewLine), wrapTextStyle);
                 ExportExcel.RenderCurrentCell(HtmlDecodeText(item.Comment), wrapTextStyle);
-                ExportExcel.RenderCurrentCell(item._1stWeekInformed ?? string.Empty, centerTextStyle);
-                ExportExcel.RenderCurrentCell(item._2ndWeekInformed ?? string.Empty, centerTextStyle);
+                ExportExcel.RenderCurrentCell(item.FirstWeekInformed ?? string.Empty, centerTextStyle);
+                ExportExcel.RenderCurrentCell(item.SecondWeekInformed ?? string.Empty, centerTextStyle);
 
                 if (IsMemberLevel)
                 {

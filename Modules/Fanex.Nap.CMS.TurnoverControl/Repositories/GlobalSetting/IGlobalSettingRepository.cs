@@ -11,10 +11,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
 
         IEnumerable<GlobalSettingItem> GetList(ICriteria criteria);
 
-        Result Add(ICriteria criteria);
+        IEnumerable<IdNameModel> GetProfiles(ICriteria criteria);
 
-        Result Edit(ICriteria criteria);
-
-        Result Delete(ICriteria criteria);
+        Result ExecuteNonQuery(ICriteria criteria);
     }
 }

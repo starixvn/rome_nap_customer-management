@@ -8,41 +8,69 @@
                     <tr>
                         @if (Model)
                         {
-                            <th class="th-multipleEdit-container">
+                            <th rowspan="2" class="th-multipleEdit-container">
                                 <div class="table-cell col-checkbox">
                                     <input type="checkbox" id="checkbox-all" />
                                     <span class="ico-multipleEdit" title="@Labels.MultipleEditMaxTurnover" id="icon-edit-maxturnover"></span>
                                 </div>
                             </th>
                         }
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-sma-name">
                                 @Labels.UserName
                             </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-level">
-                                @Labels.Level</div>
+                                @Labels.Level
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-currency">
-                                @Labels.Currency</div>
+                                @Labels.Currency
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-member-turnover">
-                                @Labels.Member_Turnover</div>
+                                @Labels.TotalMemberTO
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-company-turnover">
-                                @Labels.Company_Turnover</div>
+                                @Labels.TotalHouseTO
+                            </div>
+                        </th>
+                        <th colspan="5">
+                            <div class="col-span-max-turnover">
+                                @Labels.Max_Turnover
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels.HDP_ML
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell col-max-turnover">
-                                @Labels.Max_Turnover</div>
+                                @Labels.OU
+                            </div>
                         </th>
                         <th>
-                            <div class="table-cell col-percentage-used">
-                                @Labels.Percentage_Used</div>
+                            <div class="table-cell col-max-turnover">
+                                @Labels._1HHDP_1HML
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels._1HOU
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels.Others
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -56,45 +84,72 @@
                     <tr>
                         @if (Model)
                         {
-                            <th class="th-multipleEdit-container">
+                            <th rowspan="2" class="th-multipleEdit-container">
                                 <div class="table-cell col-checkbox">
                                     <input type="checkbox" id="checkbox-all" />
                                 </div>
                             </th>
                         }
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-sma-name">
                                 @Labels.UserName
                             </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-level">
-                                @Labels.Level</div>
+                                @Labels.Level
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-currency">
-                                @Labels.Currency</div>
+                                @Labels.Currency
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-member-turnover">
-                                @Labels.Member_Turnover</div>
+                                @Labels.TotalMemberTO
+                            </div>
                         </th>
-                        <th>
+                        <th rowspan="2">
                             <div class="table-cell col-company-turnover">
-                                @Labels.Company_Turnover</div>
+                                @Labels.TotalHouseTO
+                            </div>
+                        </th>
+                        <th colspan="5">
+                            <div class="col-span-max-turnover">
+                                @Labels.Max_Turnover
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels.HDP_ML
+                            </div>
                         </th>
                         <th>
                             <div class="table-cell col-max-turnover">
-                                @Labels.Max_Turnover</div>
+                                @Labels.OU
+                            </div>
                         </th>
                         <th>
-                            <div class="table-cell col-percentage-used">
-                                @Labels.Percentage_Used</div>
+                            <div class="table-cell col-max-turnover">
+                                @Labels._1HHDP_1HML
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels._1HOU
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-cell col-max-turnover">
+                                @Labels.Others
+                            </div>
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>

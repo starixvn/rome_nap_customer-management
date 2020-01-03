@@ -22,16 +22,17 @@
     <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="TurnoverControl-TurnoverMonitor">
-    <Setting Key="TurnoverControl_TurnoverMonitor_SMATurnoverList" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_UpdateByMatch" SpName="NAP_TOControl_MatchTurnoverUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_MatchTurnoverSelect" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_MatchTurnoverUpdate" SpName="NAP_TOControl_MatchTurnoverUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_TOControl_MatchTurnoverUpdateMultiple" SpName="NAP_TOControl_MatchTurnoverUpdateMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="TurnoverControl-GlobalSetting">
     <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_List" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Edit" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Add" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="TurnoverControl_GlobalSetting_Delete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_GlobalSettingUpdate" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_GlobalSettingInsert" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_GlobalSettingDelete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Turnover Control - Import Global Setting">
     <Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -12,83 +12,73 @@ namespace Fanex.Nap.CMS.TurnoverControl.AppStart
         public const string ImportGlobalSettingScripts = "~/areas/turnovercontrol/importglobalsettingcripts";
         public const string ImportGlobalSettingStyles = "~/areas/turnovercontrol/importglobalsettingstyles";
 
-        public const string TurnoverMonitorScripts = "~/areas/turnovercontrol/turnovermonitor/turnovermonitorscripts";
-        public const string TurnoverMonitorStyles = "~/areas/turnovercontrol/turnovermonitor/turnovermonitorstyles";
+        public const string TurnoverMonitorScripts = "~/areas/turnovercontrol/turnovermonitorscripts";
+        public const string TurnoverMonitorStyles = "~/areas/turnovercontrol/turnovermonitorstyles";
 
         public static void RegisterAll(BundleCollection bundles)
         {
             RegisterGlobalSettingBundles(bundles);
+            RegisterImportGlobalSettingBundles(bundles);
 
             RegisterTurnoverMonitorBundles(bundles);
-            RegisterTurnoverMonitorCompanyTurnoverBundles(bundles);
-
-            RegisterImportGlobalSettingBundles(bundles);
         }
 
         private static void RegisterGlobalSettingBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle(GlobalSettingScripts).Include(
-                "~/Scripts/Libs/Popup/dialogbox.js",
-                "~/Areas/TurnoverControl/Views/GlobalSetting/Scripts/AddGlobalSetting.js",
-                "~/Areas/TurnoverControl/Views/GlobalSetting/Scripts/DeleteGlobalSetting.js",
-                "~/Areas/TurnoverControl/Views/GlobalSetting/Scripts/EditGlobalSetting.js",
-                "~/Areas/TurnoverControl/Views/GlobalSetting/Scripts/GlobalSettingManager.js"));
+            bundles
+                .Add(new ScriptBundle(GlobalSettingScripts)
+                .Include(
+                    "~/Scripts/Libs/Popup/dialogbox.js",
+                    "~/Areas/TurnoverControl/Scripts/GlobalSetting/AddGlobalSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/GlobalSetting/DeleteGlobalSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/GlobalSetting/EditGlobalSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/GlobalSetting/GlobalSettingManager.js"));
 
-            AddAndInclude(
+            AddStyle(
                 bundles,
                 GlobalSettingStyles,
-                "~/Areas/TurnoverControl/Views/GlobalSetting/Styles/GlobalSetting.less");
+                "~/Areas/TurnoverControl/Styles/GlobalSetting.less");
         }
 
         private static void RegisterImportGlobalSettingBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle(ImportGlobalSettingScripts).Include(
-                "~/Areas/TurnoverControl/Views/ImportGlobalSetting/Scripts/ValidSetting.js",
-                "~/Areas/TurnoverControl/Views/ImportGlobalSetting/Scripts/ErrorSetting.js",
-                "~/Areas/TurnoverControl/Views/ImportGlobalSetting/Scripts/ImportGlobalSetting.js"));
+            bundles
+                .Add(new ScriptBundle(ImportGlobalSettingScripts)
+                .Include(
+                    "~/Areas/TurnoverControl/Scripts/ImportGlobalSetting/ValidSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/ImportGlobalSetting/ErrorSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/ImportGlobalSetting/ImportGlobalSetting.js"));
 
-            AddAndInclude(
+            AddStyle(
                 bundles,
                 ImportGlobalSettingStyles,
-                "~/Areas/TurnoverControl/Views/ImportGlobalSetting/Styles/ImportGlobalSetting.less");
+                "~/Areas/TurnoverControl/Styles/ImportGlobalSetting.less");
         }
         
         private static void RegisterTurnoverMonitorBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle(TurnoverMonitorScripts).Include(
-                "~/Scripts/Libs/Popup/dialogbox.js",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Scripts/AutoRefresh.js",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Scripts/HouseTurnoverPopup.js",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Scripts/EditMaxTurnover.js",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Scripts/EditMultipleMaxTurnover.js",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Scripts/TurnoverMonitorManager.js"));
+            bundles
+                .Add(new ScriptBundle(TurnoverMonitorScripts)
+                .Include(
+                    "~/Scripts/Libs/Popup/dialogbox.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/AutoRefresh.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/HouseTurnoverPopup.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/EditMaxTurnover.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/EditMultipleMaxTurnover.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/TurnoverMonitorManager.js"));
 
-            AddAndInclude(
+            AddStyle(
                 bundles,
                 TurnoverMonitorStyles,
                 "~/Content/Themes/PopupCustomStyle.less",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/Styles/TurnoverMonitor.less");
+                "~/Areas/TurnoverControl/Styles/TurnoverMonitor.less");
         }
 
-        private static void RegisterTurnoverMonitorCompanyTurnoverBundles(BundleCollection bundles)
-        {
-            bundles.Add(new ScriptBundle("~/areas/turnovercontrol/turnovermonitor/companyturnoverscripts").Include(
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/CompanyTurnover/Scripts/CompanyTurnoverManager.js"));
-
-            AddAndInclude(
-                bundles,
-                "~/areas/turnovercontrol/turnovermonitor/companyturnoverstyles",
-                "~/Content/Themes/PopupCustomStyle.less",
-                "~/Areas/TurnoverControl/Views/TurnoverMonitor/CompanyTurnover/Styles/CompanyTurnover.less");
-        }
-
-        private static void AddAndInclude(BundleCollection bundles, string bundleVirtualPath, params string[] virtualPaths)
-        {
-            bundles.Add(new Bundle(bundleVirtualPath)
+        private static void AddStyle(BundleCollection bundles, string bundleVirtualPath, params string[] virtualPaths)
+            => bundles.Add(new Bundle(bundleVirtualPath)
             {
                 Transforms = { new StyleTransformer(), new CssMinify() },
                 Orderer = new NullOrderer()
             }.Include(virtualPaths));
-        }
     }
 }

@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -57,6 +57,24 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1H HDP &amp; 1H ML.
+        /// </summary>
+        public static string _1HHDP_1HML {
+            get {
+                return ResourceManager.GetString("_1HHDP_1HML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1H OU.
+        /// </summary>
+        public static string _1HOU {
+            get {
+                return ResourceManager.GetString("_1HOU", resourceCulture);
             }
         }
         
@@ -129,15 +147,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to House Turnover.
-        /// </summary>
-        public static string Company_Turnover {
-            get {
-                return ResourceManager.GetString("Company_Turnover", resourceCulture);
             }
         }
         
@@ -277,11 +286,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Excel Row.
+        /// </summary>
+        public static string ExcelRow {
+            get {
+                return ResourceManager.GetString("ExcelRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exclude completed events.
         /// </summary>
         public static string ExcludeCompletedEvents {
             get {
                 return ResourceManager.GetString("ExcludeCompletedEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field.
+        /// </summary>
+        public static string Field {
+            get {
+                return ResourceManager.GetString("Field", resourceCulture);
             }
         }
         
@@ -403,7 +430,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max Turnover Is Exceeded!.
+        ///   Looks up a localized string similar to Max Turnover is exceeded!.
         /// </summary>
         public static string GlobalSetting_MaxTurnover_ExceedMaxTurnover {
             get {
@@ -439,11 +466,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HDP &amp; ML.
+        /// </summary>
+        public static string HDP_ML {
+            get {
+                return ResourceManager.GetString("HDP_ML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Headline.
         /// </summary>
         public static string Headline {
             get {
                 return ResourceManager.GetString("Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to House TO:.
+        /// </summary>
+        public static string HouseTO {
+            get {
+                return ResourceManager.GetString("HouseTO", resourceCulture);
             }
         }
         
@@ -511,6 +556,51 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Live - 1H HDP.
+        /// </summary>
+        public static string Live1HHDP {
+            get {
+                return ResourceManager.GetString("Live1HHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live - 1H OU.
+        /// </summary>
+        public static string Live1HOU {
+            get {
+                return ResourceManager.GetString("Live1HOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live - HDP.
+        /// </summary>
+        public static string LiveHDP {
+            get {
+                return ResourceManager.GetString("LiveHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live - Others.
+        /// </summary>
+        public static string LiveOthers {
+            get {
+                return ResourceManager.GetString("LiveOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live - OU.
+        /// </summary>
+        public static string LiveOU {
+            get {
+                return ResourceManager.GetString("LiveOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Match.
         /// </summary>
         public static string Match {
@@ -547,15 +637,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Member Turnover.
-        /// </summary>
-        public static string Member_Turnover {
-            get {
-                return ResourceManager.GetString("Member_Turnover", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to There is no data.
         /// </summary>
         public static string Message_NoReportData {
@@ -583,11 +664,110 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to NL.
+        /// </summary>
+        public static string NL {
+            get {
+                return ResourceManager.GetString("NL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NL - 1H HDP.
+        /// </summary>
+        public static string NL1HHDP {
+            get {
+                return ResourceManager.GetString("NL1HHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NL - 1H OU.
+        /// </summary>
+        public static string NL1HOU {
+            get {
+                return ResourceManager.GetString("NL1HOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NL - HDP.
+        /// </summary>
+        public static string NLHDP {
+            get {
+                return ResourceManager.GetString("NLHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NL - Others.
+        /// </summary>
+        public static string NLOthers {
+            get {
+                return ResourceManager.GetString("NLOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NL - OU.
+        /// </summary>
+        public static string NLOU {
+            get {
+                return ResourceManager.GetString("NLOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Non-Live.
         /// </summary>
         public static string NonLive {
             get {
                 return ResourceManager.GetString("NonLive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Live - 1H HDP.
+        /// </summary>
+        public static string NonLive1HHDP {
+            get {
+                return ResourceManager.GetString("NonLive1HHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Live - 1H OU.
+        /// </summary>
+        public static string NonLive1HOU {
+            get {
+                return ResourceManager.GetString("NonLive1HOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Live - HDP.
+        /// </summary>
+        public static string NonLiveHDP {
+            get {
+                return ResourceManager.GetString("NonLiveHDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Live - Others.
+        /// </summary>
+        public static string NonLiveOthers {
+            get {
+                return ResourceManager.GetString("NonLiveOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Live - OU.
+        /// </summary>
+        public static string NonLiveOU {
+            get {
+                return ResourceManager.GetString("NonLiveOU", resourceCulture);
             }
         }
         
@@ -606,6 +786,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string Others {
             get {
                 return ResourceManager.GetString("Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OU.
+        /// </summary>
+        public static string OU {
+            get {
+                return ResourceManager.GetString("OU", resourceCulture);
             }
         }
         
@@ -727,6 +916,24 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total House TO.
+        /// </summary>
+        public static string TotalHouseTO {
+            get {
+                return ResourceManager.GetString("TotalHouseTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Member TO.
+        /// </summary>
+        public static string TotalMemberTO {
+            get {
+                return ResourceManager.GetString("TotalMemberTO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Turnover Monitor.
         /// </summary>
         public static string Turnover_Monitor {
@@ -840,6 +1047,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string ValidSetting {
             get {
                 return ResourceManager.GetString("ValidSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
             }
         }
     }

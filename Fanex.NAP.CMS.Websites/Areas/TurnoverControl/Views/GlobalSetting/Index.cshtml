@@ -1,13 +1,9 @@
-﻿@using Fanex.Nap.CMS.TurnoverControl.AppStart;
-@using Fanex.Nap.CMS.TurnoverControl.Enums;
-@using Fanex.Nap.CMS.TurnoverControl.Resources;
+﻿@using Newtonsoft.Json
+@model Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting.GlobalSettingViewModel
 @{
-    short sportType = Convert.ToInt16(ViewData["SportType"]);
-    bool hasHostPermission = Convert.ToBoolean(ViewData["HostPermission"]);
-
-    ViewBag.Title = sportType == (short)SportType.Others ?
-        Labels.Global_Setting_OtherSports :
-        Labels.Global_Setting;
+    ViewBag.Title = Model.SportType == SportTypeConst.Others
+        ? Labels.Global_Setting_OtherSports
+        : Labels.Global_Setting;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head
@@ -30,7 +26,7 @@
                 <label for="txt-username">@Labels.UserName</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="30" />
+                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50" />
             </div>
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
@@ -41,7 +37,7 @@
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit">@Labels.Search</button>
             </div>
-            @if (hasHostPermission)
+            @if (Model.HostPermission)
             {
                 <div class="submit width-auto col_3">
                     <button type="button" id="btn-add" class="submit">@Labels.Add</button>
@@ -56,25 +52,25 @@
     <div id="globalsetting-list" class="freegrid display-none">
     </div>
 </div>
-@if (hasHostPermission)
+@if (Model.HostPermission)
 {
     <div id="divPopupContent" class="display-none">
-        @{ Html.RenderPartial("_AddGlobalSetting"); }
+        @{ Html.RenderPartial("_AddGlobalSetting", Model.Profiles); }
     </div>
 }
 @section Foot
 {
     <script type="text/javascript">
-        var rootUrl = document.getElementById("CMSRoot").value;
-        var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
-        var sportType = @sportType;
+        var hasHostPermission = @Model.HostPermission.ToString().ToLowerInvariant();
+        var sportType = @Model.SportType;
         var maxIntValue = @int.MaxValue;
         var viewResources = {
             Symbol_No: '@Labels.Symbol_No',
             UserName: '@Labels.UserName',
             Level: '@Labels.Level',
             Currency: '@Labels.Currency',
-            Max_Turnover: '@Labels.Max_Turnover',
+            Max_Turnover: "@Labels.Max_Turnover",
+            Headline: "@Labels.Headline",
             Delete: '@Labels.Delete',
             GlobalSetting_EditMaxTurnover_Confirm: '@Labels.GlobalSetting_EditMaxTurnover_Confirm',
             GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover',
@@ -84,6 +80,8 @@
             Error_InvalidValue: '@Fanex.NAP.CMS.Core.Resources.Messages.InvalidValueError',
             RM: '@Labels.RM'
         };
+        var currencies = @Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));
+        var profiles = @Html.Raw(JsonConvert.SerializeObject(Model.Profiles, Formatting.None));
     </script>
     @Scripts.Render(TurnoverControlBundleConfig.GlobalSettingScripts)
 }

@@ -5,20 +5,13 @@ namespace Fanex.Nap.CMS.TurnoverControl
     public class TurnoverControlAreaRegistration : AreaRegistration
     {
         public override string AreaName
-        {
-            get
-            {
-                return "TurnoverControl";
-            }
-        }
+            => "TurnoverControl";
 
         public override void RegisterArea(AreaRegistrationContext context)
-        {
-            context.MapRoute(
+            => context.MapRoute(
                 "TurnoverControl_default",
                 "TurnoverControl/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
                 new[] { "Fanex.Nap.CMS.TurnoverControl.Controllers" });
-        }
     }
 }

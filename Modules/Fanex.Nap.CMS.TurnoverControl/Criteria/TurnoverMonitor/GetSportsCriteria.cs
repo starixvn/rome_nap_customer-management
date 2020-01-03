@@ -4,13 +4,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
     public class GetSportsCriteria : CriteriaBase
     {
-        public byte Mode { get; set; }
+        public GetSportsCriteria(byte mode, short sportType)
+        {
+            Mode = mode;
+            SportType = sportType;
+        }
 
-        public short SportType { get; set; }
+        public byte Mode { get; }
+
+        public short SportType { get; }
 
         public override string GetSettingKey()
-        {
-            return "TurnoverControl_TurnoverMonitor_SportList";
-        }
+            => "TurnoverControl_TurnoverMonitor_SportList";
     }
 }

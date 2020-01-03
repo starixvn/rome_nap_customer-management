@@ -1,28 +1,59 @@
-﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
+﻿using System.Collections;
+using System.Text;
+using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
+
+namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 {
     public class AddGlobalSettingCriteria : NonQueryCriteria
     {
-        public string UserName { get; set; }
+        public AddGlobalSettingCriteria(
+            string username,
+            MaxTurnoverItem[] maxTurnovers,
+            bool isGroupHeadline,
+            short sportType,
+            int userId,
+            string ip) : base(isGroupHeadline, sportType, userId, ip)
+        {
+            Username = username;
+            MaxTurnovers = maxTurnovers;
+        }
 
-        public decimal MaxTurnover { get; set; }
+        public string Username { get; }
 
-        public bool IsGroupHeadline { get; set; }
-
-        public short SportType { get; set; }
+        public MaxTurnoverItem[] MaxTurnovers { get; }
 
         public override string GetSettingKey()
+            => "NAP_TOControl_GlobalSettingInsert";
+
+        public override Hashtable GetSpParams()
+            => new Hashtable
+            {
+                [nameof(Username)] = Username,
+                ["GlobalSetting"] = ToXml(),
+                [nameof(IsGroupHeadline)] = IsGroupHeadline,
+                [nameof(SportType)] = SportType,
+                [nameof(UserId)] = UserId,
+                [nameof(IP)] = IP,
+                [nameof(ErrCode)] = ErrCode,
+                [nameof(ErrMsg)] = ErrMsg,
+            };
+
+        private string ToXml()
         {
-            return "TurnoverControl_GlobalSetting_Add";
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in MaxTurnovers)
+            {
+                xmlBuilder.Append(ToXml(item));
+            }
+
+            xmlBuilder.Append("</ROOT>");
+
+            return xmlBuilder.ToString();
         }
 
-        public override bool IsValid()
-        {
-            Enums.SportType type = (Enums.SportType)SportType;
-            bool validSportType = type == Enums.SportType.Soccer || type == Enums.SportType.Others;
-            bool validUserName = !string.IsNullOrWhiteSpace(UserName);
-            bool validMaxTurnover = 0 <= MaxTurnover && MaxTurnover <= int.MaxValue;
-
-            return validSportType && validUserName && validMaxTurnover;
-        }
+        private static string ToXml(MaxTurnoverItem item)
+            => $"<GlobalSetting MaxTurnover=\"{item.MaxTurnover}\" ProfileID=\"{item.ProfileId}\"/>";
     }
 }

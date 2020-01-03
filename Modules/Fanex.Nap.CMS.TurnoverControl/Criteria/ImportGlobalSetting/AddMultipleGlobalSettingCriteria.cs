@@ -1,66 +1,71 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
 {
     public class AddMultipleGlobalSettingCriteria : NonQueryCriteria
     {
-        [SpParam(Ignored = true)]
-        public short SportType { get; set; }
+        public AddMultipleGlobalSettingCriteria(
+            IEnumerable<GlobalSettingCustomer> globalSettings,
+            short sportType,
+            int userId,
+            string ip) : base(false, sportType, userId, ip)
+        {
+            GlobalSettings = globalSettings;
+        }
 
-        [SpParam(Ignored = true)]
-        public GlobalSettingItem[] GlobalSettingItems { get; set; }
+        public IEnumerable<GlobalSettingCustomer> GlobalSettings { get; }
 
         public override string GetSettingKey()
-        {
-            return "NAP_TOControl_GlobalSettingInsertMultiple";
-        }
-
-        public override bool IsValid()
-        {
-            Enums.SportType type = (Enums.SportType)SportType;
-            bool validSportType = type == Enums.SportType.Soccer || type == Enums.SportType.Others;
-            bool validList = GlobalSettingItems != null && GlobalSettingItems.Length > 0;
-
-            return validSportType && validList;
-        }
+            => "NAP_TOControl_GlobalSettingInsertMultiple";
 
         public override Hashtable GetSpParams()
+            => new Hashtable
+            {
+                ["GlobalSetting"] = ToXml(),
+                [nameof(UserId)] = UserId,
+                [nameof(IP)] = IP,
+                [nameof(ErrCode)] = ErrCode,
+                [nameof(ErrMsg)] = ErrMsg
+            };
+
+        private string ToXml()
         {
-            StringBuilder xmlBuilder = new StringBuilder();
+            var xmlBuilder = new StringBuilder();
             xmlBuilder.Append("<ROOT>");
 
-            foreach (var item in GlobalSettingItems)
+            foreach (var item in GlobalSettings)
             {
-                xmlBuilder.Append(ToXml(item));
+                foreach (var mto in item.MaxTurnovers)
+                {
+                    xmlBuilder.Append(ToXml(item, mto));
+                }
             }
 
             xmlBuilder.Append("</ROOT>");
 
-            return new Hashtable
-            {
-                { "GlobalSetting", xmlBuilder.ToString() },
-                { "UserId", UserId },
-                { "IP", IP },
-                { "ErrCode", ErrCode },
-                { "ErrMsg", ErrMsg }
-            };
+            return xmlBuilder.ToString();
         }
 
-        private string ToXml(GlobalSettingItem item)
+        private string ToXml(GlobalSettingCustomer item, MaxTurnoverItem mto)
         {
-            bool headline = !string.IsNullOrEmpty(item.Level) &&
-                item.Level.Equals("headline", StringComparison.OrdinalIgnoreCase);
+            var builder = new StringBuilder("<gs ")
+                .Append("us=\"").Append(item.Username).Append("\" ")
+                .Append("isGH=\"").Append(GetIsGroupHeadlineValue(item.Level)).Append("\" ")
+                .Append("maxTO=\"").Append(mto.MaxTurnover).Append("\" ")
+                .Append("spt=\"").Append(SportType).Append("\" ")
+                .Append("pfID=\"").Append(mto.ProfileId).Append("\"")
+                .Append("/>");
 
-            return string.Format(
-                "<GlobalSetting Username=\"{0}\" IsGroupHeadline=\"{1}\" MaxTurnover=\"{2}\" SportType=\"{3}\"/>",
-                item.UserName,
-                headline ? 1 : 0,
-                item.MaxTurnover,
-                SportType);
+            return builder.ToString();
         }
+
+        private static int GetIsGroupHeadlineValue(string level)
+            => !string.IsNullOrEmpty(level) && level.Equals("headline", StringComparison.OrdinalIgnoreCase)
+            ? 1
+            : 0;
     }
 }

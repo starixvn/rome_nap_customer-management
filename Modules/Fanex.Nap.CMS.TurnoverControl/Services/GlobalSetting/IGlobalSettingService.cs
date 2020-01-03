@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
@@ -9,12 +9,22 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
     {
         IEnumerable<IdNameModel> GetCurrencies();
 
-        GlobalSettingModel GetList(GlobalSettingListCriteria criteria);
+        GlobalSettingModel GetList(
+            string username,
+            short sportType,
+            int exchangeId,
+            string sortField,
+            string sortDirection,
+            int page,
+            int size,
+            bool cache);
 
-        Result Add(AddGlobalSettingCriteria criteria);
+        IEnumerable<IdNameModel> GetProfiles(short sportType);
 
-        Result Edit(EditGlobalSettingCriteria criteria);
+        Result Add(string username, MaxTurnoverItem[] maxTurnovers, bool isGroupHeadline, short sportType, int userId, string ip);
 
-        Result Delete(DeleteGlobalSettingCriteria criteria);
+        Result Edit(UpdateMaxTurnoverParam param, int userId, string ip);
+
+        Result Delete(int custId, bool isGroupHeadline, short sportType, int userId, string ip);
     }
 }

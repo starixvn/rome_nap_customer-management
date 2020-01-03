@@ -1,15 +1,13 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
-using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Resources;
 using Fanex.Nap.CMS.Infrastructure.Web;
-using Fanex.Nap.CMS.TurnoverControl.Criteria;
-using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Constants;
+using Fanex.Nap.CMS.TurnoverControl.Models;
+using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.ViewModels.TurnoverMonitor;
 using Fanex.NAP.Core.Business;
 using Fanex.NAP.Core.Web.Attribute;
 
@@ -17,16 +15,18 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
     public class TurnoverMonitorController : BaseController
     {
-        private readonly ITurnoverMonitorService _turnoverMonitorService;
+        private readonly ITurnoverMonitorService turnoverMonitorService;
 
         public TurnoverMonitorController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public TurnoverMonitorController(ITurnoverMonitorService turnoverMonitorService)
+        public TurnoverMonitorController(
+            ITurnoverMonitorService turnoverMonitorService,
+            IGlobalSettingService globalSettingService)
         {
-            _turnoverMonitorService = turnoverMonitorService ?? new TurnoverMonitorService();
+            this.turnoverMonitorService = turnoverMonitorService ?? new TurnoverMonitorService();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
@@ -41,99 +41,97 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult GetSports(GetSportsCriteria criteria)
-        {
-            var result = _turnoverMonitorService.GetSports(criteria);
-
-            return JsonData(result);
-        }
+        public JsonResult GetSports(SportViewModel viewModel)
+            => JsonData(turnoverMonitorService.GetSports(viewModel.Mode, viewModel.SportType));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult GetLeagues(GetLeaguesCriteria criteria)
-        {
-            criteria.MoveBetsDay = AppSession.BalanceUpDate.MoveBetsDay;
-            var result = _turnoverMonitorService.GetLeagues(criteria);
-
-            return JsonData(result);
-        }
-
-        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult GetMatches(GetMatchesCriteria criteria)
-        {
-            var result = _turnoverMonitorService.GetMatches(criteria);
-
-            return JsonData(result);
-        }
+        public JsonResult GetLeagues(LeagueViewModel viewModel)
+            => JsonData(turnoverMonitorService.GetLeagues(
+                viewModel.FromDate,
+                viewModel.ToDate,
+                viewModel.SportType,
+                AppSession.BalanceUpDate.MoveBetsDay));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public JsonResult GetCustomerTurnovers(GetCustomerTurnoversCriteria criteria)
-        {
-            criteria.MoveBetsDay = AppSession.BalanceUpDate.MoveBetsDay;
-            var result = _turnoverMonitorService.GetCustomerTurnovers(criteria);
-
-            return JsonData(result);
-        }
+        public JsonResult GetMatches(MatchViewModel viewModel)
+            => JsonData(turnoverMonitorService.GetMatches(viewModel.FromDate, viewModel.ToDate, viewModel.LeagueId));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
-        public ActionResult GetHouseTurnovers(GetHouseTurnoverCriteria criteria)
-        {
-            var result = _turnoverMonitorService.GetHouseTurnovers(criteria);
+        public JsonResult GetCustomerTurnovers(CustomerTurnoverViewModel viewModel)
+            => JsonData(turnoverMonitorService.GetCustomerTurnovers(
+                viewModel.FromDate,
+                viewModel.ToDate,
+                viewModel.SportType,
+                viewModel.LeagueId,
+                viewModel.MatchId,
+                viewModel.Username,
+                viewModel.IsExcludeCompletedEvent,
+                viewModel.PercentageUsed,
+                AppSession.BalanceUpDate.MoveBetsDay));
 
-            return JsonData(result);
-        }
+        [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverMonitor, Policy = Constant.Policy.Read)]
+        public ActionResult GetHouseTurnovers(HouseTurnoverViewModel viewModel)
+            => JsonData(turnoverMonitorService.GetHouseTurnovers(
+                viewModel.CustId,
+                viewModel.MatchId,
+                viewModel.IsGroupHeadline,
+                viewModel.EventDate));
 
         [HttpPost]
-        public JsonResult UpdateMaxTurnover(UpdateMaxTurnoverCriteria criteria)
+        public JsonResult UpdateMaxTurnover(UpdateMaxTurnoverViewModel viewModel)
         {
-            Result result;
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
 
-            if (!criteria.IsValid())
+            if (!HasHostTurnoverMonitor(viewModel.SportType))
             {
-                result = new Result(400, Labels.BadRequest);
+                return Forbidden();
             }
-            else if (!HasHostTurnoverMonitor(criteria.SportType))
-            {
-                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
-            }
-            else
-            {
-                AssignUserIdAndIP(criteria);
-                result = _turnoverMonitorService.UpdateMaxTurnover(criteria);
-            }
+
+            var param = new UpdateMaxTurnoverParam(
+                viewModel.CustId,
+                viewModel.MaxTurnover,
+                viewModel.IsGroupHeadline,
+                viewModel.SportType,
+                viewModel.ProfileId,
+                viewModel.MatchId);
+            var result = turnoverMonitorService.UpdateMaxTurnover(param, CurrentSession.UserId, CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        public JsonResult UpdateMultipleMaxTurnover(UpdateMultipleMaxTurnoverCriteria criteria)
+        public JsonResult UpdateMultipleMaxTurnover(UpdateMaxTurnoverViewModel[] globalSettings)
         {
-            Result result;
+            var firstItem = globalSettings?.FirstOrDefault();
 
-            if (!criteria.IsValid())
+            if (firstItem == null)
             {
-                result = new Result(400, Labels.BadRequest);
+                return BadRequest();
             }
-            else if (!HasHostTurnoverMonitor(criteria.GlobalSettingItems.First().SportType))
+
+            if (!HasHostTurnoverMonitor(firstItem.SportType))
             {
-                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
+                return Forbidden();
             }
-            else
-            {
-                AssignUserIdAndIP(criteria);
-                result = _turnoverMonitorService.UpdateMultipleMaxTurnover(criteria);
-            }
+
+            var param = globalSettings.Select(vm => new UpdateMaxTurnoverParam(
+                vm.CustId,
+                vm.MaxTurnover,
+                vm.IsGroupHeadline,
+                vm.SportType,
+                vm.ProfileId,
+                vm.MatchId));
+            var result = turnoverMonitorService.UpdateMultipleMaxTurnover(
+                    param,
+                    CurrentSession.UserId,
+                    CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
-        [NonAction]
-        private void AssignUserIdAndIP(NonQueryCriteria criteria)
-        {
-            criteria.UserId = CurrentSession.UserId;
-            criteria.IP = CurrentContext.IP;
-        }
-
-        [NonAction]
         private void AssignGlobalSportType()
         {
             short globalSportType;
@@ -146,11 +144,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             }
             else if (soccer)
             {
-                globalSportType = (short)SportType.Soccer;
+                globalSportType = SportTypeConst.Soccer;
             }
             else if (otherSports)
             {
-                globalSportType = (short)SportType.Others;
+                globalSportType = SportTypeConst.Others;
             }
             else
             {
@@ -160,11 +158,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             ViewData["GlobalSportType"] = globalSportType;
         }
 
-        private bool HasHostTurnoverMonitor(short sporttype)
+        private bool HasHostTurnoverMonitor(short sportType)
         {
-            string permissionKey = sporttype == (short)SportType.Soccer ?
-                CMSFunctionKeys.TurnoverMonitorSoccer :
-                CMSFunctionKeys.TurnoverMonitorOtherSports;
+            string permissionKey = sportType == SportTypeConst.Soccer
+                ? CMSFunctionKeys.TurnoverMonitorSoccer
+                : CMSFunctionKeys.TurnoverMonitorOtherSports;
 
             return HasRight(permissionKey, Constant.Policy.Host);
         }

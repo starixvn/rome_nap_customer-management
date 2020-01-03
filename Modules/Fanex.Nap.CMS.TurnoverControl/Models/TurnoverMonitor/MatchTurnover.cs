@@ -4,28 +4,27 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
 {
     public class MatchTurnover
     {
-        public MatchTurnover(int matchId)
+        public MatchTurnover(
+            int matchId,
+            string matchName,
+            string eventDate,
+            string eventStatus)
         {
             MatchId = matchId;
+            MatchName = matchName;
+            EventDate = eventDate;
+            EventStatus = eventStatus;
             CustomerTurnovers = new List<CustomerTurnover>();
         }
 
-        public int MatchId { get; private set; }
+        public int MatchId { get; }
 
-        public int HomeId { get; set; }
+        public string MatchName { get; }
 
-        public string HomeName { get; set; }
+        public string EventDate { get; }
 
-        public int AwayId { get; set; }
+        public string EventStatus { get; }
 
-        public string AwayName { get; set; }
-
-        public bool IsNeutral { get; set; }
-
-        public string EventDate { get; set; }
-
-        public string EventStatus { get; set; }
-
-        public IList<CustomerTurnover> CustomerTurnovers { get; private set; }
+        public IList<CustomerTurnover> CustomerTurnovers { get; }
     }
 }

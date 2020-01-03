@@ -11,10 +11,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting
 {
     public class ImportGlobalSettingRepository : IImportGlobalSettingRepository
     {
-        public ImportGlobalSettingModel ValidateGlobalSettingExcels(ICriteria criteria)
+        public Tuple<IEnumerable<GlobalSettingItem>, IEnumerable<ErrorGlobalSettingExcel>> ValidateGlobalSettingExcels(ICriteria criteria)
         {
             IList<GlobalSettingItem> validSettings = new List<GlobalSettingItem>();
-            IList<ErrorGlobalSettingItem> errorSettings = new List<ErrorGlobalSettingItem>();
+            IList<ErrorGlobalSettingExcel> errorSettings = new List<ErrorGlobalSettingExcel>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -29,51 +29,43 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting
                     {
                         while (reader.Read())
                         {
-                            errorSettings.Add(GetErrorGlobalSettingItem(reader));
+                            errorSettings.Add(GetErrorGlobalSettingExcel(reader));
                         }
                     }
                 }
             }
 
-            return new ImportGlobalSettingModel(validSettings, errorSettings);
+            return new Tuple<IEnumerable<GlobalSettingItem>, IEnumerable<ErrorGlobalSettingExcel>>(validSettings, errorSettings);
         }
+
+        private static GlobalSettingItem GetGlobalSettingItem(IDataReader reader)
+            => new GlobalSettingItem(
+                reader["username"].ToString(),
+                reader["level"].ToString(),
+                reader["currency"].ToString(),
+                Convert.ToInt32(reader["profileid"]),
+                reader["profilename"].ToString(),
+                Convert.ToDecimal(reader["maxturnover"]));
+
+        private static ErrorGlobalSettingExcel GetErrorGlobalSettingExcel(IDataReader reader)
+            => new ErrorGlobalSettingExcel(
+                Convert.ToInt32(reader["rowid"]),
+                reader["username"].ToString(),
+                reader["field"].ToString(),
+                reader["value"].ToString(),
+                reader["reason"].ToString());
 
         public Result ImportGlobalSettings(ICriteria criteria)
         {
-            Result result = new Result();
-
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
-                result.Code = Convert.ToInt32(outputParams["errcode"]);
-                result.Message = outputParams["errmsg"].ToString();
+                return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    outputParams["errmsg"].ToString());
             }
-
-            return result;
-        }
-
-        private static GlobalSettingItem GetGlobalSettingItem(IDataReader reader)
-        {
-            return new GlobalSettingItem
-            {
-                UserName = reader["username"].ToString(),
-                Level = reader["level"].ToString(),
-                Currency = reader["currency"].ToString(),
-                MaxTurnover = Convert.ToDecimal(reader["maxturnover"])
-            };
-        }
-
-        private static ErrorGlobalSettingItem GetErrorGlobalSettingItem(IDataReader reader)
-        {
-            return new ErrorGlobalSettingItem
-            {
-                UserName = reader["username"].ToString(),
-                Level = reader["isgroupheadline"].ToString(),
-                MaxTurnoverText = reader["maxturnover"].ToString(),
-                Reason = reader["reason"].ToString()
-            };
         }
     }
 }

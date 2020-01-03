@@ -175,7 +175,7 @@
     <value>Required field!</value>
   </data>
   <data name="GlobalSetting_MaxTurnover_ExceedMaxTurnover" xml:space="preserve">
-    <value>Max Turnover Is Exceeded!</value>
+    <value>Max Turnover is exceeded!</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -210,11 +210,11 @@
   <data name="TurnoverMonitor_SMATurnoverList_Title" xml:space="preserve">
     <value>SMA Turnover List</value>
   </data>
-  <data name="Company_Turnover" xml:space="preserve">
-    <value>House Turnover</value>
+  <data name="TotalHouseTO" xml:space="preserve">
+    <value>Total House TO</value>
   </data>
-  <data name="Member_Turnover" xml:space="preserve">
-    <value>Member Turnover</value>
+  <data name="TotalMemberTO" xml:space="preserve">
+    <value>Total Member TO</value>
   </data>
   <data name="Percentage_Used" xml:space="preserve">
     <value>Percentage Used</value>
@@ -377,5 +377,77 @@
   </data>
   <data name="Error_NoActionOccured" xml:space="preserve">
     <value>No action occured.</value>
+  </data>
+  <data name="Live1HHDP" xml:space="preserve">
+    <value>Live - 1H HDP</value>
+  </data>
+  <data name="Live1HOU" xml:space="preserve">
+    <value>Live - 1H OU</value>
+  </data>
+  <data name="LiveHDP" xml:space="preserve">
+    <value>Live - HDP</value>
+  </data>
+  <data name="LiveOthers" xml:space="preserve">
+    <value>Live - Others</value>
+  </data>
+  <data name="LiveOU" xml:space="preserve">
+    <value>Live - OU</value>
+  </data>
+  <data name="NonLive1HHDP" xml:space="preserve">
+    <value>Non Live - 1H HDP</value>
+  </data>
+  <data name="NonLive1HOU" xml:space="preserve">
+    <value>Non Live - 1H OU</value>
+  </data>
+  <data name="NonLiveHDP" xml:space="preserve">
+    <value>Non Live - HDP</value>
+  </data>
+  <data name="NonLiveOthers" xml:space="preserve">
+    <value>Non Live - Others</value>
+  </data>
+  <data name="NonLiveOU" xml:space="preserve">
+    <value>Non Live - OU</value>
+  </data>
+  <data name="NL1HHDP" xml:space="preserve">
+    <value>NL - 1H HDP</value>
+  </data>
+  <data name="NL1HOU" xml:space="preserve">
+    <value>NL - 1H OU</value>
+  </data>
+  <data name="NLHDP" xml:space="preserve">
+    <value>NL - HDP</value>
+  </data>
+  <data name="NLOthers" xml:space="preserve">
+    <value>NL - Others</value>
+  </data>
+  <data name="NLOU" xml:space="preserve">
+    <value>NL - OU</value>
+  </data>
+  <data name="ExcelRow" xml:space="preserve">
+    <value>Excel Row</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="HDP_ML" xml:space="preserve">
+    <value>HDP &amp; ML</value>
+  </data>
+  <data name="OU" xml:space="preserve">
+    <value>OU</value>
+  </data>
+  <data name="_1HHDP_1HML" xml:space="preserve">
+    <value>1H HDP &amp; 1H ML</value>
+  </data>
+  <data name="_1HOU" xml:space="preserve">
+    <value>1H OU</value>
+  </data>
+  <data name="HouseTO" xml:space="preserve">
+    <value>House TO:</value>
+  </data>
+  <data name="NL" xml:space="preserve">
+    <value>NL</value>
   </data>
 </root>

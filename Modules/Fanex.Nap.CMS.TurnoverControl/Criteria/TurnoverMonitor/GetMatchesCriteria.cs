@@ -4,20 +4,23 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
     public class GetMatchesCriteria : CriteriaBase
     {
-        public string FromDate { get; set; }
+        public GetMatchesCriteria(string fromDate, string toDate, int leagueId)
+        {
+            FromDate = fromDate;
+            ToDate = toDate;
+            LeagueId = leagueId;
+        }
 
-        public string ToDate { get; set; }
+        public string FromDate { get; }
 
-        public int LeagueId { get; set; }
+        public string ToDate { get; }
+
+        public int LeagueId { get; }
 
         public override string GetSettingKey()
-        {
-            return "NAP_TOControl_MatchSelect";
-        }
+            => "NAP_TOControl_MatchSelect";
 
         public override bool IsValid()
-        {
-            return LeagueId > 0;
-        }
+            => LeagueId > 0;
     }
 }

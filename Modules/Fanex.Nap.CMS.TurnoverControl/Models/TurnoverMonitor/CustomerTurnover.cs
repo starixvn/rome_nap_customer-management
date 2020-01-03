@@ -1,39 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
 {
     public class CustomerTurnover
     {
-        public short SportType { get; set; }
+        public CustomerTurnover(TurnoverMonitorItem item)
+        {
+            SportType = item.SportType;
+            MatchId = item.MatchId;
+            EventStatus = item.EventStatus;
+            CustId = item.CustId;
+            Username = item.Username;
+            Level = item.Level;
+            Currency = item.Currency;
+            TotalMemberTurnover = item.TotalMemberTurnover;
+            TotalHouseTurnover = item.TotalHouseTurnover;
+            HDPML = new List<BetTypeTurnover>();
+            OU = new List<BetTypeTurnover>();
+            _1HHDP1HML = new List<BetTypeTurnover>();
+            _1HOU = new List<BetTypeTurnover>();
+            Others = new List<BetTypeTurnover>();
+        }
 
-        public int LeagueId { get; set; }
+        public short SportType { get; }
 
-        public int MatchId { get; set; }
+        public int MatchId { get; }
 
-        public int HomeId { get; set; }
+        public string EventStatus { get; }
 
-        public int AwayId { get; set; }
+        public int CustId { get; }
 
-        public bool IsNeutral { get; set; }
+        public string Username { get; }
 
-        public DateTime EventDate { get; set; }
+        public string Level { get; }
 
-        public string EventStatus { get; set; }
+        public bool IsGroupHeadline
+            => Level.Equals("headline", StringComparison.OrdinalIgnoreCase);
 
-        public int CustId { get; set; }
+        public string Currency { get; }
 
-        public string UserName { get; set; }
+        public decimal TotalMemberTurnover { get; }
 
-        public string Level { get; set; }
+        public decimal TotalHouseTurnover { get; }
 
-        public string Currency { get; set; }
+        public IList<BetTypeTurnover> HDPML { get; }
 
-        public decimal TotalTurnover { get; set; }
+        public IList<BetTypeTurnover> OU { get; }
 
-        public decimal HouseTurnover { get; set; }
+        public IList<BetTypeTurnover> _1HHDP1HML { get; }
 
-        public decimal MaxTurnover { get; set; }
+        public IList<BetTypeTurnover> _1HOU { get; }
 
-        public decimal PercentageUsed { get; set; }
+        public IList<BetTypeTurnover> Others { get; }
     }
 }

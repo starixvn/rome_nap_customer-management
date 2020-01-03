@@ -13,12 +13,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
 
         IEnumerable<IdNameModel> GetMatches(ICriteria criteria);
 
-        IEnumerable<CustomerTurnover> GetCustomerTurnovers(ICriteria criteria);
+        IEnumerable<TurnoverMonitorItem> GetCustomerTurnovers(ICriteria criteria);
 
         IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria);
 
-        Result UpdateMaxTurnover(ICriteria criteria);
-
-        Result UpdateMultipleMaxTurnover(ICriteria criteria);
+        Result ExecuteNonQuery(ICriteria criteria);
     }
 }

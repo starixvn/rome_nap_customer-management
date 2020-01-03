@@ -101,7 +101,6 @@
 @section Foot
 {
     <script type="text/javascript">
-        var rootUrl = document.getElementById("CMSRoot").value;
         var currentDate = '@DateTime.Today.ToShortFormatedDate()';
         var minDate = '@(AppSession.BalanceUpDate.BalanceUpDay.ToShortFormatedDate())';
         var hasHostPermission = @hasHostPermission.ToString().ToLowerInvariant();
@@ -124,7 +123,9 @@
             Error_RequiredField: '@Labels.Error_RequiredField',
             InvalidValueError: '@Fanex.NAP.CMS.Core.Resources.Messages.InvalidValueError',
             ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover',
-            Error_NoActionOccured: '@Labels.Error_NoActionOccured'
+            Error_NoActionOccured: '@Labels.Error_NoActionOccured',
+            HouseTO: '@Labels.HouseTO ',
+            NL: '@Labels.NL'
         };
     </script>
     @Scripts.Render(TurnoverControlBundleConfig.TurnoverMonitorScripts)

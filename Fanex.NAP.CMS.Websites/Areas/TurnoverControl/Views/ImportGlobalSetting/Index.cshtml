@@ -1,12 +1,9 @@
-﻿@using Fanex.Nap.CMS.TurnoverControl.AppStart;
-@using Fanex.Nap.CMS.TurnoverControl.Enums;
-@using Fanex.Nap.CMS.TurnoverControl.Resources;
+﻿@using Newtonsoft.Json
+@model Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting.GlobalSettingViewModel
 @{
-    short sportType = Convert.ToInt16(ViewData["SportType"]);
-
-    ViewBag.Title = sportType == (short)SportType.Others ?
-        Labels.ImportGlobalSetting_OtherSportsPageTitle :
-        Labels.ImportGlobalSetting_SoccerPageTitle;
+    ViewBag.Title = Model.SportType == SportTypeConst.Others
+        ? Labels.ImportGlobalSetting_OtherSportsPageTitle
+        : Labels.ImportGlobalSetting_SoccerPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Head
@@ -39,7 +36,7 @@
         <div class="filter-row">
             <div class="lbl-field col_3">&nbsp;</div>
             <div class="edit-field col_12">
-                <div class="float-left">@Html.ActionLink(Labels.DownloadTemplate, "DownloadTemplate", "ImportGlobalSetting")</div>
+                <div class="float-left">@Html.ActionLink(Labels.DownloadTemplate, "DownloadTemplate", "ImportGlobalSetting", new { sportType = Model.SportType }, null)</div>
                 <div class="float-right" style="font-style: italic;">@Labels.Max: 5MB</div>
             </div>
         </div>
@@ -61,8 +58,7 @@
 @section Foot
 {
     <script type="text/javascript">
-        var rootUrl = document.getElementById("CMSRoot").value;
-        var sportType = @sportType;
+        var sportType = @Model.SportType;
         var viewResources = {
             Error_RequiredField: "@Labels.Error_RequiredField",
             Error_NotExcelFile: "@Labels.Error_NotExcelFile",
@@ -73,10 +69,12 @@
             UserName: "@Labels.UserName",
             Level: "@Labels.Level",
             Currency: "@Labels.Currency",
-            Max_Turnover: "@Labels.Max_Turnover",
-            Headline: "@Labels.Headline",
+            ExcelRow: "@Labels.ExcelRow",
+            Field: "@Labels.Field",
+            Value: "@Labels.Value",
             Reason: "@Labels.Reason"
         };
+        var profiles = @Html.Raw(JsonConvert.SerializeObject(Model.Profiles, Formatting.None));
     </script>
     @Scripts.Render(TurnoverControlBundleConfig.ImportGlobalSettingScripts)
 }

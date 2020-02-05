@@ -889,6 +889,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow Old VR.
+        /// </summary>
+        public static string FollowOldVR {
+            get {
+                return ResourceManager.GetString("FollowOldVR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Follow parent.
         /// </summary>
         public static string FollowParent {
@@ -1722,6 +1731,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string SmartPunter {
             get {
                 return ResourceManager.GetString("SmartPunter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Soccer.
+        /// </summary>
+        public static string Soccer {
+            get {
+                return ResourceManager.GetString("Soccer", resourceCulture);
             }
         }
         

@@ -819,4 +819,10 @@
   <data name="ApplyAboveSettingToVR_AS" xml:space="preserve">
     <value>Apply above setting (Virtual Rate and AutoSuspend) to</value>
   </data>
+  <data name="FollowOldVR" xml:space="preserve">
+    <value>Follow Old VR</value>
+  </data>
+  <data name="Soccer" xml:space="preserve">
+    <value>Soccer</value>
+  </data>
 </root>

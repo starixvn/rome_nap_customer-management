@@ -86,6 +86,12 @@
                 "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/index.js",
                 "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/member-vr.js"));
 
+            bundles.Add(
+              new ScriptBundle("~/bundles/soccer-virtual-rate-details/index")
+              .Include(
+              "~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/Scripts/index.js"
+              ));
+
             bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/viewlog")
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/viewlog.js"));
 

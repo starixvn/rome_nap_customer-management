@@ -34,9 +34,7 @@
         [HttpPost]
         public JsonResult GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
-            var hasRight =
-                (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read)) ||
-                (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read));
+            var hasRight = HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read);
 
             if (!hasRight)
             {
@@ -70,7 +68,7 @@
 
         public void ExportVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
-            var hasRight = HasRight(CMSFunctionKeys.ESports_VirtualRateDetails, Constant.Policy.Read);
+            var hasRight = HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read);
 
             if (!hasRight)
             {
@@ -114,7 +112,7 @@
             => View("~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/ViewLog.cshtml");
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateLog, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SoccerVirtualRateLog, Policy = Constant.Policy.Read)]
         public JsonResult GetLogs(GetVirtualRateLogsCriteria criteria)
         {
             var result = _virtualRateDetailsService.GetLogs(criteria);
@@ -133,7 +131,7 @@
             return View("~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/ViewRealValues.cshtml", model);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_VirtualRateDetails, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Soccer_VirtualRateDetails, Policy = Constant.Policy.Read)]
         public void ExportRealValues(ViewRealValuesCriteria criteria)
         {
             var report = _virtualRateDetailsService.ViewRealValues(criteria);

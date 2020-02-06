@@ -2,7 +2,7 @@
 @using Fanex.Nap.CMS.Infrastructure.Extensions;
 @model string
 @{
-    ViewBag.Title = "Virtual Rate Log";
+    ViewBag.Title = "Soccer Virtual Rate Log";
     Layout = "~/Views/Shared/_Layout.cshtml";
     DateTime currentDate = DateTime.Today;
 }
@@ -73,6 +73,7 @@
             From: '@ViewLang.From',
             To: '@ViewLang.To',
             RequiredField: '@ViewLang.RequiredField',
+            FollowOldVR: '@ViewLang.FollowOldVR',
             FollowUpline: '@ViewLang.FollowUpline',
             FollowParent: '@ViewLang.FollowParent',
             Currency: '@ViewLang.Currency',
@@ -82,7 +83,7 @@
             Update: '@ViewLang.Update',
             By: '@ViewLang.By',
             ExchangeRate: '@ViewLang.ExchangeRate',
-            SportType: 43
+            SportType: 1
         };
     </script>
     @Scripts.Render("~/bundles/virtual-rate-details/viewlog")

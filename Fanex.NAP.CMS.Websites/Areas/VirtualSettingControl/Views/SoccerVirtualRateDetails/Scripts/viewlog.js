@@ -95,7 +95,7 @@
         CMS.closeMsgBox();
         $.ajax({
             type: 'POST',
-            url: CMS.resolveRootUrl("VirtualRateDetails/GetLogs"),
+            url: CMS.resolveRootUrl("SoccerVirtualRateDetails/GetLogs"),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             data: JSON.stringify(param),

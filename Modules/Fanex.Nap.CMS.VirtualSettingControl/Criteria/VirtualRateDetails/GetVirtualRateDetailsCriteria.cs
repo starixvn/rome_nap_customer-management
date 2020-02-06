@@ -23,8 +23,12 @@
 
         public override Hashtable GetSpParams()
         {
-            var result = new Hashtable();
-            result.Add("sporttype", SportType);
+            var result = new Hashtable
+            {
+                { "sporttype", SportType },
+                { "errcode", 0 },
+                { "errmsg", string.Empty }
+            };
 
             if (Username == null)
             {
@@ -33,10 +37,7 @@
             else
             {
                 result.Add("username", Username);
-            }
-
-            result.Add("errcode", 0);
-            result.Add("errmsg", string.Empty);
+            }          
             return result;
         }
     }

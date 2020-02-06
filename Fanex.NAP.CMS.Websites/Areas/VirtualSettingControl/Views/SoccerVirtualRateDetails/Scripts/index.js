@@ -300,7 +300,7 @@
             actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: false,
-            followParentText: resources.FollowUpline,
+            followParentText: this.isSuper() ? resources.FollowOldVR : resources.FollowUpline,
             copyToRelatedText: resources.CopyToAll + " \"" + sport.GroupName + "\""
         });
 

@@ -76,6 +76,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
 
         public static string RavenLibPath => GetValue("RavenLibPath");
 
+        public static string Environment => GetValue("Environment");
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

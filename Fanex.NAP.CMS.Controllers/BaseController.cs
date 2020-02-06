@@ -59,6 +59,7 @@ namespace Fanex.NAP.CMS.Controllers
 
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
+            ViewBag.Enviroment = AppSettings.Environment;
 
             this._userService = new UserService();
         }

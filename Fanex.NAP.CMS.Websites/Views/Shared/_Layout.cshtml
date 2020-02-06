@@ -1,5 +1,6 @@
 ﻿@{
     var showMenus = ViewBag.ShowMenus != null ? (bool)ViewBag.ShowMenus : true;
+    
 }
 <!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
@@ -21,7 +22,7 @@
 <body>
     @if (showMenus)
     {
-        <header>
+        <header class="@ViewBag.Enviroment">
             <div class="logo">
                 <a href="~/?ref=logo"></a>
             </div>

@@ -46,6 +46,8 @@ namespace Fanex.NAP.CMS.Core.Configurations
             }
         }
 
+        public static string Environment => GetValue("Environment");
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

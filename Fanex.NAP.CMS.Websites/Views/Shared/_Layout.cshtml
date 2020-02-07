@@ -1,6 +1,5 @@
 ﻿@{
-    var showMenus = ViewBag.ShowMenus != null ? (bool)ViewBag.ShowMenus : true;
-    
+    var showMenus = ViewBag.ShowMenus != null ? (bool)ViewBag.ShowMenus : true;    
 }
 <!DOCTYPE html>
 <!--[if (IE 7)]><html lang="en" class="ie7 oldie"><![endif]-->
@@ -25,7 +24,10 @@
         <header class="@ViewBag.Enviroment">
             <div class="logo">
                 <a href="~/?ref=logo"></a>
-                @(string.IsNullOrEmpty(ViewBag.Enviroment) ? string.Empty : Html.Raw(string.Format("<span class='env'>({0})</span>",ViewBag.Enviroment)))
+                @if (!string.IsNullOrEmpty(ViewBag.Enviroment))
+                {
+                    @Html.Raw(string.Format("<span class='env'>({0})</span>", ViewBag.Enviroment));
+                }               
             </div>
             @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
             <div class="user-info">

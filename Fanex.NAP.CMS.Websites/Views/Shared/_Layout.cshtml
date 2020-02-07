@@ -25,6 +25,7 @@
         <header class="@ViewBag.Enviroment">
             <div class="logo">
                 <a href="~/?ref=logo"></a>
+                @(string.IsNullOrEmpty(ViewBag.Enviroment) ? string.Empty : Html.Raw(string.Format("<span class='env'>({0})</span>",ViewBag.Enviroment)))
             </div>
             @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
             <div class="user-info">

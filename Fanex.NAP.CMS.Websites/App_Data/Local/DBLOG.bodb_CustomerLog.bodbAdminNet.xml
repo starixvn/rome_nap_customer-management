@@ -12,7 +12,7 @@
     <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog_xpre" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
     <Setting Key="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" SpName="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
   </Function>
 </Functions>

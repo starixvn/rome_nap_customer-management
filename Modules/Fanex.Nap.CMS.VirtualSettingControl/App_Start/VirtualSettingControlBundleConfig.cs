@@ -95,6 +95,9 @@
             bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/viewlog")
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/viewlog.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/soccer-virtual-rate-details/viewlog")
+                .Include("~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/Scripts/viewlog.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/autosuspend-log")
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/autosuspend-log.js"));
         }

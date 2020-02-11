@@ -6,6 +6,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -38,7 +39,7 @@
 
             if (!hasRight)
             {
-                return Json(new Result { Code = 1, Message = Labels.AccessDeniedMessage });
+                return Json(new VirtualRateDetailsReport { ResultCode = 500, ResultMessage = Labels.AccessDeniedMessage });
             }
 
             var result = _virtualRateDetailsService.GetVirtualRateDetails(criteria);
@@ -107,12 +108,12 @@
             return Json(result);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateLog, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Soccer_VirtualRateLog, Policy = Constant.Policy.Read)]
         public ActionResult ViewLog()
             => View("~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/ViewLog.cshtml");
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SoccerVirtualRateLog, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Soccer_VirtualRateLog, Policy = Constant.Policy.Read)]
         public JsonResult GetLogs(GetVirtualRateLogsCriteria criteria)
         {
             var result = _virtualRateDetailsService.GetLogs(criteria);

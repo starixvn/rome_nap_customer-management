@@ -152,6 +152,10 @@
                 CMS.disableInput();
             },
             success: function (rs) {
+                if (rs.ResultCode == 500) {
+                    CMS.showErrorMessage(CMS.accessDeniedError);
+                    return;
+                }
                 if (rs.ResultCode != 0) {
                     self.elements.reportContainer.addClass("display-none");
                     Validator.showError(self.elements.txtUsername, rs.ResultMessage, "n");

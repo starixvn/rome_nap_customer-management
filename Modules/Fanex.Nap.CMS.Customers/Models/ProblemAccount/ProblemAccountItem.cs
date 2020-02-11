@@ -27,7 +27,9 @@
             byte status,
             DateTime markDate,
             string comment,
-            int? abnormalBetNumber)
+            int? abnormalBetNumber,
+            string firstWeekInformed,
+            string secondWeekInformed)
         {
             CustId = custId;
             Username = username;
@@ -51,6 +53,8 @@
             MarkDate = markDate;
             Comment = comment;
             AbnormalBetNumber = abnormalBetNumber;
+            FirstWeekInformed = firstWeekInformed;
+            SecondWeekInformed = secondWeekInformed;
         }
 
         public int CustId { get; }
@@ -96,6 +100,10 @@
         public string Comment { get; }
 
         public int? AbnormalBetNumber { get; }
+
+        public string FirstWeekInformed { get; }
+
+        public string SecondWeekInformed { get; }
 
         public string StatusName { get; set; }
 

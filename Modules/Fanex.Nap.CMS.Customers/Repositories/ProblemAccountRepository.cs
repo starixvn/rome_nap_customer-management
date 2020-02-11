@@ -120,7 +120,9 @@
                 Convert.ToByte(reader["custstatus"]),
                 Convert.ToDateTime(reader["markdate"]),
                 reader["comment"].ToString(),
-                ToNullableInt32(reader["abnormalbetnumber"]));
+                ToNullableInt32(reader["abnormalbetnumber"]),
+                reader["informed1by"].ToString(),
+                reader["informed2by"].ToString());
 
         private static ProblemAccountReason ToProblemAccountReason(IDataReader reader)
             => new ProblemAccountReason(

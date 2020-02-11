@@ -30,6 +30,13 @@ namespace Fanex.Nap.CMS.Customers.Services
             [RoleIdConstants.Member] = nameof(RoleIdConstants.Member)
         };
 
+        private static readonly IDictionary<int, string> DirectlyMarkedMapper = new Dictionary<int, string>
+        {
+            [DirectlyMarkedConst.All] = nameof(DirectlyMarkedConst.All),
+            [DirectlyMarkedConst.Yes] = nameof(DirectlyMarkedConst.Yes),
+            [DirectlyMarkedConst.No] = nameof(DirectlyMarkedConst.No)
+        };
+
         private readonly SearchViewModel searchFilter;
         private readonly ProblemAccountModel data;
         private readonly IEnumerable<IdNameModel> reasons;
@@ -63,7 +70,9 @@ namespace Fanex.Nap.CMS.Customers.Services
                 new ExcelColumn(ProblemAccountResource.MaxPerBet, Width140),
                 new ExcelColumn(ProblemAccountResource.MarkDate, Width140),
                 new ExcelColumn(ProblemAccountResource.Reason, Width400),
-                new ExcelColumn(ProblemAccountResource.Comment, Width400)
+                new ExcelColumn(ProblemAccountResource.Comment, Width400),
+                new ExcelColumn(ProblemAccountResource._1stWeekInformed, Width140),
+                new ExcelColumn(ProblemAccountResource._2ndWeekInformed, Width140)
             };
 
             return IsMemberLevel
@@ -105,6 +114,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             ExportSearchFilter(ProblemAccountResource.AccountStatus, AccountStatusConst.AccountStatusList[searchFilter.Status], textStyle);
             ExportSearchFilter(ProblemAccountResource.IsReduced, IsReducedConst.IsReducedList[searchFilter.IsReduced], textStyle);
             ExportSearchFilter(ProblemAccountResource.Reason, reasonNames, textStyle);
+            ExportSearchFilter(ProblemAccountResource.DirectlyMarked, DirectlyMarkedMapper[searchFilter.IsDirectlyMarked], textStyle);
             ExportSearchFilter(ProblemAccountResource.Username, searchFilter.Username, textStyle);
             ExportSearchFilter(ProblemAccountResource.SearchDownlineExcel, searchFilter.IsSearchDownlines ? nameof(IsReducedConst.Yes) : nameof(IsReducedConst.No), textStyle);
             ExportSearchFilter(ProblemAccountResource.OrderBy, OrderByConst.OrderByList[searchFilter.OrderBy], textStyle);
@@ -163,6 +173,8 @@ namespace Fanex.Nap.CMS.Customers.Services
                 ExportExcel.RenderCurrentCell(item.MarkDateString, centerTextStyle);
                 ExportExcel.RenderCurrentCell(Join(item.Reasons, NewLine), wrapTextStyle);
                 ExportExcel.RenderCurrentCell(HtmlDecodeText(item.Comment), wrapTextStyle);
+                ExportExcel.RenderCurrentCell(item.FirstWeekInformed ?? string.Empty, centerTextStyle);
+                ExportExcel.RenderCurrentCell(item.SecondWeekInformed ?? string.Empty, centerTextStyle);
 
                 if (IsMemberLevel)
                 {

@@ -17,7 +17,8 @@
         txtUsername: $("#username"),
         chkSearchDownlines: $("#chk-seachDownlines"),
         ddlOrderBy: $("#ddl-orderBy"),
-        dataGrid: $("#freegrid")
+        dataGrid: $("#freegrid"),
+        directlyMarked: $("#ddl-directlyMarked")
     };
 
     function initSearchFilter() {
@@ -30,6 +31,7 @@
         elements.txtUsername.val(searchFilter.Username);
         elements.chkSearchDownlines.prop("checked", searchFilter.IsSearchDownlines);
         elements.ddlOrderBy.val(searchFilter.OrderBy);
+        elements.directlyMarked.val(searchFilter.IsDirectlyMarked);
 
         elements.ddlReason.fanexMultiSelect({
             minWidth: 281,
@@ -93,7 +95,8 @@
             reason: elements.ddlReason.fanexMultiSelect("getItems", true).join(","),
             username: $.trim(elements.txtUsername.val()),
             isSearchDownlines: elements.chkSearchDownlines.is(":checked"),
-            orderBy: elements.ddlOrderBy.val()
+            orderBy: elements.ddlOrderBy.val(),
+            isDirectlyMarked: elements.directlyMarked.val()
         };
     }
 
@@ -130,11 +133,11 @@
     }
 
     function initGridOptions(hideAbnormalBetColumn) {
-        var hiddenColumns = showSelectColumn ? [] : [8],
-            reasonAndCommentWidth = 420;
+        var hiddenColumns = showSelectColumn ? [] : [10],
+            reasonAndCommentWidth = 340;
 
         if (hideAbnormalBetColumn) {
-            hiddenColumns.push(7);
+            hiddenColumns.push(9);
             reasonAndCommentWidth += 53;
         }
 
@@ -146,6 +149,8 @@
             { HeaderText: resources.markDate, Width: 80, Name: "colMarkDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.reason, Width: reasonAndCommentWidth, Name: "colReason", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: resources.comment, Width: reasonAndCommentWidth, Name: "colComment", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: resources.FirstWeekInformed, Width: 80, Name: "col1stWeekInformed", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.SecondWeekInformed, Width: 80, Name: "col2ndWeekInformed", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.abnormalBet + renderAbnormalBetNote(), Width: 100, Name: "colAbnormalBet", HeaderAlign: "center", CellAlign: "right", CssClass: "custom-grid-colheader" },
             { HeaderText: resources.select + '<br/><input type="checkbox" id="chk-select-all">', Width: 60, Name: "colSelect", HeaderAlign: "center", CellAlign: "center" }
         ];
@@ -164,7 +169,7 @@
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 250,
+            gridExpandHeight: 280,
             columns: columns,
             showPager: true,
             customPager: true,
@@ -202,6 +207,8 @@
                 { Name: "colMarkDate", Value: problemAccount.MarkDateString },
                 { Name: "colReason", Value: renderReasonCell(problemAccount.Reasons || []) },
                 { Name: "colComment", Value: problemAccount.Comment },
+                { Name: "col1stWeekInformed", Value: problemAccount.FirstWeekInformed || "<div class='ico-noninformed'></div>" },
+                { Name: "col2ndWeekInformed", Value: problemAccount.SecondWeekInformed || "<div class='ico-noninformed'></div>" },
                 { Name: "colAbnormalBet", Value: renderAbnormalBetCell(problemAccount) },
                 { Name: "colSelect", Value: renderSelectCell(problemAccount.Username) }
             ];

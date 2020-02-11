@@ -3,7 +3,7 @@
 {
     <div class="filter-row">
         <div id="fromtodate-picker"></div>
-        <div class="lbl-field col_3">
+        <div class="lbl-field col_4">
             <label>@ProblemAccountResource.Level</label>
         </div>
         <div class="edit-field col_5">
@@ -12,28 +12,34 @@
         <div class="lbl-field col_3">
             <label>@ProblemAccountResource.Currency</label>
         </div>
-        <div class="edit-field col_4">
-            @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-50" })
+        <div class="edit-field col_5">
+            @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-80" })
         </div>
-        <div class="lbl-field col_5">
+        <div class="lbl-field col_4">
             <label>@ProblemAccountResource.AccountStatus</label>
         </div>
-        <div class="edit-field col_6">
-            @Html.DropDownList("accountStatus", Model.AccountStatus, new { id = "ddl-accountStatus", @class = "combobox-autocomplete width-100" })
+        <div class="edit-field col_5">
+            @Html.DropDownList("accountStatus", Model.AccountStatus, new { id = "ddl-accountStatus", @class = "combobox-autocomplete width-80" })
         </div>
         <div class="lbl-field col_3">
             <label>@ProblemAccountResource.IsReduced</label>
         </div>
-        <div class="edit-field col_4">
-            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-50" })
+        <div class="edit-field col_6">
+            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-100" })
         </div>
     </div>
-    <div class="filter-row last-row">
+    <div class="filter-row">
         <div class="lbl-field col_2">
             <label>@ProblemAccountResource.Reason</label>
         </div>
         <div class="edit-field col_11">
             <div id="ddl-reason"></div>
+        </div>
+        <div class="lbl-field col_4">
+            <label>@ProblemAccountResource.DirectlyMarked</label>
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownList("directlyMarked", Model.DirectlyMarked, new { id = "ddl-directlyMarked", @class = "combobox-autocomplete width-80" })
         </div>
         <div class="lbl-field col_3">
             <label for="username">@ProblemAccountResource.Username</label>
@@ -53,9 +59,11 @@
         <div class="edit-field col_6">
             @Html.DropDownList("orderBy", Model.OrderBy, new { id = "ddl-orderBy", @class = "combobox-autocomplete width-100" })
         </div>
-        <div class="lbl-field col_3">&nbsp;</div>
+    </div>
+    <div class="filter-row last-row">
+        <div class="lbl-field col_2"></div>
         <div class="submit width-auto col_4">
-            <button type="submit" class="submit">@ProblemAccountResource.Search</button>
+            <button type="submit" class="submit btn-search">@ProblemAccountResource.Search</button>
         </div>
     </div>
 }

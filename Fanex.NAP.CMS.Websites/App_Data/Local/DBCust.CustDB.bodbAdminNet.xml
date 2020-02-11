@@ -30,9 +30,9 @@
     <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Problem Accounts">
@@ -41,6 +41,7 @@
     <Setting Key="CS_ProblemAccount_ReduceBetLimit" SpName="CS_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_InactiveAccount" SpName="CS_ProblemAccount_InactiveAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_InformStatusUpd" SpName="CS_ProblemAccount_InformStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />

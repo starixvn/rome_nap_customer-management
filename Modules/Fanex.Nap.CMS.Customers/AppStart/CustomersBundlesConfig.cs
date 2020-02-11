@@ -34,6 +34,7 @@
                 "~/Areas/Customers/Scripts/problemAccount-unmark.js",
                 "~/Areas/Customers/Scripts/problemAccount-reduceBL.js",
                 "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
+                "~/Areas/Customers/Scripts/problemAccount-informingStatus.js",
                 "~/Areas/Customers/Scripts/problemAccount.js"));
 
             return bundles;

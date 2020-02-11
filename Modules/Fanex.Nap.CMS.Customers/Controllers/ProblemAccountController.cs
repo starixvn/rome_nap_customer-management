@@ -35,7 +35,8 @@
                 HasRight(CMSFunctionKeys.ManageProblemAccountCN88, Constant.Policy.Host),
                 (SearchViewModel)TempData[SearchFilterSessionKey],
                 service.GetReasons(true),
-                service.GetReasons(false));
+                service.GetReasons(false),
+                CurrentSession.Username);
 
             return View("~/Areas/Customers/Views/ProblemAccount/Index.cshtml", vm);
         }
@@ -53,6 +54,7 @@
                 vm.Username,
                 vm.IsSearchDownlines,
                 vm.OrderBy,
+                vm.IsDirectlyMarked,
                 vm.PageIndex,
                 vm.PageSize));
 
@@ -70,6 +72,7 @@
                 vm.Username,
                 vm.IsSearchDownlines,
                 vm.OrderBy,
+                vm.IsDirectlyMarked,
                 1,
                 int.MaxValue - 1);
 
@@ -151,6 +154,22 @@
                     vm.Level,
                     vm.IsAllDownlines ?? false,
                     vm.Confirmed ?? false,
+                    CurrentSession.UserId,
+                    CurrentContext.IP);
+
+            return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
+        public ActionResult UpdateInformingStatus(UpdateInformingStatusViewModel vm)
+        {
+            var result = vm.IsInvalid()
+                ? BadRequestResult()
+                : service.UpdateInformingStatus(
+                    vm.Usernames,
+                    vm.Level,
+                    vm.InformedType,
+                    vm.IsApplyDownlines,
                     CurrentSession.UserId,
                     CurrentContext.IP);
 

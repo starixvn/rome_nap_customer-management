@@ -1,4 +1,4 @@
-@red-color: #ff0000;
+﻿@red-color: #ff0000;
 @blue-color: #0000ff;
 
 .width-50 {
@@ -16,9 +16,7 @@
 .filter-bar {
     margin-bottom: 10px;
 
-    .filter-row.last-row {
-        margin-bottom: 10px;
-
+    .filter-row {
         #username {
             width: 115px;
         }
@@ -39,6 +37,10 @@
                 border: none;
                 box-shadow: none;
             }
+        }
+
+        &.last-row {
+            margin-bottom: 10px;
         }
     }
 }
@@ -140,7 +142,7 @@
     }
 }
 
-#formUnmarkMember, #formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber {
+#formUnmarkMember, #formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber, #formInformingStatus {
     width: 450px;
 }
 
@@ -164,6 +166,25 @@
 }
 
 .custom-confirm {
-    width: 500px!important;
+    width: 500px !important;
     word-wrap: break-word;
+}
+
+.filter-bar .filter-form .submit .btn-search {
+    margin-left: 0;
+}
+
+.ico-noninformed {
+    background: url(../../../Content/Themes/img/icon-no.png) no-repeat;
+    display: inline-block;
+    position: relative;
+    height: 16px;
+    width: 13px;
+    top: 3px;
+    margin-right: 5px;
+    background-size: 100%;
+}
+
+.note-text {
+    color: #FF0000;
 }

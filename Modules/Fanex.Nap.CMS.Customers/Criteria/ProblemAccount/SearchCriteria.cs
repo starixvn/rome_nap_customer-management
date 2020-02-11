@@ -16,6 +16,7 @@
             string username,
             bool isSearchDownlines,
             byte orderBy,
+            byte isDirectlyMarked,
             int pageIndex,
             int pageSize)
         {
@@ -31,6 +32,7 @@
             OrderType = orderBy;
             PageIndex = pageIndex;
             PageSize = pageSize;
+            IsDirectlyMarked = isDirectlyMarked;
         }
 
         public DateTime FromDate { get; }
@@ -52,6 +54,8 @@
         public bool IsSearchDownline { get; }
 
         public byte OrderType { get; }
+
+        public byte IsDirectlyMarked { get; }
 
         public int PageIndex { get; }
 

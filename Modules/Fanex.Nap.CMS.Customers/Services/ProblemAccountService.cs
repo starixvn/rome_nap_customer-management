@@ -36,6 +36,7 @@
             string username,
             bool isSearchDownlines,
             byte orderBy,
+            byte isDirectlyMarked,
             int pageIndex,
             int pageSize)
         {
@@ -50,6 +51,7 @@
                 username,
                 isSearchDownlines,
                 orderBy,
+                isDirectlyMarked,
                 pageIndex,
                 pageSize);
 
@@ -92,7 +94,7 @@
             var result = repository.ExecuteNonQuery(
                 new UnmarkCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip));
 
-            if (IsSuccessResult(result))
+            if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.UnmarkSuccessfully;
             }
@@ -111,7 +113,7 @@
             var result = repository.ExecuteNonQuery(
                 new ReduceBLCriteria(usernames, roleId, maxPerEvent, maxPerBet, userId, ip));
 
-            if (IsSuccessResult(result))
+            if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.ReduceBLSuccessfully;
             }
@@ -124,7 +126,7 @@
             var result = repository.ExecuteNonQuery(
                 new InactivateCriteria(usernames, roleId, confirmed, userId, ip));
 
-            if (IsSuccessResult(result))
+            if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.InactivateSuccessfully;
             }
@@ -151,7 +153,7 @@
             var result = repository.ExecuteNonQuery(
                 new RemoveReduceBLCriteria(usernames, roleId, isAllDownlines, confirmed, userId, ip));
 
-            if (IsSuccessResult(result))
+            if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.RemoveReduceBLSuccessfully;
             }
@@ -162,6 +164,25 @@
             else if (IsAlreadyInactiveOrRemoveReduceBL(result))
             {
                 result.Message = ProblemAccountResource.AllAccountsAlreadyRemoveReduceBL;
+            }
+
+            return result;
+        }
+
+        public Result UpdateInformingStatus(
+            string usernames,
+            byte roleId,
+            byte informType,
+            bool isApplyDownlines,
+            int userId,
+            string ip)
+        {
+            var result = repository.ExecuteNonQuery(
+                new UpdateInformingStatusCriteria(usernames, roleId, informType, isApplyDownlines, userId, ip));
+
+            if (result.IsSuccess)
+            {
+                result.Message = ProblemAccountResource.UpdateInformingStatusSuccessfully;
             }
 
             return result;
@@ -217,9 +238,6 @@
 
         private static string HtmlEncodeText(string text)
             => string.IsNullOrWhiteSpace(text) ? text : WebUtility.HtmlEncode(text);
-
-        private static bool IsSuccessResult(Result result)
-            => result.Code == 0;
 
         private static bool IsNeedTobeConfirmedResult(Result result)
             => result.Code == NeedTobeConfirmedCode;

@@ -23,13 +23,15 @@
             bool hasHostPermission,
             SearchViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
-            IEnumerable<IdNameModel> markNewReasons)
+            IEnumerable<IdNameModel> markNewReasons,
+            string updater)
         {
             HasHostPermission = hasHostPermission;
             AutoReload = searchViewModel != null;
             SearchFilter = searchViewModel ?? new SearchViewModel();
             Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
             MarkNewReasons = BuildMarkNewReasons(markNewReasons);
+            Updater = updater;
         }
 
         public bool HasHostPermission { get; }
@@ -40,6 +42,8 @@
 
         public DateTime CurrentDate { get; } = DateTime.Today;
 
+        public string Updater { get; }
+
         public IEnumerable<SelectListItem> Levels { get; } = new[]
         {
             BuildSelectListItem(RoleIdConstants.Super, nameof(RoleIdConstants.Super)),
@@ -47,6 +51,9 @@
             BuildSelectListItem(RoleIdConstants.Agent, nameof(RoleIdConstants.Agent)),
             BuildSelectListItem(RoleIdConstants.Member, nameof(RoleIdConstants.Member))
         };
+
+        public IEnumerable<SelectListItem> DirectlyMarked
+            => DirectlyMarkedConst.DirectlyMarkedList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
         public IEnumerable<SelectListItem> Currencies
             => CurrencyConst.CurrencyList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
@@ -66,6 +73,21 @@
             => new[] { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect) }.Concat(Levels).ToList();
 
         public IEnumerable<SelectListItem> MarkNewReasons { get; }
+
+        public IEnumerable<SelectListItem> InformTypes
+        {
+            get
+            {
+                return new[]
+                {
+                    BuildSelectListItem(-1, ProblemAccountResource.PleaseSelect, true),
+                    BuildSelectListItem(InformStatusConst.FirstWeek, $"{ProblemAccountResource._1stWeekInformedBy} {Updater}"),
+                    BuildSelectListItem(InformStatusConst.SecondWeek, $"{ProblemAccountResource._2ndWeekInformedBy} {Updater}"),
+                    BuildSelectListItem(InformStatusConst.BothWeeks, $"{ProblemAccountResource.BothWeeksInformedBy} {Updater}"),
+                    BuildSelectListItem(InformStatusConst.NoneWeek, ProblemAccountResource.NoneWeekInformed)
+                };
+            }
+        }
 
         private static SelectListItem BuildSelectListItem(int value, string name, bool selected = false)
             => new SelectListItem { Value = value.ToString(), Text = name, Selected = selected };

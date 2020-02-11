@@ -32,7 +32,10 @@
             duplicatedUsernamesError: "@ProblemAccountResource.DuplicatedUsernamesError",
             unmarkProblemAccount: "@ProblemAccountResource.UnmarkProblemAccount",
             inactivateAccount: "@ProblemAccountResource.InactivateAccount",
-            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage"
+            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
+            FirstWeekInformed: "@ProblemAccountResource._1stWeekInformed",
+            SecondWeekInformed: "@ProblemAccountResource._2ndWeekInformed",
+            thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
             defaultMinDate = "@IndexViewModel.DefaultMinDate.ToShortFormatedDateWithSlash()",
@@ -67,6 +70,7 @@
             <button type="button" class="blue-button" id="btn-reduceBetLimit">@ProblemAccountResource.ReduceBetLimit</button>
             <button type="button" class="blue-button" id="btn-inactivate">@ProblemAccountResource.Inactivate</button>
             <button type="button" class="blue-button" id="btn-removeReducedBetLimit">@ProblemAccountResource.RemoveReducedBetLimit</button>
+            <button type="button" class="blue-button" id="btn-informing-status">@ProblemAccountResource.UpdateInformingStatus</button>
         </div>
     </div>
 }
@@ -76,12 +80,13 @@
 @if (Model.HasHostPermission)
 {
     <div id="divPopupContent" class="display-none">
-    @{
-        Html.RenderPartial("_MarkNew", Model);
-        Html.RenderPartial("_Unmark");
-        Html.RenderPartial("_ReduceBetLimit");
-        Html.RenderPartial("_InactivateAccount");
-        Html.RenderPartial("_RemoveReduceBetLimit");
-    }
+        @{
+            Html.RenderPartial("_MarkNew", Model);
+            Html.RenderPartial("_Unmark");
+            Html.RenderPartial("_ReduceBetLimit");
+            Html.RenderPartial("_InactivateAccount");
+            Html.RenderPartial("_RemoveReduceBetLimit");
+            Html.RenderPartial("_InformingStatus", Model);
+        }
     </div>
 }

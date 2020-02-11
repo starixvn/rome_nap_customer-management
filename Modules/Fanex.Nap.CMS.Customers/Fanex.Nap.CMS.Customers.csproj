@@ -190,7 +190,9 @@
     <Compile Include="Constants\AccountStatusConst.cs" />
     <Compile Include="Constants\CounterOptionConstants.cs" />
     <Compile Include="Constants\CurrencyConst.cs" />
+    <Compile Include="Constants\InformStatusConst.cs" />
     <Compile Include="Constants\IsReducedConst.cs" />
+    <Compile Include="Constants\DirectlyMarkedConst.cs" />
     <Compile Include="Constants\OrderByConst.cs" />
     <Compile Include="Constants\CustomerFunctionKeys.cs" />
     <Compile Include="Constants\DangerLevelCategoryConst.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Criteria\ProblemAccount\NonQueryCriteriaBase.cs" />
     <Compile Include="Criteria\ProblemAccount\InactivateCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\MarkNewCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\UpdateInformingStatusCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\ReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\SearchCriteria.cs" />
@@ -288,6 +291,7 @@
     <Compile Include="ViewModels\ProblemAccount\RemoveReduceBLViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\SearchViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UnmarkViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccount\UpdateInformingStatusViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

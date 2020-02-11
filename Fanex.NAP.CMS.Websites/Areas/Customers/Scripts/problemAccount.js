@@ -7,7 +7,8 @@
         formReduceBL: $("#formReduceBL"),
         formInactivateAccount: $("#formInactivateAccount"),
         formRemoveReduceBLMemmber: $("#formRemoveReduceBLMemmber"),
-        formRemoveReduceBLSMA: $("#formRemoveReduceBLSMA")
+        formRemoveReduceBLSMA: $("#formRemoveReduceBLSMA"),
+        formInformingStatus: $("#formInformingStatus")
     };
 
     function bindEvents() {
@@ -45,6 +46,15 @@
             handleActions(function (usernames, level) {
                 var removeReduceBL = new ProblemAccountConfirmAction(getRemoveReducedBLForm(level).clone(), problemAccountSearch.reloadData);
                 removeReduceBL.init(modalTitle, usernames, level);
+            });
+        });
+
+        $("#btn-informing-status").click(function () {
+            var modalTitle = this.textContent;
+
+            handleActions(function (usernames, level) {
+                var updateInformStatus = new ProblemAccountInformingStatus(elements.formInformingStatus.clone(), problemAccountSearch.reloadData);
+                updateInformStatus.init(modalTitle, usernames, level);
             });
         });
     }

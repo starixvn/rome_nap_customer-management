@@ -42,6 +42,7 @@
     <Setting Key="CS_ProblemAccount_ReduceBetLimit" SpName="CS_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_InactiveAccount" SpName="CS_ProblemAccount_InactiveAccount" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_InformStatusUpd" SpName="CS_ProblemAccount_InformStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />

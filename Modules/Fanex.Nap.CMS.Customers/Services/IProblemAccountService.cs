@@ -20,6 +20,7 @@
             string username,
             bool isSearchDownlines,
             byte orderBy,
+            byte isDirectlyMarked,
             int pageIndex,
             int pageSize);
 
@@ -54,6 +55,14 @@
             byte roleId,
             bool isAllDownlines,
             bool confirmed,
+            int userId,
+            string ip);
+
+        Result UpdateInformingStatus(
+            string usernames,
+            byte roleId,
+            byte informType,
+            bool isApplyDownlines,
             int userId,
             string ip);
     }

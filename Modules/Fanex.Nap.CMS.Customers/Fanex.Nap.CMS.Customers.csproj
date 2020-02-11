@@ -199,11 +199,15 @@
     <Compile Include="Constants\DangerLevelConst.cs" />
     <Compile Include="Constants\PossessStatisticsSortSequence.cs" />
     <Compile Include="Constants\PTConditionLogicConst.cs" />
+    <Compile Include="Constants\SearchFilterSessionKeyConst.cs" />
+    <Compile Include="Constants\SiteTypeConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\PossessStatisticsController.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
+    <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditDepositCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
+    <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditDepositCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />

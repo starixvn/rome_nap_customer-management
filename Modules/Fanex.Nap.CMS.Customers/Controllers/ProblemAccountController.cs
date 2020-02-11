@@ -2,6 +2,7 @@
 {
     using System.Net;
     using System.Web.Mvc;
+    using Constants;
     using Infrastructure;
     using Infrastructure.Controllers;
     using Infrastructure.Models;
@@ -14,8 +15,6 @@
 
     public class ProblemAccountController : BaseController
     {
-        public const string SearchFilterSessionKey = "ProblemAccountSearchFilterSessionKey";
-
         private readonly IProblemAccountService service;
 
         public ProblemAccountController()
@@ -33,7 +32,7 @@
         {
             var vm = new IndexViewModel(
                 HasRight(CMSFunctionKeys.ManageProblemAccountCN88, Constant.Policy.Host),
-                (SearchViewModel)TempData[SearchFilterSessionKey],
+                (SearchViewModel)TempData[SearchFilterSessionKeyConst.CN88],
                 service.GetReasons(true),
                 service.GetReasons(false),
                 CurrentSession.Username);

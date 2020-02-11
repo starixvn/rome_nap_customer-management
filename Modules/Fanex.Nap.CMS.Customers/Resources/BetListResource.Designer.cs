@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class BetListResource {
@@ -102,6 +102,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ProblemAccountCN88 {
             get {
                 return ResourceManager.GetString("ProblemAccountCN88", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem Account - Credit Sites.
+        /// </summary>
+        public static string ProblemAccountCreditSites {
+            get {
+                return ResourceManager.GetString("ProblemAccountCreditSites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem Account - Deposit Sites.
+        /// </summary>
+        public static string ProblemAccountDepositSites {
+            get {
+                return ResourceManager.GetString("ProblemAccountDepositSites", resourceCulture);
             }
         }
         

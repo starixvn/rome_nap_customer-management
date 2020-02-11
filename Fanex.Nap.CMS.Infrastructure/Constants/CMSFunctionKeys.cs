@@ -101,5 +101,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Problem Account
         public const string ManageProblemAccountCN88 = "ManageProblemAccount_CN88";
+        public const string ManageProblemAccountCreditSites = "ManageProblemAccount_CreditSites";
+        public const string ManageProblemAccountDepositSites = "ManageProblemAccount_DepositSites";
     }
 }

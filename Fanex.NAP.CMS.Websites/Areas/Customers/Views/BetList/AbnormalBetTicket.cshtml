@@ -1,7 +1,7 @@
 ﻿@using Newtonsoft.Json;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = BetListResource.ProblemAccountCN88;
+    ViewBag.Title = Model.GetPageTitle();
 }
 @model Fanex.Nap.CMS.Customers.ViewModels.BetList.AbnormalBetTicketViewModel
 @section Head
@@ -21,9 +21,10 @@
         var totalAbnormalBetTickets = @Model.TotalAbnormalBetTickets;
         var filter = {
             custId: @Model.CustId,
-            fromDate: "@Model.From.ToShortFormatedDateWithSlash()",
-            toDate: "@Model.To.ToShortFormatedDateWithSlash()",
-            pageSize: @Model.PageSize
+            fromDate: "@Model.FromDate.ToShortFormatedDateWithSlash()",
+            toDate: "@Model.ToDate.ToShortFormatedDateWithSlash()",
+            pageSize: @Model.PageSize,
+            siteType: @Model.SiteType
         };
     </script>
     @Scripts.Render(CustomersBundlesConfig.AbnormalBetTicketScript)

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
+    using System;
     using System.Net;
     using System.Web.Mvc;
     using Constants;
@@ -15,6 +16,9 @@
 
     public class ProblemAccountController : BaseController
     {
+        // The release date of this feature.
+        private static readonly DateTime DefaultMinDate = new DateTime(2019, 9, 12);
+
         private readonly IProblemAccountService service;
 
         public ProblemAccountController()
@@ -30,12 +34,17 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var searchFilter = (SearchViewModel)TempData[SearchFilterSessionKeyConst.CN88];
             var vm = new IndexViewModel(
                 HasRight(CMSFunctionKeys.ManageProblemAccountCN88, Constant.Policy.Host),
-                (SearchViewModel)TempData[SearchFilterSessionKeyConst.CN88],
+                searchFilter != null,
+                searchFilter ?? new SearchViewModel { Currency = CurrencyConst.CY },
                 service.GetReasons(true),
                 service.GetReasons(false),
-                CurrentSession.Username);
+                CurrentSession.Username,
+                DefaultMinDate,
+                CurrencyConst.CurrencyList(),
+                AccountStatusConst.AccountStatusList);
 
             return View("~/Areas/Customers/Views/ProblemAccount/Index.cshtml", vm);
         }
@@ -83,15 +92,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult MarkNew(MarkNewViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.MarkNew(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.Reason,
-                    vm.Comment,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.MarkNew(
+                vm.Usernames,
+                vm.Level,
+                vm.Reason,
+                vm.Comment,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
@@ -99,15 +111,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult Unmark(UnmarkViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.Unmark(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.ExcludeAbnormalMember ?? false,
-                    vm.ExcludeDirectMark ?? false,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.Unmark(
+                vm.Usernames,
+                vm.Level,
+                vm.ExcludeAbnormalMember ?? false,
+                vm.ExcludeDirectMark ?? false,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
@@ -115,15 +130,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult ReduceBL(ReduceBLViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.ReduceBL(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.MaxPerEventValue,
-                    vm.MaxPerBetValue,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.ReduceBL(
+                vm.Usernames,
+                vm.Level,
+                vm.MaxPerEventValue,
+                vm.MaxPerBetValue,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
@@ -131,14 +149,17 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult Inactivate(InactivateViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.Inactivate(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.Confirmed ?? false,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.Inactivate(
+                vm.Usernames,
+                vm.Level,
+                vm.Confirmed ?? false,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
@@ -146,15 +167,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult RemoveReduceBL(RemoveReduceBLViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.RemoveReduceBL(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.IsAllDownlines ?? false,
-                    vm.Confirmed ?? false,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.RemoveReduceBL(
+                vm.Usernames,
+                vm.Level,
+                vm.IsAllDownlines ?? false,
+                vm.Confirmed ?? false,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
@@ -162,20 +186,20 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Host)]
         public ActionResult UpdateInformingStatus(UpdateInformingStatusViewModel vm)
         {
-            var result = vm.IsInvalid()
-                ? BadRequestResult()
-                : service.UpdateInformingStatus(
-                    vm.Usernames,
-                    vm.Level,
-                    vm.InformedType,
-                    vm.IsApplyDownlines,
-                    CurrentSession.UserId,
-                    CurrentContext.IP);
+            if (vm.IsInvalid())
+            {
+                return BadRequest();
+            }
+
+            var result = service.UpdateInformingStatus(
+                vm.Usernames,
+                vm.Level,
+                vm.InformedType,
+                vm.IsApplyDownlines,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
-
-        private static Result BadRequestResult()
-            => new Result((int)HttpStatusCode.BadRequest, ProblemAccountResource.BadRequest);
     }
 }

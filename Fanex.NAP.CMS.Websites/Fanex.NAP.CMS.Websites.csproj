@@ -425,6 +425,9 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-informingStatus.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSites\problemAccountCreditSites-reduceBL.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSites\problemAccountCreditSites-search.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSites\problemAccountCreditSites.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\filter.js" />
@@ -939,6 +942,13 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_SearchFilter.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_MarkNew.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_ReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_Unmark.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_RemoveReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSites\_CloseAccount.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

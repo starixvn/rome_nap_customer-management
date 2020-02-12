@@ -14,7 +14,6 @@
             To = DateTime.Today;
             From = To.AddDays(FromDate);
             Level = RoleIdConstants.Member;
-            Currency = CurrencyConst.CY;
             OrderBy = OrderByConst.OrderBySMALine;
         }
 

@@ -134,7 +134,7 @@
 
     function initGridOptions(hideAbnormalBetColumn) {
         var hiddenColumns = showSelectColumn ? [] : [10],
-            reasonAndCommentWidth = 340;
+            reasonAndCommentWidth = 335;
 
         if (hideAbnormalBetColumn) {
             hiddenColumns.push(9);

@@ -1,0 +1,16 @@
+﻿@using (Html.BeginForm("Close", "ProblemAccountCreditSites", FormMethod.Post, new { id = "formCloseAccount", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <p>@ProblemAccountCreditDepositResource.CloseAccountConfimMessage</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.OK</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

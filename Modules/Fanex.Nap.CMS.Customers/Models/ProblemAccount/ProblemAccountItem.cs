@@ -29,7 +29,8 @@
             string comment,
             int? abnormalBetNumber,
             string firstWeekInformed,
-            string secondWeekInformed)
+            string secondWeekInformed,
+            string currency)
         {
             CustId = custId;
             Username = username;
@@ -55,6 +56,7 @@
             AbnormalBetNumber = abnormalBetNumber;
             FirstWeekInformed = firstWeekInformed;
             SecondWeekInformed = secondWeekInformed;
+            Currency = currency;
         }
 
         public int CustId { get; }
@@ -104,6 +106,8 @@
         public string FirstWeekInformed { get; }
 
         public string SecondWeekInformed { get; }
+
+        public string Currency { get; }
 
         public string StatusName { get; set; }
 

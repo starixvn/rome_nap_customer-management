@@ -25,10 +25,19 @@
             }
         }
 
-        public Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>> GetProblemAccounts(SearchCriteria criteria)
+        private static IdNameModel ToReason(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["reasonid"]),
+                Name = reader["reasonname"].ToString()
+            };
+
+        public Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria)
         {
+            var isCreditSites = criteria is SearchCreditSitesCriteria;
             IList<ProblemAccountItem> problemAccounts = new List<ProblemAccountItem>();
             IList<ProblemAccountReason> reasons = new List<ProblemAccountReason>();
+            int totalItems = 0;
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -36,7 +45,7 @@
                 {
                     while (reader.Read())
                     {
-                        problemAccounts.Add(ToProblemAccountItem(reader));
+                        problemAccounts.Add(ToProblemAccountItem(reader, isCreditSites));
                     }
 
                     if (reader.NextResult())
@@ -48,56 +57,13 @@
                     }
                 }
 
-                criteria.TotalItems = Convert.ToInt32(db.GetOuputParams()["totalitems"]);
+                totalItems = Convert.ToInt32(db.GetOuputParams()["totalitems"]);
             }
 
-            return new Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>>(problemAccounts, reasons);
+            return new Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int>(problemAccounts, reasons, totalItems);
         }
 
-        public void MarkNew(MarkNewCriteria criteria)
-        {
-            if (criteria.IsValid())
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-                    var ouputParams = db.GetOuputParams();
-
-                    criteria.ErrCode = Convert.ToInt32(ouputParams["errcode"]);
-                    criteria.ErrMsg = ouputParams["errmsg"].ToString();
-                    criteria.SuccessList = ouputParams["successlist"].ToString();
-                    criteria.FailList = ouputParams["faillist"].ToString();
-                }
-            }
-        }
-
-        public Result ExecuteNonQuery(ICriteria criteria)
-        {
-            if (criteria.IsValid())
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-
-                    var ouputParams = db.GetOuputParams();
-
-                    return new Result(
-                        Convert.ToInt32(ouputParams["errcode"]),
-                        ouputParams["errmsg"].ToString());
-                }
-            }
-
-            return new Result();
-        }
-
-        private static IdNameModel ToReason(IDataReader reader)
-            => new IdNameModel
-            {
-                Id = Convert.ToInt32(reader["reasonid"]),
-                Name = reader["reasonname"].ToString()
-            };
-
-        private static ProblemAccountItem ToProblemAccountItem(IDataReader reader)
+        private static ProblemAccountItem ToProblemAccountItem(IDataReader reader, bool isCreditSites)
             => new ProblemAccountItem(
                 Convert.ToInt32(reader["custid"]),
                 reader["username"].ToString(),
@@ -121,8 +87,15 @@
                 Convert.ToDateTime(reader["markdate"]),
                 reader["comment"].ToString(),
                 ToNullableInt32(reader["abnormalbetnumber"]),
-                reader["informed1by"].ToString(),
-                reader["informed2by"].ToString());
+                isCreditSites ? null : reader["informed1by"].ToString(),
+                isCreditSites ? null : reader["informed2by"].ToString(),
+                isCreditSites ? reader["currency"].ToString() : null );
+
+        private static decimal? ToNullableDecimal(object value)
+            => value == null || value == DBNull.Value ? default(decimal?) : Convert.ToDecimal(value);
+
+        private static int? ToNullableInt32(object value)
+            => value == null || value == DBNull.Value ? default(int?) : Convert.ToInt32(value);
 
         private static ProblemAccountReason ToProblemAccountReason(IDataReader reader)
             => new ProblemAccountReason(
@@ -131,10 +104,53 @@
                 Convert.ToDateTime(reader["createdate"]),
                 reader["reasonname"].ToString());
 
-        private static decimal? ToNullableDecimal(object value)
-            => value == null || value == DBNull.Value ? default(decimal?) : Convert.ToDecimal(value);
+        public Result MarkNew(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
 
-        private static int? ToNullableInt32(object value)
-            => value == null || value == DBNull.Value ? default(int?) : Convert.ToInt32(value);
+                return new MarkNewResult(
+                    Convert.ToInt32(ouputParams["errcode"]),
+                    ouputParams["errmsg"].ToString(),
+                    ouputParams["successlist"].ToString(),
+                    ouputParams["faillist"].ToString());
+            }
+        }
+
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
+
+                return new Result(
+                    Convert.ToInt32(ouputParams["errcode"]),
+                    ouputParams["errmsg"].ToString());
+            }
+        }
+
+        public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return ToCurrency(reader);
+                    }
+                }
+            }
+        }
+
+        private static IdNameModel ToCurrency(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["exchangeid"]),
+                Name = reader["currency"].ToString()
+            };
     }
 }

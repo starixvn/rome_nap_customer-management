@@ -10,12 +10,17 @@
         public const string AbnormalBetTicketScript = "~/bundles/customers/betlist-abnormalbetticket-scripts";
         public const string PossessStatisticsStyles = "~/bundles/customers/possess-statistics-styles";
         public const string PossessStatisticsScript = "~/bundles/customers/possess-statistics-scripts";
+        public const string ProblemAccountCreditSitesScript = "~/bundles/customers/problem-account-creditsites-scripts";
+
+        private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.RegisterProblemAccountBundles()
+            bundles
+                .RegisterProblemAccountBundles()
                 .RegisterBetListBundles()
-                .RegisterPossessStatisticsBundles();
+                .RegisterPossessStatisticsBundles()
+                .RegisterProblemAccountCreditSitesBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -28,7 +33,7 @@
                 "~/Areas/Customers/Styles/problemAccount.less");
 
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Scripts/problemAccount-search.js",
                 "~/Areas/Customers/Scripts/problemAccount-marknew.js",
                 "~/Areas/Customers/Scripts/problemAccount-unmark.js",
@@ -74,6 +79,20 @@
                 "~/Areas/Customers/Scripts/PossessStatistics/filter.js",
                 "~/Areas/Customers/Scripts/PossessStatistics/update-action.js",
                 "~/Areas/Customers/Scripts/PossessStatistics/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterProblemAccountCreditSitesBundles(this BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ProblemAccountCreditSitesScript).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSites/problemAccountCreditSites-search.js",
+                "~/Areas/Customers/Scripts/problemAccount-marknew.js",
+                "~/Areas/Customers/Scripts/problemAccount-unmark.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSites/problemAccountCreditSites-reduceBL.js",
+                "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSites/problemAccountCreditSites.js"));
 
             return bundles;
         }

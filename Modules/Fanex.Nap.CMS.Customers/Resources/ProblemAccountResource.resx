@@ -264,9 +264,6 @@
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
-  <data name="BadRequest" xml:space="preserve">
-    <value>Bad Request.</value>
-  </data>
   <data name="InvalidMaxPerBetError" xml:space="preserve">
     <value>Max per Bet must be less than or equal to Max per Event.</value>
   </data>

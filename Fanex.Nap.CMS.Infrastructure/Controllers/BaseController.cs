@@ -10,20 +10,22 @@
 namespace Fanex.Nap.CMS.Infrastructure.Controllers
 {
     using System;
+    using System.Net;
     using System.Web.Mvc;
+    using Configurations;
     using Extensions;
-    using Fanex.Nap.CMS.Infrastructure.Configurations;
-    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Core.Web.Attribute;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Models;
     using NAP.Core.Context;
     using Newtonsoft.Json;
+    using Resources;
+    using Web;
 
     /// <summary>
     /// Base controller.
@@ -151,6 +153,9 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
             int functionPolicy = this._userService.GetPermission(this._currentSession.UserId, this.SiteId, functionKey);
             return functionPolicy >= (int)policy;
         }
+
+        protected JsonResult BadRequest(string message = null, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
+            => JsonData(new Result((int)HttpStatusCode.BadRequest, message ?? Labels.BadRequest), behavior);
 
         protected JsonResult JsonData(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
         {

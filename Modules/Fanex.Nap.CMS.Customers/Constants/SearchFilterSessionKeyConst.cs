@@ -4,12 +4,18 @@
     {
         public const string CN88 = "ProblemAccountSearchFilterCN88SessionKey";
 
-        public const string CreditDeposit = "ProblemAccountSearchFilterCreditDepositSessionKey";
+        public const string Credit = "ProblemAccountSearchFilterCreditSessionKey";
+
+        public const string Deposit = "ProblemAccountSearchFilterDepositSessionKey";
 
         public static string GetSessionKey(byte siteType)
-            => GetSessionKey(SiteTypeConst.IsCN88(siteType));
+        {
+            if (SiteTypeConst.IsCN88(siteType))
+            {
+                return CN88;
+            }
 
-        public static string GetSessionKey(bool isCN88)
-            => isCN88 ? CN88 : CreditDeposit;
+            return SiteTypeConst.IsCredit(siteType) ? Credit : Deposit;
+        }
     }
 }

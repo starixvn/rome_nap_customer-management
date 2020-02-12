@@ -38,7 +38,7 @@
             thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
-            defaultMinDate = "@IndexViewModel.DefaultMinDate.ToShortFormatedDateWithSlash()",
+            defaultMinDate = "@Model.MinFromDate.ToShortFormatedDateWithSlash()",
             maxInputUsernames = @IndexViewModel.MaxInputUsernames,
             showSelectColumn = @Model.HasHostPermission.ToString().ToLowerInvariant(),
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();

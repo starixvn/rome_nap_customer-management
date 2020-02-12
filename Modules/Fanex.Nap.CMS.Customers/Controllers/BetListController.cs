@@ -29,12 +29,12 @@
         {
             if (HasReadManageProblem(siteType))
             {
-                var isCN88 = SiteTypeConst.IsCN88(siteType);
-                TempData[SearchFilterSessionKeyConst.GetSessionKey(isCN88)] = searchViewModel;
+                TempData[SearchFilterSessionKeyConst.GetSessionKey(siteType)] = searchViewModel;
 
                 const int pageIndex = 1;
                 var fromDate = searchViewModel.From;
                 var toDate = searchViewModel.To.GetEndOfDate();
+                var isCN88 = SiteTypeConst.IsCN88(siteType);
                 var abnormalBetTicketData = service.GetAbnormalBetTickets(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize, isCN88);
 
                 var vm = new AbnormalBetTicketViewModel

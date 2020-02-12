@@ -169,15 +169,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bad Request..
-        /// </summary>
-        public static string BadRequest {
-            get {
-                return ResourceManager.GetString("BadRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Both weeks informed by.
         /// </summary>
         public static string BothWeeksInformedBy {

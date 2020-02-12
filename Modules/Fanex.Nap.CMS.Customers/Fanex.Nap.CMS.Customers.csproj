@@ -188,6 +188,7 @@
     <Compile Include="AppStart\CustomersAreaRegistration.cs" />
     <Compile Include="AppStart\CustomersBundlesConfig.cs" />
     <Compile Include="Constants\AccountStatusConst.cs" />
+    <Compile Include="Constants\AccountStatusCreditSitesConst.cs" />
     <Compile Include="Constants\CounterOptionConstants.cs" />
     <Compile Include="Constants\CurrencyConst.cs" />
     <Compile Include="Constants\InformStatusConst.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\PossessStatisticsController.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
+    <Compile Include="Controllers\ProblemAccountCreditSitesController.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditDepositCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditDepositCriteria.cs" />
@@ -218,10 +220,18 @@
     <Compile Include="Criteria\PossessStatistics\UpdateDangerLevelCritera.cs" />
     <Compile Include="Criteria\PossessStatistics\UpdateMonitorStatusCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetSitesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\CloseAccountCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\GetCurrenciesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\GetReasonCreditDepositCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\GetReasonCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\MarkNewCreditSitesCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\NonQueryCriteriaBase.cs" />
     <Compile Include="Criteria\ProblemAccount\InactivateCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\MarkNewCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\ReduceBLCreditSitesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCreditSitesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\SearchCreditSitesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\UnmarkCreditSitesCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\UpdateInformingStatusCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\ReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
@@ -265,6 +275,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PossessStatisticsResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ProblemAccountCreditDepositResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProblemAccountCreditDepositResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ProblemAccountResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -275,6 +290,7 @@
     <Compile Include="Services\IManageRobots2Service.cs" />
     <Compile Include="Services\IProblemAccountService.cs" />
     <Compile Include="Services\PossessStatisticsExporter.cs" />
+    <Compile Include="Services\ProblemAccountCreditSitesExporter.cs" />
     <Compile Include="Services\ProblemAccountExporter.cs" />
     <Compile Include="Services\ManageRobots2Service.cs" />
     <Compile Include="Services\PossessStatisticsService.cs" />
@@ -315,6 +331,10 @@
     <EmbeddedResource Include="Resources\PossessStatisticsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PossessStatisticsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ProblemAccountCreditDepositResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProblemAccountCreditDepositResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

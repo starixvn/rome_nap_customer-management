@@ -16,22 +16,26 @@
         public const int MaxPerEvent = 5000;
         public const int MaxPerBet = 1000;
 
-        // The release date of this feature.
-        public static readonly DateTime DefaultMinDate = new DateTime(2019, 9, 12);
-
         public IndexViewModel(
             bool hasHostPermission,
+            bool autoReload,
             SearchViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
             IEnumerable<IdNameModel> markNewReasons,
-            string updater)
+            string updater,
+            DateTime minFromDate,
+            IEnumerable<IdNameModel> currencies,
+            IDictionary<byte, string> accountStatus)
         {
             HasHostPermission = hasHostPermission;
-            AutoReload = searchViewModel != null;
-            SearchFilter = searchViewModel ?? new SearchViewModel();
+            AutoReload = autoReload;
+            SearchFilter = searchViewModel;
             Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
             MarkNewReasons = BuildMarkNewReasons(markNewReasons);
             Updater = updater;
+            MinFromDate = minFromDate;
+            Currencies = currencies.Select(c => BuildSelectListItem(c.Id, c.Name));
+            AccountStatus = accountStatus.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
         }
 
         public bool HasHostPermission { get; }
@@ -39,6 +43,8 @@
         public bool AutoReload { get; }
 
         public SearchViewModel SearchFilter { get; }
+
+        public DateTime MinFromDate { get; }
 
         public DateTime CurrentDate { get; } = DateTime.Today;
 
@@ -55,11 +61,9 @@
         public IEnumerable<SelectListItem> DirectlyMarked
             => DirectlyMarkedConst.DirectlyMarkedList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
 
-        public IEnumerable<SelectListItem> Currencies
-            => CurrencyConst.CurrencyList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
+        public IEnumerable<SelectListItem> Currencies { get; }
 
-        public IEnumerable<SelectListItem> AccountStatus
-            => AccountStatusConst.AccountStatusList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
+        public IEnumerable<SelectListItem> AccountStatus { get; }
 
         public IEnumerable<SelectListItem> IsReduced
             => IsReducedConst.IsReducedList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));

@@ -18,11 +18,11 @@ using NPOI.SS.UserModel;
 
 namespace Fanex.Nap.CMS.Customers.Services
 {
-    public sealed class ProblemAccountExporter : BaseExcelExporter, IExcelExporter
+    public class ProblemAccountExporter : BaseExcelExporter, IExcelExporter
     {
-        private static readonly string NewLine = Environment.NewLine;
+        protected static readonly string NewLine = Environment.NewLine;
         private static readonly string[] RoleShortNameMapper = new[] { "S:", "M:", "A:", "mb:" };
-        private static readonly IDictionary<int, string> RoleNameMapper = new Dictionary<int, string>
+        protected static readonly IDictionary<int, string> RoleNameMapper = new Dictionary<int, string>
         {
             [RoleIdConstants.Super] = nameof(RoleIdConstants.Super),
             [RoleIdConstants.Master] = nameof(RoleIdConstants.Master),
@@ -30,16 +30,16 @@ namespace Fanex.Nap.CMS.Customers.Services
             [RoleIdConstants.Member] = nameof(RoleIdConstants.Member)
         };
 
-        private static readonly IDictionary<int, string> DirectlyMarkedMapper = new Dictionary<int, string>
+        protected static readonly IDictionary<int, string> DirectlyMarkedMapper = new Dictionary<int, string>
         {
             [DirectlyMarkedConst.All] = nameof(DirectlyMarkedConst.All),
             [DirectlyMarkedConst.Yes] = nameof(DirectlyMarkedConst.Yes),
             [DirectlyMarkedConst.No] = nameof(DirectlyMarkedConst.No)
         };
 
-        private readonly SearchViewModel searchFilter;
-        private readonly ProblemAccountModel data;
-        private readonly IEnumerable<IdNameModel> reasons;
+        protected readonly SearchViewModel searchFilter;
+        protected readonly ProblemAccountModel data;
+        protected readonly IEnumerable<IdNameModel> reasons;
 
         public ProblemAccountExporter(
             SearchViewModel searchFilter,
@@ -100,17 +100,19 @@ namespace Fanex.Nap.CMS.Customers.Services
             ExportExcel.CurrentRow++;
         }
 
-        private void ExportSearchFilter()
+        protected virtual void ExportSearchFilter()
         {
             var textStyle = NpoiExcelExtensions.TextStyleWithoutBorder(ExportExcel.ExcelFile, HSSFColor.White.Index, false, Alignment.Left);
 
             var reasonDict = reasons.ToDictionary(r => r.Id.ToString(), r => r.Name);
             var reasonNames = Join(searchFilter.Reason.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(r => reasonDict[r]), ", ");
 
+            var currency = CurrencyConst.CurrencyList().FirstOrDefault(c => c.Id == searchFilter.Currency);
+
             ExportSearchFilter(ProblemAccountResource.From, searchFilter.From.ToShortFormatedDateWithSlash(), textStyle);
             ExportSearchFilter(ProblemAccountResource.To, searchFilter.To.ToShortFormatedDateWithSlash(), textStyle);
             ExportSearchFilter(ProblemAccountResource.Level, RoleNameMapper[searchFilter.Level], textStyle);
-            ExportSearchFilter(ProblemAccountResource.Currency, CurrencyConst.CurrencyList[searchFilter.Currency], textStyle);
+            ExportSearchFilter(ProblemAccountResource.Currency, currency == null ? string.Empty : currency.Name, textStyle);
             ExportSearchFilter(ProblemAccountResource.AccountStatus, AccountStatusConst.AccountStatusList[searchFilter.Status], textStyle);
             ExportSearchFilter(ProblemAccountResource.IsReduced, IsReducedConst.IsReducedList[searchFilter.IsReduced], textStyle);
             ExportSearchFilter(ProblemAccountResource.Reason, reasonNames, textStyle);
@@ -120,7 +122,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             ExportSearchFilter(ProblemAccountResource.OrderBy, OrderByConst.OrderByList[searchFilter.OrderBy], textStyle);
         }
 
-        private void ExportSearchFilter(string filterText, string filterValue, ICellStyle celltyle)
+        protected void ExportSearchFilter(string filterText, string filterValue, ICellStyle celltyle)
         {
             CreateNPOIRowAndResetColumnIndex();
             ExportExcel.RenderCurrentCell(filterText, celltyle);
@@ -185,9 +187,9 @@ namespace Fanex.Nap.CMS.Customers.Services
             }
         }
 
-        private bool IsMemberLevel => searchFilter.Level == RoleIdConstants.Member;
+        protected bool IsMemberLevel => searchFilter.Level == RoleIdConstants.Member;
 
-        private IEnumerable<decimal?> BuildMaxPerEventOrMaxPerBet(
+        protected IEnumerable<decimal?> BuildMaxPerEventOrMaxPerBet(
             decimal? super,
             decimal? master,
             decimal? agent,
@@ -211,7 +213,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             }
         }
 
-        private void ExportAccountCell(ProblemAccountItem problemAccount, IFont blueFont, ICellStyle wrapTextStyle)
+        protected void ExportAccountCell(ProblemAccountItem problemAccount, IFont blueFont, ICellStyle wrapTextStyle)
         {
             int startIndexSuper = -1;
             int endIndexSuper = -1;
@@ -294,7 +296,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             }
         }
 
-        private IFont CreateBlueFont(ICellStyle wrapTextStyle)
+        protected IFont CreateBlueFont(ICellStyle wrapTextStyle)
         {
             var font = wrapTextStyle.GetFont(ExportExcel.ExcelFile);
 
@@ -314,7 +316,7 @@ namespace Fanex.Nap.CMS.Customers.Services
             }
         }
 
-        private void ExportMaxPerEventOrMaxPerBet(IList<decimal?> values, IFont blueFont, ICellStyle wrapTextStyle)
+        protected void ExportMaxPerEventOrMaxPerBet(IList<decimal?> values, IFont blueFont, ICellStyle wrapTextStyle)
         {
             var lastIndex = LastIndexOfMinValue(values);
 
@@ -389,10 +391,10 @@ namespace Fanex.Nap.CMS.Customers.Services
             return minValue == null ? -1 : lastIndex;
         }
 
-        private static string Join(IEnumerable<string> values, string separator)
+        protected static string Join(IEnumerable<string> values, string separator)
             => values?.Any() == true ? string.Join(separator, values) : string.Empty;
 
-        private static string HtmlDecodeText(string text)
+        protected static string HtmlDecodeText(string text)
             => string.IsNullOrWhiteSpace(text) ? text : WebUtility.HtmlDecode(text);
     }
 }

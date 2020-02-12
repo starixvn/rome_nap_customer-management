@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Criteria.ProblemAccount;
     using Data.Repository;
     using Infrastructure.Models;
     using Models.ProblemAccount;
@@ -11,10 +10,12 @@
     {
         IEnumerable<IdNameModel> GetReasons(ICriteria criteria);
 
-        Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>> GetProblemAccounts(SearchCriteria criteria);
+        Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria);
 
-        void MarkNew(MarkNewCriteria criteria);
+        Result MarkNew(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria);
     }
 }

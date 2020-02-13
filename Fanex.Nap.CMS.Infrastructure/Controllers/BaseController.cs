@@ -27,9 +27,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Resources;
     using Web;
 
-    /// <summary>
-    /// Base controller.
-    /// </summary>
     public class BaseController : Controller
     {
         private readonly ICurrentSession _currentSession;

@@ -1,0 +1,31 @@
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.Models.ProblemAccount;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ProblemAccountCreditDepositResource.ManageLicenseeAcknowledgementTitle;
+}
+@model IEnumerable<LicenseeAcknowledgement>
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            licensee: "@ProblemAccountCreditDepositResource.Licensee",
+            active: "@ProblemAccountCreditDepositResource.Active",
+            acknowledgementStatus: "@ProblemAccountCreditDepositResource.AcknowledgementStatus"
+        };
+        var licensees = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore }))');
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.ManageLicenseeAcknowledgementScript)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div id="div-successInlineMessage" class="margin-top inline-message"></div>
+<div class="content-grid">
+    <div class="freegrid margin-top display-none" id="freegrid"></div>
+</div>

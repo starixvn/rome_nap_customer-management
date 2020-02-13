@@ -32,7 +32,7 @@
 
             return SiteTypeConst.IsCredit(SiteType)
                 ? BetListResource.ProblemAccountCreditSites
-                : BetListResource.ProblemAccountDepositSites;
+                : BetListResource.ProblemAccountLicenseeSites;
         }
 
         public int TotalAbnormalBetTickets { get; set; }

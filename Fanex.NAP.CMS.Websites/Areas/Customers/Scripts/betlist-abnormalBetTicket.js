@@ -45,11 +45,11 @@
         }
 
         if (filter.siteType === 1) {
-            return "Customers/ProblemAccountCreditSites/Index";
+            return "Customers/ProblemAccountCreditSite/Index";
         }
 
         if (filter.siteType === 2) {
-            return "Customers/ProblemAccountDepositSites/Index";
+            return "Customers/ProblemAccountLicenseeSite/Index";
         }
     }
 

@@ -23,9 +23,6 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Web.Session;
     using NAP.Core.Context;
 
-    /// <summary>
-    /// Base controller.
-    /// </summary>
     public class BaseController : Controller
     {
         private readonly ICurrentContext _currentContext;

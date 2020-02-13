@@ -115,11 +115,11 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Problem Account - Deposit Sites.
+        ///   Looks up a localized string similar to Problem Account - Licensee Sites.
         /// </summary>
-        public static string ProblemAccountDepositSites {
+        public static string ProblemAccountLicenseeSites {
             get {
-                return ResourceManager.GetString("ProblemAccountDepositSites", resourceCulture);
+                return ResourceManager.GetString("ProblemAccountLicenseeSites", resourceCulture);
             }
         }
         

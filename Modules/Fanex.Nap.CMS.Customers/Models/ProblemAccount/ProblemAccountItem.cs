@@ -30,7 +30,8 @@
             int? abnormalBetNumber,
             string firstWeekInformed,
             string secondWeekInformed,
-            string currency)
+            string currency,
+            byte preventiveActionId)
         {
             CustId = custId;
             Username = username;
@@ -57,6 +58,7 @@
             FirstWeekInformed = firstWeekInformed;
             SecondWeekInformed = secondWeekInformed;
             Currency = currency;
+            PreventiveActionId = preventiveActionId;
         }
 
         public int CustId { get; }
@@ -108,6 +110,10 @@
         public string SecondWeekInformed { get; }
 
         public string Currency { get; }
+
+        public byte PreventiveActionId { get; }
+
+        public string PreventiveAction { get; set; }
 
         public string StatusName { get; set; }
 

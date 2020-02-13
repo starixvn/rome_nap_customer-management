@@ -1,0 +1,41 @@
+﻿@using (Html.BeginForm("ReduceBL", "ProblemAccountLicenseeSite", FormMethod.Post, new { id = "formReduceBL", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-140">
+            <label for="txt-maxPerMatch">@ProblemAccountCreditDepositResource.MaxPerMatch<span class="span-currency"></span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text"
+                   class="align-right width-160 clearable"
+                   autocomplete="off"
+                   maxlength="20"
+                   name="maxPerMatch"
+                   id="txt-maxPerMatch" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-140">
+            <label for="txt-maxBet">@ProblemAccountCreditDepositResource.MaxBet<span class="span-currency"></span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text"
+                   class="align-right width-160 clearable"
+                   autocomplete="off"
+                   maxlength="20"
+                   name="maxBet"
+                   id="txt-maxBet" />
+        </div>
+    </div>
+    <div class="form-row">
+        <p><span class="text-red">*</span> @ProblemAccountResource.ReduceBetLimitHint</p>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

@@ -61,6 +61,33 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acknowledged.
+        /// </summary>
+        public static string Acknowledged {
+            get {
+                return ResourceManager.GetString("Acknowledged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AcknowledgementStatus.
+        /// </summary>
+        public static string AcknowledgementStatus {
+            get {
+                return ResourceManager.GetString("AcknowledgementStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All of the selected accounts are closed already. No action has been done..
         /// </summary>
         public static string AllAccountsAlreadyClosed {
@@ -142,11 +169,47 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Licensee.
+        /// </summary>
+        public static string Licensee {
+            get {
+                return ResourceManager.GetString("Licensee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input at least 2 letters.
+        /// </summary>
+        public static string LicenseePlacehoder {
+            get {
+                return ResourceManager.GetString("LicenseePlacehoder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Problem Account - Manage Licensee Acknowledgement.
+        /// </summary>
+        public static string ManageLicenseeAcknowledgementTitle {
+            get {
+                return ResourceManager.GetString("ManageLicenseeAcknowledgementTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Problem Account - Credit Sites.
         /// </summary>
         public static string ManageProblemAccountCreditSites {
             get {
                 return ResourceManager.GetString("ManageProblemAccountCreditSites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Problem Account - Licensee Sites.
+        /// </summary>
+        public static string ManageProblemAccountLicenseeSites {
+            get {
+                return ResourceManager.GetString("ManageProblemAccountLicenseeSites", resourceCulture);
             }
         }
         
@@ -169,6 +232,42 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External ID or System ID.
+        /// </summary>
+        public static string MemberPlacehoder {
+            get {
+                return ResourceManager.GetString("MemberPlacehoder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Acknowledged.
+        /// </summary>
+        public static string NotAcknowledged {
+            get {
+                return ResourceManager.GetString("NotAcknowledged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preventive Action.
+        /// </summary>
+        public static string PreventiveAction {
+            get {
+                return ResourceManager.GetString("PreventiveAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency..
         /// </summary>
         public static string ReduceBLMultipleCurrenciesSelectedError {
@@ -183,6 +282,78 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string SeperatedByComma {
             get {
                 return ResourceManager.GetString("SeperatedByComma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div&gt;This licensee has at least one bet limit reduced member.&lt;/div&gt;&lt;p&gt;Retracting Ackowledgement status will not lift the bet remit reduction for those members.&lt;/p&gt;&lt;div&gt;Do you want to proceed?&lt;/div&gt;.
+        /// </summary>
+        public static string UpdateAcknowledgementStatusConfirmMessage {
+            get {
+                return ResourceManager.GetString("UpdateAcknowledgementStatusConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acknowledement status is updated..
+        /// </summary>
+        public static string UpdateLicenseeAcknowledgementSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateLicenseeAcknowledgementSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected accounts&apos; preventive actions have been successfully updated..
+        /// </summary>
+        public static string UpdatePreventiveActionSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatePreventiveActionSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Problem Account.
+        /// </summary>
+        public static string UpdateProblemAccount {
+            get {
+                return ResourceManager.GetString("UpdateProblemAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected accounts have been successfully updated..
+        /// </summary>
+        public static string UpdateProblemAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateProblemAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VIP.
+        /// </summary>
+        public static string VIP {
+            get {
+                return ResourceManager.GetString("VIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Void winning tickets.
+        /// </summary>
+        public static string VoidWinningTickets {
+            get {
+                return ResourceManager.GetString("VoidWinningTickets", resourceCulture);
             }
         }
     }

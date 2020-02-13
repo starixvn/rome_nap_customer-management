@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Constants;
     using Fanex.NAP.Core.Configuration;
+    using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
     using Infrastructure.Controllers;
     using Infrastructure.Extensions;
@@ -10,6 +11,8 @@
     using Services;
     using ViewModels.BetList;
     using ViewModels.ProblemAccount;
+    using ViewModels.ProblemAccountCreditSite;
+    using ViewModels.ProblemAccountLicenseeSite;
 
     public class BetListController : BaseController
     {
@@ -25,36 +28,54 @@
             this.service = service ?? new BetListService();
         }
 
-        public ActionResult AbnormalBetTicket(int custId, string custName, SearchViewModel searchViewModel, byte siteType = 0)
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
+        public ActionResult AbnormalBetTicket(int custId, string custName, SearchViewModel searchViewModel)
         {
-            if (HasReadManageProblem(siteType))
+            TempData[SearchFilterSessionKeyConst.CN88] = searchViewModel;
+
+            return GetAbnormalBetTicket(custId, custName, searchViewModel, SiteTypeConst.CN88);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCreditSites, Policy = Constant.Policy.Read)]
+        public ActionResult AbnormalBetTicketCreditSite(int custId, string custName, SearchCreditSiteViewModel searchViewModel)
+        {
+            TempData[SearchFilterSessionKeyConst.Credit] = searchViewModel;
+
+            return GetAbnormalBetTicket(custId, custName, searchViewModel, SiteTypeConst.Credit);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountLicenseeSites, Policy = Constant.Policy.Read)]
+        public ActionResult AbnormalBetTicketLicenseeSite(int custId, string custName, SearchLicenseeSiteViewModel searchViewModel)
+        {
+            TempData[SearchFilterSessionKeyConst.Licensee] = searchViewModel;
+
+            return GetAbnormalBetTicket(custId, custName, searchViewModel, SiteTypeConst.Licensee);
+        }
+
+        [NonAction]
+        private ActionResult GetAbnormalBetTicket(int custId, string custName, SearchBaseViewModel searchViewModel, byte siteType)
+        {
+            const int pageIndex = 1;
+            var fromDate = searchViewModel.From;
+            var toDate = searchViewModel.To.GetEndOfDate();
+            var isCN88 = SiteTypeConst.IsCN88(siteType);
+            var abnormalBetTicketData = service.GetAbnormalBetTickets(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize, isCN88);
+
+            var vm = new AbnormalBetTicketViewModel
             {
-                TempData[SearchFilterSessionKeyConst.GetSessionKey(siteType)] = searchViewModel;
+                FromDate = fromDate,
+                ToDate = toDate,
+                CustId = custId,
+                CustName = custName,
+                PageIndex = pageIndex,
+                PageSize = searchViewModel.PageSize,
+                SiteType = siteType,
+                TotalAbnormalBetTickets = abnormalBetTicketData.Item1,
+                AbnormalBetTickets = abnormalBetTicketData.Item2,
+                TotalSportsbookBetTickets = service.GetTotalSporksbookBetTickets(custId, fromDate, toDate, isCN88)
+            };
 
-                const int pageIndex = 1;
-                var fromDate = searchViewModel.From;
-                var toDate = searchViewModel.To.GetEndOfDate();
-                var isCN88 = SiteTypeConst.IsCN88(siteType);
-                var abnormalBetTicketData = service.GetAbnormalBetTickets(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize, isCN88);
-
-                var vm = new AbnormalBetTicketViewModel
-                {
-                    FromDate = fromDate,
-                    ToDate = toDate,
-                    CustId = custId,
-                    CustName = custName,
-                    PageIndex = pageIndex,
-                    PageSize = searchViewModel.PageSize,
-                    SiteType = siteType,
-                    TotalAbnormalBetTickets = abnormalBetTicketData.Item1,
-                    AbnormalBetTickets = abnormalBetTicketData.Item2,
-                    TotalSportsbookBetTickets = service.GetTotalSporksbookBetTickets(custId, fromDate, toDate, isCN88)
-                };
-
-                return View("~/Areas/Customers/Views/BetList/AbnormalBetTicket.cshtml", vm);
-            }
-
-            return Redirect(NapSettings.Settings.UnauthorizeUrl);
+            return View("~/Areas/Customers/Views/BetList/AbnormalBetTicket.cshtml", vm);
         }
 
         public ActionResult GetAbnormalBetTicketPaging(AbnormalBetTicketViewModel viewModel)
@@ -85,7 +106,7 @@
 
             return SiteTypeConst.IsCredit(siteType)
                 ? CMSFunctionKeys.ManageProblemAccountCreditSites
-                : CMSFunctionKeys.ManageProblemAccountDepositSites;
+                : CMSFunctionKeys.ManageProblemAccountLicenseeSites;
         }
     }
 }

@@ -313,7 +313,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash {0} into the Username field..
+        ///   Looks up a localized string similar to You are not allowed to input backslash {0} into the Username field..
         /// </summary>
         public static string InputInvalidUsernamesError {
             get {

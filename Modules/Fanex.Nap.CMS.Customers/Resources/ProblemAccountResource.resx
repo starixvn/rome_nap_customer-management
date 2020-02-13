@@ -190,7 +190,7 @@
     <value>Are you sure you want to inactivate selected account(s)?</value>
   </data>
   <data name="InputInvalidUsernamesError" xml:space="preserve">
-    <value>You are not allowed to input [Enter] and backslash {0} into the Username field.</value>
+    <value>You are not allowed to input backslash {0} into the Username field.</value>
   </data>
   <data name="InvalidValueError" xml:space="preserve">
     <value>Invalid value!</value>

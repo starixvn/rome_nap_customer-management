@@ -6,7 +6,7 @@
 
         public const string Credit = "ProblemAccountSearchFilterCreditSessionKey";
 
-        public const string Deposit = "ProblemAccountSearchFilterDepositSessionKey";
+        public const string Licensee = "ProblemAccountSearchFilterLicenseeSessionKey";
 
         public static string GetSessionKey(byte siteType)
         {
@@ -15,7 +15,7 @@
                 return CN88;
             }
 
-            return SiteTypeConst.IsCredit(siteType) ? Credit : Deposit;
+            return SiteTypeConst.IsCredit(siteType) ? Credit : Licensee;
         }
     }
 }

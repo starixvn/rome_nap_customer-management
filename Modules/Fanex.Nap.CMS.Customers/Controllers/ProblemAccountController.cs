@@ -1,34 +1,28 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
-    using System;
-    using System.Net;
     using System.Web.Mvc;
     using Constants;
     using Infrastructure;
     using Infrastructure.Controllers;
-    using Infrastructure.Models;
     using Infrastructure.Services.Interfaces;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
-    using Resources;
     using Services;
     using ViewModels.ProblemAccount;
 
+    [NapSuperAuth]
     public class ProblemAccountController : BaseController
     {
-        // The release date of this feature.
-        private static readonly DateTime DefaultMinDate = new DateTime(2019, 9, 12);
-
-        private readonly IProblemAccountService service;
+        private readonly IProblemAccountCN88Service service;
 
         public ProblemAccountController()
             : this(null)
         {
         }
 
-        public ProblemAccountController(IProblemAccountService service)
+        public ProblemAccountController(IProblemAccountCN88Service service)
         {
-            this.service = service ?? new ProblemAccountService();
+            this.service = service ?? new ProblemAccountCN88Service();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageProblemAccountCN88, Policy = Constant.Policy.Read)]
@@ -40,11 +34,8 @@
                 searchFilter != null,
                 searchFilter ?? new SearchViewModel { Currency = CurrencyConst.CY },
                 service.GetReasons(true),
-                service.GetReasons(false),
                 CurrentSession.Username,
-                DefaultMinDate,
-                CurrencyConst.CurrencyList(),
-                AccountStatusConst.AccountStatusList);
+                service.GetReasons(false));
 
             return View("~/Areas/Customers/Views/ProblemAccount/Index.cshtml", vm);
         }
@@ -84,7 +75,7 @@
                 1,
                 int.MaxValue - 1);
 
-            IExcelExporter exporter = new ProblemAccountExporter(vm, data, service.GetReasons(true));
+            IExcelExporter exporter = new ProblemAccountCN88Exporter(vm, data, service.GetReasons(true));
             exporter.ResponseStream();
         }
 

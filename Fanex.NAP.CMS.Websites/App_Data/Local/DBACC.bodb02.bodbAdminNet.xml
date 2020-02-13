@@ -22,11 +22,20 @@
     <Setting Key="CS_ProblemAccount_MonitorList" SpName="CS_ProblemAccount_MonitorList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_VoidedTransactionList" SpName="CS_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
-  <Function Name="Problem Accounts - Credit/Deposit Sites">
+  <Function Name="Problem Accounts - Credit Sites">
     <Setting Key="NAP_ProblemAccount_CurrencySel" SpName="NAP_ProblemAccount_CurrencySel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_ReasonSel" SpName="NAP_ProblemAccount_ReasonSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ActionReasonSel" SpName="NAP_ProblemAccount_ActionReasonSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_VoidedTransactionList" SpName="NAP_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ActionSel" SpName="NAP_ProblemAccount_ActionSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Problem Accounts - Licensee Sites">
+    <Setting Key="NAP_ProblemAccount_LicenseeCurrencySel" SpName="NAP_ProblemAccount_LicenseeCurrencySel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeReasonSel" SpName="NAP_ProblemAccount_LicenseeReasonSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeActionReasonSel" SpName="NAP_ProblemAccount_LicenseeActionReasonSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeMonitorListSel" SpName="NAP_ProblemAccount_LicenseeMonitorListSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseePreventiveActionSel" SpName="NAP_ProblemAccount_LicenseePreventiveActionSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SelAllSite" SpName="NAP_BetRestriction_SelAllSite" DbName="DBACC.bodb02.bodbAdminNet" />

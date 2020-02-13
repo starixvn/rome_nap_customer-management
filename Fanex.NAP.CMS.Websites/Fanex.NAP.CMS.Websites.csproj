@@ -938,6 +938,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Styles\index.less" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

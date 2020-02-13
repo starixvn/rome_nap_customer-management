@@ -35,7 +35,9 @@
         [HttpPost]
         public JsonResult GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
-            var hasRight = HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read);
+            var hasRight =
+                 (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails_GlobalSetting, Constant.Policy.Read)) ||
+                 (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read));
 
             if (!hasRight)
             {
@@ -50,7 +52,9 @@
         [HttpPost]
         public JsonResult SaveVirtualRateDetails(SaveVirtualRateDetailsCriteria criteria)
         {
-            var hasEditRight = HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Host);
+            var hasEditRight =
+                 (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails_GlobalSetting, Constant.Policy.Host)) ||
+                 (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Host));
 
             if (!hasEditRight)
             {
@@ -69,7 +73,9 @@
 
         public void ExportVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
-            var hasRight = HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read);
+            var hasRight =
+               (criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails_GlobalSetting, Constant.Policy.Read)) ||
+               (!criteria.IsGlobalSetting && HasRight(CMSFunctionKeys.Soccer_VirtualRateDetails, Constant.Policy.Read));
 
             if (!hasRight)
             {
@@ -138,6 +144,13 @@
             var report = _virtualRateDetailsService.ViewRealValues(criteria);
             var exporter = new VirtualRateRealValuesExporter(report);
             exporter.ResponseStream();
-        }       
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.Soccer_VirtualRateDetails_GlobalSetting, Policy = Constant.Policy.Read)]
+        public ActionResult GlobalSetting()
+        {
+            ViewBag.HostPermission = HasRight(CMSFunctionKeys.ESports_VirtualRateDetails_GlobalSetting, Constant.Policy.Host);
+            return View("~/Areas/VirtualSettingControl/Views/SoccerVirtualRateDetails/GlobalSetting.cshtml");
+        }
     }
 }

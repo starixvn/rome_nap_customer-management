@@ -36,7 +36,10 @@
     this.init = function () {  
         this.cachedElements();
         this.bindEvents();
-        if (username != "") {
+
+        if (resources.isGlobalSetting) {
+            this.getVirtualRateDetails(undefined, 0);
+        } else if (username != "") {
             this.elements.txtUsername.val(username);
             this.getVirtualRateDetails(username);
         }
@@ -111,7 +114,8 @@
     this.exportExcel = function (username) {
         var param = {
             username: username,
-            sportType: resources.SportType
+            sportType: resources.SportType,
+            IsGlobalSetting: resources.isGlobalSetting
         };
 
         CMS.downloadFile(CMS.resolveRootUrl("SoccerVirtualRateDetails/ExportVirtualRateDetails"), param);
@@ -146,7 +150,8 @@
             data: JSON.stringify({
                 username: username,
                 sportType: resources.SportType,
-                custId: custId
+                custId: custId,
+                IsGlobalSetting: resources.isGlobalSetting
             }),
             beforeSend: function () {
                 CMS.disableInput();
@@ -195,15 +200,21 @@
       
         this.elements.tblVirtualRateReport.removeClass("display-none");
 
-        this.elements.lnkViewUpline.attr("custname", rs.UplineCustName).removeClass("display-none");
-        this.elements.lnkViewRealValues.attr("cust-id", rs.CustId).removeClass("display-none");
-        this.elements.divAssociatedAccounts.removeClass("display-none");
-       
+        if (this.isGlobalSetting()) {
+            this.elements.lnkViewUpline.addClass("display-none");
+            this.elements.lnkViewRealValues.addClass("display-none");
+            this.elements.divAssociatedAccounts.addClass("display-none");
+        } else {
+            this.elements.lnkViewUpline.attr("custname", rs.UplineCustName).removeClass("display-none");
+            this.elements.lnkViewRealValues.attr("cust-id", rs.CustId).removeClass("display-none");
+            this.elements.divAssociatedAccounts.removeClass("display-none");
+        }       
 
         this.elements.btnExportExcel.attr("username", rs.Username);
 
         var title = resources.VirtualRateDetails +
-            (" - " + rs.Username + "   " + "<span class='lbl-curreny'>" + resources.Currency + ": " + rs.Currency + "</span>");
+            (this.isGlobalSetting() ? " - " + resources.GlobalSetting : " - " + rs.Username + "   " + "<span class='lbl-curreny'>" + resources.Currency + ": " + rs.Currency + "</span>");
+
         this.elements.reportTitle.html(title);
         this.elements.iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
 
@@ -245,7 +256,9 @@
 
         this.elements.btnViewCompactMode.click();
 
-        self.viewFullMode();
+        if (!resources.isGlobalSetting) {
+            self.viewFullMode();
+        }
         
     };
     this.renderSport = function (sport, rs) {
@@ -291,7 +304,7 @@
             actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: false,
-            followParentText: this.isSuper() ? resources.FollowOldVR : resources.FollowUpline,
+            followParentText: this.isGlobalSetting() ? "" : resources.FollowUpline,
             copyToRelatedText: resources.CopyToAll + " \"" + sport.GroupName + "\""
         });
 
@@ -304,7 +317,7 @@
             actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: false,
-            followParentText: this.isSuper() ? resources.FollowOldVR : resources.FollowUpline,
+            followParentText: this.isGlobalSetting() ? "" : resources.FollowUpline,
             copyToRelatedText: resources.CopyToAll + " \"" + sport.GroupName + "\""
         });
 
@@ -443,7 +456,7 @@
 
             var rangeText = numeral(range.Value).format("#,##0");
             var value = (range.Value + 100) * options.actualRate / 100;
-            var rateText = rangeText + ' (' + numeral(value).format("#,##0.0000") + ')';
+            var rateText = this.isGlobalSetting() ? rangeText : rangeText + ' (' + numeral(value).format("#,##0.0000") + ')';
 
             html += "<option" + (options.value == range.Value ? " selected='selected'" : "") +
                 " value='" + range.Value + "'" + " data-level-id='" + range.Id + "'>" + rateText + "</option>";
@@ -588,9 +601,12 @@
         this.elements.tblReport.find(selector).val(value);
     };
     this.viewUpline = function (custName) {
-        if (custName != "") {            
+        if (custName == "") {
+            window.open(CMS.resolveRootUrl("SoccerVirtualRateDetails/GlobalSetting"), "_blank");
+
+        } else {
             window.open(CMS.resolveRootUrl("SoccerVirtualRateDetails/Index?username=" + custName), "_blank");
-        }
+        }       
     };
 
     this.getCurrentValue = function () {
@@ -737,6 +753,11 @@
         return oldRate.NonLiveValue != newRate.NonLiveValue ||
             oldRate.LiveValue != newRate.LiveValue;
     };
+
+    this.isGlobalSetting = function () {
+        return this.oldReport && this.oldReport.ReportLevel == 0;
+    };
+
     this.isSuper = function () {
         return this.oldReport.ReportLevel == 4;
     };

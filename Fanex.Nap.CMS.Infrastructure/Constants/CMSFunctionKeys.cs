@@ -90,6 +90,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ESports_VirtualRateDetails = "E_Sports_VirtualRateDetails";
         public const string Soccer_VirtualRateDetails = "Soccer_VirtualRateDetails";
         public const string ESports_VirtualRateDetails_GlobalSetting = "E_Sports_VirtualRateDetails_GlobalSetting";
+        public const string Soccer_VirtualRateDetails_GlobalSetting = "Soccer_VirtualRateDetails_GlobalSetting";
         public const string VirtualRateLog = "VirtualRateLog";
         public const string Soccer_VirtualRateLog = "Soccer_VirtualRateLog";
         public const string AutoSuspendLog = "AutoSuspendLog";

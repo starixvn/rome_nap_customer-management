@@ -1,0 +1,42 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount.IndexViewModel
+@using (Html.BeginForm("MarkNew", "ProblemAccountCreditSites", FormMethod.Post, new { id = "formMarkNew", @class = "form" }))
+{
+    <div id="div-successInlineMessage" class="inline-message"></div>
+    <div id="div-errorInlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@ProblemAccountResource.Level<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("level", Model.MarkNewLevels, new { id = "ddl-level", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label for="txt-usernames">@ProblemAccountResource.Usernames<span class="text-red">*</span>@ProblemAccountCreditDepositResource.SeperatedByComma</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="7" name="usernames" id="txt-usernames"></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("reason", Model.MarkNewReasons, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label for="txt-comment">@ProblemAccountResource.Comment</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="5" name="comment" id="txt-comment"></textarea>
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

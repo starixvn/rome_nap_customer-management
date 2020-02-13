@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountCreditSite
+namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountCreditSite
 {
     using Fanex.Data.Repository;
 

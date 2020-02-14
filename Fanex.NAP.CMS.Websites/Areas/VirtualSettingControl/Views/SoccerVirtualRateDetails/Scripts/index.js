@@ -941,7 +941,8 @@
             data: JSON.stringify({
                 Rates: currentValue,
                 sportType: resources.SportType,
-                custId: this.oldReport.CustId
+                custId: this.oldReport.CustId,
+                IsGlobalSetting: resources.isGlobalSetting
             }),
             beforeSend: function () {
                 CMS.disableInput();

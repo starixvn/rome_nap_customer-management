@@ -833,7 +833,7 @@
         this.elements.btnViewCompactMode.addClass("display-none");
         this.elements.btnViewFullMode.removeClass("display-none");
 
-        if (this.isFirstSearch) {
+        if (this.isFirstSearch || resources.isGlobalSetting) {
             return;
         }
 
@@ -891,6 +891,10 @@
 
         this.elements.btnViewFullMode.addClass("display-none");
         this.elements.btnViewCompactMode.removeClass("display-none");
+
+        if (resources.isGlobalSetting) {
+            return;
+        }
 
         this.expandAllChild();
     };

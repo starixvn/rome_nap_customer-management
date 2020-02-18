@@ -375,6 +375,35 @@ header {
     .font_tahoma;
     position: relative;
 
+    &.pro {
+    }
+
+    &.dev {
+        background: @header_dev;
+    }
+
+    &.sit {
+        background: @header_sit;
+    }
+
+    &.uat {
+        background: @header_uat;
+    }
+
+    &.mnl {
+        background: @header_mnl;
+    }
+
+    .env {
+        color: #fff;
+        margin-top: -16px;
+        margin-left: 142px;
+        font-size: 12px;
+        position: absolute;
+        text-transform:uppercase;
+    }
+
+
     .logo {
         padding: 0px;
         float: left;

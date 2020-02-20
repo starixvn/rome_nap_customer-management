@@ -469,6 +469,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\member-vr.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\autosuspend-log.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
@@ -932,6 +934,11 @@
     <Content Include="Areas\Customers\Views\ProblemAccount\_InformingStatus.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\AutoSuspendLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\auto-suspend-log.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Styles\index.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

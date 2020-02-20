@@ -30,7 +30,7 @@
     <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />

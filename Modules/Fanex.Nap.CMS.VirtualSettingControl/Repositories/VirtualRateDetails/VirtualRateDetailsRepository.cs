@@ -450,9 +450,9 @@
             var level = Converter.ToInt(reader[LevelId]);
             var followingLevel = followingLevelId == level || followingBetTypeId != -1 ? string.Empty :
                 GetSportName(followingBetTypeGroup, followingLeagueGroup, sportId);
-            var value = (Converter.ToDecimal(reader[$"{column}_FollowingValue"], -1) - 1) * 100;
+            var value = (sportId == 1 && (reader[$"{column}_FollowingValue"] == DBNull.Value)) ? "" : ((Converter.ToDecimal(reader[$"{column}_FollowingValue"], -1) - 1) * 100).ToString("#,##0");
 
-            return value.ToString("#,##0")
+            return value
                 + (string.IsNullOrWhiteSpace(followingRole) ? string.Empty : $" ({followingRole})")
                 + (string.IsNullOrWhiteSpace(followingLevel) ? string.Empty : $" ({followingLevel})");
         }

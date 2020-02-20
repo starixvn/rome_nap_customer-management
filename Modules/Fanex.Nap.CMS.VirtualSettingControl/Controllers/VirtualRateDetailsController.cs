@@ -6,6 +6,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
+    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -40,7 +41,7 @@
 
             if (!hasRight)
             {
-                return Json(new Result { Code = 1, Message = Labels.AccessDeniedMessage });
+                return Json(new VirtualRateDetailsReport { ResultCode = 500, ResultMessage = Labels.AccessDeniedMessage });
             }
 
             var result = _virtualRateDetailsService.GetVirtualRateDetails(criteria);

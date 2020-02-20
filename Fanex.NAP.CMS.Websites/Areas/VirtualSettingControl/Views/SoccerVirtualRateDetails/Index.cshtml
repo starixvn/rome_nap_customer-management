@@ -1,0 +1,141 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@model string
+@{
+    ViewBag.Title = "Soccer - Virtual Rate Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">@ViewLang.Account</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="txt-username" maxlength="50" />
+            </div>
+            <div class="submit width-auto col_4">
+                <input id="btn-search" type="button" class="submit" value="@ViewLang.Search" />
+            </div>
+        </div>
+    </div>
+</div>
+<div id="report-container" class="display-none">
+    <div>
+        <input type="button" class="submit btn-submit-changes" value="@ViewLang.SubmitAllChanges" />      
+    </div>
+    <div class="content-grid">
+        <div id="virtual-rate-report-freegrid-grid-title" class="grid-title">
+            <div class="grid-title-label" id="report-tile">@ViewLang.VirtualRateDetails</div>
+            <div class="grid-toolbox">
+                <span><a id="lnk-view-real-values" class="lnk-view-real-values">@ViewLang.ViewRealValues</a></span>
+                <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export">
+            </div>
+        </div>
+        <table id="tbl-virtual-rate-report" class="display-none tbl-report">
+            <thead>
+                <tr>
+                    <th class="col-group">
+                        <input type="button" class="submit btn-view-compact-mode" value="@ViewLang.ViewCompactMode" />
+                        <input type="button" class="submit display-none btn-view-full-mode" value="@ViewLang.ViewFullMode" />
+                        <span class="ico-collapse"></span>
+                    </th>
+                    <th class="col-nonlive">
+                        @ViewLang.NonLive
+                    </th>
+                    <th class="col-live">
+                        @ViewLang.Live
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <table id="tbl-virtual-rate-report-member" class="display-none tbl-report">
+            <thead>
+                <tr class="elm-compact-mode">
+                    <th class="col-group">
+                        <input type="button" class="submit btn-view-compact-mode" value="@ViewLang.ViewCompactMode" />
+                        <input type="button" class="submit display-none btn-view-full-mode" value="@ViewLang.ViewFullMode" />
+                        <span class="ico-collapse"></span>
+                    </th>
+                    <th class="col-nonlive">
+                        @ViewLang.NonLive
+                    </th>
+                    <th class="col-live">
+                        @ViewLang.Live
+                    </th>
+                </tr>
+                <tr class="elm-full-mode">
+                    <th class="col-group">
+                        <input type="button" class="submit btn-view-compact-mode" value="@ViewLang.ViewCompactMode" />
+                        <input type="button" class="submit display-none btn-view-full-mode" value="@ViewLang.ViewFullMode" />
+                        <span class="ico-collapse"></span>
+                    </th>
+                    <th>
+                        @ViewLang.NonLive
+                    </th>
+                    <th>
+                        @ViewLang.Live
+                    </th>
+                </tr>               
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <input type="button" class="submit btn-submit-changes" value="@ViewLang.SubmitAllChanges" />    
+    </div>
+    <div class="div-associated-accounts" disabled="disabled">
+        <div>
+            <label for="chk-apply-setting">
+                <input id="chk-apply-setting" type="checkbox" />
+                <span id="lbl-apply">@ViewLang.ApplyAboveSettingTo</span>
+                <span id="lbl-apply-vronly" class="display-none">@ViewLang.ApplyAboveSettingToVR</span>
+                <span id="lbl-apply-vr-as" class="display-none">@ViewLang.ApplyAboveSettingToVR_AS</span>
+            </label>
+            <input id="btn-add-associated-accounts" type="button" class="btn-add-associated-accounts display-none" value="@ViewLang.AddAssociatedAccounts" />
+        </div>
+        <textarea id="txt-associated-accounts" class="txt-associated-accounts"></textarea>
+        <input id="btn-submit-associated-accounts" type="button" class="submit btn-submit-associated-accounts btn-blue" value="@ViewLang.Submit" />
+    </div>
+</div>
+@section Foot
+{
+    @Scripts.Render("~/bundles/soccer-virtual-rate-details/index")
+    <script type="text/javascript">
+        var resources = {
+            VirtualRateDetails: '@ViewLang.VirtualRateDetails',
+            CopyToAll: '@ViewLang.CopyToAll',
+            CopyToAllChildren: '@ViewLang.CopyToAllChildren',
+            FollowOldVR: '@ViewLang.FollowOldVR',
+            FollowUpline: '@ViewLang.FollowUpline',
+            FollowParent: '@ViewLang.FollowParent',
+            Currency: '@ViewLang.Currency',
+            VirtualRateChangedWarning: '@ViewLang.VirtualRateChangedWarning',
+            VirtualRateSubmitChangesConfirm: '@ViewLang.VirtualRateSubmitChangesConfirm',
+            Message_NoReportData: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData',
+            InvalidAccounts: '@ViewLang.InvalidAccounts',
+            ValidAccounts: '@ViewLang.ValidAccounts',
+            Apply2AssociatedAccounts: '@ViewLang.Apply2AssociatedAccounts',
+            GlobalSetting: '@ViewLang.GlobalSetting',
+            RequiredField: '@ViewLang.RequiredField',
+            VirtualRateDetails_LeaveSiteWarning: '@Html.Raw(ViewLang.VirtualRateDetails_LeaveSiteWarning)',
+            VirtualRate_AssociatedAccounts_Error: '@ViewLang.VirtualRate_AssociatedAccounts_Error',
+            VirtualRate_AssociatedAccounts_Empty: '@ViewLang.VirtualRate_AssociatedAccounts_Empty',
+            AccessDeniedMessage: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.AccessDeniedMessage',
+            TickAll: '@ViewLang.TickAll',
+            UntickAll: '@ViewLang.UntickAll',
+            SportType: 1
+        };
+        var username = '@Model';
+    </script>
+}

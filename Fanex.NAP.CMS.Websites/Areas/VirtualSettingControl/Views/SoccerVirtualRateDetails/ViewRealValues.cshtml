@@ -1,0 +1,93 @@
+﻿@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@using Fanex.NAP.CMS.Core.Resources
+@model VirtualRateRealValues
+@{
+    ViewBag.Title = "Soccer - Virtual Rate Real Values";
+    Layout = null;
+}
+<div id="real-values-container" class="real-values-container">
+    <div class="content-grid">
+        <div id="real-values-freegrid-grid-title" class="grid-title">
+            <div class="grid-title-label" id="report-tile">
+                @ViewLang.VirtualRateDetails - @Model.Username
+                @if (Model.ResultCode == 0)
+                {
+                    <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span>
+                    <span class="lbl-exchange-rate">(@ViewLang.ExRate: @Model.ExchangeRateText)</span>
+                }
+            </div>
+            <div class="grid-toolbox">
+                <input type="button" id="btn-export-real-values" class="btnExcel" title="@ViewLang.Export">
+            </div>
+        </div>
+        <table class="tbl-real-values">
+            <thead>
+                <tr>
+                    <th class="col-group">
+                    </th>
+                    <th class="col-nonlive">
+                        @ViewLang.NonLive
+                    </th>
+                    <th class="col-live">
+                        @ViewLang.Live
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Childs.Count() == 0)
+                {
+                    <tr><td colspan="3" class="align-center">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td></tr>
+                }
+                else
+                {
+                    foreach (var sport in Model.Childs)
+                    {
+                        <tr data-level="1" data-sportid="@sport.GroupId">
+                            <td data-col="username">@sport.GroupName</td>
+                            <td data-col="non-live">@sport.NonliveLog</td>
+                            <td data-col="live">@sport.LiveLog</td>
+                        </tr>
+
+                        foreach (var league in sport.Childs)
+                        {
+                            <tr data-level="2" data-sportid="@sport.GroupId" data-gameid="@league.GroupId">
+                                <td data-col="username">
+                                    <span class="group-toggle group-expand">[−]</span>
+                                    @league.GroupName
+                                </td>
+                                <td data-col="non-live">@league.NonliveLog</td>
+                                <td data-col="live">@league.LiveLog</td>
+                            </tr>
+
+                            foreach (var betTypeGroup in league.Childs)
+                            {
+                                <tr data-level="3" data-sportid="@sport.GroupId"
+                                    data-gameid="@league.GroupId"
+                                    data-bettypegroupid="@betTypeGroup.GroupId">
+                                    <td data-col="username">
+                                        <span class="group-toggle group-expand">[−]</span>
+                                        @betTypeGroup.GroupName
+                                    </td>
+                                    <td data-col="non-live">@betTypeGroup.NonliveLog</td>
+                                    <td data-col="live">@betTypeGroup.LiveLog</td>
+                                </tr>
+
+                                foreach (var betType in betTypeGroup.Childs)
+                                {
+                                    <tr data-level="4" data-sportid="@sport.GroupId"
+                                        data-gameid="@league.GroupId"
+                                        data-bettypegroupid="@betTypeGroup.GroupId"
+                                        data-bettypeid="@betType.GroupId">
+                                        <td data-col="username">@betType.GroupName</td>
+                                        <td data-col="non-live">@betType.NonliveLog</td>
+                                        <td data-col="live">@betType.LiveLog</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -2,6 +2,6 @@
 {
     public static class DangerLevelConst
     {
-        public const int MaxDangerLevel = 21;
+        public const int MaxDangerLevel = 50;
     }
 }

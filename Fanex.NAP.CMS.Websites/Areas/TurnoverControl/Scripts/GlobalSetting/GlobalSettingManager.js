@@ -27,7 +27,7 @@
         var headerColumns = [
             {
                 HeaderText: viewResources.Symbol_No,
-                Width: 60,
+                Width: 50,
                 Name: "ColNo",
                 HeaderAlign: "center",
                 CellAlign: "center"
@@ -43,7 +43,7 @@
             },
             {
                 HeaderText: viewResources.Level,
-                Width: 80,
+                Width: 60,
                 Name: "Level",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -51,7 +51,7 @@
             },
             {
                 HeaderText: viewResources.Currency,
-                Width: 80,
+                Width: 70,
                 Name: "Currency",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -64,7 +64,7 @@
 
             headerColumns.push({
                 HeaderText: profile.Name,
-                Width: 120,
+                Width: 140,
                 Name: "Profile" + profile.Id,
                 HeaderAlign: "center",
                 CellAlign: "right",

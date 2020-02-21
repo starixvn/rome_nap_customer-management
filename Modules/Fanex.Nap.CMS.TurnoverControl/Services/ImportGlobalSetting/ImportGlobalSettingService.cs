@@ -39,7 +39,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
         public ImportGlobalSettingModel ReadExcelStream(short sportType, Stream stream, string fileExtension)
         {
             ISheet sheet = null;
-            var profiles = globalSettingService.GetProfiles(sportType);
+            var profiles = globalSettingService.GetProfiles(sportType).ToList();
             var result = ValidateTemplate(stream, fileExtension, profiles, ref sheet);
 
             if (!result.IsSuccess)
@@ -81,7 +81,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
         private static Result ValidateTemplate(
             Stream stream,
             string fileExtension,
-            IEnumerable<IdNameModel> profiles,
+            IList<IdNameModel> profiles,
             ref ISheet sheet)
         {
             IWorkbook workbook = GetWorkbook(stream, fileExtension);
@@ -143,7 +143,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
         private static bool InvalidHeaderRow(string source, string destination)
             => string.IsNullOrEmpty(source) || !source.Trim().Equals(destination, StringComparison.OrdinalIgnoreCase);
 
-        private static IEnumerable<GlobalSettingExcel> ReadExcelStream(ISheet sheet, IEnumerable<IdNameModel> profiles)
+        private static IEnumerable<GlobalSettingExcel> ReadExcelStream(ISheet sheet, IList<IdNameModel> profiles)
         {
             IRow row;
             var totalRows = sheet.LastRowNum + 1;
@@ -154,21 +154,35 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
 
                 if (row != null)
                 {
-                    yield return GetGlobalSettingExcel(row.Cells, profiles, i + 1);
+                    yield return GetGlobalSettingExcel(row, profiles, i + 1);
                 }
             }
         }
 
-        private static GlobalSettingExcel GetGlobalSettingExcel(IList<ICell> cells, IEnumerable<IdNameModel> profiles, int excelRow)
+        private static GlobalSettingExcel GetGlobalSettingExcel(IRow row, IList<IdNameModel> profiles, int excelRow)
         {
-            var columnIndex = StartOfMaxTurnoverColumnIndex;
-            var maxTurnovers = profiles.Select(p => new MaxTurnoverExcel(p.Id, cells[columnIndex++].ToString()));
+            var username = string.Empty;
+            var headline = string.Empty;
+            IList<MaxTurnoverExcel> maxTurnoverExcels = new List<MaxTurnoverExcel>();
 
-            return new GlobalSettingExcel(
-                cells[UsernameColumnIndex].ToString(),
-                cells[HeadlineColumnIndex].ToString(),
-                maxTurnovers,
-                excelRow);
+            foreach (ICell cell in row.Cells)
+            {
+                switch (cell.ColumnIndex)
+                {
+                    case UsernameColumnIndex:
+                        username = cell.ToString().Trim();
+                        break;
+                    case HeadlineColumnIndex:
+                        headline = cell.ToString().Trim();
+                        break;
+                    default:
+                        var columnIndex = cell.ColumnIndex - StartOfMaxTurnoverColumnIndex;
+                        maxTurnoverExcels.Add(new MaxTurnoverExcel(profiles[columnIndex].Id, cell.ToString().Trim()));
+                        break;
+                }
+            }
+
+            return new GlobalSettingExcel(username, headline, maxTurnoverExcels, excelRow);
         }
 
         #endregion

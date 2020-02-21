@@ -27,6 +27,7 @@
     var isResetScroller = true;
     var filterParams = {};
     var gridOptions = null;
+    var reachedMaxPercentageCount = 0;
 
     var autoRefresh = new AutoRefresh(domElements.tableTitleDiv, [0, 30, 60, 90, 120], getCustomerTurnovers);
 
@@ -213,9 +214,9 @@
     function renderCustomerTurnover(data) {
         try {
             domElements.tableBody.empty();
+            reachedMaxPercentageCount = 0;
 
             var html = [];
-            var reachedMaxPercentageCount = 0;
 
             var league;
             var leagueLength = data.length;
@@ -238,10 +239,6 @@
                     for (var k = 0; k < customerLength; k++) {
                         customer = match.CustomerTurnovers[k];
                         html.push(renderCustomer(customer, match.EventDate));
-
-                        if (customer.PercentageUsed >= maxTurnoverPercentage) {
-                            reachedMaxPercentageCount++;
-                        }
                     }
                 }
             }
@@ -358,6 +355,10 @@
     }
 
     function renderMaxTurnoverCell(html, canEditMaxTurnover, customer, turnover, label) {
+        if (turnover.PercentageUsed >= maxTurnoverPercentage) {
+            reachedMaxPercentageCount++;
+        }
+
         var percentageUsed = Math.floor(turnover.PercentageUsed * 100) / 100;
 
         html.push('<div><div class="float-left"><span class="live-nl">');
@@ -379,7 +380,7 @@
         html.push(numeral(percentageUsed).format(CMSConstants.NumberFormat.TwoDecimalNumber));
         html.push('%</div></div>');
 
-        if (canEditMaxTurnover && turnover.MaxTurnover) {
+        if (canEditMaxTurnover && typeof turnover.MaxTurnover !== "undefined") {
             html.push('<div class="float-right" id="div');
             html.push(customer.CustId);
             html.push('"><span class="max-turnover-container" data-custid="');

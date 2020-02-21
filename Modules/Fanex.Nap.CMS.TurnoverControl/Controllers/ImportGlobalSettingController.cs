@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Fanex.Logging.Extensions.Web;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
+using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.TurnoverControl.Constants;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
@@ -11,9 +15,11 @@ using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting;
 using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
+    [NapSuperAuth]
     public class ImportGlobalSettingController : BaseController
     {
         private readonly IGlobalSettingService globalSettingService;
@@ -77,10 +83,20 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
                 return BadRequest(Labels.Message_NoReportData);
             }
 
-            var result = importService.ReadExcelStream(
-                sportType,
-                file.InputStream,
-                Path.GetExtension(file.FileName));
+            Result result;
+
+            try
+            {
+                result = importService.ReadExcelStream(
+                    sportType,
+                    file.InputStream,
+                    Path.GetExtension(file.FileName));
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+                result = new Result((int)HttpStatusCode.BadRequest, Labels.Error_IncorrectLayout);
+            }
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }

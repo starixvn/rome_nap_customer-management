@@ -18,7 +18,7 @@ function ValidSetting(profiles, sportType) {
         var headerColumns = [
             {
                 HeaderText: viewResources.Symbol_No,
-                Width: 60,
+                Width: 50,
                 Name: "ColNo",
                 HeaderAlign: "center",
                 CellAlign: "center"
@@ -32,7 +32,7 @@ function ValidSetting(profiles, sportType) {
             },
             {
                 HeaderText: viewResources.Level,
-                Width: 80,
+                Width: 60,
                 Name: "Level",
                 HeaderAlign: "center",
                 CellAlign: "center"
@@ -51,7 +51,7 @@ function ValidSetting(profiles, sportType) {
 
             headerColumns.push({
                 HeaderText: profile.Name,
-                Width: 120,
+                Width: 145,
                 Name: "Profile" + profile.Id,
                 HeaderAlign: "center",
                 CellAlign: "right",

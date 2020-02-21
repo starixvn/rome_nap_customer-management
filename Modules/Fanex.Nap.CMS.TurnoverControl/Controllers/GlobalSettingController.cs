@@ -8,9 +8,11 @@ using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting;
 using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
+    [NapSuperAuth]
     public class GlobalSettingController : BaseController
     {
         private readonly IGlobalSettingService globalSettingService;

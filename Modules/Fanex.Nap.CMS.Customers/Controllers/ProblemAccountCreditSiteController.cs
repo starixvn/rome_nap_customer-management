@@ -1,7 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
     using System.Web.Mvc;
-    using Constants;
+    using Constants.ProblemAccount;
+    using Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSite;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
@@ -79,7 +80,7 @@
                 1,
                 int.MaxValue - 1);
 
-            IExcelExporter exporter = new ProblemAccountCreditSitesExporter(
+            IExcelExporter exporter = new ProblemAccountCreditSiteExporter(
                 vm,
                 data,
                 service.GetReasons(true),

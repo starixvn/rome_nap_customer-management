@@ -133,10 +133,10 @@
             reasonAndCommentWidth = 378;
 
         var columns = [
-            { HeaderText: resources.member, Width: 250, Name: "colMember", HeaderAlign: "center", CellAlign: "left", CssClass: "custom-grid-colheader", ShowCollapseExpand: true },
+            { HeaderText: resources.member, Width: 250, Name: "colMember", HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
             { HeaderText: resources.currency, Width: 80, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.maxPerMatch, Width: 100, Name: "colMaxPerMatch", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.maxBet, Width: 100, Name: "colMaxBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.maxPerMatch, Width: 100, Name: "colMaxPerMatch", HeaderAlign: "center", CellAlign: "none" },
+            { HeaderText: resources.maxBet, Width: 100, Name: "colMaxBet", HeaderAlign: "center", CellAlign: "none" },
             { HeaderText: resources.preventiveAction, Width: 120, Name: "colPreventiveAction", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.markDate, Width: 80, Name: "colMarkDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.reason, Width: reasonAndCommentWidth, Name: "colReason", HeaderAlign: "center", CellAlign: "left" },
@@ -161,7 +161,7 @@
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 280,
+            gridExpandHeight: 250,
             columns: columns,
             showPager: true,
             customPager: true,
@@ -198,8 +198,8 @@
                     if (problemAccount.IsVIP) {
                         columns.push({ Name: "colMaxPerMatch", Value: "VIP", TdClass: "vip", MergeColNumber: 2 });
                     } else {
-                        columns.push({ Name: "colMaxPerMatch", Value: problemAccount.MaxPerMatch ? numeral(problemAccount.MaxPerMatch).format(CMSConstants.NumberFormat.IntNumber) : "N/A" });
-                        columns.push({ Name: "colMaxBet", Value: problemAccount.MaxBet ? numeral(problemAccount.MaxBet).format(CMSConstants.NumberFormat.IntNumber) : "N/A" });
+                        columns.push({ Name: "colMaxPerMatch", Value: renderMaxPerMatchOrMaxBet(problemAccount.MaxPerMatch), CssClass: "align-right" });
+                        columns.push({ Name: "colMaxBet", Value: renderMaxPerMatchOrMaxBet(problemAccount.MaxBet), CssClass: "align-right" });
                     }
 
                     columns.push({ Name: "colPreventiveAction", Value: problemAccount.ActionName });
@@ -209,7 +209,7 @@
                     columns.push({ Name: "col1stWeekInformed", Value: problemAccount.Inform1 || "<div class='ico-noninformed'></div>" });
                     columns.push({ Name: "col2ndWeekInformed", Value: problemAccount.Inform2 || "<div class='ico-noninformed'></div>" });
                     columns.push({ Name: "colAbnormalBet", Value: renderAbnormalBetCell(problemAccount) });
-                    columns.push({ Name: "colSelect", Value: renderSelectCell(problemAccount.Username, problemAccount.Currency) });
+                    columns.push({ Name: "colSelect", Value: renderSelectCell(problemAccount.Username, problemAccount.Currency, problemAccount.IsAcknowledgement) });
 
                     subRows.push({ Columns: columns });
                 });
@@ -245,6 +245,18 @@
         return cells.join("");
     }
 
+    function renderMaxPerMatchOrMaxBet(value) {
+        if (typeof value === "undefined") {
+            return "N/A";
+        }
+
+        if (value === 0) {
+            return "0";
+        }
+
+        return numeral(value).format(CMSConstants.NumberFormat.IntNumber)
+    }
+
     function renderReasonCell(reasons) {
         return reasons.map(function (item) {
             return "<p>" + item + "</p>";
@@ -263,12 +275,14 @@
             : "0";
     }
 
-    function renderSelectCell(username, currency) {
+    function renderSelectCell(username, currency, isAcknowledgement) {
         return [
             '<input type="checkbox" class="chk-select-item" data-username="',
             username,
             '" data-currency="',
             currency,
+            '" data-isacknowledgement="',
+            isAcknowledgement,
             '" />'
         ].join("");
     }
@@ -314,6 +328,7 @@
     function getCheckedProblemAccount() {
         var usernames = [];
         var currency;
+        var isAcknowledgement;
 
         if (filterParams) {
             $(".chk-select-item:checked").each(function (index) {
@@ -322,15 +337,23 @@
 
                 if (index === 0) {
                     currency = checkbox.data("currency");
-                } else if (currency.length && currency !== checkbox.data("currency")) {
-                    currency = "";
+                    isAcknowledgement = checkbox.data("isacknowledgement");
+                } else {
+                    if (currency.length && currency !== checkbox.data("currency")) {
+                        currency = "";
+                    }
+
+                    if (isAcknowledgement && isAcknowledgement !== checkbox.data("isacknowledgement")) {
+                        isAcknowledgement = false;
+                    }
                 }
             });
         }
 
         return {
             usernames: usernames,
-            currency: currency
+            currency: currency,
+            isAcknowledgement: isAcknowledgement
         };
     }
 

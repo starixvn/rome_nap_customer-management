@@ -5,7 +5,7 @@
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
     using Infrastructure.Controllers;
-    using Services;
+    using Services.ProblemAccountLicenseeSite;
 
     public class ManageLicenseeAcknowledgementController : BaseController
     {

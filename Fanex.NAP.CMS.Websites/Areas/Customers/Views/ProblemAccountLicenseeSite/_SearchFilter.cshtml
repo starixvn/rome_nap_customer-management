@@ -21,11 +21,11 @@
         <div class="edit-field col_5">
             @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-80" })
         </div>
-        <div class="lbl-field col_4">
+        <div class="lbl-field col_3">
             <label>@ProblemAccountResource.IsReduced</label>
         </div>
-        <div class="edit-field col_3">
-            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-30" })
+        <div class="edit-field col_4">
+            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-50" })
         </div>
     </div>
     <div class="filter-row last-row">

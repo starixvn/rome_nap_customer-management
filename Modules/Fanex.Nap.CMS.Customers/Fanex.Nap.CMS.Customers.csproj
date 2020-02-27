@@ -182,24 +182,24 @@
   <ItemGroup>
     <Compile Include="AppStart\CustomersAreaRegistration.cs" />
     <Compile Include="AppStart\CustomersBundlesConfig.cs" />
-    <Compile Include="Constants\AccountStatusConst.cs" />
-    <Compile Include="Constants\AccountStatusCreditSiteConst.cs" />
-    <Compile Include="Constants\AcknowledgementTypeConst.cs" />
+    <Compile Include="Constants\ProblemAccount\AccountStatusConst.cs" />
+    <Compile Include="Constants\ProblemAccountCreditSite\AccountStatusCreditSiteConst.cs" />
+    <Compile Include="Constants\ProblemAccountLicenseeSite\AcknowledgementTypeConst.cs" />
     <Compile Include="Constants\CounterOptionConstants.cs" />
-    <Compile Include="Constants\CurrencyConst.cs" />
-    <Compile Include="Constants\InformStatusConst.cs" />
-    <Compile Include="Constants\IsReducedConst.cs" />
-    <Compile Include="Constants\DirectlyMarkedConst.cs" />
-    <Compile Include="Constants\OrderByConst.cs" />
+    <Compile Include="Constants\ProblemAccount\CurrencyConst.cs" />
+    <Compile Include="Constants\ProblemAccount\InformStatusConst.cs" />
+    <Compile Include="Constants\ProblemAccount\IsReducedConst.cs" />
+    <Compile Include="Constants\ProblemAccount\DirectlyMarkedConst.cs" />
+    <Compile Include="Constants\ProblemAccount\OrderByConst.cs" />
     <Compile Include="Constants\CustomerFunctionKeys.cs" />
     <Compile Include="Constants\DangerLevelCategoryConst.cs" />
     <Compile Include="Constants\DangerLevelConst.cs" />
     <Compile Include="Constants\PossessStatisticsSortSequence.cs" />
     <Compile Include="Constants\PTConditionLogicConst.cs" />
-    <Compile Include="Constants\SearchFilterSessionKeyConst.cs" />
-    <Compile Include="Constants\SiteTypeConst.cs" />
-    <Compile Include="Constants\SQLErrorCodeConst.cs" />
-    <Compile Include="Constants\VIPConst.cs" />
+    <Compile Include="Constants\ProblemAccount\SearchFilterSessionKeyConst.cs" />
+    <Compile Include="Constants\ProblemAccount\SiteTypeConst.cs" />
+    <Compile Include="Constants\ProblemAccount\SQLErrorCodeConst.cs" />
+    <Compile Include="Constants\ProblemAccountLicenseeSite\VIPConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
@@ -261,7 +261,7 @@
     <Compile Include="Models\ManageRobots2\RobotReport.cs" />
     <Compile Include="Models\ManageRobots2\RobotSitesModel.cs" />
     <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountSiteGroup.cs" />
-    <Compile Include="Models\ProblemAccount\LicenseeAcknowledgement.cs" />
+    <Compile Include="Models\ProblemAccountLicenseeSite\LicenseeAcknowledgement.cs" />
     <Compile Include="Models\ProblemAccount\MarkNewResult.cs" />
     <Compile Include="Models\ProblemAccount\PreventiveActionReason.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountItem.cs" />
@@ -274,17 +274,17 @@
     <Compile Include="Params\PossessStatistics\UpdateDangerLevelParam.cs" />
     <Compile Include="Params\PossessStatistics\UpdateMonitorStatusParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\BetListRepository.cs" />
-    <Compile Include="Repositories\IBetListRepository.cs" />
+    <Compile Include="Repositories\ProblemAccount\BetListRepository.cs" />
+    <Compile Include="Repositories\ProblemAccount\IBetListRepository.cs" />
     <Compile Include="Repositories\IManageRobots2Repository.cs" />
-    <Compile Include="Repositories\IProblemAccountLicenseeSiteRepository.cs" />
-    <Compile Include="Repositories\IProblemAccountRepository.cs" />
+    <Compile Include="Repositories\ProblemAccountLicenseeSite\IProblemAccountLicenseeSiteRepository.cs" />
+    <Compile Include="Repositories\ProblemAccount\IProblemAccountRepository.cs" />
     <Compile Include="Repositories\ManageRobots2Repository.cs" />
     <Compile Include="Repositories\PossessStatisticsRepository.cs" />
-    <Compile Include="Repositories\ProblemAccountCreditSiteRepository.cs" />
-    <Compile Include="Repositories\ProblemAccountCN88Repository.cs" />
-    <Compile Include="Repositories\ProblemAccountLicenseeSiteRepository.cs" />
-    <Compile Include="Repositories\ProblemAccountRepositoryBase.cs" />
+    <Compile Include="Repositories\ProblemAccountCreditSite\ProblemAccountCreditSiteRepository.cs" />
+    <Compile Include="Repositories\ProblemAccount\ProblemAccountCN88Repository.cs" />
+    <Compile Include="Repositories\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteRepository.cs" />
+    <Compile Include="Repositories\ProblemAccount\ProblemAccountRepositoryBase.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -310,21 +310,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProblemAccountResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\BetListService.cs" />
-    <Compile Include="Services\IBetListService.cs" />
+    <Compile Include="Services\ProblemAccount\BetListService.cs" />
+    <Compile Include="Services\ProblemAccount\IBetListService.cs" />
     <Compile Include="Services\IManageRobots2Service.cs" />
-    <Compile Include="Services\IProblemAccountCN88Service.cs" />
-    <Compile Include="Services\IProblemAccountCreditSiteService.cs" />
-    <Compile Include="Services\IProblemAccountLicenseeSiteService.cs" />
-    <Compile Include="Services\IProblemAccountService.cs" />
+    <Compile Include="Services\ProblemAccount\IProblemAccountCN88Service.cs" />
+    <Compile Include="Services\ProblemAccountCreditSite\IProblemAccountCreditSiteService.cs" />
+    <Compile Include="Services\ProblemAccountLicenseeSite\IProblemAccountLicenseeSiteService.cs" />
+    <Compile Include="Services\ProblemAccount\IProblemAccountService.cs" />
     <Compile Include="Services\PossessStatisticsExporter.cs" />
-    <Compile Include="Services\ProblemAccountCreditSiteService.cs" />
-    <Compile Include="Services\ProblemAccountCreditSitesExporter.cs" />
-    <Compile Include="Services\ProblemAccountCN88Exporter.cs" />
+    <Compile Include="Services\ProblemAccountCreditSite\ProblemAccountCreditSiteService.cs" />
+    <Compile Include="Services\ProblemAccountCreditSite\ProblemAccountCreditSiteExporter.cs" />
+    <Compile Include="Services\ProblemAccount\ProblemAccountBaseExporter.cs" />
+    <Compile Include="Services\ProblemAccount\ProblemAccountCN88Exporter.cs" />
     <Compile Include="Services\ManageRobots2Service.cs" />
     <Compile Include="Services\PossessStatisticsService.cs" />
-    <Compile Include="Services\ProblemAccountCN88Service.cs" />
-    <Compile Include="Services\ProblemAccountLicenseeSiteService.cs" />
+    <Compile Include="Services\ProblemAccount\ProblemAccountCN88Service.cs" />
+    <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
+    <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />

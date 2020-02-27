@@ -1,14 +1,14 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
     using System.Web.Mvc;
-    using Constants;
+    using Constants.ProblemAccount;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
     using Infrastructure.Controllers;
     using Infrastructure.Extensions;
     using NAP.Core.Business;
-    using Services;
+    using Services.ProblemAccount;
     using ViewModels.BetList;
     using ViewModels.ProblemAccount;
     using ViewModels.ProblemAccountCreditSite;

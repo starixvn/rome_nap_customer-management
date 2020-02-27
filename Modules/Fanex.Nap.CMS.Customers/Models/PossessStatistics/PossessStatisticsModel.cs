@@ -1,4 +1,4 @@
-﻿using Fanex.Nap.CMS.Customers.Constants;
+﻿using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
 using Fanex.Nap.CMS.Customers.Resources;
 
 namespace Fanex.Nap.CMS.Customers.Models.PossessStatistics

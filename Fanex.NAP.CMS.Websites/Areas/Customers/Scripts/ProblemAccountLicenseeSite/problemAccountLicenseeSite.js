@@ -36,9 +36,13 @@
 
             if (problemAccount.usernames.length) {
                 if (problemAccount.currency.length) {
-                    var modalTitle = this.textContent;
-                    var reduceBL = new ProblemAccountLicenseeSiteReduceBL(elements.formReduceBL.clone(), problemAccountSearch.reloadData);
-                    reduceBL.init(modalTitle, problemAccount.usernames, problemAccount.currency);
+                    if (problemAccount.isAcknowledgement) {
+                        var modalTitle = this.textContent;
+                        var reduceBL = new ProblemAccountLicenseeSiteReduceBL(elements.formReduceBL.clone(), problemAccountSearch.reloadData);
+                        reduceBL.init(modalTitle, problemAccount.usernames, problemAccount.currency);
+                    } else {
+                        CMS.showErrorBox(resources.reduceBLNotAcknowledgedSelectedError);
+                    }
                 } else {
                     CMS.showErrorBox(resources.reduceBLMultipleCurrenciesSelectedError);
                 }

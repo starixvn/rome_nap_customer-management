@@ -205,7 +205,7 @@
     <value>OK</value>
   </data>
   <data name="ReduceBetLimitHint" xml:space="preserve">
-    <value>This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types/products.</value>
+    <value>This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types of Sportsbook.</value>
   </data>
   <data name="RequiredFieldError" xml:space="preserve">
     <value>Required field!</value>

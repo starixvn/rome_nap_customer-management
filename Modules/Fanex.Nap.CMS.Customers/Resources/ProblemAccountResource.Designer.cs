@@ -493,7 +493,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types/products..
+        ///   Looks up a localized string similar to This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types of Sportsbook..
         /// </summary>
         public static string ReduceBetLimitHint {
             get {

@@ -18,7 +18,6 @@
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.Currency";
         private const string PreventiveActionCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.PreventiveAction";
-        private const string PreventiveActionReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.PreventiveActionReason";
 
         private readonly IProblemAccountLicenseeSiteRepository repository;
 
@@ -76,40 +75,6 @@
             }
 
             return preventiveActions;
-        }
-
-        public IDictionary<int, IList<IdNameModel>> GetPreventiveActionReasons()
-        {
-            var preventiveActionReasons = CacheManager.Get<IDictionary<int, IList<IdNameModel>>>(PreventiveActionReasonCacheKey);
-
-            if (preventiveActionReasons == null)
-            {
-                var rawdata = repository.GetPreventiveActionReasons(new GetPreventiveActionReasonLicenseeSiteCriteria());
-                preventiveActionReasons = ToDictionary(rawdata);
-
-                CacheManager.Set(PreventiveActionReasonCacheKey, preventiveActionReasons);
-            }
-
-            return preventiveActionReasons;
-        }
-
-        private static IDictionary<int, IList<IdNameModel>> ToDictionary(IEnumerable<PreventiveActionReason> data)
-        {
-            IList<IdNameModel> reasons;
-            IDictionary<int, IList<IdNameModel>> preventiveActionReasons = new Dictionary<int, IList<IdNameModel>>();
-
-            foreach (var item in data)
-            {
-                if (!preventiveActionReasons.TryGetValue(item.PreventiveActionId, out reasons))
-                {
-                    reasons = new List<IdNameModel>();
-                    preventiveActionReasons.Add(item.PreventiveActionId, reasons);
-                }
-
-                reasons.Add(new IdNameModel { Id = item.ReasonId, Name = item.ReasonName });
-            }
-
-            return preventiveActionReasons;
         }
 
         public ProblemAccountLicenseeSiteModel GetProblemAccounts(

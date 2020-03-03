@@ -4,8 +4,7 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
         ddlPreventiveAction = null,
         spanPreventiveAction = null,
         ddlReason = null,
-        spanReason = null,
-        inputReason = null;
+        spanReason = null;
 
     function initForm(usernames, level) {
         form.find("#txt-level").val(level);
@@ -18,14 +17,9 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
 
         ddlReason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
-        inputReason = spanReason.find(".ui-combobox-input");
     }
 
     function bindEvents() {
-        ddlPreventiveAction.change(function () {
-            getReasonList(ddlPreventiveAction.val());
-        });
-
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
@@ -33,34 +27,6 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
             event.preventDefault();
             validateUpdate() && submitForm();
         });
-    }
-
-    function getReasonList(value) {
-        var reasons = preventiveActionsReasons[value] || [];
-
-        if (!reasons.length || reasons[0].Id !== 0) {
-            reasons.unshift({ Id: 0, Name: resources.pleaseSelect });
-        }
-
-        fillReasonsIntoDropdown(reasons);
-    }
-
-    function fillReasonsIntoDropdown(reasons) {
-        var html = [];
-
-        $.each(reasons, function (index, item) {
-            html.push('<option value="');
-            html.push(item.Id);
-            html.push('">');
-            html.push(item.Name);
-            html.push("<option>");
-        });
-
-        ddlReason.html(html.join(""));
-
-        var firstSelectedReason = reasons[0];
-        ddlReason.val(firstSelectedReason.Id);
-        inputReason.val(firstSelectedReason.Name);
     }
 
     function validateUpdate() {

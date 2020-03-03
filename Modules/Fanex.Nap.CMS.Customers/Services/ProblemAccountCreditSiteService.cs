@@ -17,7 +17,7 @@
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Currency";
         private const string PreventiveActionCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.PreventiveAction";
-        private const string PreventiveActionReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.PreventiveActionReason";
+        private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Reason_{0}";
 
         private readonly IProblemAccountRepository repository;
 
@@ -41,8 +41,21 @@
             return currencies;
         }
 
-        public IEnumerable<IdNameModel> GetReasons()
-            => repository.GetReasons(new GetReasonCreditSiteCriteria());
+        public IEnumerable<IdNameModel> GetReasons(bool isAllReasons)
+        {
+            var mode = isAllReasons ? (byte)2 : (byte)1;
+            var cacheKey = string.Format(ReasonCacheKey, mode);
+
+            var reasons = CacheManager.Get<List<IdNameModel>>(cacheKey);
+
+            if (reasons == null)
+            {
+                reasons = repository.GetReasons(new GetReasonCreditSiteCriteria(mode)).ToList();
+                CacheManager.Set(cacheKey, reasons);
+            }
+
+            return reasons;
+        }
 
         public IEnumerable<IdNameModel> GetPreventiveActions()
         {
@@ -55,40 +68,6 @@
             }
 
             return preventiveActions;
-        }
-
-        public IDictionary<int, IList<IdNameModel>> GetPreventiveActionReasons()
-        {
-            var preventiveActionReasons = CacheManager.Get<IDictionary<int, IList<IdNameModel>>>(PreventiveActionReasonCacheKey);
-
-            if (preventiveActionReasons == null)
-            {
-                var rawdata = repository.GetPreventiveActionReasons(new GetPreventiveActionReasonCreditSiteCriteria());
-                preventiveActionReasons = ToDictionary(rawdata);
-
-                CacheManager.Set(PreventiveActionReasonCacheKey, preventiveActionReasons);
-            }
-
-            return preventiveActionReasons;
-        }
-
-        private static IDictionary<int, IList<IdNameModel>> ToDictionary(IEnumerable<PreventiveActionReason> data)
-        {
-            IList<IdNameModel> reasons;
-            IDictionary<int, IList<IdNameModel>> preventiveActionReasons = new Dictionary<int, IList<IdNameModel>>();
-
-            foreach (var item in data)
-            {
-                if (!preventiveActionReasons.TryGetValue(item.PreventiveActionId, out reasons))
-                {
-                    reasons = new List<IdNameModel>();
-                    preventiveActionReasons.Add(item.PreventiveActionId, reasons);
-                }
-
-                reasons.Add(new IdNameModel { Id = item.ReasonId, Name = item.ReasonName });
-            }
-
-            return preventiveActionReasons;
         }
 
         public ProblemAccountModel GetProblemAccounts(

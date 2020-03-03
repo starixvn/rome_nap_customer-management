@@ -34,8 +34,8 @@
                 searchFilter != null,
                 searchFilter ?? new SearchViewModel { Currency = CurrencyConst.CY },
                 service.GetReasons(true),
-                CurrentSession.Username,
-                service.GetReasons(false));
+                service.GetReasons(false),
+                CurrentSession.Username);
 
             return View("~/Areas/Customers/Views/ProblemAccount/Index.cshtml", vm);
         }

@@ -18,8 +18,6 @@
 
         IEnumerable<IdNameModel> GetPreventiveActions();
 
-        IDictionary<int, IList<IdNameModel>> GetPreventiveActionReasons();
-
         ProblemAccountLicenseeSiteModel GetProblemAccounts(
             DateTime from,
             DateTime to,

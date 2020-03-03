@@ -19,19 +19,14 @@
             bool autoReload,
             SearchBaseViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
+            IEnumerable<IdNameModel> markNewReasons,
             string updater,
             IEnumerable<IdNameModel> currencies,
-            IEnumerable<IdNameModel> preventiveActions,
-            IDictionary<int, IList<IdNameModel>> preventiveActionReasons)
-            : base(hasHostPermission, autoReload, searchViewModel, filterReasons, DefaultMinDate, currencies, updater)
+            IEnumerable<IdNameModel> preventiveActions)
+            : base(hasHostPermission, autoReload, searchViewModel, filterReasons, markNewReasons, DefaultMinDate, currencies, updater)
         {
-            FilterPreventiveActions = new[] { new IdNameModel { Id = 0, Name = ProblemAccountResource.All } }
-                   .Concat(preventiveActions)
-                   .Select(c => BuildSelectListItem(c));
-            MarkNewPreventiveActions = new[] { new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect } }
-                .Concat(preventiveActions)
-                .Select(c => BuildSelectListItem(c));
-            PreventiveActionReasons = preventiveActionReasons;
+            FilterPreventiveActions = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.All }, preventiveActions);
+            MarkNewPreventiveActions = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect }, preventiveActions);
         }
 
         public IEnumerable<SelectListItem> AcknowledgementTypes
@@ -43,7 +38,5 @@
         public IEnumerable<SelectListItem> FilterPreventiveActions { get; }
 
         public IEnumerable<SelectListItem> MarkNewPreventiveActions { get; }
-
-        public IDictionary<int, IList<IdNameModel>> PreventiveActionReasons { get; }
     }
 }

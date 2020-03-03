@@ -9,11 +9,9 @@
     {
         IEnumerable<IdNameModel> GetCurrencies();
 
-        IEnumerable<IdNameModel> GetReasons();
+        IEnumerable<IdNameModel> GetReasons(bool isAllReasons);
 
         IEnumerable<IdNameModel> GetPreventiveActions();
-
-        IDictionary<int, IList<IdNameModel>> GetPreventiveActionReasons();
 
         ProblemAccountModel GetProblemAccounts(
             DateTime from,

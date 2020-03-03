@@ -34,10 +34,10 @@
                 HasRight(CMSFunctionKeys.ManageProblemAccountCreditSites, Constant.Policy.Host),
                 searchFilter != null,
                 searchFilter ?? new SearchCreditSiteViewModel(),
-                service.GetReasons(),
+                service.GetReasons(true),
+                service.GetReasons(false),
                 service.GetCurrencies(),
-                service.GetPreventiveActions(),
-                service.GetPreventiveActionReasons());
+                service.GetPreventiveActions());
 
             return View("~/Areas/Customers/Views/ProblemAccountCreditSite/Index.cshtml", vm);
         }
@@ -82,7 +82,7 @@
             IExcelExporter exporter = new ProblemAccountCreditSitesExporter(
                 vm,
                 data,
-                service.GetReasons(),
+                service.GetReasons(true),
                 service.GetCurrencies(),
                 service.GetPreventiveActions());
 

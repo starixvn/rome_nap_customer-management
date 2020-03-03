@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using Constants;
     using Infrastructure.Models;
-    using Resources;
 
     public class IndexViewModel : IndexBaseViewModel
     {
@@ -21,21 +20,13 @@
             bool autoReload,
             SearchBaseViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
-            string updater,
-            IEnumerable<IdNameModel> markNewReasons)
-            : base(hasHostPermission, autoReload, searchViewModel, filterReasons, DefaultMinDate, CurrencyConst.CurrencyList(), updater)
+            IEnumerable<IdNameModel> markNewReasons,
+            string updater)
+            : base(hasHostPermission, autoReload, searchViewModel, filterReasons, markNewReasons, DefaultMinDate, CurrencyConst.CurrencyList(), updater)
         {
-            MarkNewReasons = BuildMarkNewReasons(markNewReasons);
         }
 
         public IEnumerable<SelectListItem> AccountStatus
             => AccountStatusConst.AccountStatusList.Select(kvp => BuildSelectListItem(kvp.Key, kvp.Value));
-
-        public IEnumerable<SelectListItem> MarkNewReasons { get; }
-
-        private static IEnumerable<SelectListItem> BuildMarkNewReasons(IEnumerable<IdNameModel> reasons)
-            => new[] { BuildSelectListItem(0, ProblemAccountResource.PleaseSelect) }
-            .Concat(reasons.Select(r => BuildSelectListItem(r)))
-            .ToList();
     }
 }

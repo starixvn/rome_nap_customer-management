@@ -73,27 +73,6 @@
                 Name = reader["actionname"].ToString()
             };
 
-        public IEnumerable<PreventiveActionReason> GetPreventiveActionReasons(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader.Read())
-                    {
-                        yield return ToPreventiveActionReason(reader);
-                    }
-                }
-            }
-        }
-
-        private static PreventiveActionReason ToPreventiveActionReason(IDataReader reader)
-            => new PreventiveActionReason(
-                Convert.ToInt32(reader["actionid"]),
-                reader["actionname"].ToString(),
-                Convert.ToInt32(reader["reasonid"]),
-                reader["reasonname"].ToString());
-
         public Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria)
         {
             IList<ProblemAccountItem> problemAccounts = new List<ProblemAccountItem>();

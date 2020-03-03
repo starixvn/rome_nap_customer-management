@@ -18,6 +18,7 @@
             bool autoReload,
             SearchBaseViewModel searchViewModel,
             IEnumerable<IdNameModel> filterReasons,
+            IEnumerable<IdNameModel> markNewReasons,
             DateTime minFromDate,
             IEnumerable<IdNameModel> currencies,
             string updater)
@@ -26,6 +27,7 @@
             AutoReload = autoReload;
             SearchFilter = searchViewModel;
             Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
+            MarkNewReasons = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect }, markNewReasons);
             MinFromDate = minFromDate;
             Currencies = currencies.Select(c => BuildSelectListItem(c));
             Updater = updater;
@@ -59,6 +61,8 @@
 
         public IEnumerable<SelectListItem> Reasons { get; }
 
+        public IEnumerable<SelectListItem> MarkNewReasons { get; }
+
         public IEnumerable<SelectListItem> DirectlyMarked
             => DirectlyMarkedConst.DirectlyMarkedList().Select(m => BuildSelectListItem(m));
 
@@ -87,6 +91,14 @@
 
         protected static SelectListItem BuildSelectListItem(int value, string name, bool selected = false)
             => new SelectListItem { Value = value.ToString(), Text = name, Selected = selected };
+
+        protected static IEnumerable<SelectListItem> BuildSelectListItem(IdNameModel firstItem, IEnumerable<IdNameModel> models)
+        {
+            var listItems = models.Select(r => BuildSelectListItem(r)).ToList();
+            listItems.Insert(0, BuildSelectListItem(firstItem));
+
+            return listItems;
+        }
 
         private static IEnumerable<SelectListItem> BuildFilterReasons(IEnumerable<IdNameModel> reasons, string selectedReasons)
         {

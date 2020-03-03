@@ -4,6 +4,13 @@
 
     public class GetReasonCreditSiteCriteria : CriteriaBase
     {
+        public GetReasonCreditSiteCriteria(byte mode)
+        {
+            Mode = mode;
+        }
+
+        public byte Mode { get; }
+
         public override string GetSettingKey()
             => "NAP_ProblemAccount_ReasonSel";
     }

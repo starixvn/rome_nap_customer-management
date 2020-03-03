@@ -14,8 +14,6 @@
 
         IEnumerable<IdNameModel> GetPreventiveActions(ICriteria criteria);
 
-        IEnumerable<PreventiveActionReason> GetPreventiveActionReasons(ICriteria criteria);
-
         Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria);
 
         Result MarkNew(ICriteria criteria);

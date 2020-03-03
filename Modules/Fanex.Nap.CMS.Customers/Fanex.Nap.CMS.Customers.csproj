@@ -223,7 +223,6 @@
     <Compile Include="Criteria\ProblemAccountCreditSite\CloseAccountCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountCreditSite\GetCurrenciesCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountCreditSite\GetPreventiveActionCreditSiteCriteria.cs" />
-    <Compile Include="Criteria\ProblemAccountCreditSite\GetPreventiveActionReasonCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountCreditSite\GetReasonCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountCreditSite\UpdateCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\GetCurrenciesLicenseeSiteCriteria.cs" />

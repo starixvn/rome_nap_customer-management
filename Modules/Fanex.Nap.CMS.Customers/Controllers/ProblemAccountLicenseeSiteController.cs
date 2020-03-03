@@ -33,11 +33,11 @@
                 HasRight(CMSFunctionKeys.ManageProblemAccountLicenseeSites, Constant.Policy.Host),
                 searchFilter != null,
                 searchFilter ?? new SearchLicenseeSiteViewModel(),
-                service.GetReasons(),
+                service.GetReasons(true),
+                service.GetReasons(false),
                 CurrentSession.Username,
                 service.GetCurrencies(),
-                service.GetPreventiveActions(),
-                service.GetPreventiveActionReasons());
+                service.GetPreventiveActions());
 
             return View("~/Areas/Customers/Views/ProblemAccountLicenseeSite/Index.cshtml", vm);
         }
@@ -78,7 +78,7 @@
             IExcelExporter exporter = new ProblemAccountLicenseeSiteExporter(
                 vm,
                 data,
-                service.GetReasons(),
+                service.GetReasons(true),
                 service.GetCurrencies(),
                 service.GetPreventiveActions());
 

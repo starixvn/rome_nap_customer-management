@@ -34,7 +34,7 @@
         }
 
         public override string FileNameWithoutExtension
-           => string.Format(ProblemAccountCreditDepositResource.ExcelFileNameCreditSite, DateTime.Today.ToString("yyyyMMdd"));
+           => string.Format(ProblemAccountCreditDepositResource.ExcelFileNameLicenseeSite, DateTime.Today.ToString("yyyyMMdd"));
 
         public override ExcelColumn[] ExcelColumns =>
             new[]

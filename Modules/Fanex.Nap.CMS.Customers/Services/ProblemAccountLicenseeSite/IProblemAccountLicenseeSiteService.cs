@@ -14,7 +14,7 @@
 
         IEnumerable<IdNameModel> GetCurrencies();
 
-        IEnumerable<IdNameModel> GetReasons();
+        IEnumerable<IdNameModel> GetReasons(bool isAllReasons);
 
         IEnumerable<IdNameModel> GetPreventiveActions();
 

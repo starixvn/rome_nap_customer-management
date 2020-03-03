@@ -32,7 +32,6 @@
   <Function Name="Problem Accounts - Licensee Sites">
     <Setting Key="NAP_ProblemAccount_LicenseeCurrencySel" SpName="NAP_ProblemAccount_LicenseeCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_LicenseeReasonSel" SpName="NAP_ProblemAccount_LicenseeReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeActionReasonSel" SpName="NAP_ProblemAccount_LicenseeActionReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_LicenseeMonitorListSel" SpName="NAP_ProblemAccount_LicenseeMonitorListSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_LicenseePreventiveActionSel" SpName="NAP_ProblemAccount_LicenseePreventiveActionSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>

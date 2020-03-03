@@ -228,7 +228,6 @@
     <Compile Include="Criteria\ProblemAccountLicenseeSite\GetCurrenciesLicenseeSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\GetLicenseeAcknowledgementCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\GetPreventiveActionLicenseeSiteCriteria.cs" />
-    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetPreventiveActionReasonLicenseeSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\GetReasonLicenseeSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\MarkNewLicenseeSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccountLicenseeSite\ReduceBLLicenseeSiteCriteria.cs" />

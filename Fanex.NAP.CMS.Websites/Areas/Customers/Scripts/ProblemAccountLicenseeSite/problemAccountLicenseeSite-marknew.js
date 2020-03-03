@@ -5,8 +5,7 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
         preventiveAction = null,
         spanPreventiveAction = null,
         reason = null,
-        spanReason = null,
-        inputReason = null;
+        spanReason = null;
 
     function cacheElements() {
         inlineMessage = form.find("#div-inlineMessage");
@@ -15,7 +14,6 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
         spanPreventiveAction = form.find('span[id="ddl-preventiveAction"]');
         reason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
-        inputReason = spanReason.find(".ui-combobox-input");
     }
 
     function bindEvents() {
@@ -42,10 +40,6 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
             }
         });
 
-        preventiveAction.change(function () {
-            getReasonList(preventiveAction.val());
-        });
-
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
@@ -53,34 +47,6 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
             event.preventDefault();
             isValidFormData() && submitForm();
         });
-    }
-
-    function getReasonList(value) {
-        var reasons = preventiveActionsReasons[value] || [];
-
-        if (!reasons.length || reasons[0].Id !== 0) {
-            reasons.unshift({ Id: 0, Name: resources.pleaseSelect });
-        }
-
-        fillReasonsIntoDropdown(reasons);
-    }
-
-    function fillReasonsIntoDropdown(reasons) {
-        var html = [];
-
-        $.each(reasons, function (index, item) {
-            html.push('<option value="');
-            html.push(item.Id);
-            html.push('">');
-            html.push(item.Name);
-            html.push("<option>");
-        });
-
-        reason.html(html.join(""));
-
-        var firstSelectedReason = reasons[0];
-        reason.val(firstSelectedReason.Id);
-        inputReason.val(firstSelectedReason.Name);
     }
 
     function isValidFormData() {

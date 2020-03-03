@@ -44,7 +44,6 @@
             showSelectColumn = @Model.HasHostPermission.ToString().ToLowerInvariant(),
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
         var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
-        var preventiveActionsReasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.PreventiveActionReasons, jsonSettings))');
         var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
     </script>
     @Scripts.Render(CustomersBundlesConfig.ProblemAccountLicenseeSiteScript)

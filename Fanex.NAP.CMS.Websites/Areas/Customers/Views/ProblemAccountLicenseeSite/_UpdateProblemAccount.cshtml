@@ -19,7 +19,7 @@
             <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
         </div>
         <div class="edit-field">
-            @Html.DropDownList("reason", new[] { new SelectListItem { Value = "0", Text = ProblemAccountResource.PleaseSelect, Selected = true } }, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
+            @Html.DropDownList("reason", Model.MarkNewReasons, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
         </div>
     </div>
     <div class="form-row">

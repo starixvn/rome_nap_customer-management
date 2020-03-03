@@ -18,6 +18,7 @@
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.Currency";
         private const string PreventiveActionCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.PreventiveAction";
+        private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.Reason_{0}";
 
         private readonly IProblemAccountLicenseeSiteRepository repository;
 
@@ -61,8 +62,21 @@
             return currencies;
         }
 
-        public IEnumerable<IdNameModel> GetReasons()
-            => repository.GetReasons(new GetReasonLicenseeSiteCriteria());
+        public IEnumerable<IdNameModel> GetReasons(bool isAllReasons)
+        {
+            var mode = isAllReasons ? (byte)2 : (byte)1;
+            var cacheKey = string.Format(ReasonCacheKey, mode);
+
+            var reasons = CacheManager.Get<List<IdNameModel>>(cacheKey);
+
+            if (reasons == null)
+            {
+                reasons = repository.GetReasons(new GetReasonLicenseeSiteCriteria(mode)).ToList();
+                CacheManager.Set(cacheKey, reasons);
+            }
+
+            return reasons;
+        }
 
         public IEnumerable<IdNameModel> GetPreventiveActions()
         {

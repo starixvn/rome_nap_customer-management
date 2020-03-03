@@ -2,17 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using Constants.ProblemAccount;
     using Criteria.ProblemAccount;
     using Infrastructure.Extensions;
     using Infrastructure.Models;
+    using Infrastructure.Web;
     using Models.ProblemAccount;
     using Repositories.ProblemAccount;
     using Resources;
 
     public class ProblemAccountCN88Service : IProblemAccountCN88Service
     {
+        private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Reason_{0}";
+
         private readonly IProblemAccountRepository repository;
 
         public ProblemAccountCN88Service(IProblemAccountRepository repository = null)
@@ -21,7 +25,20 @@
         }
 
         public IEnumerable<IdNameModel> GetReasons(bool isAllReasons)
-            => repository.GetReasons(new GetReasonCriteria(isAllReasons ? (byte)0 : (byte)1));
+        {
+            var mode = isAllReasons ? (byte)2 : (byte)1;
+            var cacheKey = string.Format(ReasonCacheKey, mode);
+
+            var reasons = CacheManager.Get<List<IdNameModel>>(cacheKey);
+
+            if (reasons == null)
+            {
+                reasons = repository.GetReasons(new GetReasonCriteria(mode)).ToList();
+                CacheManager.Set(cacheKey, reasons);
+            }
+
+            return reasons;
+        }
 
         public ProblemAccountModel GetProblemAccounts(
             DateTime from,

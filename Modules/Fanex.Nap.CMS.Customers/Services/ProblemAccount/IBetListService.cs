@@ -11,9 +11,17 @@
             DateTime from,
             DateTime to,
             int pageIndex,
-            int pageSize,
-            bool isCN88);
+            int pageSize);
 
-        int GetTotalSporksbookBetTickets(int custId, DateTime from, DateTime to, bool isCN88);
+        Tuple<int, IEnumerable<AbnormalBetTicket>> GetAbnormalBetTicketsCreditLicensee(
+            int custId,
+            DateTime from,
+            DateTime to,
+            int pageIndex,
+            int pageSize);
+
+        int GetTotalSporksbookBetTickets(int custId, DateTime from, DateTime to);
+
+        int GetTotalSporksbookBetTicketsCreditLicensee(int custId, DateTime from, DateTime to);
     }
 }

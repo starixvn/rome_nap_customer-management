@@ -1,7 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ProblemAccount;
+    using Customers.Models.BetList;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
@@ -58,8 +61,20 @@
             const int pageIndex = 1;
             var fromDate = searchViewModel.From;
             var toDate = searchViewModel.To.GetEndOfDate();
-            var isCN88 = SiteTypeConst.IsCN88(siteType);
-            var abnormalBetTicketData = service.GetAbnormalBetTickets(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize, isCN88);
+
+            Tuple<int, IEnumerable<AbnormalBetTicket>> abnormalBetTicketData;
+            int totalSportsbookBetTickets;
+
+            if (SiteTypeConst.IsCN88(siteType))
+            {
+                abnormalBetTicketData = service.GetAbnormalBetTickets(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize);
+                totalSportsbookBetTickets = service.GetTotalSporksbookBetTickets(custId, fromDate, toDate);
+            }
+            else
+            {
+                abnormalBetTicketData= service.GetAbnormalBetTicketsCreditLicensee(custId, fromDate, toDate, pageIndex, searchViewModel.PageSize);
+                totalSportsbookBetTickets = service.GetTotalSporksbookBetTicketsCreditLicensee(custId, fromDate, toDate);
+            }
 
             var vm = new AbnormalBetTicketViewModel
             {
@@ -72,7 +87,7 @@
                 SiteType = siteType,
                 TotalAbnormalBetTickets = abnormalBetTicketData.Item1,
                 AbnormalBetTickets = abnormalBetTicketData.Item2,
-                TotalSportsbookBetTickets = service.GetTotalSporksbookBetTickets(custId, fromDate, toDate, isCN88)
+                TotalSportsbookBetTickets = totalSportsbookBetTickets
             };
 
             return View("~/Areas/Customers/Views/BetList/AbnormalBetTicket.cshtml", vm);
@@ -82,13 +97,21 @@
         {
             if (HasReadManageProblem(viewModel.SiteType))
             {
-                return JsonData(service.GetAbnormalBetTickets(
-                    viewModel.CustId,
-                    viewModel.FromDate,
-                    viewModel.ToDate.GetEndOfDate(),
-                    viewModel.PageIndex,
-                    viewModel.PageSize,
-                    SiteTypeConst.IsCN88(viewModel.SiteType)));
+                var abnormalBetTickets = SiteTypeConst.IsCN88(viewModel.SiteType)
+                    ? service.GetAbnormalBetTickets(
+                        viewModel.CustId,
+                        viewModel.FromDate,
+                        viewModel.ToDate.GetEndOfDate(),
+                        viewModel.PageIndex,
+                        viewModel.PageSize)
+                    : service.GetAbnormalBetTicketsCreditLicensee(
+                        viewModel.CustId,
+                        viewModel.FromDate,
+                        viewModel.ToDate.GetEndOfDate(),
+                        viewModel.PageIndex,
+                        viewModel.PageSize);
+
+                return JsonData(abnormalBetTickets);
             }
 
             return Redirect(NapSettings.Settings.UnauthorizeUrl);

@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class GetAbnormalBetTicketCreditDepositCriteria : GetAbnormalBetTicketCriteria
+    public class GetAbnormalBetTicketCreditLicenseeCriteria : GetAbnormalBetTicketCriteria
     {
-        public GetAbnormalBetTicketCreditDepositCriteria(
+        public GetAbnormalBetTicketCreditLicenseeCriteria(
             int custId,
             DateTime from,
             DateTime to,

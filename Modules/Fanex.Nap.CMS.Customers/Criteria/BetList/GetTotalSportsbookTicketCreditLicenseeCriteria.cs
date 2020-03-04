@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class GetTotalSportsbookTicketCreditDepositCriteria : GetTotalSportsbookTicketCriteria
+    public class GetTotalSportsbookTicketCreditLicenseeCriteria : GetTotalSportsbookTicketCriteria
     {
-        public GetTotalSportsbookTicketCreditDepositCriteria(
+        public GetTotalSportsbookTicketCreditLicenseeCriteria(
             int custId,
             DateTime from,
             DateTime to,

@@ -22,25 +22,33 @@
             DateTime from,
             DateTime to,
             int pageIndex,
-            int pageSize,
-            bool isCN88)
-        {
-            ICriteria criteria = isCN88
-                ? new GetAbnormalBetTicketCriteria(custId, from, to, pageIndex, pageSize)
-                : new GetAbnormalBetTicketCreditDepositCriteria(custId, from, to, pageIndex, pageSize);
+            int pageSize)
+            => GetAbnormalBetTickets(new GetAbnormalBetTicketCriteria(custId, from, to, pageIndex, pageSize));
 
-            return repository.GetAbnormalBetTickets(criteria);
-        }
+        public Tuple<int, IEnumerable<AbnormalBetTicket>> GetAbnormalBetTicketsCreditLicensee(
+            int custId,
+            DateTime from,
+            DateTime to,
+            int pageIndex,
+            int pageSize)
+            => GetAbnormalBetTickets(new GetAbnormalBetTicketCreditLicenseeCriteria(custId, from, to, pageIndex, pageSize));
 
-        public int GetTotalSporksbookBetTickets(int custId, DateTime from, DateTime to, bool isCN88)
+        private Tuple<int, IEnumerable<AbnormalBetTicket>> GetAbnormalBetTickets(ICriteria criteria)
+            => repository.GetAbnormalBetTickets(criteria);
+
+        public int GetTotalSporksbookBetTickets(int custId, DateTime from, DateTime to)
+            => GetTotalSporksbookBetTickets(
+                new GetTotalSportsbookTicketCriteria(custId, from, to, AppSession.BalanceUpDate.MoveBetsDay));
+
+        public int GetTotalSporksbookBetTicketsCreditLicensee(int custId, DateTime from, DateTime to)
         {
             var reportDays = AppSession.BalanceUpDate;
 
-            ICriteria criteria = isCN88
-                ? new GetTotalSportsbookTicketCriteria(custId, from, to, reportDays.MoveBetsDay)
-                : new GetTotalSportsbookTicketCreditDepositCriteria(custId, from, to, reportDays.MoveBetsDay, reportDays.BalanceUpDay);
-
-            return repository.GetTotalSporksbookBetTickets(criteria);
+            return GetTotalSporksbookBetTickets(
+                new GetTotalSportsbookTicketCreditLicenseeCriteria(custId, from, to, reportDays.MoveBetsDay, reportDays.BalanceUpDay));
         }
+
+        private int GetTotalSporksbookBetTickets(ICriteria criteria)
+            => repository.GetTotalSporksbookBetTickets(criteria);
     }
 }

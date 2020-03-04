@@ -207,9 +207,9 @@
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Controllers\ProblemAccountCreditSiteController.cs" />
     <Compile Include="Controllers\ProblemAccountLicenseeSiteController.cs" />
-    <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditDepositCriteria.cs" />
+    <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
-    <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditDepositCriteria.cs" />
+    <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
@@ -315,7 +315,6 @@
     <Compile Include="Services\ProblemAccount\IProblemAccountCN88Service.cs" />
     <Compile Include="Services\ProblemAccountCreditSite\IProblemAccountCreditSiteService.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\IProblemAccountLicenseeSiteService.cs" />
-    <Compile Include="Services\ProblemAccount\IProblemAccountService.cs" />
     <Compile Include="Services\PossessStatisticsExporter.cs" />
     <Compile Include="Services\ProblemAccountCreditSite\ProblemAccountCreditSiteService.cs" />
     <Compile Include="Services\ProblemAccountCreditSite\ProblemAccountCreditSiteExporter.cs" />

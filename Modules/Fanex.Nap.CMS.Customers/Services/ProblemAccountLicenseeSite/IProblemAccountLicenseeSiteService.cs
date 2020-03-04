@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Infrastructure.Models;
-    using Models.ProblemAccount;
     using Models.ProblemAccountLicenseeSite;
 
     public interface IProblemAccountLicenseeSiteService

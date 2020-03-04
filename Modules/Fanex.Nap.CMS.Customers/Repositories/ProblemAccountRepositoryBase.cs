@@ -79,7 +79,7 @@
             IList<ProblemAccountReason> reasons = new List<ProblemAccountReason>();
             int totalItems = 0;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey(), 60 * 5))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {

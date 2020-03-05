@@ -2,18 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
-    using Criteria.ProblemAccount;
     using Data.Repository;
     using Infrastructure.Models;
     using Models.ProblemAccount;
 
     public interface IProblemAccountRepository
     {
+        IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria);
+
         IEnumerable<IdNameModel> GetReasons(ICriteria criteria);
 
-        Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>> GetProblemAccounts(SearchCriteria criteria);
+        IEnumerable<IdNameModel> GetPreventiveActions(ICriteria criteria);
 
-        void MarkNew(MarkNewCriteria criteria);
+        Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria);
+
+        Result MarkNew(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
     }

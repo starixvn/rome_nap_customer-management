@@ -1,0 +1,62 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccountLicenseeSite.IndexLicenseeSiteViewModel
+@using (Html.BeginForm("Search", "ProblemAccountLicenseeSite", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+{
+    <div class="filter-row">
+        <div id="fromtodate-picker"></div>
+        <div class="lbl-field col_5">
+            <label>@ProblemAccountCreditDepositResource.Type</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.DropDownList("acknowledge", Model.AcknowledgementTypes, new { id = "ddl-acknowledge", @class = "combobox-autocomplete width-120" })
+        </div>
+        <div class="lbl-field col_2">
+            <label>@ProblemAccountCreditDepositResource.VIP</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.DropDownList("vip", Model.VIPs, new { id = "ddl-vip", @class = "combobox-autocomplete width-120" })
+        </div>
+        <div class="lbl-field col_2">
+            <label>@ProblemAccountResource.Currency</label>
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownList("currency", Model.Currencies, new { id = "ddl-currency", @class = "combobox-autocomplete width-80" })
+        </div>
+        <div class="lbl-field col_4">
+            <label>@ProblemAccountResource.IsReduced</label>
+        </div>
+        <div class="edit-field col_3">
+            @Html.DropDownList("isReduced", Model.IsReduced, new { id = "ddl-isReduced", @class = "combobox-autocomplete width-30" })
+        </div>
+    </div>
+    <div class="filter-row last-row">
+        <div class="lbl-field col_2">
+            <label>@ProblemAccountResource.Reason</label>
+        </div>
+        <div class="edit-field col_11">
+            <div id="ddl-reason"></div>
+        </div>
+        <div class="lbl-field col_5">
+            <label>@ProblemAccountCreditDepositResource.PreventiveAction</label>
+        </div>
+        <div class="edit-field col_7">
+            @Html.DropDownList("preventiveActionId", Model.FilterPreventiveActions, new { id = "ddl-preventiveActionId", @class = "combobox-autocomplete width-120" })
+        </div>
+
+        <div class="lbl-field col_2">
+            <label for="username">@ProblemAccountCreditDepositResource.Member</label>
+        </div>
+        <div class="edit-field col_7">
+            <input type="text" id="member" autocomplete="off" maxlength="50" placeholder="@ProblemAccountCreditDepositResource.MemberPlacehoder" />
+        </div>
+        <div class="lbl-field col_2">
+            <label for="username">@ProblemAccountCreditDepositResource.Licensee</label>
+        </div>
+        <div class="edit-field col_5">
+            <input type="text" id="licensee" autocomplete="off" maxlength="50" placeholder="@ProblemAccountCreditDepositResource.LicenseePlacehoder" />
+        </div>
+        <div class="lbl-field col_3">&nbsp;</div>
+        <div class="submit width-auto col_5">
+            <button type="submit" class="submit btn-search">@ProblemAccountResource.Search</button>
+        </div>
+    </div>
+}

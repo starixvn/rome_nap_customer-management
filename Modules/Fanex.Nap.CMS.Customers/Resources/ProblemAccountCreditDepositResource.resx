@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Acknowledged" xml:space="preserve">
+    <value>Acknowledged</value>
+  </data>
+  <data name="AcknowledgementStatus" xml:space="preserve">
+    <value>AcknowledgementStatus</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="AllAccountsAlreadyClosed" xml:space="preserve">
+    <value>All of the selected accounts are closed already. No action has been done.</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CloseAccount" xml:space="preserve">
+    <value>Close Account</value>
+  </data>
+  <data name="CloseAccountConfimMessage" xml:space="preserve">
+    <value>Are you sure you want to close selected account(s)?</value>
+  </data>
+  <data name="CloseConfirmMessage" xml:space="preserve">
+    <value>&lt;p&gt;The following account(s) are already close: {0}.&lt;/p&gt;&lt;div&gt;Therefore, no action will be applied for them.&lt;/div&gt;&lt;div&gt;Do you want to proceed the action for the rest?&lt;/div&gt;</value>
+  </data>
+  <data name="CloseSuccessfully" xml:space="preserve">
+    <value>All accounts have been successfully closed.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="ExcelFileNameCreditSite" xml:space="preserve">
+    <value>Manage Problem Account - Credit - {0}</value>
+  </data>
+  <data name="InvalidMaxBetError" xml:space="preserve">
+    <value>Max Bet must be less than or equal to Max per Match.</value>
+  </data>
+  <data name="Licensee" xml:space="preserve">
+    <value>Licensee</value>
+  </data>
+  <data name="LicenseePlacehoder" xml:space="preserve">
+    <value>Input at least 2 letters</value>
+  </data>
+  <data name="ManageLicenseeAcknowledgementTitle" xml:space="preserve">
+    <value>Problem Account - Manage Licensee Acknowledgement</value>
+  </data>
+  <data name="ManageProblemAccountCreditSites" xml:space="preserve">
+    <value>Manage Problem Account - Credit Sites</value>
+  </data>
+  <data name="ManageProblemAccountLicenseeSites" xml:space="preserve">
+    <value>Manage Problem Account - Licensee Sites</value>
+  </data>
+  <data name="MaxBet" xml:space="preserve">
+    <value>Max Bet</value>
+  </data>
+  <data name="MaxPerMatch" xml:space="preserve">
+    <value>Max per Match</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="MemberPlacehoder" xml:space="preserve">
+    <value>External ID or System ID</value>
+  </data>
+  <data name="NotAcknowledged" xml:space="preserve">
+    <value>Not Acknowledged</value>
+  </data>
+  <data name="PreventiveAction" xml:space="preserve">
+    <value>Preventive Action</value>
+  </data>
+  <data name="ReduceBLMultipleCurrenciesSelectedError" xml:space="preserve">
+    <value>Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency.</value>
+  </data>
+  <data name="SeperatedByComma" xml:space="preserve">
+    <value>(separated by comma ',' / [tab] / [enter] / [space])</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UpdateAcknowledgementStatusConfirmMessage" xml:space="preserve">
+    <value>&lt;div&gt;This licensee has at least one bet limit reduced member.&lt;/div&gt;&lt;p&gt;Retracting Ackowledgement status will not lift the bet remit reduction for those members.&lt;/p&gt;&lt;div&gt;Do you want to proceed?&lt;/div&gt;</value>
+  </data>
+  <data name="UpdateLicenseeAcknowledgementSuccessfully" xml:space="preserve">
+    <value>Acknowledement status is updated.</value>
+  </data>
+  <data name="UpdatePreventiveActionSuccessfully" xml:space="preserve">
+    <value>The selected accounts' preventive actions have been successfully updated.</value>
+  </data>
+  <data name="UpdateProblemAccount" xml:space="preserve">
+    <value>Update Problem Account</value>
+  </data>
+  <data name="UpdateProblemAccountSuccessfully" xml:space="preserve">
+    <value>The selected accounts have been successfully updated.</value>
+  </data>
+  <data name="VIP" xml:space="preserve">
+    <value>VIP</value>
+  </data>
+  <data name="VoidWinningTickets" xml:space="preserve">
+    <value>Void winning tickets</value>
+  </data>
+</root>

@@ -21,6 +21,20 @@
     <Setting Key="CS_ProblemAccount_MonitorList" SpName="CS_ProblemAccount_MonitorList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_VoidedTransactionList" SpName="CS_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Problem Accounts - Credit Sites">
+    <Setting Key="NAP_ProblemAccount_CurrencySel" SpName="NAP_ProblemAccount_CurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ReasonSel" SpName="NAP_ProblemAccount_ReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_VoidedTransactionList" SpName="NAP_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ActionSel" SpName="NAP_ProblemAccount_ActionSel" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
+  <Function Name="Problem Accounts - Licensee Sites">
+    <Setting Key="NAP_ProblemAccount_LicenseeCurrencySel" SpName="NAP_ProblemAccount_LicenseeCurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeReasonSel" SpName="NAP_ProblemAccount_LicenseeReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeActionReasonSel" SpName="NAP_ProblemAccount_LicenseeActionReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeMonitorListSel" SpName="NAP_ProblemAccount_LicenseeMonitorListSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseePreventiveActionSel" SpName="NAP_ProblemAccount_LicenseePreventiveActionSel" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SelAllSite" SpName="NAP_BetRestriction_SelAllSite" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CustomerSel" SpName="NAP_BetRestriction_CustomerSel" DbName="DBACC.bodb02.bodbAdminNet" />

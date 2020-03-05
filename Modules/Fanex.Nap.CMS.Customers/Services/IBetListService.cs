@@ -11,12 +11,9 @@
             DateTime from,
             DateTime to,
             int pageIndex,
-            int pageSize);
+            int pageSize,
+            bool isCN88);
 
-        int GetTotalSporksbookBetTickets(
-            int custId,
-            DateTime from,
-            DateTime to,
-            DateTime moveBetsDay);
+        int GetTotalSporksbookBetTickets(int custId, DateTime from, DateTime to, bool isCN88);
     }
 }

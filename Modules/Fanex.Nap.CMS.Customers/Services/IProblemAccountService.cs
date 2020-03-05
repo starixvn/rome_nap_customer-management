@@ -57,13 +57,5 @@
             bool confirmed,
             int userId,
             string ip);
-
-        Result UpdateInformingStatus(
-            string usernames,
-            byte roleId,
-            byte informType,
-            bool isApplyDownlines,
-            int userId,
-            string ip);
     }
 }

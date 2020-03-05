@@ -2,57 +2,54 @@
 {
     using System;
     using System.Collections.Generic;
+    using Constants;
     using Infrastructure.Extensions;
     using Models.BetList;
     using Resources;
 
     public class AbnormalBetTicketViewModel
     {
-        public AbnormalBetTicketViewModel(
-            DateTime from,
-            DateTime to,
-            int custId,
-            string custName,
-            int totalAbnormalBetTickets,
-            IEnumerable<AbnormalBetTicket> abnormalBetTickets,
-            int totalSportsbookBetTickets,
-            int pageSize)
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
+
+        public int CustId { get; set; }
+
+        public string CustName { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+        public byte SiteType { get; set; }
+
+        public string GetPageTitle()
         {
-            From = from;
-            To = to;
-            CustId = custId;
-            CustName = custName;
-            TotalAbnormalBetTickets = totalAbnormalBetTickets;
-            AbnormalBetTickets = abnormalBetTickets;
-            TotalSportsbookBetTickets = totalSportsbookBetTickets;
-            PageSize = pageSize;
+            if (SiteTypeConst.IsCN88(SiteType))
+            {
+                return BetListResource.ProblemAccountCN88;
+            }
+
+            return SiteTypeConst.IsCredit(SiteType)
+                ? BetListResource.ProblemAccountCreditSites
+                : BetListResource.ProblemAccountLicenseeSites;
         }
 
-        public DateTime From { get; }
+        public int TotalAbnormalBetTickets { get; set; }
 
-        public DateTime To { get; }
+        public IEnumerable<AbnormalBetTicket> AbnormalBetTickets { get; set; }
 
-        public int CustId { get; }
-
-        public string CustName { get; }
-
-        public int TotalAbnormalBetTickets { get; }
-
-        public IEnumerable<AbnormalBetTicket> AbnormalBetTickets { get; }
-
-        public int TotalSportsbookBetTickets { get; }
-
-        public int PageSize { get; }
+        public int TotalSportsbookBetTickets { get; set; }
 
         public string AbnormalBetTicketTitle => string.Format(
             BetListResource.AbnormalBetTicketTitle,
             CustName,
-            From.ToShortFormatedDateWithSlash(),
-            To.ToShortFormatedDateWithSlash());
+            FromDate.ToShortFormatedDateWithSlash(),
+            ToDate.ToShortFormatedDateWithSlash());
 
         public string AbnormalBetTicketHint => string.Format(
             BetListResource.AbnormalBetTicketHint,
-            From.ToShortFormatedDateWithSlash(),
-            To.ToShortFormatedDateWithSlash());
+            FromDate.ToShortFormatedDateWithSlash(),
+            ToDate.ToShortFormatedDateWithSlash());
     }
 }

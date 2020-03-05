@@ -16,7 +16,7 @@
                 text: resources.abnormalBetTicketTitle,
                 showBackButton: true,
                 backFunction: function () {
-                    window.location.href = CMS.resolveRootUrl("Customers/ProblemAccount/Index");
+                    window.location.href = CMS.resolveRootUrl(getProblemAccountURL());
                 },
                 hideWhenNoData: false
             },
@@ -39,6 +39,20 @@
         };
     }
 
+    function getProblemAccountURL() {
+        if (filter.siteType === 0) {
+            return "Customers/ProblemAccount/Index";
+        }
+
+        if (filter.siteType === 1) {
+            return "Customers/ProblemAccountCreditSite/Index";
+        }
+
+        if (filter.siteType === 2) {
+            return "Customers/ProblemAccountLicenseeSite/Index";
+        }
+    }
+
     function getAbnormalBetTickets(pageIndex, pageSize) {
         // PageIndex of Fanex.Grid begin at 0 whereas server site begin at 1.
         var queryString = $.param({
@@ -46,7 +60,8 @@
             fromDate: filter.fromDate,
             toDate: filter.toDate,
             pageIndex: pageIndex + 1,
-            pageSize: pageSize
+            pageSize: pageSize,
+            siteType: filter.siteType
         });
 
         CMS.getJson(

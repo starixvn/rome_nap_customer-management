@@ -190,7 +190,7 @@
     <value>Are you sure you want to inactivate selected account(s)?</value>
   </data>
   <data name="InputInvalidUsernamesError" xml:space="preserve">
-    <value>You are not allowed to input [Enter] and backslash {0} into the Username field.</value>
+    <value>You are not allowed to input backslash {0} into the Username field.</value>
   </data>
   <data name="InvalidValueError" xml:space="preserve">
     <value>Invalid value!</value>
@@ -205,7 +205,7 @@
     <value>OK</value>
   </data>
   <data name="ReduceBetLimitHint" xml:space="preserve">
-    <value>This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types/products.</value>
+    <value>This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types of Sportsbook.</value>
   </data>
   <data name="RequiredFieldError" xml:space="preserve">
     <value>Required field!</value>
@@ -263,9 +263,6 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
-  </data>
-  <data name="BadRequest" xml:space="preserve">
-    <value>Bad Request.</value>
   </data>
   <data name="InvalidMaxPerBetError" xml:space="preserve">
     <value>Max per Bet must be less than or equal to Max per Event.</value>

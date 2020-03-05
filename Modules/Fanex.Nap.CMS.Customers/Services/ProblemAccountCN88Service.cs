@@ -11,15 +11,13 @@
     using Repositories;
     using Resources;
 
-    public class ProblemAccountService : IProblemAccountService
+    public class ProblemAccountCN88Service : IProblemAccountCN88Service
     {
-        private const int NeedTobeConfirmedCode = 101;
-        private const int AlreadyInactiveOrRemoveReduceBL = 102;
         private readonly IProblemAccountRepository repository;
 
-        public ProblemAccountService(IProblemAccountRepository repository = null)
+        public ProblemAccountCN88Service(IProblemAccountRepository repository = null)
         {
-            this.repository = repository ?? new ProblemAccountRepository();
+            this.repository = repository ?? new ProblemAccountCN88Repository();
         }
 
         public IEnumerable<IdNameModel> GetReasons(bool isAllReasons)
@@ -56,17 +54,18 @@
                 pageSize);
 
             var rawData = repository.GetProblemAccounts(criteria);
+            var accountStatusHash = AccountStatusConst.AccountStatusList;
             var reasonHash = BuildProblemAccountReasons(rawData.Item2);
             var problemAccounts = rawData.Item1;
 
             foreach (var item in problemAccounts)
             {
-                item.StatusName = GetStatusName(item.CustStatus);
+                item.StatusName = GetStatusName(accountStatusHash, item.CustStatus);
                 item.MarkDateString = ToDateTimeString(item.MarkDate);
                 item.Reasons = reasonHash.ContainsKey(item.CustId) ? reasonHash[item.CustId] : null;
             }
 
-            return new ProblemAccountModel(criteria.TotalItems, problemAccounts);
+            return new ProblemAccountModel(rawData.Item3, problemAccounts);
         }
 
         public Result MarkNew(
@@ -76,12 +75,7 @@
             string comment,
             int userId,
             string ip)
-        {
-            var criteria = new MarkNewCriteria(usernames, roleId, reasonId, HtmlEncodeText(comment), userId, ip);
-            repository.MarkNew(criteria);
-
-            return new MarkNewResult(criteria.ErrCode, criteria.ErrMsg, criteria.SuccessList, criteria.FailList);
-        }
+            => repository.MarkNew(new MarkNewCriteria(usernames, roleId, reasonId, HtmlEncodeText(comment), userId, ip));
 
         public Result Unmark(
             string usernames,
@@ -212,25 +206,11 @@
             return reasonHash;
         }
 
-        private static string GetStatusName(byte status)
+        private static string GetStatusName(IDictionary<byte, string> accountStatus, byte status)
         {
-            switch (status)
-            {
-                case AccountStatusConst.Inactive:
-                    return nameof(AccountStatusConst.Inactive);
+            accountStatus.TryGetValue(status, out var statusName);
 
-                case AccountStatusConst.Suspended:
-                    return nameof(AccountStatusConst.Suspended);
-
-                case AccountStatusConst.ViewOnly:
-                    return ProblemAccountResource.ViewOnly;
-
-                case AccountStatusConst.Active:
-                    return nameof(AccountStatusConst.Active);
-
-                default:
-                    return string.Empty;
-            }
+            return statusName;
         }
 
         private static string ToDateTimeString(DateTime value)
@@ -240,9 +220,10 @@
             => string.IsNullOrWhiteSpace(text) ? text : WebUtility.HtmlEncode(text);
 
         private static bool IsNeedTobeConfirmedResult(Result result)
-            => result.Code == NeedTobeConfirmedCode;
+            => result.Code == SQLErrorCodeConst.NeedTobeConfirmedCode;
 
         private static bool IsAlreadyInactiveOrRemoveReduceBL(Result result)
-            => result.Code == AlreadyInactiveOrRemoveReduceBL;
+            => result.Code == SQLErrorCodeConst.AlreadyInactiveOrRemoveReduceBL;
+
     }
 }

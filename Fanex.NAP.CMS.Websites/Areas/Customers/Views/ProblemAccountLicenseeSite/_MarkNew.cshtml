@@ -1,0 +1,41 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccountLicenseeSite.IndexLicenseeSiteViewModel
+@using (Html.BeginForm("MarkNew", "ProblemAccountLicenseeSite", FormMethod.Post, new { id = "formMarkNew", @class = "form" }))
+{
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label for="txt-usernames">@ProblemAccountResource.Usernames<span class="text-red">*</span>@ProblemAccountCreditDepositResource.SeperatedByComma</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="7" name="usernames" id="txt-usernames"></textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@ProblemAccountCreditDepositResource.PreventiveAction<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("preventiveAction", Model.MarkNewPreventiveActions, new { id = "ddl-preventiveAction", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("reason", new[] { new SelectListItem { Value = "0", Text = ProblemAccountResource.PleaseSelect, Selected = true } }, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label for="txt-comment">@ProblemAccountResource.Comment</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="5" name="comment" id="txt-comment"></textarea>
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.Save</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

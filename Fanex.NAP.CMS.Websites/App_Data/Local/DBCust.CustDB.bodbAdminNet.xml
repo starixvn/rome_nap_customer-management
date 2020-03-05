@@ -43,6 +43,22 @@
     <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="CS_ProblemAccount_InformStatusUpd" SpName="CS_ProblemAccount_InformStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Problem Accounts - Credit Sites">
+    <Setting Key="Nap_ProblemAccount_AddCustomer" SpName="Nap_ProblemAccount_AddCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_UpdateCustomer" SpName="NAP_ProblemAccount_UpdateCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_RemoveCustomer" SpName="NAP_ProblemAccount_RemoveCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ReduceBetLimit" SpName="NAP_ProblemAccount_ReduceBetLimit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_ClosedAccount" SpName="NAP_ProblemAccount_ClosedAccount_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_RemoveReduceBetLimit" SpName="NAP_ProblemAccount_RemoveReduceBetLimit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
+  <Function Name="Problem Accounts - Licensee Sites">
+    <Setting Key="NAP_ProblemAccount_LicenseeAddCustomer" SpName="NAP_ProblemAccount_LicenseeAddCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeAccountReasonUpd" SpName="NAP_ProblemAccount_LicenseeAccountReasonUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeRemoveCustomer" SpName="NAP_ProblemAccount_LicenseeRemoveCustomer_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeReduceBetLimit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeInformStatusUpd" SpName="NAP_ProblemAccount_LicenseeInformStatusUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd" DbName="DBCust.CustDB.bodbAdminNet" />

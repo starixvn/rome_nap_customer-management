@@ -10,12 +10,21 @@
         public const string AbnormalBetTicketScript = "~/bundles/customers/betlist-abnormalbetticket-scripts";
         public const string PossessStatisticsStyles = "~/bundles/customers/possess-statistics-styles";
         public const string PossessStatisticsScript = "~/bundles/customers/possess-statistics-scripts";
+        public const string ProblemAccountCreditSiteScript = "~/bundles/customers/problem-account-creditsite-scripts";
+        public const string ProblemAccountLicenseeSiteScript = "~/bundles/customers/problem-account-licenseesite-scripts";
+        public const string ManageLicenseeAcknowledgementScript = "~/bundles/customers/manage-licensee-acknowledgement-scripts";
+
+        private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.RegisterProblemAccountBundles()
+            bundles
+                .RegisterProblemAccountBundles()
                 .RegisterBetListBundles()
-                .RegisterPossessStatisticsBundles();
+                .RegisterPossessStatisticsBundles()
+                .RegisterProblemAccountCreditSiteBundles()
+                .RegisterProblemAccountLicenseeSiteBundles()
+                .RegisterManageLicenseeAcknowledgementBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -28,7 +37,7 @@
                 "~/Areas/Customers/Styles/problemAccount.less");
 
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Scripts/problemAccount-search.js",
                 "~/Areas/Customers/Scripts/problemAccount-marknew.js",
                 "~/Areas/Customers/Scripts/problemAccount-unmark.js",
@@ -77,5 +86,44 @@
 
             return bundles;
         }
+
+        private static BundleCollection RegisterProblemAccountCreditSiteBundles(this BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ProblemAccountCreditSiteScript).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSite/problemAccountCreditSite-search.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSite/problemAccountCreditSite-marknew.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSite/problemAccountCreditSite-update.js",
+                "~/Areas/Customers/Scripts/problemAccount-unmark.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSite/problemAccountCreditSite-reduceBL.js",
+                "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
+                "~/Areas/Customers/Scripts/ProblemAccountCreditSite/problemAccountCreditSite.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterProblemAccountLicenseeSiteBundles(this BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ProblemAccountLicenseeSiteScript).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-search.js",
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-marknew.js",
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-update.js",
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-reduceBL.js",
+                "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-informingStatus.js",
+                "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterManageLicenseeAcknowledgementBundles(this BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ManageLicenseeAcknowledgementScript).Include(
+                "~/Areas/Customers/Scripts/ManageLicenseeAcknowledgement/manageLicensee.js"));
+
+            return bundles;
+        }
+
     }
 }

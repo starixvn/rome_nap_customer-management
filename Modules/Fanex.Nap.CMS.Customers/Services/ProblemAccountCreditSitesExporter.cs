@@ -1,63 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using Fanex.Nap.CMS.Customers.Constants;
-using Fanex.Nap.CMS.Customers.Models.ProblemAccount;
-using Fanex.Nap.CMS.Customers.Resources;
-using Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount;
-using Fanex.Nap.CMS.Infrastructure.Constants;
-using Fanex.Nap.CMS.Infrastructure.Extensions;
-using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-using NPOI.HSSF.UserModel;
-using NPOI.HSSF.Util;
-using NPOI.SS.UserModel;
-
-namespace Fanex.Nap.CMS.Customers.Services
+﻿namespace Fanex.Nap.CMS.Customers.Services
 {
-    public sealed class ProblemAccountExporter : BaseExcelExporter, IExcelExporter
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
+    using System.Text;
+    using Constants;
+    using Infrastructure.Constants;
+    using Infrastructure.Extensions;
+    using Infrastructure.Models;
+    using Infrastructure.Services.Implementations;
+    using Infrastructure.Services.Interfaces;
+    using Models.ProblemAccount;
+    using NPOI.HSSF.UserModel;
+    using NPOI.HSSF.Util;
+    using NPOI.SS.UserModel;
+    using Resources;
+    using ViewModels.ProblemAccountCreditSite;
+
+    public sealed class ProblemAccountCreditSitesExporter : BaseExcelExporter, IExcelExporter
     {
         private static readonly string NewLine = Environment.NewLine;
         private static readonly string[] RoleShortNameMapper = new[] { "S:", "M:", "A:", "mb:" };
-        private static readonly IDictionary<int, string> RoleNameMapper = new Dictionary<int, string>
-        {
-            [RoleIdConstants.Super] = nameof(RoleIdConstants.Super),
-            [RoleIdConstants.Master] = nameof(RoleIdConstants.Master),
-            [RoleIdConstants.Agent] = nameof(RoleIdConstants.Agent),
-            [RoleIdConstants.Member] = nameof(RoleIdConstants.Member)
-        };
-
-        private static readonly IDictionary<int, string> DirectlyMarkedMapper = new Dictionary<int, string>
-        {
-            [DirectlyMarkedConst.All] = nameof(DirectlyMarkedConst.All),
-            [DirectlyMarkedConst.Yes] = nameof(DirectlyMarkedConst.Yes),
-            [DirectlyMarkedConst.No] = nameof(DirectlyMarkedConst.No)
-        };
-
-        private readonly SearchViewModel searchFilter;
+        
+        private readonly SearchCreditSiteViewModel searchFilter;
         private readonly ProblemAccountModel data;
         private readonly IEnumerable<IdNameModel> reasons;
+        private readonly IEnumerable<IdNameModel> currencies;
+        private readonly IEnumerable<IdNameModel> preventiveActions;
 
-        public ProblemAccountExporter(
-            SearchViewModel searchFilter,
+        public ProblemAccountCreditSitesExporter(
+            SearchCreditSiteViewModel searchFilter,
             ProblemAccountModel data,
-            IEnumerable<IdNameModel> reasons)
+            IEnumerable<IdNameModel> reasons,
+            IEnumerable<IdNameModel> currencies,
+            IEnumerable<IdNameModel> preventiveActions)
         {
             this.searchFilter = searchFilter;
             this.data = data;
             this.reasons = reasons;
+            this.currencies = currencies;
+            this.preventiveActions = preventiveActions;
         }
 
         public override string FileNameWithoutExtension
-            => string.Format(ProblemAccountResource.ExcelFileName, DateTime.Today.ToString("yyyyMMdd"));
+            => string.Format(ProblemAccountCreditDepositResource.ExcelFileNameCreditSite, DateTime.Today.ToString("yyyyMMdd"));
 
         public override ExcelColumn[] ExcelColumns => GetExcelColumns();
 
         private ExcelColumn[] GetExcelColumns()
         {
+            const int Width100 = 100;
             const int Width140 = 140;
             const int Width300 = 300;
             const int Width400 = 400;
@@ -66,13 +59,13 @@ namespace Fanex.Nap.CMS.Customers.Services
             {
                 new ExcelColumn(ProblemAccountResource.Account, Width300),
                 new ExcelColumn(ProblemAccountResource.AccountStatus, Width140),
-                new ExcelColumn(ProblemAccountResource.MaxPerEvent, Width140),
-                new ExcelColumn(ProblemAccountResource.MaxPerBet, Width140),
+                new ExcelColumn(ProblemAccountResource.Currency, Width100),
+                new ExcelColumn(ProblemAccountCreditDepositResource.MaxPerMatch, Width140),
+                new ExcelColumn(ProblemAccountCreditDepositResource.MaxBet, Width140),
+                new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width140),
                 new ExcelColumn(ProblemAccountResource.MarkDate, Width140),
                 new ExcelColumn(ProblemAccountResource.Reason, Width400),
-                new ExcelColumn(ProblemAccountResource.Comment, Width400),
-                new ExcelColumn(ProblemAccountResource._1stWeekInformed, Width140),
-                new ExcelColumn(ProblemAccountResource._2ndWeekInformed, Width140)
+                new ExcelColumn(ProblemAccountResource.Comment, Width400)
             };
 
             return IsMemberLevel
@@ -107,17 +100,24 @@ namespace Fanex.Nap.CMS.Customers.Services
             var reasonDict = reasons.ToDictionary(r => r.Id.ToString(), r => r.Name);
             var reasonNames = Join(searchFilter.Reason.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(r => reasonDict[r]), ", ");
 
+            var currency = currencies.FirstOrDefault(c => c.Id == searchFilter.Currency);
+            var isReduced = IsReducedConst.IsReducedList().FirstOrDefault(r => r.Id == searchFilter.IsReduced);
+            var directlyMarked = DirectlyMarkedConst.DirectlyMarkedList().FirstOrDefault(m => m.Id == searchFilter.IsDirectlyMarked);
+            var orderBy = OrderByConst.OrderByList().FirstOrDefault(o => o.Id == searchFilter.OrderBy);
+            var preventiveAction = preventiveActions.FirstOrDefault(p => p.Id == searchFilter.PreventiveActionId);
+
             ExportSearchFilter(ProblemAccountResource.From, searchFilter.From.ToShortFormatedDateWithSlash(), textStyle);
             ExportSearchFilter(ProblemAccountResource.To, searchFilter.To.ToShortFormatedDateWithSlash(), textStyle);
-            ExportSearchFilter(ProblemAccountResource.Level, RoleNameMapper[searchFilter.Level], textStyle);
-            ExportSearchFilter(ProblemAccountResource.Currency, CurrencyConst.CurrencyList[searchFilter.Currency], textStyle);
-            ExportSearchFilter(ProblemAccountResource.AccountStatus, AccountStatusConst.AccountStatusList[searchFilter.Status], textStyle);
-            ExportSearchFilter(ProblemAccountResource.IsReduced, IsReducedConst.IsReducedList[searchFilter.IsReduced], textStyle);
+            ExportSearchFilter(ProblemAccountResource.Level, RoleIdConstants.GetRoleName(searchFilter.Level), textStyle);
+            ExportSearchFilter(ProblemAccountResource.Currency, currency == null ? string.Empty : currency.Name, textStyle);
+            ExportSearchFilter(ProblemAccountResource.AccountStatus, AccountStatusCreditSiteConst.AccountStatusListForFilter[searchFilter.Status], textStyle);
+            ExportSearchFilter(ProblemAccountResource.IsReduced, isReduced?.Name ?? string.Empty, textStyle);
             ExportSearchFilter(ProblemAccountResource.Reason, reasonNames, textStyle);
-            ExportSearchFilter(ProblemAccountResource.DirectlyMarked, DirectlyMarkedMapper[searchFilter.IsDirectlyMarked], textStyle);
+            ExportSearchFilter(ProblemAccountResource.DirectlyMarked, directlyMarked?.Name ?? string.Empty, textStyle);
+            ExportSearchFilter(ProblemAccountCreditDepositResource.PreventiveAction, preventiveAction?.Name ?? ProblemAccountResource.All, textStyle);
             ExportSearchFilter(ProblemAccountResource.Username, searchFilter.Username, textStyle);
             ExportSearchFilter(ProblemAccountResource.SearchDownlineExcel, searchFilter.IsSearchDownlines ? nameof(IsReducedConst.Yes) : nameof(IsReducedConst.No), textStyle);
-            ExportSearchFilter(ProblemAccountResource.OrderBy, OrderByConst.OrderByList[searchFilter.OrderBy], textStyle);
+            ExportSearchFilter(ProblemAccountResource.OrderBy, orderBy?.Name ?? string.Empty, textStyle);
         }
 
         private void ExportSearchFilter(string filterText, string filterValue, ICellStyle celltyle)
@@ -149,17 +149,17 @@ namespace Fanex.Nap.CMS.Customers.Services
             var numberStyle = NpoiExcelExtensions.IntStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false);
             var blueFont = CreateBlueFont(wrapTextStyle);
 
-            IList<decimal?> maxPerEvents;
-            IList<decimal?> maxPerBets;
+            IList<decimal?> maxPerMatchs;
+            IList<decimal?> maxBets;
 
             foreach (var item in data.ProblemAccounts)
             {
-                maxPerEvents = BuildMaxPerEventOrMaxPerBet(
+                maxPerMatchs = BuildMaxPerEventOrMaxPerBet(
                     item.SuperMPM,
                     item.MasterMPM,
                     item.AgentMPM,
                     item.MPM).ToList();
-                maxPerBets = BuildMaxPerEventOrMaxPerBet(
+                maxBets = BuildMaxPerEventOrMaxPerBet(
                     item.SuperMaxBet,
                     item.MasterMaxBet,
                     item.AgentMaxBet,
@@ -168,13 +168,13 @@ namespace Fanex.Nap.CMS.Customers.Services
                 ExportExcel.ResetCurrentColumn();
                 ExportAccountCell(item, blueFont, wrapTextStyle);
                 ExportExcel.RenderCurrentCell(item.StatusName, centerTextStyle);
-                ExportMaxPerEventOrMaxPerBet(maxPerEvents, blueFont, wrapTextStyle);
-                ExportMaxPerEventOrMaxPerBet(maxPerBets, blueFont, wrapTextStyle);
+                ExportExcel.RenderCurrentCell(item.Currency, centerTextStyle);
+                ExportMaxPerEventOrMaxPerBet(maxPerMatchs, blueFont, wrapTextStyle);
+                ExportMaxPerEventOrMaxPerBet(maxBets, blueFont, wrapTextStyle);
+                ExportExcel.RenderCurrentCell(item.PreventiveAction, centerTextStyle);
                 ExportExcel.RenderCurrentCell(item.MarkDateString, centerTextStyle);
                 ExportExcel.RenderCurrentCell(Join(item.Reasons, NewLine), wrapTextStyle);
                 ExportExcel.RenderCurrentCell(HtmlDecodeText(item.Comment), wrapTextStyle);
-                ExportExcel.RenderCurrentCell(item.FirstWeekInformed ?? string.Empty, centerTextStyle);
-                ExportExcel.RenderCurrentCell(item.SecondWeekInformed ?? string.Empty, centerTextStyle);
 
                 if (IsMemberLevel)
                 {
@@ -222,41 +222,44 @@ namespace Fanex.Nap.CMS.Customers.Services
             int startIndex = -1;
             int endIndex = -1;
 
-            var cellBuilder = new StringBuilder(problemAccount.Headline);
+            var cellBuilder = new StringBuilder();
 
             ExportAccountCell(
                 cellBuilder,
                 problemAccount.IsProblemAccSuper,
-                $"    {problemAccount.Super}",
+                $"{problemAccount.Super}",
                 ref startIndexSuper,
                 ref endIndexSuper);
 
             if (searchFilter.Level <= RoleIdConstants.Master)
             {
+                cellBuilder.Append(NewLine);
                 ExportAccountCell(
                     cellBuilder,
                     problemAccount.IsProblemAccMaster,
-                    $"        {problemAccount.Master}",
+                    $"    {problemAccount.Master}",
                     ref startIndexMaster,
                     ref endIndexMaster);
             }
 
             if (searchFilter.Level <= RoleIdConstants.Agent)
             {
+                cellBuilder.Append(NewLine);
                 ExportAccountCell(
                     cellBuilder,
                     problemAccount.IsProblemAccAgent,
-                    $"            {problemAccount.Agent}",
+                    $"        {problemAccount.Agent}",
                     ref startIndexAgent,
                     ref endIndexAgent);
             }
 
             if (searchFilter.Level <= RoleIdConstants.Member)
             {
+                cellBuilder.Append(NewLine);
                 ExportAccountCell(
                     cellBuilder,
                     problemAccount.IsProblemAcc,
-                    $"                {problemAccount.Username}",
+                    $"            {problemAccount.Username}",
                     ref startIndex,
                     ref endIndex);
             }
@@ -279,11 +282,9 @@ namespace Fanex.Nap.CMS.Customers.Services
             ref int startIndex,
             ref int endIndex)
         {
-            cellBuilder.Append(NewLine);
-
             if (isProblemAcc)
             {
-                startIndex = cellBuilder.Length - 1;
+                startIndex = cellBuilder.Length == 0 ? 0 : cellBuilder.Length - 1;
             }
 
             cellBuilder.Append(username);
@@ -350,11 +351,14 @@ namespace Fanex.Nap.CMS.Customers.Services
                     value = values[i].Value.ToString("N0");
                 }
 
-                cellBuilder.Append(NewLine);
+                if (i > 0)
+                {
+                    cellBuilder.Append(NewLine);
+                }
 
                 if (i == lastIndex)
                 {
-                    startIndex = cellBuilder.Length - 1;
+                    startIndex = cellBuilder.Length == 0 ? 0 : cellBuilder.Length - 1;
                 }
 
                 cellBuilder.Append($"{RoleShortNameMapper[i]}{value}");

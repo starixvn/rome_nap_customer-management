@@ -77,9 +77,8 @@
       <HintPath>..\..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.0.0.999, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SharpZipLib.1.0.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EnterpriseLibrary.Caching.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
@@ -121,21 +120,17 @@
       <HintPath>..\..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OOXML, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.OOXML.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OOXML, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OOXML.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXml4Net, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXml4Net.dll</HintPath>
     </Reference>
-    <Reference Include="NPOI.OpenXmlFormats, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NPOI.2.0.6\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.4.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NPOI.2.4.1\lib\net45\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
@@ -188,6 +183,8 @@
     <Compile Include="AppStart\CustomersAreaRegistration.cs" />
     <Compile Include="AppStart\CustomersBundlesConfig.cs" />
     <Compile Include="Constants\AccountStatusConst.cs" />
+    <Compile Include="Constants\AccountStatusCreditSiteConst.cs" />
+    <Compile Include="Constants\AcknowledgementTypeConst.cs" />
     <Compile Include="Constants\CounterOptionConstants.cs" />
     <Compile Include="Constants\CurrencyConst.cs" />
     <Compile Include="Constants\InformStatusConst.cs" />
@@ -199,11 +196,20 @@
     <Compile Include="Constants\DangerLevelConst.cs" />
     <Compile Include="Constants\PossessStatisticsSortSequence.cs" />
     <Compile Include="Constants\PTConditionLogicConst.cs" />
+    <Compile Include="Constants\SearchFilterSessionKeyConst.cs" />
+    <Compile Include="Constants\SiteTypeConst.cs" />
+    <Compile Include="Constants\SQLErrorCodeConst.cs" />
+    <Compile Include="Constants\VIPConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
+    <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\PossessStatisticsController.cs" />
     <Compile Include="Controllers\ProblemAccountController.cs" />
+    <Compile Include="Controllers\ProblemAccountCreditSiteController.cs" />
+    <Compile Include="Controllers\ProblemAccountLicenseeSiteController.cs" />
+    <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditDepositCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
+    <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditDepositCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
@@ -214,10 +220,34 @@
     <Compile Include="Criteria\PossessStatistics\UpdateDangerLevelCritera.cs" />
     <Compile Include="Criteria\PossessStatistics\UpdateMonitorStatusCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetSitesCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\CloseAccountCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\GetCurrenciesCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\GetPreventiveActionCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\GetReasonCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\UpdateCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetCurrenciesLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetLicenseeAcknowledgementCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetPreventiveActionLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetPreventiveActionReasonLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\GetReasonLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\MarkNewLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\ReduceBLLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\RemoveReduceBLLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\SearchLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\UnmarkLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\UpdateInformingStatusLicenseeSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\UpdateLicenseeAcknowledgementCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountLicenseeSite\UpdateLicenseeSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\GetReasonCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\MarkNewCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\NonQueryCriteriaBase.cs" />
     <Compile Include="Criteria\ProblemAccount\InactivateCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\MarkNewCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\ReduceBLCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\RemoveReduceBLCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\SearchCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccountCreditSite\UnmarkCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ProblemAccount\NonQueryWithoutRoleIdCriteriaBase.cs" />
     <Compile Include="Criteria\ProblemAccount\UpdateInformingStatusCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\ReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
@@ -230,8 +260,13 @@
     <Compile Include="Models\ManageRobots2\RobotModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotReport.cs" />
     <Compile Include="Models\ManageRobots2\RobotSitesModel.cs" />
+    <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountSiteGroup.cs" />
+    <Compile Include="Models\ProblemAccount\LicenseeAcknowledgement.cs" />
     <Compile Include="Models\ProblemAccount\MarkNewResult.cs" />
+    <Compile Include="Models\ProblemAccount\PreventiveActionReason.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountItem.cs" />
+    <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteItem.cs" />
+    <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteModel.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Params\LogParam.cs" />
@@ -242,10 +277,14 @@
     <Compile Include="Repositories\BetListRepository.cs" />
     <Compile Include="Repositories\IBetListRepository.cs" />
     <Compile Include="Repositories\IManageRobots2Repository.cs" />
+    <Compile Include="Repositories\IProblemAccountLicenseeSiteRepository.cs" />
     <Compile Include="Repositories\IProblemAccountRepository.cs" />
     <Compile Include="Repositories\ManageRobots2Repository.cs" />
     <Compile Include="Repositories\PossessStatisticsRepository.cs" />
-    <Compile Include="Repositories\ProblemAccountRepository.cs" />
+    <Compile Include="Repositories\ProblemAccountCreditSiteRepository.cs" />
+    <Compile Include="Repositories\ProblemAccountCN88Repository.cs" />
+    <Compile Include="Repositories\ProblemAccountLicenseeSiteRepository.cs" />
+    <Compile Include="Repositories\ProblemAccountRepositoryBase.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -261,6 +300,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PossessStatisticsResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ProblemAccountCreditDepositResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProblemAccountCreditDepositResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ProblemAccountResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -269,12 +313,18 @@
     <Compile Include="Services\BetListService.cs" />
     <Compile Include="Services\IBetListService.cs" />
     <Compile Include="Services\IManageRobots2Service.cs" />
+    <Compile Include="Services\IProblemAccountCN88Service.cs" />
+    <Compile Include="Services\IProblemAccountCreditSiteService.cs" />
+    <Compile Include="Services\IProblemAccountLicenseeSiteService.cs" />
     <Compile Include="Services\IProblemAccountService.cs" />
     <Compile Include="Services\PossessStatisticsExporter.cs" />
-    <Compile Include="Services\ProblemAccountExporter.cs" />
+    <Compile Include="Services\ProblemAccountCreditSiteService.cs" />
+    <Compile Include="Services\ProblemAccountCreditSitesExporter.cs" />
+    <Compile Include="Services\ProblemAccountCN88Exporter.cs" />
     <Compile Include="Services\ManageRobots2Service.cs" />
     <Compile Include="Services\PossessStatisticsService.cs" />
-    <Compile Include="Services\ProblemAccountService.cs" />
+    <Compile Include="Services\ProblemAccountCN88Service.cs" />
+    <Compile Include="Services\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />
@@ -282,13 +332,22 @@
     <Compile Include="ViewModels\PossessStatistics\IndexViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\UpdateDangerLevelViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\UpdateMonitorStatusViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountCreditSite\IndexCreditSiteViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountCreditSite\MarkNewCreditSiteViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountCreditSite\SearchCreditSiteViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountLicenseeSite\MarkNewLicenseeSiteViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountLicenseeSite\ReduceBLLicenseeSiteViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\ActionViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\InactivateViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccount\IndexBaseViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountLicenseeSite\IndexLicenseeSiteViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\IndexViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\MarkNewViewModel.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\ReduceBLViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\RemoveReduceBLViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccount\SearchBaseViewModel.cs" />
+    <Compile Include="ViewModels\ProblemAccountLicenseeSite\SearchLicenseeSiteViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\SearchViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UnmarkViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UpdateInformingStatusViewModel.cs" />
@@ -311,6 +370,10 @@
     <EmbeddedResource Include="Resources\PossessStatisticsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PossessStatisticsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ProblemAccountCreditDepositResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProblemAccountCreditDepositResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -169,15 +169,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bad Request..
-        /// </summary>
-        public static string BadRequest {
-            get {
-                return ResourceManager.GetString("BadRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Both weeks informed by.
         /// </summary>
         public static string BothWeeksInformedBy {
@@ -322,7 +313,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash {0} into the Username field..
+        ///   Looks up a localized string similar to You are not allowed to input backslash {0} into the Username field..
         /// </summary>
         public static string InputInvalidUsernamesError {
             get {
@@ -502,7 +493,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types/products..
+        ///   Looks up a localized string similar to This bet limit will be applied for the selected account(s) and their downlines on all sports/bet types of Sportsbook..
         /// </summary>
         public static string ReduceBetLimitHint {
             get {

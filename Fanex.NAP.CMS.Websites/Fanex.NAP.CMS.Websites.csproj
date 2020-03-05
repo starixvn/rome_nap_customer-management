@@ -284,6 +284,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Local\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -291,6 +292,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
+    <Content Include="App_Data\Master\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Master\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -303,6 +305,7 @@
     <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
@@ -355,6 +358,7 @@
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -376,6 +380,7 @@
     <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\SIT\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
@@ -397,6 +402,7 @@
     <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\UAT\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
@@ -424,7 +430,19 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\ManageLicenseeAcknowledgement\manageLicensee.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-informingStatus.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-marknew.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-reduceBL.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-search.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-update.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-informingStatus.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-marknew.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-reduceBL.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-search.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-update.js" />
+    <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\filter.js" />
@@ -939,6 +957,23 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_SearchFilter.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_MarkNew.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_ReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_Unmark.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_RemoveReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_CloseAccount.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_SearchFilter.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_UpdateProblemAccount.cshtml" />
+    <Content Include="Areas\Customers\Views\ManageLicenseeAcknowledgement\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_MarkNew.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_UpdateProblemAccount.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_Unmark.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_InformingStatus.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_ReduceBetLimit.cshtml" />
+    <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_RemoveReduceBetLimit.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

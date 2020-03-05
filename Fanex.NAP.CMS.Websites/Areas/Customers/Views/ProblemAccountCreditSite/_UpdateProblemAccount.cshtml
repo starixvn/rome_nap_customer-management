@@ -1,0 +1,38 @@
+﻿@model Fanex.Nap.CMS.Customers.ViewModels.ProblemAccountCreditSite.IndexCreditSiteViewModel
+@using (Html.BeginForm("Update", "ProblemAccountCreditSite", FormMethod.Post, new { id = "formUpdateProblemAccount", @class = "form" }))
+{
+    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="level" id="txt-level" value="" />
+    <div id="div-inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@ProblemAccountCreditDepositResource.PreventiveAction<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("preventiveAction", Model.MarkNewPreventiveActions, new { id = "ddl-preventiveAction", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("reason", Model.MarkNewReasons, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field padding-top12">
+            <label for="txt-comment">@ProblemAccountResource.Comment</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="5" name="comment" id="txt-comment"></textarea>
+        </div>
+    </div>
+    <div class="form-row button-row">
+        <button type="submit" class="blue-button">@ProblemAccountResource.OK</button>
+        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
+    </div>
+}

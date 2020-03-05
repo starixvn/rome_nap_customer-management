@@ -132,6 +132,12 @@
   <data name="ProblemAccountCN88" xml:space="preserve">
     <value>Problem Account - CN88</value>
   </data>
+  <data name="ProblemAccountCreditSites" xml:space="preserve">
+    <value>Problem Account - Credit Sites</value>
+  </data>
+  <data name="ProblemAccountLicenseeSites" xml:space="preserve">
+    <value>Problem Account - Licensee Sites</value>
+  </data>
   <data name="TotalSportsbookBetTickets" xml:space="preserve">
     <value>Total Sportsbook Bet Tickets</value>
   </data>

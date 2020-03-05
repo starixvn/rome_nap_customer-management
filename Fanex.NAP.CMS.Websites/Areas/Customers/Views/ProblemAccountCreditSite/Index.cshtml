@@ -1,0 +1,93 @@
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.ViewModels.ProblemAccountCreditSite;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ProblemAccountCreditDepositResource.ManageProblemAccountCreditSites;
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
+}
+@model IndexCreditSiteViewModel
+@section Head
+{
+    @Styles.Render(CustomersBundlesConfig.ProblemAccountStyles)
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            account: "@ProblemAccountResource.Account",
+            accountStatus: "@ProblemAccountResource.AccountStatus",
+            currency: "@ProblemAccountResource.Currency",
+            isReduced: "@ProblemAccountResource.IsReduced",
+            maxPerEvent: "@ProblemAccountCreditDepositResource.MaxPerMatch",
+            maxPerBet: "@ProblemAccountCreditDepositResource.MaxBet",
+            preventiveAction: "@ProblemAccountCreditDepositResource.PreventiveAction",
+            markDate: "@ProblemAccountResource.MarkDate",
+            reason: "@ProblemAccountResource.Reason",
+            comment: "@ProblemAccountResource.Comment",
+            abnormalBet: "@ProblemAccountResource.AbnormalBet",
+            select: "@ProblemAccountResource.Select",
+            requiredFieldError: "@ProblemAccountResource.RequiredFieldError",
+            invalidValueError: "@ProblemAccountResource.InvalidValueError",
+            invalidMaxPerBetError: "@ProblemAccountCreditDepositResource.InvalidMaxBetError",
+            inputInvalidUsernamesError: "@ProblemAccountResource.InputInvalidUsernamesError",
+            usernamesOutOfRangeError: "@ProblemAccountResource.UsernamesOutOfRangeError",
+            duplicatedUsernamesError: "@ProblemAccountResource.DuplicatedUsernamesError",
+            unmarkProblemAccount: "@ProblemAccountResource.UnmarkProblemAccount",
+            closeAccount: "@ProblemAccountCreditDepositResource.CloseAccount",
+            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
+            reduceBLMultipleCurrenciesSelectedError: "@ProblemAccountCreditDepositResource.ReduceBLMultipleCurrenciesSelectedError",
+            pleaseSelect: "@ProblemAccountResource.PleaseSelect"
+        };
+        var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
+            defaultMinDate = "@Model.MinFromDate.ToShortFormatedDateWithSlash()",
+            maxInputUsernames = @IndexCreditSiteViewModel.MaxInputUsernames,
+            showSelectColumn = @Model.HasHostPermission.ToString().ToLowerInvariant(),
+            autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
+        var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
+        var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.ProblemAccountCreditSiteScript)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    @{ Html.RenderPartial("_SearchFilter", Model); }
+</div>
+@if (Model.HasHostPermission)
+{
+    <div class="button-list clear-fix">
+        <div class="float-left">
+            <button type="button" class="blue-button" id="btn-markNew">@ProblemAccountResource.MarkNewProblemAccount</button>
+        </div>
+        <div class="float-right">
+            <span>@ProblemAccountResource.ActionsOnSelectedAccounts</span>
+            <button type="button" class="blue-button" id="btn-updateProblemAccount">@ProblemAccountCreditDepositResource.UpdateProblemAccount</button>
+            <button type="button" class="blue-button" id="btn-unmark">@ProblemAccountResource.Unmark</button>
+            <button type="button" class="blue-button" id="btn-reduceBetLimit">@ProblemAccountResource.ReduceBetLimit</button>
+            <button type="button" class="blue-button" id="btn-closeAccount">@ProblemAccountCreditDepositResource.Close</button>
+            <button type="button" class="blue-button" id="btn-removeReducedBetLimit">@ProblemAccountResource.RemoveReducedBetLimit</button>
+        </div>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if (Model.HasHostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+    @{
+        Html.RenderPartial("_MarkNew", Model);
+        Html.RenderPartial("_UpdateProblemAccount");
+        Html.RenderPartial("_Unmark");
+        Html.RenderPartial("_ReduceBetLimit");
+        Html.RenderPartial("_CloseAccount");
+        Html.RenderPartial("_RemoveReduceBetLimit");
+    }
+    </div>
+}

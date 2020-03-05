@@ -23,10 +23,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Models;
     using NAP.Core.Context;
     using Newtonsoft.Json;
-    using Resources;
     using Web;
 
     public class BaseController : Controller
@@ -113,9 +111,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 
         protected JsonResult Forbidden(string message = null, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
             => JsonData(new Result((int)HttpStatusCode.Forbidden, message ?? Labels.AccessDeniedMessage), behavior);
-
-        protected JsonResult BadRequest(string message = null, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
-            => JsonData(new Result((int)HttpStatusCode.BadRequest, message ?? Labels.BadRequest), behavior);
 
         protected JsonResult JsonData(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
         {

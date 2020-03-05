@@ -499,6 +499,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\globalAutoSuspendThreshold.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\member-vr.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\autosuspend-log.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
@@ -967,6 +968,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalAutoSuspendThreshold.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\Index.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_SearchFilter.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_MarkNew.cshtml" />

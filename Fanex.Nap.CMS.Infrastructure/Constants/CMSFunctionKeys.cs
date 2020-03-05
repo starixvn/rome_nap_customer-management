@@ -94,6 +94,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string VirtualRateLog = "VirtualRateLog";
         public const string Soccer_VirtualRateLog = "Soccer_VirtualRateLog";
         public const string AutoSuspendLog = "AutoSuspendLog";
+        public const string ESports_GlobalAutoSuspendThreshold = "E_Sports_GlobalAutoSuspendThreshold";
 
         public const string ManageRobots2 = "ManageRobots2";
         public const string BetRestriction = "BetRestriction";

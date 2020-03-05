@@ -211,6 +211,11 @@
     <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
+    <Compile Include="Resources\ESportsResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ESportsResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
     <Compile Include="Services\VirtualRateDetails\SoccerVirtualRateDetailsExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\VirtualRateRealValuesExporter.cs" />
@@ -241,7 +246,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
     <Folder Include="ViewModels\CustomerDashboard\" />
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +270,12 @@
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ESportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ESportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

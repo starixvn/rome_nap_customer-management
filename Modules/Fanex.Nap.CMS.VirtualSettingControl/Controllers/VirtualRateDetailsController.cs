@@ -163,5 +163,15 @@
 
             return Json(result);
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
+        public ActionResult GlobalAutoSuspendThreshold()
+        {
+            var criteria = new GetVirtualRateDetailsCriteria { SportType = 43, IsGlobalSetting = true };
+
+            return View(
+                "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/GlobalAutoSuspendThreshold.cshtml",
+                _virtualRateDetailsService.GetVirtualRateDetails(criteria));
+        }
     }
 }

@@ -3,8 +3,10 @@
     using System.Web.Optimization;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
 
-    internal static class VirtualSettingControlBundleConfig
+    public static class VirtualSettingControlBundleConfig
     {
+        public const string ESports_GlobalAutoSuspendThresholdScript = "~/bundles/virtual-rate-details/global-autosuspend-threshold";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             RegisterVirtualSettingMonitorBundles(bundles);
@@ -12,6 +14,7 @@
             RegisterVrAutoAdjustmentReportBundles(bundles);
             RegisterVirtualSettingMonitorAdvanceBundles(bundles);
             RegisterVirtualRateDetailsBundles(bundles);
+            RegisterESports_GlobalAutoSuspendThreshold(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -100,6 +103,12 @@
 
             bundles.Add(new ScriptBundle("~/bundles/virtual-rate-details/autosuspend-log")
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/autosuspend-log.js"));
+        }
+
+        private static void RegisterESports_GlobalAutoSuspendThreshold(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ESports_GlobalAutoSuspendThresholdScript)
+                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/globalAutoSuspendThreshold.js"));
         }
     }
 }

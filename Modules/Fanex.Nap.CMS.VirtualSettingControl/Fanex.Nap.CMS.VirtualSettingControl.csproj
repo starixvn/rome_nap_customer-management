@@ -166,12 +166,15 @@
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendLogsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdLogCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateRangesCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\SaveVirtualRateDetailsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateDetailsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\SaveAssociatedAccountsCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\UpdateAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\ValidateAssociatedAccountsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\ViewRealValuesCriteria.cs" />
     <Compile Include="Criteria\VirtualSettingMonitorAdvance\GetVirtualSettingMonitorAdvanceCriteria.cs" />
@@ -190,6 +193,7 @@
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLog.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLogReport.cs" />
+    <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThreshold.cs" />
     <Compile Include="Models\VirtualRateDetails\LogDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\RateInfo.cs" />
     <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsResult.cs" />
@@ -199,6 +203,7 @@
     <Compile Include="Models\VirtualRateDetails\VirtualRateLog.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateRealValues.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateLogReport.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateThresholdByGroup.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerVirtualSettingAdvanceModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\CustomerModel.cs" />
     <Compile Include="Models\VirtualSettingMonitorAdvance\VirtualSettingAdvanceModel.cs" />
@@ -216,6 +221,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
     <Compile Include="Services\VirtualRateDetails\SoccerVirtualRateDetailsExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\VirtualRateRealValuesExporter.cs" />

@@ -1,36 +1,15 @@
 ﻿"use strict";
 (function ($, CMS, resources) {
-    //var oldReport = null;
-    var followParentValue = -200;
-    var buttonViewCompactMode = $("#btn-view-compact-mode");
-    var buttonViewFullMode = $("#btn-view-full-mode");
+    var oldReport = null;
     var iconCollapse = $("#ico-collapse");
     var tableBody = $("#tbl-virtual-rate-report").find("tbody");
 
-    function renderReport(rs, sportsLength) {
-        //oldReport = rs;
-
-        //this.funcGetBetTypes = self.getBetTypes;
-        //this.funcGetRateValue = self.getRateValue;
-
-        //this.elements.btnSubmitChanges.off("click touchend").on("click touchend", function () {
-        //    self.saveChanges();
-        //});
-        //window.onbeforeunload = function () {
-        //    if (oldReport == null) {
-        //        return;
-        //    }
-
-        //    var currentValue = self.getCurrentValue();
-        //    if (self.hasChanges(oldReport, currentValue)) {
-        //        return resources.VirtualRateDetails_LeaveSiteWarning;
-        //    }
-        //};
-
+    function renderReport(rs) {
         var html = [];
-        for (var i = 0; i < sportsLength; i++) {
-            html.push(renderSport(rs.Sports[i], rs));
-        }
+
+        $.each(rs.Sports, function (index, sport) {
+            html.push(renderSport(sport, rs));
+        });
 
         tableBody.html(html.join(""));
     }
@@ -50,27 +29,21 @@
         var ddlNonlive = renderDropdownRate({
             minRate: sport.MinRate,
             maxRate: sport.MaxRate,
-            id: sport.NonliveId,
-            value: sport.NonLiveValue,
+            value: sport.NonliveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: false,
-            followParentText: "",
-            copyToRelatedText: resources.CopyToAll + " \"" + sport.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + sport.GroupName + '&quot;'
         });
 
         var ddlLive = renderDropdownRate({
             minRate: sport.MinRate,
             maxRate: sport.MaxRate,
-            id: sport.LiveId,
-            value: sport.LiveValue,
+            value: sport.LiveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: false,
-            followParentText: "",
-            copyToRelatedText: resources.CopyToAll + " \"" + sport.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + sport.GroupName + '&quot;'
         });
 
         return [
@@ -96,27 +69,21 @@
         var ddlNonlive = renderDropdownRate({
             minRate: game.MinRate,
             maxRate: game.MaxRate,
-            id: sport.NonliveId,
-            value: game.NonLiveValue,
+            value: game.NonliveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: game.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + game.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + game.GroupName + '&quot;'
         });
 
         var ddlLive = renderDropdownRate({
             minRate: game.MinRate,
             maxRate: game.MaxRate,
-            id: sport.LiveId,
-            value: game.LiveValue,
+            value: game.LiveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: game.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + game.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + game.GroupName + '&quot;'
         });
 
         return [
@@ -142,27 +109,21 @@
         var ddlNonlive = renderDropdownRate({
             minRate: betTypeGroup.MinRate,
             maxRate: betTypeGroup.MaxRate,
-            id: sport.NonliveId,
-            value: betTypeGroup.NonLiveValue,
+            value: betTypeGroup.NonliveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: betTypeGroup.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + betTypeGroup.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + betTypeGroup.GroupName + '&quot;'
         });
 
         var ddlLive = renderDropdownRate({
             minRate: betTypeGroup.MinRate,
             maxRate: betTypeGroup.MaxRate,
-            id: sport.LiveId,
-            value: betTypeGroup.LiveValue,
+            value: betTypeGroup.LiveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: true,
             copyToRelated: betTypeGroup.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + betTypeGroup.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + betTypeGroup.GroupName + '&quot;'
         });
 
         return [
@@ -177,27 +138,21 @@
         var ddlNonlive = renderDropdownRate({
             minRate: betType.MinRate,
             maxRate: betType.MaxRate,
-            id: sport.NonliveId,
-            value: betType.NonLiveValue,
+            value: betType.NonliveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: false,
             copyToRelated: betType.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + betType.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + betType.GroupName + '&quot;'
         });
 
         var ddlLive = renderDropdownRate({
             minRate: betType.MinRate,
             maxRate: betType.MaxRate,
-            id: sport.LiveId,
-            value: betType.LiveValue,
+            value: betType.LiveAutoSuspendThreshold,
             rateRanges: rs.VirtualRateValueRange,
-            actualRate: rs.ActualRate,
             copyToChildren: false,
             copyToRelated: betType.HasRepetition,
-            followParentText: resources.FollowParent,
-            copyToRelatedText: resources.CopyToAll + " \"" + betType.GroupName + "\""
+            copyToRelatedText: resources.CopyToAll + ' &quot;' + betType.GroupName + '&quot;'
         });
 
         return [
@@ -215,16 +170,6 @@
 
         html.push('<select class="ddl-rate">');
 
-        if (options.followParentText) {
-            html.push("<option");
-            html.push(options.id === 0 ? ' selected="selected"' : "");
-            html.push(' value="');
-            html.push(followParentValue);
-            html.push('" data-level-id="0">');
-            html.push(options.followParentText);
-            html.push("</option>");
-        }
-
         for (var i = 0, max = options.rateRanges.length; i < max; i++) {
             var range = options.rateRanges[i];
 
@@ -234,7 +179,7 @@
 
             var rangeText = numeral(range.Value).format("#,##0");
             html.push("<option");
-            html.push(options.value === range.Value ? " selected='selected'" : "");
+            html.push(options.value === range.Value ? ' selected="selected"' : "");
             html.push(' value="');
             html.push(range.Value);
             html.push('" data-level-id="');
@@ -255,46 +200,49 @@
         return html.join("");
     }
 
-    function bindEventsAfterRenderSuccessfully() {
-        buttonViewCompactMode.click(viewCompactMode);
-        buttonViewFullMode.click(viewFullMode);
-
+    function bindEvents() {
         iconCollapse.click(collapseReport);
 
         $(".group-toggle").click(function () {
             toggleGroup($(this));
         });
 
-        //$(".icon-copy2child").on("click", function () {
-        //    self.copyToChildren($(this));
-        //});
+        $(".icon-copy2child").click(function () {
+            copyToChildren($(this));
+        });
 
-        //$(".icon-copy2related").on("click", function () {
-        //    self.copyToRelated($(this));
-        //});
-
-        //this.elements.divAssociatedAccounts.attr("disabled", "disabled");
-        //this.elements.chkAssociatedAccounts.attr("checked", null);
-        //this.elements.txtAssociatedAccounts.val("");
-        //this.enableAssociatedAccounts();
-
-        //this.elements.reportContainer.removeClass("display-none");
-
-        //this.elements.btnViewCompactMode.click();
+        $(".icon-copy2related").click(function () {
+            copyToRelated($(this));
+        });
 
         $("#btn-export-excel").click(function () {
-            var param = {
-                /*username: username,
-                sportType: resources.SportType,
-                IsGlobalSetting: resources.isGlobalSetting*/
-            };
-
-            CMS.downloadFile(CMS.resolveRootUrl("VirtualRateDetails/ExportGlobalAutoSuspendThreshold"), param);
+            CMS.downloadFile(CMS.resolveRootUrl("VirtualSettingControl/VirtualRateDetails/ExportGlobalAutoSuspendThreshold"), {});
         });
 
         $(".btn-submit-changes").click(function () {
-            alert(1);
+            CMS.showConfirmMessage(resources.VirtualRateSubmitChangesConfirm, saveChanges);
         });
+    }
+
+    function collapseReport() {
+        var hideOrShowFunc;
+        var isCollapse = iconCollapse.hasClass("ico-collapse");
+
+        if (isCollapse) {
+            hideOrShowFunc = hideChildren;
+            iconCollapse.removeClass("ico-collapse").addClass("ico-expand");
+        } else {
+            hideOrShowFunc = showChilden;
+            iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
+        }
+
+        tableBody
+            .find('tr[data-level="2"] .group-toggle')
+            .each(function () {
+                var element = $(this);
+                forceToggle(element, !isCollapse);
+                hideOrShowFunc(2, element.parent().parent());
+            });
     }
 
     function toggleGroup(element) {
@@ -375,136 +323,232 @@
         }
     }
 
-    function collapseReport() {
-        var hideOrShowFunc;
-        var isCollapse = iconCollapse.hasClass("ico-collapse");
+    function copyToChildren(element) {
+        var parent = element.parent().parent();
+        var level = parent.data("level");
 
-        if (isCollapse) {
-            hideOrShowFunc = hideChildren;
-            iconCollapse.removeClass("ico-collapse").addClass("ico-expand");
-        } else {
-            hideOrShowFunc = showChilden;
-            iconCollapse.removeClass("ico-expand").addClass("ico-collapse");
+        var colName = element.parent().data("col");
+        var value = parent.find('[data-col="' + colName + '"] .ddl-rate').val();
+        var sportId = parent.data("sportid");
+
+        var selector = 'tr:not(.hide-compact-mode)[data-sportid="' + sportId + '"]';
+
+        if (level >= 2) {
+            var gameId = parent.data("gameid");
+            selector += '[data-gameid="' + gameId + '"]';
         }
 
-        tableBody
-            .find('tr[data-level="2"] .group-toggle')
-            .each(function () {
-                var element = $(this);
-                forceToggle(element, !isCollapse);
-                hideOrShowFunc(2, element.parent().parent())
-            });
-    }
-
-    function viewCompactMode() {
-        for (var i = 4; i >= 2; i--) {
-            hideFollowParentRows(i);
+        if (level >= 3) {
+            var betTypeGroupId = parent.data("bettypegroupid");
+            selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
         }
 
-        tableBody
-            .find("tr:not(.hide-compact-mode) .icon-copy2related")
-            .each(function () {
-                var element = $(this);
-
-                var row = element.parent().parent();
-                var level = row.data("level");
-                var selector = "";
-
-                switch (level) {
-                    case 2:
-                        var gameId = row.data("gameid");
-                        selector = 'tr[data-level="2"][data-gameid="' + gameId + '"]';
-                        break;
-                    case 3:
-                        var betTypeGroupId = row.data("bettypegroupid");
-                        selector = 'tr[data-level="3"][data-bettypegroupid="' + betTypeGroupId + '"]';
-                        break;
-                    case 4:
-                        var betTypeId = row.data("bettypeid");
-                        selector = 'tr[data-level="4"][data-bettypeid="' + betTypeId + '"]';
-                        break;
-                }
-
-                selector += ":not(.hide-compact-mode)";
-
-                if (tableBody.find(selector).length <= 1) {
-                    element.parent().addClass("no-repetition-compact-mode");
-                }
-            });
-
-        buttonViewCompactMode.addClass("display-none");
-        buttonViewFullMode.removeClass("display-none");
+        selector += ' [data-col="' + colName + '"] .ddl-rate';
+        tableBody.find(selector).val(value);
     }
 
-    function hideFollowParentRows(layerId) {
-        tableBody
-            .find('tr[data-level="' + layerId + '"]')
-            .each(function () {
-                var element = $(this);
-                var isFollowParent = element.find('td[data-col="non-live"] .ddl-rate').val() == followParentValue &&
-                    element.find('td[data-col="live"] .ddl-rate').val() == followParentValue;
+    function copyToRelated(element) {
+        var parent = element.parent().parent();
+        var level = parent.data("level");
+        var colName = element.parent().data("col");
+        var value = parent.find('[data-col="' + colName + '"] .ddl-rate').val();
 
-                var sportId = element.attr("data-sportid");
-                var gameId = element.attr("data-gameid");
-                var betTypeGroupId = element.attr("data-bettypegroupid");
-                var betTypeId = element.attr("data-bettypegroupid");
+        var selector = 'tr:not(.hide-compact-mode)[data-level="' + level + '"]';
 
-                var selector = 'tr[data-level="' + (layerId + 1) + '"][data-sportid="' + sportId + '"]';
+        switch (level) {
+            case 1:
+                var sportId = parent.data("sportid");
+                selector += '[data-sportid="' + sportId + '"]';
+                break;
+            case 2:
+                var gameId = parent.data("gameid");
+                selector += '[data-gameid="' + gameId + '"]';
+                break;
+            case 3:
+                var betTypeGroupId = parent.data("bettypegroupid");
+                selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
+                break;
+            case 4:
+                var betTypeId = parent.data("bettypeid");
+                selector += '[data-bettypeid="' + betTypeId + '"]';
+                break;
+        }
 
-                if (layerId >= 2) {
-                    selector += '[data-gameid="' + gameId + '"]';
-                }
-
-                if (layerId >= 3) {
-                    selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
-                }
-
-                if (layerId >= 4) {
-                    selector += '[data-bettypeid="' + betTypeId + '"]';
-                }
-
-                selector += ":not(.hide-compact-mode)";
-                var selectorLength = tableBody.find(selector).length;
-
-                if (isFollowParent && selectorLength === 0) {
-                    element.addClass("hide-compact-mode");
-                } else if (selectorLength === 0) {
-                    var toggle = element.find(".group-toggle");
-                    toggle.attr("data-original-text", toggle.html()).html("&nbsp;");
-                    element.addClass("group-nonchild-compact-mode");
-                }
-            });
+        selector += ' [data-col="' + colName + '"] .ddl-rate';
+        tableBody.find(selector).val(value);
     }
 
-    function viewFullMode() {
-        $(".hide-compact-mode").removeClass("hide-compact-mode");
-        $(".no-repetition-compact-mode").removeClass("no-repetition-compact-mode");
+    function getSports(sports) {
+        var result = [];
 
-        tableBody
-            .find(".group-nonchild-compact-mode .group-toggle")
-            .each(function () {
-                var element = $(this);
-                element.html(elem.attr("data-original-text"));
-                element.parent().parent().removeClass("group-nonchild-compact-mode");
+        for (var i = 0, max = sports.length; i < max; i++) {
+            var sport = sports[i];
+            var nonlive = getRateValue(1, "non-live", sport.GroupId);
+            var live = getRateValue(1, "live", sport.GroupId);
+
+            result.push({
+                GroupId: sport.GroupId,
+                LevelId: sport.LevelId,
+                NonliveAutoSuspendThreshold: nonlive.value,
+                LiveAutoSuspendThreshold: live.value,
+                Childs: getGames(sport, sport.Childs)
             });
+        }
 
-        buttonViewFullMode.addClass("display-none");
-        buttonViewCompactMode.removeClass("display-none");
+        return result;
+    }
+
+    function getGames(sport, games) {
+        var result = [];
+
+        for (var i = 0, max = games.length; i < max; i++) {
+            var game = games[i];
+            var nonlive = getRateValue(2, "non-live", sport.GroupId, game.GroupId);
+            var live = getRateValue(2, "live", sport.GroupId, game.GroupId);
+
+            result.push({
+                GroupId: game.GroupId,
+                LevelId: game.LevelId,
+                NonliveAutoSuspendThreshold: nonlive.value,
+                LiveAutoSuspendThreshold: live.value,
+                Childs: getBetTypeGroups(sport, game, game.Childs)
+            });
+        }
+
+        return result;
+    }
+
+    function getBetTypeGroups(sport, game, betTypeGroups) {
+        var result = [];
+
+        for (var i = 0, max = betTypeGroups.length; i < max; i++) {
+            var betTypeGroup = betTypeGroups[i];
+            var nonlive = getRateValue(3, "non-live", sport.GroupId, game.GroupId, betTypeGroup.GroupId);
+            var live = getRateValue(3, "live", sport.GroupId, game.GroupId, betTypeGroup.GroupId);
+
+            result.push({
+                GroupId: betTypeGroup.GroupId,
+                LevelId: betTypeGroup.LevelId,
+                NonliveAutoSuspendThreshold: nonlive.value,
+                LiveAutoSuspendThreshold: live.value,
+                Childs: getBetTypes(sport, game, betTypeGroup, betTypeGroup.Childs)
+            });
+        }
+
+        return result;
+    }
+
+    function getBetTypes(sport, game, betTypeGroup, betTypes) {
+        var result = [];
+
+        for (var i = 0, max = betTypes.length; i < max; i++) {
+            var betType = betTypes[i];
+            var nonlive = getRateValue(4, "non-live", sport.GroupId, game.GroupId, betTypeGroup.GroupId, betType.GroupId);
+            var live = getRateValue(4, "live", sport.GroupId, game.GroupId, betTypeGroup.GroupId, betType.GroupId);
+
+            result.push({
+                GroupId: betType.GroupId,
+                LevelId: betType.LevelId,
+                NonliveAutoSuspendThreshold: nonlive.value,
+                LiveAutoSuspendThreshold: live.value
+            });
+        }
+
+        return result;
+    }
+
+    function getRateValue(level, colName, sportId, gameId, betTypeGroupId, betTypeId) {
+        var selector = 'tr[data-level="' + level + '"][data-sportid="' + sportId + '"]';
+
+        if (level >= 2) {
+            selector += '[data-gameid="' + gameId + '"]';
+        }
+
+        if (level >= 3) {
+            selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
+        }
+
+        if (level >= 4) {
+            selector += '[data-bettypeid="' + betTypeId + '"]';
+        }
+
+        selector += ' [data-col="' + colName + '"] .ddl-rate';
+        var dropdown = tableBody.find(selector);
+
+        return {
+            id: dropdown.find("option:selected").data("level-id"),
+            value: dropdown.val()
+        };
+    }
+
+    function childrenChanges(oldChildren, currentChildren) {
+        for (var i = 0, max = oldChildren.length; i < max; i++) {
+            var oldChild = oldChildren[i];
+            var currentChild = currentChildren[i];
+
+            if (rateChanged(oldChild, currentChild)) {
+                return true;
+            }
+
+            if (!oldChild.Childs || currentChild.Childs.length === 0) {
+                continue;
+            }
+
+            if (childrenChanges(oldChild.Childs, currentChild.Childs)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function rateChanged(oldRate, newRate) {
+        return oldRate.NonliveAutoSuspendThreshold != newRate.NonliveAutoSuspendThreshold || oldRate.LiveAutoSuspendThreshold != newRate.LiveAutoSuspendThreshold;
+    }
+
+    function saveChanges() {
+        CMS.disableInput();
+        var currentSports = getSports(oldReport.Sports);
+
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl("VirtualSettingControl/VirtualRateDetails/UpdateGlobalAutoSuspendThreshold"),
+            {
+                Sports: currentSports
+            },
+            function (data) {
+                var jsonData = $.parseJSON(data);
+
+                if (jsonData.Code === 0) {
+                    oldReport.Sports = currentSports;
+                    CMS.showSuccessMessage(jsonData.Message);
+                } else {
+                    CMS.showErrorMessage(jsonData.Message);
+                }
+            }
+        );
     }
 
     $(document).ready(function () {
-        var sportLength = model.Sports.length;
-
-        if (!sportLength) {
-            tableBody.html('<tr><td colspan="3" align="center">' + resources.Message_NoReportData + "</td></tr>");
-            return;
-        }
-
         CMS.disableInput();
 
-        renderReport(model, sportLength);
-        bindEventsAfterRenderSuccessfully();
-        viewCompactMode();
+        if (model.Sports.length) {
+            oldReport = model;
+            window.onbeforeunload = function () {
+                if (oldReport) {
+                    var currentSports = getSports(oldReport.Sports);
+
+                    if (childrenChanges(model.Sports, currentSports)) {
+                        return resources.VirtualRateDetails_LeaveSiteWarning;
+                    }
+                }
+            };
+
+            renderReport(model);
+            bindEvents();
+        } else {
+            tableBody.html('<tr><td colspan="3" align="center">' + resources.Message_NoReportData + "</td></tr>");
+        }
 
         CMS.enableInput();
     });

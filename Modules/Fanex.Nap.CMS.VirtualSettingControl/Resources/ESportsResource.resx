@@ -123,4 +123,10 @@
   <data name="GlobalAutoSuspendThreshold" xml:space="preserve">
     <value>Global Auto Suspend Threshold</value>
   </data>
+  <data name="GlobalAutoSuspendThresholdExcelFile" xml:space="preserve">
+    <value>E-Sports_Global_Auto_Suspend_Threshold</value>
+  </data>
+  <data name="GlobalAutoSuspendThresholdLog" xml:space="preserve">
+    <value>Global Auto Suspend Threshold Log</value>
+  </data>
 </root>

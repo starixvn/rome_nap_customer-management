@@ -1,5 +1,6 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
 @using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources;
 @model string
 @{
     ViewBag.Title = "Auto Suspend Log";
@@ -16,6 +17,11 @@
         <div><span class="curr">@ViewBag.Title</span></div>
     </div>
 }
+<div class="custom-tabs">
+    <span class="active">@ViewLang.Member</span>
+    |
+    @Html.ActionLink(ESportsResource.GlobalAutoSuspendThreshold, "GlobalAutoSuspendThresholdLog", "VirtualRateDetails", new { area = "VirtualSettingControl" }, null)
+</div>
 <div class="filter-bar">
     <div class="filter-form">
         <div class="filter-row">

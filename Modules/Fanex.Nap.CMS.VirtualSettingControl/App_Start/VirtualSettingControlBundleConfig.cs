@@ -6,6 +6,7 @@
     public static class VirtualSettingControlBundleConfig
     {
         public const string ESports_GlobalAutoSuspendThresholdScript = "~/bundles/virtual-rate-details/global-autosuspend-threshold";
+        public const string ESports_GlobalAutoSuspendThresholdLogScript = "~/bundles/virtual-rate-details/global-autosuspend-threshold-log";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -15,6 +16,7 @@
             RegisterVirtualSettingMonitorAdvanceBundles(bundles);
             RegisterVirtualRateDetailsBundles(bundles);
             RegisterESports_GlobalAutoSuspendThreshold(bundles);
+            RegisterESports_GlobalAutoSuspendThresholdLog(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -109,6 +111,12 @@
         {
             bundles.Add(new ScriptBundle(ESports_GlobalAutoSuspendThresholdScript)
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/globalAutoSuspendThreshold.js"));
+        }
+
+        private static void RegisterESports_GlobalAutoSuspendThresholdLog(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(ESports_GlobalAutoSuspendThresholdLogScript)
+                .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/globalAutoSuspendThresholdLog.js"));
         }
     }
 }

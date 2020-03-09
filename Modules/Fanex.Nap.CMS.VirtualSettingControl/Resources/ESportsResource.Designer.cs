@@ -77,5 +77,23 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
                 return ResourceManager.GetString("GlobalAutoSuspendThreshold", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports_Global_Auto_Suspend_Threshold.
+        /// </summary>
+        public static string GlobalAutoSuspendThresholdExcelFile {
+            get {
+                return ResourceManager.GetString("GlobalAutoSuspendThresholdExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Global Auto Suspend Threshold Log.
+        /// </summary>
+        public static string GlobalAutoSuspendThresholdLog {
+            get {
+                return ResourceManager.GetString("GlobalAutoSuspendThresholdLog", resourceCulture);
+            }
+        }
     }
 }

@@ -1,17 +1,18 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualRateDetails
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Extensions;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.NAP.CMS.Core.Resources;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
 
     public class VirtualRateDetailsRepository : IVirtualRateDetailsRepository
     {
@@ -66,8 +67,8 @@
                             NonliveValue = Converter.ToDecimal(reader["ValueNonLive"], -1),
                             LiveId = Converter.ToInt(reader["ValueIdLive"]),
                             LiveValue = Converter.ToDecimal(reader["ValueLive"], -1),
-                            NonliveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThreshold"], -1),
-                            LiveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThreshold"], -1),
+                            NonliveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdNonLive"], -1),
+                            LiveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdLive"], -1),
                             DisableNonliveAutoSuspend = Converter.ToInt(reader["IsDisableNonLiveAutoSuspend"]) == 1,
                             DisableLiveAutoSuspend = Converter.ToInt(reader["IsDisableLiveAutoSuspend"]) == 1,
                             NonliveAutoSuspend = Converter.ToBool(reader["IsNonLiveAutoSuspend"], true),
@@ -253,7 +254,7 @@
             return result;
         }
 
-        private IEnumerable<RateInfo> GetVirtualRateRanges()
+        public IEnumerable<RateInfo> GetVirtualRateRanges()
         {
             var criteria = new GetVirtualRateRangesCriteria();
             var result = new List<RateInfo>();
@@ -261,23 +262,25 @@
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
 
-                while (reader.Read())
+                using (var reader = objDb.ExecuteReader())
                 {
-                    var id = Converter.ToInt(reader["ValueID"]);
-
-                    if (id == 0)
+                    while (reader.Read())
                     {
-                        continue;
+                        var id = Converter.ToInt(reader["ValueID"]);
+
+                        if (id == 0)
+                        {
+                            continue;
+                        }
+
+                        var value = (int)(Converter.ToDecimal(reader["Value"]) * 100 - 100);
+                        result.Add(new RateInfo
+                        {
+                            Id = id,
+                            Value = value
+                        });
                     }
-
-                    var value = (int)(Converter.ToDecimal(reader["Value"]) * 100 - 100);
-                    result.Add(new RateInfo
-                    {
-                        Id = id,
-                        Value = value
-                    });
                 }
             }
 
@@ -596,6 +599,54 @@
             }
 
             return result;
+        }
+
+        public IEnumerable<VirtualRateDTO> GetVirtualRateDetails(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetVirtualRateDTO(reader);
+                    }
+                }
+            }
+        }
+
+        private static VirtualRateDTO GetVirtualRateDTO(IDataReader reader)
+        {
+            var sportType = Converter.ToInt(reader[SportType]);
+            var betTypeId = Converter.ToInt(reader["BetTypeId"], -1);
+
+            return new VirtualRateDTO
+            {
+                SportType = sportType,
+                SportName = CacheRef.GetSportName(sportType),
+                LeagueGroupId = Converter.ToInt(reader["LeagueGroupID"], -1),
+                LeagueGroupName = Converter.ToString2(reader["LeagueGroup"]),
+                BetTypeGroupId = Converter.ToInt(reader["BetTypeGroupId"], -1),
+                BetTypeGroupName = Converter.ToString2(reader["BetTypeGroup"]),
+                BetTypeId = betTypeId,
+                BetTypeName = betTypeId == -1 ? string.Empty : CacheRef.GetBetType(betTypeId),
+                Level = Converter.ToInt(reader[LevelId]),
+                LiveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdLive"], -1),
+                NonliveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdNonLive"], -1)
+            };
+        }
+
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result(
+                    Converter.ToInt(outputParams[ErrorCode]),
+                    Converter.ToString2(outputParams[ErrorMsg]));
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
@@ -167,11 +168,35 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
         public ActionResult GlobalAutoSuspendThreshold()
         {
-            var criteria = new GetVirtualRateDetailsCriteria { SportType = 43, IsGlobalSetting = true };
+            ViewBag.HostPermission = HasRight(CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Constant.Policy.Host);
 
             return View(
                 "~/Areas/VirtualSettingControl/Views/VirtualRateDetails/GlobalAutoSuspendThreshold.cshtml",
-                _virtualRateDetailsService.GetVirtualRateDetails(criteria));
+                _virtualRateDetailsService.GetGlobalAutoSuspendThreshold());
         }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
+        public void ExportGlobalAutoSuspendThreshold()
+        {
+            var exporter = new GlobalAutoSuspendThresholdExporter(
+                _virtualRateDetailsService.GetGlobalAutoSuspendThreshold());
+
+            exporter.ResponseStream();
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Host)]
+        public ActionResult UpdateGlobalAutoSuspendThreshold(VirtualRateThresholdByGroup[] sports)
+            => JsonData(
+                _virtualRateDetailsService.UpdateGlobalAutoSuspendThreshold(sports, CurrentSession.UserId, CurrentContext.IP),
+                JsonRequestBehavior.DenyGet);
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
+        public ActionResult GlobalAutoSuspendThresholdLog()
+            => View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/GlobalAutoSuspendThresholdLog.cshtml");
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
+        public ActionResult GetThresholdLog(int sportType, DateTime from, DateTime to)
+            //=> JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThresholdLog(sportType, from, to));
+            => JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThreshold());
     }
 }

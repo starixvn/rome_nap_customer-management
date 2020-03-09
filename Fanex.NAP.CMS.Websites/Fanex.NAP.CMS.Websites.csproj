@@ -500,6 +500,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\globalAutoSuspendThreshold.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\globalAutoSuspendThresholdLog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\member-vr.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\autosuspend-log.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
@@ -986,6 +987,7 @@
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_InformingStatus.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_ReduceBetLimit.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_RemoveReduceBetLimit.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalAutoSuspendThresholdLog.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

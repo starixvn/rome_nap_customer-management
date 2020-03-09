@@ -192,4 +192,10 @@
   <data name="UploadVirtualRateSuccessfully" xml:space="preserve">
     <value>The uploaded virtual rate setting has been successfully uploaded.</value>
   </data>
+  <data name="GlobalAutoSuspendThresholdExcelFile" xml:space="preserve">
+    <value>E-Sports_Global_Auto_Suspend_Threshold</value>
+  </data>
+  <data name="GlobalAutoSuspendThresholdLog" xml:space="preserve">
+    <value>Global Auto Suspend Threshold Log</value>
+  </data>
 </root>

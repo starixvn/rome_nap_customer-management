@@ -176,6 +176,7 @@
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\UploadVirtualRate\UpdateVirtualRateExcelTemplateCriteria.cs" />
     <Compile Include="Criteria\UploadVirtualRate\VerifyVirtualRateExcelTemplateCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
@@ -240,6 +241,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
     <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
     <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />
     <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />

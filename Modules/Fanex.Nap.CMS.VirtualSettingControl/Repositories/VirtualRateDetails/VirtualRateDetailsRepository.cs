@@ -648,5 +648,43 @@
                     Converter.ToString2(outputParams[ErrorMsg]));
             }
         }
+
+        public IEnumerable<GlobalAutoSuspendThresholdLogDTO> GetGlobalAutoSuspendThresholdLogs(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetGlobalAutoSuspendThresholdLogDTO(reader);
+                    }
+                }
+            }
+        }
+
+        private static GlobalAutoSuspendThresholdLogDTO GetGlobalAutoSuspendThresholdLogDTO(IDataReader reader)
+        {
+            var sportType = Converter.ToInt(reader["sporttype"]);
+            var betType = Converter.ToInt(reader["bettype"]);
+
+            return new GlobalAutoSuspendThresholdLogDTO(
+                Converter.ToInt(reader["logid"]),
+                Converter.ToDateTime(reader["logtime"]),
+                sportType,
+                CacheRef.GetSportName(sportType),
+                Converter.ToInt(reader["vrleaguegroupid"]),
+                Converter.ToString2(reader["leaguegroup"]),
+                Converter.ToInt(reader["vrbettypegroupid"]),
+                Converter.ToString2(reader["bettypegroup"]),
+                betType,
+                betType == -1 ? string.Empty : CacheRef.GetBetType(betType),
+                Converter.ToDecimal(reader["vrautosuspendthresholdlive_new"]),
+                Converter.ToDecimal(reader["vrautosuspendthresholdnonlive_new"]),
+                Converter.ToDecimal(reader["vrautosuspendthresholdlive_old"]),
+                Converter.ToDecimal(reader["vrautosuspendthresholdnonlive_old"]),
+                Converter.ToBool(reader["isnew"]),
+                Converter.ToString2(reader["updatedby"]));
+        }
     }
 }

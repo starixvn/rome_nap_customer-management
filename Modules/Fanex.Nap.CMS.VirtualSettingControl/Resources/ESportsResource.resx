@@ -129,4 +129,7 @@
   <data name="GlobalAutoSuspendThresholdLog" xml:space="preserve">
     <value>Global Auto Suspend Threshold Log</value>
   </data>
+  <data name="UpdateGlobalAutoSuspendThreshold" xml:space="preserve">
+    <value>Update Global Auto Suspend Threshold</value>
+  </data>
 </root>

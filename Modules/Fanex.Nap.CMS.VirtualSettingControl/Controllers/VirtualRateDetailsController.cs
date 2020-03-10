@@ -196,7 +196,6 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
         public ActionResult GetThresholdLog(int sportType, DateTime from, DateTime to)
-            //=> JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThresholdLog(sportType, from, to));
-            => JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThreshold());
+            => JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThresholdLogs(sportType, from, to));
     }
 }

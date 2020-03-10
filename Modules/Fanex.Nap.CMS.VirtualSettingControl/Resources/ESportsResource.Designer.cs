@@ -95,5 +95,14 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
                 return ResourceManager.GetString("GlobalAutoSuspendThresholdLog", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Global Auto Suspend Threshold.
+        /// </summary>
+        public static string UpdateGlobalAutoSuspendThreshold {
+            get {
+                return ResourceManager.GetString("UpdateGlobalAutoSuspendThreshold", resourceCulture);
+            }
+        }
     }
 }

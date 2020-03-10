@@ -25,5 +25,7 @@
         IEnumerable<VirtualRateDTO> GetVirtualRateDetails(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        IEnumerable<GlobalAutoSuspendThresholdLogDTO> GetGlobalAutoSuspendThresholdLogs(ICriteria criteria);
     }
 }

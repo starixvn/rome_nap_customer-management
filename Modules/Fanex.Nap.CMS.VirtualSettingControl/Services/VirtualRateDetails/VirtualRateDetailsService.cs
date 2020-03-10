@@ -11,6 +11,11 @@
 
     public class VirtualRateDetailsService : IVirtualRateDetailsService
     {
+        private const int Level1 = 1;
+        private const int Level2 = 2;
+        private const int Level3 = 3;
+        private const int Level4 = 4;
+
         private readonly IVirtualRateDetailsRepository _repository;
         private readonly IAutoSuspendRepository _autoSuspendRepository;
 
@@ -67,7 +72,7 @@
             {
                 var leagues = virtualRateDTOs.Where(d => d.SportType == sport.SportType && d.LeagueGroupId != -1);
 
-                yield return new VirtualRateThresholdByGroup(sport, minRange, maxRange, 1)
+                yield return new VirtualRateThresholdByGroup(sport, minRange, maxRange, Level1)
                 {
                     GroupId = sport.SportType,
                     GroupName = sport.SportName,
@@ -89,7 +94,7 @@
             {
                 var betTypeGroups = virtualRateDTOs.Where(d => d.LeagueGroupId == league.LeagueGroupId && d.BetTypeGroupId != -1);
 
-                yield return new VirtualRateThresholdByGroup(league, minRange, maxRange, 2)
+                yield return new VirtualRateThresholdByGroup(league, minRange, maxRange, Level2)
                 {
                     GroupId = league.LeagueGroupId,
                     GroupName = league.LeagueGroupName,
@@ -111,7 +116,7 @@
             {
                 var betTypes = virtualRateDTOs.Where(d => d.BetTypeGroupId == betTypeGroup.BetTypeGroupId && d.BetTypeId != -1);
 
-                yield return new VirtualRateThresholdByGroup(betTypeGroup, minRange, maxRange, 3)
+                yield return new VirtualRateThresholdByGroup(betTypeGroup, minRange, maxRange, Level3)
                 {
                     GroupId = betTypeGroup.BetTypeGroupId,
                     GroupName = betTypeGroup.BetTypeGroupName,
@@ -129,7 +134,7 @@
         {
             foreach (var betType in virtualRateDTOs)
             {
-                yield return new VirtualRateThresholdByGroup(betType, minRange, maxRange, 4)
+                yield return new VirtualRateThresholdByGroup(betType, minRange, maxRange, Level4)
                 {
                     GroupId = betType.BetTypeId,
                     GroupName = betType.BetTypeName,
@@ -155,9 +160,67 @@
             return result ?? new Result();
         }
 
-        public GlobalAutoSuspendThreshold GetGlobalAutoSuspendThresholdLog(int sportType, DateTime fromDate, DateTime toDate)
+        public IEnumerable<GlobalAutoSuspendThresholdLog> GetGlobalAutoSuspendThresholdLogs(int sportType, DateTime fromDate, DateTime toDate)
         {
-            return null;
+            var rawData = _repository.GetGlobalAutoSuspendThresholdLogs(
+                new GetAutoSuspendThresholdLogCriteria(sportType, fromDate, toDate));
+
+            var groupRawData = rawData.GroupBy(d => new { d.LogId, d.LogTime, d.Updatedby });
+
+            foreach (var grp in groupRawData)
+            {
+                yield return new GlobalAutoSuspendThresholdLog(grp.Key.LogId, grp.Key.LogTime, grp.Key.Updatedby, GetSports(grp));
+            }
+        }
+
+        private IEnumerable<GlobalAutoSuspendThresholdLogByGroup> GetSports(IEnumerable<GlobalAutoSuspendThresholdLogDTO> logs)
+        {
+            var sports = logs.Where(d => d.LeagueGroupId == -1 && d.BetTypeGroupId == -1 && d.BetType == -1);
+
+            foreach (var sport in sports)
+            {
+                var leagues = logs.Where(d => d.SportType == sport.SportType && d.LeagueGroupId != -1);
+
+                yield return new GlobalAutoSuspendThresholdLogByGroup(sport, Level1, sport.SportType, sport.SportName, GetLeagues(logs, leagues));
+            }
+        }
+
+        private IEnumerable<GlobalAutoSuspendThresholdLogByGroup> GetLeagues(
+            IEnumerable<GlobalAutoSuspendThresholdLogDTO> rawData,
+            IEnumerable<GlobalAutoSuspendThresholdLogDTO> globalThresholdLogs)
+        {
+            var leagues = globalThresholdLogs.Where(d => d.BetTypeGroupId == -1 && d.BetType == -1);
+
+            foreach (var league in leagues)
+            {
+                var betTypeGroups = globalThresholdLogs.Where(d => d.LeagueGroupId == league.LeagueGroupId && d.BetTypeGroupId != -1);
+
+                yield return new GlobalAutoSuspendThresholdLogByGroup(league, Level2, league.LeagueGroupId, league.LeagueGroup, GetBetTypeGroups(rawData, betTypeGroups));
+            }
+        }
+
+        private IEnumerable<GlobalAutoSuspendThresholdLogByGroup> GetBetTypeGroups(
+            IEnumerable<GlobalAutoSuspendThresholdLogDTO> rawData,
+            IEnumerable<GlobalAutoSuspendThresholdLogDTO> globalThresholdLogs)
+        {
+            var betTypeGroups = globalThresholdLogs.Where(d => d.BetType == -1);
+
+            foreach (var betTypeGroup in betTypeGroups)
+            {
+                var betTypes = globalThresholdLogs.Where(d => d.BetTypeGroupId == betTypeGroup.BetTypeGroupId && d.BetType != -1);
+
+                yield return new GlobalAutoSuspendThresholdLogByGroup(betTypeGroup, Level3, betTypeGroup.BetTypeGroupId, betTypeGroup.BetTypeGroup, GetBetTypes(rawData, betTypes));
+            }
+        }
+
+        private IEnumerable<GlobalAutoSuspendThresholdLogByGroup> GetBetTypes(
+           IEnumerable<GlobalAutoSuspendThresholdLogDTO> rawData,
+           IEnumerable<GlobalAutoSuspendThresholdLogDTO> globalThresholdLogs)
+        {
+            foreach (var betType in globalThresholdLogs)
+            {
+                yield return new GlobalAutoSuspendThresholdLogByGroup(betType, Level4, betType.BetType, betType.BetTypeName, null);
+            }
         }
     }
 }

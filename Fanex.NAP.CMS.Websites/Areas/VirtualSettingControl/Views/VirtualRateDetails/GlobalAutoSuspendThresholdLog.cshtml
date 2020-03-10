@@ -20,7 +20,8 @@
             From: "@ViewLang.From",
             To: "@ViewLang.To",
             ReportTitle: "@ESportsResource.GlobalAutoSuspendThresholdLog",
-            Message_NoReportData: "@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData"
+            Message_NoReportData: "@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData",
+            UpdateGlobalAutoSuspendThreshold: "@ESportsResource.UpdateGlobalAutoSuspendThreshold"
         };
     </script>
     @Scripts.Render(VirtualSettingControlBundleConfig.ESports_GlobalAutoSuspendThresholdLogScript)
@@ -57,6 +58,7 @@
             <thead>
                 <tr>
                     <th class="col-group col-threshold">
+                        @ViewLang.BetType
                         <span class="ico-collapse" id="ico-collapse"></span>
                     </th>
                     <th class="col-nonlive">@ViewLang.NonLive</th>

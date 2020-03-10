@@ -1,9 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails
 {
     using System;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
-    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
+    using System.Collections.Generic;
+    using Criteria.VirtualRateDetails;
+    using Infrastructure.Models;
+    using Models.VirtualRateDetails;
 
     public interface IVirtualRateDetailsService
     {
@@ -25,6 +26,6 @@
 
         Result UpdateGlobalAutoSuspendThreshold(VirtualRateThresholdByGroup[] sports, int userId, string ip);
 
-        GlobalAutoSuspendThreshold GetGlobalAutoSuspendThresholdLog(int sportType, DateTime fromDate, DateTime toDate);
+        IEnumerable<GlobalAutoSuspendThresholdLog> GetGlobalAutoSuspendThresholdLogs(int sportType, DateTime fromDate, DateTime toDate);
     }
 }

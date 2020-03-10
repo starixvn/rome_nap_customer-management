@@ -194,6 +194,9 @@
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLog.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLogReport.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThreshold.cs" />
+    <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLog.cs" />
+    <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLogDTO.cs" />
+    <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLogByGroup.cs" />
     <Compile Include="Models\VirtualRateDetails\LogDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\RateInfo.cs" />
     <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsResult.cs" />

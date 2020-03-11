@@ -1,0 +1,66 @@
+﻿@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@{
+    ViewBag.Title = ESportsResource.ESports_UploadVirtualRate;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    @Styles.Render(VirtualSettingControlBundleConfig.ESports_UploadVirtualRateStyle)
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            Error_RequiredField: "@Fanex.NAP.CMS.Core.Resources.Messages.RequiredFieldError",
+            Error_NotExcelFile: "@ESportsResource.Error_NotExcelFile",
+            Error_ExcessMaxFileSize: "@ESportsResource.Error_ExcessMaxFileSize",
+            ExcelZone: "@ESportsResource.ExcelZone",
+            Rule: "@ESportsResource.Rule",
+            Reason: "@ESportsResource.Reason",
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.ESports_UploadVirtualRateScript)
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-excelfile">@ESportsResource.ExcelFile</label>
+            </div>
+            <div class="edit-field col_12">
+                <input type="text" id="txt-excelfile" style="width: 99%;" readonly />
+            </div>
+            <div class="col_4 width-auto">
+                <label for="file" class="fileUpload gray-button">@ESportsResource.Browse</label>
+                <input type="file" id="file" class="display-none"
+                       accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+            </div>
+            <div class="col_4 width-auto">
+                <button type="button" class="gray-button" id="btn-verify" disabled>@ESportsResource.Verify</button>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_3">&nbsp;</div>
+            <div class="edit-field col_12">
+                <div class="float-left">@Html.ActionLink(ESportsResource.DownloadTemplate, "DownloadTemplate", "UploadVirtualRate")</div>
+                <div class="float-right" style="font-style: italic;">@ESportsResource.Max: 5MB</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="valid-setting-container">
+    <span class="valid-setting">@ESportsResource.ValidSetting:</span>
+    <span class="valid-setting" id="valid-setting">N/A</span>
+    <button type="button" class="blue-button margin-left" id="btn-update" disabled>@ESportsResource.UpdateVirtualRate</button>
+    <div id="excelError" class="freegrid margin-top display-none"></div>
+</div>

@@ -56,6 +56,12 @@
       <HintPath>..\..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fanex.Logging.Extensions, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Logging.Extensions.1.0.5\lib\net40\Fanex.Logging.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.NAP.Core.Client.1.2.1.6\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
       <Private>True</Private>
@@ -157,15 +163,21 @@
   <ItemGroup>
     <Compile Include="App_Start\VirtualSettingControlAreaRegistration.cs" />
     <Compile Include="App_Start\VirtualSettingControlBundleConfig.cs" />
+    <Compile Include="Configurations\ESportVirtualRateBetTypeCollection.cs" />
+    <Compile Include="Configurations\ESportVirtualRateBetTypeElement.cs" />
+    <Compile Include="Configurations\ESportsVirtualRateSection.cs" />
     <Compile Include="Constants\VirtualRateDetails\VirtualRateDetailsLevelConstant.cs" />
     <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
     <Compile Include="Controllers\SoccerVirtualRateDetailsController.cs" />
+    <Compile Include="Controllers\UploadVirtualRateController.cs" />
     <Compile Include="Controllers\VirtualRateDetailsController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorAdvanceController.cs" />
     <Compile Include="Controllers\VirtualSettingMonitorController.cs" />
     <Compile Include="Criteria\CustomerDashboard\GetDashboardInfoCriteria.cs" />
+    <Compile Include="Criteria\UploadVirtualRate\UpdateVirtualRateExcelTemplateCriteria.cs" />
+    <Compile Include="Criteria\UploadVirtualRate\VerifyVirtualRateExcelTemplateCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdLogCriteria.cs" />
@@ -191,6 +203,8 @@
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
     <Compile Include="Models\CustomerDashboard\BetCountByMonth.cs" />
     <Compile Include="Models\CustomerDashboard\EventChoice.cs" />
+    <Compile Include="Models\UploadVirtualRate\ExcelErrorDTO.cs" />
+    <Compile Include="Models\UploadVirtualRate\ExcelErrorModel.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLog.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLogReport.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThreshold.cs" />
@@ -215,6 +229,8 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
+    <Compile Include="Repositories\UploadVirtualRate\IUploadVirtualRateRepository.cs" />
+    <Compile Include="Repositories\UploadVirtualRate\UploadVirtualRateRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\AutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
@@ -224,6 +240,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ESportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
+    <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />
     <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
     <Compile Include="Services\VirtualRateDetails\SoccerVirtualRateDetailsExporter.cs" />

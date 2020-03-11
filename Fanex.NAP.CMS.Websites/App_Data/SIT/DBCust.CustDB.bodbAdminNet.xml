@@ -38,6 +38,8 @@
     <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Problem Accounts">
     <Setting Key="CS_ProblemAccount_AddCustomer" SpName="CS_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />

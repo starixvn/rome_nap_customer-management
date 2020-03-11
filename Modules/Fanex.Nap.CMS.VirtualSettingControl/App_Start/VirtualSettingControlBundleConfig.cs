@@ -8,6 +8,9 @@
         public const string ESports_GlobalAutoSuspendThresholdScript = "~/bundles/virtual-rate-details/global-autosuspend-threshold";
         public const string ESports_GlobalAutoSuspendThresholdLogScript = "~/bundles/virtual-rate-details/global-autosuspend-threshold-log";
 
+        public const string ESports_UploadVirtualRateStyle = "~/bundles/virtual-setting-control/upload-virtual-rate-style";
+        public const string ESports_UploadVirtualRateScript = "~/bundles/virtual-setting-control/upload-virtual-rate-script";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             RegisterVirtualSettingMonitorBundles(bundles);
@@ -17,6 +20,7 @@
             RegisterVirtualRateDetailsBundles(bundles);
             RegisterESports_GlobalAutoSuspendThreshold(bundles);
             RegisterESports_GlobalAutoSuspendThresholdLog(bundles);
+            RegisterESports_UploadVirtualRate(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -117,6 +121,16 @@
         {
             bundles.Add(new ScriptBundle(ESports_GlobalAutoSuspendThresholdLogScript)
                 .Include("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/Scripts/globalAutoSuspendThresholdLog.js"));
+        }
+
+        private static void RegisterESports_UploadVirtualRate(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                ESports_UploadVirtualRateStyle,
+                "~/Areas/VirtualSettingControl/Views/UploadVirtualRate/Styles/upload.less");
+
+            bundles.Add(new ScriptBundle(ESports_UploadVirtualRateScript).Include(
+                "~/Areas/VirtualSettingControl/Views/UploadVirtualRate/Scripts/UploadVirtualRate.js"));
         }
     }
 }

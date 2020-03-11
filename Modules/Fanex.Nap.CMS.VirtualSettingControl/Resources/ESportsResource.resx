@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="DownloadTemplate" xml:space="preserve">
+    <value>Download Template</value>
+  </data>
+  <data name="ErrorSetting" xml:space="preserve">
+    <value>Error Setting</value>
+  </data>
+  <data name="Error_ExcessMaxFileSize" xml:space="preserve">
+    <value>The file is too big.</value>
+  </data>
+  <data name="Error_NotExcelFile" xml:space="preserve">
+    <value>The selected file is not in excel format.</value>
+  </data>
   <data name="ESports_GlobalAutoSuspendThreshold" xml:space="preserve">
     <value>E-Sports - Global Auto Suspend Threshold</value>
+  </data>
+  <data name="ESports_UploadVirtualRate" xml:space="preserve">
+    <value>E-Sports Upload Virtual Rate</value>
+  </data>
+  <data name="ExcelCell" xml:space="preserve">
+    <value>Excel Cell</value>
+  </data>
+  <data name="ExcelFile" xml:space="preserve">
+    <value>Excel file</value>
   </data>
   <data name="GlobalAutoSuspendThreshold" xml:space="preserve">
     <value>Global Auto Suspend Threshold</value>
@@ -129,7 +156,40 @@
   <data name="GlobalAutoSuspendThresholdLog" xml:space="preserve">
     <value>Global Auto Suspend Threshold Log</value>
   </data>
+  <data name="Max" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
   <data name="UpdateGlobalAutoSuspendThreshold" xml:space="preserve">
     <value>Update Global Auto Suspend Threshold</value>
+  </data>
+  <data name="UpdateVirtualRate" xml:space="preserve">
+    <value>Update Virtual Rate</value>
+  </data>
+  <data name="ValidSetting" xml:space="preserve">
+    <value>Valid Setting</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="Error_IncorrectLayout" xml:space="preserve">
+    <value>The layout of file is not correct.</value>
+  </data>
+  <data name="InvalidHeader" xml:space="preserve">
+    <value>Invalid header or wrong order</value>
+  </data>
+  <data name="ExcelZone" xml:space="preserve">
+    <value>Excel Zone</value>
+  </data>
+  <data name="Rule" xml:space="preserve">
+    <value>Rule</value>
+  </data>
+  <data name="UploadVirtualRateSuccessfully" xml:space="preserve">
+    <value>The uploaded virtual rate setting has been successfully uploaded.</value>
   </data>
 </root>

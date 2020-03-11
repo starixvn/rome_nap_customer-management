@@ -61,11 +61,110 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Browse.
+        /// </summary>
+        public static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download Template.
+        /// </summary>
+        public static string DownloadTemplate {
+            get {
+                return ResourceManager.GetString("DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file is too big..
+        /// </summary>
+        public static string Error_ExcessMaxFileSize {
+            get {
+                return ResourceManager.GetString("Error_ExcessMaxFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The layout of file is not correct..
+        /// </summary>
+        public static string Error_IncorrectLayout {
+            get {
+                return ResourceManager.GetString("Error_IncorrectLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected file is not in excel format..
+        /// </summary>
+        public static string Error_NotExcelFile {
+            get {
+                return ResourceManager.GetString("Error_NotExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error Setting.
+        /// </summary>
+        public static string ErrorSetting {
+            get {
+                return ResourceManager.GetString("ErrorSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-Sports - Global Auto Suspend Threshold.
         /// </summary>
         public static string ESports_GlobalAutoSuspendThreshold {
             get {
                 return ResourceManager.GetString("ESports_GlobalAutoSuspendThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports Upload Virtual Rate.
+        /// </summary>
+        public static string ESports_UploadVirtualRate {
+            get {
+                return ResourceManager.GetString("ESports_UploadVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel Cell.
+        /// </summary>
+        public static string ExcelCell {
+            get {
+                return ResourceManager.GetString("ExcelCell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel file.
+        /// </summary>
+        public static string ExcelFile {
+            get {
+                return ResourceManager.GetString("ExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel Zone.
+        /// </summary>
+        public static string ExcelZone {
+            get {
+                return ResourceManager.GetString("ExcelZone", resourceCulture);
             }
         }
         
@@ -97,11 +196,92 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid header or wrong order.
+        /// </summary>
+        public static string InvalidHeader {
+            get {
+                return ResourceManager.GetString("InvalidHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        public static string Max {
+            get {
+                return ResourceManager.GetString("Max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reason.
+        /// </summary>
+        public static string Reason {
+            get {
+                return ResourceManager.GetString("Reason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule.
+        /// </summary>
+        public static string Rule {
+            get {
+                return ResourceManager.GetString("Rule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update Global Auto Suspend Threshold.
         /// </summary>
         public static string UpdateGlobalAutoSuspendThreshold {
             get {
                 return ResourceManager.GetString("UpdateGlobalAutoSuspendThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Virtual Rate.
+        /// </summary>
+        public static string UpdateVirtualRate {
+            get {
+                return ResourceManager.GetString("UpdateVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The uploaded virtual rate setting has been successfully uploaded..
+        /// </summary>
+        public static string UploadVirtualRateSuccessfully {
+            get {
+                return ResourceManager.GetString("UploadVirtualRateSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid Setting.
+        /// </summary>
+        public static string ValidSetting {
+            get {
+                return ResourceManager.GetString("ValidSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        public static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
             }
         }
     }

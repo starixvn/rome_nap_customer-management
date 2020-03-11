@@ -15,7 +15,7 @@
             {
                 var excelErrors = db.Query<ExcelErrorDTO>(criteria.GetSpParams());
 
-                return null;
+                return new ExcelErrorModel { ValidSetting = 0, ExcelErrors = excelErrors };
             }
         }
 

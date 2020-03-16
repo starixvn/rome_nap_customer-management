@@ -126,8 +126,8 @@
   <data name="DownloadTemplate" xml:space="preserve">
     <value>Download Template</value>
   </data>
-  <data name="ErrorSetting" xml:space="preserve">
-    <value>Error Setting</value>
+  <data name="FormatError" xml:space="preserve">
+    <value>Format Error</value>
   </data>
   <data name="Error_ExcessMaxFileSize" xml:space="preserve">
     <value>The file is too big.</value>
@@ -183,14 +183,17 @@
   <data name="InvalidHeader" xml:space="preserve">
     <value>Invalid header or wrong order</value>
   </data>
-  <data name="ExcelZone" xml:space="preserve">
-    <value>Excel Zone</value>
-  </data>
-  <data name="Rule" xml:space="preserve">
-    <value>Rule</value>
-  </data>
   <data name="UploadVirtualRateSuccessfully" xml:space="preserve">
     <value>The uploaded virtual rate setting has been successfully uploaded.</value>
+  </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>Invalid value</value>
+  </data>
+  <data name="RequiredUsernameError" xml:space="preserve">
+    <value>Username is required</value>
+  </data>
+  <data name="DataError" xml:space="preserve">
+    <value>Data Error</value>
   </data>
   <data name="GlobalAutoSuspendThresholdExcelFile" xml:space="preserve">
     <value>E-Sports_Global_Auto_Suspend_Threshold</value>

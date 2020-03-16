@@ -15,9 +15,10 @@
             Error_RequiredField: "@Fanex.NAP.CMS.Core.Resources.Messages.RequiredFieldError",
             Error_NotExcelFile: "@ESportsResource.Error_NotExcelFile",
             Error_ExcessMaxFileSize: "@ESportsResource.Error_ExcessMaxFileSize",
-            ExcelZone: "@ESportsResource.ExcelZone",
-            Rule: "@ESportsResource.Rule",
-            Reason: "@ESportsResource.Reason",
+            ExcelCell: "@ESportsResource.ExcelCell",
+            Account: "@ESportsResource.Account",
+            Value: "@ESportsResource.Value",
+            Reason: "@ESportsResource.Reason"
         };
     </script>
     @Scripts.Render(VirtualSettingControlBundleConfig.ESports_UploadVirtualRateScript)
@@ -59,8 +60,10 @@
     </div>
 </div>
 <div class="valid-setting-container">
-    <span class="valid-setting">@ESportsResource.ValidSetting:</span>
-    <span class="valid-setting" id="valid-setting">N/A</span>
-    <button type="button" class="blue-button margin-left" id="btn-update" disabled>@ESportsResource.UpdateVirtualRate</button>
-    <div id="excelError" class="freegrid margin-top display-none"></div>
+    <div class="valid-setting margin-bottom">
+        <span>@ESportsResource.ValidSetting:</span>
+        <span id="valid-setting">N/A</span>
+        <button type="button" class="blue-button margin-left" id="btn-update" disabled>@ESportsResource.UpdateVirtualRate</button>
+    </div>
+    <div id="excelError" class="freegrid display-none"></div>
 </div>

@@ -79,6 +79,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Error.
+        /// </summary>
+        public static string DataError {
+            get {
+                return ResourceManager.GetString("DataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Template.
         /// </summary>
         public static string DownloadTemplate {
@@ -111,15 +120,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         public static string Error_NotExcelFile {
             get {
                 return ResourceManager.GetString("Error_NotExcelFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Error Setting.
-        /// </summary>
-        public static string ErrorSetting {
-            get {
-                return ResourceManager.GetString("ErrorSetting", resourceCulture);
             }
         }
         
@@ -160,11 +160,11 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Excel Zone.
+        ///   Looks up a localized string similar to Format Error.
         /// </summary>
-        public static string ExcelZone {
+        public static string FormatError {
             get {
-                return ResourceManager.GetString("ExcelZone", resourceCulture);
+                return ResourceManager.GetString("FormatError", resourceCulture);
             }
         }
         
@@ -205,6 +205,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value.
+        /// </summary>
+        public static string InvalidValue {
+            get {
+                return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Max {
@@ -223,11 +232,11 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rule.
+        ///   Looks up a localized string similar to Username is required.
         /// </summary>
-        public static string Rule {
+        public static string RequiredUsernameError {
             get {
-                return ResourceManager.GetString("Rule", resourceCulture);
+                return ResourceManager.GetString("RequiredUsernameError", resourceCulture);
             }
         }
         

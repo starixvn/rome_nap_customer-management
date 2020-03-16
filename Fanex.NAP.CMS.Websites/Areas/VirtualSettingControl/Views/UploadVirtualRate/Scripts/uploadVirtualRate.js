@@ -1,38 +1,39 @@
 ﻿"use strict";
-
-function UploadedFile(fileControl, $textboxFile) {
+(function ($) {
     var MaxFileSize = 1024 * 1024 * 5;
-    this.fileControl = fileControl;
-    this.$textboxFile = $textboxFile;
+    var textboxFile = $("#txt-excelfile");
 
-    this.validate = function () {
-        CMS.clearTipsyError(this.$textboxFile);
-        var fileName = getFileName(this.fileControl.value);
+    var buttonVerify = $("#btn-verify");
+    var gridOptions = null;
+    var divExcelError = $("#excelError");
+    var spanValidSetting = $("#valid-setting");
+
+    var buttonUpdate = $("#btn-update");
+
+    function validateUploadedFile(fileControl) {
+        CMS.clearTipsyError(textboxFile);
+        var fileName = getFileName(fileControl.value);
 
         if (!fileName || !fileName.length) {
-            CMS.showTipsyError(this.$textboxFile, resources.Error_RequiredField, "sw");
+            CMS.showTipsyError(textboxFile, resources.Error_RequiredField, "sw");
             return false;
         }
 
-        this.$textboxFile.val(fileName);
+        textboxFile.val(fileName);
         var fileExtension = getFileExtension(fileName);
 
         if (fileExtension !== "xls" && fileExtension !== "xlsx") {
-            CMS.showTipsyError(this.$textboxFile, resources.Error_NotExcelFile, "sw");
+            CMS.showTipsyError(textboxFile, resources.Error_NotExcelFile, "sw");
             return false;
         }
 
-        if (this.fileControl.files[0].size > MaxFileSize) {
-            CMS.showTipsyError(this.$textboxFile, resources.Error_ExcessMaxFileSize, "sw");
+        if (fileControl.files[0].size > MaxFileSize) {
+            CMS.showTipsyError(textboxFile, resources.Error_ExcessMaxFileSize, "sw");
             return false;
         }
 
         return true;
-    };
-
-    this.getUploadedFile = function () {
-        return this.fileControl.files[0];
-    };
+    }
 
     function getFileName(path) {
         return path.replace(/^.*[\\\/]/, "");
@@ -41,85 +42,8 @@ function UploadedFile(fileControl, $textboxFile) {
     function getFileExtension(fileName) {
         return /[.]/.exec(fileName) ? /[^.]+$/.exec(fileName)[0] : "";
     }
-}
 
-function VerifyExcelTemplate() {
-    var gridOptions = null;
-    var divExcelError = $("#excelError");
-    var spanValidSetting = $("#valid-setting");
-
-    function getGridOptions() {
-        var headerColumns = [
-            {
-                HeaderText: "#",
-                Width: 60,
-                Name: "colNo",
-                HeaderAlign: "center",
-                CellAlign: "center"
-            },
-            {
-                HeaderText: resources.ExcelZone,
-                Width: 100,
-                Name: "colExcelZone",
-                HeaderAlign: "center",
-                CellAlign: "center"
-            },
-            {
-                HeaderText: resources.Rule,
-                Width: 200,
-                Name: "colRule",
-                HeaderAlign: "center",
-                CellAlign: "left"
-            },
-            {
-                HeaderText: resources.Reason,
-                Width: 250,
-                Name: "colReason",
-                HeaderAlign: "center",
-                CellAlign: "left"
-            }];
-
-        return {
-            columns: headerColumns,
-            showTitle: false,
-            bodyRows: [],
-            fullWidth: true,
-            fullHeight: true,
-            gridHeight: 0,
-            showDistinctRow: false,
-            headerColumnHeight: 29,
-            bodyRowHeight: 25,
-            showPager: false,
-            gridExpandHeight: 230
-        };
-    }
-
-    function renderGrid(data) {
-        var bodyData = [];
-
-        var JSONData = JSON.parse(data);
-        var dataLength = JSONData.length;
-
-        for (var i = 0; i < dataLength; i++) {
-            var error = JSONData[i];
-
-            bodyData.push({
-                Columns: [
-                    { Name: "colNo", Value: numeral(i + 1).format(CMSConstants.NumberFormat.IntNumber) },
-                    { Name: "colExcelZone", Value: error.CellId },
-                    { Name: "colRule", Value: error.Rule },
-                    { Name: "colReason", Value: error.Reason }]
-            });
-        }
-
-        gridOptions = gridOptions || getGridOptions();
-        gridOptions.bodyRows = bodyData;
-
-        divExcelError.removeClass("display-none").fanexGrid(gridOptions);
-        spanValidSetting.text("N/A");
-    }
-
-    this.verify = function (file) {
+    function verifyUploadedFile(file) {
         CMS.disableInput();
 
         var formData = new FormData();
@@ -131,38 +55,144 @@ function VerifyExcelTemplate() {
             contentType: false,
             processData: false,
             data: formData,
-            success: renderGrid,
+            success: renderErrorSetting,
             error: CMS.handleAjaxError
         });
 
         jqxhr.always(CMS.enableInput);
-    };
-}
+    }
 
-(function ($) {
+    function renderErrorSetting(data) {
+        var bodyData = [];
+
+        var JSONData = JSON.parse(data);
+        var excelErrors = JSONData.ExcelErrors;
+        var dataLength = excelErrors.length;
+
+        for (var i = 0; i < dataLength; i++) {
+            var error = excelErrors[i];
+
+            bodyData.push({
+                Columns: [
+                    { Name: "colNo", Value: numeral(i + 1).format(CMSConstants.NumberFormat.IntNumber) },
+                    { Name: "colExcelCell", Value: error.CellId },
+                    { Name: "colAccount", Value: error.Username },
+                    { Name: "colValue", Value: error.Value },
+                    { Name: "colReason", Value: error.Reason }]
+            });
+        }
+
+        gridOptions = gridOptions || getGridOptions();
+        gridOptions.titleInfo.text = JSONData.Title;
+        gridOptions.bodyRows = bodyData;
+
+        divExcelError.removeClass("display-none").fanexGrid(gridOptions);
+        spanValidSetting.text(JSONData.ValidSetting + "/" + JSONData.TotalRows);
+        buttonUpdate.prop("disabled", !JSONData.ValidSetting);
+    }
+
+    function getGridOptions() {
+        var headerColumns = [
+            {
+                HeaderText: "#",
+                Width: 60,
+                Name: "colNo",
+                HeaderAlign: "center",
+                CellAlign: "center"
+            },
+            {
+                HeaderText: resources.ExcelCell,
+                Width: 100,
+                Name: "colExcelCell",
+                HeaderAlign: "center",
+                CellAlign: "center"
+            },
+            {
+                HeaderText: resources.Account,
+                Width: 200,
+                Name: "colAccount",
+                HeaderAlign: "center",
+                CellAlign: "left"
+            },
+            {
+                HeaderText: resources.Value,
+                Width: 200,
+                Name: "colValue",
+                HeaderAlign: "center",
+                CellAlign: "left"
+            },
+            {
+                HeaderText: resources.Reason,
+                Width: 300,
+                Name: "colReason",
+                HeaderAlign: "center",
+                CellAlign: "left"
+            }];
+
+        return {
+            columns: headerColumns,
+            showTitle: true,
+            titleInfo: {
+                text: ""
+            },
+            bodyRows: [],
+            fullWidth: true,
+            fullHeight: true,
+            gridHeight: 0,
+            showDistinctRow: false,
+            headerColumnHeight: 29,
+            bodyRowHeight: 25,
+            showPager: false,
+            gridExpandHeight: 250
+        };
+    }
+
+    function reset() {
+        textboxFile.val("");
+        buttonVerify.prop("disabled", true);
+        spanValidSetting.text("N/A");
+        buttonUpdate.prop("disabled", true);
+        divExcelError.addClass("display-none");
+        $("#excelError-grid-title").addClass("display-none");
+    }
+
+    function uploadFile() {
+        CMS.disableInput();
+        var jqxhr = $.ajax({
+            url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/Update"),
+            type: "POST",
+            success: function (data) {
+                var JSONData = JSON.parse(data);
+                if (JSONData.Code === 0) {
+                    CMS.showSuccessMessage(JSONData.Message, reset);
+                } else {
+                    CMS.showErrorMessage(JSONData.Message);
+                }
+            },
+            error: CMS.handleAjaxError
+        });
+
+        jqxhr.always(CMS.enableInput);
+    }
+
     $(function () {
-        var buttonVerify = $("#btn-verify");
-        var buttonUpdate = $("#btn-update");
-
-        var uploadedFileInstance = null;
-        var verifyExcel = new VerifyExcelTemplate();
+        var fileControl;
 
         $("#file")
             .change(function () {
-                uploadedFileInstance = uploadedFileInstance || new UploadedFile(this, $("#txt-excelfile"));
-                var isValidFile = uploadedFileInstance.validate();
+                fileControl = this;
+                var isValidFile = validateUploadedFile(this);
                 buttonVerify.prop("disabled", !isValidFile);
             })
             .click(function () {
                 this.value = null;
+                reset();
             });
 
         buttonVerify.click(function () {
-            uploadedFileInstance && verifyExcel.verify(uploadedFileInstance.getUploadedFile());
+            fileControl && verifyUploadedFile(fileControl.files[0]);
         });
 
-        buttonUpdate.click(function () {
-
-        });
+        buttonUpdate.click(uploadFile);
     });
 })(jQuery);

@@ -4,8 +4,24 @@
 
     public class ExcelErrorModel
     {
-        public int ValidSetting { get; set; }
+        public ExcelErrorModel(
+            IEnumerable<ExcelErrorDTO> excelErrors,
+            int validSetting,
+            int totalRows,
+            string title)
+        {
+            ExcelErrors = excelErrors;
+            ValidSetting = validSetting;
+            TotalRows = totalRows;
+            Title = title;
+        }
 
-        public List<ExcelErrorDTO> ExcelErrors { get; set; }
+        public IEnumerable<ExcelErrorDTO> ExcelErrors { get; }
+
+        public int ValidSetting { get; }
+
+        public int TotalRows { get; set; }
+
+        public string Title { get; }
     }
 }

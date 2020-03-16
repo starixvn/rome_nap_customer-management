@@ -10,6 +10,7 @@
     using Infrastructure.Controllers;
     using Infrastructure.Resources;
     using Models.UploadVirtualRate;
+    using Resources;
     using Services.UploadVirtualRate;
 
     public class UploadVirtualRateController : BaseController
@@ -47,7 +48,7 @@
         public ActionResult Verify(HttpPostedFileBase file)
         {
             var errors = file == null || file.ContentLength == 0
-                ? new[] { new ExcelErrorDTO { Reason = Labels.Message_NoReportData } }
+                ? new ExcelErrorModel(new[] { new ExcelErrorDTO(Labels.Message_NoReportData) }, 0, 0, $"{ESportsResource.FormatError}: 1")
                 : uploadService.Verify(
                     file.InputStream,
                     Path.GetExtension(file.FileName),

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -11,17 +12,41 @@
     {
         public ExcelErrorModel VerifyExcelTemplate(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var excelErrors = db.Query<ExcelErrorDTO>(criteria.GetSpParams());
+            IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
+            const int commandTimeoutInMinutes = 60 * 10;
 
-                return new ExcelErrorModel { ValidSetting = 0, ExcelErrors = excelErrors };
+            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        excelErrors.Add(GetExcelErrorDTO(reader));
+                    }
+                }
+
+                var outputParams = db.GetOuputParams();
+
+                return new ExcelErrorModel(excelErrors, Convert.ToInt32(outputParams["validuser_count"]), 0, null);
             }
+        }
+
+        private static ExcelErrorDTO GetExcelErrorDTO(IDataReader reader)
+        {
+            var username = reader["username"].ToString();
+
+            return new ExcelErrorDTO(
+                reader["cellid"].ToString(),
+                username,
+                username,
+                reader["reason"].ToString());
         }
 
         public Result ExecuteNonQuery(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            const int commandTimeoutInMinutes = 60 * 60;
+
+            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();

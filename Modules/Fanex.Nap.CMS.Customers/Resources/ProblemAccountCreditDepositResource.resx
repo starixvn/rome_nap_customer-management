@@ -189,6 +189,9 @@
   <data name="PreventiveAction" xml:space="preserve">
     <value>Preventive Action</value>
   </data>
+  <data name="ReduceBetLimitVIPError" xml:space="preserve">
+    <value>VIP members cannot be reduced bet limit:</value>
+  </data>
   <data name="ReduceBLMultipleCurrenciesSelectedError" xml:space="preserve">
     <value>Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency.</value>
   </data>

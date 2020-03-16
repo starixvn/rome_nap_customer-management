@@ -277,6 +277,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VIP members cannot be reduced bet limit:.
+        /// </summary>
+        public static string ReduceBetLimitVIPError {
+            get {
+                return ResourceManager.GetString("ReduceBetLimitVIPError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency..
         /// </summary>
         public static string ReduceBLMultipleCurrenciesSelectedError {

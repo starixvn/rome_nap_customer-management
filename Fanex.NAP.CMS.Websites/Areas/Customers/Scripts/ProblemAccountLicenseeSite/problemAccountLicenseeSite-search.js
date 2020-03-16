@@ -209,7 +209,7 @@
                     columns.push({ Name: "col1stWeekInformed", Value: problemAccount.Inform1 || "<div class='ico-noninformed'></div>" });
                     columns.push({ Name: "col2ndWeekInformed", Value: problemAccount.Inform2 || "<div class='ico-noninformed'></div>" });
                     columns.push({ Name: "colAbnormalBet", Value: renderAbnormalBetCell(problemAccount) });
-                    columns.push({ Name: "colSelect", Value: renderSelectCell(problemAccount.Username, problemAccount.Currency, problemAccount.IsAcknowledgement) });
+                    columns.push({ Name: "colSelect", Value: renderSelectCell(problemAccount.Username, problemAccount.Currency, problemAccount.IsAcknowledgement, problemAccount.IsVIP) });
 
                     subRows.push({ Columns: columns });
                 });
@@ -275,7 +275,7 @@
             : "0";
     }
 
-    function renderSelectCell(username, currency, isAcknowledgement) {
+    function renderSelectCell(username, currency, isAcknowledgement, isVIP) {
         return [
             '<input type="checkbox" class="chk-select-item" data-username="',
             username,
@@ -283,6 +283,8 @@
             currency,
             '" data-isacknowledgement="',
             isAcknowledgement,
+            '" data-isvip="',
+            isVIP,
             '" />'
         ].join("");
     }
@@ -329,11 +331,18 @@
         var usernames = [];
         var currency;
         var isAcknowledgement;
+        var vipUsernames = [];
 
         if (filterParams) {
             $(".chk-select-item:checked").each(function (index) {
                 var checkbox = $(this);
-                usernames.push(checkbox.data("username"));
+                var isVIP = checkbox.data("isvip");
+                var username = checkbox.data("username");
+                usernames.push(username);
+
+                if (isVIP) {
+                    vipUsernames.push(username);
+                }
 
                 if (index === 0) {
                     currency = checkbox.data("currency");
@@ -353,7 +362,8 @@
         return {
             usernames: usernames,
             currency: currency,
-            isAcknowledgement: isAcknowledgement
+            isAcknowledgement: isAcknowledgement,
+            vipUsernames: vipUsernames
         };
     }
 

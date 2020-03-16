@@ -194,7 +194,7 @@
         public ActionResult GlobalAutoSuspendThresholdLog()
             => View("~/Areas/VirtualSettingControl/Views/VirtualRateDetails/GlobalAutoSuspendThresholdLog.cshtml");
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_GlobalAutoSuspendThreshold, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.AutoSuspendLog, Policy = Constant.Policy.Read)]
         public ActionResult GetThresholdLog(int sportType, DateTime from, DateTime to)
             => JsonData(_virtualRateDetailsService.GetGlobalAutoSuspendThresholdLogs(sportType, from, to));
     }

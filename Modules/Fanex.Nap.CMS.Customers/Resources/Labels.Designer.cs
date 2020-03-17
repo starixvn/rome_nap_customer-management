@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -237,6 +237,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string EnterUsernames {
             get {
                 return ResourceManager.GetString("EnterUsernames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From_Date {
+            get {
+                return ResourceManager.GetString("From_Date", resourceCulture);
             }
         }
         
@@ -471,6 +480,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ThisFieldIsRequired {
             get {
                 return ResourceManager.GetString("ThisFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To_Date {
+            get {
+                return ResourceManager.GetString("To_Date", resourceCulture);
             }
         }
         

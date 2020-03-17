@@ -2,7 +2,6 @@
 /// <reference path="../jQuery/jquery-1.8.2.min.js" />
 
 (function () {
-
     //// Method expose for user use
     var methods = {
         createNexDatePicker: function (opts) {
@@ -92,10 +91,11 @@
         this.$secondDatePicker = null;
         this.$datePickers = null;
         this.CurrentDate = new Date();
+        this.Blankable = options.blankable;
 
         //// Get Current Date
         if (typeof options.firstDatePicker.InitDate != "undefined"
-        && options.firstDatePicker.InitDate != "") {
+            && options.firstDatePicker.InitDate != "") {
             this.CurrentDate = new Date(options.firstDatePicker.InitDate);
             if (options.nexDatePickerType != "single"
                 && typeof options.secondDatePicker.InitDate != "undefined"
@@ -172,22 +172,23 @@
             html.push(
                 '<div class="ui_nexdatepicker_lbl_field ' + firstDatePickerLabelCss + '">' + options.firstDatePicker.Label + '</div>'
                 + '<div class="ui_nexdatepicker_edit_field ' + firstDatePickerTextboxCss + '">'
-                + '<input type="text" id="' + options.firstDatePicker.Id + '" name="' + options.firstDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" />'
+                + '<input type="text" id="' + options.firstDatePicker.Id + '" name="' + options.firstDatePicker.Id
+                + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" />'
                 + '</div>'
             );
-
 
             //// Render Second DatePicker Element
             if (options.nexDatePickerType != "single") {
                 html.push(
                     '<div class="ui_nexdatepicker_lbl_field ' + secondDatePickerLabelCss + '">' + options.secondDatePicker.Label + '</div>'
                     + '<div class="ui_nexdatepicker_edit_field ' + secondDatePickerTextboxCss + '">'
-                    + '<input type="text" id="' + options.secondDatePicker.Id + '" name="' + options.secondDatePicker.Id + '" readonly="readonly" class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" />'
+                    + '<input type="text" id="' + options.secondDatePicker.Id + '" name="' + options.secondDatePicker.Id
+                    + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" />'
                     + '</div>'
                 );
             }
 
-            //// Return Html Joined 
+            //// Return Html Joined
             return html.join('');
         },
         FormatDatePicker: function () {
@@ -204,6 +205,10 @@
             this.$datePickers = $(ids);
             this.DatePickerOnSelect();
             this.$datePickers.datepicker(options.datePickerFormat);
+            if (me.Blankable) {
+                return;
+            }
+
             var fd = new Date(me.CurrentDate);
             var td = new Date(me.CurrentDate);
             me.$firstDatePicker.datepicker("setDate", fd);
@@ -285,28 +290,28 @@
             var options = this.Options;
             var $datePickers = this.$datePickers;
             var optionSelect =
-                {
-                    onSelect: function (selectedDate) {
-                        if (options.nexDatePickerType != "single") {
-                            var option = this.id == options.firstDatePicker.Id ? "minDate" : "maxDate";
-                            var instance = $(this).data("datepicker");
-                            var date = $.datepicker.parseDate(instance.settings.dateFormat
-                                || $.datepicker._defaults.dateFormat,
-                                selectedDate,
-                                instance.settings);
-                            var nothis = $datePickers.not(this);
-                            //.datepicker("disable")
+            {
+                onSelect: function (selectedDate) {
+                    if (options.nexDatePickerType != "single") {
+                        var option = this.id == options.firstDatePicker.Id ? "minDate" : "maxDate";
+                        var instance = $(this).data("datepicker");
+                        var date = $.datepicker.parseDate(instance.settings.dateFormat
+                            || $.datepicker._defaults.dateFormat,
+                            selectedDate,
+                            instance.settings);
+                        var nothis = $datePickers.not(this);
+                        //.datepicker("disable")
 
-                            setTimeout(function () {
-                                nothis.datepicker("option", option, date);
-                            }, 200);
-                            //.datepicker("close");
-                            //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
-                        }
-                        options.onSelectDatePicker(selectedDate);
-                        me.$dropDownList.val(7);
+                        setTimeout(function () {
+                            nothis.datepicker("option", option, date);
+                        }, 200);
+                        //.datepicker("close");
+                        //$(this).datepicker("option", option == "minDate" ? "maxDate" : "minDate", date)
                     }
-                };
+                    options.onSelectDatePicker(selectedDate);
+                    me.$dropDownList.val(7);
+                }
+            };
             this.Options.datePickerFormat = $.extend({}, this.Options.datePickerFormat, optionSelect);
         }
     };
@@ -377,10 +382,10 @@
                 var month = currentMonth - 1;
                 startDate = new Date(currentYear, month, 1);
                 endDate = new Date(currentYear,
-                                    month,
-                //// Add 1 month because month of JS is 0 > 11
-                                    NexDatePickerHelper.getTotalDayOfMonth(month + 1, currentYear)
-                                    );
+                    month,
+                    //// Add 1 month because month of JS is 0 > 11
+                    NexDatePickerHelper.getTotalDayOfMonth(month + 1, currentYear)
+                );
             }
 
             return [startDate, endDate];

@@ -5,6 +5,7 @@
         divRobots: null,
         reportContainer: null,
         divAddRobot: null,
+        divFromToDatePicker: null,
 
         formAddRobot: null,
         ddlLevelAddRobot: null,
@@ -26,6 +27,7 @@
 
     this.init = function () {
         this.cachedElements();
+        this.initFields();
         this.bindEvents();
         this.getSites();
     };
@@ -39,7 +41,38 @@
         this.elements.divAddRobot = $("#div-add-robot");
         this.elements.ddCurrency = $("#ddl-currency");
         this.elements.ddCounter = $("#ddl-counter");
+        this.elements.divFromToDatePicker = $("#fromtodate-picker");
     };
+
+    this.initFields = function () {
+        this.elements.divFromToDatePicker.nexDatePicker({
+            nexDatePickerType: "daterange",
+            blankable: true,
+            datePickerFormat: {
+                dateFormat: CMS.formats.DateFormat,
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                minDate: new Date(resources.MinDate)
+            },
+            firstDatePicker: {
+                Id: "dpk-fromdate",
+                Label: resources.From_Date,
+                InitDate: resources.MinDate,
+                LabelCss: "lbl-field lblFilter",
+                TextboxCss: "edit-field col_5"
+            },
+            secondDatePicker: {
+                Id: "dpk-todate",
+                Label: resources.To_Date,
+                InitDate: resources.CurrentDate,
+                CurrentDate: null,
+                LabelCss: "lbl-field lblFilter",
+                TextboxCss: "edit-field col_5"
+            }
+        });
+    }
 
     this.bindEvents = function () {
         $("#btn-search").on("click touchend", function () { self.enterSearch(); });
@@ -131,7 +164,7 @@
         });
 
         this.elements.ddlSite.fanexMultiSelect({
-            minWidth: 180,
+            minWidth: 120,
             checkAllText: resources.All,
             isCheckAll: false,
             listData: sites

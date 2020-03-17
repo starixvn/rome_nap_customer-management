@@ -18,7 +18,8 @@
     this.searchParam = {
         pageSize: 50,
         pageIndex: 1,
-        counter: 1,
+        fromDate: null,
+        toDate: null,
         sortColumnName: null,
         sortDirection: null
     };
@@ -176,6 +177,8 @@
             sites[sites.length - 1] = "NULL";
         }
 
+        var dateRange = this.elements.divFromToDatePicker.nexDatePicker("getDateRange");
+
         self.searchParam = {
             username: this.elements.txtUsername.val().trim(),
             level: this.elements.ddLevel.val(),
@@ -183,7 +186,8 @@
             pageSize: 50,
             pageIndex: 1,
             currency: this.elements.ddCurrency.val(),
-            counter: this.elements.ddCounter.val(),
+            fromDate: dateRange.FromDate,
+            toDate: dateRange.ToDate,
             sortColumnName: null,
             sortDirection: null
         };

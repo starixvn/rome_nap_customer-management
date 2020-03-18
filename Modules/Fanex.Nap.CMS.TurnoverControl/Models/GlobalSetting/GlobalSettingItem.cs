@@ -1,18 +1,48 @@
-﻿using System;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
 {
-    [Serializable]
     public class GlobalSettingItem
     {
-        public int CustId { get; set; }
+        public GlobalSettingItem(
+            string username,
+            string level,
+            string currency,
+            int profileId,
+            string name,
+            decimal maxTurnover)
+            : this(0, username, level, currency, profileId, name, maxTurnover)
+        {
+        }
 
-        public string UserName { get; set; }
+        public GlobalSettingItem(
+            int custId,
+            string username,
+            string level,
+            string currency,
+            int profileId,
+            string profileName,
+            decimal maxTurnover)
+        {
+            CustId = custId;
+            Username = username;
+            Level = level;
+            Currency = currency;
+            ProfileId = profileId;
+            ProfileName = profileName;
+            MaxTurnover = maxTurnover;
+        }
 
-        public string Level { get; set; }
+        public int CustId { get; }
 
-        public string Currency { get; set; }
+        public string Username { get; }
 
-        public decimal MaxTurnover { get; set; }
+        public string Level { get; }
+
+        public string Currency { get; }
+
+        public int ProfileId { get; }
+
+        public string ProfileName { get; }
+
+        public decimal MaxTurnover { get; }
     }
 }

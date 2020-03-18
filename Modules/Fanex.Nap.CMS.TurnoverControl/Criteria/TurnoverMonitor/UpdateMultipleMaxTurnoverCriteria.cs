@@ -1,57 +1,65 @@
 ﻿using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using System.Text;
-using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
-    public class UpdateMultipleMaxTurnoverCriteria : NonQueryCriteria
+    public class UpdateMultipleMaxTurnoverCriteria : CriteriaBase
     {
-        [SpParam(Ignored = true)]
-        public UpdateMaxTurnoverViewModel[] GlobalSettingItems { get; set; }
+        public UpdateMultipleMaxTurnoverCriteria(
+            IEnumerable<UpdateMaxTurnoverParam> globalSettings,
+            int userId,
+            string ip)
+        {
+            GlobalSettings = globalSettings;
+            UserId = userId;
+            IP = ip;
+        }
+
+        public IEnumerable<UpdateMaxTurnoverParam> GlobalSettings { get; }
+
+        public int UserId { get; }
+
+        public string IP { get; }
 
         public override string GetSettingKey()
-        {
-            return "NAP_TOControl_MatchTurnoverUpdateMultiple";
-        }
-
-        public override bool IsValid()
-        {
-            return GlobalSettingItems != null && GlobalSettingItems.Any();
-        }
+            => "NAP_TOControl_MatchTurnoverUpdateMultiple";
 
         public override Hashtable GetSpParams()
+            => new Hashtable
+            {
+                ["GlobalSetting"] = ToXml(),
+                [nameof(UserId)] = UserId,
+                [nameof(IP)] = IP,
+                ["ErrCode"] = 0,
+                ["ErrMsg"] = null
+            };
+
+        private string ToXml()
         {
-            StringBuilder xmlBuilder = new StringBuilder();
+            var xmlBuilder = new StringBuilder();
             xmlBuilder.Append("<ROOT>");
 
-            foreach (var item in GlobalSettingItems)
+            foreach (var item in GlobalSettings)
             {
                 xmlBuilder.Append(ToXml(item));
             }
 
             xmlBuilder.Append("</ROOT>");
 
-            return new Hashtable
-            {
-                { "GlobalSetting", xmlBuilder.ToString() },
-                { "UserId", UserId },
-                { "IP", IP },
-                { "ErrCode", ErrCode },
-                { "ErrMsg", ErrMsg }
-            };
+            return xmlBuilder.ToString();
         }
 
-        private static string ToXml(UpdateMaxTurnoverViewModel item)
-        {
-            return string.Format(
-                "<GlobalSetting CustId=\"{0}\" MatchId=\"{1}\" IsGroupHeadline=\"{2}\" MaxTurnover=\"{3}\" SportType=\"{4}\"/>",
+        private static string ToXml(UpdateMaxTurnoverParam item)
+            => string.Format(
+                "<gs custID=\"{0}\" mid=\"{1}\" isGH=\"{2}\" maxTO=\"{3}\" spt=\"{4}\" pfID=\"{5}\"/>",
                 item.CustId,
                 item.MatchId,
                 item.IsGroupHeadline ? 1 : 0,
                 item.MaxTurnover,
-                item.SportType);
-        }
+                item.SportType,
+                item.ProfileId);
     }
 }

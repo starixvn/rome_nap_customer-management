@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
 using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
 using Fanex.NAP.Framework.Data;
 
@@ -10,60 +8,56 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
 {
     public class ValidateGlobalSettingCriteria : CriteriaBase
     {
-        public ValidateGlobalSettingCriteria(
-            SportType sportType,
-            IEnumerable<GlobalSettingExcel> globalSettingExcels)
+        public ValidateGlobalSettingCriteria(short sportType, IEnumerable<GlobalSettingExcel> globalSettings)
         {
-            Type = (short)sportType;
-            GlobalSettingExcels = globalSettingExcels;
+            SportType = sportType;
+            GlobalSettings = globalSettings;
         }
 
-        [SpParam(Ignored = true)]
-        public short Type { get; private set; }
+        public short SportType { get; }
 
-        [SpParam(Ignored = true)]
-        public IEnumerable<GlobalSettingExcel> GlobalSettingExcels { get; private set; }
+        public IEnumerable<GlobalSettingExcel> GlobalSettings { get; }
 
         public override string GetSettingKey()
-        {
-            return "NAP_TOControl_GlobalSettingValidation";
-        }
-
-        public override bool IsValid()
-        {
-            SportType sportType = (SportType)Type;
-            bool validSportType = sportType == SportType.Soccer || sportType == SportType.Others;
-            bool validList = GlobalSettingExcels != null && GlobalSettingExcels.Any();
-
-            return validSportType && validList;
-        }
+            => "NAP_TOControl_GlobalSettingValidation";
 
         public override Hashtable GetSpParams()
-        {
-            StringBuilder xmlBuilder = new StringBuilder();
-            xmlBuilder.Append("<ROOT>");
-
-            foreach (var item in GlobalSettingExcels)
+            => new Hashtable
             {
-                xmlBuilder.Append(ToXml(item));
+                [nameof(SportType)] = SportType,
+                ["GlobalSetting"] = ToXml()
+            };
+
+        private string ToXml()
+        {
+            var builder = new StringBuilder();
+            builder.Append("<ROOT>");
+
+            foreach (var item in GlobalSettings)
+            {
+                foreach (var mto in item.MaxTurnovers)
+                {
+                    builder.Append(ToXml(item, mto));
+                }
             }
 
-            xmlBuilder.Append("</ROOT>");
+            builder.Append("</ROOT>");
 
-            return new Hashtable
-            {
-                { "GlobalSetting", xmlBuilder.ToString() }
-            };
+            return builder.ToString();
         }
 
-        private string ToXml(GlobalSettingExcel item)
+        private string ToXml(GlobalSettingExcel globalSetting, MaxTurnoverExcel mto)
         {
-            return string.Format(
-                "<GlobalSetting Username=\"{0}\" IsGroupHeadline=\"{1}\" MaxTurnover=\"{2}\" SportType=\"{3}\"/>",
-                item.UserName,
-                item.Headline,
-                item.MaxTurnover,
-                Type);
+            var builder = new StringBuilder("<gs ")
+                .Append("us=\"").Append(globalSetting.Username).Append("\" ")
+                .Append("isGH=\"").Append(globalSetting.Headline).Append("\" ")
+                .Append("maxTO=\"").Append(mto.MaxTurnover).Append("\" ")
+                .Append("spt=\"").Append(SportType).Append("\" ")
+                .Append("pfID=\"").Append(mto.ProfileId).Append("\" ")
+                .Append("rowID=\"").Append(globalSetting.ExcelRow).Append("\"")
+                .Append("/>");
+
+            return builder.ToString();
         }
     }
 }

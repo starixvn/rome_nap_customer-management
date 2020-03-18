@@ -25,6 +25,13 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
             }
         }
 
+        private static IdNameModel GetSport(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["sporttype"]),
+                Name = reader["sportname"].ToString()
+            };
+
         public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -37,6 +44,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                     }
                 }
             }
+        }
+
+        private static IdNameModel GetLeague(IDataReader reader)
+        {
+            var leagueId = Convert.ToInt32(reader["leagueid"]);
+
+            return new IdNameModel
+            {
+                Id = leagueId,
+                Name = CacheRef.GetLeagueName(leagueId.ToString())
+            };
         }
 
         public IEnumerable<IdNameModel> GetMatches(ICriteria criteria)
@@ -58,11 +76,18 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
             }
         }
 
-        public IEnumerable<CustomerTurnover> GetCustomerTurnovers(ICriteria criteria)
+        private static IdNameModel GetMatch(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["matchid"]),
+                Name = $"{CacheRef.GetTeamName(reader["homeid"])} -vs- {CacheRef.GetTeamName(reader["awayid"])}"
+            };
+
+        public IEnumerable<TurnoverMonitorItem> GetCustomerTurnovers(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerTurnover>(criteria.GetSpParams());
+                return db.Query<TurnoverMonitorItem>(criteria.GetSpParams());
             }
         }
 
@@ -74,62 +99,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
             }
         }
 
-        public Result UpdateMaxTurnover(ICriteria criteria)
+        public Result ExecuteNonQuery(ICriteria criteria)
         {
-            return ExecuteNonQuery(criteria);
-        }
-
-        public Result UpdateMultipleMaxTurnover(ICriteria criteria)
-        {
-            return ExecuteNonQuery(criteria);
-        }
-
-        private static Result ExecuteNonQuery(ICriteria criteria)
-        {
-            Result result = new Result();
-
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
-                result.Code = Convert.ToInt32(outputParams["errcode"]);
-                result.Message = outputParams["errmsg"].ToString();
+                return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    outputParams["errmsg"].ToString());
             }
-
-            return result;
-        }
-
-        private static IdNameModel GetSport(IDataReader reader)
-        {
-            return new IdNameModel
-            {
-                Id = Convert.ToInt32(reader["sporttype"]),
-                Name = reader["sportname"].ToString()
-            };
-        }
-
-        private static IdNameModel GetLeague(IDataReader reader)
-        {
-            int leagueId = Convert.ToInt32(reader["leagueid"]);
-
-            return new IdNameModel
-            {
-                Id = leagueId,
-                Name = CacheRef.GetLeagueName(leagueId.ToString())
-            };
-        }
-
-        private static IdNameModel GetMatch(IDataReader reader)
-        {
-            return new IdNameModel
-            {
-                Id = Convert.ToInt32(reader["matchid"]),
-                Name = string.Format(
-                    "{0} -vs- {1}",
-                    CacheRef.GetTeamName(reader["homeid"]),
-                    CacheRef.GetTeamName(reader["awayid"]))
-            };
         }
     }
 }

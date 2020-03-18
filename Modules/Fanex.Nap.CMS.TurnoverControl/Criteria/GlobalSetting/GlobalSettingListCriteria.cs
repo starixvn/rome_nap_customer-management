@@ -4,39 +4,20 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 {
     public class GlobalSettingListCriteria : CriteriaBase
     {
-        public string UserName { get; set; }
+        public GlobalSettingListCriteria(string username, short sportType, int exchangeId)
+        {
+            Username = username;
+            SportType = sportType;
+            ExchangeId = exchangeId;
+        }
 
-        public short SportType { get; set; }
+        public string Username { get; }
 
-        public int ExchangeId { get; set; }
+        public short SportType { get; }
 
-        [SpParam(Ignored = true)]
-        public string SortField { get; set; }
-
-        [SpParam(Ignored = true)]
-        public string SortDirection { get; set; }
-
-        [SpParam(Ignored = true)]
-        public int Page { get; set; }
-
-        [SpParam(Ignored = true)]
-        public int Size { get; set; }
-
-        [SpParam(Ignored = true)]
-        public bool Cache { get; set; }
+        public int ExchangeId { get; }
 
         public override string GetSettingKey()
-        {
-            return "TurnoverControl_GlobalSetting_List";
-        }
-
-        public override bool IsValid()
-        {
-            Enums.SportType type = (Enums.SportType)SportType;
-
-            return (type == Enums.SportType.Soccer || type == Enums.SportType.Others) &&
-                !string.IsNullOrWhiteSpace(SortField) &&
-                !string.IsNullOrWhiteSpace(SortDirection);
-        }
+            => "NAP_TOControl_GlobalSettingSelect";
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using Fanex.Logging.Extensions.Web;
 using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.TurnoverControl.Criteria;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
-using Fanex.NAP.Framework.Data;
+using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
@@ -21,33 +21,52 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
     public class ImportGlobalSettingService : IImportGlobalSettingService
     {
         private const int BadRequest = (int)HttpStatusCode.BadRequest;
+        private const int UsernameColumnIndex = 0;
+        private const int HeadlineColumnIndex = 1;
+        private const int StartOfMaxTurnoverColumnIndex = 2;
 
-        private readonly IImportGlobalSettingRepository _importRepository;
+        private readonly IGlobalSettingService globalSettingService;
+        private readonly IImportGlobalSettingRepository importRepository;
 
-        public ImportGlobalSettingService(IImportGlobalSettingRepository importRepository = null)
+        public ImportGlobalSettingService(
+            IGlobalSettingService globalSettingService = null,
+            IImportGlobalSettingRepository importRepository = null)
         {
-            _importRepository = importRepository ?? new ImportGlobalSettingRepository();
+            this.globalSettingService = globalSettingService ?? new GlobalSettingService();
+            this.importRepository = importRepository ?? new ImportGlobalSettingRepository();
         }
 
-        public ImportGlobalSettingModel ReadExcelStream(SportType sportType, Stream stream, string fileExtension)
+        public ImportGlobalSettingModel ReadExcelStream(short sportType, Stream stream, string fileExtension)
         {
             ISheet sheet = null;
-            var result = ValidateTemplate(stream, fileExtension, ref sheet);
+            var profiles = globalSettingService.GetProfiles(sportType).ToList();
+            var result = ValidateTemplate(stream, fileExtension, profiles, ref sheet);
 
-            if (result.Code != ErrorCodeConstants.NoneError)
+            if (!result.IsSuccess)
             {
                 return new ImportGlobalSettingModel(result.Code, result.Message);
             }
 
-            var globalSettingExcels = ReadExcelStream(sheet);
-            ICriteria criteria = new ValidateGlobalSettingCriteria(sportType, globalSettingExcels);
+            var globalSettingExcels = ReadExcelStream(sheet, profiles);
+            var rawData = importRepository.ValidateGlobalSettingExcels(
+                new ValidateGlobalSettingCriteria(sportType, globalSettingExcels));
 
-            return _importRepository.ValidateGlobalSettingExcels(criteria);
+            var validSettings = rawData.Item1
+                    .GroupBy(g => new { g.CustId, g.Username, g.Level, g.Currency })
+                    .Select(grp => new GlobalSettingCustomer(
+                        grp.Key.CustId,
+                        grp.Key.Username,
+                        grp.Key.Level,
+                        grp.Key.Currency,
+                        grp.Select(g => new MaxTurnoverItem(g.ProfileId, g.MaxTurnover)).ToList()));
+
+            return new ImportGlobalSettingModel(validSettings, rawData.Item2);
         }
 
-        public Result ImportGlobalSettings(NonQueryCriteria criteria)
+        public Result ImportGlobalSettings(short sportType, IEnumerable<GlobalSettingCustomer> globalSettings, int userId, string ip)
         {
-            var result = _importRepository.ImportGlobalSettings(criteria);
+            var result = importRepository.ImportGlobalSettings(
+                new AddMultipleGlobalSettingCriteria(globalSettings, sportType, userId, ip));
 
             if (result.Code == ErrorCodeConstants.NoneError)
             {
@@ -59,7 +78,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
 
         #region Validate excel template
 
-        private static Result ValidateTemplate(Stream stream, string fileExtension, ref ISheet sheet)
+        private static Result ValidateTemplate(
+            Stream stream,
+            string fileExtension,
+            IList<IdNameModel> profiles,
+            ref ISheet sheet)
         {
             IWorkbook workbook = GetWorkbook(stream, fileExtension);
 
@@ -75,14 +98,9 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
                 return new Result(BadRequest, Labels.Error_IncorrectLayout);
             }
 
-            IRow headerRow = sheet.GetRow(0);
-
-            if (InvalidHeaderRow(headerRow))
-            {
-                return new Result(BadRequest, Labels.Error_IncorrectLayout);
-            }
-
-            return new Result();
+            return InvalidHeaderRow(sheet.GetRow(0), profiles)
+                ? new Result(BadRequest, Labels.Error_IncorrectLayout)
+                : new Result();
         }
 
         private static IWorkbook GetWorkbook(Stream stream, string fileExtension)
@@ -110,45 +128,25 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
             return null;
         }
 
-        private static bool InvalidHeaderRow(IRow headerRow)
+        private static bool InvalidHeaderRow(IRow headerRow, IEnumerable<IdNameModel> profiles)
         {
-            if (headerRow == null || headerRow.LastCellNum < 3)
-            {
-                return true;
-            }
+            const int TotalColumns = 12;
+            var columnIndex = StartOfMaxTurnoverColumnIndex;
 
-            string userName = headerRow.Cells[0].ToString();
-
-            if (string.IsNullOrEmpty(userName) ||
-                !userName.Trim().Equals(Labels.UserName, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            string headline = headerRow.Cells[1].ToString();
-
-            if (string.IsNullOrEmpty(headline) ||
-                !headline.Trim().Equals(Labels.Headline, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            string maxTurnover = headerRow.Cells[2].ToString();
-
-            if (string.IsNullOrEmpty(maxTurnover) ||
-                !maxTurnover.Trim().Equals(Labels.Max_Turnover, StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            return false;
+            return headerRow == null
+                || headerRow.LastCellNum < TotalColumns
+                || InvalidHeaderRow(headerRow.Cells[UsernameColumnIndex].ToString(), Labels.UserName)
+                || InvalidHeaderRow(headerRow.Cells[HeadlineColumnIndex].ToString(), Labels.Headline)
+                || profiles.Any(p => InvalidHeaderRow(headerRow.Cells[columnIndex++].ToString(), p.Name));
         }
 
-        private static IEnumerable<GlobalSettingExcel> ReadExcelStream(ISheet sheet)
+        private static bool InvalidHeaderRow(string source, string destination)
+            => string.IsNullOrEmpty(source) || !source.Trim().Equals(destination, StringComparison.OrdinalIgnoreCase);
+
+        private static IEnumerable<GlobalSettingExcel> ReadExcelStream(ISheet sheet, IList<IdNameModel> profiles)
         {
             IRow row;
-            int totalRows = sheet.LastRowNum + 1;
-            GlobalSettingExcel setting;
+            var totalRows = sheet.LastRowNum + 1;
 
             for (int i = 1; i < totalRows; i++)
             {
@@ -156,41 +154,35 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
 
                 if (row != null)
                 {
-                    setting = GetGlobalSettingExcel(row);
-
-                    if (!string.IsNullOrEmpty(setting.UserName) ||
-                        !string.IsNullOrEmpty(setting.Headline) ||
-                        !string.IsNullOrEmpty(setting.MaxTurnover))
-                    {
-                        yield return setting;
-                    }
+                    yield return GetGlobalSettingExcel(row, profiles, i + 1);
                 }
             }
         }
 
-        private static GlobalSettingExcel GetGlobalSettingExcel(IRow row)
+        private static GlobalSettingExcel GetGlobalSettingExcel(IRow row, IList<IdNameModel> profiles, int excelRow)
         {
-            GlobalSettingExcel globalSettingExcel = new GlobalSettingExcel();
+            var username = string.Empty;
+            var headline = string.Empty;
+            IList<MaxTurnoverExcel> maxTurnoverExcels = new List<MaxTurnoverExcel>();
 
             foreach (ICell cell in row.Cells)
             {
                 switch (cell.ColumnIndex)
                 {
-                    case 0:
-                        globalSettingExcel.UserName = cell.ToString().Trim();
+                    case UsernameColumnIndex:
+                        username = cell.ToString().Trim();
                         break;
-                    case 1:
-                        globalSettingExcel.Headline = cell.ToString().Trim();
-                        break;
-                    case 2:
-                        globalSettingExcel.MaxTurnover = cell.ToString().Trim();
+                    case HeadlineColumnIndex:
+                        headline = cell.ToString().Trim();
                         break;
                     default:
-                        continue;
+                        var columnIndex = cell.ColumnIndex - StartOfMaxTurnoverColumnIndex;
+                        maxTurnoverExcels.Add(new MaxTurnoverExcel(profiles[columnIndex].Id, cell.ToString().Trim()));
+                        break;
                 }
             }
 
-            return globalSettingExcel;
+            return new GlobalSettingExcel(username, headline, maxTurnoverExcels, excelRow);
         }
 
         #endregion

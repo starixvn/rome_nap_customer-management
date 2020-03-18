@@ -4,17 +4,20 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
 {
     public class LeagueTurnover
     {
-        public LeagueTurnover(int leagueId, string leagueName)
+        public LeagueTurnover(
+            int leagueId,
+            string leagueName,
+            IEnumerable<MatchTurnover> matchTurnovers)
         {
             LeagueId = leagueId;
             LeagueName = leagueName;
-            MatchTurnovers = new List<MatchTurnover>();
+            MatchTurnovers = matchTurnovers;
         }
 
-        public int LeagueId { get; private set; }
+        public int LeagueId { get; }
 
-        public string LeagueName { get; private set; }
+        public string LeagueName { get; }
 
-        public IList<MatchTurnover> MatchTurnovers { get; private set; }
+        public IEnumerable<MatchTurnover> MatchTurnovers { get; }
     }
 }

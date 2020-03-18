@@ -6,20 +6,20 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
     public class GlobalSettingModel
     {
         public GlobalSettingModel()
-            : this(0, Enumerable.Empty<GlobalSettingItem>())
+            : this(0, Enumerable.Empty<GlobalSettingCustomer>())
         {
         }
 
         public GlobalSettingModel(
             int totalItems,
-            IEnumerable<GlobalSettingItem> globalSettings)
+            IEnumerable<GlobalSettingCustomer> globalSettings)
         {
             TotalItems = totalItems;
             GlobalSettings = globalSettings;
         }
 
-        public int TotalItems { get; private set; }
+        public int TotalItems { get; }
 
-        public IEnumerable<GlobalSettingItem> GlobalSettings { get; private set; }
+        public IEnumerable<GlobalSettingCustomer> GlobalSettings { get; }
     }
 }

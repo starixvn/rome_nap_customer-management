@@ -1,22 +1,27 @@
-﻿namespace Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting
+﻿using System.Collections.Generic;
+
+namespace Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting
 {
-    public sealed class GlobalSettingExcel
+    public class GlobalSettingExcel
     {
-        public GlobalSettingExcel()
+        public GlobalSettingExcel(
+            string username,
+            string headline,
+            IEnumerable<MaxTurnoverExcel> maxTurnovers,
+            int excelRow = 0)
         {
-        }
-
-        public GlobalSettingExcel(string userName, string headline, string maxTurnover)
-        {
-            UserName = userName;
+            Username = username;
             Headline = headline;
-            MaxTurnover = maxTurnover;
+            MaxTurnovers = maxTurnovers;
+            ExcelRow = excelRow;
         }
 
-        public string UserName { get; set; }
+        public string Username { get; }
 
-        public string Headline { get; set; }
+        public string Headline { get; }
 
-        public string MaxTurnover { get; set; }
+        public IEnumerable<MaxTurnoverExcel> MaxTurnovers { get; }
+
+        public int ExcelRow { get; }
     }
 }

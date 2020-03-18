@@ -1,100 +1,163 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Web;
+using Fanex.Nap.CMS.TurnoverControl.Constants;
+using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
 using Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 {
     public class TurnoverMonitorService : ITurnoverMonitorService
     {
-        private readonly ITurnoverMonitorRepository _turnoverMonitorRepository;
+        private readonly ITurnoverMonitorRepository turnoverMonitorRepository;
 
         public TurnoverMonitorService(ITurnoverMonitorRepository turnoverMonitorRepository = null)
         {
-            _turnoverMonitorRepository = turnoverMonitorRepository ?? new TurnoverMonitorRepository();
+            this.turnoverMonitorRepository = turnoverMonitorRepository ?? new TurnoverMonitorRepository();
         }
 
-        public IEnumerable<IdNameModel> GetSports(ICriteria criteria)
-        {
-            return _turnoverMonitorRepository.GetSports(criteria);
-        }
+        public IEnumerable<IdNameModel> GetSports(byte mode, short sportType)
+            => turnoverMonitorRepository.GetSports(new GetSportsCriteria(mode, sportType));
 
-        public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetLeagues(string fromDate, string toDate, short sportType, DateTime moveBetsDay)
         {
-            var leagues = _turnoverMonitorRepository.GetLeagues(criteria).ToList();
+            var leagues = turnoverMonitorRepository
+                .GetLeagues(new GetLeaguesCriteria(fromDate, toDate, sportType, moveBetsDay))
+                .ToList();
             leagues.Insert(0, new IdNameModel { Id = 0, Name = Labels.All_Leagues });
 
             return leagues;
         }
 
-        public IEnumerable<IdNameModel> GetMatches(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetMatches(string fromDate, string toDate, int leagueId)
         {
-            var matches = _turnoverMonitorRepository.GetMatches(criteria).ToList();
+            var matches = turnoverMonitorRepository
+                .GetMatches(new GetMatchesCriteria(fromDate, toDate, leagueId))
+                .ToList();
             matches.Insert(0, new IdNameModel { Id = 0, Name = Labels.AllMatches });
 
             return matches;
         }
 
-        public IEnumerable<LeagueTurnover> GetCustomerTurnovers(ICriteria criteria)
+        public IEnumerable<LeagueTurnover> GetCustomerTurnovers(
+            string fromDate,
+            string toDate,
+            short sportType,
+            int leagueId,
+            int matchId,
+            string username,
+            bool isExcludeCompletedEvent,
+            int percentageUsed,
+            DateTime moveBetsDay)
         {
-            var rawData = _turnoverMonitorRepository.GetCustomerTurnovers(criteria);
+            var rawData = turnoverMonitorRepository.GetCustomerTurnovers(
+                new GetCustomerTurnoversCriteria(
+                    fromDate,
+                    toDate,
+                    sportType,
+                    leagueId,
+                    matchId,
+                    username,
+                    isExcludeCompletedEvent,
+                    percentageUsed,
+                    moveBetsDay));
 
             if (!rawData.Any())
             {
-                return new List<LeagueTurnover>();
+                yield break;
             }
 
-            LeagueTurnover leagueTurnover;
-            MatchTurnover matchTurnover;
-            IList<LeagueTurnover> leagueTurnovers = new List<LeagueTurnover>();
             var leagueLookup = rawData.ToLookup(kvp => kvp.LeagueId, kvp => kvp);
 
             foreach (var leagueGroup in leagueLookup)
             {
-                leagueTurnover = new LeagueTurnover(
-                    leagueGroup.Key,
-                    CacheRef.GetLeagueName(leagueGroup.Key.ToString()));
-
-                var matchLookup = leagueGroup.ToLookup(kvp => kvp.MatchId, kvp => kvp);
-
-                foreach (var matchGroup in matchLookup)
-                {
-                    matchTurnover = new MatchTurnover(matchGroup.Key);
-
-                    foreach (var item in matchGroup)
-                    {
-                        matchTurnover.HomeId = item.HomeId;
-                        matchTurnover.HomeName = CacheRef.GetTeamName(item.HomeId);
-
-                        matchTurnover.AwayId = item.AwayId;
-                        matchTurnover.AwayName = CacheRef.GetTeamName(item.AwayId);
-
-                        matchTurnover.IsNeutral = item.IsNeutral;
-
-                        matchTurnover.EventDate = item.EventDate.ToShortFormatedDateWithSlash();
-                        matchTurnover.EventStatus = item.EventStatus;
-
-                        matchTurnover.CustomerTurnovers.Add(item);
-                    }
-
-                    leagueTurnover.MatchTurnovers.Add(matchTurnover);
-                }
-
-                leagueTurnovers.Add(leagueTurnover);
+                yield return GetLeagueTurnover(leagueGroup);
             }
-
-            return leagueTurnovers;
         }
 
-        public IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria)
+        private static LeagueTurnover GetLeagueTurnover(IGrouping<int, TurnoverMonitorItem> leagueGroup)
         {
-            var houseTurnovers = _turnoverMonitorRepository.GetHouseTurnovers(criteria);
+            IList<MatchTurnover> matchTurnovers = new List<MatchTurnover>();
+            var matchLookup = leagueGroup.ToLookup(kvp => kvp.MatchId, kvp => kvp);
+
+            foreach (var matchGroup in matchLookup)
+            {
+                matchTurnovers.Add(GetMatchTurnover(matchGroup));
+            }
+
+            return new LeagueTurnover(
+                leagueGroup.Key,
+                CacheRef.GetLeagueName(leagueGroup.Key.ToString()),
+                matchTurnovers);
+        }
+
+        private static MatchTurnover GetMatchTurnover(IGrouping<int, TurnoverMonitorItem> matchGroup)
+        {
+            var firstMatch = matchGroup.FirstOrDefault();
+            var matchTurnover = new MatchTurnover(
+                matchGroup.Key,
+                GetMatchName(firstMatch.HomeId, firstMatch.AwayId, firstMatch.IsNeutral),
+                firstMatch.EventDate.ToShortFormatedDateWithSlash(),
+                firstMatch.EventStatus);
+
+            var customerLookup = matchGroup.ToLookup(kvp => new { kvp.CustId, kvp.Level }, kvp => kvp);
+
+            foreach (var customerGroup in customerLookup)
+            {
+                matchTurnover.CustomerTurnovers.Add(GetCustomerTurnover(customerGroup));
+            }
+
+            return matchTurnover;
+        }
+
+        private static string GetMatchName(int homeId, int awayId, bool isNeutral)
+            => $"{CacheRef.GetTeamName(homeId)}{(isNeutral ? " (N)" : string.Empty)} -vs- {CacheRef.GetTeamName(awayId)}";
+
+        private static CustomerTurnover GetCustomerTurnover(IGrouping<object, TurnoverMonitorItem> customerGroup)
+        {
+            var firstCustomer = customerGroup.FirstOrDefault();
+            var customerTurnover = new CustomerTurnover(firstCustomer);
+            BetTypeTurnover maxTurnover;
+
+            foreach (var item in customerGroup)
+            {
+                maxTurnover = new BetTypeTurnover(item);
+
+                if (item.GroupName.Equals(GroupNameConst.HDPML, StringComparison.OrdinalIgnoreCase))
+                {
+                    customerTurnover.HDPML.Add(maxTurnover);
+                }
+                else if (item.GroupName.Equals(GroupNameConst.OU, StringComparison.OrdinalIgnoreCase))
+                {
+                    customerTurnover.OU.Add(maxTurnover);
+                }
+                else if (item.GroupName.Equals(GroupNameConst._1HHDP1HML, StringComparison.OrdinalIgnoreCase))
+                {
+                    customerTurnover._1HHDP1HML.Add(maxTurnover);
+                }
+                else if (item.GroupName.Equals(GroupNameConst._1HOU, StringComparison.OrdinalIgnoreCase))
+                {
+                    customerTurnover._1HOU.Add(maxTurnover);
+                }
+                else
+                {
+                    customerTurnover.Others.Add(maxTurnover);
+                }
+            }
+
+            return customerTurnover;
+        }
+
+        public IEnumerable<HouseTurnover> GetHouseTurnovers(int custId, int matchId, bool isGroupHeadline, string eventDate)
+        {
+            var houseTurnovers = turnoverMonitorRepository.GetHouseTurnovers(
+                new GetHouseTurnoverCriteria(custId, matchId, isGroupHeadline, eventDate));
 
             if (houseTurnovers.Any())
             {
@@ -114,11 +177,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             }
         }
 
-        public Result UpdateMaxTurnover(ICriteria criteria)
+        public Result UpdateMaxTurnover(UpdateMaxTurnoverParam param, int userId, string ip)
         {
-            var result = _turnoverMonitorRepository.UpdateMaxTurnover(criteria);
+            var result = turnoverMonitorRepository.ExecuteNonQuery(
+                new UpdateMaxTurnoverCriteria(param, userId, ip));
 
-            if (result.Code == ErrorCodeConstants.NoneError)
+            if (result.IsSuccess)
             {
                 result.Message = Labels.GlobalSetting_UpdateMaxTurnover_Success;
             }
@@ -126,11 +190,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             return result;
         }
 
-        public Result UpdateMultipleMaxTurnover(ICriteria criteria)
+        public Result UpdateMultipleMaxTurnover(IEnumerable<UpdateMaxTurnoverParam> param, int userId, string ip)
         {
-            var result = _turnoverMonitorRepository.UpdateMultipleMaxTurnover(criteria);
+            var result = turnoverMonitorRepository.ExecuteNonQuery(
+                new UpdateMultipleMaxTurnoverCriteria(param, userId, ip));
 
-            if (result.Code == ErrorCodeConstants.NoneError)
+            if (result.IsSuccess)
             {
                 result.Message = Labels.GlobalSetting_UpdateMaxTurnover_Success;
             }

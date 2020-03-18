@@ -269,14 +269,10 @@
             ExportExcel.RenderCurrentCell(paddingText + rate.GroupName, enabledStyle);
             var nonliveText = rate.NonliveId == 0 ?
                 followParentText :
-#pragma warning disable S3358 // Ternary operators should not be nested
                 _isGlobalSetting ? $"{rate.NonLiveValue.ToString("#,##0")}" : $"{rate.NonLiveValue.ToString("#,##0")} ({GetRateText(rate.NonLiveValue)})";
-#pragma warning restore S3358 // Ternary operators should not be nested
             var liveText = rate.LiveId == 0 ?
                 followParentText :
-#pragma warning disable S3358 // Ternary operators should not be nested
                 _isGlobalSetting ? $"{rate.LiveValue.ToString("#,##0")}" : $"{rate.LiveValue.ToString("#,##0")} ({GetRateText(rate.LiveValue)})";
-#pragma warning restore S3358 // Ternary operators should not be nested
             ExportExcel.RenderCurrentCell(paddingText + nonliveText, _report.EnableNonLive ? enabledStyle : disabledStyle);
             if (_isMember)
             {

@@ -1,24 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 {
     public interface ITurnoverMonitorService
     {
-        IEnumerable<IdNameModel> GetSports(ICriteria criteria);
+        IEnumerable<IdNameModel> GetSports(byte mode, short sportType);
 
-        IEnumerable<IdNameModel> GetLeagues(ICriteria criteria);
+        IEnumerable<IdNameModel> GetLeagues(string fromDate, string toDate, short sportType, DateTime moveBetsDay);
 
-        IEnumerable<IdNameModel> GetMatches(ICriteria criteria);
+        IEnumerable<IdNameModel> GetMatches(string fromDate, string toDate, int leagueId);
 
-        IEnumerable<LeagueTurnover> GetCustomerTurnovers(ICriteria criteria);
+        IEnumerable<LeagueTurnover> GetCustomerTurnovers(
+            string fromDate,
+            string toDate,
+            short sportType,
+            int leagueId,
+            int matchId,
+            string username,
+            bool isExcludeCompletedEvent,
+            int percentageUsed,
+            DateTime moveBetsDay);
 
-        IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria);
+        IEnumerable<HouseTurnover> GetHouseTurnovers(int custId, int matchId, bool isGroupHeadline, string eventDate);
 
-        Result UpdateMaxTurnover(ICriteria criteria);
+        Result UpdateMaxTurnover(UpdateMaxTurnoverParam param, int userId, string ip);
 
-        Result UpdateMultipleMaxTurnover(ICriteria criteria);
+        Result UpdateMultipleMaxTurnover(IEnumerable<UpdateMaxTurnoverParam> param, int userId, string ip);
     }
 }

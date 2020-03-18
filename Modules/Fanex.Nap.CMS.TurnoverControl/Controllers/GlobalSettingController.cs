@@ -1,23 +1,21 @@
-﻿using System.Linq;
-using System.Net;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
-using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Resources;
 using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-using Fanex.Nap.CMS.TurnoverControl.Criteria;
-using Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Constants;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
+using Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting;
 using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
+    [NapSuperAuth]
     public class GlobalSettingController : BaseController
     {
-        private readonly IGlobalSettingService _globalSettingService;
+        private readonly IGlobalSettingService globalSettingService;
 
         public GlobalSettingController()
             : this(null)
@@ -26,147 +24,157 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 
         public GlobalSettingController(IGlobalSettingService globalSettingService)
         {
-            _globalSettingService = globalSettingService ?? new GlobalSettingService();
+            this.globalSettingService = globalSettingService ?? new GlobalSettingService();
         }
 
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(short? t)
         {
-            short sporttype = t ?? (short)SportType.Soccer;
+            var sporttype = t ?? SportTypeConst.Soccer;
 
             if (!HasReadGlobalSetting(sporttype))
             {
                 return Redirect("~/Error/AccessDenied");
             }
 
-            ViewData["SportType"] = sporttype;
-            ViewData["HostPermission"] = HasHostGlobalSetting(sporttype);
+            var viewModel = new GlobalSettingViewModel(
+                sporttype,
+                HasHostGlobalSetting(sporttype),
+                globalSettingService.GetCurrencies(),
+                globalSettingService.GetProfiles(sporttype));
 
-            return View("~/Areas/TurnoverControl/Views/GlobalSetting/Index.cshtml");
+            return View("~/Areas/TurnoverControl/Views/GlobalSetting/Index.cshtml", viewModel);
         }
 
         public JsonResult GetCurrencies()
-        {
-            return JsonData(_globalSettingService.GetCurrencies());
-        }
+            => JsonData(globalSettingService.GetCurrencies());
 
-        public JsonResult GetList(GlobalSettingListCriteria criteria)
+        public JsonResult GetList(GetListGlobalSettingViewModel viewModel)
         {
-            GlobalSettingModel model = !criteria.IsValid() || !HasReadGlobalSetting(criteria.SportType) ?
-                new GlobalSettingModel(0, Enumerable.Empty<GlobalSettingItem>()) :
-                _globalSettingService.GetList(criteria);
+            var model = !viewModel.IsValid() || !HasReadGlobalSetting(viewModel.SportType)
+                ? new GlobalSettingModel()
+                : globalSettingService.GetList(
+                viewModel.Username,
+                viewModel.SportType,
+                viewModel.ExchangeId,
+                viewModel.SortField,
+                viewModel.SortDirection,
+                viewModel.Page,
+                viewModel.Size,
+                viewModel.Cache);
 
             return JsonData(model);
         }
 
-        public void ExportList(GlobalSettingListCriteria criteria)
+        public void ExportList(GetListGlobalSettingViewModel viewModel)
         {
-            GlobalSettingModel model;
+            viewModel.Size = 0;
+            viewModel.Cache = true;
 
-            if (!criteria.IsValid() || !HasReadGlobalSetting(criteria.SportType))
-            {
-                model = new GlobalSettingModel(0, Enumerable.Empty<GlobalSettingItem>());
-            }
-            else
-            {
-                criteria.Cache = true;
-                criteria.Size = 0;
-                model = _globalSettingService.GetList(criteria);
-            }
+            var model = !viewModel.IsValid() || !HasReadGlobalSetting(viewModel.SportType)
+                ? new GlobalSettingModel()
+                : globalSettingService.GetList(
+                    viewModel.Username,
+                    viewModel.SportType,
+                    viewModel.ExchangeId,
+                    viewModel.SortField,
+                    viewModel.SortDirection,
+                    viewModel.Page,
+                    viewModel.Size,
+                    viewModel.Cache);
 
-            IExcelExporter exporter = new GlobalSettingExporter((SportType)criteria.SportType, model.GlobalSettings);
+            IExcelExporter exporter = new GlobalSettingExporter(
+                viewModel.SportType,
+                model.GlobalSettings,
+                globalSettingService.GetProfiles(viewModel.SportType));
+
             exporter.ResponseStream();
         }
 
         [HttpPost]
-        public JsonResult Add(AddGlobalSettingCriteria criteria)
+        public JsonResult Add(AddGlobalSettingViewModel viewModel)
         {
-            Result result;
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
 
-            if (!criteria.IsValid())
+            if (!HasHostGlobalSetting(viewModel.SportType))
             {
-                result = new Result(400, Labels.BadRequest);
+                return Forbidden();
             }
-            else if (!HasHostGlobalSetting(criteria.SportType))
-            {
-                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
-            }
-            else
-            {
-                AssignUserIdAndIP(criteria);
-                result = _globalSettingService.Add(criteria);
-            }
+
+            var result = globalSettingService.Add(
+                viewModel.Username,
+                viewModel.MaxTurnovers,
+                viewModel.IsGroupHeadline,
+                viewModel.SportType,
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        public JsonResult Edit(EditGlobalSettingCriteria criteria)
+        public JsonResult Edit(EditGlobalSettingViewModel viewModel)
         {
-            Result result;
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
 
-            if (!criteria.IsValid())
+            if (!HasHostGlobalSetting(viewModel.SportType))
             {
-                result = new Result(400, Labels.BadRequest);
+                return Forbidden();
             }
-            else if (!HasHostGlobalSetting(criteria.SportType))
-            {
-                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
-            }
-            else
-            {
-                AssignUserIdAndIP(criteria);
-                result = _globalSettingService.Edit(criteria);
-            }
+
+            var param = new UpdateMaxTurnoverParam(
+                viewModel.CustId,
+                viewModel.MaxTurnover,
+                viewModel.IsGroupHeadline,
+                viewModel.SportType,
+                viewModel.ProfileId);
+            var result = globalSettingService.Edit(param, CurrentSession.UserId, CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        public JsonResult Delete(DeleteGlobalSettingCriteria criteria)
+        public JsonResult Delete(DeleteGlobalSettingViewModel viewModel)
         {
-            Result result;
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
 
-            if (!criteria.IsValid())
+            if (!HasHostGlobalSetting(viewModel.SportType))
             {
-                result = new Result(400, Labels.BadRequest);
+                return Forbidden();
             }
-            else if (!HasHostGlobalSetting(criteria.SportType))
-            {
-                result = new Result((int)HttpStatusCode.Forbidden, Labels.AccessDeniedMessage);
-            }
-            else
-            {
-                AssignUserIdAndIP(criteria);
-                result = _globalSettingService.Delete(criteria);
-            }
+
+            var result = globalSettingService.Delete(
+                    viewModel.CustId,
+                    viewModel.IsGroupHeadline,
+                    viewModel.SportType,
+                    CurrentSession.UserId,
+                    CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
-        }
-
-        [NonAction]
-        private void AssignUserIdAndIP(NonQueryCriteria criteria)
-        {
-            criteria.UserId = CurrentSession.UserId;
-            criteria.IP = CurrentContext.IP;
         }
 
         private bool HasReadGlobalSetting(short sporttype)
-        {
-            string permissionKey = sporttype == (short)SportType.Soccer ?
-                CMSFunctionKeys.GlobalSettingSoccer :
-                CMSFunctionKeys.GlobalSettingOtherSports;
+            => HasPermission(sporttype, Constant.Policy.Read);
 
-            return HasRight(permissionKey, Constant.Policy.Read);
-
-        }
         private bool HasHostGlobalSetting(short sporttype)
-        {
-            string permissionKey = sporttype == (short)SportType.Soccer ?
-                CMSFunctionKeys.GlobalSettingSoccer :
-                CMSFunctionKeys.GlobalSettingOtherSports;
+            => HasPermission(sporttype, Constant.Policy.Host);
 
-            return HasRight(permissionKey, Constant.Policy.Host);
+        private bool HasPermission(short sporttype, Constant.Policy policy)
+        {
+            var permissionKey = sporttype == SportTypeConst.Soccer
+                ? CMSFunctionKeys.GlobalSettingSoccer
+                : CMSFunctionKeys.GlobalSettingOtherSports;
+
+            return HasRight(permissionKey, policy);
         }
     }
 }

@@ -5,28 +5,48 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
     public class GetCustomerTurnoversCriteria : CriteriaBase
     {
-        public string FromDate { get; set; }
+        public GetCustomerTurnoversCriteria(
+            string fromDate,
+            string toDate,
+            short sportType,
+            int leagueId,
+            int matchId,
+            string username,
+            bool isExcludeCompletedEvent,
+            int percentageUsed,
+            DateTime moveBetsDay)
+        {
+            FromDate = fromDate;
+            ToDate = toDate;
+            SportType = sportType;
+            LeagueId = leagueId;
+            MatchId = matchId;
+            UserName = username;
+            IsExcludeCompletedEvent = isExcludeCompletedEvent;
+            PercentageUsed = percentageUsed;
+            MoveBetsDay = moveBetsDay;
+        }
 
-        public string ToDate { get; set; }
+        public string FromDate { get; }
 
-        public int SportType { get; set; }
+        public string ToDate { get; }
 
-        public int LeagueId { get; set; }
+        public short SportType { get; }
 
-        public int MatchId { get; set; }
+        public int LeagueId { get; }
 
-        public string UserName { get; set; }
+        public int MatchId { get; }
 
-        public bool IsExcludeCompletedEvent { get; set; }
+        public string UserName { get; }
+
+        public bool IsExcludeCompletedEvent { get; }
 
         [SpParam(SqlParamName = "usedpercent")]
-        public int PercentageUsed { get; set; }
+        public int PercentageUsed { get; }
 
-        public DateTime MoveBetsDay { get; set; }
+        public DateTime MoveBetsDay { get; }
 
         public override string GetSettingKey()
-        {
-            return "TurnoverControl_TurnoverMonitor_SMATurnoverList";
-        }
+            => "NAP_TOControl_MatchTurnoverSelect";
     }
 }

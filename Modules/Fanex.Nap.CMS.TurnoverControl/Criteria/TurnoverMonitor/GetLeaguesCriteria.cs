@@ -5,17 +5,27 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
     public class GetLeaguesCriteria : CriteriaBase
     {
-        public string FromDate { get; set; }
+        public GetLeaguesCriteria(
+            string fromDate,
+            string toDate,
+            short sportType,
+            DateTime moveBetsDay)
+        {
+            FromDate = fromDate;
+            ToDate = toDate;
+            SportType = sportType;
+            MoveBetsDay = moveBetsDay;
+        }
 
-        public string ToDate { get; set; }
+        public string FromDate { get; }
 
-        public int SportType { get; set; }
+        public string ToDate { get; }
 
-        public DateTime MoveBetsDay { get; set; }
+        public short SportType { get; }
+
+        public DateTime MoveBetsDay { get; }
 
         public override string GetSettingKey()
-        {
-            return "TurnoverControl_TurnoverMonitor_LeagueList";
-        }
+            => "TurnoverControl_TurnoverMonitor_LeagueList";
     }
 }

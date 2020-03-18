@@ -1,24 +1,29 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Fanex.Logging.Extensions.Web;
 using Fanex.Nap.CMS.Infrastructure;
 using Fanex.Nap.CMS.Infrastructure.Controllers;
 using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-using Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Constants;
+using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
+using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting;
+using Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting;
 using Fanex.NAP.Core.Business;
+using Fanex.NAP.Core.Web.Attribute;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {
+    [NapSuperAuth]
     public class ImportGlobalSettingController : BaseController
     {
-        private readonly IExcelExporter _excelExporter;
-        private readonly IImportGlobalSettingService _importService;
+        private readonly IGlobalSettingService globalSettingService;
+        private readonly IImportGlobalSettingService importService;
 
         public ImportGlobalSettingController()
             : this(null, null)
@@ -26,92 +31,105 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
         }
 
         public ImportGlobalSettingController(
-            IExcelExporter excelExporter,
+            IGlobalSettingService globalSettingService,
             IImportGlobalSettingService importService)
         {
-            _excelExporter = excelExporter ?? new GlobalSettingTemplateExporter();
-            _importService = importService ?? new ImportGlobalSettingService();
+            this.globalSettingService = globalSettingService ?? new GlobalSettingService();
+            this.importService = importService ?? new ImportGlobalSettingService(this.globalSettingService);
         }
 
         [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index(short? t)
         {
-            short sporttype = t ?? (short)SportType.Soccer;
-            ViewData["SportType"] = sporttype;
+            short sportType = t ?? SportTypeConst.Soccer;
+            var hasHostPermission = HasHostGlobalSetting(sportType);
 
-            if (!HasHostGlobalSetting(sporttype))
+            if (!hasHostPermission)
             {
                 return Redirect("~/Error/AccessDenied");
             }
 
-            return View("~/Areas/TurnoverControl/Views/ImportGlobalSetting/Index.cshtml");
+            return View(
+                "~/Areas/TurnoverControl/Views/ImportGlobalSetting/Index.cshtml",
+                new GlobalSettingViewModel(sportType, hasHostPermission, null, globalSettingService.GetProfiles(sportType)));
         }
 
-        public void DownloadTemplate()
+        public void DownloadTemplate(short sportType)
         {
-            _excelExporter.ResponseStream();
+            if (SportTypeConst.IsValidSportType(sportType))
+            {
+                var profiles = globalSettingService.GetProfiles(sportType);
+                var excelExporter = new GlobalSettingTemplateExporter(profiles);
+
+                excelExporter.ResponseStream();
+            }
         }
 
         [HttpPost]
         public ActionResult Upload(short sportType, HttpPostedFileBase file)
         {
+            if (!SportTypeConst.IsValidSportType(sportType))
+            {
+                return BadRequest();
+            }
+
+            if (!HasHostGlobalSetting(sportType))
+            {
+                return Forbidden();
+            }
+
+            if (file == null || file.ContentLength == 0)
+            {
+                return BadRequest(Labels.Message_NoReportData);
+            }
+
             Result result;
-            SportType type = (SportType)sportType;
 
-            if (type != SportType.Soccer && type != SportType.Others)
+            try
             {
-                result = new Result(400, Infrastructure.Resources.Labels.BadRequest);
+                result = importService.ReadExcelStream(
+                    sportType,
+                    file.InputStream,
+                    Path.GetExtension(file.FileName));
             }
-            else if (!HasHostGlobalSetting(sportType))
+            catch (Exception ex)
             {
-                result = new Result((int)HttpStatusCode.Forbidden, Infrastructure.Resources.Labels.AccessDeniedMessage);
-            }
-            else if (file == null || file.ContentLength == 0)
-            {
-                result = new Result(400, Labels.Message_NoReportData);
-            }
-            else
-            {
-                string extension = Path.GetExtension(file.FileName);
-
-                result = extension.Equals(".xls", StringComparison.OrdinalIgnoreCase) ||
-                    extension.Equals(".xlsx", StringComparison.OrdinalIgnoreCase) ?
-                    _importService.ReadExcelStream(type, file.InputStream, extension) :
-                    new Result(400, Labels.Error_IncorrectLayout);
+                ExceptionHandler.Handle(ex);
+                result = new Result((int)HttpStatusCode.BadRequest, Labels.Error_IncorrectLayout);
             }
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        public ActionResult Import(AddMultipleGlobalSettingCriteria criteria)
+        public ActionResult Import(AddGlobalSettingViewModel[] viewModel)
         {
-            Result result;
+            var firstItem = viewModel?.FirstOrDefault();
 
-            if (!criteria.IsValid())
+            if (firstItem == null || !firstItem.IsValid())
             {
-                result = new Result(400, Infrastructure.Resources.Labels.BadRequest);
+                return BadRequest();
             }
-            else if (!HasHostGlobalSetting(criteria.SportType))
-            {
-                result = new Result((int)HttpStatusCode.Forbidden, Infrastructure.Resources.Labels.AccessDeniedMessage);
-            }
-            else
-            {
-                criteria.UserId = CurrentSession.UserId;
-                criteria.IP = CurrentContext.IP;
 
-                result = _importService.ImportGlobalSettings(criteria);
+            if (!HasHostGlobalSetting(firstItem.SportType))
+            {
+                return Forbidden();
             }
+
+            var result = importService.ImportGlobalSettings(
+                firstItem.SportType,
+                viewModel.Select(vm => new GlobalSettingCustomer(vm.Username, vm.IsGroupHeadline, vm.MaxTurnovers)),
+                CurrentSession.UserId,
+                CurrentContext.IP);
 
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
         private bool HasHostGlobalSetting(short sporttype)
         {
-            string permissionKey = sporttype == (short)SportType.Soccer ?
-                CMSFunctionKeys.GlobalSettingSoccer :
-                CMSFunctionKeys.GlobalSettingOtherSports;
+            var permissionKey = sporttype == SportTypeConst.Soccer
+                ? CMSFunctionKeys.GlobalSettingSoccer
+                : CMSFunctionKeys.GlobalSettingOtherSports;
 
             return HasRight(permissionKey, Constant.Policy.Host);
         }

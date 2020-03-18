@@ -24,52 +24,69 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
             }
         }
 
-        public IEnumerable<GlobalSettingItem> GetList(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                return db.Query<GlobalSettingItem>(criteria.GetSpParams());
-            }
-        }
-
-        public Result Add(ICriteria criteria)
-        {
-            return ExecuteNonQuery(criteria);
-        }
-
-        public Result Edit(ICriteria criteria)
-        {
-            return ExecuteNonQuery(criteria);
-        }
-
-        public Result Delete(ICriteria criteria)
-        {
-            return ExecuteNonQuery(criteria);
-        }
-
         private static IdNameModel GetCurrency(IDataReader reader)
-        {
-            return new IdNameModel
+            => new IdNameModel
             {
                 Id = Convert.ToInt32(reader["exchangeid"]),
                 Name = reader["currency"].ToString()
             };
+
+        public IEnumerable<GlobalSettingItem> GetList(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetGlobalSettingItem(reader);
+                    }
+                }
+            }
         }
 
-        private static Result ExecuteNonQuery(ICriteria criteria)
-        {
-            Result result = new Result();
+        private static GlobalSettingItem GetGlobalSettingItem(IDataReader reader)
+            => new GlobalSettingItem(
+                Convert.ToInt32(reader["custid"]),
+                reader["username"].ToString(),
+                reader["level"].ToString(),
+                reader["currency"].ToString(),
+                Convert.ToInt32(reader["profileid"]),
+                reader["profilename"].ToString(),
+                Convert.ToDecimal(reader["maxturnover"]));
 
+        public IEnumerable<IdNameModel> GetProfiles(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetProfile(reader);
+                    }
+                }
+            }
+        }
+
+        private static IdNameModel GetProfile(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["profileid"]),
+                Name = reader["profilename"].ToString()
+            };
+
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
-                result.Code = Convert.ToInt32(outputParams["errcode"]);
-                result.Message = outputParams["errmsg"].ToString();
+                return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    outputParams["errmsg"].ToString());
             }
-
-            return result;
         }
     }
 }

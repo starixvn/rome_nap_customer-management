@@ -1,30 +1,19 @@
-﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
+﻿using Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting;
+using Fanex.Nap.CMS.TurnoverControl.Models;
+
+namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
-    public class UpdateMaxTurnoverCriteria : NonQueryCriteria
+    public class UpdateMaxTurnoverCriteria : EditGlobalSettingCriteria
     {
-        public int CustId { get; set; }
+        public UpdateMaxTurnoverCriteria(UpdateMaxTurnoverParam param, int userId, string ip)
+            : base(param, userId, ip)
+        {
+            MatchId = param.MatchId;
+        }
 
-        public int MatchId { get; set; }
-
-        public short SportType { get; set; }
-
-        public bool IsGroupHeadline { get; set; }
-
-        public decimal MaxTurnover { get; set; }
+        public int MatchId { get; }
 
         public override string GetSettingKey()
-        {
-            return "TurnoverControl_TurnoverMonitor_UpdateByMatch";
-        }
-
-        public override bool IsValid()
-        {
-            bool validCustId = CustId > 0;
-            bool validMatchId = MatchId > 0;
-            bool validSportType = SportType > 0;
-            bool validMaxTurnover = 0 <= MaxTurnover && MaxTurnover <= int.MaxValue;
-
-            return validCustId && validMatchId && validSportType && validMaxTurnover;
-        }
+            => "NAP_TOControl_MatchTurnoverUpdate";
     }
 }

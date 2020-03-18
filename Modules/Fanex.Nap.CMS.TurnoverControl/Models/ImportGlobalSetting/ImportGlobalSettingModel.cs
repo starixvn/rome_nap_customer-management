@@ -12,16 +12,16 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting
         }
 
         public ImportGlobalSettingModel(
-            IEnumerable<GlobalSettingItem> validSettings,
-            IEnumerable<ErrorGlobalSettingItem> errorSettings)
+            IEnumerable<GlobalSettingCustomer> validSettings,
+            IEnumerable<ErrorGlobalSettingExcel> errorSettings)
             : this(0, null)
         {
             ValidSettings = validSettings;
             ErrorSettings = errorSettings;
         }
 
-        public IEnumerable<GlobalSettingItem> ValidSettings { get; private set; }
+        public IEnumerable<GlobalSettingCustomer> ValidSettings { get; }
 
-        public IEnumerable<ErrorGlobalSettingItem> ErrorSettings { get; private set; }
+        public IEnumerable<ErrorGlobalSettingExcel> ErrorSettings { get; }
     }
 }

@@ -1,0 +1,370 @@
+﻿#dpk-fromdate, #dpk-todate, #txt-username {
+    width: 165px;
+}
+
+.ddl-sport, .ddl-match {
+    width: 217px;
+}
+
+.ddl-league {
+    width: 319px;
+}
+
+#txt-percentageused {
+    width: 65px;
+}
+
+#txt-username {
+    margin-left: 6px;
+}
+
+.filter-bar .filter-form {
+    .col_4.col_sport {
+        margin: 0;
+
+        label {
+            margin-right: 4px;
+        }
+    }
+
+    .col_1 {
+        width: 12px;
+    }
+
+    .edit-field input[type="checkbox"] {
+        margin-top: 6px;
+
+        &:active, &:focus, &:hover {
+            border: none;
+            box-shadow: none;
+        }
+    }
+}
+
+.content-box {
+    float: left;
+    margin-left: 10px;
+    width: 1900px;
+
+    #refresh-container {
+        float: right;
+        position: relative;
+        cursor: pointer;
+
+        &:hover {
+            .dropdown-container {
+                display: block;
+            }
+        }
+
+        .timer {
+            border: 1px solid #7c98a4;
+            box-shadow: 1px 1px 3px #ccc inset;
+            height: 18px;
+            margin: 3px 2px 0 0;
+
+            .countdown {
+                background: url("Images/refresh.png") no-repeat scroll 2px center #fff;
+                float: left;
+                height: 18px;
+                padding-left: 5px;
+                width: 90px;
+            }
+
+            .dropdown {
+                background: url("Images/dropdown.png") no-repeat scroll 4px center #fff;
+                border-left: 1px solid #cecccd;
+                float: left;
+                height: 18px;
+                width: 16px;
+            }
+        }
+
+        .dropdown-container {
+            background-color: #dfdfdf;
+            border: 1px solid #d4d4d4;
+            display: none;
+            margin: 0;
+            position: absolute;
+            top: 23px;
+            width: 112px;
+            z-index: 10;
+
+            li {
+                border-bottom: 1px solid #fff;
+                padding: 3px 0 3px 17px;
+            }
+
+            .checked {
+                background: url("Images/countdownCheck.png") no-repeat scroll 5px 8px transparent;
+            }
+        }
+    }
+
+    .refreshBox {
+        border: 1px solid #7c98a4;
+        box-shadow: 1px 1px 3px #ccc inset;
+        display: inline-block;
+        float: right;
+        font-family: Tahoma,Geneva,sans-serif;
+        font-size: 12px;
+        height: 18px;
+        margin-top: 3px;
+        width: 110px;
+        margin-right: 2px;
+    }
+}
+
+#sma-turnover-container {
+    #multiple-edit-maxto-popup {
+        background-color: #fff;
+        border: 2px solid #3c5ea5;
+        position: absolute;
+        top: 26px;
+        left: 40px;
+        z-index: 10;
+        padding: 5px;
+
+        .popup-title {
+            height: 20px;
+        }
+
+        .width-50 {
+            width: 50px;
+        }
+    }
+
+    .ico-multipleEdit {
+        background: url("Images/sprites.png") no-repeat -24px 0;
+        background-color: #edecea;
+        height: 17px;
+        width: 17px;
+        display: inline-block;
+        cursor: pointer;
+
+        &:hover {
+            background-position: -44px 0;
+        }
+    }
+
+    .col-checkbox, .col-checkbox-body {
+        width: 40px;
+    }
+
+    .col-sma-name, .col-sma-name-body {
+        width: 200px;
+    }
+
+    .col-level, .col-level-body {
+        width: 60px;
+    }
+
+    .col-currency, .col-currency-body {
+        width: 70px;
+    }
+
+    .col-member-turnover, .col-member-turnover-body,
+    .col-company-turnover, .col-company-turnover-body {
+        width: 110px;
+    }
+
+    .col-span-max-turnover, .no-data-not-frozen {
+        height: 24px;
+        line-height: 24px;
+    }
+
+    .col-max-turnover, .col-max-turnover-body {
+        width: 240px;
+    }
+
+    .col-max-turnover {
+        height: 24px;
+    }
+
+    .col-max-turnover-body {
+        padding: 4px 0;
+
+        .hand {
+            margin-right: 4px;
+        }
+    }
+
+    .live-nl {
+        display: inline-block;
+        padding-right: 5px;
+        text-align: right;
+        width: 20px;
+    }
+}
+
+.max-level-used-box {
+    display: inline-block;
+    margin-left: 2px;
+    margin-top: 2px;
+
+    tr {
+        line-height: 10px;
+    }
+
+    .lbl-max-level-used {
+        background-color: #FFFFFF;
+        border-color: #7a97a4;
+        border-image: none;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        color: #014A81;
+        font-family: Tahoma,Geneva,sans-serif;
+        font-size: 12px;
+        padding: 4px 7px;
+    }
+
+    .lbl-max-level-used-counter {
+        border: 1px solid #7a97a4;
+        box-shadow: 1px 1px 3px #ccc inset;
+        color: #f00;
+        font-family: Tahoma,Geneva,sans-serif;
+        font-size: 12px;
+        padding: 3px;
+        text-align: right;
+        width: 30px;
+        background-color: #ffffff;
+    }
+}
+
+.rowLeague {
+    width: 949px;
+
+    .lblLeagueHeadline {
+        color: #AD4E54;
+        font-family: Tahoma,Geneva,sans-serif;
+        font-size: 12px;
+        font-weight: bold;
+    }
+}
+
+.normalTable td,
+.freegrid .normalTable td,
+.freegrid .grid-fixed-table .normalTable td {
+    border: medium none;
+}
+
+.boxPercentUsed {
+    border: 1px solid #7c98a4;
+    border-radius: 2px;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    width: 100px;
+}
+
+.boxPercentUsed_0_20 {
+    background: url('Images/0_20.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_20_30 {
+    background: url('Images/20_30.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_30_40 {
+    background: url('Images/30_40.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_40_50 {
+    background: url('Images/40_50.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_50_60 {
+    background: url('Images/50_60.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_60_70 {
+    background: url('Images/60_70.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_70_80 {
+    background: url('Images/70_80.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_80_90 {
+    background: url('Images/80_90.png') no-repeat scroll 0 100% transparent;
+}
+
+.boxPercentUsed_90_100 {
+    background: url('Images/90_100.png') no-repeat scroll 0 100% transparent;
+    color: #fff;
+}
+
+.boxPercentUsed_100 {
+    background: url('Images/_100.png') no-repeat scroll 0 100% transparent;
+    color: #fff;
+}
+
+.textbox-maxturnover {
+    background-color: #fff;
+    border: 1px solid #cecccd;
+    color: #000;
+    font-size: 11px;
+    text-align: right;
+    vertical-align: middle;
+    width: 85px;
+    border-radius: 3px;
+}
+
+.freegrid .current-editing-row td, .freegrid .grid-fixed-table .current-editing-row td {
+    background-color: #FAFFA8;
+}
+
+#div-smaturnover-grid-title {
+    background: linear-gradient(#ffcc33, #ffcc35) repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #d2b24d;
+    height: 25px;
+    margin-bottom: 3px;
+    vertical-align: middle;
+}
+
+.freegrid td.rowLeague,
+.freegrid .grid-fixed-table td.rowLeague,
+.freegrid td.rowLeague,
+.freegrid .grid-fixed-table td.rowLeague {
+    line-height: 20px;
+    background-color: #C2D9EC;
+}
+
+.freegrid td.rowmatch,
+.freegrid .grid-fixed-table td.rowmatch,
+.freegrid td.rowmatch,
+.freegrid .grid-fixed-table td.rowmatch {
+    line-height: 20px;
+    background-color: #F1F1F1;
+
+    .rightArrow_MatchInfo {
+        background: url("Images/arrow.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+        display: inline-block;
+        height: 8px;
+        margin: 0 8px;
+        width: 5px;
+    }
+
+    .eventStatus {
+        color: #db2c2c;
+        text-transform: capitalize;
+    }
+
+    .matchIdBox_MatchInfo {
+        background-color: #ffb981;
+        border: 1px solid #f99e55;
+        display: inline-block;
+        float: right;
+        font-size: 10px;
+        line-height: 17px;
+        min-width: 120px;
+        padding: 0 3px;
+        text-align: center;
+        font-weight: bold;
+    }
+}

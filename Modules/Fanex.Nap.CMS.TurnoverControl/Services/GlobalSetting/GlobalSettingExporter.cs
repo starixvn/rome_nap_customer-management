@@ -5,7 +5,7 @@ using Fanex.Nap.CMS.Infrastructure.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Constants;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
 using NPOI.SS.UserModel;
@@ -14,13 +14,23 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 {
     public sealed class GlobalSettingExporter : BaseExcelExporter, IExcelExporter
     {
-        private readonly SportType _sportType;
-        private readonly IEnumerable<GlobalSettingItem> _globalSettingItems;
+        private const int Width60 = 60;
+        private const int Width80 = 80;
+        private const int Width120 = 120;
+        private const int Width160 = 160;
 
-        public GlobalSettingExporter(SportType sportType, IEnumerable<GlobalSettingItem> globalSettingItems)
+        private readonly short sportType;
+        private readonly IEnumerable<GlobalSettingCustomer> globalSettings;
+        private readonly IEnumerable<IdNameModel> profiles;
+
+        public GlobalSettingExporter(
+            short sportType,
+            IEnumerable<GlobalSettingCustomer> globalSettings,
+            IEnumerable<IdNameModel> profiles)
         {
-            _sportType = sportType;
-            _globalSettingItems = globalSettingItems;
+            this.sportType = sportType;
+            this.globalSettings = globalSettings;
+            this.profiles = profiles;
         }
 
         public override string FileNameWithoutExtension
@@ -29,46 +39,30 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
             {
                 string today = DateTime.Today.ToShortFormatedDateWithSlash();
 
-                return _sportType == SportType.Others ?
-                    string.Format(Labels.GlobalSetting_ExcelFileName_OtherSports, today) :
-                    string.Format(Labels.GlobalSetting_ExcelFileName, today);
+                return sportType == SportTypeConst.Others
+                    ? string.Format(Labels.GlobalSetting_ExcelFileName_OtherSports, today)
+                    : string.Format(Labels.GlobalSetting_ExcelFileName, today);
             }
         }
 
         public override string SheetName
-        {
-            get
-            {
-                return _sportType == SportType.Others ?
-                    Labels.GlobalSetting_SheetName_OtherSports :
-                    Labels.GlobalSetting_SheetName;
-            }
-        }
+            => sportType == SportTypeConst.Others
+                ? Labels.GlobalSetting_SheetName_OtherSports
+                : Labels.GlobalSetting_SheetName;
 
         public override string Title
-        {
-            get
-            {
-                return _sportType == SportType.Others ?
-                    Labels.GlobalSetting_ExcelTitle_OtherSports :
-                    Labels.GlobalSetting_ExcelTitle;
-            }
-        }
+            => sportType == SportTypeConst.Others
+                ? Labels.GlobalSetting_ExcelTitle_OtherSports
+                : Labels.GlobalSetting_ExcelTitle;
 
         public override ExcelColumn[] ExcelColumns
-        {
-            get
+            => new[]
             {
-                return new[]
-                {
-                    new ExcelColumn(Labels.Symbol_No, 60),
-                    new ExcelColumn(Labels.UserName, 160),
-                    new ExcelColumn(Labels.Level, 120),
-                    new ExcelColumn(Labels.Currency, 160),
-                    new ExcelColumn(Labels.Max_Turnover, 160)
-                };
-            }
-        }
+                new ExcelColumn(Labels.Symbol_No, Width60),
+                new ExcelColumn(Labels.UserName, Width160),
+                new ExcelColumn(Labels.Level, Width80),
+                new ExcelColumn(Labels.Currency, Width80)
+            }.Concat(profiles.Select(p => new ExcelColumn(p.Name, Width120))).ToArray();
 
         protected override void ExportBody()
         {
@@ -77,19 +71,24 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
             var centerTextStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center);
 
-            if (_globalSettingItems.Any())
+            if (globalSettings.Any())
             {
                 int number = 0;
 
-                foreach (var item in _globalSettingItems)
+                foreach (var item in globalSettings)
                 {
                     ExportExcel.ResetCurrentColumn();
 
                     ExportExcel.RenderCurrentCell(++number, centerIntNumberStyle);
-                    ExportExcel.RenderCurrentCell(item.UserName, ExcelStyleTemplate.TextStyle);
+                    ExportExcel.RenderCurrentCell(item.Username, ExcelStyleTemplate.TextStyle);
                     ExportExcel.RenderCurrentCell(item.Level, centerTextStyle);
                     ExportExcel.RenderCurrentCell(item.Currency, centerTextStyle);
-                    ExportExcel.RenderCurrentCell(item.MaxTurnover, ExcelStyleTemplate.DecimalStyle);
+
+                    foreach (var mto in item.MaxTurnovers)
+                    {
+                        ExportExcel.RenderCurrentCell(mto.MaxTurnover, ExcelStyleTemplate.DecimalStyle);
+                    }
+
                     ExportExcel.CurrentRow++;
                 }
             }

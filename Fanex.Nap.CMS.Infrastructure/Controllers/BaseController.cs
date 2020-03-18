@@ -14,6 +14,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using System.Web.Mvc;
     using Configurations;
     using Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Configuration;
     using Fanex.NAP.Core.Service.Impl;
@@ -21,39 +23,27 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Fanex.NAP.Core.Web;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Models;
     using NAP.Core.Context;
     using Newtonsoft.Json;
-    using Resources;
     using Web;
 
     public class BaseController : Controller
     {
-        private readonly ICurrentSession _currentSession;
-
-        private readonly ICurrentContext _currentContext;
-
-        private readonly string _environment;
-
-        private readonly int _siteId;
-
-        private readonly bool _enableDirectLogin;
-
-        private readonly IUserService _userService;
+        private readonly IUserService userService;
 
         public BaseController()
         {
-            this._currentContext = new CurrentContext();
-            this._currentSession = new CurrentSession();
-            this._environment = NapSettings.Settings.Environment;
-            this._siteId = NapSettings.Settings.SiteId;
-            this._enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+            CurrentContext = new CurrentContext();
+            CurrentSession = new CurrentSession();
+            Environment = NapSettings.Settings.Environment;
+            SiteId = NapSettings.Settings.SiteId;
+            EnableDirectLogin = NapSettings.Settings.EnableDirectLogin;
 
-            ViewBag.Session = this._currentSession;
+            ViewBag.Session = CurrentContext;
 
             ViewFlags = new ViewFlags
             {
-                IsLive = this.Environment.Equals(Constant.LIVE),
+                IsLive = Environment.Equals(Constant.LIVE),
                 HasEditRight = false,
                 IsReCheckin = NapSettings.Settings.EnableReCheckIn
             };
@@ -62,7 +52,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
             ViewBag.Enviroment = AppSettings.Environment;
 
-            this._userService = new UserService();
+            userService = new UserService();
         }
 
         /// <summary>
@@ -70,45 +60,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         /// If "0", users must login through NAP Hub.
         /// </summary>
         /// <value>Is site login.</value>
-        public bool EnableDirectLogin
-        {
-            get
-            {
-                return this._enableDirectLogin;
-            }
-        }
+        public bool EnableDirectLogin { get; }
 
-        public ICurrentContext CurrentContext
-        {
-            get
-            {
-                return this._currentContext;
-            }
-        }
+        public ICurrentContext CurrentContext { get; }
 
-        public ICurrentSession CurrentSession
-        {
-            get
-            {
-                return this._currentSession;
-            }
-        }
+        public ICurrentSession CurrentSession { get; }
 
-        public string Environment
-        {
-            get
-            {
-                return this._environment;
-            }
-        }
+        public string Environment { get; }
 
-        public int SiteId
-        {
-            get
-            {
-                return this._siteId;
-            }
-        }
+        public int SiteId { get; }
 
         protected ViewFlags ViewFlags
         {
@@ -133,26 +93,24 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         {
             get
             {
-                TimeZoneInfo serverTzi = TimeZoneInfo.FindSystemTimeZoneById(AppSettings.ServerTimezone);
+                var serverTzi = TimeZoneInfo.FindSystemTimeZoneById(AppSettings.ServerTimezone);
 
                 return TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.Local, serverTzi);
             }
         }
 
-        /// <summary>
-        /// Determines whether the specified user has the right on a function.
-        /// </summary>
-        /// <param name="functionKey">The function key.</param>
-        /// <param name="policy">The policy.</param>
-        /// <returns>Whether the specified user has the right on a function.</returns>
         public bool HasRight(string functionKey, Constant.Policy policy)
         {
-            int functionPolicy = this._userService.GetPermission(this._currentSession.UserId, this.SiteId, functionKey);
+            var functionPolicy = userService.GetPermission(CurrentSession.UserId, SiteId, functionKey);
+
             return functionPolicy >= (int)policy;
         }
 
         protected JsonResult BadRequest(string message = null, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
             => JsonData(new Result((int)HttpStatusCode.BadRequest, message ?? Labels.BadRequest), behavior);
+
+        protected JsonResult Forbidden(string message = null, JsonRequestBehavior behavior = JsonRequestBehavior.DenyGet)
+            => JsonData(new Result((int)HttpStatusCode.Forbidden, message ?? Labels.AccessDeniedMessage), behavior);
 
         protected JsonResult JsonData(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
         {
@@ -165,13 +123,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         }
 
         protected new JsonResult Json(object data, JsonRequestBehavior behavior = JsonRequestBehavior.AllowGet)
-        {
-            return new JsonResult
+            => new JsonResult
             {
                 JsonRequestBehavior = behavior,
                 Data = data,
                 MaxJsonLength = int.MaxValue
             };
-        }
     }
 }

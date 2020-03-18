@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Web;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting;
-using Fanex.Nap.CMS.TurnoverControl.Enums;
+using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
@@ -16,15 +15,14 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
     public class GlobalSettingService : IGlobalSettingService
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Currency";
+        private const string ProfileCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Profile-{0}";
+        private const string GlobalSettingSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.List-{0}";
 
-        private const string SoccerSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Soccer";
-        private const string OtherSportsSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.OtherSports";
-
-        private readonly IGlobalSettingRepository _globalSettingRepository;
+        private readonly IGlobalSettingRepository globalSettingRepository;
 
         public GlobalSettingService(IGlobalSettingRepository globalSettingRepository = null)
         {
-            _globalSettingRepository = globalSettingRepository ?? new GlobalSettingRepository();
+            this.globalSettingRepository = globalSettingRepository ?? new GlobalSettingRepository();
         }
 
         public IEnumerable<IdNameModel> GetCurrencies()
@@ -33,124 +31,169 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
             if (currencies == null)
             {
-                var rawdata = _globalSettingRepository.GetCurrencies(new CurrencyListCriteria());
+                currencies = globalSettingRepository
+                    .GetCurrencies(new CurrencyListCriteria())
+                    .ToList();
 
-                if (rawdata.Any())
+                if (currencies.Count > 0)
                 {
-                    currencies = new List<IdNameModel>
-                    {
-                        new IdNameModel { Id = 0, Name = Infrastructure.Resources.Labels.All }
-                    };
-
-                    currencies.AddRange(rawdata);
-                    CacheManager.Set<List<IdNameModel>>(CurrencyCacheKey, currencies);
+                    currencies.Insert(0, new IdNameModel { Id = 0, Name = Infrastructure.Resources.Labels.All });
+                    CacheManager.Set(CurrencyCacheKey, currencies);
                 }
             }
 
             return currencies;
         }
 
-        public GlobalSettingModel GetList(GlobalSettingListCriteria criteria)
+        public GlobalSettingModel GetList(
+            string username,
+            short sportType,
+            int exchangeId,
+            string sortField,
+            string sortDirection,
+            int page,
+            int size,
+            bool cache)
         {
-            string sessionKey = GetSessionKey((SportType)criteria.SportType);
+            var sessionKey = GetGlobalSettingSessionKey(sportType);
+            var globalSettings = GetList(sessionKey, username, sportType, exchangeId, cache);
+            var totalItems = globalSettings.Count();
 
-            IEnumerable<GlobalSettingItem> globalSettings = !criteria.Cache ?
-                null :
-                (List<GlobalSettingItem>)SessionManager.GetSession(HttpContext.Current.Session, sessionKey);
-
-            if (globalSettings == null)
+            if (totalItems > 0)
             {
-                globalSettings = _globalSettingRepository.GetList(criteria);
-                SessionManager.AddSession(HttpContext.Current.Session, sessionKey, globalSettings);
+                SessionManager.Set(sessionKey, globalSettings);
+
+                globalSettings = OrderBy(globalSettings, sortField, sortDirection);
+
+                if (size > 0)
+                {
+                    globalSettings = globalSettings.Skip(page * size).Take(size);
+                }
             }
 
-            int totalItems = globalSettings.Count();
-
-            if (totalItems == 0)
-            {
-                return new GlobalSettingModel();
-            }
-
-            globalSettings = OrderBy(globalSettings, criteria.SortField, criteria.SortDirection);
-
-            if (criteria.Size > 0)
-            {
-                globalSettings = globalSettings.Skip(criteria.Page * criteria.Size).Take(criteria.Size);
-            }
-                
             return new GlobalSettingModel(totalItems, globalSettings);
         }
 
-        public Result Add(AddGlobalSettingCriteria criteria)
+        private IEnumerable<GlobalSettingCustomer> GetList(
+            string sessionKey,
+            string username,
+            short sportType,
+            int exchangeId,
+            bool cache)
         {
-            var result = _globalSettingRepository.Add(criteria);
+            IEnumerable<GlobalSettingCustomer> globalSettings = !cache
+                ? null
+                : SessionManager.Get<List<GlobalSettingCustomer>>(sessionKey);
 
-            if (result.Code == ErrorCodeConstants.NoneError)
+            if (globalSettings == null)
             {
-                RemoveSessionKey((SportType)criteria.SportType);
-                result.Message = string.Format(Labels.GlobalSetting_AddMaxTurnover_Success, criteria.UserName);
+                var rawData = globalSettingRepository.GetList(
+                    new GlobalSettingListCriteria(username, sportType, exchangeId));
+
+                globalSettings = rawData
+                    .GroupBy(g => new { g.CustId, g.Username, g.Level, g.Currency })
+                    .Select(grp => new GlobalSettingCustomer(
+                        grp.Key.CustId,
+                        grp.Key.Username,
+                        grp.Key.Level,
+                        grp.Key.Currency,
+                        grp.Select(g => new MaxTurnoverItem(g.ProfileId, g.MaxTurnover)).ToList()))
+                    .ToList();
+            }
+
+            return globalSettings;
+        }
+
+        private static IEnumerable<GlobalSettingCustomer> OrderBy(
+            IEnumerable<GlobalSettingCustomer> source,
+            string propertyName,
+            string direction)
+        {
+            if ("Username" == propertyName || "Level" == propertyName || "Currency" == propertyName)
+            {
+                var propertyInfo = typeof(GlobalSettingCustomer).GetProperty(propertyName);
+
+                return string.Equals(direction, SortDirectionConstants.Asc, StringComparison.OrdinalIgnoreCase)
+                    ? source.OrderBy(s => propertyInfo.GetValue(s, null))
+                    : source.OrderByDescending(s => propertyInfo.GetValue(s, null));
+            }
+
+            if (propertyName?.StartsWith("Profile") == true)
+            {
+                var profileId = int.Parse(propertyName.Replace("Profile", string.Empty));
+
+                return string.Equals(direction, SortDirectionConstants.Asc, StringComparison.OrdinalIgnoreCase)
+                    ? source.OrderBy(s => s.MaxTurnovers.FirstOrDefault(m => m.ProfileId == profileId).MaxTurnover)
+                    : source.OrderByDescending(s => s.MaxTurnovers.FirstOrDefault(m => m.ProfileId == profileId).MaxTurnover);
+            }
+
+            return source;
+        }
+
+        public IEnumerable<IdNameModel> GetProfiles(short sportType)
+        {
+            var cacheKey = GetProfileCacheKey(sportType);
+            var profiles = CacheManager.Get<List<IdNameModel>>(cacheKey);
+
+            if (profiles == null)
+            {
+                profiles = globalSettingRepository
+                    .GetProfiles(new GetProfileCriteria(sportType))
+                    .ToList();
+                CacheManager.Set(cacheKey, profiles);
+            }
+
+            return profiles;
+        }
+
+        public Result Add(string username, MaxTurnoverItem[] maxTurnovers, bool isGroupHeadline, short sportType, int userId, string ip)
+        {
+            var result = globalSettingRepository.ExecuteNonQuery(
+                new AddGlobalSettingCriteria(username, maxTurnovers, isGroupHeadline, sportType, userId, ip));
+
+            if (result.IsSuccess)
+            {
+                RemoveGlobalSettingSessionValue(sportType);
+                result.Message = string.Format(Labels.GlobalSetting_AddMaxTurnover_Success, username);
             }
 
             return result;
         }
 
-        public Result Edit(EditGlobalSettingCriteria criteria)
+        public Result Edit(UpdateMaxTurnoverParam param, int userId, string ip)
         {
-            var result = _globalSettingRepository.Edit(criteria);
+            var result = globalSettingRepository.ExecuteNonQuery(new EditGlobalSettingCriteria(param, userId, ip));
 
-            if (result.Code == ErrorCodeConstants.NoneError)
+            if (result.IsSuccess)
             {
-                RemoveSessionKey((SportType)criteria.SportType);
+                RemoveGlobalSettingSessionValue(param.SportType);
                 result.Message = Labels.GlobalSetting_EditMaxTurnover_Success;
             }
 
             return result;
         }
 
-        public Result Delete(DeleteGlobalSettingCriteria criteria)
+        public Result Delete(int custId, bool isGroupHeadline, short sportType, int userId, string ip)
         {
-            var result = _globalSettingRepository.Delete(criteria);
+            var result = globalSettingRepository.ExecuteNonQuery(
+                new DeleteGlobalSettingCriteria(custId, isGroupHeadline, sportType, userId, ip));
 
-            if (result.Code == ErrorCodeConstants.NoneError)
+            if (result.IsSuccess)
             {
-                RemoveSessionKey((SportType)criteria.SportType);
+                RemoveGlobalSettingSessionValue(sportType);
                 result.Message = Labels.GlobalSetting_DeleteMaxTurnover_Success;
             }
 
             return result;
         }
 
-        private static string GetSessionKey(SportType sportType)
-        {
-            return sportType == SportType.Others ?
-                OtherSportsSessionKey :
-                SoccerSessionKey;
-        }
+        private static string GetProfileCacheKey(short sportType)
+            => string.Format(ProfileCacheKey, sportType);
 
-        private static void RemoveSessionKey(SportType sportType)
-        {
-            SessionManager.AddSession(
-                HttpContext.Current.Session,
-                sportType == SportType.Others ? OtherSportsSessionKey : SoccerSessionKey,
-                null);
-        }
+        private static void RemoveGlobalSettingSessionValue(short sportType)
+            => SessionManager.Set(GetGlobalSettingSessionKey(sportType), null);
 
-        private static IEnumerable<GlobalSettingItem> OrderBy(
-            IEnumerable<GlobalSettingItem> source,
-            string propertyName,
-            string direction)
-        {
-            if (propertyName.Equals("UserName", StringComparison.OrdinalIgnoreCase) ||
-                propertyName.Equals("Level", StringComparison.OrdinalIgnoreCase) ||
-                propertyName.Equals("Currency", StringComparison.OrdinalIgnoreCase) ||
-                propertyName.Equals("MaxTurnover", StringComparison.OrdinalIgnoreCase))
-            {
-                return string.Equals(direction, SortDirectionConstants.Asc, StringComparison.OrdinalIgnoreCase) ?
-                    source.OrderBy(s => s.GetType().GetProperty(propertyName).GetValue(s, null)) :
-                    source.OrderByDescending(s => s.GetType().GetProperty(propertyName).GetValue(s, null));
-            }
-
-            return source;
-        }
+        private static string GetGlobalSettingSessionKey(short sportType)
+            => string.Format(GlobalSettingSessionKey, sportType);
     }
 }

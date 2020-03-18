@@ -87,7 +87,7 @@
         gridOptions.bodyRows = bodyData;
 
         divExcelError.removeClass("display-none").fanexGrid(gridOptions);
-        spanValidSetting.text(JSONData.ValidSetting + "/" + JSONData.TotalRows);
+        spanValidSetting.text(JSONData.IsFormatError ? "N/A" : JSONData.ValidSetting + "/" + JSONData.TotalRows);
         buttonUpdate.prop("disabled", !JSONData.ValidSetting);
     }
 

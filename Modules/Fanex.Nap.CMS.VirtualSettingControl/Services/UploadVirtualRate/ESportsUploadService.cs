@@ -86,7 +86,7 @@
 
             var totalExcelErrors = excelErrors.Count;
 
-            return new ExcelErrorModel(excelErrors, 0, totalExcelErrors, $"{ESportsResource.FormatError}: {totalExcelErrors}");
+            return new ExcelErrorModel(excelErrors, 0, totalExcelErrors, $"{ESportsResource.FormatError}: {totalExcelErrors}", true);
         }
 
         private static IWorkbook GetWorkbook(Stream stream, string fileExtension)

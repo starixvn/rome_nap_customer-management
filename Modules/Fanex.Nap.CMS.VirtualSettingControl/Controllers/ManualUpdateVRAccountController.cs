@@ -31,9 +31,11 @@
             return View("~/Areas/VirtualSettingControl/Views/ManualUpdateVRAccount/Index.cshtml");
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_ManuallyUpdatedVirtualRateAccounts, Policy = Constant.Policy.Read)]
         public ActionResult Search(int sportType, string account)
             => JsonData(manualUpdateService.GetManualUpdateAccounts(sportType, account));
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_ManuallyUpdatedVirtualRateAccounts, Policy = Constant.Policy.Host)]
         public ActionResult Unmark(int sportType, string custIds)
             => JsonData(
                 manualUpdateService.UnmarkManualUpdateAccount(sportType, custIds, CurrentSession.UserId, CurrentContext.IP),

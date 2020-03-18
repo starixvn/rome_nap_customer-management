@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Constants;
+    using Constants.ProblemAccount;
     using Infrastructure.Extensions;
     using Models.BetList;
     using Resources;

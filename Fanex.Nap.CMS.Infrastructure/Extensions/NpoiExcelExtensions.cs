@@ -346,5 +346,23 @@
                     return currentAlign;
             }
         }
+
+        public static ICellStyle VIPStyle(HSSFWorkbook excelFile)
+        {
+            ICellStyle cellStyle = excelFile.CreateCellStyle();
+            IFont font = excelFile.CreateFont();
+            font.Color = HSSFColor.Red.Index;
+            font.FontHeightInPoints = FontSize;
+            font.FontName = FontName;
+
+            cellStyle.FillForegroundColor = HSSFColor.LightYellow.Index;
+            cellStyle.FillPattern = FillPattern.SolidForeground;
+            cellStyle.Alignment = HorizontalAlignment.Center;
+            cellStyle.VerticalAlignment = (VerticalAlignment)VerticalAlignCenter;
+            cellStyle.SetFont(font);
+            cellStyle = SetBorderToCell(cellStyle);
+
+            return cellStyle;
+        }
     }
 }

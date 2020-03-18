@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Constants;
+    using Constants.ProblemAccount;
     using Infrastructure.Models;
 
     public class IndexViewModel : IndexBaseViewModel

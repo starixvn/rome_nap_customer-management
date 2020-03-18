@@ -150,6 +150,9 @@
   <data name="ExcelFileNameCreditSite" xml:space="preserve">
     <value>Manage Problem Account - Credit - {0}</value>
   </data>
+  <data name="ExcelFileNameLicenseeSite" xml:space="preserve">
+    <value>Manage Problem Account - Licensee - {0}</value>
+  </data>
   <data name="InvalidMaxBetError" xml:space="preserve">
     <value>Max Bet must be less than or equal to Max per Match.</value>
   </data>
@@ -186,8 +189,14 @@
   <data name="PreventiveAction" xml:space="preserve">
     <value>Preventive Action</value>
   </data>
+  <data name="ReduceBetLimitVIPError" xml:space="preserve">
+    <value>VIP members cannot be reduced bet limit:</value>
+  </data>
   <data name="ReduceBLMultipleCurrenciesSelectedError" xml:space="preserve">
     <value>Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency.</value>
+  </data>
+  <data name="ReduceBLNotAcknowledgedSelectedError" xml:space="preserve">
+    <value>Not acknowledged licensee's members cannot be reduced bet limit.</value>
   </data>
   <data name="SeperatedByComma" xml:space="preserve">
     <value>(separated by comma ',' / [tab] / [enter] / [space])</value>

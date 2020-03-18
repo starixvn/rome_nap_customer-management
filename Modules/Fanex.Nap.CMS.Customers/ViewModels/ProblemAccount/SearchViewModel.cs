@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.ViewModels.ProblemAccount
 {
     using System;
-    using Constants;
+    using Constants.ProblemAccount;
     using Infrastructure.Constants;
 
     [Serializable]

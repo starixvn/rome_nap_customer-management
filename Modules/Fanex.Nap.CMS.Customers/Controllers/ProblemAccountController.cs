@@ -1,13 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
     using System.Web.Mvc;
-    using Constants;
+    using Constants.ProblemAccount;
     using Infrastructure;
     using Infrastructure.Controllers;
     using Infrastructure.Services.Interfaces;
     using NAP.Core.Business;
     using NAP.Core.Web.Attribute;
-    using Services;
+    using Services.ProblemAccount;
     using ViewModels.ProblemAccount;
 
     [NapSuperAuth]

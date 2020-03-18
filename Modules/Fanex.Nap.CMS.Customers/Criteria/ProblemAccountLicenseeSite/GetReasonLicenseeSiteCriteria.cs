@@ -1,9 +1,14 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountLicenseeSite
 {
-    using Fanex.Data.Repository;
+    using ProblemAccountCreditSite;
 
-    public class GetReasonLicenseeSiteCriteria : CriteriaBase
+    public class GetReasonLicenseeSiteCriteria : GetReasonCreditSiteCriteria
     {
+        public GetReasonLicenseeSiteCriteria(byte mode)
+            : base(mode)
+        {
+        }
+
         public override string GetSettingKey()
             => "NAP_ProblemAccount_LicenseeReasonSel";
     }

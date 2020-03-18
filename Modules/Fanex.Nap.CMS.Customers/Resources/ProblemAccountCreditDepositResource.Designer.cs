@@ -160,6 +160,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Problem Account - Licensee - {0}.
+        /// </summary>
+        public static string ExcelFileNameLicenseeSite {
+            get {
+                return ResourceManager.GetString("ExcelFileNameLicenseeSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Bet must be less than or equal to Max per Match..
         /// </summary>
         public static string InvalidMaxBetError {
@@ -268,11 +277,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VIP members cannot be reduced bet limit:.
+        /// </summary>
+        public static string ReduceBetLimitVIPError {
+            get {
+                return ResourceManager.GetString("ReduceBetLimitVIPError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple currencies selected. To edit reduce bet limit, all selected account must belong to one currency..
         /// </summary>
         public static string ReduceBLMultipleCurrenciesSelectedError {
             get {
                 return ResourceManager.GetString("ReduceBLMultipleCurrenciesSelectedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not acknowledged licensee&apos;s members cannot be reduced bet limit..
+        /// </summary>
+        public static string ReduceBLNotAcknowledgedSelectedError {
+            get {
+                return ResourceManager.GetString("ReduceBLNotAcknowledgedSelectedError", resourceCulture);
             }
         }
         

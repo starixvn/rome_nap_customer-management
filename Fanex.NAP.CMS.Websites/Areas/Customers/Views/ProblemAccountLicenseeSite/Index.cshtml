@@ -33,11 +33,11 @@
             usernamesOutOfRangeError: "@ProblemAccountResource.UsernamesOutOfRangeError",
             duplicatedUsernamesError: "@ProblemAccountResource.DuplicatedUsernamesError",
             unmarkProblemAccount: "@ProblemAccountResource.UnmarkProblemAccount",
-            closeAccount: "@ProblemAccountCreditDepositResource.CloseAccount",
-            inactivateAccountConfimMessage: "@ProblemAccountResource.InactivateAccountConfimMessage",
             reduceBLMultipleCurrenciesSelectedError: "@ProblemAccountCreditDepositResource.ReduceBLMultipleCurrenciesSelectedError",
+            reduceBLNotAcknowledgedSelectedError: "@ProblemAccountCreditDepositResource.ReduceBLNotAcknowledgedSelectedError",
             pleaseSelect: "@ProblemAccountResource.PleaseSelect",
-            thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired"
+            thisFieldIsRequired: "@ProblemAccountResource.thisFieldIsRequired",
+            reduceBetLimitVIPError: "@ProblemAccountCreditDepositResource.ReduceBetLimitVIPError"
         };
         var currentDate = "@Model.CurrentDate.ToShortFormatedDateWithSlash()",
             defaultMinDate = "@Model.MinFromDate.ToShortFormatedDateWithSlash()",
@@ -45,7 +45,6 @@
             showSelectColumn = @Model.HasHostPermission.ToString().ToLowerInvariant(),
             autoReload = @Model.AutoReload.ToString().ToLowerInvariant();
         var reasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Reasons, jsonSettings))');
-        var preventiveActionsReasons = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.PreventiveActionReasons, jsonSettings))');
         var searchFilter = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SearchFilter, jsonSettings))');
     </script>
     @Scripts.Render(CustomersBundlesConfig.ProblemAccountLicenseeSiteScript)

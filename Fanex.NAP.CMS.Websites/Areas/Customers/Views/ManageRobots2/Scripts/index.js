@@ -54,8 +54,7 @@
                 changeMonth: true,
                 changeYear: true,
                 showOtherMonths: true,
-                selectOtherMonths: true,
-                minDate: new Date(resources.MinDate)
+                selectOtherMonths: true
             },
             firstDatePicker: {
                 Id: "dpk-fromdate",
@@ -88,6 +87,7 @@
         $("#note-info").off("click touchend").on("click touchend", function () {
             CMS.popup(resources.RobotRulesTitle, $("#robot-rules-container").html(), { resizable: false });
         });
+        $("#btn-export-excel").on("click touchend", function () { self.exportRobots(); });
     };
     this.getSites = function () {
         CMS.disableInput();
@@ -477,6 +477,10 @@
     this.getSortDirection = function (columnName) {
         return this.searchParam.sortColumnName == columnName ? this.searchParam.sortDirection : null;
     };
+
+    this.exportRobots = function () {
+        CMS.downloadFile(CMS.resolveRootUrl("ManageRobots2/ExportRobots"), self.searchParam);
+    }
 };
 
 $(document).ready(function () {

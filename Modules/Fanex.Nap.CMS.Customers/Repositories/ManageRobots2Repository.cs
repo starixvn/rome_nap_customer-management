@@ -42,12 +42,19 @@
 
         public RobotReport GetRobots(GetRobotsCriteria criteria)
         {
+            if (criteria.ToDate == DateTime.MinValue)
+            {
+                criteria.ToDate = DateTime.MaxValue;
+            }
+
             var result = new RobotReport
             {
                 ResultCode = 0,
                 ResultMessage = string.Empty,
                 PageSize = criteria.PageSize,
-                PageIndex = criteria.PageIndex
+                PageIndex = criteria.PageIndex,
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate
             };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))

@@ -133,6 +133,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Sports - Manually Updated Virtual Rate Accounts.
+        /// </summary>
+        public static string ESports_ManuallyUpdatedVRAccounts {
+            get {
+                return ResourceManager.GetString("ESports_ManuallyUpdatedVRAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-Sports Upload Virtual Rate.
         /// </summary>
         public static string ESports_UploadVirtualRate {
@@ -237,6 +246,60 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         public static string RequiredUsernameError {
             get {
                 return ResourceManager.GetString("RequiredUsernameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit All Changes &amp; Mark Manual VR Updated.
+        /// </summary>
+        public static string SubmitAllChangeAndMarkManualVRUpdated {
+            get {
+                return ResourceManager.GetString("SubmitAllChangeAndMarkManualVRUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit &amp; Mark Manual VR Updated.
+        /// </summary>
+        public static string SubmitAndMarkManualVRUpdated {
+            get {
+                return ResourceManager.GetString("SubmitAndMarkManualVRUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the E-Sports - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?.
+        /// </summary>
+        public static string UnmarkManualUpdateAccountConfirmMessage {
+            get {
+                return ResourceManager.GetString("UnmarkManualUpdateAccountConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected accounts have been successfully removed from the list..
+        /// </summary>
+        public static string UnmarkManualUpdateAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("UnmarkManualUpdateAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmark Selected Accounts.
+        /// </summary>
+        public static string UnmarkSelectedAccounts {
+            get {
+                return ResourceManager.GetString("UnmarkSelectedAccounts", resourceCulture);
             }
         }
         

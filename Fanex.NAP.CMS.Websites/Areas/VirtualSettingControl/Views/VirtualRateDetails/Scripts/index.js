@@ -6,6 +6,7 @@
 
         reportTitle: null,
         btnSubmitChanges: null,
+        btnSubmitChangesAndMarkManualVRUpdated: null,
         lnkViewUpline: null,
         lnkViewRealValues: null,
         btnExportExcel: null,
@@ -23,6 +24,7 @@
         btnAddAssociatedAccounts: null,
         txtAssociatedAccounts: null,
         btnSubmitAssociatedAccounts: null,
+        btnSubmitAssociatedAccountsMarkManual: null,
         tblReport: null
     };
     this.oldReport = null;
@@ -53,6 +55,8 @@
 
         this.elements.reportTitle = $("#report-tile");
         this.elements.btnSubmitChanges = $(".btn-submit-changes");
+        this.elements.btnSubmitChangesAndMarkManualVRUpdated = $(".btn-submit-changes-and-mark-manual-vr-updated");
+
         this.elements.lnkViewUpline = $("#lnk-view-upline");
         this.elements.lnkViewRealValues = $("#lnk-view-real-values");
         this.elements.btnExportExcel = $("#btn-export-excel");
@@ -71,6 +75,7 @@
         this.elements.btnAddAssociatedAccounts = $("#btn-add-associated-accounts");
         this.elements.txtAssociatedAccounts = $("#txt-associated-accounts");
         this.elements.btnSubmitAssociatedAccounts = $("#btn-submit-associated-accounts");
+        this.elements.btnSubmitAssociatedAccountsMarkManual = $("#btn-submit-associated-accounts-mark-manual");
     };
 
     this.bindEvents = function () {
@@ -187,7 +192,10 @@
         this.funcGetRateValue = self.getRateValue;
 
         this.elements.btnSubmitChanges.off("click touchend").on("click touchend", function () {
-            self.saveChanges();
+            self.saveChanges(false);
+        });
+        this.elements.btnSubmitChangesAndMarkManualVRUpdated.off("click touchend").on("click touchend", function () {
+            self.saveChanges(true);
         });
         window.onbeforeunload = function () {
             if (self.oldReport == null) {
@@ -930,15 +938,15 @@
         this.isFirstSearch = false;
     };
 
-    this.saveChanges = function () {
+    this.saveChanges = function (isManualUpdatedAccount) {
         CMS.showConfirmMessage(
             resources.VirtualRateSubmitChangesConfirm,
             function () {
-                self.submitChanges();
+                self.submitChanges(isManualUpdatedAccount);
             }
         );
     };
-    this.submitChanges = function () {
+    this.submitChanges = function (isManualUpdatedAccount) {
         var currentValue = this.getCurrentValue();
         $.ajax({
             type: 'POST',
@@ -950,7 +958,8 @@
                 sportType: resources.SportType,
                 custId: this.oldReport.CustId,
                 IsGlobalSetting: resources.isGlobalSetting,
-                isMember: this.isMember
+                isMember: this.isMember,
+                IsManualUpdate: isManualUpdatedAccount
             }),
             beforeSend: function () {
                 CMS.disableInput();
@@ -978,16 +987,19 @@
             this.elements.divAssociatedAccounts.attr("disabled", null);
             this.elements.txtAssociatedAccounts.attr("disabled", null);
             this.elements.btnSubmitAssociatedAccounts.on("click touchend", function () {
-                self.validateAssociatedAccounts();
+                self.validateAssociatedAccounts(false);
             });
-
+            this.elements.btnSubmitAssociatedAccountsMarkManual.on("click touchend", function () {
+                self.validateAssociatedAccounts(true);
+            });
         } else {
             this.elements.divAssociatedAccounts.attr("disabled", "disabled");
             this.elements.txtAssociatedAccounts.attr("disabled", "disabled");
             this.elements.btnSubmitAssociatedAccounts.off("click touchend");
+            this.elements.btnSubmitAssociatedAccountsMarkManual.off("click touchend");
         }
     };
-    this.validateAssociatedAccounts = function () {
+    this.validateAssociatedAccounts = function (isManualUpdatedAccount) {
         var accounts = this.elements.txtAssociatedAccounts.val().trim();
         if (accounts.trim() == "") {
             Validator.showError(this.elements.txtAssociatedAccounts, resources.VirtualRate_AssociatedAccounts_Empty, "s");
@@ -1018,7 +1030,7 @@
                     CMS.showConfirmMessage(
                         message,
                         function () {
-                            self.submitAssociatedAccounts(rs.ValidAccountIdsText);
+                            self.submitAssociatedAccounts(rs.ValidAccountIdsText, isManualUpdatedAccount);
                         }
                     );
                 } else {
@@ -1033,7 +1045,7 @@
             }
         });
     };
-    this.submitAssociatedAccounts = function (accounts) {
+    this.submitAssociatedAccounts = function (accounts, isManualUpdatedAccount) {
         var currentValue = this.getCurrentValue();
         $.ajax({
             type: 'POST',
@@ -1044,7 +1056,8 @@
                 Accounts: accounts,
                 Rates: currentValue,
                 sportType: resources.SportType,
-                isMember: self.isMember
+                isMember: self.isMember,
+                IsManualUpdate: isManualUpdatedAccount
             }),
             beforeSend: function () {
                 CMS.disableInput();

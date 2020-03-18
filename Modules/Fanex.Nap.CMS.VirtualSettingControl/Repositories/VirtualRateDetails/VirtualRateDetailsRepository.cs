@@ -158,7 +158,8 @@
                     UserId = criteria.UserId,
                     IP = criteria.IP,
                     Rates = criteria.Rates,
-                    IsMember = criteria.IsMember
+                    IsMember = criteria.IsMember,
+                    IsManualUpdate = criteria.IsManualUpdate
                 });
 
                 if (updateResult.Code != 0)

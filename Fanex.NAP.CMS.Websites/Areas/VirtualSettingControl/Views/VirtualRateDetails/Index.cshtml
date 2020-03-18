@@ -1,4 +1,5 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
 @model string
 @{
     ViewBag.Title = "E-Sports - Virtual Rate Details";
@@ -32,6 +33,7 @@
 <div id="report-container" class="display-none">
     <div>
         <input type="button" class="submit btn-submit-changes" value="@ViewLang.SubmitAllChanges" />
+        <input type="button" class="submit btn-submit-changes-and-mark-manual-vr-updated" value="@ESportsResource.SubmitAllChangeAndMarkManualVRUpdated" />
         <input type="button" class="submit btn-autosuspend-view display-none" value="@ViewLang.SwitchAutoSuspendView" />
         <input type="button" class="submit btn-autosuspend-edit display-none" value="@ViewLang.SwitchAutoSuspendEdit" />
     </div>
@@ -109,6 +111,7 @@
     </div>
     <div>
         <input type="button" class="submit btn-submit-changes" value="@ViewLang.SubmitAllChanges" />
+        <input type="button" class="submit btn-submit-changes-and-mark-manual-vr-updated" value="@ESportsResource.SubmitAllChangeAndMarkManualVRUpdated" />
         <input type="button" class="submit btn-autosuspend-view display-none" value="@ViewLang.SwitchAutoSuspendView" />
         <input type="button" class="submit btn-autosuspend-edit display-none" value="@ViewLang.SwitchAutoSuspendEdit" />
     </div>
@@ -123,7 +126,8 @@
             <input id="btn-add-associated-accounts" type="button" class="btn-add-associated-accounts display-none" value="@ViewLang.AddAssociatedAccounts" />
         </div>
         <textarea id="txt-associated-accounts" class="txt-associated-accounts"></textarea>
-        <input id="btn-submit-associated-accounts" type="button" class="submit btn-submit-associated-accounts btn-blue" value="@ViewLang.Submit" />
+        <input type="button" id="btn-submit-associated-accounts" class="submit btn-submit-associated-accounts btn-blue" value="@ViewLang.Submit" />
+        <input type="button" id="btn-submit-associated-accounts-mark-manual" class="submit btn-submit-associated-accounts btn-blue" value="@ESportsResource.SubmitAndMarkManualVRUpdated" />
     </div>
 </div>
 @section Foot

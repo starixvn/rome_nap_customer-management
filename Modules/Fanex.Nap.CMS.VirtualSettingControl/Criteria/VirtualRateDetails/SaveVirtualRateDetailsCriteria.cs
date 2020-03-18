@@ -10,6 +10,8 @@
 
         public int SportType { get; set; }
 
+        public bool IsManualUpdate { get; set; }
+
         public int UserId { get; set; }
 
         public string IP { get; set; }
@@ -34,6 +36,7 @@
             result.Add("ip", IP);
             result.Add("errcode", 0);
             result.Add("errmsg", string.Empty);
+            result.Add("ismanualupdate", IsManualUpdate);
 
             var xml = "<Root>";
 

@@ -1,0 +1,64 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ESportsResource.ESports_ManuallyUpdatedVRAccounts;
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head {
+    @Styles.Render(VirtualSettingControlBundleConfig.ESports_ManualUpdateVRAccountStyle)
+}
+@section Foot {
+    <script type="text/javascript">
+        var hostPermission = @hostPermission.ToString().ToLowerInvariant();
+        var resources = {
+            username: "@ViewLang.Username",
+            level: "@ViewLang.Level",
+            reportTitle: "@ESportsResource.ESports_ManuallyUpdatedVRAccounts",
+            unmarkConfirmMessage: "@Html.Raw(ESportsResource.UnmarkManualUpdateAccountConfirmMessage)"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.ESports_ManualUpdateVRAccountScript)
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "ManualUpdateVRAccount", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-account">@ESportsResource.Account</label>
+            </div>
+            <div class="edit-field col_9">
+                <input type="text" id="txt-account" name="account" style="width: 90%;" />
+            </div>
+            <div class="submit col_4 width-auto">
+                <button type="submit" class="submit">@ESportsResource.Search</button>
+            </div>
+        </div>
+        <div class="filter-row">
+            <input type="hidden" id="sportType" name="sportType" value="@ViewBag.SportType" />
+        </div>
+    }
+</div>
+<div class="content-grid display-none" id="content-grid" style="min-width: 650px">
+    @if (ViewBag.HostPermission)
+    {
+        <div class="float-right">
+            <button type="button" class="blue-button margin-right btn-unmark">@ESportsResource.UnmarkSelectedAccounts</button>
+        </div>
+        <div class="clear-fix mid-margin-bottom"></div>
+    }
+    <div class="freegrid clear-fix mid-margin-bottom" id="freegrid"></div>
+    @if (ViewBag.HostPermission)
+    {
+        <div class="float-right">
+            <button type="button" class="blue-button margin-right btn-unmark">@ESportsResource.UnmarkSelectedAccounts</button>
+        </div>
+    }
+</div>

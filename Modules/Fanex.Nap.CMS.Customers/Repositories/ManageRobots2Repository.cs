@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlTypes;
     using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
@@ -42,11 +43,6 @@
 
         public RobotReport GetRobots(GetRobotsCriteria criteria)
         {
-            if (criteria.ToDate == DateTime.MinValue)
-            {
-                criteria.ToDate = DateTime.MaxValue;
-            }
-
             var result = new RobotReport
             {
                 ResultCode = 0,

@@ -26,6 +26,7 @@
         private readonly RobotReport report;
 
         private IFont HeaderFont { get; set; }
+
         private IFont BodyFont { get; set; }
 
         private ICellStyle TitleTextStyle { get; set; }
@@ -71,12 +72,12 @@
         {
             get
             {
-                if (report.FromDate == DateTime.MinValue && report.ToDate == DateTime.MaxValue)
+                if (report.FromDate == null || report.ToDate == null)
                 {
                     return Labels.ManageRobots;
                 }
 
-                return $"{Labels.ManageRobots} - {report.FromDate.ToShortDateString()}-{report.ToDate.ToShortDateString()}";
+                return $"{Labels.ManageRobots} - {report.FromDate?.ToShortDateString()}-{report.ToDate?.ToShortDateString()}";
             }
         }
 

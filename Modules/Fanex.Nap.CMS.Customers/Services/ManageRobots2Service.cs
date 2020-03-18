@@ -34,5 +34,12 @@
 
         public IEnumerable<CurrencyModel> GetCurrencies(GetCurrenciesCriteria criteria)
             => repository.GetCurrencies(criteria);
+
+        public RobotReport GetExportRobots(GetRobotsCriteria criteria)
+        {
+            criteria.PageSize = -1;
+
+            return GetRobots(criteria);
+        }
     }
 }

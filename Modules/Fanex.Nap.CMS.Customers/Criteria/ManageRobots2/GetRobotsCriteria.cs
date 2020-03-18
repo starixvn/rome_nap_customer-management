@@ -8,9 +8,9 @@
     {
         public string Username { get; set; } = string.Empty;
 
-        public DateTime FromDate { get; set; }
+        public DateTime? FromDate { get; set; }
 
-        public DateTime ToDate { get; set; }
+        public DateTime? ToDate { get; set; }
 
         public int Level { get; set; }
 
@@ -45,11 +45,11 @@
                 { "site", Site },
                 { "pagesize", PageSize },
                 { "pageindex", PageIndex },
+                { "fromDate", FromDate },
+                { "toDate", ToDate},
                 { "totalitems", 0 }
             };
 
-            //TODO Remove default counter
-            result.Add("counter", 1);
             result.Add("ordertype", SortDirection);
             result.Add("orderoption", GetOrderOption());
 

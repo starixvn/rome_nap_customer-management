@@ -186,8 +186,8 @@
             pageSize: 50,
             pageIndex: 1,
             currency: this.elements.ddCurrency.val(),
-            fromDate: dateRange.FromDate,
-            toDate: dateRange.ToDate,
+            fromDate: dateRange.FromDate = "" ? null : dateRange.FromDate,
+            toDate: dateRange.ToDate = "" ? null : dateRange.ToDate,
             sortColumnName: null,
             sortDirection: null
         };

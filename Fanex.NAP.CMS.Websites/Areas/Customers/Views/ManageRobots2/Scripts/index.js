@@ -54,23 +54,23 @@
                 changeMonth: true,
                 changeYear: true,
                 showOtherMonths: true,
-                selectOtherMonths: true
+                selectOtherMonths: true,
+                maxDate: resources.CurrentDate,
             },
             firstDatePicker: {
                 Id: "dpk-fromdate",
                 Label: resources.From_Date,
-                InitDate: resources.MinDate,
                 LabelCss: "lbl-field lblFilter",
+                CurrentDate: resources.CurrentDate,
                 TextboxCss: "edit-field col_5"
             },
             secondDatePicker: {
                 Id: "dpk-todate",
                 Label: resources.To_Date,
-                InitDate: resources.CurrentDate,
-                CurrentDate: null,
+                CurrentDate: resources.CurrentDate,
                 LabelCss: "lbl-field lblFilter",
                 TextboxCss: "edit-field col_5"
-            }
+            },
         });
     }
 

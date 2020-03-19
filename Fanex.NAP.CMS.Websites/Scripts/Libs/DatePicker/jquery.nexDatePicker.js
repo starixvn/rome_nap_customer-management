@@ -173,7 +173,7 @@
                 '<div class="ui_nexdatepicker_lbl_field ' + firstDatePickerLabelCss + '">' + options.firstDatePicker.Label + '</div>'
                 + '<div class="ui_nexdatepicker_edit_field ' + firstDatePickerTextboxCss + '">'
                 + '<input type="text" id="' + options.firstDatePicker.Id + '" name="' + options.firstDatePicker.Id
-                + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" />'
+                + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_fromdate" autocomplete="off" />'
                 + '</div>'
             );
 
@@ -183,7 +183,7 @@
                     '<div class="ui_nexdatepicker_lbl_field ' + secondDatePickerLabelCss + '">' + options.secondDatePicker.Label + '</div>'
                     + '<div class="ui_nexdatepicker_edit_field ' + secondDatePickerTextboxCss + '">'
                     + '<input type="text" id="' + options.secondDatePicker.Id + '" name="' + options.secondDatePicker.Id
-                    + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" />'
+                    + (options.blankable === true ? '"' : '" readonly="readonly"') + ' class="ui_nexdatepicker_datetextbox ui_nexdatepicker_todate" autocomplete="off" />'
                     + '</div>'
                 );
             }

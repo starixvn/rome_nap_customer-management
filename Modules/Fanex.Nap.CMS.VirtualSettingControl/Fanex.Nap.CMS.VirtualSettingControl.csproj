@@ -183,9 +183,6 @@
     <Compile Include="Criteria\UploadVirtualRate\UpdateVirtualRateExcelTemplateCriteria.cs" />
     <Compile Include="Criteria\UploadVirtualRate\VerifyVirtualRateExcelTemplateCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
-    <Compile Include="Criteria\UploadVirtualRate\UpdateVirtualRateExcelTemplateCriteria.cs" />
-    <Compile Include="Criteria\UploadVirtualRate\VerifyVirtualRateExcelTemplateCriteria.cs" />
-    <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdLogCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateLogsCriteria.cs" />
@@ -251,9 +248,6 @@
     <Compile Include="Services\ManualUpdateVRAccount\IManualUpdateVRAccountService.cs" />
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountExporter.cs" />
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountService.cs" />
-    <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
-    <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />
-    <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
     <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
     <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />
     <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />

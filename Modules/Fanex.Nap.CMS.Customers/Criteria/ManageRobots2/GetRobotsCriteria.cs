@@ -46,7 +46,7 @@
                 { "pagesize", PageSize },
                 { "pageindex", PageIndex },
                 { "fromDate", FromDate },
-                { "toDate", ToDate},
+                { "toDate", ToDate?.AddDays(1).AddTicks(-1) },
                 { "totalitems", 0 }
             };
 

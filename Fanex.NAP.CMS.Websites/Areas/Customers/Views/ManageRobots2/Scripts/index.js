@@ -185,6 +185,9 @@
             return;
         }
 
+        CMS.clearTipsyError($("#dpk-fromdate"));
+        CMS.clearTipsyError($("#dpk-todate"));
+
         self.searchParam = {
             username: this.elements.txtUsername.val().trim(),
             level: this.elements.ddLevel.val(),

@@ -97,6 +97,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Username is duplicated.
+        /// </summary>
+        public static string DuplicatedUsernameError {
+            get {
+                return ResourceManager.GetString("DuplicatedUsernameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The file is too big..
         /// </summary>
         public static string Error_ExcessMaxFileSize {

@@ -145,6 +145,7 @@
             var actualTotalRows = 0;
             IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
             var rateRanges = virtualRateDetailsRepository.GetVirtualRateRanges().ToDictionary(kvp => kvp.Value, kvp => true);
+            IDictionary<string, bool> accountsHash = new Dictionary<string, bool>();
 
             var totalSheetRows = sheet.LastRowNum + 1;
 
@@ -155,24 +156,24 @@
                 if (row != null && row.Cells.Count > 0)
                 {
                     actualTotalRows++;
-                    ValidateBodyRows(row, excelErrors, rateRanges, i + 1);
+                    ValidateBodyRows(row, excelErrors, rateRanges, accountsHash, i + 1);
                 }
             }
 
             return excelErrors;
         }
 
-        private void ValidateBodyRows(IRow row, IList<ExcelErrorDTO> excelErrors, IDictionary<int, bool> rateRanges, int rowNumber)
+        private void ValidateBodyRows(
+            IRow row,
+            IList<ExcelErrorDTO> excelErrors,
+            IDictionary<int, bool> rateRanges,
+            IDictionary<string, bool> accountsHash,
+            int rowNumber)
         {
             string multiplier;
             var cellRef = new CellReference("A");
             var account = row.GetCell(cellRef.Col)?.ToString();
-
-            if (string.IsNullOrWhiteSpace(account))
-            {
-                excelErrors.Add(
-                    new ExcelErrorDTO(GetExcelCell(cellRef, rowNumber), account, account, ESportsResource.RequiredUsernameError));
-            }
+            ValidateAccount(account, excelErrors, accountsHash, cellRef, rowNumber);
 
             foreach (ESportVirtualRateBetTypeElement betType in betTypes)
             {
@@ -184,6 +185,35 @@
                 {
                     excelErrors.Add(
                         new ExcelErrorDTO(GetExcelCell(cellRef, rowNumber), account, multiplier, ESportsResource.InvalidValue));
+                }
+            }
+        }
+
+        private static void ValidateAccount(
+            string account,
+            IList<ExcelErrorDTO> excelErrors,
+            IDictionary<string, bool> accountsHash,
+            CellReference cellRef,
+            int rowNumber)
+        {
+            if (string.IsNullOrWhiteSpace(account))
+            {
+                excelErrors.Add(
+                    new ExcelErrorDTO(GetExcelCell(cellRef, rowNumber), account, account, ESportsResource.RequiredUsernameError));
+            }
+            else
+            {
+                var accountTrim = account.Trim();
+                var accountLowerCase = accountTrim.ToLowerInvariant();
+
+                if (accountsHash.ContainsKey(accountLowerCase))
+                {
+                    excelErrors.Add(
+                        new ExcelErrorDTO(GetExcelCell(cellRef, rowNumber), account, account, ESportsResource.DuplicatedUsernameError));
+                }
+                else
+                {
+                    accountsHash.Add(accountLowerCase, true);
                 }
             }
         }

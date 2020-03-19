@@ -29,9 +29,7 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_UploadVirtualRate, Policy = Constant.Policy.Read)]
         public ActionResult Index()
-        {
-            return View("~/Areas/VirtualSettingControl/Views/UploadVirtualRate/Index.cshtml");
-        }
+            => View("~/Areas/VirtualSettingControl/Views/UploadVirtualRate/Index.cshtml");
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_UploadVirtualRate, Policy = Constant.Policy.Read)]
         public ActionResult DownloadTemplate()

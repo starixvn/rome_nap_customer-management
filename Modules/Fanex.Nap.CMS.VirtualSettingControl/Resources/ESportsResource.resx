@@ -195,12 +195,6 @@
   <data name="DataError" xml:space="preserve">
     <value>Data Error</value>
   </data>
-  <data name="GlobalAutoSuspendThresholdExcelFile" xml:space="preserve">
-    <value>E-Sports_Global_Auto_Suspend_Threshold</value>
-  </data>
-  <data name="GlobalAutoSuspendThresholdLog" xml:space="preserve">
-    <value>Global Auto Suspend Threshold Log</value>
-  </data>
   <data name="SubmitAllChangeAndMarkManualVRUpdated" xml:space="preserve">
     <value>Submit All Changes &amp; Mark Manual VR Updated</value>
   </data>
@@ -224,5 +218,8 @@
   </data>
   <data name="ESportsManualVRAccountsExcelFileName" xml:space="preserve">
     <value>E-Sports - Manual VR Accounts</value>
+  </data>
+  <data name="DuplicatedUsernameError" xml:space="preserve">
+    <value>Username is duplicated</value>
   </data>
 </root>

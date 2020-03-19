@@ -1,0 +1,71 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@{
+    ViewBag.Title = "Auto Suspend Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var currentDate = '@currentDate.ToShortFormatedDateWithSlash()',
+            initFromDate = '@currentDate.AddDays(-1).ToShortFormatedDateWithSlash()';
+        var resources = {
+            From: "@ViewLang.From",
+            To: "@ViewLang.To",
+            ReportTitle: "@ESportsResource.GlobalAutoSuspendThresholdLog",
+            Message_NoReportData: "@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData",
+            UpdateGlobalAutoSuspendThreshold: "@ESportsResource.UpdateGlobalAutoSuspendThreshold"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.ESports_GlobalAutoSuspendThresholdLogScript)
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+<div class="custom-tabs">
+    @Html.ActionLink(ViewLang.Member, "AutoSuspendLog", "VirtualRateDetails", new { area = "VirtualSettingControl" }, null)
+    |
+    <span class="active">@ESportsResource.GlobalAutoSuspendThreshold</span>
+</div>
+<div class="filter-bar">
+    @using (Html.BeginForm("GetThresholdLog", "VirtualRateDetails", FormMethod.Get, new { id = "formViewLog", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit">@ViewLang.Search</button>
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div id="report-container" class="display-none">
+    <div class="content-grid">
+        <div id="virtual-rate-report-freegrid-grid-title" class="grid-title">
+            <div class="grid-title-label" id="report-tile"></div>
+        </div>
+        <table id="tbl-virtual-rate-report" class="tbl-report">
+            <thead>
+                <tr>
+                    <th class="col-group col-threshold">
+                        @ViewLang.BetType
+                        <span class="ico-collapse" id="ico-collapse"></span>
+                    </th>
+                    <th class="col-nonlive">@ViewLang.NonLive</th>
+                    <th class="col-live">@ViewLang.Live</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

@@ -346,7 +346,7 @@
                     return currentAlign;
             }
         }
-
+        
         public static ICellStyle VIPStyle(HSSFWorkbook excelFile)
         {
             ICellStyle cellStyle = excelFile.CreateCellStyle();
@@ -361,6 +361,28 @@
             cellStyle.VerticalAlignment = (VerticalAlignment)VerticalAlignCenter;
             cellStyle.SetFont(font);
             cellStyle = SetBorderToCell(cellStyle);
+
+            return cellStyle;
+        }
+
+        public static ICellStyle TextStyleWithBlurBorder(
+            HSSFWorkbook excelFile,
+            short cellColor,
+            bool bold,
+            Alignment align,
+            short fontColor = 8)
+        {
+            var cellStyle = TextStyleWithoutBorder(excelFile, cellColor, bold, align, fontColor);
+
+            cellStyle.BorderBottom = BorderStyle.Thin;
+            cellStyle.BorderLeft = BorderStyle.Thin;
+            cellStyle.BorderRight = BorderStyle.Thin;
+            cellStyle.BorderTop = BorderStyle.Thin;
+
+            cellStyle.BottomBorderColor = HSSFColor.Grey25Percent.Index;
+            cellStyle.LeftBorderColor = HSSFColor.Grey25Percent.Index;
+            cellStyle.RightBorderColor = HSSFColor.Grey25Percent.Index;
+            cellStyle.TopBorderColor = HSSFColor.Grey25Percent.Index;
 
             return cellStyle;
         }

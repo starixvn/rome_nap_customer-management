@@ -499,6 +499,9 @@
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Scripts\uploadVirtualRate.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\globalAutoSuspendThreshold.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\globalAutoSuspendThresholdLog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\member-vr.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\autosuspend-log.js" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Scripts\viewlog.js" />
@@ -967,6 +970,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\ViewRealValues.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\GlobalSetting.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalAutoSuspendThreshold.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\Index.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_SearchFilter.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountCreditSite\_MarkNew.cshtml" />
@@ -984,6 +988,10 @@
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_InformingStatus.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_ReduceBetLimit.cshtml" />
     <Content Include="Areas\Customers\Views\ProblemAccountLicenseeSite\_RemoveReduceBetLimit.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\GlobalAutoSuspendThresholdLog.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Styles\upload.less" />
+    <Content Include="App_Data\ExcelTemplates\E-Sports-UploadVirtualRateTemplate.xlsx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -994,6 +1002,9 @@
     <Content Include="Content\Sites\credit-collection-summary.less" />
     <Content Include="Views\StatusLog\Index.cshtml" />
     <Content Include="Areas\BetRestriction\Index.cshtml" />
+    <Content Include="ESportsVirtualRateSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

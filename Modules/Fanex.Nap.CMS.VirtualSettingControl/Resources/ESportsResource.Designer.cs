@@ -151,6 +151,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Sports - Manual VR Accounts.
+        /// </summary>
+        public static string ESportsManualVRAccountsExcelFileName {
+            get {
+                return ResourceManager.GetString("ESportsManualVRAccountsExcelFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Excel Cell.
         /// </summary>
         public static string ExcelCell {

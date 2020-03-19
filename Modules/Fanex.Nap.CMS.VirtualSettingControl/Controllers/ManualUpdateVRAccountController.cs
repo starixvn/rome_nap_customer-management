@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Constants;
+    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using Infrastructure;
@@ -34,6 +35,15 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_ManuallyUpdatedVirtualRateAccounts, Policy = Constant.Policy.Read)]
         public ActionResult Search(int sportType, string account)
             => JsonData(manualUpdateService.GetManualUpdateAccounts(sportType, account));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_ManuallyUpdatedVirtualRateAccounts, Policy = Constant.Policy.Read)]
+        public void Export(int sportType, string account)
+        {
+            var data = manualUpdateService.GetManualUpdateAccounts(sportType, account);
+
+            IExcelExporter exporter = new ManualUpdateVRAccountExporter(data);
+            exporter.ResponseStream();
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_ManuallyUpdatedVirtualRateAccounts, Policy = Constant.Policy.Host)]
         public ActionResult Unmark(int sportType, string custIds)

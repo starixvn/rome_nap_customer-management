@@ -56,7 +56,11 @@
             columns: headerColumns,
             showTitle: true,
             titleInfo: {
-                text: resources.reportTitle
+                text: resources.reportTitle,
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("VirtualSettingControl/ManualUpdateVRAccount/Export"), formSearch.serializeArray());
+                }
             },
             bodyRows: [],
             fullWidth: true,

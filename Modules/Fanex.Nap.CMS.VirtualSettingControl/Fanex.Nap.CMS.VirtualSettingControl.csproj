@@ -249,6 +249,7 @@
       <DependentUpon>ESportsResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\ManualUpdateVRAccount\IManualUpdateVRAccountService.cs" />
+    <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountExporter.cs" />
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountService.cs" />
     <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
     <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />

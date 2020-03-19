@@ -222,4 +222,7 @@
   <data name="UnmarkManualUpdateAccountSuccessfully" xml:space="preserve">
     <value>The selected accounts have been successfully removed from the list.</value>
   </data>
+  <data name="ESportsManualVRAccountsExcelFileName" xml:space="preserve">
+    <value>E-Sports - Manual VR Accounts</value>
+  </data>
 </root>

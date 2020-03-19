@@ -367,6 +367,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please input values on both From and To fields to search data within date range..
+        /// </summary>
+        public static string MissingFilterDate {
+            get {
+                return ResourceManager.GetString("MissingFilterDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Site.
         /// </summary>
         public static string NoSite {

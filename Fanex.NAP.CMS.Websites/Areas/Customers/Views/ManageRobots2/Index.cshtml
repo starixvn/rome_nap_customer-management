@@ -69,11 +69,6 @@
     </div>
 </div>
 <div id="report-container" class="display-none content-grid">
-    <div class="grid-title">
-        <div class="grid-toolbox">
-            <input type="button" id="btn-export-excel" class="btnExcel" title="@Labels.Export">
-        </div>
-    </div>
     <div id="div-robots" class="freegrid"></div>
 </div>
 @if (Model.HasEditRight)
@@ -192,7 +187,9 @@
             RobotRulesTitle: '@Labels.RobotRulesTitle',
             From_Date: '@Labels.From_Date',
             To_Date: '@Labels.To_Date',
-            CurrentDate: '@Model.CurrentDate'
+            CurrentDate: '@Model.CurrentDate',
+            Export: '@Labels.Export',
+            MissingFilterDate: '@Labels.MissingFilterDate'
         };
     </script>
 }

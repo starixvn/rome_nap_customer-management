@@ -87,7 +87,6 @@
         $("#note-info").off("click touchend").on("click touchend", function () {
             CMS.popup(resources.RobotRulesTitle, $("#robot-rules-container").html(), { resizable: false });
         });
-        $("#btn-export-excel").on("click touchend", function () { self.exportRobots(); });
     };
     this.getSites = function () {
         CMS.disableInput();
@@ -179,6 +178,13 @@
 
         var dateRange = this.elements.divFromToDatePicker.nexDatePicker("getDateRange");
 
+        if ((dateRange.FromDate === "" ? 1 : 0) ^ (dateRange.ToDate === "" ? 1 : 0)) {
+            dateRange.FromDate === "" ?
+                CMS.showTipsyError($("#dpk-fromdate"), resources.MissingFilterDate, "s")
+                : CMS.showTipsyError($("#dpk-todate"), resources.MissingFilterDate, "s");
+            return;
+        }
+
         self.searchParam = {
             username: this.elements.txtUsername.val().trim(),
             level: this.elements.ddLevel.val(),
@@ -245,6 +251,7 @@
             showNumberColumn: true,
             showPager: true,
             customPager: true,
+            showTitle: true,
             pagerOption: {
                 itemsPerPage: rs.PageSize,
                 currentPage: rs.PageIndex - 1,
@@ -259,7 +266,14 @@
                     self.searchParam.pageIndex = 1;
                     self.getRobots(self.searchParam);
                 }
-            }
+            },
+            titleInfo: {
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("ManageRobots2/ExportRobots"), self.searchParam);
+                }
+            },
         };
 
         var bodyData = [];
@@ -477,10 +491,6 @@
     this.getSortDirection = function (columnName) {
         return this.searchParam.sortColumnName == columnName ? this.searchParam.sortDirection : null;
     };
-
-    this.exportRobots = function () {
-        CMS.downloadFile(CMS.resolveRootUrl("ManageRobots2/ExportRobots"), self.searchParam);
-    }
 };
 
 $(document).ready(function () {

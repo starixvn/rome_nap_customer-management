@@ -40,34 +40,19 @@
             this.virtualRateDetailsRepository = virtualRateDetailsRepository ?? new VirtualRateDetailsRepository();
         }
 
-        public ExcelErrorModel Verify(Stream stream, string fileExtension, int userId)
+        public ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension)
         {
-            ISheet sheet = null;
-            var excelErrorModel = ValidateByWeb(stream, fileExtension, ref sheet);
-
-            return excelErrorModel.ExcelErrors.Any()
-                ? excelErrorModel
-                : ValidateBySP(sheet, userId);
-        }
-
-        #region Web Validation
-
-        private ExcelErrorModel ValidateByWeb(Stream stream, string fileExtension, ref ISheet sheet)
-        {
+            var actualTotalRows = 0;
             var excelErrors = new List<ExcelErrorDTO>();
-            IWorkbook workbook = GetWorkbook(stream, fileExtension);
+            var workbook = GetWorkbook(stream, fileExtension);
 
             if (workbook == null)
             {
                 excelErrors.Add(new ExcelErrorDTO(ESportsResource.Error_NotExcelFile));
             }
-            else if (workbook.NumberOfSheets == 0)
-            {
-                excelErrors.Add(new ExcelErrorDTO(ESportsResource.Error_IncorrectLayout));
-            }
             else
             {
-                sheet = workbook.GetSheetAt(0);
+                var sheet = GetSheet(workbook);
 
                 if (sheet == null)
                 {
@@ -79,15 +64,26 @@
 
                     if (excelErrors.Count == 0)
                     {
-                        excelErrors.AddRange(ValidateBodyRows(sheet));
+                        excelErrors.AddRange(ValidateBodyRows(sheet, ref actualTotalRows));
                     }
                 }
             }
 
             var totalExcelErrors = excelErrors.Count;
 
-            return new ExcelErrorModel(excelErrors, 0, totalExcelErrors, $"{ESportsResource.FormatError}: {totalExcelErrors}", true);
+            return new ExcelErrorModel(excelErrors, 0, actualTotalRows, $"{ESportsResource.FormatError}: {totalExcelErrors}");
         }
+
+        public ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId)
+        {
+            var excelErrors = new List<ExcelErrorDTO>();
+            var workbook = GetWorkbook(stream, fileExtension);
+            var sheet = GetSheet(workbook);
+
+            return ValidateBySP(sheet, userId);
+        }
+
+        #region Web Validation
 
         private static IWorkbook GetWorkbook(Stream stream, string fileExtension)
         {
@@ -110,6 +106,11 @@
 
             return null;
         }
+
+        private static ISheet GetSheet(IWorkbook workbook)
+            => workbook.NumberOfSheets == 0
+            ? null
+            : workbook.GetSheetAt(0);
 
         private static IEnumerable<ExcelErrorDTO> ValidateHeaderRow(IRow headerRow)
         {
@@ -139,10 +140,9 @@
             return excelErrors;
         }
 
-        private IEnumerable<ExcelErrorDTO> ValidateBodyRows(ISheet sheet)
+        private IEnumerable<ExcelErrorDTO> ValidateBodyRows(ISheet sheet, ref int actualTotalRows)
         {
             IRow row;
-            var actualTotalRows = 0;
             IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
             var rateRanges = virtualRateDetailsRepository.GetVirtualRateRanges().ToDictionary(kvp => kvp.Value, kvp => true);
             IDictionary<string, bool> accountsHash = new Dictionary<string, bool>();
@@ -233,6 +233,7 @@
             var validSetting = 0;
             var errors = new List<ExcelErrorDTO>();
             var actualTotalRows = 0;
+            ExcelErrorModel errorExcelModel;
 
             do
             {
@@ -243,7 +244,13 @@
                     endIndex = totalSheetRows;
                 }
 
-                var errorExcelModel = VerifyExcelTemplate(sheet, startIndex, endIndex, sessionId, userId);
+                errorExcelModel = VerifyExcelTemplate(sheet, startIndex, endIndex, sessionId, userId);
+
+                if (errorExcelModel == null)
+                {
+                    break;
+                }
+
                 validSetting += errorExcelModel.ValidSetting;
                 actualTotalRows += errorExcelModel.TotalRows;
                 errors.AddRange(errorExcelModel.ExcelErrors);
@@ -258,7 +265,7 @@
         {
             IRow row;
             var actualTotalRows = 0;
-            var xmlBuilder = new StringBuilder("<Rt>");
+            var xmlBuilder = new StringBuilder();
 
             for (int i = startIndex; i < endIndex; i++)
             {
@@ -267,24 +274,28 @@
                 if (row != null && row.Cells.Count > 0)
                 {
                     actualTotalRows++;
-                    GetVirtualRateXML(xmlBuilder, row, i + 1);
+                    xmlBuilder.Append(GetVirtualRateXML(row, i + 1));
                 }
             }
 
-            xmlBuilder.Append("</Rt>");
+            if (xmlBuilder.Length == 0)
+            {
+                return null;
+            }
 
             var excelErrorModel = uploadRepository.VerifyExcelTemplate(
-                new VerifyVirtualRateExcelTemplateCriteria(ESportsSportType, sessionId, userId, xmlBuilder.ToString()));
+                new VerifyVirtualRateExcelTemplateCriteria(ESportsSportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>"));
             excelErrorModel.TotalRows = actualTotalRows;
 
             return excelErrorModel;
         }
 
-        private static string GetVirtualRateXML(StringBuilder xmlBuilder, IRow row, int rowNumber)
+        private static string GetVirtualRateXML(IRow row, int rowNumber)
         {
             string multiplier;
             CellReference cellRef;
             var account = GetUsername(row);
+            var xmlBuilder = new StringBuilder();
 
             foreach (ESportVirtualRateBetTypeElement betType in betTypes)
             {

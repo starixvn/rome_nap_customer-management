@@ -8,14 +8,12 @@
             IEnumerable<ExcelErrorDTO> excelErrors,
             int validSetting,
             int totalRows,
-            string title,
-            bool isFormatError = false)
+            string title)
         {
             ExcelErrors = excelErrors;
             ValidSetting = validSetting;
             TotalRows = totalRows;
             Title = title;
-            IsFormatError = isFormatError;
         }
 
         public IEnumerable<ExcelErrorDTO> ExcelErrors { get; }
@@ -25,7 +23,5 @@
         public int TotalRows { get; set; }
 
         public string Title { get; }
-
-        public bool IsFormatError { get; }
     }
 }

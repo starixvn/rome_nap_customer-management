@@ -43,11 +43,24 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ESports_UploadVirtualRate, Policy = Constant.Policy.Host)]
-        public ActionResult Verify(HttpPostedFileBase file)
+        public ActionResult VerifyByWeb(HttpPostedFileBase file)
         {
             var errors = file == null || file.ContentLength == 0
                 ? new ExcelErrorModel(new[] { new ExcelErrorDTO(Labels.Message_NoReportData) }, 0, 0, $"{ESportsResource.FormatError}: 1")
-                : uploadService.Verify(
+                : uploadService.VerifyByWeb(
+                    file.InputStream,
+                    Path.GetExtension(file.FileName));
+
+            return JsonData(errors, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ESports_UploadVirtualRate, Policy = Constant.Policy.Host)]
+        public ActionResult VerifyByDB(HttpPostedFileBase file)
+        {
+            var errors = file == null || file.ContentLength == 0
+                ? new ExcelErrorModel(new[] { new ExcelErrorDTO(Labels.Message_NoReportData) }, 0, 0, $"{ESportsResource.FormatError}: 1")
+                : uploadService.VerifyByDB(
                     file.InputStream,
                     Path.GetExtension(file.FileName),
                     CurrentSession.UserId);

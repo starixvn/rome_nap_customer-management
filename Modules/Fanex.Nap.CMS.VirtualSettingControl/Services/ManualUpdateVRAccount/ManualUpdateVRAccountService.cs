@@ -10,7 +10,8 @@
     public class ManualUpdateVRAccountService : ServiceBase, IManualUpdateVRAccountService
     {
         public IEnumerable<ManualUpdateAccountDTO> GetManualUpdateAccounts(int sportType, string account)
-            => GetRepositoryData<ManualUpdateAccountDTO>(new GetManualUpdateAccountListCriteria(sportType, account));
+            => GetRepositoryData<ManualUpdateAccountDTO>(
+                new GetManualUpdateAccountListCriteria(sportType, account == null ? string.Empty : account.Trim()));
 
         public Result UnmarkManualUpdateAccount(int sportType, string custIds, int userId, string ip)
         {

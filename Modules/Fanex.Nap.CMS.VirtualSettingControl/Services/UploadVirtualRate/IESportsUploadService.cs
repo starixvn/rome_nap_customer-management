@@ -6,7 +6,9 @@
 
     public interface IESportsUploadService
     {
-        ExcelErrorModel Verify(Stream stream, string fileExtension, int userId);
+        ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension);
+
+        ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId);
 
         Result Update(int userId, string ip);
     }

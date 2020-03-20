@@ -5,9 +5,12 @@
 
     var buttonVerify = $("#btn-verify");
     var gridOptions = null;
-    var divExcelError = $("#excelError");
+    var freegrid = $("#freegrid");
     var spanValidSetting = $("#valid-setting");
 
+    var progressbar = $("#progressbar");
+    var progressLabel = $("#progressLabel");
+    var progressbarTimeId = null;
     var buttonUpdate = $("#btn-update");
 
     function validateUploadedFile(fileControl) {
@@ -43,52 +46,85 @@
         return /[.]/.exec(fileName) ? /[^.]+$/.exec(fileName)[0] : "";
     }
 
-    function verifyUploadedFile(file) {
+    function verifyByWeb(file) {
         CMS.disableInput();
 
         var formData = new FormData();
         formData.append("File", file);
 
         var jqxhr = $.ajax({
-            url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/Verify"),
+            url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/VerifyByWeb"),
             type: "POST",
             contentType: false,
             processData: false,
             data: formData,
-            success: renderErrorSetting,
+            success: function (data) {
+                verifyByWebSuccessHandler(data, formData);
+            },
             error: CMS.handleAjaxError
         });
 
         jqxhr.always(CMS.enableInput);
     }
 
-    function renderErrorSetting(data) {
-        var bodyData = [];
+    function verifyByWebSuccessHandler(data, formData) {
+        var JSONData = JSON.parse(data);
+
+        if (JSONData.ExcelErrors.length) {
+            renderGrid(JSONData.ExcelErrors, JSONData.Title);
+            spanValidSetting.text("N/A");
+        } else {
+            verifyByDB(formData, JSONData.TotalRows);
+        }
+    }
+
+    function verifyByDB(formData, totalRows) {
+        buttonVerify.prop("disabled", true);
+        var jqxhr = $.ajax({
+            url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/VerifyByDB"),
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: verifyByDBSuccessHandler,
+            error: CMS.handleAjaxError
+        });
+
+        jqxhr.always(function () {
+            hideProgressBar();
+            buttonVerify.prop("disabled", false);
+        });
+
+        showProgressBar(totalRows);
+    }
+
+    function verifyByDBSuccessHandler(data) {
+        hideProgressBar();
 
         var JSONData = JSON.parse(data);
-        var excelErrors = JSONData.ExcelErrors;
-        var dataLength = excelErrors.length;
+        renderGrid(JSONData.ExcelErrors, JSONData.Title);
+        spanValidSetting.text(JSONData.ValidSetting + "/" + JSONData.TotalRows);
+        buttonUpdate.prop("disabled", !JSONData.ValidSetting);
+    }
 
-        for (var i = 0; i < dataLength; i++) {
-            var error = excelErrors[i];
+    function renderGrid(data, title) {
+        var bodyData = [];
 
+        $.each(data, function (index, error) {
             bodyData.push({
                 Columns: [
-                    { Name: "colNo", Value: numeral(i + 1).format(CMSConstants.NumberFormat.IntNumber) },
+                    { Name: "colNo", Value: numeral(index + 1).format(CMSConstants.NumberFormat.IntNumber) },
                     { Name: "colExcelCell", Value: error.CellId },
                     { Name: "colAccount", Value: error.Username },
                     { Name: "colValue", Value: error.Value },
                     { Name: "colReason", Value: error.Reason }]
             });
-        }
+        });
 
         gridOptions = gridOptions || getGridOptions();
-        gridOptions.titleInfo.text = JSONData.Title;
+        gridOptions.titleInfo.text = title;
         gridOptions.bodyRows = bodyData;
-
-        divExcelError.removeClass("display-none").fanexGrid(gridOptions);
-        spanValidSetting.text(JSONData.IsFormatError ? "N/A" : JSONData.ValidSetting + "/" + JSONData.TotalRows);
-        buttonUpdate.prop("disabled", !JSONData.ValidSetting);
+        freegrid.removeClass("display-none").fanexGrid(gridOptions);
     }
 
     function getGridOptions() {
@@ -150,10 +186,14 @@
     function reset() {
         textboxFile.val("");
         buttonVerify.prop("disabled", true);
+        resetGrid();
+    }
+
+    function resetGrid() {
         spanValidSetting.text("N/A");
         buttonUpdate.prop("disabled", true);
-        divExcelError.addClass("display-none");
-        $("#excelError-grid-title").addClass("display-none");
+        freegrid.addClass("display-none");
+        $("#freegrid-grid-title").addClass("display-none");
     }
 
     function uploadFile() {
@@ -164,7 +204,8 @@
             success: function (data) {
                 var JSONData = JSON.parse(data);
                 if (JSONData.Code === 0) {
-                    CMS.showSuccessMessage(JSONData.Message, reset);
+                    reset();
+                    CMS.showSuccessMessage(JSONData.Message);
                 } else {
                     CMS.showErrorMessage(JSONData.Message);
                 }
@@ -173,6 +214,41 @@
         });
 
         jqxhr.always(CMS.enableInput);
+    }
+
+    function showProgressBar(totalRows) {
+        var batchSize = 150;
+        var totalBatches = Math.ceil(totalRows / batchSize);
+        var percentIncreasePerBatch = Math.ceil(100 / totalBatches);
+        var processPerBatchInSeconds = 6;
+
+        progressbar.progressbar({
+            value: 0,
+            change: function () {
+                progressLabel.text(progressbar.progressbar("value") + "%");
+            }
+        });
+
+        function progress() {
+            var val = progressbar.progressbar("value") || 0;
+            val += percentIncreasePerBatch;
+
+            if (val < 100) {
+                progressbar.progressbar("value", val);
+                progressbarTimeId = setTimeout(progress, 1000 * processPerBatchInSeconds);
+            } else {
+                progressbar.progressbar("value", 99);
+            }
+        }
+
+        progress();
+        progressbar.removeClass("display-none");
+    }
+
+    function hideProgressBar() {
+        clearTimeout(progressbarTimeId);
+        progressbar.addClass("display-none");
+        progressLabel.text("0%");
     }
 
     $(function () {
@@ -190,7 +266,8 @@
             });
 
         buttonVerify.click(function () {
-            fileControl && verifyUploadedFile(fileControl.files[0]);
+            resetGrid();
+            fileControl && verifyByWeb(fileControl.files[0]);
         });
 
         buttonUpdate.click(uploadFile);

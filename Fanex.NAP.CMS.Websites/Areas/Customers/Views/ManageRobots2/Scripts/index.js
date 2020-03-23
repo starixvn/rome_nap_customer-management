@@ -164,7 +164,7 @@
         });
 
         this.elements.ddlSite.fanexMultiSelect({
-            minWidth: 120,
+            minWidth: 140,
             checkAllText: resources.All,
             isCheckAll: false,
             listData: sites

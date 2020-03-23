@@ -16,6 +16,7 @@
         private const int Cell50Width = 50;
         private const int Cell100Width = 100;
         private const int Cell200Width = 200;
+        private const int Cell400Width = 400;
 
         private readonly int[] ColumnWidth
             = new[] { Cell50Width, Cell100Width, Cell200Width, Cell100Width,
@@ -63,7 +64,7 @@
                     new ExcelColumn(Labels.ServerIP, Cell100Width),
                     new ExcelColumn(Labels.AddedBy, Cell100Width),
                     new ExcelColumn(Labels.AddedDate, Cell100Width),
-                    new ExcelColumn(Labels.Remark, Cell100Width)
+                    new ExcelColumn(Labels.Remark, Cell400Width)
                 };
             }
         }
@@ -81,38 +82,39 @@
             }
         }
 
-        protected override void ExportHeader()
-        {
-            ExportExcel.SetColumnWidthByFontWidth(ColumnWidth);
+        //protected override void ExportHeader()
+        //{
+        //    ExportExcel.SetColumnWidthByFontWidth(ColumnWidth);
 
-            ExportExcel.MaxColumnIndex = ColumnCount - 1;
+        //    ExportExcel.MaxColumnIndex = ColumnCount - 1;
 
-            ExportExcel.CreateCurrentNPOIRow();
-            ExportExcel.RenderRow(Title, TitleTextStyle);
-            ExportExcel.ResetCurrentColumn();
+        //    ExportExcel.CreateCurrentNPOIRow();
+        //    ExportExcel.RenderRow(Title, TitleTextStyle);
+        //    ExportExcel.ResetCurrentColumn();
 
-            ExportExcel.CreateCurrentNPOIRow();
-            ExportExcel.RenderCurrentCell("#", HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.CustId, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Username, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Level, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Currency, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Site, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.IP, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Country, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Region, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.LastChangeTime, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Counter, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.ServerIP, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.AddedBy, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.AddedDate, HeaderTextStyle);
-            ExportExcel.RenderCurrentCell(Labels.Remark, HeaderTextStyle);
-            ExportExcel.CurrentRow++;
-            ExportExcel.ResetCurrentColumn();
-        }
+        //    ExportExcel.CreateCurrentNPOIRow();
+        //    ExportExcel.RenderCurrentCell("#", HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.CustId, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Username, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Level, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Currency, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Site, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.IP, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Country, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Region, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.LastChangeTime, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Counter, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.ServerIP, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.AddedBy, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.AddedDate, HeaderTextStyle);
+        //    ExportExcel.RenderCurrentCell(Labels.Remark, HeaderTextStyle);
+        //    ExportExcel.CurrentRow++;
+        //    ExportExcel.ResetCurrentColumn();
+        //}
 
         protected override void ExportBody()
         {
+            ExportExcel.ResetCurrentColumn();
             for (int i = 0; i < report.Robots.Count; i++)
             {
                 var robot = report.Robots[i];

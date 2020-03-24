@@ -7,23 +7,14 @@
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
-    using System;
 
     public sealed class RobotsExporter : BaseExcelExporter, IExcelExporter
     {
-        private const int ColumnCount = 15;
         private const int FontHeight = 9;
         private const int Cell50Width = 50;
         private const int Cell100Width = 100;
         private const int Cell200Width = 200;
         private const int Cell400Width = 400;
-
-        private readonly int[] ColumnWidth
-            = new[] { Cell50Width, Cell100Width, Cell200Width, Cell100Width,
-                Cell100Width, Cell200Width, Cell100Width, Cell100Width,
-                Cell100Width, Cell200Width, Cell100Width, Cell100Width,
-                Cell100Width, Cell100Width, Cell100Width };
-
         private readonly RobotReport report;
 
         private IFont HeaderFont { get; set; }
@@ -81,36 +72,6 @@
                 return $"{Labels.ManageRobots} - {report.FromDate?.ToShortDateString()}-{report.ToDate?.ToShortDateString()}";
             }
         }
-
-        //protected override void ExportHeader()
-        //{
-        //    ExportExcel.SetColumnWidthByFontWidth(ColumnWidth);
-
-        //    ExportExcel.MaxColumnIndex = ColumnCount - 1;
-
-        //    ExportExcel.CreateCurrentNPOIRow();
-        //    ExportExcel.RenderRow(Title, TitleTextStyle);
-        //    ExportExcel.ResetCurrentColumn();
-
-        //    ExportExcel.CreateCurrentNPOIRow();
-        //    ExportExcel.RenderCurrentCell("#", HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.CustId, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Username, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Level, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Currency, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Site, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.IP, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Country, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Region, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.LastChangeTime, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Counter, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.ServerIP, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.AddedBy, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.AddedDate, HeaderTextStyle);
-        //    ExportExcel.RenderCurrentCell(Labels.Remark, HeaderTextStyle);
-        //    ExportExcel.CurrentRow++;
-        //    ExportExcel.ResetCurrentColumn();
-        //}
 
         protected override void ExportBody()
         {

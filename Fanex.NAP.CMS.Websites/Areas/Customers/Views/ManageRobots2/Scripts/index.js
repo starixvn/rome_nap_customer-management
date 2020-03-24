@@ -5,6 +5,7 @@
         divRobots: null,
         reportContainer: null,
         divAddRobot: null,
+        divFromToDatePicker: null,
 
         formAddRobot: null,
         ddlLevelAddRobot: null,
@@ -17,7 +18,8 @@
     this.searchParam = {
         pageSize: 50,
         pageIndex: 1,
-        counter: 1,
+        fromDate: null,
+        toDate: null,
         sortColumnName: null,
         sortDirection: null
     };
@@ -26,6 +28,7 @@
 
     this.init = function () {
         this.cachedElements();
+        this.initFields();
         this.bindEvents();
         this.getSites();
     };
@@ -39,7 +42,37 @@
         this.elements.divAddRobot = $("#div-add-robot");
         this.elements.ddCurrency = $("#ddl-currency");
         this.elements.ddCounter = $("#ddl-counter");
+        this.elements.divFromToDatePicker = $("#fromtodate-picker");
     };
+
+    this.initFields = function () {
+        this.elements.divFromToDatePicker.nexDatePicker({
+            nexDatePickerType: "daterange",
+            blankable: true,
+            datePickerFormat: {
+                dateFormat: CMS.formats.DateFormat,
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                maxDate: resources.CurrentDate,
+            },
+            firstDatePicker: {
+                Id: "dpk-fromdate",
+                Label: resources.From_Date,
+                LabelCss: "lbl-field lblFilter",
+                CurrentDate: resources.CurrentDate,
+                TextboxCss: "edit-field col_5"
+            },
+            secondDatePicker: {
+                Id: "dpk-todate",
+                Label: resources.To_Date,
+                CurrentDate: resources.CurrentDate,
+                LabelCss: "lbl-field lblFilter",
+                TextboxCss: "edit-field col_5"
+            },
+        });
+    }
 
     this.bindEvents = function () {
         $("#btn-search").on("click touchend", function () { self.enterSearch(); });
@@ -131,7 +164,7 @@
         });
 
         this.elements.ddlSite.fanexMultiSelect({
-            minWidth: 180,
+            minWidth: 140,
             checkAllText: resources.All,
             isCheckAll: false,
             listData: sites
@@ -143,6 +176,18 @@
             sites[sites.length - 1] = "NULL";
         }
 
+        var dateRange = this.elements.divFromToDatePicker.nexDatePicker("getDateRange");
+
+        if ((dateRange.FromDate === "" ? 1 : 0) ^ (dateRange.ToDate === "" ? 1 : 0)) {
+            dateRange.FromDate === "" ?
+                CMS.showTipsyError($("#dpk-fromdate"), resources.MissingFilterDate, "s")
+                : CMS.showTipsyError($("#dpk-todate"), resources.MissingFilterDate, "s");
+            return;
+        }
+
+        CMS.clearTipsyError($("#dpk-fromdate"));
+        CMS.clearTipsyError($("#dpk-todate"));
+
         self.searchParam = {
             username: this.elements.txtUsername.val().trim(),
             level: this.elements.ddLevel.val(),
@@ -150,7 +195,8 @@
             pageSize: 50,
             pageIndex: 1,
             currency: this.elements.ddCurrency.val(),
-            counter: this.elements.ddCounter.val(),
+            fromDate: dateRange.FromDate = "" ? null : dateRange.FromDate,
+            toDate: dateRange.ToDate = "" ? null : dateRange.ToDate,
             sortColumnName: null,
             sortDirection: null
         };
@@ -208,6 +254,7 @@
             showNumberColumn: true,
             showPager: true,
             customPager: true,
+            showTitle: true,
             pagerOption: {
                 itemsPerPage: rs.PageSize,
                 currentPage: rs.PageIndex - 1,
@@ -222,7 +269,14 @@
                     self.searchParam.pageIndex = 1;
                     self.getRobots(self.searchParam);
                 }
-            }
+            },
+            titleInfo: {
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("ManageRobots2/ExportRobots"), self.searchParam);
+                }
+            },
         };
 
         var bodyData = [];

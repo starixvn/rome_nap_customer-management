@@ -69,5 +69,12 @@
 
             return Json(service.AddRobot(criteria));
         }
+
+        public void ExportRobots(GetRobotsCriteria criteria)
+        {
+            var report = service.GetExportRobots(criteria);
+            var exporter = new RobotsExporter(report);
+            exporter.ResponseStream();
+        }
     }
 }

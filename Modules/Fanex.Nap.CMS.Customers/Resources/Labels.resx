@@ -267,4 +267,16 @@
   <data name="RobotRulesTitle" xml:space="preserve">
     <value>Robot Identification Rules &amp; Actions</value>
   </data>
+  <data name="From_Date" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="To_Date" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MissingFilterDate" xml:space="preserve">
+    <value>Please input values on both From and To fields to search data within date range.</value>
+  </data>
 </root>

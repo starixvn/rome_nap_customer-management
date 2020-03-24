@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -241,6 +241,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        public static string Export {
+            get {
+                return ResourceManager.GetString("Export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From.
+        /// </summary>
+        public static string From_Date {
+            get {
+                return ResourceManager.GetString("From_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid account(s):.
         /// </summary>
         public static string InvalidAccounts {
@@ -345,6 +363,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Message_MarkSuccessfully {
             get {
                 return ResourceManager.GetString("Message_MarkSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please input values on both From and To fields to search data within date range..
+        /// </summary>
+        public static string MissingFilterDate {
+            get {
+                return ResourceManager.GetString("MissingFilterDate", resourceCulture);
             }
         }
         
@@ -471,6 +498,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ThisFieldIsRequired {
             get {
                 return ResourceManager.GetString("ThisFieldIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To.
+        /// </summary>
+        public static string To_Date {
+            get {
+                return ResourceManager.GetString("To_Date", resourceCulture);
             }
         }
         

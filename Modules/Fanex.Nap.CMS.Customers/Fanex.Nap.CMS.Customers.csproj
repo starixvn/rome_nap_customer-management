@@ -325,6 +325,7 @@
     <Compile Include="Services\ProblemAccount\ProblemAccountCN88Service.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
+    <Compile Include="Services\RobotsExporter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />

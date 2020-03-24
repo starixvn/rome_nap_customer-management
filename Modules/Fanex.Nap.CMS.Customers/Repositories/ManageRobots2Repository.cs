@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlTypes;
     using System.Linq;
     using Fanex.Common;
     using Fanex.Data;
@@ -47,7 +48,9 @@
                 ResultCode = 0,
                 ResultMessage = string.Empty,
                 PageSize = criteria.PageSize,
-                PageIndex = criteria.PageIndex
+                PageIndex = criteria.PageIndex,
+                FromDate = criteria.FromDate,
+                ToDate = criteria.ToDate
             };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))

@@ -9,9 +9,15 @@
     public interface IManageRobots2Service
     {
         RobotSitesModel GetSites();
+
         RobotReport GetRobots(GetRobotsCriteria criteria);
+
         Result DeleteRobot(DeleteRobotCriteria criteria);
+
         Result AddRobot(AddRobotCriteria criteria);
+
         IEnumerable<CurrencyModel> GetCurrencies(GetCurrenciesCriteria criteria);
+
+        RobotReport GetExportRobots(GetRobotsCriteria criteria);
     }
 }

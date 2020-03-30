@@ -15,5 +15,7 @@
         public string IP { get; set; }
 
         public bool IsMember { get; set; }
+
+        public bool IsManualUpdate { get; set; }
     }
 }

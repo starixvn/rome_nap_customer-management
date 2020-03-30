@@ -2,12 +2,33 @@
 {
     public class ExcelErrorDTO
     {
-        public string Username { get; set; }
+        public ExcelErrorDTO(string reason)
+            : this(null, null, null, null, reason)
+        {
+        }
 
-        public string CellId { get; set; }
+        public ExcelErrorDTO(string cellId, string username, string value, string reason)
+            : this(cellId, username, value, null, reason)
+        {
+        }
 
-        public string Rule { get; set; }
+        public ExcelErrorDTO(string cellId, string username, string value, string rule, string reason)
+        {
+            CellId = cellId;
+            Username = username;
+            Value = value;
+            Rule = rule;
+            Reason = reason;
+        }
 
-        public string Reason { get; set; }
+        public string CellId { get; }
+
+        public string Username { get; }
+
+        public string Value { get; }
+
+        public string Rule { get; }
+
+        public string Reason { get; }
     }
 }

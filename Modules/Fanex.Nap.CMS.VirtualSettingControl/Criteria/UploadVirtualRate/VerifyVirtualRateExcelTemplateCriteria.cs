@@ -29,6 +29,8 @@
 
         public string ErrMsg { get; set; }
 
+        public int ValidUser_Count { get; set; }
+
         public override string GetSettingKey()
             => "Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp";
     }

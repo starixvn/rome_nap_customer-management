@@ -126,8 +126,8 @@
   <data name="DownloadTemplate" xml:space="preserve">
     <value>Download Template</value>
   </data>
-  <data name="ErrorSetting" xml:space="preserve">
-    <value>Error Setting</value>
+  <data name="FormatError" xml:space="preserve">
+    <value>Format Error</value>
   </data>
   <data name="Error_ExcessMaxFileSize" xml:space="preserve">
     <value>The file is too big.</value>
@@ -183,13 +183,43 @@
   <data name="InvalidHeader" xml:space="preserve">
     <value>Invalid header or wrong order</value>
   </data>
-  <data name="ExcelZone" xml:space="preserve">
-    <value>Excel Zone</value>
-  </data>
-  <data name="Rule" xml:space="preserve">
-    <value>Rule</value>
-  </data>
   <data name="UploadVirtualRateSuccessfully" xml:space="preserve">
     <value>The uploaded virtual rate setting has been successfully uploaded.</value>
+  </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>Invalid value</value>
+  </data>
+  <data name="RequiredUsernameError" xml:space="preserve">
+    <value>Username is required</value>
+  </data>
+  <data name="DataError" xml:space="preserve">
+    <value>Data Error</value>
+  </data>
+  <data name="SubmitAllChangeAndMarkManualVRUpdated" xml:space="preserve">
+    <value>Submit All Changes &amp; Mark Manual VR Updated</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="UnmarkSelectedAccounts" xml:space="preserve">
+    <value>Unmark Selected Accounts</value>
+  </data>
+  <data name="SubmitAndMarkManualVRUpdated" xml:space="preserve">
+    <value>Submit &amp; Mark Manual VR Updated</value>
+  </data>
+  <data name="ESports_ManuallyUpdatedVRAccounts" xml:space="preserve">
+    <value>E-Sports - Manually Updated Virtual Rate Accounts</value>
+  </data>
+  <data name="UnmarkManualUpdateAccountConfirmMessage" xml:space="preserve">
+    <value>&lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the E-Sports - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?</value>
+  </data>
+  <data name="UnmarkManualUpdateAccountSuccessfully" xml:space="preserve">
+    <value>The selected accounts have been successfully removed from the list.</value>
+  </data>
+  <data name="ESportsManualVRAccountsExcelFileName" xml:space="preserve">
+    <value>E-Sports - Manual VR Accounts</value>
+  </data>
+  <data name="DuplicatedUsernameError" xml:space="preserve">
+    <value>Username is duplicated</value>
   </data>
 </root>

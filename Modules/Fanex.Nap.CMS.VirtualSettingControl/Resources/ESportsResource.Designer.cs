@@ -79,11 +79,29 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data Error.
+        /// </summary>
+        public static string DataError {
+            get {
+                return ResourceManager.GetString("DataError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Template.
         /// </summary>
         public static string DownloadTemplate {
             get {
                 return ResourceManager.GetString("DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username is duplicated.
+        /// </summary>
+        public static string DuplicatedUsernameError {
+            get {
+                return ResourceManager.GetString("DuplicatedUsernameError", resourceCulture);
             }
         }
         
@@ -115,15 +133,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error Setting.
-        /// </summary>
-        public static string ErrorSetting {
-            get {
-                return ResourceManager.GetString("ErrorSetting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to E-Sports - Global Auto Suspend Threshold.
         /// </summary>
         public static string ESports_GlobalAutoSuspendThreshold {
@@ -133,11 +142,29 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-Sports - Manually Updated Virtual Rate Accounts.
+        /// </summary>
+        public static string ESports_ManuallyUpdatedVRAccounts {
+            get {
+                return ResourceManager.GetString("ESports_ManuallyUpdatedVRAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-Sports Upload Virtual Rate.
         /// </summary>
         public static string ESports_UploadVirtualRate {
             get {
                 return ResourceManager.GetString("ESports_UploadVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-Sports - Manual VR Accounts.
+        /// </summary>
+        public static string ESportsManualVRAccountsExcelFileName {
+            get {
+                return ResourceManager.GetString("ESportsManualVRAccountsExcelFileName", resourceCulture);
             }
         }
         
@@ -160,11 +187,11 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Excel Zone.
+        ///   Looks up a localized string similar to Format Error.
         /// </summary>
-        public static string ExcelZone {
+        public static string FormatError {
             get {
-                return ResourceManager.GetString("ExcelZone", resourceCulture);
+                return ResourceManager.GetString("FormatError", resourceCulture);
             }
         }
         
@@ -205,6 +232,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value.
+        /// </summary>
+        public static string InvalidValue {
+            get {
+                return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Max {
@@ -223,11 +259,65 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rule.
+        ///   Looks up a localized string similar to Username is required.
         /// </summary>
-        public static string Rule {
+        public static string RequiredUsernameError {
             get {
-                return ResourceManager.GetString("Rule", resourceCulture);
+                return ResourceManager.GetString("RequiredUsernameError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit All Changes &amp; Mark Manual VR Updated.
+        /// </summary>
+        public static string SubmitAllChangeAndMarkManualVRUpdated {
+            get {
+                return ResourceManager.GetString("SubmitAllChangeAndMarkManualVRUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit &amp; Mark Manual VR Updated.
+        /// </summary>
+        public static string SubmitAndMarkManualVRUpdated {
+            get {
+                return ResourceManager.GetString("SubmitAndMarkManualVRUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the E-Sports - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?.
+        /// </summary>
+        public static string UnmarkManualUpdateAccountConfirmMessage {
+            get {
+                return ResourceManager.GetString("UnmarkManualUpdateAccountConfirmMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected accounts have been successfully removed from the list..
+        /// </summary>
+        public static string UnmarkManualUpdateAccountSuccessfully {
+            get {
+                return ResourceManager.GetString("UnmarkManualUpdateAccountSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unmark Selected Accounts.
+        /// </summary>
+        public static string UnmarkSelectedAccounts {
+            get {
+                return ResourceManager.GetString("UnmarkSelectedAccounts", resourceCulture);
             }
         }
         

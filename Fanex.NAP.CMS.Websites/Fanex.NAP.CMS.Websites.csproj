@@ -495,6 +495,7 @@
     <Content Include="Areas\TurnoverControl\Styles\Images\_100.png" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Scripts\manualUpdate.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
@@ -992,6 +993,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Styles\upload.less" />
     <Content Include="App_Data\ExcelTemplates\E-Sports-UploadVirtualRateTemplate.xlsx" />
+    <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Styles\manualUpdate.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -8,8 +8,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Reflection;
 
     public class ServiceBase : IServiceBase
     {
@@ -63,6 +66,40 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
                 objDb.ExecuteNonQuery();
                 var outputs = objDb.GetOuputParams();
                 return new Result(CMSConverter.ToInt32(outputs["errcode"]), CMSConverter.ToString(outputs["errmsg"]));
+            }
+        }
+
+        public virtual void ExecuteNonQueryWithMap(ICriteria criteria)
+        {
+            Check.Argument.IsNotNull(criteria, "criteria");
+            if (!criteria.IsValid())
+            {
+                throw new InvalidOperationException("Invalid criteria");
+            }
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                if (outputParams != null)
+                {
+                    Map(criteria, outputParams);
+                }
+            }
+        }
+
+        private static void Map(ICriteria criteria, Hashtable outputParams)
+        {
+            foreach (string key in outputParams.Keys)
+            {
+                var propertyInfos = criteria.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
+                foreach (var propertyInfo in propertyInfos)
+                {
+                    if (propertyInfo.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        propertyInfo.SetValue(criteria, outputParams[key]);
+                    }
+                }
             }
         }
     }

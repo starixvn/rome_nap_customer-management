@@ -374,6 +374,16 @@ namespace Fanex.NAP.CMS.Core.Resources {
                 return ResourceManager.GetString("Basketball", resourceCulture);
             }
         }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit Type Control.
+        /// </summary>
+        public static string BetLimitTypeControl {
+            get {
+                return ResourceManager.GetString("BetLimitTypeControl", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Bet Restriction.
@@ -390,6 +400,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string BetType {
             get {
                 return ResourceManager.GetString("BetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Both.
+        /// </summary>
+        public static string Both {
+            get {
+                return ResourceManager.GetString("Both", resourceCulture);
             }
         }
         

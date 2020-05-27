@@ -53,6 +53,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.Customers", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.BetRestriction", "Fanex.Nap.CMS.BetRestriction\Fanex.Nap.CMS.BetRestriction.csproj", "{F4A2DF08-F986-45F7-928C-8EB0581338A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.BetLimitTypeControl", "Fanex.Nap.CMS.BetLimitTypeControl\Fanex.NAP.CMS.BetLimitTypeControl.csproj", "{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -127,6 +129,10 @@ Global
 		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4A2DF08-F986-45F7-928C-8EB0581338A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +154,7 @@ Global
 		{FA19DB02-6356-4BE1-B7EB-642884ADF9E3} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{5CA24F84-6331-4A98-8124-7C40BBD3D84D} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{F4A2DF08-F986-45F7-928C-8EB0581338A8} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{DAC006B0-1796-4DC8-87B2-A72792CF1CDF} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E08A2867-264F-4443-BC13-A4DD81DAB9FC}

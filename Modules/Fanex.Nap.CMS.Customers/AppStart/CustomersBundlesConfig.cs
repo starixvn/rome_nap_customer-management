@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.AppStart
 {
-    using System.Web.Optimization;
     using Infrastructure.Extensions;
+    using System.Web.Optimization;
 
     public static class CustomersBundlesConfig
     {
@@ -13,6 +13,8 @@
         public const string ProblemAccountCreditSiteScript = "~/bundles/customers/problem-account-creditsite-scripts";
         public const string ProblemAccountLicenseeSiteScript = "~/bundles/customers/problem-account-licenseesite-scripts";
         public const string ManageLicenseeAcknowledgementScript = "~/bundles/customers/manage-licensee-acknowledgement-scripts";
+        public const string BetLimitTypeControlScriptPath = "~/bundles/bet-limit-type-control-scripts";
+        public const string BetLimitTypeControlStylePath = "~/bundles/bet-limit-type-control-styles";
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
 
@@ -24,7 +26,8 @@
                 .RegisterPossessStatisticsBundles()
                 .RegisterProblemAccountCreditSiteBundles()
                 .RegisterProblemAccountLicenseeSiteBundles()
-                .RegisterManageLicenseeAcknowledgementBundles();
+                .RegisterManageLicenseeAcknowledgementBundles()
+                .RegisterBetLimitTypeControlBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -125,5 +128,20 @@
             return bundles;
         }
 
+        private static BundleCollection RegisterBetLimitTypeControlBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                BetLimitTypeControlStylePath,
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.css",
+                "~/Content/Pages/BetLimitTypeControl/index.less");
+
+            bundles.Add(new ScriptBundle(BetLimitTypeControlScriptPath).Include(
+                FanexMultiSelectScriptPath,
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.js",
+                "~/Content/Pages/BetLimitTypeControl/index.js"));
+
+            return bundles;
+        }
     }
 }

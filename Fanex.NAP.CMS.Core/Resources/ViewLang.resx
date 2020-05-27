@@ -834,4 +834,10 @@
   <data name="VirtualRateSetting" xml:space="preserve">
     <value>Virtual Rate Setting</value>
   </data>
+  <data name="BetLimitTypeControl" xml:space="preserve">
+    <value>Bet Limit Type Control</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>Both</value>
+  </data>
 </root>

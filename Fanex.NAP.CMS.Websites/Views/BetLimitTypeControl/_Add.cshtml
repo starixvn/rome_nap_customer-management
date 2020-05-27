@@ -1,0 +1,88 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+
+<div class="display-none">
+    <div id="frmAdd" class="div-add form expand-form">
+        <div id="msgAdd" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtTypeAdd">Type<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtTypeAdd" maxlength="50" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="selectProductAdd">Product<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="selectProductAdd"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="selectSportTypeAdd">Sport<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="selectSportTypeAdd"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="selectBetTypeAdd">BetType<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="selectBetTypeAdd"></select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="selectLiveIndicatorAdd">Live/Non Live</label>
+            </div>
+            <div class="edit-field">
+                <select id="selectLiveIndicatorAdd">
+                    <option value="2">@ViewLang.Both</option>
+                    <option value="1">@ViewLang.Live</option>
+                    <option value="0">@ViewLang.NonLive</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row large-margin-top">
+            <div class="lbl-field width-auto">
+                <label for="txtLeagueAdd">Sportsbook League ID (Separated by comma (,))</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-label">
+                <textarea id="txtLeagueAdd" maxlength="5000" rows="3" class="width-465"></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="edit-field checkbox">
+                <input type="checkbox" id="chkSpecificTime" />
+                <label for="chkSpecificTime">Specific Time (GMT+8)</label>
+            </div>
+            <div class="edit-field margin-left">
+                <label for="txtFromTimeAdd">From Time</label>
+                <input type="text" id="txtFromTimeAdd" maxlength="5" class="input-time" />
+            </div>
+            <div class="edit-field margin-left">
+                <label for="txtToTimeAdd">To Time</label>
+                <input type="text" id="txtToTimeAdd" maxlength="5" class="input-time" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="edit-field checkbox">
+                <input type="checkbox" id="chkRestrictVIP" />
+                <label for="chkRestrictVIP">Restrict VIP</label>
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveAdd" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelAdd" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

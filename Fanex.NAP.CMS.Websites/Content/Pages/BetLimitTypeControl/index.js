@@ -193,8 +193,8 @@ Fanex.CMS.BetLimitTypeControl = function () {
                     $('#txtFromTimeAdd').prop("disabled", false);
                     $('#txtToTimeAdd').prop("disabled", false);
                 } else {
-                    $('#txtFromTimeAdd').prop("disabled", true);
-                    $('#txtToTimeAdd').prop("disabled", true);
+                    $('#txtFromTimeAdd').prop("disabled", true).val('');
+                    $('#txtToTimeAdd').prop("disabled", true).val('');
                 }
             })
             .prop('checked', false)

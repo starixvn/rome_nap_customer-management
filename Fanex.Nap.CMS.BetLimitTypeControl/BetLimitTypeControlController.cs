@@ -29,7 +29,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Read)]
-        public JsonResult Search(SearchRequest request) => Json(service.Search(request));
+        public ActionResult Search(SearchRequest request) => JsonNet(service.Search(request));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Host)]

@@ -129,5 +129,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
                 Data = data,
                 MaxJsonLength = int.MaxValue
             };
+
+        protected ActionResult JsonNet(object data)
+        {
+            return Content(JsonConvert.SerializeObject(data), "application/json");
+        }
     }
 }

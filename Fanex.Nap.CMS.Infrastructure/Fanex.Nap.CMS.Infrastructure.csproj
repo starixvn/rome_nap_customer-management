@@ -237,8 +237,10 @@
     <Compile Include="Extensions\NpoiExcelExtensions.cs" />
     <Compile Include="Extensions\StringExtentions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\DateTimeFormatConverter.cs" />
     <Compile Include="Helpers\ExcelHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
+    <Compile Include="Helpers\TimeSpanFormatConverter.cs" />
     <Compile Include="LogEngines\LogEngineFactory.cs" />
     <Compile Include="LogEngines\RabbitLogEngine.cs" />
     <Compile Include="LogEngines\SentryLogEngine.cs" />

@@ -413,7 +413,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 { HeaderText: 'Type <span class="type-toggle-all">[+]</span>', Width: 200, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Product', Width: 200, Name: 'ProductList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Sport', Width: 200, Name: 'SportTypeList', HeaderAlign: 'center', CellAlign: 'left' },
-                { HeaderText: 'Bet Type', Width: 200, Name: 'BetTypeList', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Bet Type', Width: 280, Name: 'BetTypeList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Live / Non Live', Width: 100, Name: 'LiveIndicator', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Sportsbook League ID', Width: 200, Name: 'LeagueList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Time (GMT+8)', Width: 100, Name: 'Time', HeaderAlign: 'center', CellAlign: 'center' },
@@ -432,31 +432,52 @@ Fanex.CMS.BetLimitTypeControl = function () {
         for (var item of data) {
             row = {
                 Columns: [
-                    { Name: 'BetLimitType', Value: '<span class="type-toggle">[+]</span>' + item.BetLimitType },
+                    {
+                        Name: 'BetLimitType',
+                        TdClass: 'vertical-top',
+                        Value: '<span class="type-toggle">[+]</span>' + item.BetLimitType
+                    },
                     {
                         Name: 'ProductList',
+                        TdClass: 'vertical-top',
                         Value: '<div data-isAll="' + item.IsAllProduct + '" data-productList="' + item.ProductList + '"></div>'
                     },
                     {
                         Name: 'SportTypeList',
+                        TdClass: 'vertical-top',
                         Value: '<div data-isAll="' + item.IsAllSportType + '" data-sportTypeList="' + item.SportTypeList + '"></div>'
                     },
                     {
                         Name: 'BetTypeList',
+                        TdClass: 'vertical-top',
                         Value: '<div data-isAll="' + item.IsAllBetType + '" data-betTypeList="' + item.BetTypeList + '"></div>'
                     },
-                    { Name: 'LiveIndicator', Value: liveIndicators[item.LiveIndicator] },
+                    {
+                        Name: 'LiveIndicator',
+                        TdClass: 'vertical-top',
+                        Value: liveIndicators[item.LiveIndicator]
+                    },
                     {
                         Name: 'LeagueList',
+                        TdClass: 'vertical-top',
                         Value: '<div data-isAll="' + item.IsAllLeague + '" data-leagueList="' + item.LeagueList + '"></div>'
                     },
-                    { Name: 'Time', Value: item.BeginTime === null ? 'All' : item.BeginTime + ' - ' + item.EndTime },
-                    { Name: 'RestrictVIP', Value: item.RestrictVIP ? 'Yes' : 'No' }
+                    {
+                        Name: 'Time',
+                        TdClass: 'vertical-top',
+                        Value: item.BeginTime === null ? 'All' : item.BeginTime + ' - ' + item.EndTime
+                    },
+                    {
+                        Name: 'RestrictVIP',
+                        TdClass: 'vertical-top',
+                        Value: item.RestrictVIP ? 'Yes' : 'No'
+                    }
                 ]
             };
             if (isHost) {
                 row.Columns.push({
                     Name: 'Action',
+                    TdClass: 'vertical-top',
                     Value: '<span class="ico-edit" data-id="' + item.BetLimitTypeId + '"></span><span class="ico-delete mid-margin-left" data-id="' + item.BetLimitTypeId + '"></span>'
                 });
             }

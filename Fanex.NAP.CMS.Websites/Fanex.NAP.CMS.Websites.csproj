@@ -538,6 +538,7 @@
     </Content>
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3.less" />
+    <Content Include="Content\Pages\BetLimitControl\index.js" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -760,6 +761,10 @@
     <Content Include="WhoamI.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.Nap.CMS.BetLimitControl.csproj">
+      <Project>{c34ed2ac-3a75-4029-8110-265864b9ee1f}</Project>
+      <Name>Fanex.Nap.CMS.BetLimitControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitTypeControl\Fanex.NAP.CMS.BetLimitTypeControl.csproj">
       <Project>{dac006b0-1796-4dc8-87b2-a72792cf1cdf}</Project>
       <Name>Fanex.NAP.CMS.BetLimitTypeControl</Name>
@@ -1049,6 +1054,8 @@
     <Content Include="Views\BetLimitTypeControl\Index.cshtml" />
     <Content Include="Content\Pages\BetLimitTypeControl\index.less" />
     <Content Include="Views\BetLimitTypeControl\_Add.cshtml" />
+    <Content Include="Views\BetLimitControl\Index.cshtml" />
+    <Content Include="Content\Pages\BetLimitControl\index.less" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

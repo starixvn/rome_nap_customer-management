@@ -840,4 +840,7 @@
   <data name="Both" xml:space="preserve">
     <value>Both</value>
   </data>
+  <data name="BetLimitControl" xml:space="preserve">
+    <value>Bet Limit Control</value>
+  </data>
 </root>

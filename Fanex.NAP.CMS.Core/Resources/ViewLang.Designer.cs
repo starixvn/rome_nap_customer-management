@@ -374,7 +374,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
                 return ResourceManager.GetString("Basketball", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit Control.
+        /// </summary>
+        public static string BetLimitControl {
+            get {
+                return ResourceManager.GetString("BetLimitControl", resourceCulture);
+            }
+        }
 
         /// <summary>
         ///   Looks up a localized string similar to Bet Limit Type Control.

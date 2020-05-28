@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.AppStart
 {
-    using Infrastructure.Extensions;
     using System.Web.Optimization;
+    using Infrastructure.Extensions;
 
     public static class CustomersBundlesConfig
     {
@@ -15,6 +15,8 @@
         public const string ManageLicenseeAcknowledgementScript = "~/bundles/customers/manage-licensee-acknowledgement-scripts";
         public const string BetLimitTypeControlScriptPath = "~/bundles/bet-limit-type-control-scripts";
         public const string BetLimitTypeControlStylePath = "~/bundles/bet-limit-type-control-styles";
+        public const string BetLimitControlScriptPath = "~/bundles/bet-limit-control-scripts";
+        public const string BetLimitControlStylePath = "~/bundles/bet-limit-control-styles";
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
 
@@ -27,7 +29,8 @@
                 .RegisterProblemAccountCreditSiteBundles()
                 .RegisterProblemAccountLicenseeSiteBundles()
                 .RegisterManageLicenseeAcknowledgementBundles()
-                .RegisterBetLimitTypeControlBundles();
+                .RegisterBetLimitTypeControlBundles()
+                .RegisterBetLimitControlBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -140,6 +143,20 @@
                 FanexMultiSelectScriptPath,
                 "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.js",
                 "~/Content/Pages/BetLimitTypeControl/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterBetLimitControlBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                BetLimitControlStylePath,
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Content/Pages/BetLimitControl/index.less");
+
+            bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                "~/Content/Pages/BetLimitControl/index.js"));
 
             return bundles;
         }

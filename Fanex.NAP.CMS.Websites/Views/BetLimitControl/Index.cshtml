@@ -1,0 +1,71 @@
+﻿@using Fanex.Nap.CMS.Customers.AppStart
+@section Head
+{
+    @Styles.Render(CustomersBundlesConfig.BetLimitControlStylePath)
+}
+@section Foot
+{
+    @Scripts.Render(CustomersBundlesConfig.BetLimitControlScriptPath)
+}
+<div class="filter-bar">
+    <div id="divFilterForm" class="filter-form" style="display: inline-flex">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="selectProduct">@ViewLang.Level</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectLevel" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                    <option value="1">@ViewLang.Super</option>
+                    <option value="2">@ViewLang.Master</option>
+                    <option value="3">@ViewLang.Agent</option>
+                    <option value="4">@ViewLang.Member</option>
+                </select>
+            </div>
+            <div class="lbl-field col-2">
+                <label for="selectCurrency">@ViewLang.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectCurrency" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                </select>
+            </div>
+            <div class="lbl-field col_1">
+                <label for="selectSite">@ViewLang.Site</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectSite" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                </select>
+            </div>
+            <div class="lbl-field col_4">
+                <label for="selectBetLimitType">@ViewLang.BetLimitControl</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectBetLimitType" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="selectUsername">@ViewLang.Username</label>
+            </div>
+            <div class="edit-field col_5">
+                <input id="selectUsername" class="ddl-username combobox-autocomplete">
+            </div>
+            <div class="submit col_6">
+                <input id="btnSearch" type="button" class="submit btn-search" value="@ViewLang.Search" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-new-bet-limit clear-fix">
+    <button type="button" class="blue-button" id="btnAdd">New Bet Limit</button>
+</div>
+
+<div id="report-container" class="content-grid">
+    <div id="div-bet-limit-control" class="freegrid">
+        <div class="col_header row-headers-background scroll-y">
+        </div>
+    </div>
+</div>

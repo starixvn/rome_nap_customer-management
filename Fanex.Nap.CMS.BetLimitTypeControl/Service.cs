@@ -110,7 +110,7 @@
 
         public Result Delete(DeleteRequest request)
         {
-            var criteria = new UpdateCriteria
+            var criteria = new DeleteCriteria
             {
                 BetLimitTypeId = request.BetLimitTypeId,
                 IP = currentContext.IP,

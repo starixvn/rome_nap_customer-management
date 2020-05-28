@@ -10,9 +10,9 @@ namespace Fanex.NAP.CMS.BetLimitTypeControl.Criteria
 
         public int UserId { get; set; }
 
-        public int ErrCode { get; set; }
+        public int ErrorCode { get; set; }
 
-        public string ErrMsg { get; set; }
+        public string ErrorMsg { get; set; }
 
         public override bool IsValid() => BetLimitTypeId > 0 && UserId > 0;
 

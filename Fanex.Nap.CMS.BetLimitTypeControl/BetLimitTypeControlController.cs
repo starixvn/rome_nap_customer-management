@@ -21,7 +21,11 @@
 
         [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Read)]
-        public ActionResult Index() => View();
+        public ActionResult Index()
+        {
+            ViewBag.IsHost = HasRight(CMSFunctionKeys.BetLimitTypeControl, Constant.Policy.Host);
+            return View();
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Read)]

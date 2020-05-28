@@ -8,6 +8,9 @@ Fanex.CMS.BetLimitTypeControl = function () {
     var $this = this;
     var filterData;
     var $addDialog;
+    var isHost = false;
+    var liveIndicators = {};
+    var queryParams;
 
     function generateOptionsHtml(data, valueKey, textKey, customText) {
         var html = [];
@@ -19,21 +22,35 @@ Fanex.CMS.BetLimitTypeControl = function () {
         return html.join('');
     }
 
-    function filterSportTypes(productIds) {
-        return $.grep(filterData.SportTypes, function (sportType) {
-            return productIds.indexOf(sportType.ProductId) !== -1;
-        });
+    function filterAndDistinctSportTypes(productIds) {
+        var filterSportTypes = [];
+        var filterSportTypeIds = [];
+        for (var sportType of filterData.SportTypes) {
+            if (filterSportTypeIds.indexOf(sportType.SportTypeId) === -1 && productIds.indexOf(sportType.ProductId) !== -1) {
+                filterSportTypeIds.push(sportType.SportTypeId);
+                filterSportTypes.push(sportType);
+            }
+        }
+
+        return filterSportTypes;
     }
 
-    function filterBetTypes(productIds, sportTypeIds) {
-        return $.grep(filterData.BetTypes, function (betType) {
-            return productIds.indexOf(betType.ProductId) !== -1 && sportTypeIds.indexOf(betType.SportTypeId) !== -1;
-        });
+    function filterAndDistinctBetTypes(productIds, sportTypeIds) {
+        var filterBetTypeIds = [];
+        var filterBetTypes = [];
+        for (var betType of filterData.BetTypes) {
+            if (filterBetTypeIds.indexOf(betType.BetTypeId) === -1 && productIds.indexOf(betType.ProductId) !== -1 && sportTypeIds.indexOf(betType.SportTypeId) !== -1) {
+                filterBetTypeIds.push(betType.BetTypeId);
+                filterBetTypes.push(betType);
+            }
+        }
+
+        return filterBetTypes;
     }
 
     function onProductChange() {
         var productId = parseInt($('#selectProduct').val());
-        var sportTypes = productId === 0 ? filterData.SportTypes : filterSportTypes([productId]);
+        var sportTypes = productId === 0 ? filterData.SportTypes : filterAndDistinctSportTypes([productId]);
         sportTypes = [{ SportTypeId: 0, SportTypeName: 'All' }].concat(sportTypes);
         $('#selectSportType')
             .html(generateOptionsHtml(sportTypes, 'SportTypeId', 'SportTypeName'))
@@ -44,7 +61,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
     function onSportTypeChange() {
         var productId = parseInt($('#selectProduct').val());
         var sportTypeId = parseInt($('#selectSportType').val());
-        var betTypes = sportTypeId === 0 ? filterData.BetTypes : filterBetTypes([productId], [sportTypeId]);
+        var betTypes = sportTypeId === 0 ? filterData.BetTypes : filterAndDistinctBetTypes([productId], [sportTypeId]);
         betTypes = [{ BetTypeId: 0, BetTypeName: 'All' }].concat(betTypes);
         $('#selectBetType')
             .html(generateOptionsHtml(betTypes, 'BetTypeId', 'BetTypeName', function (row) {
@@ -122,7 +139,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             var selectedProductIds = $.map($('#selectProductAdd').fanexMultiSelect("getItems", true), function (x) {
                 return parseInt(x);
             });
-            var selectedSportTypes = filterSportTypes(selectedProductIds);
+            var selectedSportTypes = filterAndDistinctSportTypes(selectedProductIds);
 
             var sportTypesDataSource = getMultiselectSource(selectedSportTypes, 'SportTypeId', 'SportTypeName');
             $('#selectSportTypeAdd').fanexMultiSelect({
@@ -146,7 +163,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             var selectedSportTypeIds = $.map($('#selectSportTypeAdd').fanexMultiSelect("getItems", true), function (x) {
                 return parseInt(x);
             });
-            var selectedBetTypes = filterBetTypes(selectedProductIds, selectedSportTypeIds);
+            var selectedBetTypes = filterAndDistinctBetTypes(selectedProductIds, selectedSportTypeIds);
 
             var betTypesDataSource = getMultiselectSource(selectedBetTypes, 'BetTypeId', 'BetTypeName', function (row) {
                 var betTypeId = row.BetTypeId;
@@ -256,11 +273,6 @@ Fanex.CMS.BetLimitTypeControl = function () {
         };
     }
 
-    function bindEvents() {
-        $('#btnAdd').click(showAddDialog);
-        $('#btnSearch').click(search);
-    }
-
     function add() {
         var betLimitType = $.trim($("#txtTypeAdd").val());
         if (!betLimitType) {
@@ -349,6 +361,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 }
 
                 CMS.showInlineSuccessMsg('New bet limit type has been successfully created', $('#msgAdd'), true);
+                searchWithParams(queryParams);
                 setTimeout(CMS.closePopup, 3000);
             },
             error: function (xhr) {
@@ -365,12 +378,16 @@ Fanex.CMS.BetLimitTypeControl = function () {
         var sportTypeId = parseInt($('#selectSportType').val());
         var betTypeId = parseInt($('#selectBetType').val());
         var liveIndicator = parseInt($('#selectLiveIndicator').val());
-        var params = {
+        queryParams = {
             productId,
             sportTypeId,
             betTypeId,
             liveIndicator
         };
+        searchWithParams(queryParams);
+    }
+
+    function searchWithParams(params) {
         CMS.disableInput();
         $.ajax({
             type: 'POST',
@@ -379,7 +396,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             data: JSON.stringify(params),
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                renderGrid(data);
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -390,8 +407,227 @@ Fanex.CMS.BetLimitTypeControl = function () {
         });
     }
 
+    function renderGrid(data) {
+        var gridOptions = {
+            columns: [
+                { HeaderText: 'Type <span class="type-toggle-all">[+]</span>', Width: 200, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Product', Width: 200, Name: 'ProductList', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Sport', Width: 200, Name: 'SportTypeList', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Bet Type', Width: 200, Name: 'BetTypeList', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Live / Non Live', Width: 100, Name: 'LiveIndicator', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Sportsbook League ID', Width: 200, Name: 'LeagueList', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Time (GMT+8)', Width: 100, Name: 'Time', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Restrict VIP' + '<span class="light-note-info-message small-margin-left" title="' + $('#restrict-vip-title').html() + '"></span>', Width: 100, Name: 'RestrictVIP', HeaderAlign: 'center', CellAlign: 'center' },
+            ],
+            fullWidth: true,
+            fullHeight: true,
+            showDistinctRow: false,
+            showHighlightRow: true,
+            gridExpandHeight: 180
+        };
+        if (isHost) {
+            gridOptions.columns.push({ HeaderText: 'Action', Width: 50, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' });
+        }
+        var bodyData = [];
+        for (var item of data) {
+            row = {
+                Columns: [
+                    { Name: 'BetLimitType', Value: '<span class="type-toggle">[+]</span>' + item.BetLimitType },
+                    {
+                        Name: 'ProductList',
+                        Value: '<div data-isAll="' + item.IsAllProduct + '" data-productList="' + item.ProductList + '"></div>'
+                    },
+                    {
+                        Name: 'SportTypeList',
+                        Value: '<div data-isAll="' + item.IsAllSportType + '" data-sportTypeList="' + item.SportTypeList + '"></div>'
+                    },
+                    {
+                        Name: 'BetTypeList',
+                        Value: '<div data-isAll="' + item.IsAllBetType + '" data-betTypeList="' + item.BetTypeList + '"></div>'
+                    },
+                    { Name: 'LiveIndicator', Value: liveIndicators[item.LiveIndicator] },
+                    {
+                        Name: 'LeagueList',
+                        Value: '<div data-isAll="' + item.IsAllLeague + '" data-leagueList="' + item.LeagueList + '"></div>'
+                    },
+                    { Name: 'Time', Value: item.BeginTime === null ? 'All' : item.BeginTime + ' - ' + item.EndTime },
+                    { Name: 'RestrictVIP', Value: item.RestrictVIP ? 'Yes' : 'No' }
+                ]
+            };
+            if (isHost) {
+                row.Columns.push({
+                    Name: 'Action',
+                    Value: '<span class="ico-edit" data-id="' + item.BetLimitTypeId + '"></span><span class="ico-delete mid-margin-left" data-id="' + item.BetLimitTypeId + '"></span>'
+                });
+            }
+            bodyData.push(row);
+        }
+
+        gridOptions.bodyRows = bodyData;
+        $('#grid').fanexGrid(gridOptions);
+        $(".light-note-info-message").tipsy({
+            className: "custom-grid-colheader-note",
+            html: true,
+            opacity: 0.9,
+            gravity: "n"
+        });
+        $('.ico-delete').click(function () {
+            var id = parseInt($(this).attr('data-id'));
+            confirmDelete(id);
+        });
+        $('.ico-edit').click(function () {
+            var id = parseInt($(this).attr('data-id'));
+            confirmEdit(id);
+        });
+        $('.type-toggle-all').click(function () {
+            var status = $(this).data('toggle') || 'collapse';
+            $('.type-toggle').trigger('toggle', status);
+            if (status === 'collapse') {
+                status = 'expand';
+                $(this).text('[−]');
+            } else {
+                status = 'collapse';
+                $(this).text('[+]');
+            }
+            $(this).data('toggle', status);
+        });
+        $('.type-toggle')
+            .click(function () {
+                var status = $(this).data('toggle') || 'collapse';
+                if (status === 'collapse') {
+                    status = 'expand';
+                    $(this).text('[−]');
+                } else {
+                    status = 'collapse';
+                    $(this).text('[+]');
+                }
+                $(this).data('toggle', status);
+                var $tr = $(this).closest('tr');
+                $tr.find('[data-productList]').trigger('toggle', status);
+                $tr.find('[data-sportTypeList]').trigger('toggle', status);
+                $tr.find('[data-betTypeList]').trigger('toggle', status);
+                $tr.find('[data-leagueList]').trigger('toggle', status);
+                $('#grid').fanexGrid('resizeGrid');
+            }).on('toggle', function (e, status) {
+                $(this).data('toggle', status).trigger('click');
+            });
+        registerToggledTextControl('data-productList', filterData.Products, 'ProductId', 'ProductName');
+        registerToggledTextControl('data-sportTypeList', filterData.SportTypes, 'SportTypeId', 'SportTypeName');
+        registerToggledTextControl('data-betTypeList', filterData.BetTypes, 'BetTypeId', 'BetTypeName', function (row) {
+            return row.BetTypeName + ' [' + row.BetTypeId + ']';
+        });
+        registerToggledTextControl('data-leagueList');
+        $('#grid').fanexGrid('resizeGrid');
+    }
+
+    function registerToggledTextControl(queryDataName, dataSource, keyValue, keyName, customNameFn) {
+        $('[' + queryDataName + ']').each(function () {
+            var $control = $(this);
+            var isAll = $(this).attr('data-isAll') === 'true';
+            $control.data('isAll', isAll);
+            var dataList = $control.attr(queryDataName);
+            var ids = [];
+            if (dataList) {
+                ids = $.map(dataList.split(','), function (x) { return parseInt(x) });
+            }
+
+            if (dataSource) {
+                $control.data('allText', 'All (' + dataSource.length + ')');
+                var names = [];
+                for (var id of ids) {
+                    for (var row of dataSource) {
+                        if (row[keyValue] === id) {
+                            names.push(customNameFn ? customNameFn(row) : row[keyName]);
+                            break;
+                        }
+                    }
+                }
+                $control.data('list', names);
+            } else {
+                $control.data('allText', 'All');
+                $control.data('list', ids);
+            }
+
+            $control.on('toggle', function (e, status) {
+                var isAll = $(this).data('isAll');
+                var list = $(this).data('list');
+                if (status === 'collapse') {
+                    if (isAll) {
+                        $(this).html($(this).data('allText'));
+                    } else {
+                        var html = [];
+                        for (var i = 0; i < list.length && i < 3; i++) {
+                            html.push('<div>' + list[i] + '</div>');
+                        }
+                        if (list.length >= 4) {
+                            if (list.length === 4) {
+                                html.push('<div>' + list[3] + '</div>');
+                            } else {
+                                html.push('<div>...</div>');
+                            }
+                        }
+
+                        $(this).html(html.join(''));
+                    }
+                } else {
+                    if (isAll && list.length === 0) {
+                        $(this).html($(this).data('allText'));
+                    } else {
+                        var html = [];
+                        for (var i = 0; i < list.length; i++) {
+                            html.push('<div>' + list[i] + '</div>');
+                        }
+
+                        $(this).html(html.join(''));
+                    }
+                }
+            });
+
+            $control.trigger('toggle', 'collapse');
+        });
+    }
+
+    function confirmEdit(id) {
+
+    }
+
+    function confirmDelete(id) {
+        CMS.showConfirmMessage('After deleting this Bet Limit Type, the accounts applying this Bet Limit Type will not be restricted by it no more.<br />Do you want to delete the selected bet limit?', function () {
+            CMS.disableInput();
+            CMS.closeMsgBox();
+
+            $.ajax({
+                type: 'POST',
+                url: CMS.resolveRootUrl('BetLimitTypeControl/Delete'),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({ betLimitTypeId: id }),
+                success: function (data) {
+                    if (data.Code) {
+                        CMS.showErrorMessage(data.Message);
+                        return;
+                    }
+
+                    CMS.showSuccessMessage('Bet limit has been successfully deleted');
+                    searchWithParams(queryParams);
+                },
+                error: function (xhr) {
+                    CMS.handleAjaxError(xhr);
+                },
+                complete: function () {
+                    CMS.enableInput();
+                }
+            });
+        });
+    }
+
     this.InitPage = function () {
+        isHost = $('.filter-bar').attr('isHost') === 'True';
+        $('#selectLiveIndicator option').each(function (index, option) {
+            liveIndicators[$(option).val()] = $(option).text();
+        });
+        $('#btnAdd').click(showAddDialog);
+        $('#btnSearch').click(search);
         loadFilter();
-        bindEvents();
     }
 }

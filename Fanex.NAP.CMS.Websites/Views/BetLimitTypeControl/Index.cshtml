@@ -19,7 +19,7 @@
         </div>
     </div>
 }
-<div class="filter-bar">
+<div class="filter-bar" isHost="@ViewBag.IsHost.ToString()">
     <div id="divFilterForm" class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_3">
@@ -61,6 +61,10 @@
     <button type="button" class="blue-button" id="btnAdd">New Bet Limit Type</button>
 </div>
 <div class="display-none content-grid">
-    <div id="divRobotList" class="freegrid"></div>
+    <div id="grid" class="freegrid"></div>
+</div>
+<div class="display-none" id="restrict-vip-title">
+    <p>- If Restrict VIP = Yes then the VIP accounts will be applied the bet limit.</p>
+    <p>- If Restrict VIP = No then the VIP accounts will not be applied the bet limit.</p>
 </div>
 @Html.Partial("_Add")

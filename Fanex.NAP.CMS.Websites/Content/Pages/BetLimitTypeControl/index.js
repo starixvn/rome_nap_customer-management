@@ -132,6 +132,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
     }
 
     function showAddOrUpdateDialog(betLimitTypeData) {
+        CMS.hideInlineMsg($('#msgAdd'));
         var productCheckedList, sportTypeCheckedList, betTypeCheckedList;
         var isAdd = true;
         if (betLimitTypeData) {
@@ -249,15 +250,20 @@ Fanex.CMS.BetLimitTypeControl = function () {
             $('#txtFromTimeAdd').timepicker(timePickerOptions);
             $('#txtToTimeAdd').timepicker(timePickerOptions);
             $('#btnCancelAdd').click(CMS.closePopup);
-            $('#btnSaveAdd').click(function () {
-                addOrUpdate(betLimitTypeData.BetLimitTypeId);
-            });
             $('#txtLeagueAdd').blur(reformatAndValidateLeague);
             $addDialog = CMS.modal(title, $('#frmAdd'), { resizable: false });
         } else {
             $addDialog.dialog('open');
             $('#ui-dialog-title-dialog-popup').text(title);
         }
+
+        $('#btnSaveAdd').off('click').on('click', function () {
+            if (betLimitTypeData) {
+                addOrUpdate(betLimitTypeData.BetLimitTypeId);
+            } else {
+                addOrUpdate();
+            }
+        });
     }
 
     function reformatAndValidateLeague() {
@@ -299,26 +305,28 @@ Fanex.CMS.BetLimitTypeControl = function () {
             return;
         }
 
-        var productList = $.map($('#selectProductAdd').fanexMultiSelect("getItems", true), function (x) {
+        var productCheckedList = $.map($('#selectProductAdd').fanexMultiSelect("getItems", true), function (x) {
             return parseInt(x);
         });
-        if (productList.length === 0) {
+        if (productCheckedList.length === 0) {
             CMS.showTipsyError($("#selectProductAdd"), 'This field is required', "w");
             return;
         }
 
-        var sportTypeList = $.map($('#selectSportTypeAdd').fanexMultiSelect("getItems", true), function (x) {
+        var sportTypeUncheckedList = $('#selectSportTypeAdd').fanexMultiSelect("getItems", false);
+        var sportTypeCheckedList = $.map($('#selectSportTypeAdd').fanexMultiSelect("getItems", true), function (x) {
             return parseInt(x);
         });
-        if (sportTypeList.length === 0) {
+        if (sportTypeCheckedList.length === 0) {
             CMS.showTipsyError($("#selectSportTypeAdd"), 'This field is required', "w");
             return;
         }
 
-        var betTypeList = $.map($('#selectBetTypeAdd').fanexMultiSelect("getItems", true), function (x) {
+        var betTypeUncheckedList = $('#selectBetTypeAdd').fanexMultiSelect("getItems", false);
+        var betTypeCheckedList = $.map($('#selectBetTypeAdd').fanexMultiSelect("getItems", true), function (x) {
             return parseInt(x);
         });
-        if (betTypeList.length === 0) {
+        if (betTypeCheckedList.length === 0) {
             CMS.showTipsyError($("#selectBetTypeAdd"), 'This field is required', "w");
             return;
         }
@@ -358,9 +366,9 @@ Fanex.CMS.BetLimitTypeControl = function () {
         var params = {
             betLimitTypeId: betLimitTypeId,
             betLimitType: betLimitType,
-            productList: productList.join(','),
-            sportTypeList: sportTypeList.join(','),
-            betTypeList: betTypeList.join(','),
+            productList: productCheckedList.join(','),
+            sportTypeList: sportTypeUncheckedList.length === 0 ? '0' : sportTypeCheckedList.join(','),
+            betTypeList: betTypeUncheckedList.length === 0 ? '0' : betTypeCheckedList.join(','),
             liveIndicator: liveIndicator,
             leagueList: leagueList,
             beginTime: beginTime,

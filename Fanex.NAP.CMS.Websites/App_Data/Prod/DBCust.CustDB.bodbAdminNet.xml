@@ -89,4 +89,15 @@
     <Setting Key="CS_Customer_MonitorPT_Upd" SpName="CS_Customer_MonitorPT_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Bet Limit Control">
+    <Setting Key="NAP_BLControl_SportBettypeSel" SpName="NAP_BLControl_SportBettypeSel" DbName="DBCust.CustDB.bodbAdminNet">
+      <Mapping DataField="Sporttype" ObjectProperty="SportTypeId" />
+      <Mapping DataField="SportName" ObjectProperty="SportTypeName" />
+      <Mapping DataField="Bettype" ObjectProperty="BetTypeId" />
+    </Setting>
+    <Setting Key="NAP_BLControl_TypeSelect" SpName="NAP_BLControl_TypeSelect" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

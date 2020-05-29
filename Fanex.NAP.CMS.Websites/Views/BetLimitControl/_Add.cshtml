@@ -1,0 +1,49 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+
+<div class="display-none">
+    <div id="frmAdd" class="div-add form expand-form">
+        <div id="msgAdd" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtUsernameAdd">@ViewLang.Username<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtUsernameAdd" maxlength="30" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtBetLimitTypeAdd">@ViewLang.BetLimitType<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="txtBetLimitTypeAdd" class="bet-limit-type-select">
+                    <option value="" selected hidden disabled>Please Select</option>
+                    <option value="0">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxPerMatchAdd">@ViewLang.MaxPerMatch<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxPerMatchAdd" maxlength="50" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxBetAdd">@ViewLang.MaxBet<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxBetAdd" maxlength="50" />
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label lbl-btn-group"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveAdd" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelAdd" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

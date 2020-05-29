@@ -843,4 +843,7 @@
   <data name="BetLimitControl" xml:space="preserve">
     <value>Bet Limit Control</value>
   </data>
+  <data name="BetLimitType" xml:space="preserve">
+    <value>Bet Limit Type</value>
+  </data>
 </root>

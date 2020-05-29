@@ -1,0 +1,48 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+
+<div class="display-none">
+    <div id="frmUpd" class="form expand-form">
+        <div id="msgUpd" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label>@ViewLang.Username<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <label id="usernameUpdate"></label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtBetLimitTypeUpdate">@ViewLang.BetLimitType<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="txtBetLimitTypeUpdate">
+                    <option value="1">All</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxPerMatchUpdate">@ViewLang.MaxPerMatch<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxPerMatchUpdate" maxlength="50" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxBetUpdate">@ViewLang.MaxBet<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxBetUpdate" maxlength="50" />
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveUpdate" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelUpdate" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

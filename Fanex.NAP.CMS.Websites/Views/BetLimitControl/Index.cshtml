@@ -7,6 +7,14 @@
 {
     @Scripts.Render(CustomersBundlesConfig.BetLimitControlScriptPath)
 }
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.BetLimitControl</span>
+        </div>
+    </div>
+}
 <div class="filter-bar">
     <div id="divFilterForm" class="filter-form" style="display: inline-flex">
         <div class="filter-row">
@@ -39,7 +47,7 @@
                 </select>
             </div>
             <div class="lbl-field col_4">
-                <label for="selectBetLimitType">@ViewLang.BetLimitControl</label>
+                <label for="selectBetLimitType">@ViewLang.BetLimitType</label>
             </div>
             <div class="edit-field col_6">
                 <select id="selectBetLimitType" class="ddl-select combobox-autocomplete">
@@ -52,7 +60,7 @@
             <div class="edit-field col_5">
                 <input id="selectUsername" class="ddl-username combobox-autocomplete">
             </div>
-            <div class="submit col_6">
+            <div class="submit col_4">
                 <input id="btnSearch" type="button" class="submit btn-search" value="@ViewLang.Search" />
             </div>
         </div>
@@ -69,3 +77,5 @@
         </div>
     </div>
 </div>
+@Html.Partial("_Add")
+@Html.Partial("_Update")

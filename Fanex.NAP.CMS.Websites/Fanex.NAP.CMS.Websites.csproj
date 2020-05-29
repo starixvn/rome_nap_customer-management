@@ -1053,7 +1053,7 @@
     </Content>
     <Content Include="Views\BetLimitTypeControl\Index.cshtml" />
     <Content Include="Content\Pages\BetLimitTypeControl\index.less" />
-    <Content Include="Views\BetLimitTypeControl\_Add.cshtml" />
+    <Content Include="Views\BetLimitTypeControl\_AddOrUpdate.cshtml" />
     <Content Include="Views\BetLimitControl\Index.cshtml" />
     <Content Include="Content\Pages\BetLimitControl\index.less" />
     <None Include="Web.ConnectionString.dev.config">

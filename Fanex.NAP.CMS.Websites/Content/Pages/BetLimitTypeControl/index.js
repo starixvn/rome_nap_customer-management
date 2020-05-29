@@ -453,7 +453,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
         }
         var bodyData = [];
         for (var item of data) {
-            row = {
+            var row = {
                 Columns: [
                     {
                         Name: 'BetLimitType',

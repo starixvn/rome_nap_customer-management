@@ -13,10 +13,10 @@
         </div>
         <div class="form-row">
             <div class="lbl-field col-label">
-                <label for="txtBetLimitTypeUpdate">@ViewLang.BetLimitType<span class="required-field">*</span></label>
+                <label for="selBetLimitTypeUpdate">@ViewLang.BetLimitType<span class="required-field">*</span></label>
             </div>
             <div class="edit-field">
-                <select id="txtBetLimitTypeUpdate">
+                <select id="selBetLimitTypeUpdate" class="bet-limit-type-select">
                     <option value="1">All</option>
                 </select>
             </div>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="form-row float-right button-group">
-            <div class="lbl-field normal-label col-label"></div>
+            <div class="lbl-field normal-label col-label lbl-btn-group"></div>
             <div class="edit-field">
                 <input type="button" id="btnSaveUpdate" class="blue-button" value="@Labels.Save" />
                 <input type="button" id="btnCancelUpdate" class="red-button" value="@Labels.Cancel" />

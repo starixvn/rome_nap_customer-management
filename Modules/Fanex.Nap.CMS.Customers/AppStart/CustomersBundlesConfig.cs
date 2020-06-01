@@ -155,6 +155,7 @@
                 "~/Content/Pages/BetLimitControl/index.less");
 
             bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(
+                "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
                 "~/Content/Pages/BetLimitControl/index.js"));
 

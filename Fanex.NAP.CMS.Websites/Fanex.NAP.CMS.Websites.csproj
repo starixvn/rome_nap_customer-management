@@ -578,6 +578,7 @@
     <Content Include="Scripts\Libs\Highcharts\exporting.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libs\InputFormatter\number-commar-seperator.js" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.css" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />

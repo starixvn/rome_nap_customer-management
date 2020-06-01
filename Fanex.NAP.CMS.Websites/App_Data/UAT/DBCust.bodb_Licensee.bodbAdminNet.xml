@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<Functions>
-  <Function Name="Manage Licensee Acknowledgement">
-    <Setting Key="NAP_ProblemAccount_LicenseeAcknowledgementSel" SpName="NAP_ProblemAccount_LicenseeAcknowledgementSel" DbName="DBCust.bodb_Licensee.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeAcknowledgementUpd" SpName="NAP_ProblemAccount_LicenseeAcknowledgementUpd" DbName="DBCust.bodb_Licensee.bodbAdminNet" />
-  </Function>
-</Functions>

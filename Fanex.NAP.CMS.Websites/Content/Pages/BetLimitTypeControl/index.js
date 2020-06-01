@@ -441,14 +441,14 @@ Fanex.CMS.BetLimitTypeControl = function () {
         queryData = data;
         var gridOptions = {
             columns: [
-                { HeaderText: 'Type <span class="type-toggle-all">[+]</span>', Width: 200, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'Type' + (data.length > 0 ? '<span class="type-toggle-all">[+]</span>' : ''), Width: 200, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Product', Width: 200, Name: 'ProductList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Sport', Width: 200, Name: 'SportTypeList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Bet Type', Width: 280, Name: 'BetTypeList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Live / Non Live', Width: 100, Name: 'LiveIndicator', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Sportsbook League ID', Width: 200, Name: 'LeagueList', HeaderAlign: 'center', CellAlign: 'left' },
                 { HeaderText: 'Time (GMT+8)', Width: 100, Name: 'Time', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Restrict VIP' + '<span class="light-note-info-message small-margin-left" title="' + $('#restrict-vip-title').html() + '"></span>', Width: 100, Name: 'RestrictVIP', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: 'Restrict VIP<span class="light-note-info-message small-margin-left" title="' + $('#restrict-vip-title').html() + '"></span>', Width: 100, Name: 'RestrictVIP', HeaderAlign: 'center', CellAlign: 'center' },
             ],
             fullWidth: true,
             fullHeight: true,
@@ -509,7 +509,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 row.Columns.push({
                     Name: 'Action',
                     TdClass: 'vertical-top',
-                    Value: '<span class="ico-edit" data-id="' + item.BetLimitTypeId + '"></span><span class="ico-delete mid-margin-left" data-id="' + item.BetLimitTypeId + '"></span>'
+                    Value: '<span title="Update" class="ico-edit" data-id="' + item.BetLimitTypeId + '"></span><span title="Delete" class="ico-delete mid-margin-left" data-id="' + item.BetLimitTypeId + '"></span>'
                 });
             }
             bodyData.push(row);

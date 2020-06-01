@@ -312,6 +312,28 @@
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
+    <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">

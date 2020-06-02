@@ -1,11 +1,30 @@
-﻿using System.Web.Mvc;
-using Fanex.Nap.CMS.Infrastructure.Controllers;
-
-namespace Fanex.Nap.CMS.BetLimitControl
+﻿namespace Fanex.NAP.CMS.BetLimitControl
 {
+    using Fanex.Nap.CMS.Infrastructure;
+    using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
+    using System.Web.Mvc;
+
     public class BetLimitControlController : BaseController
     {
+        private readonly IService service;
+
+        public BetLimitControlController() : this(null)
+        { }
+
+        public BetLimitControlController(IService service)
+        {
+            this.service = service ?? new Service(CurrentSession, CurrentContext);
+        }
+
         [HttpGet]
-        public ActionResult Index() => View();
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Read)]
+        public ActionResult Index()
+        {
+            ViewBag.IsHost = HasRight(CMSFunctionKeys.BetLimitTypeControl, Constant.Policy.Host);
+            var viewModel = service.GetIndexViewModel();
+            return View(viewModel);
+        }
     }
 }

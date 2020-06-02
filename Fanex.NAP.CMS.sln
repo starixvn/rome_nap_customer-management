@@ -55,7 +55,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.BetRestrictio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.BetLimitTypeControl", "Fanex.Nap.CMS.BetLimitTypeControl\Fanex.NAP.CMS.BetLimitTypeControl.csproj", "{DAC006B0-1796-4DC8-87B2-A72792CF1CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.BetLimitControl", "Fanex.Nap.CMS.BetLimitControl\Fanex.Nap.CMS.BetLimitControl.csproj", "{C34ED2AC-3A75-4029-8110-265864B9EE1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.BetLimitControl", "Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj", "{C34ED2AC-3A75-4029-8110-265864B9EE1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

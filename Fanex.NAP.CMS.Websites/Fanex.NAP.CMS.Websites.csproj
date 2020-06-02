@@ -163,7 +163,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.7\lib\net40\ONEbook.UM.dll</HintPath>
@@ -696,9 +695,9 @@
     <Content Include="WhoamI.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.Nap.CMS.BetLimitControl.csproj">
+    <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj">
       <Project>{c34ed2ac-3a75-4029-8110-265864b9ee1f}</Project>
-      <Name>Fanex.Nap.CMS.BetLimitControl</Name>
+      <Name>Fanex.NAP.CMS.BetLimitControl</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitTypeControl\Fanex.NAP.CMS.BetLimitTypeControl.csproj">
       <Project>{dac006b0-1796-4dc8-87b2-a72792cf1cdf}</Project>

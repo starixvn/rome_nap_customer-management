@@ -58,5 +58,6 @@
       <Mapping DataField="SportName" ObjectProperty="SportTypeName" />
       <Mapping DataField="Bettype" ObjectProperty="BetTypeId" />
     </Setting>
+    <Setting Key="NAP_BLControl_AllTypeSelect" SpName="NAP_BLControl_AllTypeSelect" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

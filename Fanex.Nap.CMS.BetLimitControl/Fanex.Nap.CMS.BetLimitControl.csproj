@@ -93,7 +93,7 @@
     <Compile Include="BetLimitControlController.cs" />
     <Compile Include="Criteria\GetAllBetLimitTypeCriteria.cs" />
     <Compile Include="Criteria\GetAllCurrencyCriteria.cs" />
-    <Compile Include="Criteria\GetAllSiteCriteria.cs" />
+    <Compile Include="Criteria\GetSiteByPermissionCriteria.cs" />
     <Compile Include="Models\BetLimitTypeModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\SiteModel.cs" />

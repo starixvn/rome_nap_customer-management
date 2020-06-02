@@ -1,4 +1,5 @@
 ﻿@using Fanex.Nap.CMS.Customers.AppStart
+@using Fanex.NAP.CMS.Core.Constants
 @model Fanex.NAP.CMS.BetLimitControl.Models.IndexViewModel
 @section Head
 {
@@ -25,10 +26,10 @@
             <div class="edit-field col_6">
                 <select id="selectLevel" class="ddl-select combobox-autocomplete">
                     <option value="0">@ViewLang.All</option>
-                    <option value="1">@ViewLang.Super</option>
-                    <option value="2">@ViewLang.Master</option>
-                    <option value="3">@ViewLang.Agent</option>
-                    <option value="4">@ViewLang.Member</option>
+                    <option value="@CustomerLevels.Super">@ViewLang.Super</option>
+                    <option value="@CustomerLevels.Master">@ViewLang.Master</option>
+                    <option value="@CustomerLevels.Agent">@ViewLang.Agent</option>
+                    <option value="@CustomerLevels.Member">@ViewLang.Member</option>
                 </select>
             </div>
             <div class="lbl-field col-2">
@@ -91,5 +92,5 @@
         </div>
     </div>
 </div>
-@Html.Partial("_Add")
-@Html.Partial("_Update")
+@Html.Partial("_Add", Model.BetLimitTypes)
+@Html.Partial("_Update", Model.BetLimitTypes)

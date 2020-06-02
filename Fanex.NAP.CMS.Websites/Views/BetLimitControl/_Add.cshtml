@@ -1,4 +1,5 @@
 ﻿@using Fanex.Nap.CMS.Customers.Resources
+@model IEnumerable<Fanex.NAP.CMS.BetLimitControl.Models.BetLimitTypeModel>
 
 <div class="display-none">
     <div id="frmAdd" class="form expand-form">
@@ -17,8 +18,11 @@
             </div>
             <div class="edit-field">
                 <select id="txtBetLimitTypeAdd" class="bet-limit-type-select">
-                    <option value="" selected hidden disabled>Please Select</option>
-                    <option value="0">All</option>
+                    <option value="">Please Select</option>
+                    @foreach (var betLimitType in @Model)
+                    {
+                        <option value="@betLimitType.BetLimitTypeId">@betLimitType.BetLimitType</option>
+                    }
                 </select>
             </div>
         </div>

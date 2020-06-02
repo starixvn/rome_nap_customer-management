@@ -33,7 +33,7 @@
         public IndexViewModel GetIndexViewModel()
         {
             var currencies = serviceBase.GetRepositoryData<CurrencyModel>(new GetAllCurrencyCriteria());
-            var sites = serviceBase.GetRepositoryData<SiteModel>(new GetAllSiteCriteria());
+            var sites = serviceBase.GetRepositoryData<SiteModel>(new GetSiteByPermissionCriteria(currentSession.UserId));
             var betLimitTypes = serviceBase.GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
             return new IndexViewModel
             {

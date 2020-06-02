@@ -54,6 +54,12 @@ Fanex.CMS.BetLimitControl = function () {
         this.elements.divBetLimitControl = $("#div-bet-limit-control");
         this.elements.reportContainer = $("#report-container");
 
+        this.search.levelId = $("#selectLevel");
+        this.search.currency = $("#selectCurrency");
+        this.search.site = $("#selectSite");
+        this.search.betLimitType = $("#selectBetLimitType");
+        this.search.username = $("#selectUsername");
+
         this.popupAdd.btnSave = $("#btnSaveAdd");
         this.popupAdd.btnCancel = $("#btnCancelAdd");
         this.popupAdd.username = $("#txtUsernameAdd");
@@ -81,18 +87,18 @@ Fanex.CMS.BetLimitControl = function () {
 
     function Search() {
         var params = {
-            levelId: null,
-            currency: null,
-            username: null,
-            siteId: null,
-            betLimitTypeID: null,
+            levelId: self.search.levelId.val(),
+            currency: self.search.currency.val(),
+            username: self.search.username.val(),
+            siteId: self.search.site.val(),
+            betLimitTypeID: self.search.betLimitType.val(),
             pageIndex: self.search.pageIndex,
             pageSize: self.search.pageSize
         }
-        searchWithParams(params)
+        self.searchWithParams(params)
     }
 
-    function searchWithParams(params) {
+    this.searchWithParams = function (params) {
         CMS.disableInput();
         $.ajax({
             type: 'POST',
@@ -111,6 +117,12 @@ Fanex.CMS.BetLimitControl = function () {
             }
         });
     }
+
+    this.changePager = function (pageIndex, itemsPerPage) {
+        self.search.pageSize = itemsPerPage;
+        self.search.pageIndex = pageIndex + 1;
+        self.searchWithParams(self.search);
+    };
 
     this.renderBetLimit = function (rs) {
         var gridOptions = {
@@ -138,24 +150,23 @@ Fanex.CMS.BetLimitControl = function () {
                 },
             ],
             columns: [
-                { HeaderText: "Username", Width: 140, Name: 'Username', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'VIP', Width: 80, Name: 'VIP', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-                { HeaderText: 'Level', Width: 80, Name: 'Level', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: "Username", Width: 140, Name: 'Username', HeaderAlign: 'center', CellAlign: 'left' },
+                { HeaderText: 'VIP', Width: 80, Name: 'VIP', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
+                { HeaderText: 'Level', Width: 80, Name: 'Level', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
                 { HeaderText: 'Currency', Width: 80, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
                 { HeaderText: 'Site', Width: 80, Name: 'Site', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Bet Limit Type', Width: 140, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'AgentMaxPerMatch', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'AgentMaxBet', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'MasterMaxPerMatch', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'MasterMaxBet', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'SuperMaxPerMatch', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
+                { HeaderText: 'Bet Limit Type', Width: 140, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 140, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 140, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 140, Name: 'AgentMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 140, Name: 'AgentMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 140, Name: 'MasterMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 140, Name: 'MasterMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 140, Name: 'SuperMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 140, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
                 { HeaderText: 'Action', Width: 100, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true }
             ],
             showDistinctRow: false,
-            showNumberColumn: true,
             showPager: true,
             customPager: true,
             showTitle: false,

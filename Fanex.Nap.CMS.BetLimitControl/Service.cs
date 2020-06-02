@@ -1,5 +1,9 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl
 {
+    using System.Linq;
+    using Fanex.Nap.CMS.BetLimitControl.Criteria;
+    using Fanex.Nap.CMS.BetLimitControl.Models;
+    using Fanex.Nap.CMS.BetLimitControl.Request;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.NAP.CMS.BetLimitControl.Criteria;
@@ -10,6 +14,8 @@
     public interface IService
     {
         IndexViewModel GetIndexViewModel();
+
+        SearchModel Search(SearchRequest request);
     }
 
     public class Service : IService
@@ -41,6 +47,30 @@
                 Sites = sites,
                 BetLimitTypes = betLimitTypes
             };
+        }
+
+        public SearchModel Search(SearchRequest request)
+        {
+            var criteria = new SearchCriteria
+            {
+                UserId = currentSession.UserId,
+                LevelID = request.LevelId,
+                Currency = request.Currency,
+                SiteID = request.SiteId,
+                BetLimitTypeID = request.BetLimitTypeID,
+                Username = request.Username,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+            };
+            var customerBetLimitControls = serviceBase.GetRepositoryData<CustomerBetLimitModel>(criteria);
+
+            var result = new SearchModel
+            {
+                TotalItems = criteria.TotalItems,
+                CustomerBetLimitControls = customerBetLimitControls.GroupBy(control => control.Username)
+            };
+
+            return result;
         }
     }
 }

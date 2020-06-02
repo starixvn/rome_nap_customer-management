@@ -95,7 +95,6 @@
     <Compile Include="Criteria\GetAllCurrencyCriteria.cs" />
     <Compile Include="Criteria\GetSiteByPermissionCriteria.cs" />
     <Compile Include="Models\BetLimitTypeModel.cs" />
-    <Compile Include="BetLimitControlService.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />
     <Compile Include="Models\CustomerBetLimitModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
@@ -121,6 +120,5 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-    <Folder Include="Requests\" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

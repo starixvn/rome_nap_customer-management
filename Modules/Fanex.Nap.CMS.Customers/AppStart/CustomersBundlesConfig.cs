@@ -39,7 +39,7 @@
         {
             bundles.AddAndInclude(
                 ProblemAccountStyles,
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Styles/problemAccount.less");
 
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
@@ -67,7 +67,7 @@
         {
             bundles.AddAndInclude(
                 "~/bundles/manage-robots-2/index-styles",
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Views/ManageRobots2/Styles/index.less");
 
             bundles.Add(new ScriptBundle("~/bundles/manage-robots-2/index-scripts")
@@ -156,7 +156,7 @@
 
             bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(
                 "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+                FanexMultiSelectScriptPath,
                 "~/Content/Pages/BetLimitControl/index.js"));
 
             return bundles;

@@ -83,7 +83,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMap(criteria);
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -104,7 +104,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMap(criteria);
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -116,7 +116,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMap(criteria);
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
     }

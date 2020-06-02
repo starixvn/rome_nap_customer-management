@@ -22,6 +22,16 @@ Fanex.CMS.BetLimitControl = function () {
         $updateDialog: null
     };
 
+    this.search = {
+        levelId: null,
+        username: null,
+        currency: null,
+        site: null,
+        betLimitType: null,
+        pageIndex: 1,
+        pageSize: 50
+    }
+
     this.popupAdd = {
         btnSave: null,
         btnCancel: null,
@@ -60,13 +70,46 @@ Fanex.CMS.BetLimitControl = function () {
     };
 
     this.InitEventHandler = function () {
+        $('#btnSearch').click(Search);
         $('#btnAdd').click(showAddDialog);
     }
 
     this.InitPage = function () {
         this.cachedElements();
         this.InitEventHandler();
-        this.renderBetLimit();
+    }
+
+    function Search() {
+        var params = {
+            levelId: null,
+            currency: null,
+            username: null,
+            siteId: null,
+            betLimitTypeID: null,
+            pageIndex: self.search.pageIndex,
+            pageSize: self.search.pageSize
+        }
+        searchWithParams(params)
+    }
+
+    function searchWithParams(params) {
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: CMS.resolveRootUrl('BetLimitControl/Search'),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(params),
+            dataType: 'json',
+            success: function (data) {
+                self.renderBetLimit(data);
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
     }
 
     this.renderBetLimit = function (rs) {
@@ -117,8 +160,8 @@ Fanex.CMS.BetLimitControl = function () {
             customPager: true,
             showTitle: false,
             pagerOption: {
-                itemsPerPage: 50,
-                currentPage: 1,
+                itemsPerPage: self.search.pageSize,
+                currentPage: self.search.pageIndex - 1,
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: self.changePager
             },
@@ -130,75 +173,105 @@ Fanex.CMS.BetLimitControl = function () {
         };
 
         var bodyData = [];
-
-        row = {
-            Columns: [
-                {
-                    Name: 'Username',
-                    Value: 'Member01'
-                },
-                {
-                    Name: 'VIP',
-                    Value: 'No'
-                },
-                {
-                    Name: 'Level',
-                    Value: 'Member'
-                },
-                {
-                    Name: 'Currency',
-                    Value: 'UUS'
-                },
-                {
-                    Name: 'Site',
-                    Value: 'BEST-ODDS'
-                },
-                {
-                    Name: 'BetLimitType',
-                    Value: 'PA - Credit'
-                },
-                {
-                    Name: 'MaxPerMatch',
-                    Value: '6000'
-                },
-                {
-                    Name: 'MaxBet',
-                    Value: '3000'
-                },
-                {
-                    Name: 'AgentMaxPerMatch',
-                    Value: '6000'
-                },
-                {
-                    Name: 'AgentMaxBet',
-                    Value: '3000'
-                },
-                {
-                    Name: 'MasterMaxPerMatch',
-                    Value: '6000'
-                },
-                {
-                    Name: 'MasterMaxBet',
-                    Value: '3000'
-                },
-                {
-                    Name: 'SuperMaxPerMatch',
-                    Value: '6000'
-                },
-                {
-                    Name: 'SuperMaxBet',
-                    Value: '3000'
-                },
-                {
-                    Name: 'Action',
-                    Value: "<span class='ico-edit edit-betlimitcontrol' data-username='Member01' data-betlimtit-type='1'  ></span><span class='ico-delete mid-margin-left'></span>"
+        $.each(rs.CustomerBetLimitControls, function (_, userBetLimit) {
+            var isFirstColumn = true;
+            $.each(userBetLimit, function (_, betLimitType) {
+                var currentColumms = [];
+                var isVIPCustomer = betLimitType.VIP;
+                if (isFirstColumn) {
+                    var rowMerge = userBetLimit.length;
+                    currentColumms = currentColumms.concat([
+                        {
+                            Name: 'Username',
+                            Value: betLimitType.Username,
+                            MergeRowNumber: rowMerge
+                        },
+                        {
+                            Name: 'VIP',
+                            Value: betLimitType.VIP ? 'Yes' : 'No',
+                            MergeRowNumber: rowMerge
+                        },
+                        {
+                            Name: 'Level',
+                            Value: betLimitType.Level,
+                            MergeRowNumber: rowMerge
+                        },
+                        {
+                            Name: 'Currency',
+                            Value: betLimitType.Currency,
+                            MergeRowNumber: rowMerge
+                        },
+                        {
+                            Name: 'Site',
+                            Value: betLimitType.Site,
+                            MergeRowNumber: rowMerge
+                        }
+                    ]);
                 }
-            ]
-        };
-        bodyData.push(row);
+
+                var hasAgent = betLimitType.Level === "Member";
+                var hasMaster = betLimitType.Level !== "Master" && betLimitType.Level !== "Super";
+                var hasSuper = betLimitType.Level !== "Super";
+                currentColumms = currentColumms.concat([
+                    {
+                        Name: 'BetLimitType',
+                        Value: betLimitType.BetLimitType
+                    },
+                    {
+                        Name: 'MaxPerMatch',
+                        Value: FormatNumber(betLimitType.MaxPerMatch)
+                    },
+                    {
+                        Name: 'MaxBet',
+                        Value: FormatNumber(betLimitType.MaxBet)
+                    },
+                    {
+                        Name: 'AgentMaxPerMatch',
+                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxPerMatch) : '',
+                        TdClass: hasAgent ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'AgentMaxBet',
+                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxBet) : '',
+                        TdClass: hasAgent ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'MasterMaxPerMatch',
+                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxPerMatch) : '',
+                        TdClass: hasMaster ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'MasterMaxBet',
+                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxBet) : '',
+                        TdClass: hasMaster ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'SuperMaxPerMatch',
+                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxPerMatch) : '',
+                        TdClass: hasSuper ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'SuperMaxBet',
+                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxBet) : '',
+                        TdClass: hasSuper ? '' : 'cell-disable'
+                    },
+                    {
+                        Name: 'Action',
+                        Value: "<span class='ico-edit edit-betlimitcontrol' data-username='" + betLimitType.Username + "' data-betlimtit-type='" + betLimitType.BetLimitTypeID + "'  ></span><span class='ico-delete mid-margin-left'></span>"
+                    }
+                ]);
+
+                bodyData.push(
+                    {
+                        Columns: currentColumms,
+                        CssClass: isVIPCustomer ? 'row-vip-customer' : ''
+                    });
+                isFirstColumn = false;
+            });
+        });
 
         gridOptions.bodyRows = bodyData;
-        gridOptions.pagerOption.totalItem = 0;
+        gridOptions.pagerOption.totalItem = rs?.TotalItems;
 
         this.elements.divBetLimitControl.fanexGrid(gridOptions);
 
@@ -207,6 +280,14 @@ Fanex.CMS.BetLimitControl = function () {
 
         this.elements.reportContainer.removeClass("display-none");
     };
+
+    function FormatNumber(number) {
+        if (number === null || isNaN(number)) {
+            return "N/A";
+        } else {
+            return numeral(number).format(CMSConstants.NumberFormat.IntNumber);
+        }
+    }
 
     function IsPositiveNumber(number) {
         if (number && number >= 0) {

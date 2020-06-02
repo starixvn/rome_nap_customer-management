@@ -17,6 +17,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Interfaces
     {
         IEnumerable<T> GetRepositoryData<T>(ICriteria criteria);
 
-        void ExecuteNonQueryWithMap(ICriteria criteria);
+        void ExecuteNonQueryWithMapOutput(ICriteria criteria);
     }
 }

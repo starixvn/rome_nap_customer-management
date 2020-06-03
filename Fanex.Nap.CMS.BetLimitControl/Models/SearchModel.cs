@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.Nap.CMS.BetLimitControl.Models
+namespace Fanex.NAP.CMS.BetLimitControl.Models
 {
     public class SearchModel
     {

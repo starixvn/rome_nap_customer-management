@@ -94,5 +94,9 @@
     <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustCheck" SpName="NAP_BLControl_CustCheck" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

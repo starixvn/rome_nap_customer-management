@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.BetLimitControl.Request
+﻿namespace Fanex.NAP.CMS.BetLimitControl.Request
 {
     public class SearchRequest
     {

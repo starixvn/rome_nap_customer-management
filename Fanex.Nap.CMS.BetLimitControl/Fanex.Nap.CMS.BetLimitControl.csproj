@@ -91,9 +91,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BetLimitControlController.cs" />
+    <Compile Include="Criteria\AddBetLimitControlCriteria.cs" />
+    <Compile Include="Criteria\CheckUsernameBetLimitTypeCriteria.cs" />
+    <Compile Include="Criteria\DeleteBetLimitControlCriteria.cs" />
     <Compile Include="Criteria\GetAllBetLimitTypeCriteria.cs" />
     <Compile Include="Criteria\GetAllCurrencyCriteria.cs" />
     <Compile Include="Criteria\GetSiteByPermissionCriteria.cs" />
+    <Compile Include="Criteria\UpdateBetLimitControlCriteria.cs" />
     <Compile Include="Models\BetLimitTypeModel.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />
     <Compile Include="Models\CustomerBetLimitModel.cs" />
@@ -101,6 +105,9 @@
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request\AddRequest.cs" />
+    <Compile Include="Request\DeleteRequest.cs" />
+    <Compile Include="Request\UpdateRequest.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="Request\SearchRequest.cs" />
     <Compile Include="Models\IndexViewModel.cs" />

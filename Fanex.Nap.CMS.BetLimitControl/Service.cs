@@ -1,13 +1,12 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl
 {
     using System.Linq;
-    using Fanex.Nap.CMS.BetLimitControl.Criteria;
-    using Fanex.Nap.CMS.BetLimitControl.Models;
-    using Fanex.Nap.CMS.BetLimitControl.Request;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.NAP.CMS.BetLimitControl.Criteria;
     using Fanex.NAP.CMS.BetLimitControl.Models;
+    using Fanex.NAP.CMS.BetLimitControl.Request;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
 
@@ -16,6 +15,12 @@
         IndexViewModel GetIndexViewModel();
 
         SearchModel Search(SearchRequest request);
+
+        Result Add(AddRequest addRequest);
+
+        Result Update(UpdateRequest updateRequest);
+
+        Result Delete(DeleteRequest deleteRequest);
     }
 
     public class Service : IService
@@ -34,6 +39,53 @@
             this.currentSession = currentSession;
             this.currentContext = currentContext;
             this.serviceBase = serviceBase ?? new ServiceBase();
+        }
+
+        public Result Add(AddRequest addRequest)
+        {
+            var checkUsernameBetLimitTypeResult = CheckUsernameAndType(addRequest.Username, addRequest.BetLimitTypeID);
+            if (!checkUsernameBetLimitTypeResult.IsSuccess)
+            {
+                return checkUsernameBetLimitTypeResult;
+            }
+
+            var criteria = new AddBetLimitControlCriteria
+            {
+                Username = addRequest.Username,
+                BetLimitTypeID = addRequest.BetLimitTypeID,
+                MaxBet = addRequest.MaxBet,
+                MaxPerMatch = addRequest.MaxPerMatch,
+                UserId = currentSession.UserId,
+                IP = currentContext.IP
+            };
+
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
+            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
+        }
+
+        public Result CheckUsernameAndType(string username, int betLimitType)
+        {
+            var criteria = new CheckUsernameBetLimitTypeCriteria(username, betLimitType, currentSession.UserId);
+
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
+            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
+        }
+
+        public Result Delete(DeleteRequest deleteRequest)
+        {
+            var criteria = new DeleteBetLimitControlCriteria
+            {
+                CustID = deleteRequest.CustID,
+                BetLimitTypeID = deleteRequest.BetLimitTypeID,
+                UserId = currentSession.UserId,
+                IP = currentContext.IP
+            };
+
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
+            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
         public IndexViewModel GetIndexViewModel()
@@ -71,6 +123,24 @@
             };
 
             return result;
+        }
+
+        public Result Update(UpdateRequest updateRequest)
+        {
+            var criteria = new UpdateBetLimitControlCriteria
+            {
+                CustID = updateRequest.CustID,
+                BetLimitTypeID = updateRequest.BetLimitTypeID,
+                NewBetLimitTypeID = updateRequest.NewBetLimitTypeID,
+                MaxBet = updateRequest.MaxBet,
+                MaxPerMatch = updateRequest.MaxPerMatch,
+                UserId = currentSession.UserId,
+                IP = currentContext.IP
+            };
+
+            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
+            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.BetLimitControl.Models
+﻿namespace Fanex.NAP.CMS.BetLimitControl.Models
 {
     public class CustomerBetLimitModel
     {

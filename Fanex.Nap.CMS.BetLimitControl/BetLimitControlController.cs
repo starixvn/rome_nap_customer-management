@@ -1,11 +1,11 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl
 {
-    using Fanex.Nap.CMS.BetLimitControl.Request;
+    using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.NAP.CMS.BetLimitControl.Request;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using System.Web.Mvc;
 
     public class BetLimitControlController : BaseController
     {
@@ -27,9 +27,21 @@
             var viewModel = service.GetIndexViewModel();
             return View(viewModel);
         }
-        
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Read)]
         public JsonResult Search(SearchRequest searchRequest) => Json(service.Search(searchRequest));
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Host)]
+        public JsonResult Add(AddRequest addRequest) => Json(service.Add(addRequest));
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Host)]
+        public JsonResult Update(UpdateRequest updateRequest) => Json(service.Update(updateRequest));
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Host)]
+        public JsonResult Delete(DeleteRequest deleteRequest) => Json(service.Delete(deleteRequest));
     }
 }

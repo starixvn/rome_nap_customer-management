@@ -1,14 +1,6 @@
 ﻿$(document).ready(function () {
     var betLimitControl = new Fanex.CMS.BetLimitControl();
     betLimitControl.InitPage();
-
-    $('.edit-betlimitcontrol').off();
-    $('.edit-betlimitcontrol').click(function () {
-        var $this = $(this);
-        var username = $this.attr('data-username');
-        var betlimitType = $this.attr('data-betlimit-type');
-        betLimitControl.openUpdateDialog(username, betlimitType);
-    });
 });
 
 Namespace.Register("Fanex.CMS.BetLimitControl");
@@ -46,8 +38,11 @@ Fanex.CMS.BetLimitControl = function () {
         btnCancel: null,
         username: null,
         betLimitType: null,
+        oldBetLimitType: null,
         maxPerMatch: null,
-        maxBet: null
+        maxBet: null,
+        custID: null,
+        oldBetLimitType: null
     }
 
     this.cachedElements = function () {
@@ -268,7 +263,19 @@ Fanex.CMS.BetLimitControl = function () {
                     },
                     {
                         Name: 'Action',
-                        Value: "<span class='ico-edit edit-betlimitcontrol' data-username='" + betLimitType.Username + "' data-betlimtit-type='" + betLimitType.BetLimitTypeID + "'  ></span><span class='ico-delete mid-margin-left'></span>"
+                        Value: "<span class='ico-edit' data-username='"
+                            + betLimitType.Username
+                            + "' data-betlimit-type='"
+                            + betLimitType.BetLimitTypeID
+                            + "' data-maxbet='"
+                            + betLimitType.MaxBet
+                            + "' data-maxpermatch='"
+                            + betLimitType.MaxPerMatch
+                            + "'  ></span><span class='ico-delete mid-margin-left' data-cust-id='"
+                            + betLimitType.CustID
+                            + "' data-betlimit-type='"
+                            + betLimitType.BetLimitTypeID
+                            + "'></span>"
                     }
                 ]);
 
@@ -286,7 +293,19 @@ Fanex.CMS.BetLimitControl = function () {
 
         this.elements.divBetLimitControl.fanexGrid(gridOptions);
 
+        this.elements.divBetLimitControl.find(".ico-edit").on("click touchend", function () {
+            var $this = $(this);
+            var username = $this.attr('data-username');
+            var betlimitType = $this.attr('data-betlimit-type');
+            var maxbet = $this.attr('data-maxbet');
+            var maxpermatch = $this.attr('data-maxpermatch');
+            self.openUpdateDialog(username, betlimitType, maxbet, maxpermatch);
+        });
+
         this.elements.divBetLimitControl.find(".ico-delete").on("click touchend", function () {
+            var custId = $(this).attr("data-cust-id");
+            var betLimitTypeId = $(this).attr("data-betlimit-type");
+            self.delete(custId, betLimitTypeId);
         });
 
         this.elements.reportContainer.removeClass("display-none");
@@ -307,7 +326,7 @@ Fanex.CMS.BetLimitControl = function () {
         return false;
     }
 
-    function validateNewBetTypeControlValue() {
+    function add() {
         var username = $.trim(self.popupAdd.username.val());
         if (!username) {
             CMS.showTipsyError(self.popupAdd.username, 'This field is required', "w");
@@ -343,10 +362,38 @@ Fanex.CMS.BetLimitControl = function () {
             CMS.showTipsyError(self.popupAdd.maxBet, 'Please input a positive whole number.', "w");
             return;
         }
-    }
 
-    function add() {
-        validateNewBetTypeControlValue();
+        var request = {
+            username: username,
+            betLimitTypeID: betLimitType,
+            maxBet: maxBet,
+            maxPerMatch: maxPerMatch
+        }
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: CMS.resolveRootUrl('BetLimitControl/Add'),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(request),
+            dataType: 'json',
+            success: function (data) {
+                if (!data.IsSuccess) {
+                    CMS.showInlineErrorMsg(data.Message, $('#msgAdd'), false, 15000);
+                    return;
+                }
+
+                var message = 'New bet limit has been successfully created';
+                CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
+                Search();
+                setTimeout(CMS.closePopup, 3000);
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
     }
 
     function showAddDialog() {
@@ -364,7 +411,7 @@ Fanex.CMS.BetLimitControl = function () {
         }
     }
 
-    function validateUpdateBetTypeControlValue() {
+    function update() {
         var betLimitType = self.popupUpdate.betLimitType.val();
         if (!betLimitType || betLimitType === "") {
             CMS.showTipsyError(self.popupUpdate.betLimitType, 'This field is required', "w");
@@ -394,17 +441,54 @@ Fanex.CMS.BetLimitControl = function () {
             CMS.showTipsyError(self.popupUpdate.maxBet, 'Please input a positive whole number.', "w");
             return;
         }
+        var request = {
+            custID: this.popupUpdate.custID,
+            maxBet: maxBet,
+            maxPerMatch: maxPerMatch
+        }
+
+        if (this.popupUpdate.oldBetLimitType == betLimitType) {
+            request.betLimitTypeID = betLimitType;
+        } else {
+            request.newBetLimitTypeID = betLimitType;
+        }
+
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: CMS.resolveRootUrl('BetLimitControl/Update'),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(request),
+            dataType: 'json',
+            success: function (data) {
+                if (!data.IsSuccess) {
+                    CMS.showInlineErrorMsg(data.Message, $('#msgUpd'), false, 15000);
+                    return;
+                }
+
+                var message = 'Bet limit has been successfully updated.';
+                CMS.showInlineSuccessMsg(message, $('#msgUpd'), true);
+                Search();
+                setTimeout(CMS.closePopup, 3000);
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
     }
 
-    function update() {
-        validateUpdateBetTypeControlValue();
-    }
-
-    this.openUpdateDialog = function (username, betTypeLimit) {
+    this.openUpdateDialog = function (custID, username, betTypeLimit, maxBet, maxPerMatch) {
         CMS.closeMsgBox();
+        this.popupUpdate.username.text(username);
+        this.popupUpdate.betLimitType.val(betTypeLimit);
+        this.popupUpdate.maxBet.val(numeral(maxBet).format(CMSConstants.NumberFormat.IntNumber));
+        this.popupUpdate.maxPerMatch.val(numeral(maxPerMatch).format(CMSConstants.NumberFormat.IntNumber));
+        this.popupUpdate.oldBetLimitType = betTypeLimit;
+        this.popupUpdate.custID = custID;
         if (!self.elements.$updateDialog) {
-            this.popupUpdate.username.text(username);
-            this.popupUpdate.betLimitType.val(betTypeLimit);
             self.popupUpdate.btnSave.click(update);
             self.popupUpdate.btnCancel.click(CMS.closePopup);
             self.elements.$updateDialog = CMS.modal("New Bet Limit", $('#frmUpd'), { resizable: false });
@@ -415,5 +499,32 @@ Fanex.CMS.BetLimitControl = function () {
             CMS.clearTipsyError(self.popupUpdate.maxBet);
             self.elements.$updateDialog.dialog('open');
         }
+    }
+
+    this.delete = function (custID, betLimitTypeID) {
+        var request = {
+            custID: custID,
+            betLimitTypeID: betLimitTypeID
+        }
+
+        CMS.disableInput();
+        $.ajax({
+            type: 'POST',
+            url: CMS.resolveRootUrl('BetLimitControl/Delete'),
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(request),
+            dataType: 'json',
+            success: function (data) {
+                if (data.IsSuccess) {
+                    Search();
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            },
+            complete: function () {
+                CMS.enableInput();
+            }
+        });
     }
 }

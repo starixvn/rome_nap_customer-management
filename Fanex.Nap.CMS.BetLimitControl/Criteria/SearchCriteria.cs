@@ -1,6 +1,6 @@
 ﻿using Fanex.Data.Repository;
 
-namespace Fanex.Nap.CMS.BetLimitControl.Criteria
+namespace Fanex.NAP.CMS.BetLimitControl.Criteria
 {
     public class SearchCriteria : CriteriaBase
     {

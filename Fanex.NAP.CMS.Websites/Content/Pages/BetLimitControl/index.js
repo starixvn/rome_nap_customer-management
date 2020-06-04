@@ -525,7 +525,7 @@ Fanex.CMS.BetLimitControl = function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.IsSuccess) {
-                        CMS.showSuccessMessage("Delete Successfully.")
+                        CMS.showSuccessMessage("Bet Limit Type has been successfully deleted.")
                         setTimeout(function () {
                             Search();
                         }, 1000);

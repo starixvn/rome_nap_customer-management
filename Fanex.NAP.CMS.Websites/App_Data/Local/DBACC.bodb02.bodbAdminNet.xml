@@ -62,11 +62,11 @@
     <Setting Key="NAP_BLControl_SiteByPermissionSelect" SpName="NAP_BLControl_SiteByPermissionSelect" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BLControl_CustSelect" SpName="NAP_BLControl_CustSelect" DbName="DBACC.bodb02.bodbAdminNet">
       <Mapping DataField="Agent_MaxBet" ObjectProperty="AgentMaxBet" />
-      <Mapping DataField="Agent_MaxPerMatch" ObjectProperty="AgentMaxBet" />
+      <Mapping DataField="Agent_MaxPerMatch" ObjectProperty="AgentMaxPerMatch" />
       <Mapping DataField="Master_MaxBet" ObjectProperty="MasterMaxBet" />
-      <Mapping DataField="Master_MaxPerMatch" ObjectProperty="MasterMaxBet" />
+      <Mapping DataField="Master_MaxPerMatch" ObjectProperty="MasterMaxPerMatch" />
       <Mapping DataField="Super_MaxBet" ObjectProperty="SuperMaxBet" />
-      <Mapping DataField="Super_MaxPerMatch" ObjectProperty="SuperMaxBet" />
+      <Mapping DataField="Super_MaxPerMatch" ObjectProperty="SuperMaxPerMatch" />
     </Setting>
   </Function>
 </Functions>

@@ -23,7 +23,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitControl, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.IsHost = HasRight(CMSFunctionKeys.BetLimitTypeControl, Constant.Policy.Host);
+            ViewBag.IsHost = HasRight(CMSFunctionKeys.BetLimitControl, Constant.Policy.Host);
             var viewModel = service.GetIndexViewModel();
             return View(viewModel);
         }

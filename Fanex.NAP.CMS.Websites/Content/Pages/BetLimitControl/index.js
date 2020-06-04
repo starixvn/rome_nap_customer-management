@@ -7,6 +7,8 @@ Namespace.Register("Fanex.CMS.BetLimitControl");
 Fanex.CMS.BetLimitControl = function () {
     var self = this;
 
+    this.isHost = false;
+
     this.elements = {
         divBetLimitControl: null,
         reportContainer: null,
@@ -68,6 +70,7 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     this.InitPage = function () {
+        this.isHost = $('.filter-bar').attr('isHost') === 'True';
         this.cachedElements();
         this.InitEventHandler();
     }
@@ -124,8 +127,7 @@ Fanex.CMS.BetLimitControl = function () {
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 3 },
                         { HeaderText: 'Bet Limit Type', Name: 'BetLimitType', MergeRowNumber: 3 },
                         { HeaderText: 'Selected Account', Name: 'MaxPerMatch', MergeRowNumber: 2, MergeColNumber: 2 },
-                        { HeaderText: 'Upline', Name: 'AgentMaxPerMatch', MergeColNumber: 6 },
-                        { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 3 }
+                        { HeaderText: 'Upline', Name: 'AgentMaxPerMatch', MergeColNumber: 6 }
                     ]
                 },
                 {
@@ -150,8 +152,7 @@ Fanex.CMS.BetLimitControl = function () {
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'MasterMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
                 { HeaderText: 'Max Bet', Width: 100, Name: 'MasterMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'SuperMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 100, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Action', Width: 80, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true }
+                { HeaderText: 'Max Bet', Width: 100, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true }
             ],
             showDistinctRow: false,
             showPager: true,
@@ -167,8 +168,13 @@ Fanex.CMS.BetLimitControl = function () {
             titleInfo: {
                 text: "",
                 showExcelButton: false
-            },
+            }
         };
+
+        if (self.isHost) {
+            gridOptions.groupHeaderRows[0].Columns.push({ HeaderText: 'Action', Name: 'Action', MergeRowNumber: 3 });
+            gridOptions.columns.push({ HeaderText: 'Action', Width: 80, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' });
+        }
 
         var bodyData = [];
         $.each(rs.CustomerBetLimitControls, function (_, userBetLimit) {
@@ -252,26 +258,30 @@ Fanex.CMS.BetLimitControl = function () {
                         Name: 'SuperMaxBet',
                         Value: hasSuper ? FormatNumber(betLimitType.SuperMaxBet) : '',
                         TdClass: hasSuper ? '' : 'cell-disable'
-                    },
-                    {
-                        Name: 'Action',
-                        Value: "<span title='Update' class='ico-edit' data-username='"
-                            + betLimitType.Username
-                            + "' data-cust-id='"
-                            + betLimitType.CustID
-                            + "' data-betlimit-type='"
-                            + betLimitType.BetLimitTypeID
-                            + "' data-maxbet='"
-                            + betLimitType.MaxBet
-                            + "' data-maxpermatch='"
-                            + betLimitType.MaxPerMatch
-                            + "'  ></span><span title='Delete' class='ico-delete mid-margin-left' data-cust-id='"
-                            + betLimitType.CustID
-                            + "' data-betlimit-type='"
-                            + betLimitType.BetLimitTypeID
-                            + "'></span>"
                     }
                 ]);
+
+                if (self.isHost) {
+                    currentColumms.push(
+                        {
+                            Name: 'Action',
+                            Value: "<span title='Update' class='ico-edit' data-username='"
+                                + betLimitType.Username
+                                + "' data-cust-id='"
+                                + betLimitType.CustID
+                                + "' data-betlimit-type='"
+                                + betLimitType.BetLimitTypeID
+                                + "' data-maxbet='"
+                                + betLimitType.MaxBet
+                                + "' data-maxpermatch='"
+                                + betLimitType.MaxPerMatch
+                                + "'  ></span><span title='Delete' class='ico-delete mid-margin-left' data-cust-id='"
+                                + betLimitType.CustID
+                                + "' data-betlimit-type='"
+                                + betLimitType.BetLimitTypeID
+                                + "'></span>"
+                        });
+                }
 
                 bodyData.push(
                     {
@@ -505,7 +515,7 @@ Fanex.CMS.BetLimitControl = function () {
             custID: custID,
             betLimitTypeID: betLimitTypeID
         }
-        CMS.showConfirmMessage("Are you sure to delete?", function () {
+        CMS.showConfirmMessage("Do you want to delete the selected bet limit?", function () {
             CMS.disableInput();
             $.ajax({
                 type: 'POST',

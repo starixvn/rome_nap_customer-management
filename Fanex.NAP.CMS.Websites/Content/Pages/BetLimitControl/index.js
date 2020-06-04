@@ -358,7 +358,7 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        if (maxPerMatch > maxBet) {
+        if (maxBet > maxPerMatch) {
             CMS.showTipsyError(self.popupAdd.maxPerMatch, 'Max Per Match must be greater than or equal to Max Bet.', "w");
             return;
         }
@@ -440,7 +440,7 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        if (maxPerMatch > maxBet) {
+        if (maxBet > maxPerMatch) {
             CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'Max Per Match must be greater than or equal to Max Bet.', "w");
             return;
         }

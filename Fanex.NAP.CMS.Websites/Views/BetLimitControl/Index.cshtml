@@ -85,6 +85,10 @@
     <div class="btn-new-bet-limit clear-fix">
         <button type="button" class="blue-button" id="btnAdd">New Bet Limit</button>
     </div>
+    <div id="div-popup" class="display-none">
+        @Html.Partial("_Add", Model.BetLimitTypes)
+        @Html.Partial("_Update", Model.BetLimitTypes)
+    </div>
 }
 <div id="report-container" class="content-grid display-none">
     <div id="div-bet-limit-control" class="freegrid">
@@ -92,5 +96,3 @@
         </div>
     </div>
 </div>
-@Html.Partial("_Add", Model.BetLimitTypes)
-@Html.Partial("_Update", Model.BetLimitTypes)

@@ -48,6 +48,8 @@ Fanex.CMS.BetLimitControl = function () {
     this.cachedElements = function () {
         this.elements.divBetLimitControl = $("#div-bet-limit-control");
         this.elements.reportContainer = $("#report-container");
+        this.elements.$addDialog = $("#frmAdd");
+        this.elements.$updateDialog = $("#frmUpd");
 
         this.search.levelId = $("#selectLevel");
         this.search.currency = $("#selectCurrency");
@@ -55,19 +57,9 @@ Fanex.CMS.BetLimitControl = function () {
         this.search.betLimitType = $("#selectBetLimitType");
         this.search.username = $("#selectUsername");
 
-        this.popupAdd.btnSave = $("#btnSaveAdd");
-        this.popupAdd.btnCancel = $("#btnCancelAdd");
-        this.popupAdd.username = $("#txtUsernameAdd");
-        this.popupAdd.betLimitType = $("#txtBetLimitTypeAdd");
-        this.popupAdd.maxPerMatch = $("#txtMaxPerMatchAdd");
-        this.popupAdd.maxBet = $("#txtMaxBetAdd");
-
-        this.popupUpdate.btnSave = $("#btnSaveUpdate");
-        this.popupUpdate.btnCancel = $("#btnCancelUpdate");
-        this.popupUpdate.username = $("#usernameUpdate");
-        this.popupUpdate.betLimitType = $("#selBetLimitTypeUpdate");
-        this.popupUpdate.maxPerMatch = $("#txtMaxPerMatchUpdate");
-        this.popupUpdate.maxBet = $("#txtMaxBetUpdate");
+        // Empty the #divPopupContent since it's children was cached.
+        // It also helps to prevent the 'for' attributes do not work correctly in the popup.
+        $("#div-popup").remove();
     };
 
     this.InitEventHandler = function () {
@@ -291,7 +283,7 @@ Fanex.CMS.BetLimitControl = function () {
         });
 
         gridOptions.bodyRows = bodyData;
-        gridOptions.pagerOption.totalItem = rs?.TotalItems;
+        gridOptions.pagerOption.totalItem = rs.TotalItems;
 
         this.elements.divBetLimitControl.fanexGrid(gridOptions);
 
@@ -387,8 +379,10 @@ Fanex.CMS.BetLimitControl = function () {
 
                 var message = 'New bet limit has been successfully created';
                 CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
-                setTimeout(CMS.closePopup, 3000);
-                Search();
+                setTimeout(function () {
+                    CMS.closePopup();
+                    Search();
+                }, 3000);
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -400,24 +394,14 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     function showAddDialog() {
-        CMS.closeMsgBox();
-        CMS.hideInlineMsg($('#msgAdd'));
-        self.popupAdd.username.val('');
-        self.popupAdd.betLimitType.val('');
-        self.popupAdd.maxBet.val('');
-        self.popupAdd.maxPerMatch.val('');
+        CMS.modal("New Bet Limit", self.elements.$addDialog.clone(), { resizable: false });
 
-        if (!self.elements.$addDialog) {
-            self.popupAdd.btnSave.click(add);
-            self.popupAdd.btnCancel.click(CMS.closePopup);
-            self.elements.$addDialog = CMS.modal("New Bet Limit", $('#frmAdd'), { resizable: false });
-        } else {
-            CMS.clearTipsyError(self.popupAdd.username);
-            CMS.clearTipsyError(self.popupAdd.betLimitType);
-            CMS.clearTipsyError(self.popupAdd.maxPerMatch);
-            CMS.clearTipsyError(self.popupAdd.maxBet);
-            self.elements.$addDialog.dialog('open');
-        }
+        self.popupAdd.username = $("#txtUsernameAdd");
+        self.popupAdd.betLimitType = $("#txtBetLimitTypeAdd");
+        self.popupAdd.maxPerMatch = $("#txtMaxPerMatchAdd");
+        self.popupAdd.maxBet = $("#txtMaxBetAdd");
+        $("#btnSaveAdd").click(add);
+        $("#btnCancelAdd").click(CMS.closePopup);
     }
 
     function update() {
@@ -473,8 +457,10 @@ Fanex.CMS.BetLimitControl = function () {
 
                 var message = 'Bet limit has been successfully updated.';
                 CMS.showInlineSuccessMsg(message, $('#msgUpd'), true);
-                setTimeout(CMS.closePopup, 3000);
-                Search();
+                setTimeout(function () {
+                    CMS.closePopup();
+                    Search();
+                }, 3000);
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -486,25 +472,21 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     this.openUpdateDialog = function (custID, username, betTypeLimit, maxBet, maxPerMatch) {
-        CMS.closeMsgBox();
-        CMS.hideInlineMsg($('#msgUpd'));
-        this.popupUpdate.username.text(username);
-        this.popupUpdate.betLimitType.val(betTypeLimit);
-        this.popupUpdate.maxBet.val(numeral(maxBet).format(CMSConstants.NumberFormat.IntNumber));
-        this.popupUpdate.maxPerMatch.val(numeral(maxPerMatch).format(CMSConstants.NumberFormat.IntNumber));
-        this.popupUpdate.oldBetLimitType = betTypeLimit;
-        this.popupUpdate.custID = custID;
-        if (!self.elements.$updateDialog) {
-            self.popupUpdate.btnSave.click(update);
-            self.popupUpdate.btnCancel.click(CMS.closePopup);
-            self.elements.$updateDialog = CMS.modal("New Bet Limit", $('#frmUpd'), { resizable: false });
-        } else {
-            CMS.clearTipsyError(self.popupUpdate.username);
-            CMS.clearTipsyError(self.popupUpdate.betLimitType);
-            CMS.clearTipsyError(self.popupUpdate.maxPerMatch);
-            CMS.clearTipsyError(self.popupUpdate.maxBet);
-            self.elements.$updateDialog.dialog('open');
-        }
+        CMS.modal("Update Bet Limit", self.elements.$updateDialog.clone(), { resizable: false });
+
+        self.popupUpdate.username = $("#usernameUpdate");
+        self.popupUpdate.betLimitType = $("#selBetLimitTypeUpdate");
+        self.popupUpdate.maxPerMatch = $("#txtMaxPerMatchUpdate");
+        self.popupUpdate.maxBet = $("#txtMaxBetUpdate");
+
+        self.popupUpdate.username.text(username);
+        self.popupUpdate.betLimitType.val(betTypeLimit);
+        self.popupUpdate.maxBet.val(numeral(maxBet).format(CMSConstants.NumberFormat.IntNumber));
+        self.popupUpdate.maxPerMatch.val(numeral(maxPerMatch).format(CMSConstants.NumberFormat.IntNumber));
+        self.popupUpdate.oldBetLimitType = betTypeLimit;
+        self.popupUpdate.custID = custID;
+        $("#btnSaveUpdate").click(update);
+        $("#btnCancelUpdate").click(CMS.closePopup);
     }
 
     this.delete = function (custID, betLimitTypeID) {
@@ -512,25 +494,25 @@ Fanex.CMS.BetLimitControl = function () {
             custID: custID,
             betLimitTypeID: betLimitTypeID
         }
-
-        CMS.disableInput();
-        $.ajax({
-            type: 'POST',
-            url: CMS.resolveRootUrl('BetLimitControl/Delete'),
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(request),
-            dataType: 'json',
-            success: function (data) {
-                if (data.IsSuccess) {
-                    Search();
+        CMS.showConfirmMessage("Are you sure to delete?", function () {
+            $.ajax({
+                type: 'POST',
+                url: CMS.resolveRootUrl('BetLimitControl/Delete'),
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(request),
+                dataType: 'json',
+                success: function (data) {
+                    if (data.IsSuccess) {
+                        Search();
+                    }
+                },
+                error: function (xhr) {
+                    CMS.handleAjaxError(xhr);
+                },
+                complete: function () {
+                    CMS.enableInput();
                 }
-            },
-            error: function (xhr) {
-                CMS.handleAjaxError(xhr);
-            },
-            complete: function () {
-                CMS.enableInput();
-            }
-        });
+            });
+        })
     }
 }

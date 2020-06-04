@@ -188,6 +188,7 @@ Fanex.CMS.BetLimitControl = function () {
                         {
                             Name: 'Username',
                             Value: betLimitType.Username,
+                            TdClass: 'break-word',
                             MergeRowNumber: rowMerge
                         },
                         {
@@ -332,6 +333,10 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     function add() {
+        CMS.clearTipsyError(self.popupAdd.username);
+        CMS.clearTipsyError(self.popupAdd.betLimitType);
+        CMS.clearTipsyError(self.popupAdd.maxPerMatch);
+        CMS.clearTipsyError(self.popupAdd.maxBet);
         var username = $.trim(self.popupAdd.username.val());
         if (!username) {
             CMS.showTipsyError(self.popupAdd.username, 'This field is required', "w");
@@ -420,6 +425,10 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     function update() {
+        CMS.clearTipsyError(self.popupUpdate.betLimitType);
+        CMS.clearTipsyError(self.popupUpdate.maxPerMatch);
+        CMS.clearTipsyError(self.popupUpdate.maxBet);
+
         var betLimitType = self.popupUpdate.betLimitType.val();
         if (!betLimitType || betLimitType === "") {
             CMS.showTipsyError(self.popupUpdate.betLimitType, 'This field is required', "w");

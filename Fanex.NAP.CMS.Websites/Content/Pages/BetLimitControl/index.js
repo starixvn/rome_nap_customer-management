@@ -515,16 +515,18 @@ Fanex.CMS.BetLimitControl = function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.IsSuccess) {
-                        setTimeout(Search, 3000);
+                        CMS.showSuccessMessage("Delete Successfully.")
+                        setTimeout(function () {
+                            Search();
+                        }, 1000);
                     } else {
-                        CMS.handleAjaxError(data.Message);
+                        CMS.enableInput();
+                        CMS.showErrorMessage(data.Message);
                     }
                 },
                 error: function (xhr) {
-                    CMS.handleAjaxError(xhr);
-                },
-                complete: function () {
                     CMS.enableInput();
+                    CMS.handleAjaxError(xhr);
                 }
             });
         })

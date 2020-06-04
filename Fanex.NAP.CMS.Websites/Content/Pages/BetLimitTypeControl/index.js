@@ -390,7 +390,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                     return;
                 }
 
-                var message = betLimitTypeId ? 'Bet limit has been successfully updated' : 'New bet limit type has been successfully created';
+                var message = betLimitTypeId ? 'Bet Limit Type has been successfully updated' : 'New Bet Limit Type has been successfully created';
                 CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
                 searchWithParams(queryParams);
                 setTimeout(CMS.closePopup, 3000);
@@ -466,7 +466,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 Columns: [
                     {
                         Name: 'BetLimitType',
-                        TdClass: 'vertical-top',
+                        TdClass: 'vertical-top break-word',
                         Value: '<span class="type-toggle">[+]</span>' + item.BetLimitType
                     },
                     {
@@ -669,7 +669,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                         return;
                     }
 
-                    CMS.showSuccessMessage('Bet limit has been successfully deleted');
+                    CMS.showSuccessMessage('Bet Limit Type has been successfully deleted');
                     searchWithParams(queryParams);
                 },
                 error: function (xhr) {

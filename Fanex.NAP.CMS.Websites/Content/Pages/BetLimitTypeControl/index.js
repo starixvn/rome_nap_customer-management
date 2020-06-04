@@ -255,6 +255,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
         } else {
             $addDialog.dialog('open');
             $('#ui-dialog-title-dialog-popup').text(title);
+            $addDialog.find('.error-tipsy').remove();
         }
 
         $('#btnSaveAdd').off('click').on('click', function () {

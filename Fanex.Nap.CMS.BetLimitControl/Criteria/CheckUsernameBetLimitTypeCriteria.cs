@@ -4,18 +4,18 @@
 
     public class CheckUsernameBetLimitTypeCriteria : CriteriaBase
     {
-        public CheckUsernameBetLimitTypeCriteria(string username, int betLimitTypeID, int userid)
+        public CheckUsernameBetLimitTypeCriteria(string username, int betLimitTypeID, int userId)
         {
             Username = username;
             BetLimitTypeID = betLimitTypeID;
-            Userid = userid;
+            UserId = userId;
         }
 
         public string Username { get; set; }
 
         public int BetLimitTypeID { get; set; }
 
-        public int Userid { get; set; }
+        public int UserId { get; set; }
 
         public int CustID { get; set; }
 
@@ -27,6 +27,6 @@
             => "NAP_BLControl_CustCheck";
 
         public override bool IsValid()
-            => Userid > 0 && !string.IsNullOrWhiteSpace(Username);
+            => UserId > 0 && !string.IsNullOrWhiteSpace(Username) && BetLimitTypeID > 0;
     }
 }

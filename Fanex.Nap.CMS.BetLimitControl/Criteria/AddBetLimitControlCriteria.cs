@@ -24,6 +24,6 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
             => "NAP_BLControl_CustInsert";
 
         public override bool IsValid()
-            => !string.IsNullOrWhiteSpace(Username) && UserId > 0;
+            => !string.IsNullOrWhiteSpace(Username) && BetLimitTypeID > 0 && MaxBet <= MaxPerMatch && UserId > 0 && !string.IsNullOrWhiteSpace(IP);
     }
 }

@@ -13,6 +13,6 @@
 
         public override string GetSettingKey() => "NAP_BLControl_SiteByPermissionSelect";
 
-        public override bool IsValid() => true;
+        public override bool IsValid() => UserId > 0;
     }
 }

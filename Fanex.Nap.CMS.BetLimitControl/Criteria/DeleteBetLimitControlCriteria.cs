@@ -20,6 +20,6 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
             => "NAP_BLControl_CustDelete";
 
         public override bool IsValid()
-            => CustID > 0;
+            => CustID > 0 && UserId > 0 && BetLimitTypeID > 0 && !string.IsNullOrWhiteSpace(IP);
     }
 }

@@ -14,7 +14,7 @@ namespace Fanex.NAP.CMS.BetLimitTypeControl.Criteria
 
         public string ErrorMsg { get; set; }
 
-        public override bool IsValid() => BetLimitTypeId > 0 && UserId > 0;
+        public override bool IsValid() => BetLimitTypeId > 0 && UserId > 0 && !string.IsNullOrWhiteSpace(IP);
 
         public override string GetSettingKey() => "NAP_BLControl_TypeDelete";
     }

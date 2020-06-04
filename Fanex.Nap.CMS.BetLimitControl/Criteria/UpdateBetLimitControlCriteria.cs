@@ -1,14 +1,14 @@
-﻿using Fanex.Data.Repository;
-
-namespace Fanex.NAP.CMS.BetLimitControl.Criteria
+﻿namespace Fanex.NAP.CMS.BetLimitControl.Criteria
 {
+    using Fanex.Data.Repository;
+
     public class UpdateBetLimitControlCriteria : CriteriaBase
     {
         public int CustID { get; set; }
 
-        public int? BetLimitTypeID { get; set; }
+        public int BetLimitTypeID { get; set; }
 
-        public int? NewBetLimitTypeID { get; set; }
+        public int NewBetLimitTypeID { get; set; }
 
         public decimal MaxBet { get; set; }
 
@@ -26,6 +26,6 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
             => "NAP_BLControl_CustUpdate";
 
         public override bool IsValid()
-            => CustID > 0;
+            => CustID > 0 && BetLimitTypeID > 0 && NewBetLimitTypeID > 0 && MaxBet <= MaxPerMatch && UserId > 0 && !string.IsNullOrWhiteSpace(IP);
     }
 }

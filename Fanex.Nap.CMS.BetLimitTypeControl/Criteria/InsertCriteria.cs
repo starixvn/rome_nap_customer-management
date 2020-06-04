@@ -34,7 +34,8 @@
             !string.IsNullOrWhiteSpace(ProductList) &&
             !string.IsNullOrWhiteSpace(SportTypeList) &&
             !string.IsNullOrWhiteSpace(BetTypeList) &&
-            UserId > 0;
+            UserId > 0 &&
+            !string.IsNullOrWhiteSpace(IP);
 
         public override string GetSettingKey() => "NAP_BLControl_TypeInsert";
     }

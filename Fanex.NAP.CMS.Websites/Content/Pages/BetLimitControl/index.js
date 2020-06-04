@@ -265,6 +265,8 @@ Fanex.CMS.BetLimitControl = function () {
                         Name: 'Action',
                         Value: "<span class='ico-edit' data-username='"
                             + betLimitType.Username
+                            + "' data-cust-id='"
+                            + betLimitType.CustID
                             + "' data-betlimit-type='"
                             + betLimitType.BetLimitTypeID
                             + "' data-maxbet='"
@@ -295,11 +297,12 @@ Fanex.CMS.BetLimitControl = function () {
 
         this.elements.divBetLimitControl.find(".ico-edit").on("click touchend", function () {
             var $this = $(this);
+            var custId = $(this).attr("data-cust-id");
             var username = $this.attr('data-username');
             var betlimitType = $this.attr('data-betlimit-type');
             var maxbet = $this.attr('data-maxbet');
             var maxpermatch = $this.attr('data-maxpermatch');
-            self.openUpdateDialog(username, betlimitType, maxbet, maxpermatch);
+            self.openUpdateDialog(custId, username, betlimitType, maxbet, maxpermatch);
         });
 
         this.elements.divBetLimitControl.find(".ico-delete").on("click touchend", function () {
@@ -345,7 +348,7 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        var maxPerMatch = parseInt(maxPerMatchString);
+        var maxPerMatch = numeral().unformat(maxPerMatchString);
         if (!IsPositiveNumber(maxPerMatch)) {
             CMS.showTipsyError(self.popupAdd.maxPerMatch, 'Please input a positive whole number.', "w");
             return;
@@ -357,7 +360,7 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        var maxBet = parseInt(maxBetString);
+        var maxBet = numeral().unformat(maxBetString);
         if (!IsPositiveNumber(maxBet)) {
             CMS.showTipsyError(self.popupAdd.maxBet, 'Please input a positive whole number.', "w");
             return;
@@ -384,8 +387,8 @@ Fanex.CMS.BetLimitControl = function () {
 
                 var message = 'New bet limit has been successfully created';
                 CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
-                Search();
                 setTimeout(CMS.closePopup, 3000);
+                Search();
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -398,6 +401,12 @@ Fanex.CMS.BetLimitControl = function () {
 
     function showAddDialog() {
         CMS.closeMsgBox();
+        CMS.hideInlineMsg($('#msgAdd'));
+        self.popupAdd.username.val('');
+        self.popupAdd.betLimitType.val('');
+        self.popupAdd.maxBet.val('');
+        self.popupAdd.maxPerMatch.val('');
+
         if (!self.elements.$addDialog) {
             self.popupAdd.btnSave.click(add);
             self.popupAdd.btnCancel.click(CMS.closePopup);
@@ -424,33 +433,29 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        var maxPerMatch = parseInt(maxPerMatchString);
+        var maxPerMatch = numeral().unformat(maxPerMatchString);
         if (!IsPositiveNumber(maxPerMatch)) {
             CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'Please input a positive whole number.', "w");
             return;
         }
 
-        var maxBetString = self.popupAdd.maxBet.val();
+        var maxBetString = self.popupUpdate.maxBet.val();
         if (!maxBetString) {
             CMS.showTipsyError(self.popupUpdate.maxBet, 'This field is required', "w");
             return;
         }
 
-        var maxBet = parseInt(maxBetString);
+        var maxBet = numeral().unformat(maxBetString);
         if (!IsPositiveNumber(maxBet)) {
             CMS.showTipsyError(self.popupUpdate.maxBet, 'Please input a positive whole number.', "w");
             return;
         }
         var request = {
-            custID: this.popupUpdate.custID,
+            custID: self.popupUpdate.custID,
             maxBet: maxBet,
-            maxPerMatch: maxPerMatch
-        }
-
-        if (this.popupUpdate.oldBetLimitType == betLimitType) {
-            request.betLimitTypeID = betLimitType;
-        } else {
-            request.newBetLimitTypeID = betLimitType;
+            maxPerMatch: maxPerMatch,
+            betLimitTypeID: self.popupUpdate.oldBetLimitType,
+            newBetLimitTypeID: betLimitType
         }
 
         CMS.disableInput();
@@ -468,8 +473,8 @@ Fanex.CMS.BetLimitControl = function () {
 
                 var message = 'Bet limit has been successfully updated.';
                 CMS.showInlineSuccessMsg(message, $('#msgUpd'), true);
-                Search();
                 setTimeout(CMS.closePopup, 3000);
+                Search();
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -482,6 +487,7 @@ Fanex.CMS.BetLimitControl = function () {
 
     this.openUpdateDialog = function (custID, username, betTypeLimit, maxBet, maxPerMatch) {
         CMS.closeMsgBox();
+        CMS.hideInlineMsg($('#msgUpd'));
         this.popupUpdate.username.text(username);
         this.popupUpdate.betLimitType.val(betTypeLimit);
         this.popupUpdate.maxBet.val(numeral(maxBet).format(CMSConstants.NumberFormat.IntNumber));

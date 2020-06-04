@@ -143,15 +143,15 @@ Fanex.CMS.BetLimitControl = function () {
                 { HeaderText: 'Currency', Width: 80, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
                 { HeaderText: 'Site', Width: 80, Name: 'Site', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
                 { HeaderText: 'Bet Limit Type', Width: 140, Name: 'BetLimitType', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'AgentMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'AgentMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'MasterMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'MasterMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Per Match', Width: 140, Name: 'SuperMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Max Bet', Width: 140, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
-                { HeaderText: 'Action', Width: 100, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true }
+                { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 100, Name: 'AgentMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 100, Name: 'AgentMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 100, Name: 'MasterMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 100, Name: 'MasterMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Per Match', Width: 100, Name: 'SuperMaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Max Bet', Width: 100, Name: 'SuperMaxBet', HeaderAlign: 'center', CellAlign: 'right', AllowTruncate: true },
+                { HeaderText: 'Action', Width: 80, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center', AllowTruncate: true }
             ],
             showDistinctRow: false,
             showPager: true,
@@ -255,7 +255,7 @@ Fanex.CMS.BetLimitControl = function () {
                     },
                     {
                         Name: 'Action',
-                        Value: "<span class='ico-edit' data-username='"
+                        Value: "<span title='Update' class='ico-edit' data-username='"
                             + betLimitType.Username
                             + "' data-cust-id='"
                             + betLimitType.CustID
@@ -265,7 +265,7 @@ Fanex.CMS.BetLimitControl = function () {
                             + betLimitType.MaxBet
                             + "' data-maxpermatch='"
                             + betLimitType.MaxPerMatch
-                            + "'  ></span><span class='ico-delete mid-margin-left' data-cust-id='"
+                            + "'  ></span><span title='Delete' class='ico-delete mid-margin-left' data-cust-id='"
                             + betLimitType.CustID
                             + "' data-betlimit-type='"
                             + betLimitType.BetLimitTypeID
@@ -506,6 +506,7 @@ Fanex.CMS.BetLimitControl = function () {
             betLimitTypeID: betLimitTypeID
         }
         CMS.showConfirmMessage("Are you sure to delete?", function () {
+            CMS.disableInput();
             $.ajax({
                 type: 'POST',
                 url: CMS.resolveRootUrl('BetLimitControl/Delete'),
@@ -514,7 +515,9 @@ Fanex.CMS.BetLimitControl = function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.IsSuccess) {
-                        Search();
+                        setTimeout(Search, 3000);
+                    } else {
+                        CMS.handleAjaxError(data.Message);
                     }
                 },
                 error: function (xhr) {

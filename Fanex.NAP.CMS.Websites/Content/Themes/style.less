@@ -569,6 +569,23 @@ header {
 
                 ul {
                     right: 0px;
+
+                    > li > a {
+                        text-align: right;
+                    }
+
+                    .has-subkids {
+                        > a:after {
+                            left: 8px;
+                            right: unset;
+                            content: '\276E';
+                        }
+
+                        > ul {
+                            right: 100%;
+                            left: unset;
+                        }
+                    }
                 }
             }
 

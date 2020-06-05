@@ -400,7 +400,7 @@ header {
         margin-left: 142px;
         font-size: 12px;
         position: absolute;
-        text-transform:uppercase;
+        text-transform: uppercase;
     }
 
 
@@ -491,6 +491,48 @@ header {
 
                         &:last-child {
                             border: none;
+                        }
+
+                        &.has-subkids {
+                            position: relative;
+
+                            > a:after {
+                                content: '\276F';
+                                color: @sub_menu_text;
+                                position: absolute;
+                                right: 8px;
+                            }
+
+                            > ul {
+                                position: absolute;
+                                left: 100%;
+                                top: -5px;
+                                visibility: hidden;
+                                opacity: 0;
+                                border: solid 1px @menu_border;
+
+                                a {
+                                    background-color: @sub_menu_bg;
+                                    color: @sub_menu_text;
+                                }
+                            }
+
+                            &:hover {
+                                > a:after {
+                                    color: #fff;
+                                }
+
+                                > ul {
+                                    visibility: visible;
+                                    opacity: 1;
+
+                                    li a:hover {
+                                        text-decoration: none;
+                                        background-color: @menu_border;
+                                        color: @sub_menu_text_o;
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -230,7 +230,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                     $('#txtToTimeAdd').prop("disabled", true).val('');
                 }
             })
-            .prop('checked', isAdd ? false : betLimitTypeData.BeginTime !== betLimitTypeData.EndTime)
+            .prop('checked', isAdd ? false : !!betLimitTypeData.BeginTime)
             .trigger('change');
         $('#chkRestrictVIP').prop('checked', isAdd ? false : betLimitTypeData.RestrictVIP);
 

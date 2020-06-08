@@ -272,7 +272,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
         var invalidLeagueIds = [];
         var duplicatedLeagueIds = [];
         var text = $('#txtLeagueAdd').val();
-        var words = text.split(',');
+        var words = text.replace(/ /g, ',').replace(/\n/g, ',').split(',');
         var validWords = [];
         for (var word of words) {
             var trimmedWord = $.trim(word);

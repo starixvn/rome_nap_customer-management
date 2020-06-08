@@ -57,9 +57,12 @@
         </div>
     </div>
 </div>
-<div class="button-list clear-fix">
-    <button type="button" class="blue-button" id="btnAdd">New Bet Limit Type</button>
-</div>
+@if (ViewBag.IsHost)
+{
+    <div class="button-list clear-fix">
+        <button type="button" class="blue-button" id="btnAdd">New Bet Limit Type</button>
+    </div>
+}
 <div class="display-none content-grid">
     <div id="grid" class="freegrid"></div>
 </div>

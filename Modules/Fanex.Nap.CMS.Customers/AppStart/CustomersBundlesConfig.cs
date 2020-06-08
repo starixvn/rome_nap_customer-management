@@ -19,6 +19,7 @@
         public const string BetLimitControlStylePath = "~/bundles/bet-limit-control-styles";
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
+        private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -39,7 +40,7 @@
         {
             bundles.AddAndInclude(
                 ProblemAccountStyles,
-                FanexMultiSelectScriptPath,
+                FanexMultiSelectStylePath,
                 "~/Areas/Customers/Styles/problemAccount.less");
 
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
@@ -67,7 +68,7 @@
         {
             bundles.AddAndInclude(
                 "~/bundles/manage-robots-2/index-styles",
-                FanexMultiSelectScriptPath,
+                FanexMultiSelectStylePath,
                 "~/Areas/Customers/Views/ManageRobots2/Styles/index.less");
 
             bundles.Add(new ScriptBundle("~/bundles/manage-robots-2/index-scripts")
@@ -135,7 +136,7 @@
         {
             bundles.AddAndInclude(
                 BetLimitTypeControlStylePath,
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectStylePath,
                 "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.css",
                 "~/Content/Pages/BetLimitTypeControl/index.less");
 
@@ -151,7 +152,7 @@
         {
             bundles.AddAndInclude(
                 BetLimitControlStylePath,
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectStylePath,
                 "~/Content/Pages/BetLimitControl/index.less");
 
             bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(

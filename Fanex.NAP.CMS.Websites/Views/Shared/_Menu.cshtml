@@ -5,81 +5,58 @@
 }
 <nav>
     <ul class="menu">
-        <li class="first has-kids">
-            <a href="javascript:;">Customer</a>
-            <ul>
-                <li><a href="/CloseOpenMember">Close/Open Member</a></li>
-                <li><a href="/ConfigureCustomerAccess">Configure Customer Access</a></li>
-                <li><a href="/ManageRobots2">Manage Robots</a></li>
-                <li><a href="/ManageSmartPunters">Manage Smart Punters</a></li>
-                <li><a href="/PayoutManagement/PayoutList/Index">Payout Management</a></li>
-                <li><a href="/ColossusBets/BonusTicket/Index">Colossus Bet Bonus Ticket</a></li>
-                <li><a href="/Customers/ProblemAccount/Index">Manage Problem Account - CN88</a></li>
-                <li><a href="/BetRestriction/Index">Bet Restriction</a></li>
-                <li><a href="/BetRestrictionManagement/Index">On-Off Bet Restriction</a></li>
-                <li><a href="/Customers/PossessStatistics/Index">Possess Statistics - CN88</a></li>
-                <li><a href="/Customers/ProblemAccountCreditSite/Index">Manage Problem Account - Credit Sites</a></li>
-                <li><a href="/Customers/ProblemAccountLicenseeSite/Index">Manage Problem Account - Licensee Sites</a></li>
-                <li><a href="/Customers/ManageLicenseeAcknowledgement/Index">Problem Account - Manage Licensee Acknowledgement</a></li>
-                <li><a href="/BetLimitTypeControl/Index">Bet Limit Type Control</a></li>
-                <li><a href="/BetLimitControl/Index">Bet Limit Control</a></li>
-            </ul>
-        </li>
-        <li class="has-kids">
-            <a href="javascript:;">Loss Control</a>
-            <ul>
-                <li><a href="/LossMonitor">Loss Monitor</a></li>
-            </ul>
-        </li>
-        <li class="has-kids">
-            <a href="javascript:;">Turnover Control</a>
-            <ul>
-                <li class="has-subkids">
-                    <a href="/TurnoverControl/GlobalSetting">Global Setting - Soccer</a>
+        @for (int i = 0; i < lvl0MenuItemList.Count; i++)
+        {
+            var menuItem = lvl0MenuItemList[i];
+            var lvl1MenuItemList = menuItemList.Where(x => x.Parent != null && x.Parent.Id == menuItem.Id)
+                .OrderBy(x => x.DisplayOrder).ToList();
+            var className = string.Empty;
+
+            if (i == 0)
+            {
+                className = "first";
+            }
+
+            if ((i == lvl0MenuItemList.Count - 1) && (lvl0MenuItemList.Count > 1))
+            {
+                className += className.Length > 0 ? " last" : "last";
+            }
+
+            if (!lvl1MenuItemList.Any())
+            {
+                <li class="@className"><a href="@Url.Content(menuItem.ValidUrl)">@menuItem.Name</a></li>
+            }
+            else
+            {
+                className += className.Length > 0 ? " has-kids" : "has-kids";
+
+                <li class="@className">
+                    <a href="javascript:;">@menuItem.Name</a>
                     <ul>
-                        <li><a href="/VirtualSettingControl/NewAutoAdjustmentReport">Auto Adjustment Report (New)</a></li>
-                        <li><a href="/VirtualSettingControl/VirtualSettingMonitorAdvance">Virtual Setting Monitor Advance</a></li>
-                        <li><a href="/VirtualRateDetails/Index">E-Sports - Virtual Rate Details</a></li>
-                        <li><a href="/VirtualRateDetails/GlobalSetting">E-Sports - Virtual Rate Details - Global Setting</a></li>
-                        <li><a href="/VirtualRateDetails/ViewLog">Virtual Rate Log</a></li>
+                        @foreach (var lvl1MenuItem in lvl1MenuItemList)
+                        {
+                            var lvl2MenuItemList = menuItemList.Where(x => x.Parent != null && x.Parent.Id == lvl1MenuItem.Id)
+                                    .OrderBy(x => x.DisplayOrder).ToList();
+                            if (!lvl2MenuItemList.Any())
+                            {
+                                <li><a href="@Url.Content(lvl1MenuItem.ValidUrl)">@lvl1MenuItem.Name</a></li>
+                            }
+                            else
+                            {
+                                <li class="has-subkids">
+                                    <a href="href=" javascript:;">@lvl1MenuItem.Name</a>
+                                    <ul>
+                                        @foreach (var lvl2MenuItem in lvl2MenuItemList)
+                                        {
+                                            <li><a href="@Url.Content(lvl2MenuItem.ValidUrl)">@lvl2MenuItem.Name</a></li>
+                                        }
+                                    </ul>
+                                </li>                                
+                            }
+                        }
                     </ul>
                 </li>
-                <li><a href="/TurnoverControl/GlobalSetting?t=99">Global Setting - Other Sports</a></li>
-                <li><a href="/TurnoverControl/ImportGlobalSetting">Import Global Setting - Soccer</a></li>
-                <li><a href="/TurnoverControl/ImportGlobalSetting?t=99">Import Global Setting - Other Sports</a></li>
-                <li><a href="/TurnoverControl/TurnoverMonitor/Index">Turnover Monitor</a></li>
-            </ul>
-        </li>
-        <li class="has-kids">
-            <a href="javascript:;">Virtual Setting Control</a>
-            <ul>
-                <li><a href="/VirtualSettingControl/NewAutoAdjustmentReport">Auto Adjustment Report (New)</a></li>
-                <li><a href="/VirtualSettingControl/VirtualSettingMonitorAdvance">Virtual Setting Monitor Advance</a></li>
-                <li><a href="/VirtualRateDetails/Index">E-Sports - Virtual Rate Details</a></li>
-                <li><a href="/VirtualRateDetails/GlobalSetting">E-Sports - Virtual Rate Details - Global Setting</a></li>
-                <li><a href="/VirtualRateDetails/ViewLog">Virtual Rate Log</a></li>
-                <li><a href="/VirtualRateDetails/AutoSuspendLog">Auto Suspend Log</a></li>
-                <li><a href="/SoccerVirtualRateDetails/Index">Soccer - Virtual Rate Details</a></li>
-                <li><a href="/SoccerVirtualRateDetails/ViewLog">Soccer - Virtual Rate Log</a></li>
-                <li><a href="/SoccerVirtualRateDetails/GlobalSetting">Soccer - Virtual Rate Details - Global Setting</a></li>
-                <li><a href="/VirtualSettingControl/VirtualRateDetails/GlobalAutoSuspendThreshold">E-Sports - Global Auto Suspend Threshold</a></li>
-                <li><a href="/VirtualSettingControl/ManualUpdateVRAccount/Index">E-Sports - Manually Updated Virtual Rate Accounts</a></li>
-                <li><a href="/VirtualSettingControl/UploadVirtualRate/Index">E-Sports - Upload Virtual Rate</a></li>
-            </ul>
-        </li>
-        <li class="last has-kids">
-            <a href="javascript:;">Credit Collection</a>
-            <ul>
-                <li class="has-subkids">
-                    <a href="/CreditCollectionSummary/Index">Credit Collection Summary</a>
-                    <ul>
-                        <li><a href="/VirtualSettingControl/VirtualRateDetails/GlobalAutoSuspendThreshold">E-Sports - Global Auto Suspend Threshold</a></li>
-                        <li><a href="/VirtualSettingControl/ManualUpdateVRAccount/Index">E-Sports - Manually Updated Virtual Rate Accounts</a></li>
-                        <li><a href="/VirtualSettingControl/UploadVirtualRate/Index">E-Sports - Upload Virtual Rate</a></li>
-                    </ul>
-                </li>
-                <li><a href="/StatusLog/Index">Status Log</a></li>
-            </ul>
-        </li>
+            }
+        }
     </ul>
 </nav>

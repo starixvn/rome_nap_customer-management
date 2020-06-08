@@ -397,7 +397,7 @@ Fanex.CMS.BetLimitControl = function () {
                     return;
                 }
 
-                var message = 'New bet limit has been successfully created';
+                var message = 'New Bet Limit has been successfully created';
                 CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
                 setTimeout(function () {
                     CMS.closePopup();
@@ -485,7 +485,7 @@ Fanex.CMS.BetLimitControl = function () {
                     return;
                 }
 
-                var message = 'Bet limit has been successfully updated.';
+                var message = 'Bet Limit has been successfully updated.';
                 CMS.showInlineSuccessMsg(message, $('#msgUpd'), true);
                 setTimeout(function () {
                     CMS.closePopup();
@@ -524,7 +524,7 @@ Fanex.CMS.BetLimitControl = function () {
             custID: custID,
             betLimitTypeID: betLimitTypeID
         }
-        CMS.showConfirmMessage("Do you want to delete the selected bet limit?", function () {
+        CMS.showConfirmMessage("Do you want to delete the selected Bet Limit?", function () {
             CMS.disableInput();
             $.ajax({
                 type: 'POST',
@@ -534,7 +534,7 @@ Fanex.CMS.BetLimitControl = function () {
                 dataType: 'json',
                 success: function (data) {
                     if (data.IsSuccess) {
-                        CMS.showSuccessMessage("Bet Limit Type has been successfully deleted.")
+                        CMS.showSuccessMessage("Bet Limit has been successfully deleted.")
                         setTimeout(function () {
                             Search();
                         }, 1000);

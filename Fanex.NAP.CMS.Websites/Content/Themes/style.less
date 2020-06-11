@@ -510,10 +510,12 @@ header {
                                 visibility: hidden;
                                 opacity: 0;
                                 border: solid 1px @menu_border;
+                                max-width: 330px;
 
                                 a {
                                     background-color: @sub_menu_bg;
                                     color: @sub_menu_text;
+                                    text-align: left;
                                 }
                             }
 
@@ -594,6 +596,41 @@ header {
 
                 > a {
                     cursor: default;
+                }
+            }
+
+            @media screen and (max-width: 1080px) {
+                > li ul li.has-subkids > ul {
+                    max-width: 340px;
+
+                    a {
+                        text-align: left;
+                    }
+                }
+
+                > li:nth-last-child(2) {
+                    border-right: 0 none;
+
+                    ul {
+                        right: 0px;
+
+                        > li > a {
+                            text-align: right;
+                        }
+
+                        .has-subkids {
+                            > a:after {
+                                left: 8px;
+                                right: unset;
+                                content: '\276E';
+                            }
+
+                            > ul {
+                                right: 100%;
+                                left: unset;
+                            }
+                        }
+                    }
                 }
             }
         }

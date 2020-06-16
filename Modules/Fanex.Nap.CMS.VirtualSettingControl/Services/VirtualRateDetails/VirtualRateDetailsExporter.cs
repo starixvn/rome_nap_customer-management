@@ -6,6 +6,8 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.NAP.CMS.Core.Resources;
     using NPOI.HSSF.Util;
@@ -16,6 +18,7 @@
         private readonly VirtualRateDetailsReport _report;
         private readonly bool _isGlobalSetting;
         private readonly bool _isMember;
+        private readonly int _sportType;
 
         private IFont _font { get; set; }
         private ICellStyle HeaderTextStyle { get; set; }
@@ -31,11 +34,12 @@
 
         private ICellStyle BodyTextStyle { get; set; }
 
-        public VirtualRateDetailsExporter(VirtualRateDetailsReport report)
+        public VirtualRateDetailsExporter(VirtualRateDetailsReport report, int sportType)
         {
             _report = report;
             _isGlobalSetting = report.ReportLevel == 0;
             _isMember = report.ReportLevel == 1;
+            _sportType = sportType;
 
             InitStyles();
         }
@@ -44,25 +48,22 @@
         {
             get
             {
+                if (_sportType == SportTypeConstants.Basketball)
+                {
+                    return $"{CacheRef.GetSportName(_sportType)}_{ViewLang.VirtualRateDetails}";
+                }
+
                 return ViewLang.VirtualRateDetails;
             }
         }
 
         public override string SheetName
-        {
-            get
-            {
-                return ViewLang.VRSetting;
-            }
-        }
+            => ViewLang.VRSetting;
 
         public override string Title
-        {
-            get
-            {
-                return _isGlobalSetting ? ViewLang.VirtualRateSettingDetails + " - " + ViewLang.GlobalSetting : ViewLang.VirtualRateSettingDetails;
-            }
-        }
+            => _isGlobalSetting
+                ? ViewLang.VirtualRateSettingDetails + " - " + ViewLang.GlobalSetting
+                : ViewLang.VirtualRateSettingDetails;
 
         public override ExcelColumn[] ExcelColumns
         {
@@ -99,7 +100,7 @@
 
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(ViewLang.Product + ":", BodyTextStyle);
-            ExportExcel.RenderCurrentCell(ViewLang.ESports, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(CacheRef.GetSportName(_sportType), BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
@@ -252,9 +253,7 @@
         }
 
         private string GetRateText(decimal rate)
-        {
-            return ((rate + 100) * _report.ActualRate / 100).ToString("#,##0.0000");
-        }
+            => ((rate + 100) * _report.ActualRate / 100).ToString("#,##0.0000");
 
         private void RenderRate(
            VirtualRateDetailsByGroup rate,

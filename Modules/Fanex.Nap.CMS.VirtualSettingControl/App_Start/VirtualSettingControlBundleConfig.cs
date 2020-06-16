@@ -14,6 +14,13 @@
         public const string ESports_ManualUpdateVRAccountStyle = "~/bundles/virtual-setting-control/manual-update-vr-account-style";
         public const string ESports_ManualUpdateVRAccountScript = "~/bundles/virtual-setting-control/manual-update-vr-account-script";
 
+        public const string Basketball_VirtualRateDetailsScript = "~/bundles/virtual-setting-control/basketball-vr-details-script";
+        public const string Basketball_VirtualRateGlobalSettingsScript = "~/bundles/virtual-setting-control/basketball-vr-globalsettings-script";
+        public const string Basketball_VirtualRateLogsScript = "~/bundles/virtual-setting-control/basketball-vr-logs-script";
+        public const string Basketball_AutoSuspendLogsScript = "~/bundles/virtual-setting-control/basketball-auto-suspend-logs-script";
+        public const string Basketball_GlobalAutoSuspendThresholdLogsScript = "~/bundles/virtual-setting-control/basketball-global-autosuspend-threshold-logs-script";
+        public const string Basketball_GlobalAutoSuspendThresholdScript = "~/bundles/virtual-setting-control/basketball-global-autosuspend-threshold-script";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             RegisterVirtualSettingMonitorBundles(bundles);
@@ -25,6 +32,7 @@
             RegisterESports_GlobalAutoSuspendThresholdLog(bundles);
             RegisterESports_UploadVirtualRate(bundles);
             RegisterESports_ManualUpdateVRAccount(bundles);
+            RegisterBasketballVirtualRate(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -145,6 +153,39 @@
 
             bundles.Add(new ScriptBundle(ESports_ManualUpdateVRAccountScript)
                 .Include("~/Areas/VirtualSettingControl/Views/ManualUpdateVRAccount/Scripts/manualUpdate.js"));
+        }
+
+        private static void RegisterBasketballVirtualRate(BundleCollection bundles)
+        {
+            bundles.Add(new ScriptBundle(Basketball_VirtualRateDetailsScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateDetails.js"));
+
+            bundles.Add(new ScriptBundle(Basketball_VirtualRateGlobalSettingsScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/globalSettings.js"));
+
+            bundles.Add(new ScriptBundle(Basketball_VirtualRateLogsScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateLogGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateLogs.js"));
+
+            bundles.Add(new ScriptBundle(Basketball_AutoSuspendLogsScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateLogGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/autoSuspendLogs.js"));
+
+            bundles.Add(new ScriptBundle(Basketball_GlobalAutoSuspendThresholdLogsScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateLogGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/globalAutoSuspendThresholdLogs.js"));
+
+            bundles.Add(new ScriptBundle(Basketball_GlobalAutoSuspendThresholdScript)
+                .Include(
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateGridEvents.js",
+                "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/globalAutoSuspendThreshold.js"));
         }
     }
 }

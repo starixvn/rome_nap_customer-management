@@ -1,0 +1,81 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@model VirtualRateDetailsReport
+<div class="grid-title">
+    <div class="grid-title-label">@ViewLang.VirtualRateDetails - @Model.Username <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span></div>
+    <div class="grid-toolbox">
+        @Html.ActionLink(ViewLang.ViewRealValues, "ViewRealValues", new { custid = Model.CustId }, new { id = "lnk-view-real-values", @class = "lnk-view-real-values", area = "VirtualSettingControl" })
+        @Html.ActionLink(" ", "BetTypeVirtualRateMapping", null, new { @class = "note-info-message", target = "_blank", area = "VirtualSettingControl" })
+        <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export" />
+    </div>
+</div>
+<table id="tbl-report" class="tbl-report">
+    <thead>
+        <tr>
+            <th class="col-group">
+                <button type="button" id="btn-view-compact-mode" class="submit btn-view-compact-mode">@ViewLang.ViewCompactMode</button>
+                <button type="button" id="btn-view-full-mode" class="submit btn-view-full-mode display-none">@ViewLang.ViewFullMode</button>
+                <span class="ico-collapse"></span>
+            </th>
+            <th class="col-nonlive">@ViewLang.NonLive</th>
+            <th class="col-live">@ViewLang.Live</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sport in Model.Sports)
+        {
+            var hasGames = sport.Childs.Any();
+            <tr data-level="@sport.GroupLevel" data-levelid="@sport.LevelId" data-sportid="@sport.GroupId">
+                <td data-col="groupname">@sport.GroupName</td>
+                <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.NonLiveValue, sport.HasRepetition, sport.GroupName, hasGames, ViewLang.FollowUpline, Model.ActualRate)</td>
+                <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.LiveValue, sport.HasRepetition, sport.GroupName, hasGames, ViewLang.FollowUpline, Model.ActualRate)</td>
+            </tr>
+
+            foreach (var game in sport.Childs)
+            {
+                var hasBetTypeGroups = game.Childs.Any();
+                <tr data-level="@game.GroupLevel" data-levelid="@game.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId">
+                    <td data-col="groupname"><span class="group-toggle group-expand">[−]</span>@game.GroupName</td>
+                    <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.NonLiveValue, game.HasRepetition, game.GroupName, hasBetTypeGroups, ViewLang.FollowParent, Model.ActualRate)</td>
+                    <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.LiveValue, game.HasRepetition, game.GroupName, hasBetTypeGroups, ViewLang.FollowParent, Model.ActualRate)</td>
+                </tr>
+
+                foreach (var betTypeGroup in game.Childs)
+                {
+                    var hasBetTypes = betTypeGroup.Childs.Any();
+                    <tr data-level="@betTypeGroup.GroupLevel" data-levelid="@betTypeGroup.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId" data-bettypegroupid="@betTypeGroup.GroupId">
+                        <td data-col="groupname">
+                            @if (hasBetTypes)
+                            {
+                                <span class="group-toggle group-collapse">[+]</span>
+                            }
+                            else
+                            {
+                                <span class="margin-right"></span>
+                            }
+
+                            @betTypeGroup.GroupName
+                        </td>
+                        <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.NonLiveValue, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes, ViewLang.FollowParent, Model.ActualRate)</td>
+                        <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.LiveValue, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes, ViewLang.FollowParent, Model.ActualRate)</td>
+                    </tr>
+
+                    if (hasBetTypes)
+                    {
+                        foreach (var betType in betTypeGroup.Childs)
+                        {
+                            <tr data-level="@betType.GroupLevel" data-levelid="@betType.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId" data-bettypegroupid="@betTypeGroup.GroupId" data-bettypeid="@betType.GroupId" class="display-none">
+                                <td data-col="groupname">@betType.GroupName</td>
+                                <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.NonLiveValue, betType.HasRepetition, betType.GroupName, false, ViewLang.FollowParent, Model.ActualRate)</td>
+                                <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.LiveValue, betType.HasRepetition, betType.GroupName, false, ViewLang.FollowParent, Model.ActualRate)</td>
+                            </tr>
+                        }
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<input type="hidden" id="txt-custId" value="@Model.CustId" />
+<input type="hidden" id="txt-custname" value="@Model.Username" />
+<input type="hidden" id="txt-report-level" value="@Model.ReportLevel" />

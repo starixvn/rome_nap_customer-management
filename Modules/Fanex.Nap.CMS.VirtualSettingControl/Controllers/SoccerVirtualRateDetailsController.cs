@@ -5,6 +5,7 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails;
@@ -142,7 +143,7 @@
         public void ExportRealValues(ViewRealValuesCriteria criteria)
         {
             var report = _virtualRateDetailsService.ViewRealValues(criteria);
-            var exporter = new VirtualRateRealValuesExporter(report);
+            var exporter = new VirtualRateRealValuesExporter(report, SportTypeConstants.Soccer);
             exporter.ResponseStream();
         }
 

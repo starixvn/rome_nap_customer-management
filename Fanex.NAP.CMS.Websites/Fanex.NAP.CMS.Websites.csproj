@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
     <Use64BitIISExpress />
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -492,6 +494,13 @@
     <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\HouseTurnoverPopup.js" />
     <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\TurnoverMonitorManager.js" />
     <Content Include="Areas\TurnoverControl\Styles\Images\_100.png" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\autoSuspendLogs.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\globalAutoSuspendThreshold.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\globalAutoSuspendThresholdLogs.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\globalSettings.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateGridEvents.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateDetails.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogGridEvents.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard-chart.js" />
     <Content Include="Areas\VirtualSettingControl\Views\CustomerDashboard\Script\dashboard.js" />
     <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Scripts\manualUpdate.js" />
@@ -994,6 +1003,20 @@
     <Content Include="App_Data\ExcelTemplates\E-Sports-UploadVirtualRateTemplate.xlsx" />
     <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Index.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Styles\manualUpdate.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\VirtualRateDetails.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_SMAVirtualRateDetails.cshtml" />
+    <Content Include="App_Code\VRHtmlHelpers.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_MemberVirtualRateDetails.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\BetTypeVirtualRateMapping.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_ViewRealValues.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\GlobalSettings.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\VirtualRateLogs.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_VirtualRateLogs.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\AutoSuspendLogs.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_AutoSuspendLogsReport.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\GlobalAutoSuspendThresholdLogs.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_GlobalAutoSuspendThresholdLogsReport.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\GlobalAutoSuspendThreshold.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1017,12 +1040,18 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">

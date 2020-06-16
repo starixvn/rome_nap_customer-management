@@ -1,0 +1,88 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@model AutoSuspendLogReport
+<div class="content-grid">
+    <div class="grid-title">
+        <div class="grid-title-label">@ViewLang.AutoSuspendLog - @Model.Username - @ViewLang.From @Model.FromDateText @ViewLang.To @Model.ToDateText</div>
+    </div>
+    <table id="tbl-report" class="tbl-auto-suspend-log">
+        <thead>
+            <tr>
+                <th class="col-group">
+                    @ViewLang.BetType
+                    <span id="ico-collapse" class="ico-collapse"></span>
+                </th>
+                <th class="col-nonlive">@ViewLang.NonLive</th>
+                <th class="col-live">@ViewLang.Live</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Logs.Any())
+            {
+                <tr>
+                    <td colspan="3" align="center">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var log in Model.Logs)
+                {
+                    <tr data-level="0" data-log-id="@log.LogId">
+                        <td colspan="3">
+                            <span class="group-toggle group-expand">[−]</span>@log.UpdatedDateText - @ViewLang.Update @log.Username - @ViewLang.By @log.Editor
+                        </td>
+                    </tr>
+
+                    foreach (var betType in log.Sports)
+                    {
+                        <tr data-level="1" data-log-id="@log.LogId">
+                            <td>
+                                @betType.SportName
+
+                                @if (!string.IsNullOrWhiteSpace(betType.LeagueGroupName))
+                                {
+                                    @:  >  @betType.LeagueGroupName
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(betType.BetTypeGroupName))
+                                {
+                                    @:  >  @betType.BetTypeGroupName
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(betType.BetTypeName))
+                                {
+                                    @:  >  @betType.BetTypeName
+                                }
+                            </td>
+                            @renderStatus(betType.NewNonliveAutoSuspend, betType.NonliveAutoSuspend)
+                            @renderStatus(betType.NewLiveAutoSuspend, betType.LiveAutoSuspend)
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@helper renderStatus(bool newStatus, bool oldStatus)
+{
+    var text = getStatusText(oldStatus);
+    var newText = getStatusText(newStatus);
+
+    if (newText.Equals(text, StringComparison.OrdinalIgnoreCase))
+    {
+        <td class="align-center">@newText</td>
+    }
+    else
+    {
+        <td class="has-changes align-center">
+            <div class="new-value">@newText</div>
+            <div class="old-value">@text</div>
+        </td>
+    }
+}
+@functions {
+    string getStatusText(bool status)
+    {
+        return status ? ViewLang.Yes : ViewLang.No;
+    }
+}

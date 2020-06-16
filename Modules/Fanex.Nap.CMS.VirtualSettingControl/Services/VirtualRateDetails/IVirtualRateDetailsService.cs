@@ -22,10 +22,12 @@
 
         AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria);
 
-        GlobalAutoSuspendThreshold GetGlobalAutoSuspendThreshold();
+        GlobalAutoSuspendThreshold GetGlobalAutoSuspendThreshold(int sportType);
 
-        Result UpdateGlobalAutoSuspendThreshold(VirtualRateThresholdByGroup[] sports, int userId, string ip);
+        Result UpdateGlobalAutoSuspendThreshold(int sportType, VirtualRateThresholdByGroup[] sports, int userId, string ip);
 
         IEnumerable<GlobalAutoSuspendThresholdLog> GetGlobalAutoSuspendThresholdLogs(int sportType, DateTime fromDate, DateTime toDate);
+
+        IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(int sportType);
     }
 }

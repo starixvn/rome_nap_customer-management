@@ -97,6 +97,13 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ESports_GlobalAutoSuspendThreshold = "E_Sports_GlobalAutoSuspendThreshold";
         public const string ESports_ManuallyUpdatedVirtualRateAccounts = "E_Sports_ManuallyUpdatedVirtualRateAccounts";
         public const string ESports_UploadVirtualRate = "E_Sports_UploadVirtualRate";
+        public const string Basketball_VirtualRateDetails = "Basketball_VirtualRateDetails";
+        public const string Basketball_VirtualRateDetails_GlobalSetting = "Basketball_VirtualRateDetails_GlobalSetting";
+        public const string Basketball_VirtualRateLog = "Basketball_VirtualRateLog";
+        public const string Basketball_AutoSuspendLog = "Basketball_AutoSuspendLog";
+        public const string Basketball_GlobalAutoSuspendThreshold = "Basketball_GlobalAutoSuspendThreshold";
+        public const string Basketball_ManuallyUpdatedVRAccounts = "Basketball_ManuallyUpdatedVRAccounts";
+        public const string Basketball_UploadVirtualRate = "Basketball_UploadVirtualRate";
 
         public const string ManageRobots2 = "ManageRobots2";
         public const string BetRestriction = "BetRestriction";

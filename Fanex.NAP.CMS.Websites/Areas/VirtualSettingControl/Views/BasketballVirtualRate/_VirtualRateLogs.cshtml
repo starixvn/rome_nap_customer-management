@@ -1,0 +1,103 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@model VirtualRateLogReport
+<div class="content-grid">
+    <div class="grid-title">
+        <div class="grid-title-label">@ViewLang.VirtualRateLog - @Model.Username - @ViewLang.From @Model.FromDateText @ViewLang.To @Model.ToDateText</div>
+    </div>
+    <table id="tbl-report" class="tbl-report">
+        <thead>
+            <tr>
+                <th class="col-group">
+                    <span id="ico-collapse" class="ico-expand"></span>
+                </th>
+                <th class="col-nonlive">@ViewLang.NonLive</th>
+                <th class="col-live">@ViewLang.Live</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Logs.Any())
+            {
+                <tr>
+                    <td colspan="3" align="center">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var log in Model.Logs)
+                {
+                    <tr data-level="0" data-log-id="@log.LogId">
+                        <td colspan="3">
+                            <span class="group-toggle group-collapse">[+]</span>@log.UpdatedDateText - @ViewLang.Update @log.Username - @ViewLang.By @log.Editor
+                            @if (log.ExchangeRate != -1)
+                            {
+                                <span class="lbl-exchange-rate">@ViewLang.ExchangeRate: @log.ExchangeRateText</span>
+                            }
+                        </td>
+                    </tr>
+
+                    foreach (var sport in log.Sports)
+                    {
+                        <tr data-level="@sport.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" class="display-none">
+                            <td><span class="group-toggle group-expand">[−]</span>@sport.GroupName</td>
+                            @renderLogRate(sport.NewNonliveLog, sport.NonliveLog)
+                            @renderLogRate(sport.NewLiveLog, sport.LiveLog)
+                        </tr>
+
+                        foreach (var league in sport.Childs)
+                        {
+                            <tr data-level="@league.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" class="display-none">
+                                <td><span class="group-toggle group-expand">[−]</span>@league.GroupName</td>
+                                @renderLogRate(league.NewNonliveLog, league.NonliveLog)
+                                @renderLogRate(league.NewLiveLog, league.LiveLog)
+                            </tr>
+
+                            foreach (var betTypeGroup in league.Childs)
+                            {
+                                <tr data-level="@betTypeGroup.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" data-bet-type-group-id="@betTypeGroup.GroupId" class="display-none">
+                                    <td>
+                                        @if (betTypeGroup.Childs.Count() > 0)
+                                        {
+                                            <span class="group-toggle group-expand">[−]</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="large-margin-right"></span>
+                                        }
+
+                                        @betTypeGroup.GroupName
+                                    </td>
+                                    @renderLogRate(betTypeGroup.NewNonliveLog, betTypeGroup.NonliveLog)
+                                    @renderLogRate(betTypeGroup.NewLiveLog, betTypeGroup.LiveLog)
+                                </tr>
+
+                                foreach (var betType in betTypeGroup.Childs)
+                                {
+                                    <tr data-level="@betType.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" data-bet-type-group-id="@betTypeGroup.GroupId" class="display-none">
+                                        <td>@betType.GroupName</td>
+                                        @renderLogRate(betType.NewNonliveLog, betType.NonliveLog)
+                                        @renderLogRate(betType.NewLiveLog, betType.LiveLog)
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@helper renderLogRate(string newRate, string oldRate)
+{
+    if (newRate.Equals(oldRate, StringComparison.OrdinalIgnoreCase))
+    {
+        <td>@newRate</td>
+    }
+    else
+    {
+        <td class="has-changes">
+            <div class="new-value">@newRate</div>
+            <div class="old-value">@oldRate</div>
+        </td>
+    }
+}

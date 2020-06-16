@@ -9,6 +9,7 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Extensions;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
@@ -76,7 +77,7 @@
                         };
 
                         dto.SportName = CacheRef.GetSportName(dto.SportType);
-                        dto.BetTypeName = CacheRef.GetBetType(dto.BetTypeId);
+                        dto.BetTypeName = GetBetTypeName(dto.SportType, dto.BetTypeId);
                         virtualRateDTOs.Add(dto);
                     }
                 }
@@ -434,10 +435,11 @@
             };
 
             dto.SportName = CacheRef.GetSportName(dto.SportType);
-            dto.BetTypeName = CacheRef.GetBetType(dto.BetTypeId);
+            dto.BetTypeName = GetBetTypeName(dto.SportType, dto.BetTypeId);
 
             dto.NonliveLog = GetValueFollowingLog(reader, "NonLive");
             dto.LiveLog = GetValueFollowingLog(reader, "Live");
+
             return dto;
         }
 
@@ -630,7 +632,7 @@
                 BetTypeGroupId = Converter.ToInt(reader["BetTypeGroupId"], -1),
                 BetTypeGroupName = Converter.ToString2(reader["BetTypeGroup"]),
                 BetTypeId = betTypeId,
-                BetTypeName = betTypeId == -1 ? string.Empty : CacheRef.GetBetType(betTypeId),
+                BetTypeName = GetBetTypeName(sportType, betTypeId),
                 Level = Converter.ToInt(reader[LevelId]),
                 LiveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdLive"], -1),
                 NonliveAutoSuspendThreshold = Converter.ToDecimal(reader["VRAutoSuspendThresholdNonLive"], -1)
@@ -679,13 +681,60 @@
                 Converter.ToInt(reader["vrbettypegroupid"]),
                 Converter.ToString2(reader["bettypegroup"]),
                 betType,
-                betType == -1 ? string.Empty : CacheRef.GetBetType(betType),
+                GetBetTypeName(sportType, betType),
                 Converter.ToDecimal(reader["vrautosuspendthresholdlive_new"]),
                 Converter.ToDecimal(reader["vrautosuspendthresholdnonlive_new"]),
                 Converter.ToDecimal(reader["vrautosuspendthresholdlive_old"]),
                 Converter.ToDecimal(reader["vrautosuspendthresholdnonlive_old"]),
                 Converter.ToBool(reader["isnew"]),
                 Converter.ToString2(reader["updatedby"]));
+        }
+
+        public IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return GetBetTypeVirtualRateMapping(reader);
+                    }
+                }
+            }
+        }
+
+        private static BetTypeVirtualRateMapping GetBetTypeVirtualRateMapping(IDataReader reader)
+        {
+            var dto = new BetTypeVirtualRateMapping
+            {
+                LeagueGroup = reader["leaguegroup"].ToString(),
+                BetType = Convert.ToInt32(reader["bettype"]),
+                VRSetting = reader["vrsetting"].ToString(),
+                Level = reader["level"].ToString(),
+                LeagueGroupOrder = Convert.ToInt32(reader["leaguegrouporder"])
+            };
+
+            dto.BetTypeName = CacheRef.GetBetType(dto.BetType);
+
+            if (dto.LeagueGroupOrder == 1)
+            {
+                dto.VRSetting = CacheRef.GetVRBetTypeName(SportTypeConstants.Basketball, int.Parse(dto.VRSetting));
+            }
+
+            return dto;
+        }
+
+        private static string GetBetTypeName(int sportType, int betTypeId)
+        {
+            if (betTypeId == -1)
+            {
+                return string.Empty;
+            }
+
+            return sportType == SportTypeConstants.Basketball
+                ? CacheRef.GetVRBetTypeName(sportType, betTypeId)
+                : CacheRef.GetBetType(betTypeId);
         }
     }
 }

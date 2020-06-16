@@ -48,14 +48,14 @@
         public AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria)
             => _autoSuspendRepository.GetAutoSuspendLogs(criteria);
 
-        public GlobalAutoSuspendThreshold GetGlobalAutoSuspendThreshold()
+        public GlobalAutoSuspendThreshold GetGlobalAutoSuspendThreshold(int sportType)
         {
             var ranges = _repository.GetVirtualRateRanges();
             var minRange = ranges.Min(r => r.Value);
             var maxRange = ranges.Max(r => r.Value);
 
             var virtualRateDTOs = _repository
-                .GetVirtualRateDetails(new GetAutoSuspendThresholdCriteria())
+                .GetVirtualRateDetails(new GetAutoSuspendThresholdCriteria(sportType))
                 .ToList();
 
             return new GlobalAutoSuspendThreshold(ranges, GetSports(virtualRateDTOs, minRange, maxRange));
@@ -143,13 +143,13 @@
             }
         }
 
-        public Result UpdateGlobalAutoSuspendThreshold(VirtualRateThresholdByGroup[] sports, int userId, string ip)
+        public Result UpdateGlobalAutoSuspendThreshold(int sportType, VirtualRateThresholdByGroup[] sports, int userId, string ip)
         {
             Result result = null;
 
             if (sports?.Length > 0)
             {
-                result = _repository.ExecuteNonQuery(new UpdateAutoSuspendThresholdCriteria(sports, userId, ip));
+                result = _repository.ExecuteNonQuery(new UpdateAutoSuspendThresholdCriteria(sportType, sports, userId, ip));
 
                 if (result.IsSuccess)
                 {
@@ -222,5 +222,8 @@
                 yield return new GlobalAutoSuspendThresholdLogByGroup(betType, Level4, betType.BetType, betType.BetTypeName, null);
             }
         }
+
+        public IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(int sportType)
+            => _repository.GetBetTypeVirtualRateMapping(new GetBetTypeVirtualRateMappingCriteria(sportType));
     }
 }

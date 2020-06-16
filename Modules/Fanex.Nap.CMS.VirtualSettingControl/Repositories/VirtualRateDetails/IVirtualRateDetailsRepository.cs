@@ -27,5 +27,7 @@
         Result ExecuteNonQuery(ICriteria criteria);
 
         IEnumerable<GlobalAutoSuspendThresholdLogDTO> GetGlobalAutoSuspendThresholdLogs(ICriteria criteria);
+
+        IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(ICriteria criteria);
     }
 }

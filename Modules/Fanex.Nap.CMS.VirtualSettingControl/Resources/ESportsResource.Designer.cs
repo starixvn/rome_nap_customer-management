@@ -142,29 +142,11 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-Sports - Manually Updated Virtual Rate Accounts.
-        /// </summary>
-        public static string ESports_ManuallyUpdatedVRAccounts {
-            get {
-                return ResourceManager.GetString("ESports_ManuallyUpdatedVRAccounts", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to E-Sports Upload Virtual Rate.
         /// </summary>
         public static string ESports_UploadVirtualRate {
             get {
                 return ResourceManager.GetString("ESports_UploadVirtualRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to E-Sports - Manual VR Accounts.
-        /// </summary>
-        public static string ESportsManualVRAccountsExcelFileName {
-            get {
-                return ResourceManager.GetString("ESportsManualVRAccountsExcelFileName", resourceCulture);
             }
         }
         
@@ -241,6 +223,24 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manually Updated Virtual Rate Accounts.
+        /// </summary>
+        public static string ManuallyUpdatedVRAccounts {
+            get {
+                return ResourceManager.GetString("ManuallyUpdatedVRAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual VR Accounts.
+        /// </summary>
+        public static string ManualVRAccountsExcelFileName {
+            get {
+                return ResourceManager.GetString("ManualVRAccountsExcelFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max.
         /// </summary>
         public static string Max {
@@ -295,7 +295,7 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the E-Sports - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?.
+        ///   Looks up a localized string similar to &lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the {0} - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?.
         /// </summary>
         public static string UnmarkManualUpdateAccountConfirmMessage {
             get {

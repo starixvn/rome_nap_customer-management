@@ -11,6 +11,8 @@ namespace Fanex.NAP.CMS.Websites
 {
     using System;
     using System.Configuration;
+    using System.Net;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
@@ -52,6 +54,17 @@ namespace Fanex.NAP.CMS.Websites
         protected void Application_Error(object sender, EventArgs e)
         {
             ExceptionHandler.Handle(Server.GetLastError());
+        }
+
+        protected void Application_EndRequest()
+        {
+            var context = new HttpContextWrapper(Context);
+            // If we're an ajax request, and doing a 302, then we actually need to do a 403
+            if (Context.Response.StatusCode == (int)HttpStatusCode.Redirect && context.Request.IsAjaxRequest())
+            {
+                Context.Response.Clear();
+                Context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            }
         }
     }
 }

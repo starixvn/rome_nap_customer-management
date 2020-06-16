@@ -6,6 +6,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.NAP.CMS.Core.Resources;
     using NPOI.HSSF.Util;
@@ -14,6 +15,7 @@
     public sealed class VirtualRateRealValuesExporter : BaseExcelExporter, IExcelExporter
     {
         private readonly VirtualRateRealValues _report;
+        private readonly int _sportType;
         private IFont _font { get; set; }
         private ICellStyle HeaderTextStyle { get; set; }
         private ICellStyle SportTextStyle { get; set; }
@@ -22,9 +24,10 @@
         private ICellStyle BetTypeTextStyle { get; set; }
         private ICellStyle BodyTextStyle { get; set; }
 
-        public VirtualRateRealValuesExporter(VirtualRateRealValues report)
+        public VirtualRateRealValuesExporter(VirtualRateRealValues report, int sportType)
         {
             _report = report;
+            _sportType = sportType;
             InitStyles();
         }
 
@@ -56,7 +59,7 @@
 
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(ViewLang.Product + ":", BodyTextStyle);
-            ExportExcel.RenderCurrentCell(ViewLang.ESports, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(CacheRef.GetSportName(_sportType), BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.CurrentRow++;

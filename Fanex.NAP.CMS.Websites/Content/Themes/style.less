@@ -400,7 +400,7 @@ header {
         margin-left: 142px;
         font-size: 12px;
         position: absolute;
-        text-transform:uppercase;
+        text-transform: uppercase;
     }
 
 
@@ -492,6 +492,50 @@ header {
                         &:last-child {
                             border: none;
                         }
+
+                        &.has-subkids {
+                            position: relative;
+
+                            > a:after {
+                                content: '\276F';
+                                color: @sub_menu_text;
+                                position: absolute;
+                                right: 8px;
+                            }
+
+                            > ul {
+                                position: absolute;
+                                left: 100%;
+                                top: -5px;
+                                visibility: hidden;
+                                opacity: 0;
+                                border: solid 1px @menu_border;
+                                max-width: 330px;
+
+                                a {
+                                    background-color: @sub_menu_bg;
+                                    color: @sub_menu_text;
+                                    text-align: left;
+                                }
+                            }
+
+                            &:hover {
+                                > a:after {
+                                    color: #fff;
+                                }
+
+                                > ul {
+                                    visibility: visible;
+                                    opacity: 1;
+
+                                    li a:hover {
+                                        text-decoration: none;
+                                        background-color: @menu_border;
+                                        color: @sub_menu_text_o;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -527,6 +571,23 @@ header {
 
                 ul {
                     right: 0px;
+
+                    > li > a {
+                        text-align: right;
+                    }
+
+                    .has-subkids {
+                        > a:after {
+                            left: 8px;
+                            right: unset;
+                            content: '\276E';
+                        }
+
+                        > ul {
+                            right: 100%;
+                            left: unset;
+                        }
+                    }
                 }
             }
 
@@ -535,6 +596,41 @@ header {
 
                 > a {
                     cursor: default;
+                }
+            }
+
+            @media screen and (max-width: 1080px) {
+                > li ul li.has-subkids > ul {
+                    max-width: 340px;
+
+                    a {
+                        text-align: left;
+                    }
+                }
+
+                > li:nth-last-child(2) {
+                    border-right: 0 none;
+
+                    ul {
+                        right: 0px;
+
+                        > li > a {
+                            text-align: right;
+                        }
+
+                        .has-subkids {
+                            > a:after {
+                                left: 8px;
+                                right: unset;
+                                content: '\276E';
+                            }
+
+                            > ul {
+                                right: 100%;
+                                left: unset;
+                            }
+                        }
+                    }
                 }
             }
         }

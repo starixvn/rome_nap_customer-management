@@ -50,7 +50,15 @@ Fanex.CMS.BetLimitTypeControl = function () {
 
     function onProductChange() {
         var productId = parseInt($('#selectProduct').val());
-        var sportTypes = productId === 0 ? filterData.SportTypes : filterAndDistinctSportTypes([productId]);
+        var productIds = [];
+        if (productId === 0) {
+            for (var product of filterData.Products) {
+                productIds.push(product.ProductId);
+            }
+        } else {
+            productIds.push(productId);
+        }
+        var sportTypes = filterAndDistinctSportTypes(productIds);
         sportTypes = [{ SportTypeId: 0, SportTypeName: 'All' }].concat(sportTypes);
         $('#selectSportType')
             .html(generateOptionsHtml(sportTypes, 'SportTypeId', 'SportTypeName'))
@@ -60,8 +68,28 @@ Fanex.CMS.BetLimitTypeControl = function () {
 
     function onSportTypeChange() {
         var productId = parseInt($('#selectProduct').val());
+        var productIds = [];
+        if (productId === 0) {
+            for (var product of filterData.Products) {
+                productIds.push(product.ProductId);
+            }
+        } else {
+            productIds.push(productId);
+        }
+
         var sportTypeId = parseInt($('#selectSportType').val());
-        var betTypes = sportTypeId === 0 ? filterData.BetTypes : filterAndDistinctBetTypes([productId], [sportTypeId]);
+        var sportTypeIds = [];
+        if (sportTypeId === 0) {
+            for (var sportType of filterData.SportTypes) {
+                if (productId === 0 || sportType.ProductId === productId) {
+                    sportTypeIds.push(sportType.SportTypeId);
+                }
+            }
+        } else {
+            sportTypeIds.push(sportTypeId);
+        }
+
+        var betTypes = filterAndDistinctBetTypes(productIds, sportTypeIds);
         betTypes = [{ BetTypeId: 0, BetTypeName: 'All' }].concat(betTypes);
         $('#selectBetType')
             .html(generateOptionsHtml(betTypes, 'BetTypeId', 'BetTypeName', function (row) {

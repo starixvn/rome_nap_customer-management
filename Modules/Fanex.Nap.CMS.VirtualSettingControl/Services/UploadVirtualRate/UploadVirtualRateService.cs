@@ -8,6 +8,7 @@
     using Configurations;
     using Criteria.UploadVirtualRate;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Infrastructure.Models;
     using Infrastructure.Web;
     using Models.UploadVirtualRate;
@@ -19,25 +20,32 @@
     using Repositories.VirtualRateDetails;
     using Resources;
 
-    public class ESportsUploadService : IESportsUploadService
+    public class UploadVirtualRateService : IUploadVirtualRateService
     {
         private const int OneHundred = 100;
         private const int UpdateBatchSize = 150;
-        private const int ESportsSportType = 43;
         private const string XMLFormat = "<R UN=\"{0}\" Cell=\"{1}\" Mul=\"{2}\" LId=\"{3}\" BTGId=\"{4}\" BTId=\"{5}\" Live=\"{6}\"/>";
-        private const string UploadSessionKey = "Fanex.Nap.CMS.VirtualSettingControl.Services.UploadVirtualRate.ESportsUploadService";
-
-        private static readonly ESportVirtualRateBetTypeCollection betTypes = ESportsVirtualRateSection.Instance.BetTypes;
+        private const string SessionIdSessionKey = "Fanex.Nap.CMS.VirtualSettingControl.Services.UploadVirtualRate.UploadVirtualRateService.SessionId_{0}";
 
         private readonly IUploadVirtualRateRepository uploadRepository;
         private readonly IVirtualRateDetailsRepository virtualRateDetailsRepository;
+        private readonly int sportType;
+        private readonly int limitAccount;
+        private readonly VirtualRateBetTypeCollection betTypes;
 
-        public ESportsUploadService(
+        public UploadVirtualRateService(
+            int sportType,
             IUploadVirtualRateRepository uploadRepository = null,
             IVirtualRateDetailsRepository virtualRateDetailsRepository = null)
         {
+            this.sportType = sportType;
             this.uploadRepository = uploadRepository ?? new UploadVirtualRateRepository();
             this.virtualRateDetailsRepository = virtualRateDetailsRepository ?? new VirtualRateDetailsRepository();
+
+            limitAccount = LimitAccountConstants.GetLimitAccount(sportType);
+            betTypes = sportType == SportTypeConstants.ESports
+                ? ESportsVirtualRateSection.Instance.BetTypes
+                : BasketballVirtualRateSection.Instance.BetTypes;
         }
 
         public ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension)
@@ -112,32 +120,31 @@
             ? null
             : workbook.GetSheetAt(0);
 
-        private static IEnumerable<ExcelErrorDTO> ValidateHeaderRow(IRow headerRow)
+        private IEnumerable<ExcelErrorDTO> ValidateHeaderRow(IRow headerRow)
         {
-            IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
-
-            if (headerRow == null || headerRow.Cells[0].ToString() != ESportsResource.Account)
+            if (headerRow == null)
             {
-                excelErrors.Add(new ExcelErrorDTO(ESportsResource.Error_NotExcelFile));
+                yield return new ExcelErrorDTO(ESportsResource.InvalidHeader);
             }
-            else
+
+            CellReference cellRef;
+            ICell cell = headerRow.Cells[0];
+
+            if (cell.ToString() != ESportsResource.Account)
             {
-                ICell cell;
-                CellReference cellRef;
+                yield return new ExcelErrorDTO("A1", null, cell?.ToString(), ESportsResource.InvalidHeader);
+            }
 
-                foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+            foreach (VirtualRateBetTypeElement betType in betTypes)
+            {
+                cellRef = new CellReference(betType.Cell);
+                cell = headerRow.GetCell(cellRef.Col);
+
+                if (cell?.ToString() != betType.Key)
                 {
-                    cellRef = new CellReference(betType.Cell);
-                    cell = headerRow.GetCell(cellRef.Col);
-
-                    if (cell?.ToString() != betType.Key)
-                    {
-                        excelErrors.Add(new ExcelErrorDTO(betType.Cell + "1", null, cell?.ToString(), ESportsResource.InvalidHeader));
-                    }
+                    yield return new ExcelErrorDTO(betType.Cell + "1", null, cell?.ToString(), ESportsResource.InvalidHeader);
                 }
             }
-
-            return excelErrors;
         }
 
         private IEnumerable<ExcelErrorDTO> ValidateBodyRows(ISheet sheet, ref int actualTotalRows)
@@ -156,6 +163,15 @@
                 if (row != null && row.Cells.Count > 0)
                 {
                     actualTotalRows++;
+
+                    if (actualTotalRows > limitAccount)
+                    {
+                        return new List<ExcelErrorDTO>
+                        {
+                            new ExcelErrorDTO(string.Format(ESportsResource.LimitAccountError, limitAccount.ToString("N0")))
+                        };
+                    }
+
                     ValidateBodyRows(row, excelErrors, rateRanges, accountsHash, i + 1);
                 }
             }
@@ -175,7 +191,7 @@
             var account = row.GetCell(cellRef.Col)?.ToString();
             ValidateAccount(account, excelErrors, accountsHash, cellRef, rowNumber);
 
-            foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+            foreach (VirtualRateBetTypeElement betType in betTypes)
             {
                 cellRef = new CellReference(betType.Cell);
                 multiplier = row.GetCell(cellRef.Col)?.ToString();
@@ -284,20 +300,20 @@
             }
 
             var excelErrorModel = uploadRepository.VerifyExcelTemplate(
-                new VerifyVirtualRateExcelTemplateCriteria(ESportsSportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>"));
+                new VerifyVirtualRateExcelTemplateCriteria(sportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>"));
             excelErrorModel.TotalRows = actualTotalRows;
 
             return excelErrorModel;
         }
 
-        private static string GetVirtualRateXML(IRow row, int rowNumber)
+        private string GetVirtualRateXML(IRow row, int rowNumber)
         {
             string multiplier;
             CellReference cellRef;
             var account = GetUsername(row);
             var xmlBuilder = new StringBuilder();
 
-            foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+            foreach (VirtualRateBetTypeElement betType in betTypes)
             {
                 cellRef = new CellReference(betType.Cell);
                 multiplier = row.GetCell(cellRef.Col)?.ToString();
@@ -317,7 +333,7 @@
         private static string GetExcelCell(CellReference cellRef, int rowNumber)
             => $"{cellRef.FormatAsString()}:{rowNumber}";
 
-        private static string GetVirtualRateXML(string account, string cell, decimal? multiplier, ESportVirtualRateBetTypeElement betType)
+        private static string GetVirtualRateXML(string account, string cell, decimal? multiplier, VirtualRateBetTypeElement betType)
             => string.Format("<R UN=\"{0}\" Cell=\"{1}\" Mul=\"{2}\" LId=\"{3}\" BTGId=\"{4}\" BTId=\"{5}\" Live=\"{6}\"/>",
                 account,
                 cell,
@@ -342,7 +358,7 @@
         public Result Update(int userId, string ip)
         {
             var result = uploadRepository.ExecuteNonQuery(
-                new UpdateVirtualRateExcelTemplateCriteria(ESportsSportType, GetSessionId(), userId, ip));
+                new UpdateVirtualRateExcelTemplateCriteria(sportType, GetSessionId(), userId, ip));
 
             if (result.IsSuccess)
             {
@@ -353,13 +369,16 @@
             return result;
         }
 
-        private static Guid GetSessionId()
-            => SessionManager.Get<Guid>(UploadSessionKey);
+        private Guid GetSessionId()
+            => SessionManager.Get<Guid>(GetSessionIdSessionKey());
 
-        private static void SetSessionId(Guid value)
-            => SessionManager.Set(UploadSessionKey, value);
+        private void SetSessionId(Guid value)
+            => SessionManager.Set(GetSessionIdSessionKey(), value);
 
-        private static void RemoveSessionId()
-            => SessionManager.Set(UploadSessionKey, null);
+        private void RemoveSessionId()
+            => SessionManager.Set(GetSessionIdSessionKey(), null);
+
+        private string GetSessionIdSessionKey()
+            => string.Format(SessionIdSessionKey, sportType);
     }
 }

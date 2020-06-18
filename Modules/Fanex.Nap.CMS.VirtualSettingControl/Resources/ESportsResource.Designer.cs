@@ -142,15 +142,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E-Sports Upload Virtual Rate.
-        /// </summary>
-        public static string ESports_UploadVirtualRate {
-            get {
-                return ResourceManager.GetString("ESports_UploadVirtualRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Excel Cell.
         /// </summary>
         public static string ExcelCell {
@@ -219,6 +210,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         public static string InvalidValue {
             get {
                 return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file contains more than {0} accounts..
+        /// </summary>
+        public static string LimitAccountError {
+            get {
+                return ResourceManager.GetString("LimitAccountError", resourceCulture);
             }
         }
         
@@ -336,6 +336,15 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         public static string UpdateVirtualRate {
             get {
                 return ResourceManager.GetString("UpdateVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Virtual Rate.
+        /// </summary>
+        public static string UploadVirtualRate {
+            get {
+                return ResourceManager.GetString("UploadVirtualRate", resourceCulture);
             }
         }
         

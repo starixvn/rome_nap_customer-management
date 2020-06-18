@@ -12,6 +12,7 @@
     var progressLabel = $("#progressLabel");
     var progressbarTimeId = null;
     var buttonUpdate = $("#btn-update");
+    var sportTypeId = $("#txt-sporttype").val();
 
     function validateUploadedFile(fileControl) {
         CMS.clearTipsyError(textboxFile);
@@ -51,6 +52,7 @@
 
         var formData = new FormData();
         formData.append("File", file);
+        formData.append("sportType", sportTypeId);
 
         var jqxhr = $.ajax({
             url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/VerifyByWeb"),
@@ -69,6 +71,11 @@
 
     function verifyByWebSuccessHandler(data, formData) {
         var JSONData = JSON.parse(data);
+
+        if (JSONData.Message) {
+            CMS.showErrorMessage(JSONData.Message);
+            return;
+        }
 
         if (JSONData.ExcelErrors.length) {
             renderGrid(JSONData.ExcelErrors, JSONData.Title);
@@ -100,8 +107,13 @@
 
     function verifyByDBSuccessHandler(data) {
         hideProgressBar();
-
         var JSONData = JSON.parse(data);
+
+        if (JSONData.Message) {
+            CMS.showErrorMessage(JSONData.Message);
+            return;
+        }
+
         renderGrid(JSONData.ExcelErrors, JSONData.Title);
         spanValidSetting.text(JSONData.ValidSetting + "/" + JSONData.TotalRows);
         buttonUpdate.prop("disabled", !JSONData.ValidSetting);
@@ -201,6 +213,7 @@
         var jqxhr = $.ajax({
             url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/Update"),
             type: "POST",
+            data: { sportType: sportTypeId },
             success: function (data) {
                 var JSONData = JSON.parse(data);
                 if (JSONData.Code === 0) {

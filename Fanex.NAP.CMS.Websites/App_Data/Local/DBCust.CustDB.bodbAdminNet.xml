@@ -38,7 +38,7 @@
     <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_uat1" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_ManualUpdAcc_Sel" SpName="Acc_VR_ManualUpdAcc_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_ManualUpdAcc_Remove" SpName="Acc_VR_ManualUpdAcc_Remove" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_VR_BettypeVirtualRateMapping_Sel" SpName="Acc_VR_BettypeVirtualRateMapping_Sel_uat1" DbName="DBCust.CustDB.bodbAdminNet" />

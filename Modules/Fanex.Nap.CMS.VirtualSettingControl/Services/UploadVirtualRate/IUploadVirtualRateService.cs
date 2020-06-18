@@ -4,7 +4,7 @@
     using Infrastructure.Models;
     using Models.UploadVirtualRate;
 
-    public interface IESportsUploadService
+    public interface IUploadVirtualRateService
     {
         ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension);
 

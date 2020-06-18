@@ -138,8 +138,8 @@
   <data name="ESports_GlobalAutoSuspendThreshold" xml:space="preserve">
     <value>E-Sports - Global Auto Suspend Threshold</value>
   </data>
-  <data name="ESports_UploadVirtualRate" xml:space="preserve">
-    <value>E-Sports Upload Virtual Rate</value>
+  <data name="UploadVirtualRate" xml:space="preserve">
+    <value>Upload Virtual Rate</value>
   </data>
   <data name="ExcelCell" xml:space="preserve">
     <value>Excel Cell</value>
@@ -221,5 +221,8 @@
   </data>
   <data name="DuplicatedUsernameError" xml:space="preserve">
     <value>Username is duplicated</value>
+  </data>
+  <data name="LimitAccountError" xml:space="preserve">
+    <value>The file contains more than {0} accounts.</value>
   </data>
 </root>

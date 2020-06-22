@@ -157,7 +157,9 @@
 
         protected override void ExportBody()
         {
+            var isShowAutoSuspendOnAllLevels = IsShowAutoSuspendOnAllLevels();
             var layerPadding = new List<string>();
+
             for (var i = 0; i < 4; i++)
             {
                 layerPadding.Add(string.Concat(Enumerable.Repeat(" ", i * 8)));
@@ -165,19 +167,19 @@
 
             foreach (var sport in _report.Sports)
             {
-                RenderRate(sport, SportTextStyle, SportDisabledTextStyle, ViewLang.FollowUpline, layerPadding[0]);
+                RenderRate(sport, SportTextStyle, SportDisabledTextStyle, ViewLang.FollowUpline, layerPadding[0], isShowAutoSuspendOnAllLevels);
 
                 foreach (var game in sport.Childs)
                 {
-                    RenderRate(game, GameTextStyle, GameDisabledTextStyle, ViewLang.FollowParent, layerPadding[1]);
+                    RenderRate(game, GameTextStyle, GameDisabledTextStyle, ViewLang.FollowParent, layerPadding[1], isShowAutoSuspendOnAllLevels);
 
                     foreach (var betTypeGroup in game.Childs)
                     {
-                        RenderRate(betTypeGroup, BetTypeGroupTextStyle, BetTypeGroupDisabledTextStyle, ViewLang.FollowParent, layerPadding[2]);
+                        RenderRate(betTypeGroup, BetTypeGroupTextStyle, BetTypeGroupDisabledTextStyle, ViewLang.FollowParent, layerPadding[2], isShowAutoSuspendOnAllLevels);
 
                         foreach (var betType in betTypeGroup.Childs)
                         {
-                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3], isBetType: true);
+                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3], true);
                         }
                     }
                 }
@@ -302,5 +304,7 @@
 
         private string AutoSuspendText(bool? autoSuspend)
             => autoSuspend == null ? string.Empty : autoSuspend.Value ? ViewLang.Yes : ViewLang.No;
+
+        private bool IsShowAutoSuspendOnAllLevels() => _sportType == SportTypeConstants.Basketball;
     }
 }

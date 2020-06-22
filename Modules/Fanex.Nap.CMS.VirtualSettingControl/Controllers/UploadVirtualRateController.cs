@@ -54,12 +54,16 @@
         }
 
         [HttpPost]
-        public ActionResult VerifyByDB(HttpPostedFileBase file, int sportType)
+        public ActionResult VerifyByDB(HttpPostedFileBase file, int sportType, int startRow)
         {
             if (HasHost(sportType))
             {
                 var service = GetUploadService(sportType);
-                var errors = service.VerifyByDB(file?.InputStream, Path.GetExtension(file?.FileName), CurrentSession.UserId);
+                var errors = service.VerifyByDB(
+                    file?.InputStream,
+                    Path.GetExtension(file?.FileName),
+                    CurrentSession.UserId,
+                    startRow);
 
                 return JsonData(errors, JsonRequestBehavior.DenyGet);
             }
@@ -84,6 +88,7 @@
         {
             ViewBag.SportTypeName = CacheRef.GetSportName(sportType);
             ViewBag.LimitAccount = LimitAccountConstants.GetLimitAccount(sportType);
+            ViewBag.UpdateBatchSize = UploadVirtualRateService.UpdateBatchSize;
 
             return View("~/Areas/VirtualSettingControl/Views/UploadVirtualRate/Index.cshtml", sportType);
         }

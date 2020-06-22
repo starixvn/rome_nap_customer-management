@@ -397,26 +397,32 @@ var virtualRateGridEvents = (function ($) {
         var level = row.data("level");
         var column = element.closest("td");
         var colName = column.data("col");
+        var sportId = row.data("sportid");
+        var gameId = row.data("gameid");
+        var betTypeGroupId = row.data("bettypegroupid");
 
         if (typeof threshold === "undefined") {
             threshold = parseInt(row.data(colName + "-threshold"));
         }
 
         if (typeof value === "undefined") {
-            value = parseInt(column.find(".ddl-rate").val());
+            var valueString = column.find(".ddl-rate").val();
+
+            if (level <= 1 || valueString !== followParentValue) {
+                value = parseInt(valueString);
+            } else {
+                value = getRateValueOfParent(level, colName, sportId, gameId, betTypeGroupId);
+            }
         }
 
         var showHideAutoSuspendControlFunc = value < threshold ? hideAutoSuspendControl : showAutoSuspendControl;
         showHideAutoSuspendControlFunc(row.find('.col-autosuspend[data-col="' + colName + '"]'))
 
         if (level < 4) {
-            var selector = 'tr[data-level="' + (level + 1) + '"][data-sportid="' + row.data("sportid") + '"]';
-            var gameId = row.data("gameid");
+            var selector = 'tr[data-level="' + (level + 1) + '"][data-sportid="' + sportId + '"]';
 
             if (gameId) {
                 selector += '[data-gameid="' + gameId + '"]';
-
-                var betTypeGroupId = row.data("bettypegroupid");
 
                 if (betTypeGroupId) {
                     selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
@@ -433,6 +439,28 @@ var virtualRateGridEvents = (function ($) {
                 }
             });
         }
+    }
+
+    function getRateValueOfParent(level, colName, sportId, gameId, betTypeGroupId) {
+        var parentLevel = level - 1;
+        var selector = 'tr[data-level="' + parentLevel + '"][data-sportid="' + sportId + '"]';
+
+        if (parentLevel >= 2) {
+            selector += '[data-gameid="' + gameId + '"]';
+        }
+
+        if (parentLevel >= 3) {
+            selector += '[data-bettypegroupid="' + betTypeGroupId + '"]';
+        }
+
+        selector += ' td[data-col="' + colName + '"] .ddl-rate';
+        var rateValueString = tableBody.find(selector).val();
+
+        if (parentLevel <= 1 || rateValueString !== followParentValue) {
+            return parseInt(rateValueString);
+        }
+
+        return getRateValueOfParent(parentLevel, colName, sportId, gameId, betTypeGroupId);
     }
 
     function hideAutoSuspendControl(colAutoSuspend) {

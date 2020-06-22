@@ -53,6 +53,15 @@
             disableAssociatedAccountsSection(!this.checked);
         });
 
+        txtAssociatedAccounts.blur(function () {
+            var accounts = $.trim(txtAssociatedAccounts.val());
+
+            if (accounts.length) {
+                accounts = accounts.replace(/\r\n/g, "\n").replace(/\n/g, ",");
+                txtAssociatedAccounts.val(accounts);
+            }
+        });
+
         btnSubmitAssociatedAccounts.click(function () {
             validateAssociatedAccounts(false);
         });

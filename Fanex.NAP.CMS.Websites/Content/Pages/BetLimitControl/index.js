@@ -76,16 +76,17 @@ Fanex.CMS.BetLimitControl = function () {
     }
 
     function Search() {
+        self.search.pageIndex = 1;
         var params = {
             levelId: self.search.levelId.val(),
             currency: self.search.currency.val(),
-            username: self.search.username.val(),
+            username: $.trim(self.search.username.val()),
             siteId: self.search.site.val(),
             betLimitTypeID: self.search.betLimitType.val(),
             pageIndex: self.search.pageIndex,
             pageSize: self.search.pageSize
-        }
-        self.searchWithParams(params)
+        };
+        self.searchWithParams(params);
     }
 
     this.searchWithParams = function (params) {
@@ -111,7 +112,16 @@ Fanex.CMS.BetLimitControl = function () {
     this.changePager = function (pageIndex, itemsPerPage) {
         self.search.pageSize = itemsPerPage;
         self.search.pageIndex = pageIndex + 1;
-        self.searchWithParams(self.search);
+        var params = {
+            levelId: self.search.levelId.val(),
+            currency: self.search.currency.val(),
+            username: $.trim(self.search.username.val()),
+            siteId: self.search.site.val(),
+            betLimitTypeID: self.search.betLimitType.val(),
+            pageIndex: self.search.pageIndex,
+            pageSize: self.search.pageSize
+        };
+        self.searchWithParams(params);
     };
 
     this.renderBetLimit = function (rs) {

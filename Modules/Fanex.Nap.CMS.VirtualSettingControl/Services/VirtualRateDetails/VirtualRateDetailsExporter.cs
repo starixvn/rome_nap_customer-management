@@ -277,7 +277,7 @@
             ExportExcel.RenderCurrentCell(paddingText + nonliveText, _report.EnableNonLive ? enabledStyle : disabledStyle);
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.NonliveAutoSuspend) : string.Empty;
+                var text = isBetType ? AutoSuspendText(rate.DisableNonliveAutoSuspend, rate.NonliveAutoSuspend) : string.Empty;
 
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableNonLive ? enabledStyle : disabledStyle);
@@ -290,7 +290,7 @@
 
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.LiveAutoSuspend) : string.Empty;
+                var text = isBetType ? AutoSuspendText(rate.DisableLiveAutoSuspend, rate.LiveAutoSuspend) : string.Empty;
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableLive ? enabledStyle : disabledStyle);
                 style.Alignment = HorizontalAlignment.Center;
@@ -302,8 +302,10 @@
             ExportExcel.ResetCurrentColumn();
         }
 
-        private string AutoSuspendText(bool? autoSuspend)
-            => autoSuspend == null ? string.Empty : autoSuspend.Value ? ViewLang.Yes : ViewLang.No;
+        private string AutoSuspendText(bool disabledAutoSuspend, bool autoSuspend)
+            => disabledAutoSuspend || !autoSuspend
+            ? ViewLang.No
+            : ViewLang.Yes;
 
         private bool IsShowAutoSuspendOnAllLevels() => _sportType == SportTypeConstants.Basketball;
     }

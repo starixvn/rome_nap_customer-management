@@ -57,6 +57,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
                         grp.Key.CustId,
                         grp.Key.Username,
                         grp.Key.Level,
+                        false,
                         grp.Key.Currency,
                         grp.Select(g => new MaxTurnoverItem(g.ProfileId, g.MaxTurnover)).ToList()));
 

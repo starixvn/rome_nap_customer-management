@@ -50,6 +50,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
                 Convert.ToInt32(reader["custid"]),
                 reader["username"].ToString(),
                 reader["level"].ToString(),
+                Convert.ToBoolean(reader["IsGlobalLockTOLimit"]),
                 reader["currency"].ToString(),
                 Convert.ToInt32(reader["profileid"]),
                 reader["profilename"].ToString(),

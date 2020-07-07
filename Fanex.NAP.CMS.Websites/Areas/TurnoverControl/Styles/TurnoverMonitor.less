@@ -44,7 +44,7 @@
 .content-box {
     float: left;
     margin-left: 10px;
-    width: 1900px;
+    width: 1930px;
 
     #refresh-container {
         float: right;
@@ -159,13 +159,17 @@
         width: 60px;
     }
 
+    .col-lock, .col-lock-body {
+        width: 60px;
+    }
+
     .col-currency, .col-currency-body {
-        width: 70px;
+        width: 60px;
     }
 
     .col-member-turnover, .col-member-turnover-body,
     .col-company-turnover, .col-company-turnover-body {
-        width: 110px;
+        width: 94px;
     }
 
     .col-span-max-turnover, .no-data-not-frozen {
@@ -174,7 +178,7 @@
     }
 
     .col-max-turnover, .col-max-turnover-body {
-        width: 240px;
+        width: 230px;
     }
 
     .col-max-turnover {
@@ -311,7 +315,7 @@
     font-size: 11px;
     text-align: right;
     vertical-align: middle;
-    width: 85px;
+    width: 75px;
     border-radius: 3px;
 }
 
@@ -367,4 +371,20 @@
         text-align: center;
         font-weight: bold;
     }
+}
+
+.icon(@position) {
+    background: url("Images/sprites.png") no-repeat @position;
+    height: 17px;
+    width: 17px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ico-lock {
+    .icon(-44px -48px);
+}
+
+.ico-unlock {
+    .icon(-62px -48px);
 }

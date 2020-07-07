@@ -10,7 +10,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
             string username,
             bool isGroupHeadline,
             IEnumerable<MaxTurnoverItem> maxTurnovers)
-            : this(0, username, isGroupHeadline ? "headline" : string.Empty, string.Empty, maxTurnovers)
+            : this(0, username, isGroupHeadline ? "headline" : string.Empty, false, string.Empty, maxTurnovers)
         {
         }
 
@@ -18,12 +18,14 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
             int custId,
             string username,
             string level,
+            bool isLock,
             string currency,
             IEnumerable<MaxTurnoverItem> maxTurnovers)
         {
             CustId = custId;
             Username = username;
             Level = level;
+            IsLock = isLock;
             Currency = currency;
             MaxTurnovers = maxTurnovers;
         }
@@ -33,6 +35,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
         public string Username { get; }
 
         public string Level { get; }
+
+        public bool IsLock { get; }
 
         public string Currency { get; }
 

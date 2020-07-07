@@ -162,6 +162,29 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
+        [HttpPost]
+        public JsonResult Lock(LockGlobalSettingViewModel viewModel)
+        {
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
+
+            if (!HasHostGlobalSetting(viewModel.SportType))
+            {
+                return Forbidden();
+            }
+
+            var param = new LockSettingParam(
+                viewModel.CustId,
+                viewModel.IsLock,
+                viewModel.IsGroupHeadline,
+                viewModel.SportType);
+            var result = globalSettingService.Lock(param, CurrentSession.UserId, CurrentContext.IP);
+
+            return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
         private bool HasReadGlobalSetting(short sporttype)
             => HasPermission(sporttype, Constant.Policy.Read);
 

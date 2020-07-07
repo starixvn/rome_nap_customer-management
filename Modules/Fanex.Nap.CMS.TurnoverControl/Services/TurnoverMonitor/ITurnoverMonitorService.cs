@@ -30,5 +30,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         Result UpdateMaxTurnover(UpdateMaxTurnoverParam param, int userId, string ip);
 
         Result UpdateMultipleMaxTurnover(IEnumerable<UpdateMaxTurnoverParam> param, int userId, string ip);
+
+        Result Lock(LockSettingParam param, int userId, string ip);
     }
 }

@@ -46,7 +46,7 @@ function EditMaxTurnover(table, resultMessageDiv, reloadGridFunction) {
             var text = $this.find("#link" + custId).text();
             var inputHtml = [
                 '<input type="text" class="clearable x-icon textbox-maxturnover" maxlength="16" value="',
-                text.substring(0, text.indexOf(".")),
+                text,
                 '" data-custid="',
                 custId,
                 '" data-username="',

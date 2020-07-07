@@ -450,4 +450,16 @@
   <data name="NL" xml:space="preserve">
     <value>NL</value>
   </data>
+  <data name="EventSettingLock" xml:space="preserve">
+    <value>Event Setting Lock</value>
+  </data>
+  <data name="GlobalSettingLock" xml:space="preserve">
+    <value>Global Setting Lock</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="Exposure" xml:space="preserve">
+    <value>Exposure</value>
+  </data>
 </root>

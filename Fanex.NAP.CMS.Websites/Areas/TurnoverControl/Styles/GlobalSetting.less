@@ -28,3 +28,19 @@
 .expand-form {
     width: 500px;
 }
+
+.icon(@position) {
+    background: url("Images/sprites.png") no-repeat @position;
+    height: 17px;
+    width: 17px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.ico-lock {
+    .icon(-44px -48px);
+}
+
+.ico-unlock {
+    .icon(-62px -48px);
+}

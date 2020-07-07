@@ -42,6 +42,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting
             => new GlobalSettingItem(
                 reader["username"].ToString(),
                 reader["level"].ToString(),
+                //Convert.ToBoolean(reader["islock"]),
+                false,
                 reader["currency"].ToString(),
                 Convert.ToInt32(reader["profileid"]),
                 reader["profilename"].ToString(),

@@ -160,6 +160,7 @@
     <Compile Include="Criteria\GlobalSetting\EditGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GetProfileCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\GlobalSettingListCriteria.cs" />
+    <Compile Include="Criteria\GlobalSetting\LockGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\ImportGlobalSetting\AddMultipleGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\ImportGlobalSetting\ValidateGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\NonQueryCriteria.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Criteria\TurnoverMonitor\GetMatchesCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetCustomerTurnoversCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetSportsCriteria.cs" />
+    <Compile Include="Criteria\TurnoverMonitor\LockEventSettingCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\UpdateMultipleMaxTurnoverCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\UpdateMaxTurnoverCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Models\ImportGlobalSetting\GlobalSettingExcel.cs" />
     <Compile Include="Models\ImportGlobalSetting\ImportGlobalSettingModel.cs" />
     <Compile Include="Models\ImportGlobalSetting\MaxTurnoverExcel.cs" />
+    <Compile Include="Models\LockSettingParam.cs" />
     <Compile Include="Models\TurnoverMonitor\BetTypeTurnover.cs" />
     <Compile Include="Models\TurnoverMonitor\TurnoverMonitorItem.cs" />
     <Compile Include="Models\TurnoverMonitor\LeagueTurnover.cs" />
@@ -212,9 +215,11 @@
     <Compile Include="ViewModels\GlobalSetting\EditGlobalSettingViewModel.cs" />
     <Compile Include="ViewModels\GlobalSetting\GetListGlobalSettingViewModel.cs" />
     <Compile Include="ViewModels\GlobalSetting\GlobalSettingViewModel.cs" />
+    <Compile Include="ViewModels\GlobalSetting\LockGlobalSettingViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\CustomerTurnoverViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\HouseTurnoverViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\LeagueViewModel.cs" />
+    <Compile Include="ViewModels\TurnoverMonitor\LockEventSettingViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\MatchViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\SportViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\UpdateMaxTurnoverViewModel.cs" />

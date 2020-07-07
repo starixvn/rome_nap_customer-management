@@ -61,6 +61,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
                 new ExcelColumn(Labels.Symbol_No, Width60),
                 new ExcelColumn(Labels.UserName, Width160),
                 new ExcelColumn(Labels.Level, Width80),
+                new ExcelColumn(Labels.Lock, Width80),
                 new ExcelColumn(Labels.Currency, Width80)
             }.Concat(profiles.Select(p => new ExcelColumn(p.Name, Width120))).ToArray();
 
@@ -82,6 +83,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
                     ExportExcel.RenderCurrentCell(++number, centerIntNumberStyle);
                     ExportExcel.RenderCurrentCell(item.Username, ExcelStyleTemplate.TextStyle);
                     ExportExcel.RenderCurrentCell(item.Level, centerTextStyle);
+                    ExportExcel.RenderCurrentCell(item.IsLock ? Labels.Lock : string.Empty, centerTextStyle);
                     ExportExcel.RenderCurrentCell(item.Currency, centerTextStyle);
 
                     foreach (var mto in item.MaxTurnovers)

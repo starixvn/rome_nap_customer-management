@@ -1034,6 +1034,9 @@
     <Content Include="Web.Configuration\BasketballVirtualRateSection.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Web.Configuration\BasketballVirtualRateSection.prod.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

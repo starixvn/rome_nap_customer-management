@@ -83,6 +83,8 @@
         if (JSONData.ExcelErrors.length) {
             renderGrid(JSONData.ExcelErrors, JSONData.Title);
             spanValidSetting.text("N/A");
+        } else if (!JSONData.TotalRows) {
+            renderEmptyGrid();
         } else {
             showProgressBar();
             buttonVerify.prop("disabled", true);
@@ -131,6 +133,15 @@
             buttonVerify.prop("disabled", false);
             buttonUpdate.prop("disabled", totalValidSettings === 0);
         }
+    }
+
+    function renderEmptyGrid() {
+        renderGrid([], "Data Error: 0");
+        spanValidSetting.text("0/0");
+
+        hideProgressBar();
+        buttonVerify.prop("disabled", false);
+        buttonUpdate.prop("disabled", true);
     }
 
     function renderGrid(data, title) {

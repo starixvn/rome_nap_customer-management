@@ -4,7 +4,9 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
         ddlPreventiveAction = null,
         spanPreventiveAction = null,
         ddlReason = null,
-        spanReason = null;
+        spanReason = null,
+        ddlTime = null,
+        spanTime = null;
 
     function initForm(usernames, level) {
         form.find("#txt-level").val(level);
@@ -17,6 +19,9 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
 
         ddlReason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
+
+        ddlTime = form.find("#ddl-time").combobox();
+        spanTime = form.find('span[id="ddl-time"]');
     }
 
     function bindEvents() {

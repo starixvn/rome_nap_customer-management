@@ -8,19 +8,43 @@
         <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
     </div>
     <div class="form-row">
-        <div class="lbl-field">
-            <label>@ProblemAccountCreditDepositResource.PreventiveAction<span class="text-red">*</span></label>
-        </div>
-        <div class="edit-field">
-            @Html.DropDownList("preventiveAction", Model.MarkNewPreventiveActions, new { id = "ddl-preventiveAction", @class = "combobox-autocomplete width-250" })
-        </div>
-    </div>
-    <div class="form-row">
-        <div class="lbl-field padding-top12">
+        <div class="lbl-field width-250 padding-top12">
             <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
         </div>
-        <div class="edit-field">
-            @Html.DropDownList("reason", Model.MarkNewReasons, new { id = "ddl-reason", @class = "combobox-autocomplete width-250" })
+        <div class="edit-field width-250">
+            @Html.DropDownList("reason", Model.MarkNewReasons, new { id = "ddl-reason", @class = "combobox-autocomplete width-180" })
+        </div>
+    </div>
+    <div class="form-row divUpdateReason">
+        <div class="column width-250">
+            <div class="lbl-field width-250 padding-top12">
+                <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
+            </div>
+            <div class="edit-field width-250">
+                @Html.DropDownList("preventiveAction", Model.MarkNewPreventiveActions, new { id = "ddl-preventiveAction", @class = "combobox-autocomplete width-180" })
+            </div>
+        </div>
+        <div class="column width-250">
+            <div class="lbl-field width-250 padding-top12">
+                <label>@ProblemAccountResource.Time</label>
+            </div>
+            <div class="edit-field width-250">
+                @Html.DropDownList("time", Model.MarkNewPreventiveActions, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
+            </div>
+        </div>
+        <div class="column width-250">
+            <div class="lbl-field width-250 padding-top12">
+                <label>@ProblemAccountResource.LimitAmount</label>
+            </div>
+            <div class="edit-field width-190">
+                <input type="text"
+                       class="align-right width-160 clearable"
+                       autocomplete="off"
+                       maxlength="13"
+                       name="limitAmount"
+                       id="txt-limitAmount" />
+                <span class="note-info-message" title="@ProblemAccountResource.VoidWinningTicketLimitAmountHint"></span>
+            </div>
         </div>
     </div>
     <div class="form-row">

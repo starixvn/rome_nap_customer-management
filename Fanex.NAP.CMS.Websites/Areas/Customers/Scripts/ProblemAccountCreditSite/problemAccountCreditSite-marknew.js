@@ -8,7 +8,9 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         preventiveAction = null,
         spanPreventiveAction = null,
         reason = null,
-        spanReason = null;
+        spanReason = null,
+        time = null,
+        spanTime = null;
 
     function cacheElements() {
         successInlineMessage = form.find("#div-successInlineMessage");
@@ -20,6 +22,8 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         spanPreventiveAction = form.find('span[id="ddl-preventiveAction"]');
         reason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
+        time = form.find("#ddl-time").combobox();
+        spanTime = form.find('span[id="ddl-time"]');
     }
 
     function bindEvents() {

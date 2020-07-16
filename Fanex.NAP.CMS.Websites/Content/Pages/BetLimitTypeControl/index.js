@@ -334,6 +334,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             return;
         }
 
+        var productUncheckedList = $('#selectProductAdd').fanexMultiSelect("getItems", false);
         var productCheckedList = $.map($('#selectProductAdd').fanexMultiSelect("getItems", true), function (x) {
             return parseInt(x);
         });
@@ -395,7 +396,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
         var params = {
             betLimitTypeId: betLimitTypeId,
             betLimitType: betLimitType,
-            productList: productCheckedList.join(','),
+            productList: productUncheckedList.length === 0 ? '0' : productCheckedList.join(','),
             sportTypeList: sportTypeUncheckedList.length === 0 ? '0' : sportTypeCheckedList.join(','),
             betTypeList: betTypeUncheckedList.length === 0 ? '0' : betTypeCheckedList.join(','),
             liveIndicator: liveIndicator,
@@ -613,7 +614,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             }
 
             if (dataSource) {
-                $control.data('allText', 'All (' + dataSource.length + ')');
+                $control.data('allText', 'All (' + ids.length + ')');
                 var names = [];
                 for (var id of ids) {
                     for (var row of dataSource) {

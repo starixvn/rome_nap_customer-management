@@ -18,13 +18,13 @@
     <div class="form-row divUpdateReason">
         <div class="column width-250">
             <div class="lbl-field width-250 padding-top12">
-                <label>@ProblemAccountResource.Reason<span class="text-red">*</span></label>
+                <label>@ProblemAccountCreditDepositResource.PreventiveAction<span class="text-red">*</span></label>
             </div>
             <div class="edit-field width-250">
                 @Html.DropDownList("preventiveAction", Model.MarkNewPreventiveActions, new { id = "ddl-preventiveAction", @class = "combobox-autocomplete width-180" })
             </div>
         </div>
-        <div class="column width-250">
+        <div class="voidWinningOption column width-250 display-none">
             <div class="lbl-field width-250 padding-top12">
                 <label>@ProblemAccountResource.Time</label>
             </div>
@@ -32,8 +32,8 @@
                 @Html.DropDownList("time", Model.MarkNewPreventiveActions, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
             </div>
         </div>
-        <div class="column width-250">
-            <div class="lbl-field width-250 padding-top12">
+        <div class="voidWinningOption column width-190 display-none">
+            <div class="lbl-field width-190 padding-top12">
                 <label>@ProblemAccountResource.LimitAmount</label>
             </div>
             <div class="edit-field width-190">

@@ -53,6 +53,15 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
+        preventiveAction.on("change", function () {
+            var preventActionId = preventiveAction.val();
+            if (preventActionId === '2') {
+                $(".voidWinningOption").removeClass("display-none");
+            } else {
+                $(".voidWinningOption").addClass("display-none");
+            }
+        });
+
         form.off("submit").on("submit", function (event) {
             event.preventDefault();
             isValidFormData() && submitForm();

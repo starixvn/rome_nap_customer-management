@@ -42,10 +42,9 @@ function ProblemAccountLicenseeSiteUpdate(form, reloadData) {
         });
 
         $(".note-info-message").tipsy({
-            className: "custom-grid-colheader-note",
             html: true,
             opacity: 0.9,
-            gravity: "e"
+            gravity: "nw"
         });
     }
 

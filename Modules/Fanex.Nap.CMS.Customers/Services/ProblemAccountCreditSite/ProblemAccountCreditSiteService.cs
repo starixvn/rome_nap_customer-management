@@ -286,5 +286,10 @@
 
         private static bool IsAlreadyInactiveOrRemoveReduceBL(Result result)
             => result.Code == SQLErrorCodeConst.AlreadyInactiveOrRemoveReduceBL;
+
+        public IEnumerable<string> GetVoidWinningTimes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

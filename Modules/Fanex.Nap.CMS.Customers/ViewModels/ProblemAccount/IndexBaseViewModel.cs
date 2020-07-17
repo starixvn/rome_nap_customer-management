@@ -92,7 +92,27 @@
         protected static SelectListItem BuildSelectListItem(int value, string name, bool selected = false)
             => new SelectListItem { Value = value.ToString(), Text = name, Selected = selected };
 
+        protected static SelectListItem BuildSelectListItem(string name, bool selected = false)
+            => new SelectListItem { Value = name, Text = name, Selected = selected };
+
         protected static IEnumerable<SelectListItem> BuildSelectListItem(IdNameModel firstItem, IEnumerable<IdNameModel> models)
+        {
+            var listItems = models.Select(r => BuildSelectListItem(r)).ToList();
+            listItems.Insert(0, BuildSelectListItem(firstItem));
+
+            return listItems;
+        }
+
+        protected static IEnumerable<SelectListItem> BuildWinningTimes()
+        {
+            var listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem { Text = ProblemAccountResource.PleaseSelect, Value = "0", Selected = true });
+            listItems.Add(new SelectListItem { Text = "23:59", Value = "23:59" });
+
+            return listItems;
+        }
+
+        protected static IEnumerable<SelectListItem> BuildSelectListItem(IdNameModel firstItem, IEnumerable<string> models)
         {
             var listItems = models.Select(r => BuildSelectListItem(r)).ToList();
             listItems.Insert(0, BuildSelectListItem(firstItem));

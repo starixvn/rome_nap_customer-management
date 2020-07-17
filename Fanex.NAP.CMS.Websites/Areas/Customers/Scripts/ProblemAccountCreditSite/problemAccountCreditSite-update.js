@@ -42,7 +42,11 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
             validateUpdate() && submitForm();
         });
 
-
+        $(".note-info-message").tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: "nw"
+        });
     }
 
     function validateUpdate() {

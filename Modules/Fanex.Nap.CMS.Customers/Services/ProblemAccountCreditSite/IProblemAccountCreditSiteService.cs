@@ -62,7 +62,7 @@
             int maxPerBet,
             int userId,
             string ip);
-
+        IEnumerable<string> GetVoidWinningTimes();
         Result Close(string usernames, byte roleId, bool confirmed, int userId, string ip);
 
         Result RemoveReduceBL(

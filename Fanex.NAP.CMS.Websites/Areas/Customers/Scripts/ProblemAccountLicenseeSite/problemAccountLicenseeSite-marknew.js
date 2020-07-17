@@ -64,7 +64,7 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
         $(".note-info-message").tipsy({
             html: true,
             opacity: 0.9,
-            gravity: "e"
+            gravity: "nw"
         });
     }
 

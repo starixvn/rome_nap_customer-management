@@ -8,6 +8,7 @@
     using Configurations;
     using Criteria.UploadVirtualRate;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Infrastructure.Models;
     using Infrastructure.Web;
     using Models.UploadVirtualRate;
@@ -19,26 +20,36 @@
     using Repositories.VirtualRateDetails;
     using Resources;
 
-    public class ESportsUploadService : IESportsUploadService
+    public class UploadVirtualRateService : IUploadVirtualRateService
     {
+        private const int DisabledAccountErrCode = 600;
         private const int OneHundred = 100;
-        private const int UpdateBatchSize = 150;
-        private const int ESportsSportType = 43;
+        public const int UpdateBatchSize = 150;
         private const string XMLFormat = "<R UN=\"{0}\" Cell=\"{1}\" Mul=\"{2}\" LId=\"{3}\" BTGId=\"{4}\" BTId=\"{5}\" Live=\"{6}\"/>";
-        private const string UploadSessionKey = "Fanex.Nap.CMS.VirtualSettingControl.Services.UploadVirtualRate.ESportsUploadService";
-
-        private static readonly ESportVirtualRateBetTypeCollection betTypes = ESportsVirtualRateSection.Instance.BetTypes;
+        private const string SessionIdSessionKey = "Fanex.Nap.CMS.VirtualSettingControl.Services.UploadVirtualRate.UploadVirtualRateService.SessionId_{0}";
 
         private readonly IUploadVirtualRateRepository uploadRepository;
         private readonly IVirtualRateDetailsRepository virtualRateDetailsRepository;
+        private readonly int sportType;
+        private readonly int limitAccount;
+        private readonly VirtualRateBetTypeCollection betTypes;
 
-        public ESportsUploadService(
+        public UploadVirtualRateService(
+            int sportType,
             IUploadVirtualRateRepository uploadRepository = null,
             IVirtualRateDetailsRepository virtualRateDetailsRepository = null)
         {
+            this.sportType = sportType;
             this.uploadRepository = uploadRepository ?? new UploadVirtualRateRepository();
             this.virtualRateDetailsRepository = virtualRateDetailsRepository ?? new VirtualRateDetailsRepository();
+
+            limitAccount = LimitAccountConstants.GetLimitAccount(sportType);
+            betTypes = sportType == SportTypeConstants.ESports
+                ? ESportsVirtualRateSection.Instance.BetTypes
+                : BasketballVirtualRateSection.Instance.BetTypes;
         }
+
+        #region Web Validation
 
         public ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension)
         {
@@ -69,21 +80,8 @@
                 }
             }
 
-            var totalExcelErrors = excelErrors.Count;
-
-            return new ExcelErrorModel(excelErrors, 0, actualTotalRows, $"{ESportsResource.FormatError}: {totalExcelErrors}");
+            return new ExcelErrorModel(excelErrors, 0, actualTotalRows, $"{ESportsResource.FormatError}: {excelErrors.Count}");
         }
-
-        public ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId)
-        {
-            var excelErrors = new List<ExcelErrorDTO>();
-            var workbook = GetWorkbook(stream, fileExtension);
-            var sheet = GetSheet(workbook);
-
-            return ValidateBySP(sheet, userId);
-        }
-
-        #region Web Validation
 
         private static IWorkbook GetWorkbook(Stream stream, string fileExtension)
         {
@@ -112,40 +110,48 @@
             ? null
             : workbook.GetSheetAt(0);
 
-        private static IEnumerable<ExcelErrorDTO> ValidateHeaderRow(IRow headerRow)
+        private IEnumerable<ExcelErrorDTO> ValidateHeaderRow(IRow headerRow)
         {
-            IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
+            var errors = new List<ExcelErrorDTO>();
 
-            if (headerRow == null || headerRow.Cells[0].ToString() != ESportsResource.Account)
+            if (headerRow == null)
             {
-                excelErrors.Add(new ExcelErrorDTO(ESportsResource.Error_NotExcelFile));
+                errors.Add(new ExcelErrorDTO(ESportsResource.InvalidHeader));
             }
             else
             {
-                ICell cell;
-                CellReference cellRef;
+                ICell cell = headerRow.Cells[0];
 
-                foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+                if (cell.ToString() != ESportsResource.Account)
                 {
-                    cellRef = new CellReference(betType.Cell);
-                    cell = headerRow.GetCell(cellRef.Col);
+                    errors.Add(new ExcelErrorDTO("A1", null, cell?.ToString(), ESportsResource.InvalidHeader));
+                }
+                else
+                {
+                    CellReference cellRef;
 
-                    if (cell?.ToString() != betType.Key)
+                    foreach (VirtualRateBetTypeElement betType in betTypes)
                     {
-                        excelErrors.Add(new ExcelErrorDTO(betType.Cell + "1", null, cell?.ToString(), ESportsResource.InvalidHeader));
+                        cellRef = new CellReference(betType.Cell);
+                        cell = headerRow.GetCell(cellRef.Col);
+
+                        if (cell?.ToString() != betType.Key)
+                        {
+                            errors.Add(new ExcelErrorDTO(betType.Cell + "1", null, cell?.ToString(), ESportsResource.InvalidHeader));
+                        }
                     }
                 }
             }
 
-            return excelErrors;
+            return errors;
         }
 
         private IEnumerable<ExcelErrorDTO> ValidateBodyRows(ISheet sheet, ref int actualTotalRows)
         {
             IRow row;
-            IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
+            var excelErrors = new List<ExcelErrorDTO>();
             var rateRanges = virtualRateDetailsRepository.GetVirtualRateRanges().ToDictionary(kvp => kvp.Value, kvp => true);
-            IDictionary<string, bool> accountsHash = new Dictionary<string, bool>();
+            var accountsHash = new Dictionary<string, bool>();
 
             var totalSheetRows = sheet.LastRowNum + 1;
 
@@ -156,6 +162,15 @@
                 if (row != null && row.Cells.Count > 0)
                 {
                     actualTotalRows++;
+
+                    if (actualTotalRows > limitAccount)
+                    {
+                        return new List<ExcelErrorDTO>
+                        {
+                            new ExcelErrorDTO(string.Format(ESportsResource.LimitAccountError, limitAccount.ToString("N0")))
+                        };
+                    }
+
                     ValidateBodyRows(row, excelErrors, rateRanges, accountsHash, i + 1);
                 }
             }
@@ -175,7 +190,7 @@
             var account = row.GetCell(cellRef.Col)?.ToString();
             ValidateAccount(account, excelErrors, accountsHash, cellRef, rowNumber);
 
-            foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+            foreach (VirtualRateBetTypeElement betType in betTypes)
             {
                 cellRef = new CellReference(betType.Cell);
                 multiplier = row.GetCell(cellRef.Col)?.ToString();
@@ -222,49 +237,37 @@
 
         #region DB Validation
 
-        private ExcelErrorModel ValidateBySP(ISheet sheet, int userId)
+        public ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId, int startRow)
         {
-            var sessionId = Guid.NewGuid();
-            SetSessionId(sessionId);
+            var workbook = GetWorkbook(stream, fileExtension);
+            var sheet = GetSheet(workbook);
 
-            var startIndex = 1;
-            var endIndex = 1;
-            var totalSheetRows = sheet.LastRowNum + 1;
-            var validSetting = 0;
-            var errors = new List<ExcelErrorDTO>();
-            var actualTotalRows = 0;
-            ExcelErrorModel errorExcelModel;
+            var totalRows = sheet.LastRowNum + 1;
+            var endRow = startRow + UpdateBatchSize;
 
-            do
+            if (endRow > totalRows)
             {
-                endIndex += UpdateBatchSize;
+                endRow = totalRows;
+            }
 
-                if (endIndex > totalSheetRows)
-                {
-                    endIndex = totalSheetRows;
-                }
+            Guid sessionId;
 
-                errorExcelModel = VerifyExcelTemplate(sheet, startIndex, endIndex, sessionId, userId);
+            if (startRow == 1)
+            {
+                sessionId = Guid.NewGuid();
+                SetSessionId(sessionId);
+            }
+            else
+            {
+                sessionId = GetSessionId();
+            }
 
-                if (errorExcelModel == null)
-                {
-                    break;
-                }
-
-                validSetting += errorExcelModel.ValidSetting;
-                actualTotalRows += errorExcelModel.TotalRows;
-                errors.AddRange(errorExcelModel.ExcelErrors);
-
-                startIndex = endIndex;
-            } while (startIndex < totalSheetRows);
-
-            return new ExcelErrorModel(errors, validSetting, actualTotalRows, $"{ESportsResource.DataError}: {errors.Count}");
+            return VerifyExcelTemplate(sheet, startRow, endRow, sessionId, userId);
         }
 
         private ExcelErrorModel VerifyExcelTemplate(ISheet sheet, int startIndex, int endIndex, Guid sessionId, int userId)
         {
             IRow row;
-            var actualTotalRows = 0;
             var xmlBuilder = new StringBuilder();
 
             for (int i = startIndex; i < endIndex; i++)
@@ -273,31 +276,24 @@
 
                 if (row != null && row.Cells.Count > 0)
                 {
-                    actualTotalRows++;
                     xmlBuilder.Append(GetVirtualRateXML(row, i + 1));
                 }
             }
 
-            if (xmlBuilder.Length == 0)
-            {
-                return null;
-            }
-
-            var excelErrorModel = uploadRepository.VerifyExcelTemplate(
-                new VerifyVirtualRateExcelTemplateCriteria(ESportsSportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>"));
-            excelErrorModel.TotalRows = actualTotalRows;
-
-            return excelErrorModel;
+            return xmlBuilder.Length == 0
+                ? null
+                : uploadRepository.VerifyExcelTemplate(
+                    new VerifyVirtualRateExcelTemplateCriteria(sportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>"));
         }
 
-        private static string GetVirtualRateXML(IRow row, int rowNumber)
+        private string GetVirtualRateXML(IRow row, int rowNumber)
         {
             string multiplier;
             CellReference cellRef;
             var account = GetUsername(row);
             var xmlBuilder = new StringBuilder();
 
-            foreach (ESportVirtualRateBetTypeElement betType in betTypes)
+            foreach (VirtualRateBetTypeElement betType in betTypes)
             {
                 cellRef = new CellReference(betType.Cell);
                 multiplier = row.GetCell(cellRef.Col)?.ToString();
@@ -317,7 +313,7 @@
         private static string GetExcelCell(CellReference cellRef, int rowNumber)
             => $"{cellRef.FormatAsString()}:{rowNumber}";
 
-        private static string GetVirtualRateXML(string account, string cell, decimal? multiplier, ESportVirtualRateBetTypeElement betType)
+        private static string GetVirtualRateXML(string account, string cell, decimal? multiplier, VirtualRateBetTypeElement betType)
             => string.Format("<R UN=\"{0}\" Cell=\"{1}\" Mul=\"{2}\" LId=\"{3}\" BTGId=\"{4}\" BTId=\"{5}\" Live=\"{6}\"/>",
                 account,
                 cell,
@@ -342,24 +338,31 @@
         public Result Update(int userId, string ip)
         {
             var result = uploadRepository.ExecuteNonQuery(
-                new UpdateVirtualRateExcelTemplateCriteria(ESportsSportType, GetSessionId(), userId, ip));
+                new UpdateVirtualRateExcelTemplateCriteria(sportType, GetSessionId(), userId, ip));
 
-            if (result.IsSuccess)
+            // Ignore disabled account error.
+            if (result.IsSuccess || result.Code == DisabledAccountErrCode)
             {
                 RemoveSessionId();
                 result.Message = ESportsResource.UploadVirtualRateSuccessfully;
+
+                // Reset ErrCode in case of DisabledAccountErrCode.
+                result.Code = 0;
             }
 
             return result;
         }
 
-        private static Guid GetSessionId()
-            => SessionManager.Get<Guid>(UploadSessionKey);
+        private Guid GetSessionId()
+            => SessionManager.Get<Guid>(GetSessionIdSessionKey());
 
-        private static void SetSessionId(Guid value)
-            => SessionManager.Set(UploadSessionKey, value);
+        private void SetSessionId(Guid value)
+            => SessionManager.Set(GetSessionIdSessionKey(), value);
 
-        private static void RemoveSessionId()
-            => SessionManager.Set(UploadSessionKey, null);
+        private void RemoveSessionId()
+            => SessionManager.Set(GetSessionIdSessionKey(), null);
+
+        private string GetSessionIdSessionKey()
+            => string.Format(SessionIdSessionKey, sportType);
     }
 }

@@ -17,12 +17,12 @@
         }
 
         [ConfigurationProperty("BetTypes", IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(ESportVirtualRateBetTypeCollection))]
-        public ESportVirtualRateBetTypeCollection BetTypes
+        [ConfigurationCollection(typeof(VirtualRateBetTypeCollection))]
+        public VirtualRateBetTypeCollection BetTypes
         {
             get
             {
-                return (ESportVirtualRateBetTypeCollection)base["BetTypes"];
+                return (VirtualRateBetTypeCollection)base["BetTypes"];
             }
         }
     }

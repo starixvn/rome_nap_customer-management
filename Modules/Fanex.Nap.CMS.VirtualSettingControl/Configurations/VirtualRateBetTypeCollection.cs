@@ -2,12 +2,12 @@
 {
     using System.Configuration;
 
-    public class ESportVirtualRateBetTypeCollection : ConfigurationElementCollection
+    public class VirtualRateBetTypeCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()
-            => new ESportVirtualRateBetTypeElement();
+            => new VirtualRateBetTypeElement();
 
         protected override object GetElementKey(ConfigurationElement element)
-            => ((ESportVirtualRateBetTypeElement)element).Key;
+            => ((VirtualRateBetTypeElement)element).Key;
     }
 }

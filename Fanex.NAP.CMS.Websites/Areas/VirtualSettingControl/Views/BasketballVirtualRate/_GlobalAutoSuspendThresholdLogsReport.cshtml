@@ -1,0 +1,96 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@model IEnumerable<GlobalAutoSuspendThresholdLog>
+<table id="tbl-report" class="tbl-report">
+    <thead>
+        <tr>
+            <th class="col-group">
+                @ViewLang.BetType
+                <span id="ico-collapse" class="ico-expand"></span>
+            </th>
+            <th class="col-nonlive">@ViewLang.NonLive</th>
+            <th class="col-live">@ViewLang.Live</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="3" align="center">@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Message_NoReportData</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var log in Model)
+            {
+                <tr data-level="0" data-log-id="@log.LogId">
+                    <td colspan="3">
+                        <span class="group-toggle group-collapse">[+]</span>@log.LogTimeString - @ESportsResource.UpdateGlobalAutoSuspendThreshold - @ViewLang.By @log.Updatedby
+                    </td>
+                </tr>
+
+                foreach (var sport in log.Sports)
+                {
+                    <tr data-level="@sport.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" class="display-none">
+                        <td><span class="group-toggle group-expand">[−]</span>@sport.GroupName</td>
+                        @renderLogRate(sport.NonliveAutoSuspendThreshold, sport.NonliveAutoSuspendThresholdOld)
+                        @renderLogRate(sport.LiveAutoSuspendThreshold, sport.LiveAutoSuspendThresholdOld)
+                    </tr>
+
+                    foreach (var league in sport.Childs)
+                    {
+                        <tr data-level="@league.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" class="display-none">
+                            <td><span class="group-toggle group-expand">[−]</span>@league.GroupName</td>
+                            @renderLogRate(league.NonliveAutoSuspendThreshold, league.NonliveAutoSuspendThresholdOld)
+                            @renderLogRate(league.LiveAutoSuspendThreshold, league.LiveAutoSuspendThresholdOld)
+                        </tr>
+
+                        foreach (var betTypeGroup in league.Childs)
+                        {
+                            <tr data-level="@betTypeGroup.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" data-bet-type-group-id="@betTypeGroup.GroupId" class="display-none">
+                                <td>
+                                    @if (betTypeGroup.Childs.Count() > 0)
+                                    {
+                                        <span class="group-toggle group-expand">[−]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="large-margin-right"></span>
+                                    }
+
+                                    @betTypeGroup.GroupName
+                                </td>
+                                @renderLogRate(betTypeGroup.NonliveAutoSuspendThreshold, betTypeGroup.NonliveAutoSuspendThresholdOld)
+                                @renderLogRate(betTypeGroup.LiveAutoSuspendThreshold, betTypeGroup.LiveAutoSuspendThresholdOld)
+                            </tr>
+
+                            foreach (var betType in betTypeGroup.Childs)
+                            {
+                                <tr data-level="@betType.GroupLevel" data-log-id="@log.LogId" data-sport-id="@sport.GroupId" data-league-id="@league.GroupId" data-bet-type-group-id="@betTypeGroup.GroupId" class="display-none">
+                                    <td>@betType.GroupName</td>
+                                    @renderLogRate(betType.NonliveAutoSuspendThreshold, betType.NonliveAutoSuspendThresholdOld)
+                                    @renderLogRate(betType.LiveAutoSuspendThreshold, betType.LiveAutoSuspendThresholdOld)
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+@helper renderLogRate(decimal newRate, decimal oldRate)
+{
+    if (newRate == oldRate)
+    {
+        <td>@newRate.ToString("N0")</td>
+    }
+    else
+    {
+        <td class="has-changes">
+            <div class="new-value">@newRate.ToString("N0")</div>
+            <div class="old-value">@oldRate.ToString("N0")</div>
+        </td>
+    }
+}

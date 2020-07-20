@@ -1,0 +1,83 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+
+@helper RenderRateRange(
+    IEnumerable<RateInfo> rateRanges,
+    decimal minRate,
+    decimal maxRate,
+    decimal selectedValue,
+    bool copyToRelated,
+    string copyToRelatedText,
+    bool copyToChildren,
+    string followParent = null,
+    decimal? actualRate = null)
+{
+    if (copyToRelated)
+    {
+        <span class="icon-copy2related" title="@string.Format("{0} \"{1}\"", ViewLang.CopyToAll, copyToRelatedText)"></span>
+    }
+    else
+    {
+        <span class="padding-icon-copy2related"></span>
+    }
+
+    <select class="ddl-rate">
+        @if (!string.IsNullOrWhiteSpace(followParent))
+        {
+            <option value="-200" data-level-id="0">@followParent</option>
+        }
+
+        @foreach (var rate in rateRanges)
+        {
+            if (minRate <= rate.Value && rate.Value <= maxRate)
+            {
+                @RenderRateOption(rate, selectedValue, actualRate)
+            }
+        }
+    </select>
+
+    if (copyToChildren)
+    {
+        <span class="icon-copy2child" title="@ViewLang.CopyToAllChildren"></span>
+    }
+}
+
+@helper RenderRateOption(RateInfo rate, decimal selectedValue, decimal? actualRate)
+{
+    if (actualRate == null)
+    {
+        <option value="@rate.Value" data-level-id="@rate.Id" @(rate.Value == selectedValue ? "selected=selected" : string.Empty)>
+            @rate.Value
+        </option>
+    }
+    else
+    {
+        var value = (rate.Value + 100) * actualRate.Value / 100;
+
+        <option value="@rate.Value" data-level-id="@rate.Id" @(rate.Value == selectedValue ? "selected=selected" : string.Empty)>
+            @rate.Value (@value.ToString("N4"))
+        </option>
+    }
+}
+
+@helper RenderAutoSuspend(bool canEditAutoSuspend, bool isAutoSuspend, bool copyToRelated, string copyToRelatedText, bool copyToChildren = false)
+{
+    var canEditClass = canEditAutoSuspend ? string.Empty : "display-none";
+    <span class="icon-non-autosuspend elm-autosuspend-view @(!canEditAutoSuspend || isAutoSuspend ? "display-none" : string.Empty)"></span>
+
+    if (copyToRelated)
+    {
+        <span class="icon-copy2related-autosuspend elm-autosuspend-edit @canEditClass" title="@string.Format("{0} \"{1}\"", ViewLang.CopyToAll, copyToRelatedText)"></span>
+    }
+    else
+    {
+        <span class="padding-icon-copy2related elm-autosuspend-edit @canEditClass"></span>
+    }
+
+    <input type="checkbox" class="chk-autosuspend elm-autosuspend-edit @canEditClass" @(isAutoSuspend ? "checked=checked" : string.Empty) />
+
+    if (copyToChildren)
+    {
+        <span class="icon-copy2child-autosuspend elm-autosuspend-edit @canEditClass" title="@ViewLang.CopyToAllChildren"></span>
+    }
+}

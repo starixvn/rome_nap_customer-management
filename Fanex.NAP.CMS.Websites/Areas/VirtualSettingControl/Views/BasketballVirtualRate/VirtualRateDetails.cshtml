@@ -1,0 +1,94 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Basketball - Virtual Rate Details";
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            RequiredField: "@ViewLang.RequiredField",
+            VirtualRateSubmitChangesConfirm: "@ViewLang.VirtualRateSubmitChangesConfirm",
+            VirtualRateDetails_LeaveSiteWarning: "@Html.Raw(ViewLang.VirtualRateDetails_LeaveSiteWarning)",
+            VirtualRate_AssociatedAccounts_Empty: "@ViewLang.VirtualRate_AssociatedAccounts_Empty",
+            VirtualRate_AssociatedAccounts_Error: "@ViewLang.VirtualRate_AssociatedAccounts_Error",
+            InvalidAccounts: "@ViewLang.InvalidAccounts",
+            ValidAccounts: "@ViewLang.ValidAccounts",
+            Apply2AssociatedAccounts: "@ViewLang.Apply2AssociatedAccounts",
+            AccessDeniedMessage: "@Fanex.Nap.CMS.Infrastructure.Resources.Labels.AccessDeniedMessage",
+            VirtualRateDetails: "@ViewLang.VirtualRateDetails"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.Basketball_VirtualRateDetailsScript)
+}
+<div class="filter-bar">
+    @using (Html.BeginForm("GetVirtualRateDetails", "BasketballVirtualRate", FormMethod.Get, new { @class = "filter-form", id = "form-search" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">@ViewLang.Account</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" name="username" class="txt-username" maxlength="50" />
+            </div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit">@ViewLang.Search</button>
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div id="report-container" class="display-none">
+    <div>
+        @if (hostPermission)
+        {
+            <button type="button" class="submit btn-submit-changes">@ViewLang.SubmitAllChanges</button>
+            <button type="button" class="submit btn-submit-changes-and-mark-manual-vr-updated">@ESportsResource.SubmitAllChangeAndMarkManualVRUpdated</button>
+        }
+        <button type="button" class="submit btn-autosuspend-view display-none">@ViewLang.SwitchAutoSuspendView</button>
+        <button type="button" class="submit btn-autosuspend-edit display-none">@ViewLang.SwitchAutoSuspendEdit</button>
+    </div>
+    <div id="content-grid" class="content-grid"></div>
+    @if (hostPermission)
+    {
+        <div>
+            <input type="button" class="submit btn-submit-changes" value="@ViewLang.SubmitAllChanges" />
+            <input type="button" class="submit btn-submit-changes-and-mark-manual-vr-updated" value="@ESportsResource.SubmitAllChangeAndMarkManualVRUpdated" />
+            <input type="button" class="submit btn-autosuspend-view display-none" value="@ViewLang.SwitchAutoSuspendView" />
+            <input type="button" class="submit btn-autosuspend-edit display-none" value="@ViewLang.SwitchAutoSuspendEdit" />
+        </div>
+        <div id="div-associated-accounts" class="div-associated-accounts" disabled="disabled">
+            <div>
+                <label for="chk-apply-setting">
+                    <input id="chk-apply-setting" type="checkbox" />
+                    <span id="lbl-apply">@ViewLang.ApplyAboveSettingTo</span>
+                    <span id="lbl-apply-vronly" class="display-none">@ViewLang.ApplyAboveSettingToVR</span>
+                    <span id="lbl-apply-vr-as" class="display-none">@ViewLang.ApplyAboveSettingToVR_AS</span>
+                </label>
+            </div>
+            <textarea id="txt-associated-accounts" class="txt-associated-accounts" disabled="disabled"></textarea>
+            <button type="button" id="btn-submit-associated-accounts" class="submit btn-submit-associated-accounts btn-blue">@ViewLang.Submit</button>
+            <button type="button" id="btn-submit-associated-accounts-mark-manual" class="submit btn-submit-associated-accounts btn-blue">@ESportsResource.SubmitAndMarkManualVRUpdated</button>
+        </div>
+    }
+    else
+    {
+        <div class="margin-bottom">
+            <input type="button" class="submit btn-autosuspend-view display-none" value="@ViewLang.SwitchAutoSuspendView" />
+            <input type="button" class="submit btn-autosuspend-edit display-none" value="@ViewLang.SwitchAutoSuspendEdit" />
+        </div>
+    }
+</div>

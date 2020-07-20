@@ -1,0 +1,56 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources;
+@{
+    ViewBag.Title = "Basketball - Auto Suspend Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var currentDate = "@currentDate.ToShortFormatedDateWithSlash()",
+            initFromDate = "@currentDate.AddDays(-1).ToShortFormatedDateWithSlash()";
+        var resources = {
+            From: "@ViewLang.From",
+            To: "@ViewLang.To",
+            RequiredField: "@ViewLang.RequiredField"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.Basketball_AutoSuspendLogsScript)
+}
+<div class="custom-tabs">
+    <span class="active">@ViewLang.Member</span>
+    |
+    @Html.ActionLink(ESportsResource.GlobalAutoSuspendThreshold, "GlobalAutoSuspendThresholdLogs", "BasketballVirtualRate", new { area = "VirtualSettingControl" }, null)
+</div>
+<div class="filter-bar">
+    @using (Html.BeginForm("GetAutoSuspendLogs", "BasketballVirtualRate", FormMethod.Get, new { @class = "filter-form", id = "form-search" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">@ViewLang.Member</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="txt-username" maxlength="50" />
+            </div>
+            <div id="fromtodate-picker"></div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit">@ViewLang.Search</button>
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div id="report-container" class="display-none"></div>

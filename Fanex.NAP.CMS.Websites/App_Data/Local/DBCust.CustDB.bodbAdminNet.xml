@@ -31,16 +31,17 @@
     <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_ManualUpdAcc_Sel" SpName="Acc_VR_ManualUpdAcc_Sel_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_ManualUpdAcc_Remove" SpName="Acc_VR_ManualUpdAcc_Remove_uat2" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_ManualUpdAcc_Sel" SpName="Acc_VR_ManualUpdAcc_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_ManualUpdAcc_Remove" SpName="Acc_VR_ManualUpdAcc_Remove" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_BettypeVirtualRateMapping_Sel" SpName="Acc_VR_BettypeVirtualRateMapping_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Problem Accounts">
     <Setting Key="CS_ProblemAccount_AddCustomer" SpName="CS_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />

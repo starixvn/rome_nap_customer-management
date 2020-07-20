@@ -1,0 +1,52 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources;
+@{
+    ViewBag.Title = "Basketball - Auto Suspend Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var currentDate = "@currentDate.ToShortFormatedDateWithSlash()",
+            initFromDate = "@currentDate.AddDays(-1).ToShortFormatedDateWithSlash()";
+        var resources = {
+            From: "@ViewLang.From",
+            To: "@ViewLang.To",
+            ReportTitle: "@ESportsResource.GlobalAutoSuspendThresholdLog"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.Basketball_GlobalAutoSuspendThresholdLogsScript)
+}
+<div class="custom-tabs">
+    @Html.ActionLink(ViewLang.Member, "AutoSuspendLogs", "BasketballVirtualRate", new { area = "VirtualSettingControl" }, null)
+    |
+    <span class="active">@ESportsResource.GlobalAutoSuspendThreshold</span>
+</div>
+<div class="filter-bar">
+    @using (Html.BeginForm("GetGlobalAutoSuspendThresholdLogs", "BasketballVirtualRate", FormMethod.Get, new { @class = "filter-form", id = "form-search" }))
+    {
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit">@ViewLang.Search</button>
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div id="report-container" class="display-none">
+    <div id="content-grid" class="content-grid"></div>
+</div>

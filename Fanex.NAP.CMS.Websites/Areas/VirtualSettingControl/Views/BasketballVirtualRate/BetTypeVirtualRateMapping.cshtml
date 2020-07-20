@@ -1,0 +1,43 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Basketball - Mapping between Ticket's Bet Type and Virtual Rate Setting";
+    string preLeagueGroup = string.Empty;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+<div id="report-container">
+    <div class="content-grid">
+        <div class="grid-title">
+            <div class="grid-title-label">@ViewBag.Title</div>
+        </div>
+        <table class="tbl-report">
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (!item.LeagueGroup.Equals(preLeagueGroup, StringComparison.OrdinalIgnoreCase))
+                    {
+                        { preLeagueGroup = item.LeagueGroup; }
+                        <tr>
+                            <td class="league-group" colspan="4">@item.LeagueGroup</td>
+                        </tr>
+                        <tr>
+                            <td class="bettype-title" colspan="2">@ViewLang.TicketsBetType</td>
+                            <td class="bettype-title">@ViewLang.VirtualRateSetting</td>
+                            <td class="bettype-title">@ViewLang.Level</td>
+                        </tr>
+                    }
+                    
+                    <tr>
+                        <td class="align-right">@item.BetType</td>
+                        <td>@item.BetTypeName</td>
+                        <td>@item.VRSetting</td>
+                        <td>@item.Level</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

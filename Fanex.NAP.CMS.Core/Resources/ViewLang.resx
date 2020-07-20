@@ -825,4 +825,13 @@
   <data name="Soccer" xml:space="preserve">
     <value>Soccer</value>
   </data>
+  <data name="Basketball" xml:space="preserve">
+    <value>Basketball</value>
+  </data>
+  <data name="TicketsBetType" xml:space="preserve">
+    <value>Ticket's Bet Type</value>
+  </data>
+  <data name="VirtualRateSetting" xml:space="preserve">
+    <value>Virtual Rate Setting</value>
+  </data>
 </root>

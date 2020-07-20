@@ -89,6 +89,13 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
                 resourceId);
         }
 
+        public static string GetVRBetTypeName(int sportTypeId, int betTypeId)
+            => RefData.GetResourceDataByRefIdAndResourceId(
+                "VirtualRateLabel",
+                $"{sportTypeId}_{betTypeId}",
+                LanguageCode,
+                string.Empty);
+
         private static IRemotingRefService RefData => new RemotingRefService();
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.CMS.Core.Resources;
     using Infrastructure.Models;
     using Infrastructure.Services.Implementations;
@@ -20,6 +21,7 @@
         private const int Width400 = 400;
 
         private readonly GlobalAutoSuspendThreshold globalAutoSuspendThreshold;
+        private readonly string sportTypeName;
 
         private ICellStyle headerTextStyle;
         private ICellStyle sportTextStyle;
@@ -28,9 +30,10 @@
         private ICellStyle betTypeTextStyle;
         private ICellStyle bodyTextStyle;
 
-        public GlobalAutoSuspendThresholdExporter(GlobalAutoSuspendThreshold globalAutoSuspendThreshold)
+        public GlobalAutoSuspendThresholdExporter(GlobalAutoSuspendThreshold globalAutoSuspendThreshold, int sportType)
         {
             this.globalAutoSuspendThreshold = globalAutoSuspendThreshold;
+            sportTypeName = CacheRef.GetSportName(sportType);
             InitStyles();
         }
 
@@ -59,7 +62,7 @@
         }
 
         public override string FileNameWithoutExtension
-            => ESportsResource.GlobalAutoSuspendThresholdExcelFile;
+            => $"{sportTypeName}_{ESportsResource.GlobalAutoSuspendThreshold}".Replace(" ", "_");
 
         public override ExcelColumn[] ExcelColumns
             => new[]
@@ -92,8 +95,8 @@
 
         private void ExportSearchFilter()
         {
-            ExportSearchFilter(string.Empty, ESportsResource.ESports_GlobalAutoSuspendThreshold, bodyTextStyle);
-            ExportSearchFilter(ViewLang.Product, ViewLang.ESports, bodyTextStyle);
+            ExportSearchFilter(string.Empty, $"{sportTypeName} - {ESportsResource.GlobalAutoSuspendThreshold}", bodyTextStyle);
+            ExportSearchFilter(ViewLang.Product, sportTypeName, bodyTextStyle);
             ExportSearchFilter(ViewLang.DateOfReport, DateTime.Today.ToString("MM/dd/yyyy"), bodyTextStyle);
         }
 

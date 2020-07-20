@@ -3,7 +3,7 @@
 @using Fanex.Nap.CMS.VirtualSettingControl.Resources
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = ESportsResource.ESports_ManuallyUpdatedVRAccounts;
+    ViewBag.Title = string.Format("{0} - {1}", ViewBag.SportTypeName, ESportsResource.ManuallyUpdatedVRAccounts);
     var hostPermission = (bool)ViewBag.HostPermission;
 }
 @section Head {
@@ -15,8 +15,8 @@
         var resources = {
             username: "@ViewLang.Username",
             level: "@ViewLang.Level",
-            reportTitle: "@ESportsResource.ESports_ManuallyUpdatedVRAccounts",
-            unmarkConfirmMessage: "@Html.Raw(ESportsResource.UnmarkManualUpdateAccountConfirmMessage)"
+            reportTitle: "@ViewBag.Title",
+            unmarkConfirmMessage: "@Html.Raw(string.Format(ESportsResource.UnmarkManualUpdateAccountConfirmMessage, ViewBag.SportTypeName))"
         };
     </script>
     @Scripts.Render(VirtualSettingControlBundleConfig.ESports_ManualUpdateVRAccountScript)

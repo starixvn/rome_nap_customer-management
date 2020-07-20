@@ -4,6 +4,13 @@
 
     public class GetAutoSuspendThresholdCriteria : CriteriaBase
     {
+        public GetAutoSuspendThresholdCriteria(int sportType)
+        {
+            SportType = sportType;
+        }
+
+        public int SportType { get; }
+
         public override string GetSettingKey()
             => "Acc_VR_AutoSuspendThreshold_Sel";
     }

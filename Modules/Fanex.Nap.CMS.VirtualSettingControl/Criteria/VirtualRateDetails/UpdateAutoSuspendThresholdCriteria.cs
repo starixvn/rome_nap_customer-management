@@ -10,14 +10,18 @@
         private const int OneHunded = 100;
 
         public UpdateAutoSuspendThresholdCriteria(
+            int sportType,
             VirtualRateThresholdByGroup[] sports,
             int userId,
             string ip)
         {
+            SportType = sportType;
             Sports = sports;
             UserId = userId;
             IP = ip;
         }
+
+        public int SportType { get; }
 
         public VirtualRateThresholdByGroup[] Sports { get; }
 
@@ -31,6 +35,7 @@
         public override Hashtable GetSpParams()
             => new Hashtable
             {
+                ["sporttype"] = SportType,
                 ["xml"] = BuildXML(),
                 ["userid"] = UserId,
                 ["ip"] = IP,
@@ -54,9 +59,12 @@
                     {
                         xmlBuilder.Append(GetRowXML(betTypeGroup));
 
-                        foreach (var betType in betTypeGroup.Childs)
+                        if (betTypeGroup.Childs != null)
                         {
-                            xmlBuilder.Append(GetRowXML(betType));
+                            foreach (var betType in betTypeGroup.Childs)
+                            {
+                                xmlBuilder.Append(GetRowXML(betType));
+                            }
                         }
                     }
                 }

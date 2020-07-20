@@ -1,8 +1,9 @@
 ﻿@using Fanex.Nap.CMS.VirtualSettingControl
 @using Fanex.Nap.CMS.VirtualSettingControl.Resources
 @{
-    ViewBag.Title = ESportsResource.ESports_UploadVirtualRate;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = string.Format("{0} {1}", ViewBag.SportTypeName, ESportsResource.UploadVirtualRate);
+    int limitAccount = (int)@ViewBag.LimitAccount;
 }
 @section Head
 {
@@ -11,6 +12,8 @@
 @section Foot
 {
     <script type="text/javascript">
+        var limitAccount = limitAccount;
+        var updateBatchSize = @ViewBag.UpdateBatchSize;
         var resources = {
             Error_RequiredField: "@Fanex.NAP.CMS.Core.Resources.Messages.RequiredFieldError",
             Error_NotExcelFile: "@ESportsResource.Error_NotExcelFile",
@@ -23,7 +26,6 @@
     </script>
     @Scripts.Render(VirtualSettingControlBundleConfig.ESports_UploadVirtualRateScript)
 }
-
 @section Headline
 {
     <div class="title">
@@ -32,6 +34,7 @@
         </div>
     </div>
 }
+@model int
 <div class="filter-bar">
     <div class="filter-form">
         <div class="filter-row">
@@ -53,8 +56,8 @@
         <div class="filter-row">
             <div class="lbl-field col_3">&nbsp;</div>
             <div class="edit-field col_12">
-                <div class="float-left">@Html.ActionLink(ESportsResource.DownloadTemplate, "DownloadTemplate", "UploadVirtualRate")</div>
-                <div class="float-right" style="font-style: italic;">@ESportsResource.Max: 5MB</div>
+                <div class="float-left">@Html.ActionLink(ESportsResource.DownloadTemplate, "DownloadTemplate", new { sportType = Model })</div>
+                <div class="float-right" style="font-style: italic;">@ESportsResource.Max: @limitAccount.ToString("N0") accounts</div>
             </div>
         </div>
     </div>
@@ -73,3 +76,4 @@
 <div class="content-grid">
     <div id="freegrid" class="freegrid display-none"></div>
 </div>
+<input type="hidden" value="@Model" id="txt-sporttype" />

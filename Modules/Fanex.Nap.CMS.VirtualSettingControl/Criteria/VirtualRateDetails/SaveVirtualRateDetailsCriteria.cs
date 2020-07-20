@@ -1,7 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
 {
     using System.Collections;
+    using System.Text;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
 
     public class SaveVirtualRateDetailsCriteria : CriteriaBase
@@ -28,50 +30,61 @@
             => "Acc_CustVirtualMultiplier_Upd";
 
         public override Hashtable GetSpParams()
-        {
-            var result = new Hashtable();
-            result.Add("custid", CustId);
-            result.Add("sporttype", SportType);
-            result.Add("userid", UserId);
-            result.Add("ip", IP);
-            result.Add("errcode", 0);
-            result.Add("errmsg", string.Empty);
-            result.Add("ismanualupdate", IsManualUpdate);
+            => new Hashtable
+            {
+                ["custid"] = CustId,
+                ["sporttype"] = SportType,
+                ["ismanualupdate"] = IsManualUpdate,
+                ["virtualmultiplier"] = BuildXML(),
+                ["userid"] = UserId,
+                ["ip"] = IP,
+                ["errcode"] = 0,
+                ["errmsg"] = string.Empty
+            };
 
-            var xml = "<Root>";
+        private string BuildXML()
+        {
+            var canSetAutoSuspendOnAllLevels = SportType == SportTypeConstants.Basketball;
+
+            var xml = new StringBuilder();
+            xml.Append("<Root>");
 
             foreach (var sport in Rates.Sports)
             {
-                xml += GetRowXML(sport);
+                xml.Append(GetRowXML(sport, canSetAutoSuspendOnAllLevels));
 
                 foreach (var game in sport.Childs)
                 {
-                    xml += GetRowXML(game);
+                    xml.Append(GetRowXML(game, canSetAutoSuspendOnAllLevels));
 
                     foreach (var betTypeGroup in game.Childs)
                     {
-                        xml += GetRowXML(betTypeGroup);
+                        xml.Append(GetRowXML(betTypeGroup, canSetAutoSuspendOnAllLevels));
 
-                        foreach (var betType in betTypeGroup.Childs)
+                        if (betTypeGroup.Childs != null)
                         {
-                            xml += GetRowXML(betType, isBetType: true);
+                            foreach (var betType in betTypeGroup.Childs)
+                            {
+                                xml.Append(GetRowXML(betType, true));
+                            }
                         }
                     }
                 }
             }
 
-            xml += "</Root>";
-            result.Add("virtualmultiplier", xml);
+            xml.Append("</Root>");
 
-            return result;
+            return xml.ToString();
         }
 
         private string GetRowXML(VirtualRateDetailsByGroup rate, bool isBetType = false)
         {
             if (IsMember && isBetType)
             {
-                if (rate.LiveId == 0 && rate.NonliveId == 0
-                    && rate.DisableNonliveAutoSuspend && rate.DisableLiveAutoSuspend)
+                if (rate.LiveId == 0
+                    && rate.NonliveId == 0
+                    && rate.DisableNonliveAutoSuspend
+                    && rate.DisableLiveAutoSuspend)
                 {
                     return string.Empty;
                 }

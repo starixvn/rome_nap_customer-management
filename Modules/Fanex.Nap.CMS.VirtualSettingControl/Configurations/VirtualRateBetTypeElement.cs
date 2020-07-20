@@ -2,7 +2,7 @@
 {
     using System.Configuration;
 
-    public class ESportVirtualRateBetTypeElement : ConfigurationElement
+    public class VirtualRateBetTypeElement : ConfigurationElement
     {
         [ConfigurationProperty("key", IsRequired = true, IsKey = true)]
         public string Key

@@ -367,6 +367,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basketball.
+        /// </summary>
+        public static string Basketball {
+            get {
+                return ResourceManager.GetString("Basketball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Restriction.
         /// </summary>
         public static string BetRestriction {
@@ -1861,6 +1870,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket&apos;s Bet Type.
+        /// </summary>
+        public static string TicketsBetType {
+            get {
+                return ResourceManager.GetString("TicketsBetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         public static string To {
@@ -2100,6 +2118,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string VirtualRateLog {
             get {
                 return ResourceManager.GetString("VirtualRateLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Setting.
+        /// </summary>
+        public static string VirtualRateSetting {
+            get {
+                return ResourceManager.GetString("VirtualRateSetting", resourceCulture);
             }
         }
         

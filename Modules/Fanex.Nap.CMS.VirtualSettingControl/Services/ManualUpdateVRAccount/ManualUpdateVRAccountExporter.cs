@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.CMS.Core.Resources;
     using Infrastructure.Extensions;
     using Infrastructure.Models;
@@ -16,17 +17,19 @@
         private const int Width300 = 300;
 
         private readonly IEnumerable<ManualUpdateAccountDTO> data;
+        private readonly string sportTypeName;
 
-        public ManualUpdateVRAccountExporter(IEnumerable<ManualUpdateAccountDTO> data)
+        public ManualUpdateVRAccountExporter(IEnumerable<ManualUpdateAccountDTO> data, int sportType)
         {
             this.data = data;
+            sportTypeName = CacheRef.GetSportName(sportType);
         }
 
         public override string FileNameWithoutExtension
-            => $"{ESportsResource.ESportsManualVRAccountsExcelFileName}_{DateTime.Today.ToString("yyyyMMdd")}";
+            => $"{sportTypeName}_{ESportsResource.ManualVRAccountsExcelFileName}_{DateTime.Today.ToString("yyyyMMdd")}";
 
         public override string Title
-            => ESportsResource.ESports_ManuallyUpdatedVRAccounts;
+            => $"{sportTypeName} - {ESportsResource.ManuallyUpdatedVRAccounts}";
 
         public override ExcelColumn[] ExcelColumns
             => new[]

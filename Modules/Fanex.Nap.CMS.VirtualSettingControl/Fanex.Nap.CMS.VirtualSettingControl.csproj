@@ -162,11 +162,14 @@
   <ItemGroup>
     <Compile Include="App_Start\VirtualSettingControlAreaRegistration.cs" />
     <Compile Include="App_Start\VirtualSettingControlBundleConfig.cs" />
-    <Compile Include="Configurations\ESportVirtualRateBetTypeCollection.cs" />
-    <Compile Include="Configurations\ESportVirtualRateBetTypeElement.cs" />
+    <Compile Include="Configurations\BasketballVirtualRateSection.cs" />
+    <Compile Include="Configurations\VirtualRateBetTypeCollection.cs" />
+    <Compile Include="Configurations\VirtualRateBetTypeElement.cs" />
     <Compile Include="Configurations\ESportsVirtualRateSection.cs" />
+    <Compile Include="Constants\LimitAccountConstants.cs" />
     <Compile Include="Constants\SportTypeConstants.cs" />
     <Compile Include="Constants\VirtualRateDetails\VirtualRateDetailsLevelConstant.cs" />
+    <Compile Include="Controllers\BasketballVirtualRateController.cs" />
     <Compile Include="Controllers\ManualUpdateVRAccountController.cs" />
     <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetAutoSuspendThresholdLogCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateDetails\GetBetTypeVirtualRateMappingCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateLogsCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\GetVirtualRateRangesCriteria.cs" />
     <Compile Include="Criteria\VirtualRateDetails\SaveVirtualRateDetailsCriteria.cs" />
@@ -201,6 +205,8 @@
     <Compile Include="Criteria\VrAutoAdjustmentReport\GetVrAdjustmentLogCriteria.cs" />
     <Compile Include="Extensions\IDataReaderExtension.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\Basketball\BasketballVirtualRateDetails.cs" />
+    <Compile Include="Models\Basketball\CustomerInfo.cs" />
     <Compile Include="Models\CustomerDashboard\SportPerformance.cs" />
     <Compile Include="Models\CustomerDashboard\BetTypePerformance.cs" />
     <Compile Include="Models\CustomerDashboard\GeneralInfo.cs" />
@@ -211,6 +217,7 @@
     <Compile Include="Models\UploadVirtualRate\ExcelErrorModel.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLog.cs" />
     <Compile Include="Models\VirtualRateDetails\AutoSuspendLogReport.cs" />
+    <Compile Include="Models\VirtualRateDetails\BetTypeVirtualRateMapping.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThreshold.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLog.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLogDTO.cs" />
@@ -236,6 +243,7 @@
     <Compile Include="Repositories\UploadVirtualRate\IUploadVirtualRateRepository.cs" />
     <Compile Include="Repositories\UploadVirtualRate\UploadVirtualRateRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\AutoSuspendRepository.cs" />
+    <Compile Include="Repositories\VirtualRateDetails\BetTypeVirtualRateMappingRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
@@ -247,8 +255,8 @@
     <Compile Include="Services\ManualUpdateVRAccount\IManualUpdateVRAccountService.cs" />
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountExporter.cs" />
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountService.cs" />
-    <Compile Include="Services\UploadVirtualRate\ESportsUploadService.cs" />
-    <Compile Include="Services\UploadVirtualRate\IESportsUploadService.cs" />
+    <Compile Include="Services\UploadVirtualRate\UploadVirtualRateService.cs" />
+    <Compile Include="Services\UploadVirtualRate\IUploadVirtualRateService.cs" />
     <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
     <Compile Include="Services\VirtualRateDetails\SoccerVirtualRateDetailsExporter.cs" />

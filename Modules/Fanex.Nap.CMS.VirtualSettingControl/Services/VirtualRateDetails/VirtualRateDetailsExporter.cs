@@ -6,6 +6,8 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.NAP.CMS.Core.Resources;
     using NPOI.HSSF.Util;
@@ -16,6 +18,7 @@
         private readonly VirtualRateDetailsReport _report;
         private readonly bool _isGlobalSetting;
         private readonly bool _isMember;
+        private readonly int _sportType;
 
         private IFont _font { get; set; }
         private ICellStyle HeaderTextStyle { get; set; }
@@ -31,11 +34,12 @@
 
         private ICellStyle BodyTextStyle { get; set; }
 
-        public VirtualRateDetailsExporter(VirtualRateDetailsReport report)
+        public VirtualRateDetailsExporter(VirtualRateDetailsReport report, int sportType)
         {
             _report = report;
             _isGlobalSetting = report.ReportLevel == 0;
             _isMember = report.ReportLevel == 1;
+            _sportType = sportType;
 
             InitStyles();
         }
@@ -44,25 +48,22 @@
         {
             get
             {
+                if (_sportType == SportTypeConstants.Basketball)
+                {
+                    return $"{CacheRef.GetSportName(_sportType)}_{ViewLang.VirtualRateDetails}";
+                }
+
                 return ViewLang.VirtualRateDetails;
             }
         }
 
         public override string SheetName
-        {
-            get
-            {
-                return ViewLang.VRSetting;
-            }
-        }
+            => ViewLang.VRSetting;
 
         public override string Title
-        {
-            get
-            {
-                return _isGlobalSetting ? ViewLang.VirtualRateSettingDetails + " - " + ViewLang.GlobalSetting : ViewLang.VirtualRateSettingDetails;
-            }
-        }
+            => _isGlobalSetting
+                ? ViewLang.VirtualRateSettingDetails + " - " + ViewLang.GlobalSetting
+                : ViewLang.VirtualRateSettingDetails;
 
         public override ExcelColumn[] ExcelColumns
         {
@@ -99,7 +100,7 @@
 
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderCurrentCell(ViewLang.Product + ":", BodyTextStyle);
-            ExportExcel.RenderCurrentCell(ViewLang.ESports, BodyTextStyle);
+            ExportExcel.RenderCurrentCell(CacheRef.GetSportName(_sportType), BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
             ExportExcel.RenderCurrentCell(string.Empty, BodyTextStyle);
@@ -156,7 +157,9 @@
 
         protected override void ExportBody()
         {
+            var isShowAutoSuspendOnAllLevels = IsShowAutoSuspendOnAllLevels();
             var layerPadding = new List<string>();
+
             for (var i = 0; i < 4; i++)
             {
                 layerPadding.Add(string.Concat(Enumerable.Repeat(" ", i * 8)));
@@ -164,19 +167,19 @@
 
             foreach (var sport in _report.Sports)
             {
-                RenderRate(sport, SportTextStyle, SportDisabledTextStyle, ViewLang.FollowUpline, layerPadding[0]);
+                RenderRate(sport, SportTextStyle, SportDisabledTextStyle, ViewLang.FollowUpline, layerPadding[0], isShowAutoSuspendOnAllLevels);
 
                 foreach (var game in sport.Childs)
                 {
-                    RenderRate(game, GameTextStyle, GameDisabledTextStyle, ViewLang.FollowParent, layerPadding[1]);
+                    RenderRate(game, GameTextStyle, GameDisabledTextStyle, ViewLang.FollowParent, layerPadding[1], isShowAutoSuspendOnAllLevels);
 
                     foreach (var betTypeGroup in game.Childs)
                     {
-                        RenderRate(betTypeGroup, BetTypeGroupTextStyle, BetTypeGroupDisabledTextStyle, ViewLang.FollowParent, layerPadding[2]);
+                        RenderRate(betTypeGroup, BetTypeGroupTextStyle, BetTypeGroupDisabledTextStyle, ViewLang.FollowParent, layerPadding[2], isShowAutoSuspendOnAllLevels);
 
                         foreach (var betType in betTypeGroup.Childs)
                         {
-                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3], isBetType: true);
+                            RenderRate(betType, BetTypeTextStyle, BetTypeDisabledTextStyle, ViewLang.FollowParent, layerPadding[3], true);
                         }
                     }
                 }
@@ -252,9 +255,7 @@
         }
 
         private string GetRateText(decimal rate)
-        {
-            return ((rate + 100) * _report.ActualRate / 100).ToString("#,##0.0000");
-        }
+            => ((rate + 100) * _report.ActualRate / 100).ToString("#,##0.0000");
 
         private void RenderRate(
            VirtualRateDetailsByGroup rate,
@@ -276,7 +277,7 @@
             ExportExcel.RenderCurrentCell(paddingText + nonliveText, _report.EnableNonLive ? enabledStyle : disabledStyle);
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.NonliveAutoSuspend) : string.Empty;
+                var text = isBetType ? AutoSuspendText(rate.DisableNonliveAutoSuspend, rate.NonliveAutoSuspend) : string.Empty;
 
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableNonLive ? enabledStyle : disabledStyle);
@@ -289,7 +290,7 @@
 
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.LiveAutoSuspend) : string.Empty;
+                var text = isBetType ? AutoSuspendText(rate.DisableLiveAutoSuspend, rate.LiveAutoSuspend) : string.Empty;
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableLive ? enabledStyle : disabledStyle);
                 style.Alignment = HorizontalAlignment.Center;
@@ -301,7 +302,11 @@
             ExportExcel.ResetCurrentColumn();
         }
 
-        private string AutoSuspendText(bool? autoSuspend)
-            => autoSuspend == null ? string.Empty : autoSuspend.Value ? ViewLang.Yes : ViewLang.No;
+        private string AutoSuspendText(bool disabledAutoSuspend, bool autoSuspend)
+            => disabledAutoSuspend || !autoSuspend
+            ? ViewLang.No
+            : ViewLang.Yes;
+
+        private bool IsShowAutoSuspendOnAllLevels() => _sportType == SportTypeConstants.Basketball;
     }
 }

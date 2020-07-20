@@ -7,11 +7,13 @@
     var gridOptions = null;
     var freegrid = $("#freegrid");
     var spanValidSetting = $("#valid-setting");
+    var totalValidSettings;
+    var totalExcelErrors;
 
     var progressbar = $("#progressbar");
     var progressLabel = $("#progressLabel");
-    var progressbarTimeId = null;
     var buttonUpdate = $("#btn-update");
+    var sportTypeId = $("#txt-sporttype").val();
 
     function validateUploadedFile(fileControl) {
         CMS.clearTipsyError(textboxFile);
@@ -48,9 +50,12 @@
 
     function verifyByWeb(file) {
         CMS.disableInput();
+        totalValidSettings = 0;
+        totalExcelErrors = [];
 
         var formData = new FormData();
         formData.append("File", file);
+        formData.append("sportType", sportTypeId);
 
         var jqxhr = $.ajax({
             url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/VerifyByWeb"),
@@ -70,41 +75,73 @@
     function verifyByWebSuccessHandler(data, formData) {
         var JSONData = JSON.parse(data);
 
+        if (JSONData.Message) {
+            CMS.showErrorMessage(JSONData.Message);
+            return;
+        }
+
         if (JSONData.ExcelErrors.length) {
             renderGrid(JSONData.ExcelErrors, JSONData.Title);
             spanValidSetting.text("N/A");
+        } else if (!JSONData.TotalRows) {
+            renderEmptyGrid();
         } else {
-            verifyByDB(formData, JSONData.TotalRows);
+            showProgressBar();
+            buttonVerify.prop("disabled", true);
+
+            formData.append("startRow", 1);
+            verifyByDB(formData, 1, JSONData.TotalRows);
         }
     }
 
-    function verifyByDB(formData, totalRows) {
-        buttonVerify.prop("disabled", true);
-        var jqxhr = $.ajax({
+    function verifyByDB(formData, startRow, totalRows) {
+        $.ajax({
             url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/VerifyByDB"),
             type: "POST",
             contentType: false,
             processData: false,
             data: formData,
-            success: verifyByDBSuccessHandler,
+            success: function (data) {
+                verifyByDBSuccessHandler(data, formData, startRow, totalRows);
+            },
             error: CMS.handleAjaxError
         });
-
-        jqxhr.always(function () {
-            hideProgressBar();
-            buttonVerify.prop("disabled", false);
-        });
-
-        showProgressBar(totalRows);
     }
 
-    function verifyByDBSuccessHandler(data) {
-        hideProgressBar();
-
+    function verifyByDBSuccessHandler(data, formData, startRow, totalRows) {
         var JSONData = JSON.parse(data);
-        renderGrid(JSONData.ExcelErrors, JSONData.Title);
-        spanValidSetting.text(JSONData.ValidSetting + "/" + JSONData.TotalRows);
-        buttonUpdate.prop("disabled", !JSONData.ValidSetting);
+
+        if (JSONData.Message) {
+            CMS.showErrorMessage(JSONData.Message);
+            return;
+        }
+
+        totalValidSettings += JSONData.ValidSetting;
+        totalExcelErrors = totalExcelErrors.concat(JSONData.ExcelErrors);
+        startRow += updateBatchSize;
+
+        if (startRow <= totalRows) {
+            increaseProgressBarPercent(totalRows);
+
+            formData.set("startRow", startRow);
+            verifyByDB(formData, startRow, totalRows);
+        } else {
+            renderGrid(totalExcelErrors, "Data Error: " + (totalRows - totalValidSettings));
+            spanValidSetting.text(totalValidSettings + "/" + totalRows);
+
+            hideProgressBar();
+            buttonVerify.prop("disabled", false);
+            buttonUpdate.prop("disabled", totalValidSettings === 0);
+        }
+    }
+
+    function renderEmptyGrid() {
+        renderGrid([], "Data Error: 0");
+        spanValidSetting.text("0/0");
+
+        hideProgressBar();
+        buttonVerify.prop("disabled", false);
+        buttonUpdate.prop("disabled", true);
     }
 
     function renderGrid(data, title) {
@@ -201,6 +238,7 @@
         var jqxhr = $.ajax({
             url: CMS.resolveRootUrl("VirtualSettingControl/UploadVirtualRate/Update"),
             type: "POST",
+            data: { sportType: sportTypeId },
             success: function (data) {
                 var JSONData = JSON.parse(data);
                 if (JSONData.Code === 0) {
@@ -216,12 +254,7 @@
         jqxhr.always(CMS.enableInput);
     }
 
-    function showProgressBar(totalRows) {
-        var batchSize = 150;
-        var totalBatches = Math.ceil(totalRows / batchSize);
-        var percentIncreasePerBatch = Math.ceil(100 / totalBatches);
-        var processPerBatchInSeconds = 6;
-
+    function showProgressBar() {
         progressbar.progressbar({
             value: 0,
             change: function () {
@@ -229,26 +262,26 @@
             }
         });
 
-        function progress() {
-            var val = progressbar.progressbar("value") || 0;
-            val += percentIncreasePerBatch;
-
-            if (val < 100) {
-                progressbar.progressbar("value", val);
-                progressbarTimeId = setTimeout(progress, 1000 * processPerBatchInSeconds);
-            } else {
-                progressbar.progressbar("value", 99);
-            }
-        }
-
-        progress();
         progressbar.removeClass("display-none");
     }
 
     function hideProgressBar() {
-        clearTimeout(progressbarTimeId);
         progressbar.addClass("display-none");
         progressLabel.text("0%");
+    }
+
+    function increaseProgressBarPercent(totalRows) {
+        var totalBatches = Math.ceil(totalRows / updateBatchSize);
+        var percentIncreasePerBatch = Math.ceil(100 / totalBatches);
+
+        var val = progressbar.progressbar("value") || 0;
+        val += percentIncreasePerBatch;
+
+        if (val < 100) {
+            progressbar.progressbar("value", val);
+        } else {
+            progressbar.progressbar("value", 99);
+        }
     }
 
     $(function () {

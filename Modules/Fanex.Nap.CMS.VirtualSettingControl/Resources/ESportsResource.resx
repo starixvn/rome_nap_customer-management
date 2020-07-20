@@ -138,8 +138,8 @@
   <data name="ESports_GlobalAutoSuspendThreshold" xml:space="preserve">
     <value>E-Sports - Global Auto Suspend Threshold</value>
   </data>
-  <data name="ESports_UploadVirtualRate" xml:space="preserve">
-    <value>E-Sports Upload Virtual Rate</value>
+  <data name="UploadVirtualRate" xml:space="preserve">
+    <value>Upload Virtual Rate</value>
   </data>
   <data name="ExcelCell" xml:space="preserve">
     <value>Excel Cell</value>
@@ -207,19 +207,22 @@
   <data name="SubmitAndMarkManualVRUpdated" xml:space="preserve">
     <value>Submit &amp; Mark Manual VR Updated</value>
   </data>
-  <data name="ESports_ManuallyUpdatedVRAccounts" xml:space="preserve">
-    <value>E-Sports - Manually Updated Virtual Rate Accounts</value>
+  <data name="ManuallyUpdatedVRAccounts" xml:space="preserve">
+    <value>Manually Updated Virtual Rate Accounts</value>
   </data>
   <data name="UnmarkManualUpdateAccountConfirmMessage" xml:space="preserve">
-    <value>&lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the E-Sports - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?</value>
+    <value>&lt;p&gt;The accounts not in the manually updated virtual rate list will be updated by the {0} - Upload Virtual Rate function.&lt;/p&gt;Do you want to remove the selected account(s) the list?</value>
   </data>
   <data name="UnmarkManualUpdateAccountSuccessfully" xml:space="preserve">
     <value>The selected accounts have been successfully removed from the list.</value>
   </data>
-  <data name="ESportsManualVRAccountsExcelFileName" xml:space="preserve">
-    <value>E-Sports - Manual VR Accounts</value>
+  <data name="ManualVRAccountsExcelFileName" xml:space="preserve">
+    <value>Manual VR Accounts</value>
   </data>
   <data name="DuplicatedUsernameError" xml:space="preserve">
     <value>Username is duplicated</value>
+  </data>
+  <data name="LimitAccountError" xml:space="preserve">
+    <value>The file contains more than {0} accounts.</value>
   </data>
 </root>

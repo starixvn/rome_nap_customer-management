@@ -6,6 +6,7 @@
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Extensions;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
@@ -65,7 +66,8 @@
             };
 
             dto.SportName = CacheRef.GetSportName(dto.SportType);
-            dto.BetTypeName = CacheRef.GetBetType(dto.BetTypeId);
+            dto.BetTypeName = GetBetTypeName(dto.SportType, dto.BetTypeId);
+
             return dto;
         }
 
@@ -100,6 +102,18 @@
             };
 
             return result;
+        }
+
+        private static string GetBetTypeName(int sportType, int betTypeId)
+        {
+            if (betTypeId == -1)
+            {
+                return string.Empty;
+            }
+
+            return sportType == SportTypeConstants.Basketball
+                ? CacheRef.GetVRBetTypeName(sportType, betTypeId)
+                : CacheRef.GetBetType(betTypeId);
         }
     }
 }

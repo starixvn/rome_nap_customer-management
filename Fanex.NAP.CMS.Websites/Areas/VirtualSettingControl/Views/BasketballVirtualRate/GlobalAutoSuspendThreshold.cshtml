@@ -1,0 +1,118 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
+@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Basketball - Global Auto Suspend Threshold";
+    var hostPermission = (bool)ViewBag.HostPermission;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/virtual-rate-details/index-styles")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            VirtualRateDetails_LeaveSiteWarning: "@Html.Raw(ViewLang.VirtualRateDetails_LeaveSiteWarning)",
+            VirtualRateSubmitChangesConfirm: "@ViewLang.VirtualRateSubmitChangesConfirm"
+        };
+    </script>
+    @Scripts.Render(VirtualSettingControlBundleConfig.Basketball_GlobalAutoSuspendThresholdScript)
+}
+@model GlobalAutoSuspendThreshold
+<div class="no-filter"></div>
+<div id="report-container" class="large-margin-bottom">
+    @if (hostPermission)
+    {
+        <div>
+            <button type="button" class="submit btn-submit-changes">@ViewLang.SubmitAllChanges</button>
+        </div>
+    }
+    <div class="content-grid">
+        <div class="grid-title">
+            <div class="grid-title-label">@ESportsResource.GlobalAutoSuspendThreshold</div>
+            <div class="grid-toolbox">
+                <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export" />
+            </div>
+        </div>
+        <table id="tbl-report" class="tbl-report">
+            <thead>
+                <tr>
+                    <th class="col-group col-threshold">
+                        <span class="ico-collapse" id="ico-collapse"></span>
+                    </th>
+                    <th class="col-nonlive">@ViewLang.NonLive</th>
+                    <th class="col-live">@ViewLang.Live</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sport in Model.Sports)
+                {
+                    var hasGames = sport.Childs.Any();
+                    <tr data-level="@sport.GroupLevel" data-levelid="@sport.LevelId" data-sportid="@sport.GroupId">
+                        <td data-col="groupname">@sport.GroupName</td>
+                        <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.NonliveAutoSuspendThreshold, sport.HasRepetition, sport.GroupName, hasGames)</td>
+                        <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.LiveAutoSuspendThreshold, sport.HasRepetition, sport.GroupName, hasGames)</td>
+                    </tr>
+
+                    foreach (var game in sport.Childs)
+                    {
+                        var hasBetTypeGroups = game.Childs.Any();
+                        <tr data-level="@game.GroupLevel" data-levelid="@game.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId">
+                            <td data-col="groupname"><span class="group-toggle group-expand">[−]</span>@game.GroupName</td>
+                            <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.NonliveAutoSuspendThreshold, game.HasRepetition, game.GroupName, hasBetTypeGroups)</td>
+                            <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.LiveAutoSuspendThreshold, game.HasRepetition, game.GroupName, hasBetTypeGroups)</td>
+                        </tr>
+
+                        foreach (var betTypeGroup in game.Childs)
+                        {
+                            var hasBetTypes = betTypeGroup.Childs.Any();
+                            <tr data-level="@betTypeGroup.GroupLevel" data-levelid="@betTypeGroup.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId" data-bettypegroupid="@betTypeGroup.GroupId">
+                                <td data-col="groupname">
+                                    @if (hasBetTypes)
+                                    {
+                                        <span class="group-toggle group-collapse">[−]</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="margin-right"></span>
+                                    }
+
+                                    @betTypeGroup.GroupName
+                                </td>
+                                <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.NonliveAutoSuspendThreshold, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)</td>
+                                <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.LiveAutoSuspendThreshold, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)</td>
+                            </tr>
+
+                            if (hasBetTypes)
+                            {
+                                foreach (var betType in betTypeGroup.Childs)
+                                {
+                                    <tr data-level="@betType.GroupLevel" data-levelid="@betType.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId" data-bettypegroupid="@betTypeGroup.GroupId" data-bettypeid="@betType.GroupId">
+                                        <td data-col="groupname">@betType.GroupName</td>
+                                        <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.NonliveAutoSuspendThreshold, betType.HasRepetition, betType.GroupName, false)</td>
+                                        <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.LiveAutoSuspendThreshold, betType.HasRepetition, betType.GroupName, false)</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    @if (hostPermission)
+    {
+        <div>
+            <button type="button" class="submit btn-submit-changes">@ViewLang.SubmitAllChanges</button>
+        </div>
+    }
+</div>

@@ -4,11 +4,11 @@
     using Infrastructure.Models;
     using Models.UploadVirtualRate;
 
-    public interface IESportsUploadService
+    public interface IUploadVirtualRateService
     {
         ExcelErrorModel VerifyByWeb(Stream stream, string fileExtension);
 
-        ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId);
+        ExcelErrorModel VerifyByDB(Stream stream, string fileExtension, int userId, int startRow);
 
         Result Update(int userId, string ip);
     }

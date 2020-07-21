@@ -345,7 +345,11 @@ var virtualRateGridEvents = (function ($) {
         }
 
         selector += ' [data-col="' + column.data("col") + '"] .ddl-rate';
-        tableBody.find(selector).val(value);
+        tableBody.find(selector).each(function () {
+            var $this = $(this);
+            $this.val(value);
+            memberLevel && rateChanged($this);
+        });
     }
 
     function copyToRelated(element) {
@@ -367,7 +371,11 @@ var virtualRateGridEvents = (function ($) {
         }
 
         selector += ' [data-col="' + column.data("col") + '"] .ddl-rate';
-        tableBody.find(selector).val(value);
+        tableBody.find(selector).each(function () {
+            var $this = $(this);
+            $this.val(value);
+            memberLevel && rateChanged($this);
+        });
     }
 
     function autoSuspendEdit() {

@@ -31,7 +31,9 @@
             string firstWeekInformed,
             string secondWeekInformed,
             string currency,
-            byte preventiveActionId)
+            byte preventiveActionId,
+            string voidTime,
+            decimal limitAmount)
         {
             CustId = custId;
             Username = username;
@@ -59,6 +61,8 @@
             SecondWeekInformed = secondWeekInformed;
             Currency = currency;
             PreventiveActionId = preventiveActionId;
+            VoidTime = voidTime;
+            LimitAmount = limitAmount;
         }
 
         public int CustId { get; }
@@ -120,5 +124,9 @@
         public string MarkDateString { get; set; }
 
         public IEnumerable<string> Reasons { get; set; }
+
+        public string VoidTime { get;}
+
+        public decimal LimitAmount { get;}
     }
 }

@@ -202,7 +202,7 @@
                         columns.push({ Name: "colMaxBet", Value: renderMaxPerMatchOrMaxBet(problemAccount.MaxBet), CssClass: "align-right" });
                     }
 
-                    columns.push({ Name: "colPreventiveAction", Value: problemAccount.ActionName });
+                    columns.push({ Name: "colPreventiveAction", Value: renderPreventAction(problemAccount) });
                     columns.push({ Name: "colMarkDate", Value: problemAccount.MarkDateString });
                     columns.push({ Name: "colReason", Value: renderReasonCell(problemAccount.Reasons || []) });
                     columns.push({ Name: "colComment", Value: problemAccount.Comment });
@@ -287,6 +287,16 @@
             isVIP,
             '" />'
         ].join("");
+    }
+
+    function renderPreventAction(problemAccount) {
+        if (problemAccount.PreventiveActionId === 2) {
+            var limitAmount = problemAccount.LimitAmount === 0 ? "Unlimited" : problemAccount.LimitAmount;
+
+            return `${problemAccount.PreventiveAction} - ${problemAccount.VoidTime} - ${limitAmount}`;
+        } else {
+            return problemAccount.PreventiveAction;
+        }
     }
 
     function bindEventsAfterRenderProblemAccounts() {

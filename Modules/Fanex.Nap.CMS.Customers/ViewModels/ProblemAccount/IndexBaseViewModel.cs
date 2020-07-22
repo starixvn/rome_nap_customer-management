@@ -12,6 +12,7 @@
     public abstract class IndexBaseViewModel
     {
         public const int MaxInputUsernames = 100;
+        public const int AvoidWinningTimeRange = 30;
 
         protected IndexBaseViewModel(
             bool hasHostPermission,
@@ -105,9 +106,19 @@
 
         protected static IEnumerable<SelectListItem> BuildWinningTimes()
         {
-            var listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem { Text = ProblemAccountResource.PleaseSelect, Value = "0", Selected = true });
-            listItems.Add(new SelectListItem { Text = "23:59", Value = "23:59" });
+            var listItems = new List<SelectListItem>
+            {
+                new SelectListItem { Text = ProblemAccountResource.PleaseSelect, Value = "0", Selected = true },
+                new SelectListItem { Text = "23:59", Value = "23:59" }
+            };
+            var time = new TimeSpan(23, 0, 0);
+            var beginningDayTime = new TimeSpan(0, 0, 0);
+            while(time > beginningDayTime)
+            {
+                var displayTime = time.ToString(@"hh\:mm");
+                listItems.Add(new SelectListItem { Text = displayTime, Value = displayTime });
+                time = time.Subtract(TimeSpan.FromMinutes(AvoidWinningTimeRange));
+            }
 
             return listItems;
         }

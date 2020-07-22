@@ -10,7 +10,8 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         reason = null,
         spanReason = null,
         time = null,
-        spanTime = null;
+        spanTime = null,
+        txtLimitAmount = null;
 
     function cacheElements() {
         successInlineMessage = form.find("#div-successInlineMessage");
@@ -24,6 +25,7 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         spanReason = form.find('span[id="ddl-reason"]');
         time = form.find("#ddl-time").combobox();
         spanTime = form.find('span[id="ddl-time"]');
+        txtLimitAmount = form.find("#txt-limitAmount");
     }
 
     function bindEvents() {

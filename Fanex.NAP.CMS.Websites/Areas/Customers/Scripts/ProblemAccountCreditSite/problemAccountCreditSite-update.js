@@ -6,7 +6,8 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
         ddlReason = null,
         spanReason = null,
         ddlTime = null,
-        spanTime = null;
+        spanTime = null,
+        txtLimitAmount = null;
 
     function initForm(usernames, level) {
         form.find("#txt-level").val(level);
@@ -21,7 +22,10 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
         spanReason = form.find('span[id="ddl-reason"]');
 
         ddlTime = form.find("#ddl-time").combobox();
+        ddlTime.combobox('disable');
         spanTime = form.find('span[id="ddl-time"]');
+
+        txtLimitAmount = form.find("#txt-limitAmount");
     }
 
     function bindEvents() {
@@ -46,6 +50,14 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
             html: true,
             opacity: 0.9,
             gravity: "nw"
+        });
+
+        $("#ckb-time").change(function () {
+            if (this.checked) {
+                ddlTime.combobox('enable');
+            } else {
+                ddlTime.combobox('disable');
+            }
         });
     }
 

@@ -7,7 +7,8 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
         reason = null,
         spanReason = null,
         time = null,
-        spanTime = null;
+        spanTime = null,
+        txtLimitAmount = null;
 
     function cacheElements() {
         inlineMessage = form.find("#div-inlineMessage");
@@ -18,6 +19,7 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
         spanReason = form.find('span[id="ddl-reason"]');
         time = form.find("#ddl-time").combobox();
         spanTime = form.find('span[id="ddl-time"]');
+        txtLimitAmount = form.find("#txt-limitAmount");
     }
 
     function bindEvents() {

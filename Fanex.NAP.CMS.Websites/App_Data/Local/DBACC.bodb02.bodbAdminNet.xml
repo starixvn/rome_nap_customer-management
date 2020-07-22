@@ -25,7 +25,7 @@
   <Function Name="Problem Accounts - Credit Sites">
     <Setting Key="NAP_ProblemAccount_CurrencySel" SpName="NAP_ProblemAccount_CurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_ReasonSel" SpName="NAP_ProblemAccount_ReasonSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_VoidedTransactionList" SpName="NAP_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_ProblemAccount_ActionSel" SpName="NAP_ProblemAccount_ActionSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>

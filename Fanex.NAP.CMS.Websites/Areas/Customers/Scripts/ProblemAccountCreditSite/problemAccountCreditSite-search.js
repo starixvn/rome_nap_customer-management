@@ -208,7 +208,7 @@
                 { Name: "colCurrency", Value: problemAccount.Currency },
                 { Name: "colMaxPerEvent", Value: renderMaxPerEventOrMaxPerBet(maxPerEvents) },
                 { Name: "colMaxPerBet", Value: renderMaxPerEventOrMaxPerBet(maxPerBets) },
-                { Name: "colPreventiveAction", Value: problemAccount.PreventiveAction },
+                { Name: "colPreventiveAction", Value: renderPreventAction(problemAccount) },
                 { Name: "colMarkDate", Value: problemAccount.MarkDateString },
                 { Name: "colReason", Value: renderReasonCell(problemAccount.Reasons || []) },
                 { Name: "colComment", Value: problemAccount.Comment },
@@ -322,6 +322,16 @@
                 numeral(problemAccount.AbnormalBetNumber).format(CMSConstants.NumberFormat.IntNumber),
                 '</a>'].join("")
             : "0";
+    }
+
+    function renderPreventAction(problemAccount) {
+        if (problemAccount.PreventiveActionId === 2) {
+            var limitAmount = problemAccount.LimitAmount === 0 ? "Unlimited" : problemAccount.LimitAmount;
+
+            return `${problemAccount.PreventiveAction} - ${problemAccount.VoidTime} - ${limitAmount}`;
+        } else {
+            return problemAccount.PreventiveAction;
+        }
     }
 
     function renderSelectCell(username, currency) {

@@ -27,6 +27,7 @@
         {
             FilterPreventiveActions = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.All }, preventiveActions);
             MarkNewPreventiveActions = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect }, preventiveActions);
+            VoidWinningTimes = BuildWinningTimes();
         }
 
         public IEnumerable<SelectListItem> AcknowledgementTypes
@@ -38,5 +39,7 @@
         public IEnumerable<SelectListItem> FilterPreventiveActions { get; }
 
         public IEnumerable<SelectListItem> MarkNewPreventiveActions { get; }
+
+        public IEnumerable<SelectListItem> VoidWinningTimes { get; }
     }
 }

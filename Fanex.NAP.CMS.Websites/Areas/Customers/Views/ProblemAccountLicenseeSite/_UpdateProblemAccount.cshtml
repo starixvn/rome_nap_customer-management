@@ -25,16 +25,16 @@
         </div>
         <div class="voidWinningOption column width-250 display-none">
             <div class="lbl-field width-250 padding-top12">
-                <input type="checkbox" id="ckb-time" />
+                <input type="checkbox" id="ckb-time" name="updateTime" value="true"/>
                 <label>@ProblemAccountResource.Time</label>
             </div>
             <div class="edit-field width-250">
-                @Html.DropDownList("time", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
+                @Html.DropDownList("voidTime", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
             </div>
         </div>
         <div class="voidWinningOption column width-190 display-none">
             <div class="lbl-field width-190 padding-top12">
-                <input type="checkbox" id="ckb-limitAmount" />
+                <input type="checkbox" id="ckb-limitAmount" name="updateLimitAmount" value="true"/>
                 <label>@ProblemAccountResource.LimitAmount</label>
             </div>
             <div class="edit-field width-190">
@@ -43,6 +43,7 @@
                        autocomplete="off"
                        maxlength="13"
                        name="limitAmount"
+                       placeholder="@ProblemAccountResource.Unlimited"
                        id="txt-limitAmount"
                        disabled />
                 <span class="note-info-message" title="@ProblemAccountResource.VoidWinningTicketLimitAmountHint"></span>

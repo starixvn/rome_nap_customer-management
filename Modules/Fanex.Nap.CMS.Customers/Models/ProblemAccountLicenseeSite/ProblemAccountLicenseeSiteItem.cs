@@ -20,7 +20,9 @@
             string comment,
             string inform1,
             string inform2,
-            int? abnormalBetNumber)
+            int? abnormalBetNumber,
+            string voidTime,
+            double limitAmount)
         {
             CustId = custId;
             Site = site;
@@ -37,6 +39,8 @@
             Inform1 = inform1;
             Inform2 = inform2;
             AbnormalBetNumber = abnormalBetNumber;
+            VoidTime = voidTime;
+            LimitAmount = limitAmount;
         }
 
         public int CustId { get; }
@@ -73,5 +77,9 @@
         public int? AbnormalBetNumber { get; }
 
         public IEnumerable<string> Reasons { get; set; }
+
+        public string VoidTime { get; }
+
+        public double LimitAmount { get; }
     }
 }

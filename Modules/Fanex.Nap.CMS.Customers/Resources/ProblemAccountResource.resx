@@ -366,4 +366,10 @@
   <data name="VoidWinningTicketLimitAmountHint" xml:space="preserve">
     <value>The system will void the ticket sequentially by Win Loss Date until the total stake reach the Limit Amount. The overflown tickets will not be voided and will be settled as Won.</value>
   </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="AtSettlement" xml:space="preserve">
+    <value>At Settlement</value>
+  </data>
 </root>

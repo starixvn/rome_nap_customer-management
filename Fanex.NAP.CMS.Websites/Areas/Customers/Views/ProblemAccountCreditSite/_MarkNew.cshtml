@@ -41,7 +41,7 @@
                 <label>@ProblemAccountResource.Time</label>
             </div>
             <div class="edit-field width-250">
-                @Html.DropDownList("time", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
+                @Html.DropDownList("voidTime", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })
             </div>
         </div>
         <div class="voidWinningOption column width-190 display-none">
@@ -54,6 +54,7 @@
                        autocomplete="off"
                        maxlength="13"
                        name="limitAmount"
+                       placeholder="@ProblemAccountResource.Unlimited"
                        id="txt-limitAmount" />
                 <span class="note-info-message" title="@ProblemAccountResource.VoidWinningTicketLimitAmountHint"></span>
             </div>

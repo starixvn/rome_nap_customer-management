@@ -62,6 +62,9 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
             } else {
                 $(".voidWinningOption").addClass("display-none");
             }
+
+            time.val("0");
+            txtLimitAmount.val("");
         });
 
         form.off("submit").on("submit", function (event) {
@@ -73,6 +76,11 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
             html: true,
             opacity: 0.9,
             gravity: "nw"
+        });
+
+        txtLimitAmount.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        txtLimitAmount.on("cut copy paste", function (e) {
+            e.preventDefault();
         });
     }
 

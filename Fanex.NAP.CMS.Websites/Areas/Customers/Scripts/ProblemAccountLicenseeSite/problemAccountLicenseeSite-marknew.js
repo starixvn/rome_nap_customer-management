@@ -56,6 +56,9 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
             } else {
                 $(".voidWinningOption").addClass("display-none");
             }
+
+            time.val("0");
+            txtLimitAmount.val("");
         });
 
         form.off("submit").on("submit", function (event) {
@@ -68,12 +71,26 @@ function ProblemAccountLicenseeSiteMarkNew(form, reloadData) {
             opacity: 0.9,
             gravity: "nw"
         });
+
+        txtLimitAmount.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        txtLimitAmount.on("cut copy paste", function (e) {
+            e.preventDefault();
+        });
     }
 
     function isValidFormData() {
         return isValidUsernames()
             && isValidDropdownList(preventiveAction, spanPreventiveAction)
-            && isValidDropdownList(reason, spanReason);
+            && isValidDropdownList(reason, spanReason)
+            && isValidVoidTime();
+    }
+
+    function isValidVoidTime() {
+        if (preventiveAction.val() === '2') {
+            return isValidDropdownList(time, spanTime);
+        } else {
+            return true;
+        }
     }
 
     function submitForm() {

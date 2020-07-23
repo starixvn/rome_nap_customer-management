@@ -169,6 +169,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At Settlement.
+        /// </summary>
+        public static string AtSettlement {
+            get {
+                return ResourceManager.GetString("AtSettlement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Both weeks informed by.
         /// </summary>
         public static string BothWeeksInformedBy {
@@ -687,6 +696,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlimited.
+        /// </summary>
+        public static string Unlimited {
+            get {
+                return ResourceManager.GetString("Unlimited", resourceCulture);
             }
         }
         

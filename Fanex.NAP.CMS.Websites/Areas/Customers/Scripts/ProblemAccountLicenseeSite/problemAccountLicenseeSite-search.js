@@ -290,12 +290,12 @@
     }
 
     function renderPreventAction(problemAccount) {
-        if (problemAccount.PreventiveActionId === 2) {
+        if (problemAccount.ActionName === "Void Winning Tickets") {
             var limitAmount = problemAccount.LimitAmount === 0 ? "Unlimited" : problemAccount.LimitAmount;
 
-            return `${problemAccount.PreventiveAction} - ${problemAccount.VoidTime} - ${limitAmount}`;
+            return `${problemAccount.ActionName} - ${problemAccount.VoidTime} - ${limitAmount}`;
         } else {
-            return problemAccount.PreventiveAction;
+            return problemAccount.ActionName;
         }
     }
 

@@ -38,6 +38,9 @@ function ProblemAccountLicenseeSiteUpdate(form, reloadData) {
             } else {
                 $(".voidWinningOption").addClass("display-none");
             }
+
+            $("#ckb-time").prop("checked", false).change();
+            $("#ckb-limitAmount").prop("checked", false).change();
         });
 
         form.off("submit").on("submit", function (event) {
@@ -57,6 +60,7 @@ function ProblemAccountLicenseeSiteUpdate(form, reloadData) {
             } else {
                 ddlTime.combobox('disable');
             }
+            ddlTime.val('0').combobox('refresh');
         });
 
         $("#ckb-limitAmount").change(function () {
@@ -65,13 +69,27 @@ function ProblemAccountLicenseeSiteUpdate(form, reloadData) {
             } else {
                 txtLimitAmount.prop("disabled", true);
             }
+            txtLimitAmount.val("");
+        });
+
+        txtLimitAmount.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        txtLimitAmount.on("cut copy paste", function (e) {
+            e.preventDefault();
         });
     }
 
     function validateUpdate() {
         return isValidDropdownList(ddlPreventiveAction, spanPreventiveAction)
             && isValidDropdownList(ddlReason, spanReason)
-            && isValidDropdownList(ddlTime, spanTime);
+            && isValidVoidTime();
+    }
+
+    function isValidVoidTime() {
+        if ($("#ckb-time").checked) {
+            return isValidDropdownList(ddlTime, spanTime);
+        } else {
+            return true;
+        }
     }
 
     function isValidDropdownList(ddlTag, span) {

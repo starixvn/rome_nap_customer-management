@@ -180,11 +180,13 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
             int userId,
             string ip)
         {
             var result = repository.ExecuteNonQuery(
-                new MarkNewLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), userId, ip));
+                new MarkNewLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, userId, ip));
 
             if (result.IsSuccess)
             {
@@ -199,11 +201,15 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
+            bool updateTime,
+            bool updateLimitAmount,
             int userId,
             string ip)
         {
             var result = repository.ExecuteNonQuery(
-                new UpdateLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), userId, ip));
+                new UpdateLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount,updateTime, updateLimitAmount, userId, ip));
 
             if (result.IsSuccess)
             {

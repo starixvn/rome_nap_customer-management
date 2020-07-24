@@ -88,7 +88,16 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         return isValidDropdownList(level, spanLevel)
             && isValidUsernames()
             && isValidDropdownList(preventiveAction, spanPreventiveAction)
-            && isValidDropdownList(reason, spanReason);
+            && isValidDropdownList(reason, spanReason)
+            && isValidVoidTime();
+    }
+
+    function isValidVoidTime() {
+        if (preventiveAction.val() === '2') {
+            return isValidDropdownList(time, spanTime);
+        } else {
+            return true;
+        }
     }
 
     function submitForm() {

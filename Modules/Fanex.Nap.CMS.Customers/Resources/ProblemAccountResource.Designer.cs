@@ -493,6 +493,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limit Amount must be positive.
+        /// </summary>
+        public static string PositiveLimitAmountError {
+            get {
+                return ResourceManager.GetString("PositiveLimitAmountError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reason.
         /// </summary>
         public static string Reason {

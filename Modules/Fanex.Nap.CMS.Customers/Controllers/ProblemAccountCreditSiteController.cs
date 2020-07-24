@@ -104,6 +104,8 @@
                 vm.PreventiveAction,
                 vm.Reason,
                 vm.Comment,
+                vm.VoidTime,
+                vm.LimitAmount,
                 CurrentSession.UserId,
                 CurrentContext.IP);
 
@@ -124,6 +126,10 @@
                 vm.PreventiveAction,
                 vm.Reason,
                 vm.Comment,
+                vm.VoidTime,
+                vm.LimitAmount,
+                vm.UpdateTime,
+                vm.UpdateLimitAmount,
                 CurrentSession.UserId,
                 CurrentContext.IP);
 

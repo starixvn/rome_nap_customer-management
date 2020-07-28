@@ -405,7 +405,7 @@
             };
 
             dto.SportName = CacheRef.GetSportName(dto.SportType);
-            dto.BetTypeName = CacheRef.GetBetType(dto.BetTypeId);
+            dto.BetTypeName = GetBetTypeName(dto.SportType, dto.BetTypeId);
 
             dto.NonliveLog = GetValueFollowingLog(reader, "NonLive");
             dto.LiveLog = GetValueFollowingLog(reader, "Live");

@@ -13,5 +13,7 @@
         ExcelColumn[] ExcelColumns { get; }
 
         void ResponseStream();
+
+        void ResponseCsvStream();
     }
 }

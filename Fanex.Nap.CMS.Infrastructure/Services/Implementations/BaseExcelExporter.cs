@@ -1,10 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 {
-    using System.Linq;
     using Helpers;
     using Interfaces;
     using Models;
     using NPOI.HSSF.UserModel;
+    using System.Linq;
     using Web;
 
     public abstract class BaseExcelExporter : IExcelExporter
@@ -69,6 +69,13 @@
 
             ExcelHelper.ResponseStream(_exportExcel.ExcelFile, ExcelHelper.FormatFileName(FileNameWithoutExtension));
         }
+
+        public void ResponseCsvStream()
+        {
+            ExcelHelper.ResponseCsvStream(ExportCsv(), ExcelHelper.FormatFileName(FileNameWithoutExtension));
+        }
+
+        protected virtual byte[] ExportCsv() => new byte[] { };
 
         protected virtual void Export()
         {

@@ -5,11 +5,12 @@
         public GlobalSettingItem(
             string username,
             string level,
+            bool isLock,
             string currency,
             int profileId,
             string name,
             decimal maxTurnover)
-            : this(0, username, level, currency, profileId, name, maxTurnover)
+            : this(0, username, level, isLock, currency, profileId, name, maxTurnover)
         {
         }
 
@@ -17,6 +18,7 @@
             int custId,
             string username,
             string level,
+            bool isLock,
             string currency,
             int profileId,
             string profileName,
@@ -25,6 +27,7 @@
             CustId = custId;
             Username = username;
             Level = level;
+            IsLock = isLock;
             Currency = currency;
             ProfileId = profileId;
             ProfileName = profileName;
@@ -36,6 +39,8 @@
         public string Username { get; }
 
         public string Level { get; }
+
+        public bool IsLock { get; }
 
         public string Currency { get; }
 

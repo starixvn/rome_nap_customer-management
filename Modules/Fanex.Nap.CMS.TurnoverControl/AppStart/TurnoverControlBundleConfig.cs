@@ -32,6 +32,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.AppStart
                     "~/Areas/TurnoverControl/Scripts/GlobalSetting/AddGlobalSetting.js",
                     "~/Areas/TurnoverControl/Scripts/GlobalSetting/DeleteGlobalSetting.js",
                     "~/Areas/TurnoverControl/Scripts/GlobalSetting/EditGlobalSetting.js",
+                    "~/Areas/TurnoverControl/Scripts/GlobalSetting/ToggleLockGlobalSetting.js",
                     "~/Areas/TurnoverControl/Scripts/GlobalSetting/GlobalSettingManager.js"));
 
             AddStyle(
@@ -65,6 +66,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.AppStart
                     "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/HouseTurnoverPopup.js",
                     "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/EditMaxTurnover.js",
                     "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/EditMultipleMaxTurnover.js",
+                    "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/ToggleLockEventSetting.js",
                     "~/Areas/TurnoverControl/Scripts/TurnoverMonitor/TurnoverMonitorManager.js"));
 
             AddStyle(

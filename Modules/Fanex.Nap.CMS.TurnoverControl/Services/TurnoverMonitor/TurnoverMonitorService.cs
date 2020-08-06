@@ -202,5 +202,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
             return result;
         }
+
+        public Result Lock(LockSettingParam param, int userId, string ip)
+            => turnoverMonitorRepository.ExecuteNonQuery(new LockEventSettingCriteria(param, userId, ip));
     }
 }

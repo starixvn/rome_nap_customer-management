@@ -277,6 +277,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Event Setting Lock.
+        /// </summary>
+        public static string EventSettingLock {
+            get {
+                return ResourceManager.GetString("EventSettingLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Excel file.
         /// </summary>
         public static string ExcelFile {
@@ -300,6 +309,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string ExcludeCompletedEvents {
             get {
                 return ResourceManager.GetString("ExcludeCompletedEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exposure.
+        /// </summary>
+        public static string Exposure {
+            get {
+                return ResourceManager.GetString("Exposure", resourceCulture);
             }
         }
         
@@ -466,6 +484,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global Setting Lock.
+        /// </summary>
+        public static string GlobalSettingLock {
+            get {
+                return ResourceManager.GetString("GlobalSettingLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to HDP &amp; ML.
         /// </summary>
         public static string HDP_ML {
@@ -597,6 +624,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Resources {
         public static string LiveOU {
             get {
                 return ResourceManager.GetString("LiveOU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lock.
+        /// </summary>
+        public static string Lock {
+            get {
+                return ResourceManager.GetString("Lock", resourceCulture);
             }
         }
         

@@ -35,10 +35,9 @@ function EditGlobalSetting(viewResources, table, resultMessageDiv, reloadGridFun
     this.initialize = function () {
         table.on("click", ".edit-maxturnover", function () {
             var $this = $(this);
-            var text = $this.text();
             var inputHtml = [
                 '<input type="text" class="clearable x-icon textbox-maxturnover" maxlength="13" value="',
-                text.substring(0, text.indexOf(".")),
+                $this.text(),
                 '" data-custid="',
                 $this.data("custid"),
                 '" data-username="',

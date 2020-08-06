@@ -1,8 +1,8 @@
 ﻿"use strict";
 (function ($) {
     var totalColumns;
-    var readPermissionColumnNumber = 10;
-    var hostPermissionColumnNumber = 11;
+    var readPermissionColumnNumber = 12;
+    var hostPermissionColumnNumber = 13;
     var domElements = {
         datePickerPlugin: null,
         sportDropdown: $("#ddl-sport"),
@@ -280,9 +280,11 @@
     function renderCustomer(customer, eventDate) {
         var html = [];
 
-        var eventStatus = customer.EventStatus.toLowerCase();
         var hostPermission = customer.SportType === 1 ? soccerHostPermission : otherSportsHostPermission;
-        var canEditMaxTurnover = hostPermission && eventStatus !== "completed";
+        var eventStatus = customer.EventStatus.toLowerCase();
+        var isLock = customer.IsGlobalLock || customer.IsEventLock;
+        var canEditLockStatus = hostPermission && eventStatus !== "completed";
+        var canEditMaxTurnover = canEditLockStatus && !isLock;
 
         html.push('<tr id="tr');
         html.push(customer.CustId);
@@ -291,7 +293,7 @@
         if (hostPermission) {
             html.push('<td><div class="col-checkbox-body align-center">');
 
-            if (eventStatus !== "completed") {
+            if (eventStatus !== "completed" && !isLock) {
                 html.push('<input type="checkbox" data-custid="');
                 html.push(customer.CustId);
                 html.push('" data-matchid="');
@@ -312,6 +314,14 @@
 
         html.push('<td><div class="col-level-body align-center">');
         html.push(customer.Level);
+        html.push('</div></td>');
+
+        html.push('<td><div class="col-lock-body align-center">');
+        customer.IsGlobalLock && html.push('<span class="ico-lock"></span>');
+        html.push('</div></td>');
+
+        html.push('<td><div class="col-lock-body align-center">');
+        html.push(renderEventSettingLockCell(canEditLockStatus, customer));
         html.push('</div></td>');
 
         html.push('<td><div class="col-currency-body align-center">');
@@ -341,6 +351,25 @@
         renderLiveAndNonLiveMaxTurnover(html, canEditMaxTurnover, customer, customer.Others);
 
         return html.join("");
+    }
+
+    function renderEventSettingLockCell(hasHostPermission, customer) {
+        var cell = ['<span class="', customer.IsEventLock ? "ico-lock" : "ico-unlock"];
+
+        if (hasHostPermission) {
+            cell.push(' event-setting-lock" ');
+            cell.push('data-custid="');
+            cell.push(customer.CustId);
+            cell.push('" data-matchid="');
+            cell.push(customer.MatchId);
+            cell.push('" data-isgroupheadline="');
+            cell.push(customer.IsGroupHeadline);
+            cell.push('" data-sporttype="');
+            cell.push(customer.SportType);
+        }
+
+        cell.push('"></span>');
+        return cell.join("");
     }
 
     function renderLiveAndNonLiveMaxTurnover(html, canEditMaxTurnover, customer, maxTurnovers) {
@@ -398,13 +427,13 @@
             html.push('"><a class="c hand" href="javascript:;" id="link');
             html.push(customer.CustId);
             html.push('">');
-            html.push(numeral(turnover.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+            html.push(numeral(turnover.MaxTurnover).format(CMSConstants.NumberFormat.IntNumber));
             html.push('</a><span class="ico-edit" title="');
             html.push(viewResources.Edit);
             html.push('"></span></span></div>');
         } else {
             html.push('<div class="float-right table-cell">');
-            html.push(numeral(turnover.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber));
+            html.push(numeral(turnover.MaxTurnover).format(CMSConstants.NumberFormat.IntNumber));
             html.push('</div>');
         }
 
@@ -522,6 +551,9 @@
             multipleEditHandler.initialize();
 
             domElements.allCheckbox = multipleEditHandler.getAllCheckbox();
+
+            var lockHandler = new ToggleLockEventSetting(domElements.tableBody, getCustomerTurnovers);
+            lockHandler.initialize();
         }
 
         var popupHandler = new HouseTurnoverPopup(domElements.tableBody);

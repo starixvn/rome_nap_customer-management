@@ -26,5 +26,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         Result Edit(UpdateMaxTurnoverParam param, int userId, string ip);
 
         Result Delete(int custId, bool isGroupHeadline, short sportType, int userId, string ip);
+
+        Result Lock(LockSettingParam param, int userId, string ip);
     }
 }

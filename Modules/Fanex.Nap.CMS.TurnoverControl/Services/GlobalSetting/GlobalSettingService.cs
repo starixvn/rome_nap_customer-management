@@ -91,11 +91,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
                     new GlobalSettingListCriteria(username, sportType, exchangeId));
 
                 globalSettings = rawData
-                    .GroupBy(g => new { g.CustId, g.Username, g.Level, g.Currency })
+                    .GroupBy(g => new { g.CustId, g.Username, g.Level, g.IsLock, g.Currency })
                     .Select(grp => new GlobalSettingCustomer(
                         grp.Key.CustId,
                         grp.Key.Username,
                         grp.Key.Level,
+                        grp.Key.IsLock,
                         grp.Key.Currency,
                         grp.Select(g => new MaxTurnoverItem(g.ProfileId, g.MaxTurnover)).ToList()))
                     .ToList();
@@ -182,6 +183,18 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
             {
                 RemoveGlobalSettingSessionValue(sportType);
                 result.Message = Labels.GlobalSetting_DeleteMaxTurnover_Success;
+            }
+
+            return result;
+        }
+
+        public Result Lock(LockSettingParam param, int userId, string ip)
+        {
+            var result = globalSettingRepository.ExecuteNonQuery(new LockGlobalSettingCriteria(param, userId, ip));
+
+            if (result.IsSuccess)
+            {
+                RemoveGlobalSettingSessionValue(param.SportType);
             }
 
             return result;

@@ -41,5 +41,9 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
         public int ProfileId { get; set; }
 
         public string GroupName { get; set; }
+
+        public bool IsGlobalLockTOLimit { get; set; }
+
+        public bool IsEventLockTOLimit { get; set; }
     }
 }

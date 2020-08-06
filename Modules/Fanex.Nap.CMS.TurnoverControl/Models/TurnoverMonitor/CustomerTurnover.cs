@@ -13,6 +13,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
             CustId = item.CustId;
             Username = item.Username;
             Level = item.Level;
+            IsGlobalLock = item.IsGlobalLockTOLimit;
+            IsEventLock = item.IsEventLockTOLimit;
             Currency = item.Currency;
             TotalMemberTurnover = item.TotalMemberTurnover;
             TotalHouseTurnover = item.TotalHouseTurnover;
@@ -34,6 +36,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor
         public string Username { get; }
 
         public string Level { get; }
+
+        public bool IsGlobalLock { get; }
+
+        public bool IsEventLock { get; }
 
         public bool IsGroupHeadline
             => Level.Equals("headline", StringComparison.OrdinalIgnoreCase);

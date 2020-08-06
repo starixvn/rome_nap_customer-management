@@ -132,6 +132,30 @@ namespace Fanex.Nap.CMS.TurnoverControl.Controllers
             return JsonData(result, JsonRequestBehavior.DenyGet);
         }
 
+        [HttpPost]
+        public JsonResult Lock(LockEventSettingViewModel viewModel)
+        {
+            if (!viewModel.IsValid())
+            {
+                return BadRequest();
+            }
+
+            if (!HasHostTurnoverMonitor(viewModel.SportType))
+            {
+                return Forbidden();
+            }
+
+            var param = new LockSettingParam(
+                viewModel.CustId,
+                viewModel.IsLock,
+                viewModel.IsGroupHeadline,
+                viewModel.SportType,
+                viewModel.MatchId);
+            var result = turnoverMonitorService.Lock(param, CurrentSession.UserId, CurrentContext.IP);
+
+            return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
         private void AssignGlobalSportType()
         {
             short globalSportType;

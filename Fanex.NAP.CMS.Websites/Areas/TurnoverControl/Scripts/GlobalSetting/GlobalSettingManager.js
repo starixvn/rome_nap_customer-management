@@ -50,8 +50,15 @@
                 Sort: true
             },
             {
+                HeaderText: viewResources.Lock,
+                Width: 50,
+                Name: "Lock",
+                HeaderAlign: "center",
+                CellAlign: "center"
+            },
+            {
                 HeaderText: viewResources.Currency,
-                Width: 70,
+                Width: 80,
                 Name: "Currency",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -64,7 +71,7 @@
 
             headerColumns.push({
                 HeaderText: profile.Name,
-                Width: 140,
+                Width: profile.Name.indexOf("Non Live") === -1 ? 125 : 140,
                 Name: "Profile" + profile.Id,
                 HeaderAlign: "center",
                 CellAlign: "right",
@@ -163,6 +170,7 @@
                 { Name: "ColNo", Value: numeral(i + startIndex).format(CMSConstants.NumberFormat.IntNumber) },
                 { Name: "Username", Value: customer.Username },
                 { Name: "Level", Value: customer.Level },
+                { Name: "Lock", Value: renderLockCell(hasHostPermission, customer) },
                 { Name: "Currency", Value: customer.Currency }];
 
             bodyData.push({
@@ -172,6 +180,21 @@
         }
 
         return bodyData;
+    }
+
+    function renderLockCell(hasHostPermission, customer) {
+        var cell = ['<span class="', customer.IsLock ? "ico-lock" : "ico-unlock"];
+
+        if (hasHostPermission) {
+            cell.push(' lock-action" ');
+            cell.push('data-custid="');
+            cell.push(customer.CustId);
+            cell.push('" data-isgroupheadline="');
+            cell.push(customer.IsGroupHeadline);
+        }
+
+        cell.push('"></span>');
+        return cell.join("");
     }
 
     function renderMaxTurnovers(hasHostPermission, columns, customer) {
@@ -201,7 +224,7 @@
                 item = maxTurnovers[i];
                 columns.push({
                     Name: "Profile" + item.ProfileId,
-                    Value: numeral(item.MaxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber)
+                    Value: numeral(item.MaxTurnover).format(CMSConstants.NumberFormat.IntNumber)
                 });
             }
         }
@@ -220,7 +243,7 @@
             '" data-profileid="',
             profileId,
             '">',
-            numeral(maxTurnover).format(CMSConstants.NumberFormat.TwoDecimalNumber),
+            numeral(maxTurnover).format(CMSConstants.NumberFormat.IntNumber),
             "</a>"
         ].join("");
     }
@@ -296,6 +319,9 @@
                 resetFilterParamsAndSearch,
                 sportType);
             editHandler.initialize();
+
+            var toggleLockHandler = new ToggleLockGlobalSetting(elements.table, sportType);
+            toggleLockHandler.initialize();
 
             // Remove the #divPopupContent element since it was cached.
             // It also helps to prevent the 'for' attributes do not work correctly in the popup.

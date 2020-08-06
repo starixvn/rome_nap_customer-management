@@ -470,9 +470,11 @@
     <Content Include="Areas\TurnoverControl\Scripts\GlobalSetting\DeleteGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\GlobalSetting\EditGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\GlobalSetting\GlobalSettingManager.js" />
+    <Content Include="Areas\TurnoverControl\Scripts\GlobalSetting\ToggleLockGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ErrorSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ImportGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ValidSetting.js" />
+    <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\ToggleLockEventSetting.js" />
     <Content Include="Areas\TurnoverControl\Styles\Images\0_20.png" />
     <Content Include="Areas\TurnoverControl\Styles\Images\1.jpg" />
     <Content Include="Areas\TurnoverControl\Styles\Images\20_30.png" />

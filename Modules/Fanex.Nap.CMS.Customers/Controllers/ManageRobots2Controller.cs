@@ -74,7 +74,7 @@
         {
             var report = service.GetExportRobots(criteria);
             var exporter = new RobotsExporter(report);
-            exporter.ResponseStream();
+            exporter.ResponseCsvStream();
         }
     }
 }

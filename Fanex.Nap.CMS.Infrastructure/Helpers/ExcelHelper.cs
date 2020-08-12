@@ -9,8 +9,8 @@
 
 namespace Fanex.Nap.CMS.Infrastructure.Helpers
 {
-    using System.Web;
     using NPOI.SS.UserModel;
+    using System.Web;
 
     /// <summary>
     /// Excel Helper.
@@ -29,6 +29,16 @@ namespace Fanex.Nap.CMS.Infrastructure.Helpers
             response.ContentType = "application/vnd.ms-excel";
             response.AddHeader("Content-Disposition", string.Format("attachment; filename={0}.xls", fileName));
             workbook.Write(response.OutputStream);
+        }
+
+        public static void ResponseCsvStream(byte[] data, string fileName)
+        {
+            var response = HttpContext.Current.Response;
+            response.Clear();
+            response.ContentType = "text/csv";
+            response.AddHeader("Content-Disposition", $"attachment;filename={fileName}.csv");
+            response.BinaryWrite(data);
+            response.End();
         }
 
         public static string FormatFileName(string fileName)

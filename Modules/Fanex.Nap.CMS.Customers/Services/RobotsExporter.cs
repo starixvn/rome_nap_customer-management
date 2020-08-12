@@ -7,6 +7,7 @@
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
+    using System.Text;
 
     public sealed class RobotsExporter : BaseExcelExporter, IExcelExporter
     {
@@ -72,6 +73,56 @@
                 return $"{Labels.ManageRobots} - {report.FromDate?.ToShortDateString()}-{report.ToDate?.ToShortDateString()}";
             }
         }
+
+        protected override byte[] ExportCsv()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(string.Join(",", new[]
+            {
+                BuildCellValue("#"),
+                BuildCellValue(Labels.CustId),
+                BuildCellValue(Labels.Username),
+                BuildCellValue(Labels.Level),
+                BuildCellValue(Labels.Currency),
+                BuildCellValue(Labels.Site),
+                BuildCellValue(Labels.IP),
+                BuildCellValue(Labels.Country),
+                BuildCellValue(Labels.Region),
+                BuildCellValue(Labels.LastChangeTime),
+                BuildCellValue(Labels.Counter),
+                BuildCellValue(Labels.ServerIP),
+                BuildCellValue(Labels.AddedBy),
+                BuildCellValue(Labels.AddedDate),
+                BuildCellValue(Labels.Remark)
+            }));
+
+            for (int i = 0; i < report.Robots.Count; i++)
+            {
+                var robot = report.Robots[i];
+                stringBuilder.AppendLine(string.Join(",", new[]
+                {
+                    BuildCellValue(i + 1),
+                    BuildCellValue(robot.CustId),
+                    BuildCellValue(robot.Username),
+                    BuildCellValue(robot.Level),
+                    BuildCellValue(robot.Currency),
+                    BuildCellValue(robot.Site),
+                    BuildCellValue(robot.IP),
+                    BuildCellValue(robot.Country),
+                    BuildCellValue(robot.Region),
+                    BuildCellValue(robot.LastChangeTimeStr),
+                    BuildCellValue(robot.CounterStr),
+                    BuildCellValue(robot.ServerIP),
+                    BuildCellValue(robot.AddedBy),
+                    BuildCellValue(robot.AddedDateStr),
+                    BuildCellValue(robot.Remark)
+                }));
+            }
+
+            return Encoding.UTF8.GetBytes(stringBuilder.ToString());
+        }
+
+        private static string BuildCellValue(object value) => string.Format("\"{0}\"", value);
 
         protected override void ExportBody()
         {

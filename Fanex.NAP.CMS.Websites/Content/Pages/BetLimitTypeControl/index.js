@@ -123,15 +123,14 @@ Fanex.CMS.BetLimitTypeControl = function () {
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (data) {
+                CMS.enableInput();
                 filterData = data;
                 renderFilter();
                 search();
             },
             error: function (xhr) {
-                CMS.handleAjaxError(xhr);
-            },
-            complete: function () {
                 CMS.enableInput();
+                CMS.handleAjaxError(xhr);
             }
         });
     }
@@ -484,7 +483,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             fullHeight: true,
             showDistinctRow: false,
             showHighlightRow: true,
-            gridExpandHeight: 180
+            gridExpandHeight: 200
         };
         if (isHost) {
             gridOptions.columns.push({ HeaderText: 'Action', Width: 50, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' });

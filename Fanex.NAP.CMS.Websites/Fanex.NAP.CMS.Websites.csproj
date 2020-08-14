@@ -163,7 +163,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="ONEbook.UM, Version=2.0.2.7, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.7\lib\net40\ONEbook.UM.dll</HintPath>
@@ -293,36 +292,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBCust.bodb_Licensee.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBONUSER.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Master\DBONUSER.ON_USER.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Master\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\MNL\DBONUSER.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\MNL\DBONUSER.ON_USER.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\MNL\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\MNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -336,26 +305,34 @@
     </Content>
     <Content Include="App_Data\Local\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Master\DBCust.CustDB.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\Master\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\Master\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\Master\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Local\DBACC.bodb_ACC.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBACC.bodb_ACC.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
+    <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBONUSER.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBONUSER.ON_USER.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\MNL\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBPRO.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBTXN.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\NAPCMSSPNames.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBACC.bodb_ACC.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
@@ -378,50 +355,6 @@
     <Content Include="App_Data\Prod\DBPRO.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBTXN.bodb02.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\NAPCMSSPNames.xml" />
-    <Content Include="App_Data\SIT\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\SIT\DBCust.bodb_Licensee.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBCust.CustDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\SIT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBONUSER.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\SIT\DBONUSER.ON_USER.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\SIT\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\SIT\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\UAT\DBACC.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBACC.bodb_ACC.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBAGE.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\UAT\DBCust.bodb_Licensee.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBCust.CustDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBCust.IPDB.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBDW.bodb_dwrs.bodbSPUNet.xml" />
-    <Content Include="App_Data\UAT\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBONUSER.bodb02.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\UAT\DBONUSER.ON_USER.bodbAdminNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Data\UAT\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBPRO.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\DBTXN.bodb02.bodbAdminNet.xml" />
-    <Content Include="App_Data\UAT\NAPCMSSPNames.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Data\Local\NAPCMSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -538,6 +471,7 @@
     </Content>
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3.less" />
+    <Content Include="Content\Pages\BetLimitControl\index.js" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -643,6 +577,9 @@
     <Content Include="Scripts\Libs\Highcharts\exporting.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
+    <Content Include="Scripts\Libs\InputFormatter\number-commar-seperator.js" />
+    <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.css" />
+    <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Libs\MonthPicker\monPickr-0.0.3.js" />
@@ -741,6 +678,7 @@
     <Content Include="Areas\BetRestriction\Scripts\Index.js" />
     <Content Include="Areas\BetRestriction\SiteManagement.cshtml" />
     <Content Include="Areas\BetRestriction\CurrencyManagement.cshtml" />
+    <Content Include="Content\Pages\BetLimitTypeControl\index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -757,6 +695,14 @@
     <Content Include="WhoamI.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj">
+      <Project>{c34ed2ac-3a75-4029-8110-265864b9ee1f}</Project>
+      <Name>Fanex.NAP.CMS.BetLimitControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitTypeControl\Fanex.NAP.CMS.BetLimitTypeControl.csproj">
+      <Project>{dac006b0-1796-4dc8-87b2-a72792cf1cdf}</Project>
+      <Name>Fanex.NAP.CMS.BetLimitTypeControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetRestriction\Fanex.Nap.CMS.BetRestriction.csproj">
       <Project>{f4a2df08-f986-45f7-928c-8eb0581338a8}</Project>
       <Name>Fanex.Nap.CMS.BetRestriction</Name>
@@ -1039,6 +985,13 @@
     <Content Include="Web.Configuration\BasketballVirtualRateSection.prod.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\BetLimitTypeControl\Index.cshtml" />
+    <Content Include="Content\Pages\BetLimitTypeControl\index.less" />
+    <Content Include="Views\BetLimitTypeControl\_AddOrUpdate.cshtml" />
+    <Content Include="Views\BetLimitControl\Index.cshtml" />
+    <Content Include="Content\Pages\BetLimitControl\index.less" />
+    <Content Include="Views\BetLimitControl\_Add.cshtml" />
+    <Content Include="Views\BetLimitControl\_Update.cshtml" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

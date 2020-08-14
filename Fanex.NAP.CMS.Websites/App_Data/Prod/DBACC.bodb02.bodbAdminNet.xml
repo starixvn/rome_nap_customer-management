@@ -52,4 +52,21 @@
   <Function Name="Bet Restriction Management">
     <Setting Key="NAP_BetRestriction_SettingSel" SpName="NAP_BetRestriction_SettingSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Bet Limit Control">
+    <Setting Key="NAP_BLControl_SportBettypeSel" SpName="NAP_BLControl_SportBettypeSel" DbName="DBACC.bodb02.bodbAdminNet">
+      <Mapping DataField="Sporttype" ObjectProperty="SportTypeId" />
+      <Mapping DataField="SportName" ObjectProperty="SportTypeName" />
+      <Mapping DataField="Bettype" ObjectProperty="BetTypeId" />
+    </Setting>
+    <Setting Key="NAP_BLControl_AllTypeSelect" SpName="NAP_BLControl_AllTypeSelect" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_SiteByPermissionSelect" SpName="NAP_BLControl_SiteByPermissionSelect" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustSelect" SpName="NAP_BLControl_CustSelect" DbName="DBACC.bodb02.bodbAdminNet">
+      <Mapping DataField="Agent_MaxBet" ObjectProperty="AgentMaxBet" />
+      <Mapping DataField="Agent_MaxPerMatch" ObjectProperty="AgentMaxPerMatch" />
+      <Mapping DataField="Master_MaxBet" ObjectProperty="MasterMaxBet" />
+      <Mapping DataField="Master_MaxPerMatch" ObjectProperty="MasterMaxPerMatch" />
+      <Mapping DataField="Super_MaxBet" ObjectProperty="SuperMaxBet" />
+      <Mapping DataField="Super_MaxPerMatch" ObjectProperty="SuperMaxPerMatch" />
+    </Setting>
+  </Function>
 </Functions>

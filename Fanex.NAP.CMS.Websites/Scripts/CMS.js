@@ -255,7 +255,7 @@ var CMS = (function ($) {
             }
         },
         modal: function (title, html, option) {
-            CMS.dialogPopup.html(html).dialog({
+            var $dialog = CMS.dialogPopup.html(html).dialog({
                 width: 'auto',
                 modal: true,
                 position: ['center', 160 - CMS.popupTopMargin], //['center', 160],
@@ -265,6 +265,8 @@ var CMS = (function ($) {
             if (option) {
                 CMS.dialogPopup.dialog('option', option);
             }
+
+            return $dialog;
         },
         popup: function (title, html, option) {
             CMS.dialogPopup.html(html).dialog({

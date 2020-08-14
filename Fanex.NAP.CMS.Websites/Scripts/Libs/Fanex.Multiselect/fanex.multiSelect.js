@@ -423,7 +423,11 @@
                     }
 
                     if (options.useCustomCheckAllText && $inputs.length === numChecked) {
-                        value = options.customCheckAllText;
+                        if (typeof options.customCheckAllText === 'function') {
+                            value = options.customCheckAllText();
+                        } else {
+                            value = options.customCheckAllText;
+                        }
                     }
                     else {
                         if (options.showParentSelectedText) {

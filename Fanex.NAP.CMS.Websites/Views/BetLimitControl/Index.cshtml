@@ -1,0 +1,101 @@
+﻿@using Fanex.Nap.CMS.Customers.AppStart
+@using Fanex.NAP.CMS.Core.Constants
+@model Fanex.NAP.CMS.BetLimitControl.Models.IndexViewModel
+@{
+    ViewBag.Title = ViewLang.BetLimitControl;
+}
+@section Head
+{
+    @Styles.Render(CustomersBundlesConfig.BetLimitControlStylePath)
+}
+@section Foot
+{
+    @Scripts.Render(CustomersBundlesConfig.BetLimitControlScriptPath)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.BetLimitControl</span>
+        </div>
+    </div>
+}
+<div class="filter-bar" isHost="@ViewBag.IsHost.ToString()">
+    <div id="divFilterForm" class="filter-form" style="display: inline-flex">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="selectProduct">@ViewLang.Level</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectLevel" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                    <option value="@CustomerLevels.Super">@ViewLang.Super</option>
+                    <option value="@CustomerLevels.Master">@ViewLang.Master</option>
+                    <option value="@CustomerLevels.Agent">@ViewLang.Agent</option>
+                    <option value="@CustomerLevels.Member">@ViewLang.Member</option>
+                </select>
+            </div>
+            <div class="lbl-field col-2">
+                <label for="selectCurrency">@ViewLang.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectCurrency" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                    @foreach (var currency in Model.Currencies)
+                    {
+                        <option value="@currency.ExchangeId">@currency.Currency</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_1">
+                <label for="selectSite">@ViewLang.Site</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectSite" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                    @foreach (var site in Model.Sites)
+                    {
+                        <option value="@site.SiteId">@site.Site</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_4">
+                <label for="selectBetLimitType">@ViewLang.BetLimitType</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="selectBetLimitType" class="ddl-select combobox-autocomplete">
+                    <option value="0">@ViewLang.All</option>
+                    @foreach (var betLimitType in Model.BetLimitTypes)
+                    {
+                        <option value="@betLimitType.BetLimitTypeId">@betLimitType.BetLimitType</option>
+                    }
+                </select>
+            </div>
+            <div class="lbl-field col_3">
+                <label for="selectUsername">@ViewLang.Username</label>
+            </div>
+            <div class="edit-field col_5">
+                <input id="selectUsername" class="ddl-username combobox-autocomplete">
+            </div>
+            <div class="submit col_4">
+                <input id="btnSearch" type="button" class="submit btn-search" value="@ViewLang.Search" />
+            </div>
+        </div>
+    </div>
+</div>
+@if (ViewBag.IsHost)
+{
+    <div class="btn-new-bet-limit clear-fix">
+        <button type="button" class="blue-button" id="btnAdd">New Bet Limit</button>
+    </div>
+    <div id="div-popup" class="display-none">
+        @Html.Partial("_Add", Model.BetLimitTypes)
+        @Html.Partial("_Update", Model.BetLimitTypes)
+    </div>
+}
+<div id="report-container" class="content-grid display-none">
+    <div id="div-bet-limit-control" class="freegrid">
+        <div class="col_header row-headers-background scroll-y">
+        </div>
+    </div>
+</div>

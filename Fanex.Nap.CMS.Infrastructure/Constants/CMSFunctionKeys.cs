@@ -109,6 +109,9 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string BetRestriction = "BetRestriction";
         public const string OnOffBetRestriction = "OnOffBetRestriction";
 
+        public const string BetLimitTypeControl = "BetLimitTypeControl";
+        public const string BetLimitControl = "BetLimitControl";
+
         // Problem Account
         public const string ManageProblemAccountCN88 = "ManageProblemAccount_CN88";
         public const string ManageProblemAccountCreditSites = "ManageProblemAccount_CreditSites";

@@ -13,8 +13,13 @@
         public const string ProblemAccountCreditSiteScript = "~/bundles/customers/problem-account-creditsite-scripts";
         public const string ProblemAccountLicenseeSiteScript = "~/bundles/customers/problem-account-licenseesite-scripts";
         public const string ManageLicenseeAcknowledgementScript = "~/bundles/customers/manage-licensee-acknowledgement-scripts";
+        public const string BetLimitTypeControlScriptPath = "~/bundles/bet-limit-type-control-scripts";
+        public const string BetLimitTypeControlStylePath = "~/bundles/bet-limit-type-control-styles";
+        public const string BetLimitControlScriptPath = "~/bundles/bet-limit-control-scripts";
+        public const string BetLimitControlStylePath = "~/bundles/bet-limit-control-styles";
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
+        private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -24,7 +29,9 @@
                 .RegisterPossessStatisticsBundles()
                 .RegisterProblemAccountCreditSiteBundles()
                 .RegisterProblemAccountLicenseeSiteBundles()
-                .RegisterManageLicenseeAcknowledgementBundles();
+                .RegisterManageLicenseeAcknowledgementBundles()
+                .RegisterBetLimitTypeControlBundles()
+                .RegisterBetLimitControlBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -33,7 +40,7 @@
         {
             bundles.AddAndInclude(
                 ProblemAccountStyles,
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectStylePath,
                 "~/Areas/Customers/Styles/problemAccount.less");
 
             bundles.Add(new ScriptBundle(ProblemAccountScript).Include(
@@ -61,7 +68,7 @@
         {
             bundles.AddAndInclude(
                 "~/bundles/manage-robots-2/index-styles",
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                FanexMultiSelectStylePath,
                 "~/Areas/Customers/Views/ManageRobots2/Styles/index.less");
 
             bundles.Add(new ScriptBundle("~/bundles/manage-robots-2/index-scripts")
@@ -125,5 +132,35 @@
             return bundles;
         }
 
+        private static BundleCollection RegisterBetLimitTypeControlBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                BetLimitTypeControlStylePath,
+                FanexMultiSelectStylePath,
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.css",
+                "~/Content/Pages/BetLimitTypeControl/index.less");
+
+            bundles.Add(new ScriptBundle(BetLimitTypeControlScriptPath).Include(
+                FanexMultiSelectScriptPath,
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.js",
+                "~/Content/Pages/BetLimitTypeControl/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterBetLimitControlBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                BetLimitControlStylePath,
+                FanexMultiSelectStylePath,
+                "~/Content/Pages/BetLimitControl/index.less");
+
+            bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(
+                "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
+                FanexMultiSelectScriptPath,
+                "~/Content/Pages/BetLimitControl/index.js"));
+
+            return bundles;
+        }
     }
 }

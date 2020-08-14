@@ -1,0 +1,53 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+@model IEnumerable<Fanex.NAP.CMS.BetLimitControl.Models.BetLimitTypeModel>
+
+<div class="display-none">
+    <div id="frmAdd" class="form expand-form">
+        <div id="msgAdd" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtUsernameAdd">@ViewLang.Username<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtUsernameAdd" maxlength="30" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtBetLimitTypeAdd">@ViewLang.BetLimitType<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="txtBetLimitTypeAdd" class="bet-limit-type-select">
+                    <option value="">Please Select</option>
+                    @foreach (var betLimitType in @Model)
+                    {
+                        <option value="@betLimitType.BetLimitTypeId">@betLimitType.BetLimitType</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxPerMatchAdd">@ViewLang.MaxPerMatch<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxPerMatchAdd" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxBetAdd">@ViewLang.MaxBet<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxBetAdd" autocomplete="off" />
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label lbl-btn-group"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveAdd" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelAdd" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

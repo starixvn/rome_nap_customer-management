@@ -9,6 +9,14 @@
 
 namespace Fanex.NAP.CMS.Websites
 {
+    using System.Net;
+    using System.Web;
+    using Data.Configuration;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
+    using Nap.CMS.Infrastructure.Web;
+    using ONEbook.UM.Filters;
+    using RemotingRef;
     using System;
     using System.Configuration;
     using System.Net;
@@ -17,12 +25,6 @@ namespace Fanex.NAP.CMS.Websites
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Data.Configuration;
-    using Logging.Extensions.Database;
-    using Logging.Extensions.Web;
-    using Nap.CMS.Infrastructure.Web;
-    using ONEbook.UM.Filters;
-    using RemotingRef;
 
     /// <summary>
     /// MVC application configuration.

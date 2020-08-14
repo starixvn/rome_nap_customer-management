@@ -27,7 +27,7 @@
         <div class="voidWinningOption column width-250 display-none">
             <div class="lbl-field width-250 padding-top12">
                 <input type="checkbox" id="ckb-time" name="updateTime" value="true" />
-                <label>@ProblemAccountResource.Time</label>
+                <label>@ProblemAccountResource.Time<span class="text-red">*</span></label>
             </div>
             <div class="edit-field width-250">
                 @Html.DropDownList("voidTime", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })

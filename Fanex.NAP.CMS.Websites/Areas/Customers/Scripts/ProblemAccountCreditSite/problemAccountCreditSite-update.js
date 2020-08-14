@@ -86,7 +86,7 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
     }
 
     function isValidVoidTime() {
-        if ($("#ckb-time").checked) {
+        if ($("#ckb-time")[0].checked) {
             return isValidDropdownList(ddlTime, spanTime);
         } else {
             return true;

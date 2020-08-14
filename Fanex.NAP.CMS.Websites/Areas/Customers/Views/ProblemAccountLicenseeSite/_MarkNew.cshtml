@@ -29,7 +29,7 @@
         </div>
         <div class="voidWinningOption column width-250 display-none">
             <div class="lbl-field width-250 padding-top12">
-                <label>@ProblemAccountResource.Time</label>
+                <label>@ProblemAccountResource.Time<span class="text-red">*</span></label>
             </div>
             <div class="edit-field width-250">
                 @Html.DropDownList("voidTime", Model.VoidWinningTimes, new { id = "ddl-time", @class = "combobox-autocomplete width-180" })

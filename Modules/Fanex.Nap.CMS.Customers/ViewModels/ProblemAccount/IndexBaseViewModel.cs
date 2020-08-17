@@ -108,8 +108,7 @@
         {
             var listItems = new List<SelectListItem>
             {
-                new SelectListItem { Text = ProblemAccountResource.PleaseSelect, Value = "0", Selected = true },
-                new SelectListItem { Text = ProblemAccountResource.AtSettlement, Value = ProblemAccountResource.AtSettlement },
+                new SelectListItem { Text = ProblemAccountResource.AtSettlement, Value = ProblemAccountResource.AtSettlement, Selected = true },
                 new SelectListItem { Text = "23:59", Value = "23:59" }
             };
             var time = new TimeSpan(23, 0, 0);

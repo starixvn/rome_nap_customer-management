@@ -140,7 +140,8 @@
         {
             if (problemAccount.ActionName == VoidWinningAction)
             {
-                return $"{problemAccount.ActionName} - {problemAccount.VoidTime} - {problemAccount.LimitAmount}";
+                var limitAmount = problemAccount.LimitAmount.Equals(0.0d)? Unlimited : problemAccount.LimitAmount.ToString();
+                return $"{problemAccount.ActionName} - {problemAccount.VoidTime} - {limitAmount}";
             }
 
             return problemAccount.ActionName;

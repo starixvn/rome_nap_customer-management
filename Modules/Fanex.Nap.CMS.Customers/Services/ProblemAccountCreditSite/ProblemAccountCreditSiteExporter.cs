@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using Constants.ProblemAccount;
@@ -280,7 +281,8 @@
         {
             if(problemAccount.PreventiveActionId == VoidWinningActionId)
             {
-                return $"{problemAccount.PreventiveAction} - {problemAccount.VoidTime} - {problemAccount.LimitAmount}";
+                var limitAmount = problemAccount.LimitAmount == 0 ? Unlimited : problemAccount.LimitAmount.ToString();
+                return $"{problemAccount.PreventiveAction} - {problemAccount.VoidTime} - {limitAmount}";
             }
 
             return problemAccount.PreventiveAction;

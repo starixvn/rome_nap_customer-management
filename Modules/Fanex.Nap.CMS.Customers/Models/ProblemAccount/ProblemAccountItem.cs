@@ -33,7 +33,7 @@
             string currency,
             byte preventiveActionId,
             string voidTime,
-            decimal limitAmount)
+            double limitAmount)
         {
             CustId = custId;
             Username = username;
@@ -127,6 +127,6 @@
 
         public string VoidTime { get;}
 
-        public decimal LimitAmount { get;}
+        public double LimitAmount { get;}
     }
 }

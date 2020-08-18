@@ -36,6 +36,6 @@
                 reader["currency"].ToString(),
                 Convert.ToByte(reader["actionid"]),
                 reader["voidtime"].ToString(),
-                Convert.ToDecimal(reader["limitamount"]));
+                Convert.ToDouble(reader["limitamount"]));
     }
 }

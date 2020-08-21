@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.AppStart
 {
-    using System.Web.Optimization;
     using Infrastructure.Extensions;
+    using System.Web.Optimization;
 
     public static class CustomersBundlesConfig
     {
@@ -17,6 +17,8 @@
         public const string BetLimitTypeControlStylePath = "~/bundles/bet-limit-type-control-styles";
         public const string BetLimitControlScriptPath = "~/bundles/bet-limit-control-scripts";
         public const string BetLimitControlStylePath = "~/bundles/bet-limit-control-styles";
+        public const string DefaultMemberBetLimitScriptPath = "~/bundles/default-member-bet-limit-scripts";
+        public const string DefaultMemberBetLimitStylePath = "~/bundles/default-member-bet-limit-styles";
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
@@ -31,7 +33,8 @@
                 .RegisterProblemAccountLicenseeSiteBundles()
                 .RegisterManageLicenseeAcknowledgementBundles()
                 .RegisterBetLimitTypeControlBundles()
-                .RegisterBetLimitControlBundles();
+                .RegisterBetLimitControlBundles()
+                .RegisterDefaultMemberBetLimitBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -159,6 +162,21 @@
                 "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
                 FanexMultiSelectScriptPath,
                 "~/Content/Pages/BetLimitControl/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterDefaultMemberBetLimitBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                DefaultMemberBetLimitStylePath,
+                FanexMultiSelectStylePath,
+                "~/Content/Pages/DefaultMemberBetLimit/index.less");
+
+            bundles.Add(new ScriptBundle(DefaultMemberBetLimitScriptPath).Include(
+                "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
+                FanexMultiSelectScriptPath,
+                "~/Content/Pages/DefaultMemberBetLimit/index.js"));
 
             return bundles;
         }

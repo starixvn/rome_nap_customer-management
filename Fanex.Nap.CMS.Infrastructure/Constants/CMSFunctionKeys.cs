@@ -111,6 +111,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         public const string BetLimitTypeControl = "BetLimitTypeControl";
         public const string BetLimitControl = "BetLimitControl";
+        public const string DefaultMemberBetLimit = "DefaultBetLimitforNewMember";
 
         // Problem Account
         public const string ManageProblemAccountCN88 = "ManageProblemAccount_CN88";

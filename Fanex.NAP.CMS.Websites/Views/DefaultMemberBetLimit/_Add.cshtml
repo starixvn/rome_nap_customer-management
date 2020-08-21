@@ -1,0 +1,52 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+@model Fanex.Nap.CMS.DefaultMemberBetLimit.Models.IndexViewModel
+<div class="display-none">
+    <div id="frmAdd" class="div-add form expand-form">
+        <div id="msgAdd" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="selectBetLimitTypeAdd">Bet Limit Type<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="selectBetLimitTypeAdd" class="bet-limit-type-select">
+                    <option value="0">Please select</option>
+                    @foreach (var betLimitType in Model.BetLimitTypes)
+                    {
+                        <option value="@betLimitType.BetLimitTypeId">@betLimitType.BetLimitType</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtUsernameAdd">SMA Username<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtUsernameAdd" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxPerMatchAdd">Default Max Per Match<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxPerMatchAdd" class="number-separator input-text-right" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxBetAdd">Default Max Bet<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxBetAdd" class="number-separator input-text-right" />
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveAdd" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelAdd" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

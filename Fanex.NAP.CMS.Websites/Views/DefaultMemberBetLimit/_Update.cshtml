@@ -1,0 +1,43 @@
+﻿@using Fanex.Nap.CMS.Customers.Resources
+<div class="display-none">
+    <div id="frmUpdate" class="div-update form expand-form">
+        <div id="msgUpdate" class="inline-message"></div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label>Bet Limit Type</label>
+            </div>
+            <div class="edit-field" id="txtBetLimitTypeUpdate">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtUsernameUpdate">SMA Username</label>
+            </div>
+            <div class="edit-field" id="txtUsernameUpdate">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxPerMatchUpdate">Default Max Per Match<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxPerMatchUpdate" class="number-separator input-text-right" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtMaxBetUpdate">Default Max Bet<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtMaxBetUpdate" class="number-separator input-text-right" />
+            </div>
+        </div>
+        <div class="form-row float-right button-group">
+            <div class="lbl-field normal-label col-label"></div>
+            <div class="edit-field">
+                <input type="button" id="btnSaveUpdate" class="blue-button" value="@Labels.Save" />
+                <input type="button" id="btnCancelUpdate" class="red-button" value="@Labels.Cancel" />
+            </div>
+        </div>
+    </div>
+</div>

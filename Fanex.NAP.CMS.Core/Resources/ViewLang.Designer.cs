@@ -383,7 +383,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
                 return ResourceManager.GetString("BetLimitControl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Bet Limit Type.
         /// </summary>
@@ -714,6 +714,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string DebtMovement {
             get {
                 return ResourceManager.GetString("DebtMovement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Bet Limit for New Member.
+        /// </summary>
+        public static string DefaultMemberBetLimit {
+            get {
+                return ResourceManager.GetString("DefaultMemberBetLimit", resourceCulture);
             }
         }
         

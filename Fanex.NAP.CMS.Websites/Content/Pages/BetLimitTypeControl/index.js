@@ -483,7 +483,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             fullHeight: true,
             showDistinctRow: false,
             showHighlightRow: true,
-            gridExpandHeight: 200
+            gridExpandHeight: 180
         };
         if (isHost) {
             gridOptions.columns.push({ HeaderText: 'Action', Width: 50, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' });

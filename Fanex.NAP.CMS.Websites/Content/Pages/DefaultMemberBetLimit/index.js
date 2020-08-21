@@ -65,6 +65,11 @@ Fanex.CMS.DefaultMemberBetLimit = function () {
                 return;
             }
 
+            if (maxBet > maxPerMatch) {
+                CMS.showTipsyError($('#txtMaxPerMatchAdd'), 'Default Max Per Match must be greater than or equal to Default Max Bet.', "w");
+                return;
+            }
+
             var params = {
                 betLimitTypeId,
                 username,
@@ -128,6 +133,11 @@ Fanex.CMS.DefaultMemberBetLimit = function () {
             var maxBet = numeral().unformat(maxBetString);
             if (!IsPositiveNumber(maxBet)) {
                 CMS.showTipsyError($('#txtMaxBetUpdate'), 'Please input a positive whole number.', "w");
+                return;
+            }
+
+            if (maxBet > maxPerMatch) {
+                CMS.showTipsyError($('#txtMaxPerMatchUpdate'), 'Default Max Per Match must be greater than or equal to Default Max Bet.', "w");
                 return;
             }
 

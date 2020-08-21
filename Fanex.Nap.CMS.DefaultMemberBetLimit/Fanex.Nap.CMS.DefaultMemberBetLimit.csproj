@@ -97,12 +97,8 @@
     <Compile Include="Criteria\InsertCriteria.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />
     <Compile Include="Models\BetLimitTypeModel.cs" />
-    <Compile Include="Models\BetType.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
-    <Compile Include="Models\Product.cs" />
-    <Compile Include="Models\QueryFilterModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
-    <Compile Include="Models\SportType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\DeleteRequest.cs" />
     <Compile Include="Requests\InsertRequest.cs" />

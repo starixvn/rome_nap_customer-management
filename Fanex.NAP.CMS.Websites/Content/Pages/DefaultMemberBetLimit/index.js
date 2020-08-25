@@ -296,7 +296,7 @@ Fanex.CMS.DefaultMemberBetLimit = function () {
     }
 
     function confirmDelete(custId, betLimitTypeId) {
-        CMS.showConfirmMessage('<div class="mid-margin-bottom">You are going to delete the Default Bet Setting for the selected account. The setting will not be applied for the new members.</div><label><input type="checkbox" id="isDownlineAffected" /> Also delete the Bet Limit Type for all downlines of the selected account.</label>', function () {
+        CMS.showConfirmMessage('<div class="mid-margin-bottom">You are going to delete the Default Bet Setting for the selected account. The setting will not be applied for the new members.</div><label><input type="checkbox" id="isDownlineAffected" /> Also delete the Bet Limit Type for all members of the selected account.</label>', function () {
             CMS.disableInput();
             CMS.closeMsgBox();
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using Constants.ProblemAccount;
@@ -24,6 +25,8 @@
         private readonly ProblemAccountModel data;
         private readonly IEnumerable<IdNameModel> currencies;
         private readonly IEnumerable<IdNameModel> preventiveActions;
+
+        public const int VoidWinningActionId = 2;
 
         public ProblemAccountCreditSiteExporter(
             SearchCreditSiteViewModel searchFilter,
@@ -52,7 +55,7 @@
                 new ExcelColumn(ProblemAccountResource.Currency, Width100),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxPerMatch, Width140),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxBet, Width140),
-                new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width140),
+                new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width300),
                 new ExcelColumn(ProblemAccountResource.MarkDate, Width140),
                 new ExcelColumn(ProblemAccountResource.Reason, Width400),
                 new ExcelColumn(ProblemAccountResource.Comment, Width400)
@@ -98,6 +101,7 @@
 
             IList<decimal?> maxPerMatchs;
             IList<decimal?> maxBets;
+            string preventiveAction;
 
             foreach (var item in data.ProblemAccounts)
             {
@@ -114,13 +118,15 @@
                     item.MaxBet,
                     searchFilter.Level).ToList();
 
+                preventiveAction = BuildPreventiveAction(item);
+
                 ExportExcel.ResetCurrentColumn();
                 ExportAccountCell(item, searchFilter.Level, blueFont, wrapTextStyle);
                 ExportExcel.RenderCurrentCell(item.StatusName, centerTextStyle);
                 ExportExcel.RenderCurrentCell(item.Currency, centerTextStyle);
                 ExportMaxPerEventOrMaxPerBet(maxPerMatchs, blueFont, wrapTextStyle);
                 ExportMaxPerEventOrMaxPerBet(maxBets, blueFont, wrapTextStyle);
-                ExportExcel.RenderCurrentCell(item.PreventiveAction, centerTextStyle);
+                ExportExcel.RenderCurrentCell(preventiveAction, centerTextStyle);
                 ExportExcel.RenderCurrentCell(item.MarkDateString, centerTextStyle);
                 ExportExcel.RenderCurrentCell(Join(item.Reasons, NewLine), wrapTextStyle);
                 ExportExcel.RenderCurrentCell(HtmlDecodeText(item.Comment), wrapTextStyle);
@@ -270,5 +276,16 @@
         }
 
         private bool IsMemberLevel => searchFilter.Level == RoleIdConstants.Member;
+
+        private static string BuildPreventiveAction(ProblemAccountItem problemAccount)
+        {
+            if(problemAccount.PreventiveActionId == VoidWinningActionId)
+            {
+                var limitAmount = problemAccount.LimitAmount == 0 ? Unlimited : problemAccount.LimitAmount.ToString();
+                return $"{problemAccount.PreventiveAction} - {problemAccount.VoidTime} - {limitAmount}";
+            }
+
+            return problemAccount.PreventiveAction;
+        }
     }
 }

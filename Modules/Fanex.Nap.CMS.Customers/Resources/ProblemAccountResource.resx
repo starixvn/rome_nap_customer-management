@@ -357,4 +357,22 @@
   <data name="UpdateInformingStatusSuccessfully" xml:space="preserve">
     <value>The informing statuses of the selected accounts have been successfully updated.</value>
   </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="LimitAmount" xml:space="preserve">
+    <value>Limit Amount</value>
+  </data>
+  <data name="VoidWinningTicketLimitAmountHint" xml:space="preserve">
+    <value>The system will void the ticket sequentially by Win Loss Date until the total stake reach the Limit Amount. The overflown tickets will not be voided and will be settled as Won.</value>
+  </data>
+  <data name="Unlimited" xml:space="preserve">
+    <value>Unlimited</value>
+  </data>
+  <data name="AtSettlement" xml:space="preserve">
+    <value>At Settlement</value>
+  </data>
+  <data name="PositiveLimitAmountError" xml:space="preserve">
+    <value>Limit Amount must be positive</value>
+  </data>
 </root>

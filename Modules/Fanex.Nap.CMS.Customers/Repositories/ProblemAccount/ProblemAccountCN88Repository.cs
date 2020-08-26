@@ -33,6 +33,8 @@
                 reader["informed1by"].ToString(),
                 reader["informed2by"].ToString(),
                 null,
+                0,
+                null,
                 0);
     }
 }

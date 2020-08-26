@@ -21,6 +21,7 @@
         protected const int Width140 = 140;
         protected const int Width300 = 300;
         protected const int Width400 = 400;
+        protected const string Unlimited = "Unlimited";
 
         protected static readonly string NewLine = Environment.NewLine;
         protected static readonly string[] RoleShortNameMapper = new[] { "S:", "M:", "A:", "mb:" };

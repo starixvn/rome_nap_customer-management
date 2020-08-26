@@ -4,7 +4,10 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
         ddlPreventiveAction = null,
         spanPreventiveAction = null,
         ddlReason = null,
-        spanReason = null;
+        spanReason = null,
+        ddlTime = null,
+        spanTime = null,
+        txtLimitAmount = null;
 
     function initForm(usernames, level) {
         form.find("#txt-level").val(level);
@@ -17,21 +20,77 @@ function ProblemAccountCreditSiteUpdate(form, reloadData) {
 
         ddlReason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
+
+        ddlTime = form.find("#ddl-time").combobox();
+        ddlTime.combobox('disable');
+        spanTime = form.find('span[id="ddl-time"]');
+
+        txtLimitAmount = form.find("#txt-limitAmount");
     }
 
     function bindEvents() {
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
+        ddlPreventiveAction.on("change", function () {
+            var preventActionId = ddlPreventiveAction.val();
+            if (preventActionId === '2') {
+                $(".voidWinningOption").removeClass("display-none");
+            } else {
+                $(".voidWinningOption").addClass("display-none");
+            }
+
+            $("#ckb-time").prop("checked", false).change();
+            $("#ckb-limitAmount").prop("checked", false).change();
+        });
+ 
         form.off("submit").on("submit", function (event) {
             event.preventDefault();
             validateUpdate() && submitForm();
+        });
+
+        $(".note-info-message").tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: "nw"
+        });
+
+        $("#ckb-time").change(function () {
+            if (this.checked) {
+                ddlTime.combobox('enable');
+            } else {
+                ddlTime.combobox('disable');
+            }
+            ddlTime.val("0").combobox('refresh');
+        });
+
+        $("#ckb-limitAmount").change(function () {
+            if (this.checked) {
+                txtLimitAmount.prop("disabled", false);
+            } else {
+                txtLimitAmount.prop("disabled", true);
+            }
+            txtLimitAmount.val("");
+        });
+
+        txtLimitAmount.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        txtLimitAmount.on("cut copy paste", function (e) {
+            e.preventDefault();
         });
     }
 
     function validateUpdate() {
         return isValidDropdownList(ddlPreventiveAction, spanPreventiveAction)
-            && isValidDropdownList(ddlReason, spanReason);
+            && isValidDropdownList(ddlReason, spanReason)
+            && isValidVoidTime();
+    }
+
+    function isValidVoidTime() {
+        if ($("#ckb-time")[0].checked) {
+            return isValidDropdownList(ddlTime, spanTime);
+        } else {
+            return true;
+        }
     }
 
     function isValidDropdownList(ddlTag, span) {

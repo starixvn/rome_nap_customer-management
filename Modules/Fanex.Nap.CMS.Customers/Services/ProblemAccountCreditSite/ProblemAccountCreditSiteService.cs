@@ -127,9 +127,11 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
             int userId,
             string ip)
-            => repository.MarkNew(new MarkNewCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), userId, ip));
+            => repository.MarkNew(new MarkNewCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, userId, ip));
 
         public Result Update(
             string usernames,
@@ -137,11 +139,15 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
+            bool updateTime,
+            bool updateLimitAmount,
             int userId,
             string ip)
         {
             var result = repository.ExecuteNonQuery(
-                new UpdateCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), userId, ip));
+                new UpdateCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, updateTime, updateLimitAmount, userId, ip));
 
             if (result.IsSuccess)
             {
@@ -286,5 +292,10 @@
 
         private static bool IsAlreadyInactiveOrRemoveReduceBL(Result result)
             => result.Code == SQLErrorCodeConst.AlreadyInactiveOrRemoveReduceBL;
+
+        public IEnumerable<string> GetVoidWinningTimes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -35,6 +35,8 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
             int userId,
             string ip);
 
@@ -44,6 +46,10 @@
             byte preventiveActionId,
             byte reasonId,
             string comment,
+            string voidTime,
+            decimal limitAmount,
+            bool updateTime,
+            bool updateLimitAmount,
             int userId,
             string ip);
 
@@ -62,7 +68,7 @@
             int maxPerBet,
             int userId,
             string ip);
-
+        IEnumerable<string> GetVoidWinningTimes();
         Result Close(string usernames, byte roleId, bool confirmed, int userId, string ip);
 
         Result RemoveReduceBL(

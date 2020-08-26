@@ -12,6 +12,7 @@
     public abstract class IndexBaseViewModel
     {
         public const int MaxInputUsernames = 100;
+        public const int AvoidWinningTimeRange = 30;
 
         protected IndexBaseViewModel(
             bool hasHostPermission,
@@ -92,7 +93,37 @@
         protected static SelectListItem BuildSelectListItem(int value, string name, bool selected = false)
             => new SelectListItem { Value = value.ToString(), Text = name, Selected = selected };
 
+        protected static SelectListItem BuildSelectListItem(string name, bool selected = false)
+            => new SelectListItem { Value = name, Text = name, Selected = selected };
+
         protected static IEnumerable<SelectListItem> BuildSelectListItem(IdNameModel firstItem, IEnumerable<IdNameModel> models)
+        {
+            var listItems = models.Select(r => BuildSelectListItem(r)).ToList();
+            listItems.Insert(0, BuildSelectListItem(firstItem));
+
+            return listItems;
+        }
+
+        protected static IEnumerable<SelectListItem> BuildWinningTimes()
+        {
+            var listItems = new List<SelectListItem>
+            {
+                new SelectListItem { Text = ProblemAccountResource.AtSettlement, Value = ProblemAccountResource.AtSettlement, Selected = true },
+                new SelectListItem { Text = "23:59", Value = "23:59" }
+            };
+            var time = new TimeSpan(23, 0, 0);
+            var beginningDayTime = new TimeSpan(0, 0, 0);
+            while(time > beginningDayTime)
+            {
+                var displayTime = time.ToString(@"hh\:mm");
+                listItems.Add(new SelectListItem { Text = displayTime, Value = displayTime });
+                time = time.Subtract(TimeSpan.FromMinutes(AvoidWinningTimeRange));
+            }
+
+            return listItems;
+        }
+
+        protected static IEnumerable<SelectListItem> BuildSelectListItem(IdNameModel firstItem, IEnumerable<string> models)
         {
             var listItems = models.Select(r => BuildSelectListItem(r)).ToList();
             listItems.Insert(0, BuildSelectListItem(firstItem));

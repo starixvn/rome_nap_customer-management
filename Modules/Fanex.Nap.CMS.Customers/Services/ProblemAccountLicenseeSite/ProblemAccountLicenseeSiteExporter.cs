@@ -20,6 +20,8 @@
         private readonly IEnumerable<IdNameModel> currencies;
         private readonly IEnumerable<IdNameModel> preventiveActions;
 
+        public const string VoidWinningAction = "Void Winning Tickets";
+
         public ProblemAccountLicenseeSiteExporter(
             SearchLicenseeSiteViewModel searchFilter,
             ProblemAccountLicenseeSiteModel data,
@@ -43,7 +45,7 @@
                 new ExcelColumn(ProblemAccountResource.Currency, Width100),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxPerMatch, Width140),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxBet, Width140),
-                new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width140),
+                new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width300),
                 new ExcelColumn(ProblemAccountResource.MarkDate, Width140),
                 new ExcelColumn(ProblemAccountResource.Reason, Width400),
                 new ExcelColumn(ProblemAccountResource.Comment, Width400),
@@ -117,7 +119,7 @@
                         ExportExcel.RenderCurrentCell(FormatDecimal(item.MaxBet), numberStyle);
                     }
 
-                    ExportExcel.RenderCurrentCell(item.ActionName, centerTextStyle);
+                    ExportExcel.RenderCurrentCell(BuildPreventiveAction(item), centerTextStyle);
                     ExportExcel.RenderCurrentCell(item.MarkDateString, centerTextStyle);
                     ExportExcel.RenderCurrentCell(Join(item.Reasons, NewLine), wrapTextStyle);
                     ExportExcel.RenderCurrentCell(HtmlDecodeText(item.Comment), wrapTextStyle);
@@ -132,5 +134,17 @@
 
         private static string FormatDecimal(decimal? value)
             => value == null ? "N/A" : value.Value.ToString("N0");
+
+
+        private static string BuildPreventiveAction(ProblemAccountLicenseeSiteItem problemAccount)
+        {
+            if (problemAccount.ActionName == VoidWinningAction)
+            {
+                var limitAmount = problemAccount.LimitAmount.Equals(0.0d)? Unlimited : problemAccount.LimitAmount.ToString();
+                return $"{problemAccount.ActionName} - {problemAccount.VoidTime} - {limitAmount}";
+            }
+
+            return problemAccount.ActionName;
+        }
     }
 }

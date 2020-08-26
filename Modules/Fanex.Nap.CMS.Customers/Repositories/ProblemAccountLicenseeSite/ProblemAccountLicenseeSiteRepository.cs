@@ -83,7 +83,9 @@
                 reader["comment"].ToString(),
                 reader["inform1"].ToString(),
                 reader["inform2"].ToString(),
-                ToNullableInt32(reader["abnormalbetnumber"]));
+                ToNullableInt32(reader["abnormalbetnumber"]),
+                reader["voidtime"].ToString(),
+                Convert.ToDouble(reader["limitamount"]));
 
         protected override ProblemAccountReason ToProblemAccountReason(IDataReader reader)
             => new ProblemAccountReason(

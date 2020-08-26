@@ -8,7 +8,10 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         preventiveAction = null,
         spanPreventiveAction = null,
         reason = null,
-        spanReason = null;
+        spanReason = null,
+        time = null,
+        spanTime = null,
+        txtLimitAmount = null;
 
     function cacheElements() {
         successInlineMessage = form.find("#div-successInlineMessage");
@@ -20,6 +23,9 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         spanPreventiveAction = form.find('span[id="ddl-preventiveAction"]');
         reason = form.find("#ddl-reason").combobox();
         spanReason = form.find('span[id="ddl-reason"]');
+        time = form.find("#ddl-time").combobox();
+        spanTime = form.find('span[id="ddl-time"]');
+        txtLimitAmount = form.find("#txt-limitAmount");
     }
 
     function bindEvents() {
@@ -49,9 +55,32 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
+        preventiveAction.on("change", function () {
+            var preventActionId = preventiveAction.val();
+            if (preventActionId === '2') {
+                $(".voidWinningOption").removeClass("display-none");
+            } else {
+                $(".voidWinningOption").addClass("display-none");
+            }
+
+            time.val("0");
+            txtLimitAmount.val("");
+        });
+
         form.off("submit").on("submit", function (event) {
             event.preventDefault();
             isValidFormData() && submitForm();
+        });
+
+        $(".note-info-message").tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: "nw"
+        });
+
+        txtLimitAmount.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        txtLimitAmount.on("cut copy paste", function (e) {
+            e.preventDefault();
         });
     }
 
@@ -59,7 +88,16 @@ function ProblemAccountCreditSiteMarkNew(form, reloadData) {
         return isValidDropdownList(level, spanLevel)
             && isValidUsernames()
             && isValidDropdownList(preventiveAction, spanPreventiveAction)
-            && isValidDropdownList(reason, spanReason);
+            && isValidDropdownList(reason, spanReason)
+            && isValidVoidTime();
+    }
+
+    function isValidVoidTime() {
+        if (preventiveAction.val() === '2') {
+            return isValidDropdownList(time, spanTime);
+        } else {
+            return true;
+        }
     }
 
     function submitForm() {

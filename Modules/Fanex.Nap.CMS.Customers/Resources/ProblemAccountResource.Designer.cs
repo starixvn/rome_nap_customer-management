@@ -169,6 +169,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to At Settlement.
+        /// </summary>
+        public static string AtSettlement {
+            get {
+                return ResourceManager.GetString("AtSettlement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Both weeks informed by.
         /// </summary>
         public static string BothWeeksInformedBy {
@@ -358,6 +367,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limit Amount.
+        /// </summary>
+        public static string LimitAmount {
+            get {
+                return ResourceManager.GetString("LimitAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Problem Account - CN88.
         /// </summary>
         public static string ManageProblemAccount {
@@ -471,6 +489,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string PleaseSelect {
             get {
                 return ResourceManager.GetString("PleaseSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limit Amount must be positive.
+        /// </summary>
+        public static string PositiveLimitAmountError {
+            get {
+                return ResourceManager.GetString("PositiveLimitAmountError", resourceCulture);
             }
         }
         
@@ -664,11 +691,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time.
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlimited.
+        /// </summary>
+        public static string Unlimited {
+            get {
+                return ResourceManager.GetString("Unlimited", resourceCulture);
             }
         }
         
@@ -768,6 +813,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ViewOnly {
             get {
                 return ResourceManager.GetString("ViewOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The system will void the ticket sequentially by Win Loss Date until the total stake reach the Limit Amount. The overflown tickets will not be voided and will be settled as Won..
+        /// </summary>
+        public static string VoidWinningTicketLimitAmountHint {
+            get {
+                return ResourceManager.GetString("VoidWinningTicketLimitAmountHint", resourceCulture);
             }
         }
         

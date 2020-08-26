@@ -294,9 +294,9 @@
             var limitAmount = problemAccount.LimitAmount === 0 ? "Unlimited" : problemAccount.LimitAmount;
 
             return `${problemAccount.ActionName} - ${problemAccount.VoidTime} - ${limitAmount}`;
-        } else {
-            return problemAccount.ActionName;
         }
+
+        return problemAccount.ActionName;
     }
 
     function bindEventsAfterRenderProblemAccounts() {

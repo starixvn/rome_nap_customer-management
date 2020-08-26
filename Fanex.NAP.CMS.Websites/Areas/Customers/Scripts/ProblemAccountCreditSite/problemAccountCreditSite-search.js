@@ -329,9 +329,9 @@
             var limitAmount = problemAccount.LimitAmount === 0 ? "Unlimited" : problemAccount.LimitAmount;
 
             return `${problemAccount.PreventiveAction} - ${problemAccount.VoidTime} - ${limitAmount}`;
-        } else {
-            return problemAccount.PreventiveAction;
         }
+
+        return problemAccount.PreventiveAction;
     }
 
     function renderSelectCell(username, currency) {

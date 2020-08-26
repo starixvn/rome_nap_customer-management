@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Constants.ProblemAccountLicenseeSite;
     using Infrastructure.Extensions;
@@ -140,7 +141,7 @@
         {
             if (problemAccount.ActionName == VoidWinningAction)
             {
-                var limitAmount = problemAccount.LimitAmount.Equals(0.0d)? Unlimited : problemAccount.LimitAmount.ToString();
+                var limitAmount = problemAccount.LimitAmount.Equals(0.0d)? Unlimited : problemAccount.LimitAmount.ToString(CultureInfo.InvariantCulture);
                 return $"{problemAccount.ActionName} - {problemAccount.VoidTime} - {limitAmount}";
             }
 

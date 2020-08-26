@@ -281,7 +281,7 @@
         {
             if(problemAccount.PreventiveActionId == VoidWinningActionId)
             {
-                var limitAmount = problemAccount.LimitAmount == 0 ? Unlimited : problemAccount.LimitAmount.ToString();
+                var limitAmount = problemAccount.LimitAmount.Equals(0.0d) ? Unlimited : problemAccount.LimitAmount.ToString(CultureInfo.InvariantCulture);
                 return $"{problemAccount.PreventiveAction} - {problemAccount.VoidTime} - {limitAmount}";
             }
 

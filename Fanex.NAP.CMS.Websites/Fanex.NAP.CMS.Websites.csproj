@@ -472,6 +472,7 @@
     <Content Include="Content\MonthPicker\monPickr-0.0.3-custom.less" />
     <Content Include="Content\MonthPicker\monPickr-0.0.3.less" />
     <Content Include="Content\Pages\BetLimitControl\index.js" />
+    <Content Include="Content\Pages\DefaultMemberBetLimit\index.js" />
     <Content Include="Content\Sites\Login\fonts\YanoneKaffeesatz.svg" />
     <Content Include="Content\Sites\Login\img\auth-bg.png" />
     <Content Include="Content\Sites\Login\img\bg.png" />
@@ -714,6 +715,10 @@
     <ProjectReference Include="..\Fanex.NAP.CMS.Core\Fanex.NAP.CMS.Core.csproj">
       <Project>{C6F0B6DA-D9C2-48D6-A158-FFE7DFE9A96B}</Project>
       <Name>Fanex.NAP.CMS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.DefaultMemberBetLimit\Fanex.Nap.CMS.DefaultMemberBetLimit.csproj">
+      <Project>{3b7d1e54-061b-45c2-b1b3-e2c68bee530c}</Project>
+      <Name>Fanex.Nap.CMS.DefaultMemberBetLimit</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
@@ -992,6 +997,10 @@
     <Content Include="Content\Pages\BetLimitControl\index.less" />
     <Content Include="Views\BetLimitControl\_Add.cshtml" />
     <Content Include="Views\BetLimitControl\_Update.cshtml" />
+    <Content Include="Views\DefaultMemberBetLimit\_Add.cshtml" />
+    <Content Include="Views\DefaultMemberBetLimit\Index.cshtml" />
+    <Content Include="Content\Pages\DefaultMemberBetLimit\index.less" />
+    <Content Include="Views\DefaultMemberBetLimit\_Update.cshtml" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

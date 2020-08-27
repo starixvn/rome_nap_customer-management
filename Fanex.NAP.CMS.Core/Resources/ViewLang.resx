@@ -846,4 +846,7 @@
   <data name="BetLimitType" xml:space="preserve">
     <value>Bet Limit Type</value>
   </data>
+  <data name="DefaultMemberBetLimit" xml:space="preserve">
+    <value>Default Bet Limit for New Member</value>
+  </data>
 </root>

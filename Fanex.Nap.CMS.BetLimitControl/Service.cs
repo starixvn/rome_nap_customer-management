@@ -1,6 +1,9 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
@@ -16,7 +19,7 @@
 
         SearchModel Search(SearchRequest request);
 
-        Result Add(AddRequest addRequest);
+        IEnumerable<Result> Add(AddRequest addRequest);
 
         Result Update(UpdateRequest updateRequest);
 
@@ -25,6 +28,8 @@
 
     public class Service : IService
     {
+        private const int MaxUsernames = 100;
+
         private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
@@ -41,17 +46,17 @@
             this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
-        public Result Add(AddRequest addRequest)
+        public IEnumerable<Result> Add(AddRequest addRequest)
         {
-            var checkUsernameBetLimitTypeResult = CheckUsernameAndType(addRequest.Username, addRequest.BetLimitTypeID);
-            if (!checkUsernameBetLimitTypeResult.IsSuccess)
+            if (addRequest.Username.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length > MaxUsernames)
             {
-                return checkUsernameBetLimitTypeResult;
+                yield return new Result(MaxUsernames, Labels.Username_LimitCountWarning);
+                yield break;
             }
 
             var criteria = new AddBetLimitControlCriteria
             {
-                Username = addRequest.Username,
+                Usernames = addRequest.Username,
                 BetLimitTypeID = addRequest.BetLimitTypeID,
                 MaxBet = addRequest.MaxBet,
                 MaxPerMatch = addRequest.MaxPerMatch,
@@ -59,18 +64,21 @@
                 IP = currentContext.IP
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            var groupResults = serviceBase
+                .GetRepositoryData<AddBetLimitControlResult>(criteria)
+                .GroupBy(r => new { r.ErrorCode, r.ErrorMsg });
 
-            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
-        }
+            foreach (var group in groupResults)
+            {
+                var usernames = string.Join(", ", group.Select(r => r.Username));
 
-        public Result CheckUsernameAndType(string username, int betLimitType)
-        {
-            var criteria = new CheckUsernameBetLimitTypeCriteria(username, betLimitType, currentSession.UserId);
+                if (usernames.Length > 0)
+                {
+                    usernames += ": ";
+                }
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
-
-            return new Result(criteria.ErrorCode, criteria.ErrorMsg);
+                yield return new Result(group.Key.ErrorCode, $"{usernames}{group.Key.ErrorMsg}");
+            }
         }
 
         public Result Delete(DeleteRequest deleteRequest)

@@ -32,7 +32,9 @@ Fanex.CMS.BetLimitControl = function () {
         username: null,
         betLimitType: null,
         maxPerMatch: null,
-        maxBet: null
+        maxBet: null,
+        msgAddError: null,
+        msgAddSuccess: null
     }
 
     this.popupUpdate = {
@@ -43,8 +45,7 @@ Fanex.CMS.BetLimitControl = function () {
         oldBetLimitType: null,
         maxPerMatch: null,
         maxBet: null,
-        custID: null,
-        oldBetLimitType: null
+        custID: null
     }
 
     this.cachedElements = function () {
@@ -347,6 +348,9 @@ Fanex.CMS.BetLimitControl = function () {
         CMS.clearTipsyError(self.popupAdd.betLimitType);
         CMS.clearTipsyError(self.popupAdd.maxPerMatch);
         CMS.clearTipsyError(self.popupAdd.maxBet);
+        CMS.hideInlineMsg(self.popupAdd.msgAddError);
+        CMS.hideInlineMsg(self.popupAdd.msgAddSuccess);
+
         var username = $.trim(self.popupAdd.username.val());
         if (!username) {
             CMS.showTipsyError(self.popupAdd.username, 'This field is required', "w");
@@ -402,17 +406,31 @@ Fanex.CMS.BetLimitControl = function () {
             data: JSON.stringify(request),
             dataType: 'json',
             success: function (data) {
-                if (!data.IsSuccess) {
-                    CMS.showInlineErrorMsg(data.Message, $('#msgAdd'), false, 15000);
-                    return;
-                }
+                if (isAddAllResultsSuccessfully(data)) {
+                    CMS.showInlineSuccessMsg('New Bet Limit has been successfully created.', self.popupAdd.msgAddSuccess, true);
+                    setTimeout(function () {
+                        CMS.closePopup();
+                        Search();
+                    }, 3000);
+                } else {
+                    var errorMessage = [];
+                    var successMessage = '';
+                    for (var i = 0, maxLength = data.length; i < maxLength; i++) {
+                        if (data[i].IsSuccess) {
+                            successMessage = data[i].Message + 'New Bet Limit has been successfully created.';
+                        } else {
+                            errorMessage.push(data[i].Message);
+                        }
+                    }
 
-                var message = 'New Bet Limit has been successfully created';
-                CMS.showInlineSuccessMsg(message, $('#msgAdd'), true);
-                setTimeout(function () {
-                    CMS.closePopup();
-                    Search();
-                }, 3000);
+                    if (errorMessage.length) {
+                        CMS.showInlineErrorMsg(errorMessage.join('<br/>'), self.popupAdd.msgAddError);
+                    }
+
+                    if (successMessage.length) {
+                        CMS.showInlineSuccessMsg(successMessage, self.popupAdd.msgAddSuccess, false);
+                    }
+                }
             },
             error: function (xhr) {
                 CMS.handleAjaxError(xhr);
@@ -423,13 +441,49 @@ Fanex.CMS.BetLimitControl = function () {
         });
     }
 
+    function isAddAllResultsSuccessfully(results) {
+        for (var i = 0, max = results.length; i < max; i++) {
+            if (!results[i].IsSuccess) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function showAddDialog() {
         CMS.modal("New Bet Limit", self.elements.$addDialog.clone(), { resizable: false });
 
         self.popupAdd.username = $("#txtUsernameAdd");
+        self.popupAdd.username.off("change").on("change", function () {
+            var usernamesValue = $.trim(self.popupAdd.username.val());
+
+            if (usernamesValue.length > 0) {
+                if (usernamesValue.indexOf("\n") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\n/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\r") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\r/g, " ");
+                }
+
+                if (usernamesValue.indexOf("\t") >= 0) {
+                    usernamesValue = usernamesValue.replace(/\t/g, " ");
+                }
+
+                usernamesValue = usernamesValue.replace(/\s/g, ",");
+                var usernamesArray = usernamesValue.split(",").filter(item => item.length > 0);
+
+                self.popupAdd.username.val(usernamesArray.join(","));
+            }
+        });
+
         self.popupAdd.betLimitType = $("#txtBetLimitTypeAdd");
         self.popupAdd.maxPerMatch = $("#txtMaxPerMatchAdd");
         self.popupAdd.maxBet = $("#txtMaxBetAdd");
+        self.popupAdd.msgAddError = $("#msgAdd");
+        self.popupAdd.msgAddSuccess = $("#msgAddSuccess");
+
         $("#btnSaveAdd").click(add);
         $("#btnCancelAdd").click(CMS.closePopup);
     }
@@ -549,13 +603,14 @@ Fanex.CMS.BetLimitControl = function () {
                             Search();
                         }, 1000);
                     } else {
-                        CMS.enableInput();
                         CMS.showErrorMessage(data.Message);
                     }
                 },
                 error: function (xhr) {
-                    CMS.enableInput();
                     CMS.handleAjaxError(xhr);
+                },
+                complete: function () {
+                    CMS.enableInput();
                 }
             });
         })

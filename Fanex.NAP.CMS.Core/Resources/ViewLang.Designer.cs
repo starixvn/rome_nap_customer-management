@@ -2050,6 +2050,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usernames (Seperated by comma &quot;,&quot;).
+        /// </summary>
+        public static string UsernamesSeperatedByComma {
+            get {
+                return ResourceManager.GetString("UsernamesSeperatedByComma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Valid accounts.
         /// </summary>
         public static string ValidAccounts {

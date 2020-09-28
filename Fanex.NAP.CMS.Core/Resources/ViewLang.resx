@@ -849,4 +849,7 @@
   <data name="DefaultMemberBetLimit" xml:space="preserve">
     <value>Default Bet Limit for New Member</value>
   </data>
+  <data name="UsernamesSeperatedByComma" xml:space="preserve">
+    <value>Usernames (Seperated by comma ",")</value>
+  </data>
 </root>

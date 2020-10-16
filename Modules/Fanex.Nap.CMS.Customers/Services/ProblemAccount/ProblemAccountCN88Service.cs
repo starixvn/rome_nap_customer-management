@@ -18,10 +18,14 @@
         private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Reason_{0}";
 
         private readonly IProblemAccountRepository repository;
+        private readonly IProblemAccountCTSService ctsService;
 
-        public ProblemAccountCN88Service(IProblemAccountRepository repository = null)
+        public ProblemAccountCN88Service(
+            IProblemAccountRepository repository = null,
+            IProblemAccountCTSService ctsService = null)
         {
             this.repository = repository ?? new ProblemAccountCN88Repository();
+            this.ctsService = ctsService ?? new ProblemAccountCTSService();
         }
 
         public IEnumerable<IdNameModel> GetReasons(bool isAllReasons)
@@ -102,12 +106,15 @@
             int userId,
             string ip)
         {
-            var result = repository.ExecuteNonQuery(
+            var unmarkResult = repository.Unmark(
                 new UnmarkCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip));
+            var result = unmarkResult.Item1;
 
             if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.UnmarkSuccessfully;
+
+                ctsService.RemoveProblemAccounts(unmarkResult.Item2);
             }
 
             return result;
@@ -241,6 +248,5 @@
 
         private static bool IsAlreadyInactiveOrRemoveReduceBL(Result result)
             => result.Code == SQLErrorCodeConst.AlreadyInactiveOrRemoveReduceBL;
-
     }
 }

@@ -18,6 +18,8 @@
 
         Result MarkNew(ICriteria criteria);
 
+        Tuple<Result, string> Unmark(ICriteria criteria);
+
         Result ExecuteNonQuery(ICriteria criteria);
     }
 }

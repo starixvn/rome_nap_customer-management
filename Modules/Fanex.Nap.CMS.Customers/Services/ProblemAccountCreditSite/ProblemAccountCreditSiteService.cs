@@ -22,10 +22,14 @@
         private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Reason_{0}";
 
         private readonly IProblemAccountRepository repository;
+        private readonly IProblemAccountCTSService ctsService;
 
-        public ProblemAccountCreditSiteService(IProblemAccountRepository repository = null)
+        public ProblemAccountCreditSiteService(
+            IProblemAccountRepository repository = null,
+            IProblemAccountCTSService ctsService = null)
         {
             this.repository = repository ?? new ProblemAccountCreditSiteRepository();
+            this.ctsService = ctsService ?? new ProblemAccountCTSService();
         }
 
         public IEnumerable<IdNameModel> GetCurrencies()
@@ -165,12 +169,15 @@
             int userId,
             string ip)
         {
-            var result = repository.ExecuteNonQuery(
+            var unmarkResult = repository.Unmark(
                 new UnmarkCreditSiteCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip));
+            var result = unmarkResult.Item1;
 
             if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.UnmarkSuccessfully;
+
+                ctsService.RemoveProblemAccounts(unmarkResult.Item2);
             }
 
             return result;

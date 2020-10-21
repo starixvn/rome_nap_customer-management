@@ -18,6 +18,8 @@
 
         public bool ExcludeDirectMark { get; }
 
+        public string SuccessAllDownlineList { get; set; }
+
         public override string GetSettingKey()
             => "CS_ProblemAccount_RemoveCustomer";
     }

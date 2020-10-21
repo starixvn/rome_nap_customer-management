@@ -21,10 +21,14 @@
         private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountLicenseeSiteService.Reason_{0}";
 
         private readonly IProblemAccountLicenseeSiteRepository repository;
+        private readonly IProblemAccountCTSService ctsService;
 
-        public ProblemAccountLicenseeSiteService(IProblemAccountLicenseeSiteRepository repository = null)
+        public ProblemAccountLicenseeSiteService(
+            IProblemAccountLicenseeSiteRepository repository = null,
+            IProblemAccountCTSService ctsService = null)
         {
             this.repository = repository ?? new ProblemAccountLicenseeSiteRepository();
+            this.ctsService = ctsService ?? new ProblemAccountCTSService();
         }
 
         public IEnumerable<LicenseeAcknowledgement> GetLicenseeAcknowledgements()
@@ -224,11 +228,14 @@
 
         public Result Unmark(string usernames, int userId, string ip)
         {
-            var result = repository.ExecuteNonQuery(new UnmarkLicenseeSiteCriteria(usernames, userId, ip));
+            var unmarkResult = repository.Unmark(new UnmarkLicenseeSiteCriteria(usernames, userId, ip));
+            var result = unmarkResult.Item1;
 
             if (result.IsSuccess)
             {
                 result.Message = ProblemAccountResource.UnmarkSuccessfully;
+
+                ctsService.RemoveProblemAccounts(unmarkResult.Item2);
             }
 
             return result;

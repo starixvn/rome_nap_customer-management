@@ -133,6 +133,20 @@
             }
         }
 
+        public Tuple<Result, string> Unmark(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var ouputParams = db.GetOuputParams();
+
+                var result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
+                var custIds = ouputParams["successalldownlinelist"].ToString();
+
+                return new Tuple<Result, string>(result, custIds);
+            }
+        }
+
         public Result ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

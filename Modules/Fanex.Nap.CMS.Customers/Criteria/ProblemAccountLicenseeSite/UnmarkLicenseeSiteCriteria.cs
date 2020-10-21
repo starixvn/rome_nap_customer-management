@@ -9,6 +9,8 @@
         {
         }
 
+        public string SuccessAllDownlineList { get; set; }
+
         public override string GetSettingKey()
             => "NAP_ProblemAccount_LicenseeRemoveCustomer";
     }

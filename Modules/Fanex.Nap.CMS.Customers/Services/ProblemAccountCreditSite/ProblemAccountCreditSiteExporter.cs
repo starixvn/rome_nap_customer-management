@@ -50,7 +50,10 @@
         {
             var columns = new[]
             {
-                new ExcelColumn(ProblemAccountResource.Account, Width300),
+                new ExcelColumn(Labels.Super, Width140),
+                new ExcelColumn(Labels.Master, Width140),
+                new ExcelColumn(Labels.Agent, Width140),
+                new ExcelColumn(Labels.Member, Width140),
                 new ExcelColumn(ProblemAccountResource.AccountStatus, Width140),
                 new ExcelColumn(ProblemAccountResource.Currency, Width100),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxPerMatch, Width140),
@@ -146,86 +149,44 @@
             IFont blueFont,
             ICellStyle wrapTextStyle)
         {
-            int startIndexSuper = -1;
-            int endIndexSuper = -1;
-            int startIndexMaster = -1;
-            int endIndexMaster = -1;
-            int startIndexAgent = -1;
-            int endIndexAgent = -1;
-            int startIndex = -1;
-            int endIndex = -1;
-
-            var cellBuilder = new StringBuilder();
-
-            ExportAccountCell(
-                cellBuilder,
+            RenderAccountCell(
+                problemAccount.Super,
                 problemAccount.IsProblemAccSuper,
-                $"{problemAccount.Super}",
-                ref startIndexSuper,
-                ref endIndexSuper);
+                blueFont,
+                wrapTextStyle);
 
-            if (searchFilter.Level <= RoleIdConstants.Master)
-            {
-                cellBuilder.Append(NewLine);
-                ExportAccountCell(
-                    cellBuilder,
-                    problemAccount.IsProblemAccMaster,
-                    $"    {problemAccount.Master}",
-                    ref startIndexMaster,
-                    ref endIndexMaster);
-            }
+            RenderAccountCell(
+                currentLevel <= RoleIdConstants.Master ? problemAccount.Master : string.Empty,
+                problemAccount.IsProblemAccMaster,
+                blueFont,
+                wrapTextStyle);
 
-            if (searchFilter.Level <= RoleIdConstants.Agent)
-            {
-                cellBuilder.Append(NewLine);
-                ExportAccountCell(
-                    cellBuilder,
-                    problemAccount.IsProblemAccAgent,
-                    $"        {problemAccount.Agent}",
-                    ref startIndexAgent,
-                    ref endIndexAgent);
-            }
+            RenderAccountCell(
+                currentLevel <= RoleIdConstants.Agent ? problemAccount.Agent : string.Empty,
+                problemAccount.IsProblemAccAgent,
+                blueFont,
+                wrapTextStyle);
 
-            if (searchFilter.Level <= RoleIdConstants.Member)
-            {
-                cellBuilder.Append(NewLine);
-                ExportAccountCell(
-                    cellBuilder,
-                    problemAccount.IsProblemAcc,
-                    $"            {problemAccount.Username}",
-                    ref startIndex,
-                    ref endIndex);
-            }
-
-            IRichTextString richText = new HSSFRichTextString(cellBuilder.ToString());
-            richText.ApplyFont(wrapTextStyle.FontIndex);
-
-            ApplyBlueFont(richText, startIndexSuper, endIndexSuper, blueFont);
-            ApplyBlueFont(richText, startIndexMaster, endIndexMaster, blueFont);
-            ApplyBlueFont(richText, startIndexAgent, endIndexAgent, blueFont);
-            ApplyBlueFont(richText, startIndex, endIndex, blueFont);
-
-            ExportExcel.RenderCurrentCellText(wrapTextStyle, richText);
+            RenderAccountCell(
+                currentLevel <= RoleIdConstants.Member ? problemAccount.Username : string.Empty,
+                problemAccount.IsProblemAcc,
+                blueFont,
+                wrapTextStyle);
         }
 
-        protected override void ExportAccountCell(
-            StringBuilder cellBuilder,
+        private void RenderAccountCell(
+            string userName,
             bool isProblemAcc,
-            string username,
-            ref int startIndex,
-            ref int endIndex)
+            IFont blueFont,
+            ICellStyle wrapTextStyle)
         {
+            IRichTextString richText = new HSSFRichTextString(userName);
             if (isProblemAcc)
             {
-                startIndex = cellBuilder.Length == 0 ? 0 : cellBuilder.Length - 1;
+                richText.ApplyFont(blueFont);
             }
 
-            cellBuilder.Append(username);
-
-            if (isProblemAcc)
-            {
-                endIndex = cellBuilder.Length;
-            }
+            ExportExcel.RenderCurrentCellText(wrapTextStyle, richText);
         }
 
         protected override void ExportMaxPerEventOrMaxPerBet(IList<decimal?> values, int lastIndex, IFont blueFont, ICellStyle wrapTextStyle)

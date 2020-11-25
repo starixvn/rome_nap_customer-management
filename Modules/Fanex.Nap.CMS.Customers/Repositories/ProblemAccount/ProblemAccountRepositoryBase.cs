@@ -108,6 +108,9 @@
         protected static decimal? ToNullableDecimal(object value)
             => value == null || value == DBNull.Value ? default(decimal?) : Convert.ToDecimal(value);
 
+        protected static double? ToNullableDouble(object value)
+            => value == null || value == DBNull.Value ? default(double?) : Convert.ToDouble(value);
+
         protected static int? ToNullableInt32(object value)
             => value == null || value == DBNull.Value ? default(int?) : Convert.ToInt32(value);
 

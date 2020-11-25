@@ -5,6 +5,7 @@
 
     public class ProblemAccountItem
     {
+#pragma warning disable S107 // Methods should not have too many parameters
         public ProblemAccountItem(
             int custId,
             string username,
@@ -33,7 +34,8 @@
             string currency,
             byte preventiveActionId,
             string voidTime,
-            double limitAmount)
+            double? limitAmount)
+#pragma warning restore S107 // Methods should not have too many parameters
         {
             CustId = custId;
             Username = username;
@@ -127,6 +129,6 @@
 
         public string VoidTime { get;}
 
-        public double LimitAmount { get;}
+        public double? LimitAmount { get;}
     }
 }

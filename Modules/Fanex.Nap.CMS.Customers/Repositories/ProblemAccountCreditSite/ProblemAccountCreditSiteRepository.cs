@@ -36,6 +36,6 @@
                 reader["currency"].ToString(),
                 Convert.ToByte(reader["actionid"]),
                 reader["voidtime"].ToString(),
-                Convert.ToDouble(reader["limitamount"]));
+                ToNullableDouble(reader["limitamount"]));
     }
 }

@@ -47,6 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{
 	ProjectSection(SolutionItems) = preProject
 		SonarQube\Fanex.NAP.CMCSharp.ruleset = SonarQube\Fanex.NAP.CMCSharp.ruleset
 		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+		SonarQube\fanex.nap.cm\CSharp\SonarLint.xml = SonarQube\fanex.nap.cm\CSharp\SonarLint.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.Customers", "Modules\Fanex.Nap.CMS.Customers\Fanex.Nap.CMS.Customers.csproj", "{5CA24F84-6331-4A98-8124-7C40BBD3D84D}"

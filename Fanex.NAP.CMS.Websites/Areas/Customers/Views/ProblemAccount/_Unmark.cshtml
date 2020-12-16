@@ -1,6 +1,6 @@
 ﻿@using (Html.BeginForm("Unmark", "ProblemAccount", FormMethod.Post, new { id = "formUnmarkMember", @class = "form" }))
 {
-    <input type="hidden" name="usernames" id="txt-usernames" value="" />
+    <input type="hidden" name="usernames" maxlength="4000" id="txt-usernames" value="" />
     <input type="hidden" name="level" id="txt-level" value="" />
     <div id="div-inlineMessage" class="inline-message"></div>
     <div class="form-row">

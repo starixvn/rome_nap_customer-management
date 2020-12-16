@@ -5,11 +5,16 @@
     using System.Data;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Customers.Resources;
     using Infrastructure.Models;
     using Models.ProblemAccount;
 
     public abstract class ProblemAccountRepositoryBase : IProblemAccountRepository
     {
+        private const int ErrorInvalidAccount = 100;
+        private const int ErrorExistUnmarkedAccount = 101;
+        private const int ErrorNonMemberAccount = 102;
+
         public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
@@ -138,9 +143,23 @@
 
         public Tuple<Result, string> Unmark(ICriteria criteria)
         {
+            var validationError = new List<Result>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        validationError.Add(new Result(Convert.ToInt32(reader["errcode"]), reader["username"].ToString()));
+                    }
+                }
+                if (validationError.Count > 0)
+                {
+                    var validateErrorResult = BuildUnMarkMessage(validationError);
+
+                    return new Tuple<Result, string>(validateErrorResult, string.Empty);
+                }
+
                 var ouputParams = db.GetOuputParams();
 
                 var result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
@@ -148,6 +167,32 @@
 
                 return new Tuple<Result, string>(result, custIds);
             }
+        }
+
+        private static Result BuildUnMarkMessage(List<Result> validateErrors)
+        {
+            var errorMsg = "";
+            foreach (var result in validateErrors)
+            {
+                if (result.Code == ErrorInvalidAccount)
+                {
+                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorInvalidAccount, result.Message));
+                }
+                else if (result.Code == ErrorExistUnmarkedAccount)
+                {
+                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorExistingUnmarked, result.Message));
+                }
+                else if (result.Code == ErrorNonMemberAccount)
+                {
+                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorNonMemberAccount, result.Message));
+                }
+                else
+                {
+                    errorMsg = string.Concat(errorMsg, "<div class=\"error\">", result.Message, "</div>");
+                }
+            }
+
+            return new Result(-1, errorMsg);
         }
 
         public Result ExecuteNonQuery(ICriteria criteria)

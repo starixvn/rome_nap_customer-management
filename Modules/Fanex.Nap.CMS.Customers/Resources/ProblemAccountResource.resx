@@ -375,4 +375,22 @@
   <data name="PositiveLimitAmountError" xml:space="preserve">
     <value>Limit Amount must be positive</value>
   </data>
+  <data name="MultipleMembers" xml:space="preserve">
+    <value>Member(s)</value>
+  </data>
+  <data name="UnallowBacksplash" xml:space="preserve">
+    <value>You are not allowed to input backslash `\\` into the Username field.</value>
+  </data>
+  <data name="OverUsernamesLimitation" xml:space="preserve">
+    <value>The function can only unmark up to 100 accounts per request.</value>
+  </data>
+  <data name="ErrorExistingUnmarked" xml:space="preserve">
+    <value>&lt;div  class="error"&gt;Existing unmarked problem account(s): {0} &lt;/div&gt;</value>
+  </data>
+  <data name="ErrorInvalidAccount" xml:space="preserve">
+    <value>&lt;div  class="error"&gt;Invalid account(s): {0} &lt;/div&gt;</value>
+  </data>
+  <data name="ErrorNonMemberAccount" xml:space="preserve">
+    <value>&lt;div  class="error"&gt;Non-Member Account(s): {0}&lt;/div&gt;</value>
+  </data>
 </root>

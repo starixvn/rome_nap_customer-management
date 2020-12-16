@@ -229,6 +229,7 @@
         public Result Unmark(string usernames, int userId, string ip)
         {
             var unmarkResult = repository.Unmark(new UnmarkLicenseeSiteCriteria(usernames, userId, ip));
+
             var result = unmarkResult.Item1;
 
             if (result.IsSuccess)

@@ -26,8 +26,8 @@
 
         $("#btn-unmark").click(function () {
             handleActions(function (usernames) {
-                var unmark = new ProblemAccountConfirmAction(elements.formUnmarkMember.clone(), problemAccountSearch.reloadData);
-                unmark.init(resources.unmarkProblemAccount, usernames);
+                var unmark = new ProblemAccountUnmark(elements.formUnmarkMember.clone(), problemAccountSearch.reloadData);
+                unmark.init(resources.unmarkProblemAccount, usernames, 1);
             });
         });
 

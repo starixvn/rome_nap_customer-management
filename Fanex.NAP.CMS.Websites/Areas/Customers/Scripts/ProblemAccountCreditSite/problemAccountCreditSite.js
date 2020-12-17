@@ -30,7 +30,7 @@
             handleActions(function (usernames, level) {
                 var unmark = new ProblemAccountUnmark(getUnmarkForm(level).clone(), problemAccountSearch.reloadData);
                 unmark.init(resources.unmarkProblemAccount, usernames, level);
-            });
+            }, true);
         });
 
         $("#btn-reduceBetLimit").click(function () {
@@ -64,9 +64,9 @@
         });
     }
 
-    function handleActions(handleActionCallback) {
+    function handleActions(handleActionCallback, openManually = false) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        problemAccount.usernames.length && handleActionCallback(problemAccount.usernames, problemAccount.level);
+        (openManually || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames, problemAccount.level);
     }
 
     function getUnmarkForm(level) {

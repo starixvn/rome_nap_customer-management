@@ -28,7 +28,7 @@
             handleActions(function (usernames) {
                 var unmark = new ProblemAccountUnmark(elements.formUnmarkMember.clone(), problemAccountSearch.reloadData);
                 unmark.init(resources.unmarkProblemAccount, usernames, 1);
-            });
+            }, true);
         });
 
         $("#btn-reduceBetLimit").click(function () {
@@ -72,9 +72,9 @@
         });
     }
 
-    function handleActions(handleActionCallback) {
+    function handleActions(handleActionCallback, openManually = false) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        problemAccount.usernames.length && handleActionCallback(problemAccount.usernames);
+        (openManually || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames);
     }
 
     function initialize() {

@@ -385,7 +385,7 @@
     <value>The function can only unmark up to 100 accounts per request.</value>
   </data>
   <data name="ErrorExistingUnmarked" xml:space="preserve">
-    <value>&lt;div  class="error"&gt;Existing unmarked problem account(s): {0} &lt;/div&gt;</value>
+    <value>&lt;div  class="error"&gt;Not problem account(s): {0} &lt;/div&gt;</value>
   </data>
   <data name="ErrorInvalidAccount" xml:space="preserve">
     <value>&lt;div  class="error"&gt;Invalid account(s): {0} &lt;/div&gt;</value>

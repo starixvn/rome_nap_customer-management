@@ -232,7 +232,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Existing unmarked problem account(s): {0} &lt;/div&gt;.
+        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Not problem account(s): {0} &lt;/div&gt;.
         /// </summary>
         public static string ErrorExistingUnmarked {
             get {

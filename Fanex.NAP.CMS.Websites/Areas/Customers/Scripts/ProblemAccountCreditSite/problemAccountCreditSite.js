@@ -66,7 +66,7 @@
 
     function handleActions(handleActionCallback, openManually = false) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        (openManually || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames, problemAccount.level);
+        (openManually && problemAccount.level === "1" || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames, problemAccount.level);
     }
 
     function getUnmarkForm(level) {

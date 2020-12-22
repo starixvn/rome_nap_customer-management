@@ -120,6 +120,7 @@
                 "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-marknew.js",
                 "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-update.js",
                 "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-reduceBL.js",
+                "~/Areas/Customers/Scripts/problemAccount-unmark.js",
                 "~/Areas/Customers/Scripts/problemAccount-confirmAction.js",
                 "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite-informingStatus.js",
                 "~/Areas/Customers/Scripts/ProblemAccountLicenseeSite/problemAccountLicenseeSite.js"));

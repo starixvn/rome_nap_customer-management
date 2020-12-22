@@ -232,6 +232,33 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Not problem account(s): {0} &lt;/div&gt;.
+        /// </summary>
+        public static string ErrorExistingUnmarked {
+            get {
+                return ResourceManager.GetString("ErrorExistingUnmarked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Invalid account(s): {0} &lt;/div&gt;.
+        /// </summary>
+        public static string ErrorInvalidAccount {
+            get {
+                return ResourceManager.GetString("ErrorInvalidAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Non-Member Account(s): {0}&lt;/div&gt;.
+        /// </summary>
+        public static string ErrorNonMemberAccount {
+            get {
+                return ResourceManager.GetString("ErrorNonMemberAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Problem Account CN88 {0}.
         /// </summary>
         public static string ExcelFileName {
@@ -448,6 +475,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member(s).
+        /// </summary>
+        public static string MultipleMembers {
+            get {
+                return ResourceManager.GetString("MultipleMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
@@ -480,6 +516,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string OrderBy {
             get {
                 return ResourceManager.GetString("OrderBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The function can only unmark up to 100 accounts per request..
+        /// </summary>
+        public static string OverUsernamesLimitation {
+            get {
+                return ResourceManager.GetString("OverUsernamesLimitation", resourceCulture);
             }
         }
         
@@ -705,6 +750,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string To {
             get {
                 return ResourceManager.GetString("To", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not allowed to input backslash `\\` into the Username field..
+        /// </summary>
+        public static string UnallowBacksplash {
+            get {
+                return ResourceManager.GetString("UnallowBacksplash", resourceCulture);
             }
         }
         

@@ -171,6 +171,7 @@
         {
             var unmarkResult = repository.Unmark(
                 new UnmarkCreditSiteCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip));
+
             var result = unmarkResult.Item1;
 
             if (result.IsSuccess)

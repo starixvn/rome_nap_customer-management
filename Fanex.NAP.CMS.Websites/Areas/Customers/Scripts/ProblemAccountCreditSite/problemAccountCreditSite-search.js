@@ -383,7 +383,7 @@
     }
 
     function getCheckedProblemAccount() {
-        var level = -1, usernames = [];
+        var level = "1", usernames = [];
         var currency;
 
         if (filterParams) {

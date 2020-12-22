@@ -14,6 +14,7 @@
         private const int ErrorInvalidAccount = 100;
         private const int ErrorExistUnmarkedAccount = 101;
         private const int ErrorNonMemberAccount = 102;
+        private const string ErrorCodeParam = "errcode";
 
         public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
         {
@@ -134,7 +135,7 @@
                 var ouputParams = db.GetOuputParams();
 
                 return new MarkNewResult(
-                    Convert.ToInt32(ouputParams["errcode"]),
+                    Convert.ToInt32(ouputParams[ErrorCodeParam]),
                     ouputParams["errmsg"].ToString(),
                     ouputParams["successlist"].ToString(),
                     ouputParams["faillist"].ToString());
@@ -150,7 +151,7 @@
                 {
                     while (reader.Read())
                     {
-                        validationError.Add(new Result(Convert.ToInt32(reader["errcode"]), reader["username"].ToString()));
+                        validationError.Add(new Result(Convert.ToInt32(reader[ErrorCodeParam]), reader["username"].ToString()));
                     }
                 }
                 if (validationError.Count > 0)
@@ -162,7 +163,7 @@
 
                 var ouputParams = db.GetOuputParams();
 
-                var result = new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
+                var result = new Result(Convert.ToInt32(ouputParams[ErrorCodeParam]), ouputParams["errmsg"].ToString());
                 var custIds = ouputParams["successalldownlinelist"].ToString();
 
                 return new Tuple<Result, string>(result, custIds);
@@ -203,7 +204,7 @@
                 var ouputParams = db.GetOuputParams();
 
                 return new Result(
-                    Convert.ToInt32(ouputParams["errcode"]),
+                    Convert.ToInt32(ouputParams[ErrorCodeParam]),
                     ouputParams["errmsg"].ToString());
             }
         }

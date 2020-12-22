@@ -38,7 +38,7 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PayoutManagement, Policy = Constant.Policy.Read)]
-        public async Task<ActionResult> ColossusBetsAsync(GetBetTicketCriteria criteria)
+        public async Task<ActionResult> ColossusBets(GetBetTicketCriteria criteria)
         {
             int userId = CurrentSession.UserId;
             var colossusbets = _betTicketService.GetColossusBets(criteria);

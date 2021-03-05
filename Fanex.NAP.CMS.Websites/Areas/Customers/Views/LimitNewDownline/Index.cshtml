@@ -1,0 +1,103 @@
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.ViewModels.LimitNewDownline;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = LimitNewDownlineResource.LimitNewDownlinePerDay;
+}
+@model LimitNewDownlineViewModel
+@section Head {
+    @Styles.Render(CustomersBundlesConfig.LimitNewDownlineStylePath)
+}
+@section Foot {
+    <script type="text/javascript">
+        var resources = {
+            username: "@Labels.Username",
+            level: "@Labels.Level",
+            currency: "@LimitNewDownlineResource.Currency",
+            site: "@Labels.Site",
+            addedBy: "@LimitNewDownlineResource.AddedBy",
+            addedDate: "@LimitNewDownlineResource.AddedDate",
+            remove: "@LimitNewDownlineResource.Remove",
+            requiredUsernamesError: "@LimitNewDownlineResource.RequiredUsernamesError",
+            overUsernamesLimitationError: "@LimitNewDownlineResource.OverUsernamesLimitationError",
+            inputInvalidUsernamesError: "@LimitNewDownlineResource.InputInvalidUsernamesError"
+        };
+        var sites = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites))');
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.LimitNewDownlineScriptPath)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <span id="note-info" class="note-info-message"></span>
+    @using (Html.BeginForm("Search", "LimitNewDownline", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label for="txt-username">@Labels.Username</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" style="width:100%" id="txt-username" autocomplete="off" maxlength="50" />
+            </div>
+            <div class="lbl-field col_4">
+                <label>@Labels.Level</label>
+            </div>
+            <div class="edit-field col_5">
+                @Html.DropDownList("level", Model.Levels(), new { id = "ddl-level", @class = "combobox-autocomplete width-80" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_8">
+                <div id="ddl-site"></div>
+            </div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit btn-search">@ProblemAccountResource.Search</button>
+            </div>
+            <div class="filter-row"></div>
+        </div>
+    }
+</div>
+@if (Model.HasHostPermission)
+{
+    <div class="button-list">
+        <button type="button" class="blue-button" id="btn-addNew">@LimitNewDownlineResource.AddNewLimit</button>
+        <button type="button" class="blue-button" id="btn-remove">@LimitNewDownlineResource.RemoveLimit</button>
+    </div>
+}
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+
+<div id="divPopupContent" class="display-none">
+    <div id="note-info-content">
+        <p>- If a super is applied the limit, the super can only created 3 masters per day, its masters can only created 3 agents per day and its agents can only created 5 members per day.</p>
+        <p>- If a master is applied the limit, its super will not be limited, the master can only created 3 agents per day and its agents can only created 5 members per day.</p>
+        <p>- If an agent is applied the limit, its super and master will not be limited, the the agent can only created 5 members per day.</p>
+        <p>- The limitation is applied on Alpha Site and External Admin Site. Creating new downline on NAP Site is not limited but the created account is counted in the daily limit.</p>
+    </div>
+    @if (Model.HasHostPermission)
+    {
+        <div id="addNewOrRemoveLimit">
+            <div id="inline-message" class="inline-message"></div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label for="txt-usernames">@Labels.Usernames<span class="text-red">*</span>&nbsp;@LimitNewDownlineResource.SeperatedByComma</label>
+                </div>
+                <div class="edit-field">
+                    <textarea rows="10" name="usernames" id="txt-usernames"></textarea>
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <button type="button" class="blue-button" id="btn-save">@Labels.Save</button>
+                <button type="button" class="red-button" id="btn-cancel">@Labels.Cancel</button>
+            </div>
+        </div>
+    }
+</div>

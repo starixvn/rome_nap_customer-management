@@ -27,5 +27,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
         public const string FullMonthName = "MMMM";
         public const string YearMonthDateWithSlash = "yyyy/MM/dd";
         public const string LongDateMMMdd = "MMM dd, yyyy hh:mm:ss tt";
+        public const string LongDate24hWithSlash = "MM/dd/yyyy HH:mm:ss";
     }
 }

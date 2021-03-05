@@ -1,0 +1,42 @@
+﻿@red-color: #ff0000;
+
+.text-red {
+    color: @red-color;
+}
+
+.filter-bar .filter-row .edit-field input[type="text"].fanex-multiselect-state-default {
+    &:hover, &:focus {
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.button-list {
+    margin: 0 25px 0 10px;
+}
+
+.content-grid {
+    margin-top: 10px;
+}
+
+.ui-dialog .ui-dialog-content #addNewOrRemoveLimit {
+    padding-bottom: 0;
+    width: 700px;
+
+    .form-row {
+        .lbl-field, .edit-field {
+            padding-bottom: 5px;
+            width: 98%;
+
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        }
+    }
+
+    .button-row {
+        margin: 10px 0;
+        text-align: right;
+    }
+}

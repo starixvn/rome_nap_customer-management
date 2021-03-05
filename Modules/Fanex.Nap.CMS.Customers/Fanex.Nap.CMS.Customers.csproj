@@ -195,6 +195,7 @@
     <Compile Include="Constants\ProblemAccount\SQLErrorCodeConst.cs" />
     <Compile Include="Constants\ProblemAccountLicenseeSite\VIPConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
+    <Compile Include="Controllers\LimitNewDownlineController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\PossessStatisticsController.cs" />
@@ -205,6 +206,10 @@
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
+    <Compile Include="Criteria\LimitNewDownline\AddNewLimitCriteria.cs" />
+    <Compile Include="Criteria\LimitNewDownline\GetCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\LimitNewDownline\GetLimitDownlineListCriteria.cs" />
+    <Compile Include="Criteria\LimitNewDownline\RemoveLimitCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetCurrenciesCriteria.cs" />
@@ -249,6 +254,9 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\LimitNewDownline\AddNewOrRemoveLimitResult.cs" />
+    <Compile Include="Models\LimitNewDownline\LimitDownlineItem.cs" />
+    <Compile Include="Models\LimitNewDownline\LimitDownlineReport.cs" />
     <Compile Include="Models\PossessStatistics\PossessStatisticsModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotReport.cs" />
@@ -267,6 +275,8 @@
     <Compile Include="Params\PossessStatistics\UpdateDangerLevelParam.cs" />
     <Compile Include="Params\PossessStatistics\UpdateMonitorStatusParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\LimitNewDownline\ILimitNewDownlineRepository.cs" />
+    <Compile Include="Repositories\LimitNewDownline\LimitNewDownlineRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\BetListRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\IBetListRepository.cs" />
     <Compile Include="Repositories\IManageRobots2Repository.cs" />
@@ -288,6 +298,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\LimitNewDownlineResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LimitNewDownlineResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\PossessStatisticsResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -303,6 +318,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProblemAccountResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\LimitNewDownline\ILimitNewDownlineService.cs" />
+    <Compile Include="Services\LimitNewDownline\LimitNewDownlineService.cs" />
     <Compile Include="Services\ProblemAccountCTSService.cs" />
     <Compile Include="Services\ProblemAccount\BetListService.cs" />
     <Compile Include="Services\ProblemAccount\IBetListService.cs" />
@@ -323,6 +340,8 @@
     <Compile Include="Services\RobotsExporter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
+    <Compile Include="ViewModels\LimitNewDownline\LimitNewDownlineViewModel.cs" />
+    <Compile Include="ViewModels\LimitNewDownline\SearchLimitDownlineViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\FilterViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\IndexViewModel.cs" />
@@ -368,6 +387,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\LimitNewDownlineResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LimitNewDownlineResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\PossessStatisticsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PossessStatisticsResource.Designer.cs</LastGenOutput>
@@ -392,6 +415,7 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

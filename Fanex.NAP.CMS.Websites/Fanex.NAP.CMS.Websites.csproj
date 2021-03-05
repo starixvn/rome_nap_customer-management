@@ -390,6 +390,8 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\LimitNewDownline\addNewOrRemoveLimit.js" />
+    <Content Include="Areas\Customers\Scripts\LimitNewDownline\limitNewDownline.js" />
     <Content Include="Areas\Customers\Scripts\ManageLicenseeAcknowledgement\manageLicensee.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-informingStatus.js" />
     <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-marknew.js" />
@@ -995,6 +997,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\_GlobalAutoSuspendThresholdLogsReport.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\GlobalAutoSuspendThreshold.cshtml" />
     <Content Include="App_Data\ExcelTemplates\Basketball-UploadVirtualRateTemplate.xlsx" />
+    <Content Include="Areas\Customers\Views\LimitNewDownline\Index.cshtml" />
+    <Content Include="Areas\Customers\Styles\limitNewDownline.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

@@ -26,7 +26,8 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Web.Session;
     using NAP.Core.Models;
     using NAP.Core.Models.ParameterObject;
-    using ONEbook.UM.Models;
+    using ONEbook.UM;
+    using ONEbook.UM.Services;
 
     /// <summary>
     /// Login controller.
@@ -41,7 +42,7 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly IGroupService _groupService;
         private readonly ISiteService _siteService;
         private readonly ICurrentSession _currentSession;
-        private readonly ONEbook.UM.Services.IMaintenanceService _maintenanceService;
+        private readonly IMaintenanceService _maintenanceService;
         private readonly HashAlgorithm _hashAlgorithm;
         private readonly ISecurityService _securityService;
 
@@ -59,14 +60,18 @@ namespace Fanex.NAP.CMS.Controllers
             IGroupService groupService,
             ISiteService siteService,
             ICurrentSession currentSession,
-           ONEbook.UM.Services.IMaintenanceService maintenanceService,
-           ISecurityService securityService)
+            IMaintenanceService maintenanceService,
+            ISecurityService securityService)
         {
             this._userService = userService ?? new UserService();
             this._groupService = groupService ?? new GroupService();
             this._siteService = siteService ?? new SiteService();
             this._currentSession = currentSession ?? new CurrentSession();
-            this._maintenanceService = maintenanceService ?? new ONEbook.UM.Services.Impl.MaintenanceService();
+            this._maintenanceService = maintenanceService ?? new MaintenanceService(
+                UMClientManager.RestClient,
+                UMClientManager.CacheService,
+                UMClientManager.UMClientConfigs,
+                UMClientManager.HttpContext);
             _hashAlgorithm = new SHA256Managed();
             _securityService = securityService ?? new SecurityService();
         }
@@ -243,7 +248,7 @@ namespace Fanex.NAP.CMS.Controllers
                 FormsAuthentication.RedirectToLoginPage();
             }
 
-            UnderMaintenanceTime downTime = _maintenanceService.GetUnderMaintenanceTime();
+            var downTime = _maintenanceService.GetUnderMaintenanceTime();
             ViewBag.UmtFrom = downTime.From;
             ViewBag.UmtTo = downTime.To;
 

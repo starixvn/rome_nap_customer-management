@@ -18,10 +18,17 @@ namespace Fanex.NAP.CMS.Websites
     using System.Web.Optimization;
     using System.Web.Routing;
     using Data.Configuration;
+    using Fanex.Caching;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
-    using ONEbook.UM.Filters;
+    using ONEbook.UM;
+    using ONEbook.UM.AspNetMVC.Filters;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Helpers;
+    using ONEbook.UM.NETFramework;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Transport;
     using RemotingRef;
 
     /// <summary>
@@ -36,7 +43,15 @@ namespace Fanex.NAP.CMS.Websites
             LoggingConfig.Init(
                   new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" },
                   getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
-            GlobalFilters.Filters.Add(new CheckUMFilter());
+
+            var umConfig = new UMClientConfiguration().Initialize();
+            UMClientManager
+                .UseConfig(umConfig)
+                .UseCacheService(new UMCacheService(new CacheService()))
+                .UseRestClient(new UMRestClient(umConfig))
+                .UseHttpContext(new HttpContextHelper());
+            GlobalFilters.Filters.Add(new CheckUMFilterAttribute(
+                new MaintenanceService(UMClientManager.RestClient, UMClientManager.CacheService, UMClientManager.UMClientConfigs, UMClientManager.HttpContext), null));
 
             DbSettingProviderManager.Current.Start();
             AreaRegistration.RegisterAllAreas();

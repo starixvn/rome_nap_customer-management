@@ -86,6 +86,7 @@
     <Compile Include="TurnoverUsage\TurnoverUsageInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Fanex.NAP.CMS.Models.Debug.ruleset" />
     <None Include="Fanex.NAP.CMS.Models.ruleset" />
     <None Include="packages.config" />

@@ -17,7 +17,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
     /// </summary>
     public static class CacheManager
     {
-        private static readonly ICache CacheManagerInstance = CacheService.CreateInstance(CacheType.MemoryCache);
+        private static readonly ICacheService CacheManagerInstance = new CacheService();
 
         /// <summary>
         /// Gets cached value associated with the passed key.
@@ -69,7 +69,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         /// <param name="timeSpanExpiration">The time span which the cached value will be expired.</param>
         public static void Set(string key, object value, TimeSpan timeSpanExpiration)
         {
-            CacheManagerInstance.Set(key, value, timeSpanExpiration);
+            CacheManagerInstance.Set(key, value, new CacheItemOptions().SetAbsoluteExpiration(timeSpanExpiration));
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         /// <param name="timeSpanExpiration">The time span which the cached value will be expired.</param>
         public static void Set<T>(string key, T value, TimeSpan timeSpanExpiration)
         {
-            CacheManagerInstance.Set<T>(key, value, timeSpanExpiration);
+            CacheManagerInstance.Set<T>(key, value, new CacheItemOptions().SetAbsoluteExpiration(timeSpanExpiration));
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         /// <param name="absoluteExpiration">The time when the cached value will be expired.</param>
         public static void Set(string key, object value, DateTime absoluteExpiration)
         {
-            CacheManagerInstance.Set(key, value, absoluteExpiration);
+            CacheManagerInstance.Set(key, value, new CacheItemOptions().SetAbsoluteExpiration(absoluteExpiration));
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Web
         /// <param name="absoluteExpiration">The time when the cached value will be expired.</param>
         public static void Set<T>(string key, T value, DateTime absoluteExpiration)
         {
-            CacheManagerInstance.Set<T>(key, value, absoluteExpiration);
+            CacheManagerInstance.Set<T>(key, value, new CacheItemOptions().SetAbsoluteExpiration(absoluteExpiration));
         }
 
         /// <summary>

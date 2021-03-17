@@ -28,6 +28,14 @@ var Recheckin = (function ($) {
                     if (result === '-1') {
                         window.location.href = Recheckin.root + 'Login/Offline';
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status === 503) {
+                        var response = JSON.parse(jqXHR.responseText);
+                        if (response.code === 999999) {
+                            window.location.href = Recheckin.root + 'Login/Offline';
+                        }
+                    }
                 }
             });
         },

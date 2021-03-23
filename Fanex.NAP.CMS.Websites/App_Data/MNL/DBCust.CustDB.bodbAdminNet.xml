@@ -102,4 +102,9 @@
     <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Limit number of new created account">
+    <Setting Key="Nap_ProblemAccountLimitDownlineSel" SpName="Nap_ProblemAccountLimitDownlineSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Nap_ProblemAccountLimitDownlineIns" SpName="Nap_ProblemAccountLimitDownlineIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

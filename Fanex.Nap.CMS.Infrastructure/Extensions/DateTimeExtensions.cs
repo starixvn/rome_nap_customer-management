@@ -188,5 +188,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Extensions
         {
             return date.ToString(DateTimeFormatConstants.LongDateMMMdd);
         }
+
+        public static string ToLongDate24hWithSlash(this DateTime date)
+        {
+            return date.ToString(DateTimeFormatConstants.LongDate24hWithSlash);
+        }
     }
 }

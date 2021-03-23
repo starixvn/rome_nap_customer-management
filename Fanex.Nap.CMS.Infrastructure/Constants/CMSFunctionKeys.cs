@@ -118,5 +118,8 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ManageProblemAccountCreditSites = "ManageProblemAccount_CreditSites";
         public const string ManageProblemAccountLicenseeSites = "ManageProblemAccount_LicenseeSites";
         public const string ProblemAccountManageLicenseeAcknowledgement = "ProblemAccount_ManageLicenseeAcknowledgement";
+
+        // Limit New Downline Per Day
+        public const string LimitNewDownlinePerDay = "LimitNewDownlinePerDay";
     }
 }

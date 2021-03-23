@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.AppStart
 {
-    using Infrastructure.Extensions;
     using System.Web.Optimization;
+    using Infrastructure.Extensions;
 
     public static class CustomersBundlesConfig
     {
@@ -20,6 +20,9 @@
         public const string DefaultMemberBetLimitScriptPath = "~/bundles/default-member-bet-limit-scripts";
         public const string DefaultMemberBetLimitStylePath = "~/bundles/default-member-bet-limit-styles";
 
+        public const string LimitNewDownlineScriptPath = "~/bundles/limit-new-downline-scripts";
+        public const string LimitNewDownlineStylePath = "~/bundles/limit-new-downline-styles";
+
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
@@ -34,7 +37,8 @@
                 .RegisterManageLicenseeAcknowledgementBundles()
                 .RegisterBetLimitTypeControlBundles()
                 .RegisterBetLimitControlBundles()
-                .RegisterDefaultMemberBetLimitBundles();
+                .RegisterDefaultMemberBetLimitBundles()
+                .RegisterLimitNewDownlineBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -178,6 +182,21 @@
                 "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
                 FanexMultiSelectScriptPath,
                 "~/Content/Pages/DefaultMemberBetLimit/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterLimitNewDownlineBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                LimitNewDownlineStylePath,
+                FanexMultiSelectStylePath,
+                "~/Areas/Customers/Styles/limitNewDownline.less");
+
+            bundles.Add(new ScriptBundle(LimitNewDownlineScriptPath).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/LimitNewDownline/addNewOrRemoveLimit.js",
+                "~/Areas/Customers/Scripts/LimitNewDownline/limitNewDownline.js"));
 
             return bundles;
         }

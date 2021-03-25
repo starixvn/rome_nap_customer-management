@@ -23,6 +23,9 @@
         public const string LimitNewDownlineScriptPath = "~/bundles/limit-new-downline-scripts";
         public const string LimitNewDownlineStylePath = "~/bundles/limit-new-downline-styles";
 
+        public const string WhitelistBigCreditMembersScriptPath = "~/bundles/whitelist-big-credit-members-scripts";
+        public const string WhitelistBigCreditMembersStylePath = "~/bundles/whitelist-big-credit-members-styles";
+
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
@@ -38,7 +41,8 @@
                 .RegisterBetLimitTypeControlBundles()
                 .RegisterBetLimitControlBundles()
                 .RegisterDefaultMemberBetLimitBundles()
-                .RegisterLimitNewDownlineBundles();
+                .RegisterLimitNewDownlineBundles()
+                .RegisterWhitelistBigCreditMembersBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -197,6 +201,18 @@
                 FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Scripts/LimitNewDownline/addNewOrRemoveLimit.js",
                 "~/Areas/Customers/Scripts/LimitNewDownline/limitNewDownline.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterWhitelistBigCreditMembersBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+               WhitelistBigCreditMembersStylePath,
+               "~/Areas/Customers/Styles/whitelistBigCreditMembers.less");
+
+            bundles.Add(new ScriptBundle(WhitelistBigCreditMembersScriptPath).Include(
+                "~/Areas/Customers/Scripts/WhitelistBigCreditMembers/whitelistBigCreditMembers.js"));
 
             return bundles;
         }

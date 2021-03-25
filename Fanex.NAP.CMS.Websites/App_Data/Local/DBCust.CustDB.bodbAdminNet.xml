@@ -106,4 +106,7 @@
     <Setting Key="Nap_ProblemAccountLimitDownlineIns" SpName="Nap_ProblemAccountLimitDownlineIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Whitelist Big Credit Members">
+    <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

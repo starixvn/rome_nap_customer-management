@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Controllers\ProblemAccountCreditSiteController.cs" />
     <Compile Include="Controllers\ProblemAccountLicenseeSiteController.cs" />
+    <Compile Include="Controllers\WhitelistBigCreditMembersController.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditLicenseeCriteria.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\SearchCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\UnmarkCriteria.cs" />
+    <Compile Include="Criteria\WhitelistBigCreditMembers\AddMemberCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
@@ -270,6 +272,7 @@
     <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteModel.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Models\WhitelistBigCreditMembers\AddMemberResult.cs" />
     <Compile Include="Params\LogParam.cs" />
     <Compile Include="Params\PossessStatistics\GetPossessStatisticsParam.cs" />
     <Compile Include="Params\PossessStatistics\UpdateDangerLevelParam.cs" />
@@ -288,6 +291,8 @@
     <Compile Include="Repositories\ProblemAccount\ProblemAccountCN88Repository.cs" />
     <Compile Include="Repositories\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\ProblemAccountRepositoryBase.cs" />
+    <Compile Include="Repositories\WhitelistBigCreditMembers\IWhitelistBigCreditMembersRepository.cs" />
+    <Compile Include="Repositories\WhitelistBigCreditMembers\WhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -318,6 +323,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProblemAccountResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\WhitelistBigCreditMembersResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WhitelistBigCreditMembersResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\LimitNewDownline\ILimitNewDownlineService.cs" />
     <Compile Include="Services\LimitNewDownline\LimitNewDownlineService.cs" />
     <Compile Include="Services\ProblemAccountCTSService.cs" />
@@ -338,6 +348,8 @@
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="Services\RobotsExporter.cs" />
+    <Compile Include="Services\WhitelistBigCreditMembers\IWhitelistBigCreditMembersService.cs" />
+    <Compile Include="Services\WhitelistBigCreditMembers\WhitelistBigCreditMembersService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\LimitNewDownlineViewModel.cs" />
@@ -402,6 +414,10 @@
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemAccountResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WhitelistBigCreditMembersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WhitelistBigCreditMembersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

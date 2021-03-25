@@ -279,4 +279,7 @@
   <data name="MissingFilterDate" xml:space="preserve">
     <value>Please input values on both From and To fields to search data within date range.</value>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
 </root>

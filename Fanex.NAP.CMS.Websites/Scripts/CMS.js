@@ -166,6 +166,10 @@ var CMS = (function ($) {
             $obj.html(message);
             $obj.removeClass('success').addClass('error').slideDown();
         },
+        showInlineWarningMsg: function (message, $obj) {
+            $obj.html(message);
+            $obj.removeClass('success error').addClass('warn').slideDown();
+        },
         showInlineSuccessMsg: function (message, $obj, autoHide, callbackFunc) {
             autoHide = autoHide === undefined ? true : autoHide;
             $obj.html(message);

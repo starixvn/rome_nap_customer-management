@@ -19,6 +19,12 @@
     color: @msg_text;
 }
 
+.warn-icon {
+    padding: 3px 0 3px 30px;
+    background: url(img/icon-info-message.png) no-repeat;
+    color: #ff8c00;
+}
+
 .msgbox {
     &.custom-confirm {
         font-weight: normal;
@@ -131,6 +137,10 @@
 
     &.info {
         .info-icon;
+    }
+
+    &.warn {
+        .warn-icon;
     }
 }
 

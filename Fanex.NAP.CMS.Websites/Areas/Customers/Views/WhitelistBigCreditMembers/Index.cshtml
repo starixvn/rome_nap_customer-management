@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = WhitelistBigCreditMembersResource.WhitelistBigCreditMembers;
+}
+@model bool
+@section Head {
+    @Styles.Render(CustomersBundlesConfig.WhitelistBigCreditMembersStylePath)
+}
+@section Foot {
+    <script type="text/javascript">
+        var resources = {
+            requiredWhitelistBigCreditMembersError: "@WhitelistBigCreditMembersResource.RequiredWhitelistBigCreditMembersError",
+            inputInvalidUsernamesError: "@WhitelistBigCreditMembersResource.InputInvalidUsernamesError",
+            overUsernamesLimitationError: "@LimitNewDownlineResource.OverUsernamesLimitationError"
+        };
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.WhitelistBigCreditMembersScriptPath)
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div id="success-message" class="inline-message"></div>
+<div id="warn-message" class="inline-message"></div>
+<div id="error-message" class="inline-message"></div>
+@using (Html.BeginForm("AddMembers", "WhitelistBigCreditMembers", FormMethod.Post, new { id = "formAddMembers" }))
+{
+    <div class="form-row">
+        <div class="lbl-field">
+            <label for="txt-usernames">@WhitelistBigCreditMembersResource.MembersToBeWhitelisted<span class="text-red"> * </span>@WhitelistBigCreditMembersResource.SeperatedByComma</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="10" name="usernames" id="txt-usernames"></textarea>
+        </div>
+    </div>
+    if (Model)
+    {
+        <div class="form-row button-row">
+            <button type="submit" class="blue-button">@Labels.Submit</button>
+        </div>
+    }
+}
+<p>- Members with big given credit are put on performance checking queue when they place the first ticket.</p>
+<p>- During performance checking process, if member place big stake tickets, the ticket's VR will not follow member's but a predefined value.</p>
+<p>- After a week from the first ticket, system will start checking the queued members' win loss and whitelist them if their loss attains RM 200K.</p>
+<p>- This function allows user to manually whitelist selected members. Once whitelisted the members will apply its own VR setting.</p>
+<p>- No ticket , already whitelisted and removed from queue members will be automatically excluded from being whitelisted.</p>
+

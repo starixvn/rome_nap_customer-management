@@ -121,5 +121,8 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Limit New Downline Per Day
         public const string LimitNewDownlinePerDay = "LimitNewDownlinePerDay";
+
+        // Whitelist Big Credit Members
+        public const string WhitelistBigCreditMembers = "WhitelistBigCreditMembers";
     }
 }

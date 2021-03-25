@@ -1058,19 +1058,19 @@
     <Content Include="Views\DefaultMemberBetLimit\Index.cshtml" />
     <Content Include="Content\Pages\DefaultMemberBetLimit\index.less" />
     <Content Include="Views\DefaultMemberBetLimit\_Update.cshtml" />
-    <None Include="Web.AppSettings.aws.config">
+    <Content Include="Web.AppSettings.aws.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
-    <None Include="Web.ConnectionString.aws.config">
+    </Content>
+    <Content Include="Web.ConnectionString.aws.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </None>
+    </Content>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </None>
-    <None Include="Web.aws.config">
+    <Content Include="Web.aws.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

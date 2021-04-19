@@ -65,7 +65,7 @@
         </div>
         <div class="form-row">
             <div class="lbl-field">
-                <label for="txt-priority">Priority</label>
+                <label for="txt-priority">Priority Order</label>
             </div>
             <div class="edit-field">
                 <input type="text" class="width-60" id="txt-priority" />
@@ -77,36 +77,81 @@
                 <label>Criteria</label>
             </div>
         </div>
-        <div class="form-row">
+        <div class="form-row-sub">
             <div class="lbl-field">
                 <label class="lbl-field-criteria"><span class="lbl-field-criteria-no">[1].</span>Site Type</label>
             </div>
-            <div class="edit-field">
-                <div class="enable-criteria-container">
-                    <input type="checkbox"/>
-                    <span class="note-info-message"></span>
-                </div>
-                <select class="combobox-autocomplete width-250" id="ddl-siteType">
+            <div class="enable-criteria-container">
+                <input type="checkbox" />
+                <span class="note-info-message"></span>
+            </div>
+            <div class="detail-rule">
+                <select class="combobox-autocomplete">
                     <option value="0" selected="selected">All</option>
                     <option value="1">Credit</option>
                     <option value="2">Licensee</option>
                 </select>
             </div>
         </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                <label class="lbl-field-criteria2">Site</label>
-            </div>
-            <div class="edit-field">
-                <div class="enable-criteria-container"></div>
-                <select class="combobox-autocomplete width-60" id="ddl-siteSelection">
+        <div class="form-row-sub">
+            <label class="lbl-field-criteria2">Site</label>
+            <div class="enable-criteria-container"></div>
+            <div class="detail-rule">
+                <select class="combobox-autocomplete" >
                     <option value="0" selected="selected">in</option>
                     <option value="1">not in</option>
                 </select>
-                <div id="ddl-site"></div>
             </div>
         </div>
-        <div class="form-row button-row">
+        <div class="form-row-sub">
+            <label class="lbl-field-criteria2">Customer Class</label>
+            <div class="enable-criteria-container"></div>
+            <div class="detail-rule">
+                <div class="ddl-primary">
+                    <select class="combobox-autocomplete">
+                        <option value="0" selected="selected">in</option>
+                        <option value="1">not in</option>
+                    </select>
+                </div>
+                <div class="ddl-second">
+                    <select class="combobox-autocomplete">
+                        <option value="0" selected="selected">CN88</option>
+                        <option value="1">Alpha</option>
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+        <div class="form-row-sub">
+            <label class="lbl-field-criteria2">Current Virtual Rate</label>
+            <div class="enable-criteria-container"></div>
+            <div class="detail-rule value-range">
+                <span class="txt">From</span>
+                <div  class="from-value"><input type="text" value="-100" /><span>%</span></div>
+                <span class="txt">To</span>
+                <div class="to-value"><input type="text"  value="-60" /><span>%</span></div>
+            </div>
+        </div>
+        <div class="form-row-last">
+            <span class="lbl-field">Adjustment</span>
+            <div class="edit-field">
+                <select class="combobox-autocomplete">
+                    <option value="0" selected="selected">Adjust Current Vitual Rate</option>
+                    <option value="1">Fixed Value</option>
+                </select>
+                <div class="active-value"><input type="text" class="width-60" value="-10" /><span>%</span></div>
+            </div>
+        </div>
+        <div class="form-row-last">
+            <span class="lbl-field">Active</span>
+            <div class="edit-field">
+                <select class="combobox-autocomplete">
+                    <option value="0" selected="selected">Active</option>
+                    <option value="1">Closed</option>
+                </select>
+            </div>
+        </div>
+        <div class="button-row">
             <button type="submit" class="blue-button">Submit</button>
             <button type="button" class="red-button" id="btn-cancel">Cancel</button>
         </div>

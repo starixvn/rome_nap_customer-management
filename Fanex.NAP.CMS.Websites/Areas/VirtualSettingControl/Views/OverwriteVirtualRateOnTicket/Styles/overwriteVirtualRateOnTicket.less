@@ -132,22 +132,32 @@
 
 .form-row-sub {
     display: grid;
-    grid-template-columns: 180px 40px 1fr;
+    grid-template-columns: 200px 40px 1fr;
     grid-template-rows: minmax(28px, auto);
     grid-column-gap: 8px;
     margin-bottom: 8px;
     align-items: center;
     padding-left: 12px;
+
+    .lbl-field {
+        display: grid;
+        grid-template-columns: 33px 1fr;
+
+        .txt-name {
+            grid-column: 2 e("/") 3;
+        }
+    }
+
     .detail-rule {
         display: flex;
 
         .ddl-primary {
-            width: 80px;
+            width: 70px;
             margin-right: 8px;
         }
 
         .ddl-second {
-            width: calc(~"100% - 88px");
+            width: calc(~"100% - 78px");
         }
 
         .combobox-autocomplete {
@@ -157,7 +167,7 @@
 
         &.value-range {
             display: grid;
-            grid-template-columns: 60px 1fr 40px 1fr;
+            grid-template-columns: 78px 1fr 48px 1fr;
             justify-content: flex-start;
             align-items: center;
 
@@ -177,7 +187,7 @@
 
 .form [class*="form"] {
     input[type="text"] {
-        margin-right: 8px;
+        margin-right: 4px;
         text-align: center;
         border: 1px solid #c4c4c4;
         width: 80px;
@@ -188,3 +198,6 @@
     text-align: right;
 }
 
+.lbl-field-criteria-no {
+    padding-right: 12px;
+}

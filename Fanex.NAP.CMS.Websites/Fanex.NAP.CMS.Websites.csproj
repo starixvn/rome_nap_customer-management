@@ -468,6 +468,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\ManualUpdateVRAccount\Scripts\manualUpdate.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Scripts\vrAutoAdjustmentReport.js" />
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
+    <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Scripts\overwriteVirtualRateOnTicket.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Scripts\siteTypeCriteria.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Scripts\uploadVirtualRate.js" />
@@ -602,6 +604,9 @@
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.css" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.js" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.min.js" />
     <Content Include="Scripts\Libs\Highcharts\exporting.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
@@ -1002,6 +1007,8 @@
     <Content Include="Areas\Customers\Styles\limitNewDownline.less" />
     <Content Include="Areas\Customers\Views\WhitelistBigCreditMembers\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\whitelistBigCreditMembers.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Index.cshtml" />
+    <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Styles\overwriteVirtualRateOnTicket.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1049,6 +1056,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

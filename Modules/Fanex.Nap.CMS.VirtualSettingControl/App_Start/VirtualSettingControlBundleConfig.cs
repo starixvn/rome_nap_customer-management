@@ -21,6 +21,9 @@
         public const string Basketball_GlobalAutoSuspendThresholdLogsScript = "~/bundles/virtual-setting-control/basketball-global-autosuspend-threshold-logs-script";
         public const string Basketball_GlobalAutoSuspendThresholdScript = "~/bundles/virtual-setting-control/basketball-global-autosuspend-threshold-script";
 
+        public const string OverwriteVirtualRateOnTicketStyle = "~/bundles/virtual-setting-control/overwrite-virtualrate-on-ticket-style";
+        public const string OverwriteVirtualRateOnTicketScript = "~/bundles/virtual-setting-control/overwrite-virtualrate-on-ticket-script";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             RegisterVirtualSettingMonitorBundles(bundles);
@@ -33,6 +36,7 @@
             RegisterESports_UploadVirtualRate(bundles);
             RegisterESports_ManualUpdateVRAccount(bundles);
             RegisterBasketballVirtualRate(bundles);
+            RegisterOverwriteVirtualRateOnTicket(bundles);
         }
 
         private static void RegisterVirtualSettingMonitorBundles(BundleCollection bundles)
@@ -186,6 +190,18 @@
                 .Include(
                 "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/virtualRateGridEvents.js",
                 "~/Areas/VirtualSettingControl/Views/BasketballVirtualRate/Scripts/globalAutoSuspendThreshold.js"));
+        }
+
+        private static void RegisterOverwriteVirtualRateOnTicket(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                OverwriteVirtualRateOnTicketStyle,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
+                "~/Areas/VirtualSettingControl/Views/OverwriteVirtualRateOnTicket/Styles/overwriteVirtualRateOnTicket.less");
+
+            bundles.Add(new ScriptBundle(OverwriteVirtualRateOnTicketScript).Include(
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                "~/Areas/VirtualSettingControl/Views/OverwriteVirtualRateOnTicket/Scripts/overwriteVirtualRateOnTicket.js"));
         }
     }
 }

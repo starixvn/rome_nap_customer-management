@@ -202,6 +202,7 @@
     <Compile Include="Controllers\ProblemAccountController.cs" />
     <Compile Include="Controllers\ProblemAccountCreditSiteController.cs" />
     <Compile Include="Controllers\ProblemAccountLicenseeSiteController.cs" />
+    <Compile Include="Controllers\VirtualRateEngineController.cs" />
     <Compile Include="Controllers\WhitelistBigCreditMembersController.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />

@@ -29,6 +29,9 @@
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
+        public const string VirtualRateEngineScriptPath = "~/bundles/customers/virtual-rate-engine-script";
+        public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles
@@ -42,7 +45,8 @@
                 .RegisterBetLimitControlBundles()
                 .RegisterDefaultMemberBetLimitBundles()
                 .RegisterLimitNewDownlineBundles()
-                .RegisterWhitelistBigCreditMembersBundles();
+                .RegisterWhitelistBigCreditMembersBundles()
+                .RegisterVirtualRateEngine();
 
             RegisterManageRobots2(bundles);
         }
@@ -213,6 +217,22 @@
 
             bundles.Add(new ScriptBundle(WhitelistBigCreditMembersScriptPath).Include(
                 "~/Areas/Customers/Scripts/WhitelistBigCreditMembers/whitelistBigCreditMembers.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterVirtualRateEngine(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                VirtualRateEngineStylePath,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
+                "~/Areas/Customers/Styles/virtualRateEngine.less");
+
+            bundles.Add(new ScriptBundle(VirtualRateEngineScriptPath).Include(
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngineHelper.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/siteTypeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
 
             return bundles;
         }

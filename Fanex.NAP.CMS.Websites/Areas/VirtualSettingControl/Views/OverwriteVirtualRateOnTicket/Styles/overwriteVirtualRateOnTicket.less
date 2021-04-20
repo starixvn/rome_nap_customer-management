@@ -155,11 +155,6 @@
 
             #ddl-site {
                 width: calc(~"100% - 3px") !important;
-
-                input[type="text"] {
-                    width: calc(~"100% - 18px") !important;
-                    margin-right: 0;
-                }
             }
         }
 
@@ -177,6 +172,7 @@
             [class*="value"] {
                 input[type="text"] {
                     width: 80px;
+                    text-align: center;
                 }
             }
 
@@ -212,12 +208,17 @@
     }
 }
 
+
+/********************** customize multiselect  ***********************/
+
 .ui-multiselect-widget-content {
     .ui-multiselect-widget-header input[type="text"] {
         width: calc(~"100% - 12px");
     }
 }
-.ui-multiselect-widget input[type='text'] {
+.ui-multiselect-widget input[type='text'].ui-multiselect-state-default {
     height: 21px !important;
     cursor: pointer;
+    width: calc(~"100% - 18px") !important;
+    margin-right: 0;
 }

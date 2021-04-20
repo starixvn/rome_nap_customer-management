@@ -470,6 +470,7 @@
     <Content Include="Areas\VirtualSettingControl\Views\NewVrAutoAdjustmentReport\Styles\vrAutoAdjustmentReport.css" />
     <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Scripts\overwriteVirtualRateOnTicket.js" />
     <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Scripts\siteTypeCriteria.js" />
+    <Content Include="Areas\VirtualSettingControl\Views\OverwriteVirtualRateOnTicket\Scripts\virtualRateEngineHelper.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\SoccerVirtualRateDetails\Scripts\viewlog.js" />
     <Content Include="Areas\VirtualSettingControl\Views\UploadVirtualRate\Scripts\uploadVirtualRate.js" />

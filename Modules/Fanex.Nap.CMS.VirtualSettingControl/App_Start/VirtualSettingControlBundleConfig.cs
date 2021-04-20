@@ -201,6 +201,8 @@
 
             bundles.Add(new ScriptBundle(OverwriteVirtualRateOnTicketScript).Include(
                 "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                "~/Areas/VirtualSettingControl/Views/OverwriteVirtualRateOnTicket/Scripts/virtualRateEngineHelper.js",
+                "~/Areas/VirtualSettingControl/Views/OverwriteVirtualRateOnTicket/Scripts/siteTypeCriteria.js",
                 "~/Areas/VirtualSettingControl/Views/OverwriteVirtualRateOnTicket/Scripts/overwriteVirtualRateOnTicket.js"));
         }
     }

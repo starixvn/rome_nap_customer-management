@@ -20,6 +20,7 @@ Thumbs.db
 *.log
 *.lib
 *.sbr
+*.css
 *.dic
 *.orig
 *.suo

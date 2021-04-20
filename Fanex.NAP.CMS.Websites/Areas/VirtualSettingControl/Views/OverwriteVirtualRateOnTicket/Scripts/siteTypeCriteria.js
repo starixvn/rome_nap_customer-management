@@ -21,7 +21,7 @@ function SiteTypeCriteria() {
             <div class="enable-criteria-container"></div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-80" id="ddl-siteNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-siteNotIn"></select>
                 </div>
                 <div class="ddl-second">
                     <div id="ddl-site"></div>

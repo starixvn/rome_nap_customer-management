@@ -28,16 +28,12 @@
         });
 
         var $multiSelect = $("#" + id).multiSelect({
-            minWidth: 255,
-            maxHeight: 450,
             shadow: true,
-            showHeader: true,
             isCheckAll: true,
             showFooter: false,
             showFilter: true,
             checkAllText: "All",
-            listData: data,
-            noItemText: "No item selected."
+            listData: data
         });
 
         return $multiSelect;

@@ -143,16 +143,25 @@
         }
     }
 
+    .enable-criteria-container input[type="checkbox"] {
+        position: relative;
+        top: 1px;
+        cursor: pointer;
+    }
+
     .detail-rule {
         display: flex;
 
         .ddl-primary {
-            width: 70px;
             margin-right: 8px;
         }
 
         .ddl-second {
-            width: calc(~"100% - 78px");
+            width: calc(~"100% - 108px");
+
+            #ddl-site {
+                width: calc(~"100% - 3px") !important;
+            }
         }
 
         .combobox-autocomplete {
@@ -162,13 +171,14 @@
 
         &.value-range {
             display: grid;
-            grid-template-columns: 78px 1fr 48px 1fr;
+            grid-template-columns: 108px 1fr 48px 1fr;
             justify-content: flex-start;
             align-items: center;
 
             [class*="value"] {
                 input[type="text"] {
                     width: 80px;
+                    text-align: center;
                 }
             }
 
@@ -194,4 +204,29 @@
 
 .lbl-field-criteria-no {
     padding-right: 12px;
+}
+
+.ui-combobox {
+    display: flex;
+    width: 100%;
+
+    input[role="textbox"] {
+        width: 100%;
+    }
+}
+
+
+/********************** customize multiselect  ***********************/
+
+.ui-multiselect-widget-content {
+    .ui-multiselect-widget-header input[type="text"] {
+        width: calc(~"100% - 12px");
+    }
+}
+
+.ui-multiselect-widget input[type='text'].ui-multiselect-state-default {
+    height: 21px !important;
+    cursor: pointer;
+    width: calc(~"100% - 18px") !important;
+    margin-right: 0;
 }

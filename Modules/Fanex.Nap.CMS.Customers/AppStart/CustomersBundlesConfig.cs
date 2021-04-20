@@ -232,6 +232,17 @@
                 "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngineHelper.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/siteTypeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/customerClassCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/currentVRCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/currentVRStatusCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/sportCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/betTypeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/eventCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/leagueGroupCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/betfromCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/stakeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/ticketDoWCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/ticketTimeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
 
             return bundles;

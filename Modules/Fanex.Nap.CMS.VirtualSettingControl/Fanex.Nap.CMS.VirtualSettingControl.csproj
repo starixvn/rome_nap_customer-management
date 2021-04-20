@@ -165,7 +165,6 @@
     <Compile Include="Controllers\NewAutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\AutoAdjustmentReportController.cs" />
     <Compile Include="Controllers\CustomerDashboardController.cs" />
-    <Compile Include="Controllers\OverwriteVirtualRateOnTicketController.cs" />
     <Compile Include="Controllers\SoccerVirtualRateDetailsController.cs" />
     <Compile Include="Controllers\UploadVirtualRateController.cs" />
     <Compile Include="Controllers\VirtualRateDetailsController.cs" />

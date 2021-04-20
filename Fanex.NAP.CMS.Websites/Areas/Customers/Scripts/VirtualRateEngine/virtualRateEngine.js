@@ -20,6 +20,11 @@
         { Value: 5, Text: "TLC" },
         { Value: 6, Text: "Athena000" }
     ];
+    var customerClassList = [
+        { Value: 1, Text: "Group Betting" },
+        { Value: 2, Text: "Hedging" },
+        { Value: 3, Text: "Fixed" }
+    ];
 
     $(function () {
         $("#btnAddNewRule").click(function () {
@@ -30,8 +35,18 @@
             buttonCancel.off("click").on("click", CMS.closePopup);
 
             var $criteriaContainer = form.find("#div-criteriaContainer");
+
             var siteTypeCriteria = new SiteTypeCriteria();
             siteTypeCriteria.renderHtml($criteriaContainer, siteTypeList, notInList, siteList);
+            siteTypeCriteria.bindEvents();
+
+            var customerClassCriteria = new CustomerClassCriteria();
+            customerClassCriteria.renderHtml($criteriaContainer, notInList, customerClassList);
+            customerClassCriteria.bindEvents();
+
+            var currentVRCriteria = new CurrentVRCriteria();
+            currentVRCriteria.renderHtml($criteriaContainer);
+            currentVRCriteria.bindEvents();
         });
 
         // Empty the #divPopupContent since it's children was cached.

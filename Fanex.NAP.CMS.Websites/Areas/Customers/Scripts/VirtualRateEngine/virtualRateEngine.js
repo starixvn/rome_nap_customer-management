@@ -53,6 +53,24 @@
         { Value: 1, Text: "p (phone betting)" },
         { Value: 2, Text: "z (china desktop)" }
     ];
+    var dowList = [
+        { Value: 1, Text: "Monday" },
+        { Value: 2, Text: "Tuesday" },
+        { Value: 3, Text: "Wednesday" },
+        { Value: 4, Text: "Thursday" },
+        { Value: 5, Text: "Friday" },
+        { Value: 6, Text: "Sarturday" },
+        { Value: 0, Text: "Sunday" }
+    ];
+    var adjustmentList = [
+        { Value: 1, Text: "Adjust Current Virtual Rate" },
+        { Value: 2, Text: "Fixed Value" }
+    ];
+    var activeList = [
+        { Value: 1, Text: "UAT" },
+        { Value: 2, Text: "PRO" },
+        { Value: 3, Text: "Inactive" },
+    ];
 
     $(function () {
         $("#btnAddNewRule").click(function () {
@@ -94,8 +112,14 @@
             var stakeCriteria = new StakeCriteria($criteriaContainer);
             stakeCriteria.initAddNew();
 
+            var ticketDoWCriteria = new TicketDoWCriteria($criteriaContainer, notInList, dowList);
+            ticketDoWCriteria.initAddNew();
+
             var ticketTimeCriteria = new TicketTimeCriteria($criteriaContainer);
             ticketTimeCriteria.initAddNew();
+
+            var ddlAdjustment = virtualRateEngineHelper.renderCombobox("ddl-adjustment", adjustmentList);
+            var ddlActive = virtualRateEngineHelper.renderCombobox("ddl-active", activeList);
         });
 
         // Empty the #divPopupContent since it's children was cached.

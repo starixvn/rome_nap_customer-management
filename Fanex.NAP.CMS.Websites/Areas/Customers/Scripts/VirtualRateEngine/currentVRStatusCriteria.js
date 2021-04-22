@@ -1,1 +1,52 @@
-﻿
+﻿"use strict";
+function CurrentVRStatusCriteria($selector, vrStatusList) {
+    var htmlTemplate =
+        `<div class="form-row-sub">
+            <div class="lbl-field">
+                <span class="lbl-field-criteria-no">[4].</span>
+                <span class="txt-name">Current Virtual Rate Status</span>
+            </div>
+            <div class="enable-criteria-container">
+                <input type="checkbox" id="chk-enableCurrentVRStatusCriteria" />
+                <span class="note-info-message" id="span-noteCurrentVRStatusCriteria"></span>
+            </div>
+            <div class="detail-rule">
+                <select class="combobox-autocomplete width-60" id="ddl-currentVRStatus"></select>
+            </div>
+        </div>`
+    var chkEnableCurrentVRStatusCriteria, ddlCurrentVRStatus;
+
+    function renderHtml() {
+        $selector.append(htmlTemplate);
+        ddlCurrentVRStatus = virtualRateEngineHelper.renderCombobox("ddl-currentVRStatus", vrStatusList);
+        chkEnableCurrentVRStatusCriteria = $("#chk-enableCurrentVRStatusCriteria");
+    }
+
+    function bindEvents() {
+        chkEnableCurrentVRStatusCriteria
+            .off("change")
+            .on("change", function () {
+                enableCriteria(this.checked);
+            });
+
+        $("#span-noteCurrentVRStatusCriteria")
+            .off("click")
+            .on("click", function () { });
+    }
+
+    function enableCriteria(isEnabled) {
+        ddlCurrentVRStatus.combobox(isEnabled ? "enable" : "disable");
+    }
+
+    this.initAddNew = function () {
+        renderHtml();
+        enableCriteria(false);
+        bindEvents();
+    };
+
+    this.initUpdate = function () {
+        renderHtml();
+        chkEnableSportCriteria.remove();
+        bindEvents();
+    };
+}

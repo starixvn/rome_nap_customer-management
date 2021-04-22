@@ -25,6 +25,34 @@
         { Value: 2, Text: "Hedging" },
         { Value: 3, Text: "Fixed" }
     ];
+    var vrStatusList = [
+        { Value: 0, Text: "Enabled" },
+        { Value: 1, Text: "Disabled" }
+    ];
+    var sportList = [
+        { Value: 1, Text: "Soccer" },
+        { Value: 2, Text: "Basket Ball" }
+    ];
+    var betTypeList = [
+        { Value: 1, Text: "Handicap" },
+        { Value: 2, Text: "Over/Under" }
+    ];
+    var eventList = [
+        { Value: 1, Text: "Live" },
+        { Value: 2, Text: "None Live" }
+    ];
+    var leagueGroupList = [
+        { Value: 1, Text: "aaaaaa" },
+        { Value: 2, Text: "bbbbbb" }
+    ];
+    var leagueList = [
+        { Value: 1, Text: "cccccc" },
+        { Value: 2, Text: "dddddd" }
+    ];
+    var betfromList = [
+        { Value: 1, Text: "p (phone betting)" },
+        { Value: 2, Text: "z (china desktop)" }
+    ];
 
     $(function () {
         $("#btnAddNewRule").click(function () {
@@ -36,17 +64,38 @@
 
             var $criteriaContainer = form.find("#div-criteriaContainer");
 
-            var siteTypeCriteria = new SiteTypeCriteria();
-            siteTypeCriteria.renderHtml($criteriaContainer, siteTypeList, notInList, siteList);
-            siteTypeCriteria.bindEvents();
+            var siteTypeCriteria = new SiteTypeCriteria($criteriaContainer, siteTypeList, notInList, siteList);
+            siteTypeCriteria.initAddNew();
 
-            var customerClassCriteria = new CustomerClassCriteria();
-            customerClassCriteria.renderHtml($criteriaContainer, notInList, customerClassList);
-            customerClassCriteria.bindEvents();
+            var customerClassCriteria = new CustomerClassCriteria($criteriaContainer, notInList, customerClassList);
+            customerClassCriteria.initAddNew();
 
-            var currentVRCriteria = new CurrentVRCriteria();
-            currentVRCriteria.renderHtml($criteriaContainer);
-            currentVRCriteria.bindEvents();
+            var currentVRCriteria = new CurrentVRCriteria($criteriaContainer);
+            currentVRCriteria.initAddNew();
+
+            var currentVRStatusCriteria = new CurrentVRStatusCriteria($criteriaContainer, vrStatusList);
+            currentVRStatusCriteria.initAddNew();
+
+            var sportCriteria = new SportCriteria($criteriaContainer, notInList, sportList);
+            sportCriteria.initAddNew();
+
+            var betTypeCriteria = new BetTypeCriteria($criteriaContainer, notInList, betTypeList);
+            betTypeCriteria.initAddNew();
+
+            var eventCriteria = new EventCriteria($criteriaContainer, eventList);
+            eventCriteria.initAddNew();
+
+            var leagueGroupCriteria = new LeagueGroupCriteria($criteriaContainer, notInList, leagueGroupList, leagueList);
+            leagueGroupCriteria.initAddNew();
+
+            var betfromCriteria = new BetfromCriteria($criteriaContainer, betfromList);
+            betfromCriteria.initAddNew();
+
+            var stakeCriteria = new StakeCriteria($criteriaContainer);
+            stakeCriteria.initAddNew();
+
+            var ticketTimeCriteria = new TicketTimeCriteria($criteriaContainer);
+            ticketTimeCriteria.initAddNew();
         });
 
         // Empty the #divPopupContent since it's children was cached.

@@ -1,5 +1,5 @@
 ﻿"use strict";
-function CustomerClassCriteria() {
+function CustomerClassCriteria($selector, notInList, customerClassList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -19,30 +19,42 @@ function CustomerClassCriteria() {
                 </div>
             </div>
         </div>`
-    var $customerClasNotIn,
-        $customerClass;
+    var chkEnableCustomerClassCriteria, ddlCustomerClasNotIn, ddlCustomerClass;
 
-    this.renderHtml = function ($selector, notInList, customerClassList) {
+    function renderHtml() {
         $selector.append(htmlTemplate);
-        $customerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", notInList);
-        $customerClass = virtualRateEngineHelper.renderCombobox("ddl-customerClass", customerClassList);
+        ddlCustomerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", notInList);
+        ddlCustomerClass = virtualRateEngineHelper.renderCombobox("ddl-customerClass", customerClassList);
+        chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria");
     };
 
-    this.bindEvents = function () {
-        $("#chk-enableCustomerClassCriteria")
+    function bindEvents() {
+        chkEnableCustomerClassCriteria
             .off("change")
             .on("change", function () {
-                if (this.checked) {
-                    $customerClasNotIn.combobox("enable");
-                    $customerClass.combobox("enable");
-                } else {
-                    $customerClasNotIn.combobox("disable");
-                    $customerClass.combobox("disable");
-                }
+                enableCriteria(this.checked);
             });
 
         $("#span-noteCustomerClassCriteria")
             .off("click")
             .on("click", function () { });
+    }
+
+    function enableCriteria(isEnabled) {
+        var actionName = isEnabled ? "enable" : "disable";
+        ddlCustomerClasNotIn.combobox(actionName);
+        ddlCustomerClass.combobox(actionName);
+    }
+
+    this.initAddNew = function () {
+        renderHtml();
+        enableCriteria(false);
+        bindEvents();
+    };
+
+    this.initUpdate = function () {
+        renderHtml();
+        chkEnableCustomerClassCriteria.remove();
+        bindEvents();
     };
 }

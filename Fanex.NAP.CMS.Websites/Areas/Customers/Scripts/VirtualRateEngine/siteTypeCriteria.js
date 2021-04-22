@@ -1,5 +1,5 @@
 ﻿"use strict";
-function SiteTypeCriteria() {
+function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -11,7 +11,7 @@ function SiteTypeCriteria() {
                 <span class="note-info-message" id="span-noteSiteTypeCriteria"></span>
             </div>
             <div class="detail-rule">
-                <select class="combobox-autocomplete" id="ddl-siteType"></select>
+                <select class="combobox-autocomplete width-60" id="ddl-siteType"></select>
             </div>
         </div>
         <div class="form-row-sub">
@@ -28,38 +28,55 @@ function SiteTypeCriteria() {
                 </div>
             </div>
         </div>`
-    var $siteType,
-        $siteNotIn,
-        $siteSelection;
+    var chkEnableSiteTypeCriteria, ddlSiteType, ddlSiteNotIn, ddlSite;
 
-    this.renderHtml = function ($selector, siteTypeList, notInList, siteList) {
+    function renderHtml() {
         $selector.append(htmlTemplate);
-        $siteType = virtualRateEngineHelper.renderCombobox("ddl-siteType", siteTypeList);
-        $siteNotIn = virtualRateEngineHelper.renderCombobox("ddl-siteNotIn", notInList);
-        $siteSelection = virtualRateEngineHelper.renderMultiSelect("ddl-site", siteList);
-    };
+        ddlSiteType = virtualRateEngineHelper.renderCombobox("ddl-siteType", siteTypeList);
+        ddlSiteNotIn = virtualRateEngineHelper.renderCombobox("ddl-siteNotIn", notInList);
+        ddlSite = virtualRateEngineHelper.renderMultiSelect("ddl-site", siteList);
+        chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria");
+    }
 
-    this.bindEvents = function () {
-        $("#chk-enableSiteTypeCriteria")
+    function bindEvents() {
+        chkEnableSiteTypeCriteria
             .off("change")
             .on("change", function () {
-                if (this.checked) {
-                    $siteType.combobox("enable");
-                    $siteNotIn.combobox("enable");
-                } else {
-                    $siteType.combobox("disable");
-                    $siteNotIn.combobox("disable");
-                }
+                enableCriteria(this.checked)
             });
 
         $("#span-noteSiteTypeCriteria")
             .off("click")
             .on("click", function () { });
 
-        $siteType
+        ddlSiteType
             .off("change")
             .on("change", function () {
                 alert(this.value);
             });
+    }
+
+    function enableCriteria(isEnabled) {
+        if (isEnabled) {
+            ddlSiteType.combobox("enable");
+            ddlSiteNotIn.combobox("enable");
+            //ddlSite
+        } else {
+            ddlSiteType.combobox("disable");
+            ddlSiteNotIn.combobox("disable");
+            //ddlSite
+        }
+    }
+
+    this.initAddNew = function () {
+        renderHtml();
+        enableCriteria(false);
+        bindEvents();
+    };
+
+    this.initUpdate = function () {
+        renderHtml();
+        chkEnableCustomerClassCriteria.remove();
+        bindEvents();
     };
 }

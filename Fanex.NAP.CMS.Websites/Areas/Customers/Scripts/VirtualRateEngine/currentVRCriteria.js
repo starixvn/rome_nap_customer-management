@@ -1,5 +1,5 @@
 ﻿"use strict";
-function CurrentVRCriteria() {
+function CurrentVRCriteria($selector) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -13,35 +13,60 @@ function CurrentVRCriteria() {
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
                 <div class="from-value">
-                    <input type="text" id="txt-currentVRFrom" autocomplete="off" />
+                    <input type="text" id="txt-currentVRFrom" autocomplete="off" maxlength="4" />
                     <span>%</span>
                 </div>
                 <span class="txt">To</span>
                 <div class="to-value">
-                    <input type="text" id="txt-currentVRTo" autocomplete="off" />
+                    <input type="text" id="txt-currentVRTo" autocomplete="off" maxlength="4" />
                     <span>%</span>
                 </div>
             </div>
         </div>`
-    var $currentVRFrom,
-        $currentVRTo;
+    var chkEnableCurrentVRCriteria, txtVRFrom, txtVRTo;
 
-    this.renderHtml = function ($selector) {
+    function renderHtml() {
         $selector.append(htmlTemplate);
-        $currentVRFrom = $("#txt-currentVRFrom").clearfield();
-        $currentVRTo = $("#txt-currentVRTo").clearfield();
-    };
+        txtVRFrom = $("#txt-currentVRFrom").clearfield();
+        txtVRTo = $("#txt-currentVRTo").clearfield();
+        chkEnableCurrentVRCriteria = $("#chk-enableCurrentVRCriteria");
+    }
 
-    this.bindEvents = function () {
-        $("#chk-enableCurrentVRCriteria")
+    function bindEvents() {
+        chkEnableCurrentVRCriteria
             .off("change")
             .on("change", function () {
-                $currentVRFrom.prop("disabled", !this.value);
-                $currentVRTo.prop("disabled", !this.value);
+                enableCriteria(this.checked);
             });
+
+        txtVRFrom
+            .off("keypress")
+            .on("keypress", CMS.forceNegativeNumberInput);
+
+        txtVRTo
+            .off("keypress")
+            .on("keypress", CMS.forceNegativeNumberInput);
 
         $("#span-noteCurrentVRCriteria")
             .off("click")
             .on("click", function () { });
+    }
+
+    function enableCriteria(isEnabled) {
+        var isDisabled = !isEnabled;
+        txtVRFrom.prop("disabled", isDisabled);
+        txtVRTo.prop("disabled", isDisabled);
+    }
+
+    this.initAddNew = function () {
+        renderHtml();
+        enableCriteria(false);
+        bindEvents();
+    };
+
+    this.initUpdate = function () {
+        renderHtml();
+        chkEnableCurrentVRCriteria.remove();
+        bindEvents();
     };
 }

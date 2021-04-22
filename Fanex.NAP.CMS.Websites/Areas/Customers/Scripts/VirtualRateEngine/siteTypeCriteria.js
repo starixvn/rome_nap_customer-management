@@ -79,4 +79,12 @@ function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
         chkEnableCustomerClassCriteria.remove();
         bindEvents();
     };
+
+    this.getFormData = function () {
+        return {
+            siteType: ddlSiteType.val(),
+            site: ddlSite.getCheckedItems().join(","),
+            notIn: ddlSiteNotIn.val()
+        };
+    };
 }

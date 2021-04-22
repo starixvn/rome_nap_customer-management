@@ -69,4 +69,11 @@ function CurrentVRCriteria($selector) {
         chkEnableCurrentVRCriteria.remove();
         bindEvents();
     };
+
+    this.getFormData = function () {
+        var inputVRFrom = $.trim(txtVRFrom.val());
+        if (!inputVRFrom.length) {
+            CMS.showTipsyError(txtVRFrom, resources.requiredField, "");
+        }
+    };
 }

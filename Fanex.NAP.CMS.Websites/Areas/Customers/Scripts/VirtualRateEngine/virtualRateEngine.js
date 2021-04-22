@@ -1,8 +1,6 @@
 ﻿"use strict";
 (function ($) {
-    var $formAddNewRule = $("#form-addNewRule");
-    var $siteType;
-    var $siteSelection;
+    var formAddNewRule = $("#form-addNewRule");
     var siteTypeList = [
         { Value: 0, Text: "All" },
         { Value: 1, Text: "Credit" },
@@ -72,54 +70,64 @@
         { Value: 3, Text: "Inactive" },
     ];
 
+    function initAddNewRule(form) {
+        var buttonCancel = form.find("#btn-cancel");
+        buttonCancel
+            .off("click")
+            .on("click", CMS.closePopup);
+
+        var $criteriaContainer = form.find("#div-criteriaContainer");
+
+        var siteTypeCriteria = new SiteTypeCriteria($criteriaContainer, siteTypeList, notInList, siteList);
+        siteTypeCriteria.initAddNew();
+
+        var customerClassCriteria = new CustomerClassCriteria($criteriaContainer, notInList, customerClassList);
+        customerClassCriteria.initAddNew();
+
+        var currentVRCriteria = new CurrentVRCriteria($criteriaContainer);
+        currentVRCriteria.initAddNew();
+
+        var currentVRStatusCriteria = new CurrentVRStatusCriteria($criteriaContainer, vrStatusList);
+        currentVRStatusCriteria.initAddNew();
+
+        var sportCriteria = new SportCriteria($criteriaContainer, notInList, sportList);
+        sportCriteria.initAddNew();
+
+        var betTypeCriteria = new BetTypeCriteria($criteriaContainer, notInList, betTypeList);
+        betTypeCriteria.initAddNew();
+
+        var eventCriteria = new EventCriteria($criteriaContainer, eventList);
+        eventCriteria.initAddNew();
+
+        var leagueGroupCriteria = new LeagueGroupCriteria($criteriaContainer, notInList, leagueGroupList, leagueList);
+        leagueGroupCriteria.initAddNew();
+
+        var betfromCriteria = new BetfromCriteria($criteriaContainer, betfromList);
+        betfromCriteria.initAddNew();
+
+        var stakeCriteria = new StakeCriteria($criteriaContainer);
+        stakeCriteria.initAddNew();
+
+        var ticketDoWCriteria = new TicketDoWCriteria($criteriaContainer, notInList, dowList);
+        ticketDoWCriteria.initAddNew();
+
+        var ticketTimeCriteria = new TicketTimeCriteria($criteriaContainer);
+        ticketTimeCriteria.initAddNew();
+
+        var ddlAdjustment = virtualRateEngineHelper.renderCombobox("ddl-adjustment", adjustmentList);
+        var txtAdjustment = form.find("#txt-adjustment");
+        txtAdjustment
+            .off("keypress")
+            .on("keypress", CMS.forceNegativeNumberInput);
+
+        var ddlActive = virtualRateEngineHelper.renderCombobox("ddl-active", activeList);
+    }
+
     $(function () {
         $("#btnAddNewRule").click(function () {
-            var form = $formAddNewRule.clone();
-            CMS.modal("Update Rule", form, { height: "auto", resizable: false });
-
-            var buttonCancel = form.find("#btn-cancel");
-            buttonCancel.off("click").on("click", CMS.closePopup);
-
-            var $criteriaContainer = form.find("#div-criteriaContainer");
-
-            var siteTypeCriteria = new SiteTypeCriteria($criteriaContainer, siteTypeList, notInList, siteList);
-            siteTypeCriteria.initAddNew();
-
-            var customerClassCriteria = new CustomerClassCriteria($criteriaContainer, notInList, customerClassList);
-            customerClassCriteria.initAddNew();
-
-            var currentVRCriteria = new CurrentVRCriteria($criteriaContainer);
-            currentVRCriteria.initAddNew();
-
-            var currentVRStatusCriteria = new CurrentVRStatusCriteria($criteriaContainer, vrStatusList);
-            currentVRStatusCriteria.initAddNew();
-
-            var sportCriteria = new SportCriteria($criteriaContainer, notInList, sportList);
-            sportCriteria.initAddNew();
-
-            var betTypeCriteria = new BetTypeCriteria($criteriaContainer, notInList, betTypeList);
-            betTypeCriteria.initAddNew();
-
-            var eventCriteria = new EventCriteria($criteriaContainer, eventList);
-            eventCriteria.initAddNew();
-
-            var leagueGroupCriteria = new LeagueGroupCriteria($criteriaContainer, notInList, leagueGroupList, leagueList);
-            leagueGroupCriteria.initAddNew();
-
-            var betfromCriteria = new BetfromCriteria($criteriaContainer, betfromList);
-            betfromCriteria.initAddNew();
-
-            var stakeCriteria = new StakeCriteria($criteriaContainer);
-            stakeCriteria.initAddNew();
-
-            var ticketDoWCriteria = new TicketDoWCriteria($criteriaContainer, notInList, dowList);
-            ticketDoWCriteria.initAddNew();
-
-            var ticketTimeCriteria = new TicketTimeCriteria($criteriaContainer);
-            ticketTimeCriteria.initAddNew();
-
-            var ddlAdjustment = virtualRateEngineHelper.renderCombobox("ddl-adjustment", adjustmentList);
-            var ddlActive = virtualRateEngineHelper.renderCombobox("ddl-active", activeList);
+            var form = formAddNewRule.clone();
+            CMS.modal("Add New Rule", form, { height: "auto", resizable: false });
+            initAddNewRule(form);
         });
 
         // Empty the #divPopupContent since it's children was cached.

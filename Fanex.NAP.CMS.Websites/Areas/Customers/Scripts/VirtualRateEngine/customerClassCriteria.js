@@ -24,7 +24,7 @@ function CustomerClassCriteria($selector, notInList, customerClassList) {
     function renderHtml() {
         $selector.append(htmlTemplate);
         ddlCustomerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", notInList);
-        ddlCustomerClass = virtualRateEngineHelper.renderCombobox("ddl-customerClass", customerClassList);
+        ddlCustomerClass = virtualRateEngineHelper.renderMultiSelect("ddl-customerClass", customerClassList);
         chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria");
     };
 

@@ -10,6 +10,9 @@
 @section Foot
 {
     <script type="text/javascript">
+        var resources = {
+            requiredField: "@Labels.ThisFieldIsRequired"
+        };
     </script>
     @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
 }
@@ -70,7 +73,7 @@
             </div>
             <div class="edit-field">
                 <input type="text" class="width-60" id="txt-priority" />
-                <span class="priority-note">Range: [1; 10,000] the higher value, the higher priority.</span>
+                <span class="priority-note">Range: [1;10,000] the lower value, the higher priority.</span>
             </div>
         </div>
         <div class="form-row">

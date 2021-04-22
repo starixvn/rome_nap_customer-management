@@ -243,6 +243,7 @@
                 "~/Areas/Customers/Scripts/VirtualRateEngine/stakeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketDoWCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketTimeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngineAddNew.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
 
             return bundles;

@@ -418,6 +418,7 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketDoWCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketTimeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngine.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngineAddNew.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngineHelper.js" />
     <Content Include="Areas\Customers\Scripts\WhitelistBigCreditMembers\whitelistBigCreditMembers.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />

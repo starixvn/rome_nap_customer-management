@@ -85,11 +85,10 @@
     }
 }
 
-.form .form-row, .form-row-last {
+.form .form-row {
     display: grid;
     grid-template-columns: auto 1fr;
     float: unset;
-    align-items: center;
     margin-bottom: 8px;
 }
 
@@ -105,22 +104,20 @@
             font-style: italic;
         }
     }
-}
 
-.form-row-last {
-    grid-column-gap: 16px;
-    grid-template-columns: minmax(76px,auto) 1fr;
-
-    .edit-field {
-        display: flex;
-
+    &.adjustment-row {
         .active-value {
             text-align: right;
             margin-left: 8px;
+            display: flex;
+            align-items: center;
         }
 
-        select {
-            width: 210px;
+        .edit-field {
+            display: flex;
+            .ui-combobox {
+                width: unset;
+            }
         }
     }
 }
@@ -159,7 +156,7 @@
         .ddl-second {
             width: calc(~"100% - 108px");
 
-            #ddl-site {
+            .ui-multiselect-widget {
                 width: calc(~"100% - 3px") !important;
             }
         }

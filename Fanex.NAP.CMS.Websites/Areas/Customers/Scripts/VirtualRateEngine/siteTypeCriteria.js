@@ -57,15 +57,10 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
     }
 
     function enableCriteria(isEnabled) {
-        if (isEnabled) {
-            ddlSiteType.combobox("enable");
-            ddlSiteCondition.combobox("enable");
-            //ddlSite
-        } else {
-            ddlSiteType.combobox("disable");
-            ddlSiteCondition.combobox("disable");
-            //ddlSite
-        }
+        var action = isEnabled ? "enable" : "disable";
+        ddlSiteType.combobox(action);
+        ddlSiteCondition.combobox(action);
+        ddlSite.multiSelect(action);
     }
 
     this.initAddNew = function (criteriaContainer) {

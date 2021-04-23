@@ -124,7 +124,8 @@
                 resizable: false,
                 position: {
                     my: "center top",
-                    at: "center top"
+                    at: "center top",
+                    of: "#headline"
                 }
             });
             initAddNewRule(form);

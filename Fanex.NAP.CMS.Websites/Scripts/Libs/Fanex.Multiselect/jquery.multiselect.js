@@ -64,6 +64,20 @@
         },
         openMe: function () {
             $(this).next('div.ui-multiselect-options').trigger('open');
+        },
+        disable: function () {
+            var self = $(this);
+            if (!self.parent().length) {
+                self = $('#' + self.attr('id'));
+            }
+            self.addClass("ui-multiselect-state-disabled");
+        },
+        enable: function () {
+            var self = $(this);
+            if (!self.parent().length) {
+                self = $('#' + self.attr('id'));
+            }
+            self.removeClass("ui-multiselect-state-disabled");
         }
     };
 

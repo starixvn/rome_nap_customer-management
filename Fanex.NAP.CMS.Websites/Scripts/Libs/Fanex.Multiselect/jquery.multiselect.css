@@ -78,6 +78,18 @@ important
     padding-left: 3px;
 }
 
+.ui-multiselect-state-disabled .ui-multiselect-state-default {
+    background-color: #f3efee;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.ui-multiselect-state-disabled .ui-multiselect-icon-triangle-1-s,
+.ui-multiselect-state-disabled .collapseClass:after {
+    border-color: #ccc transparent transparent transparent;
+    color: #ccc;
+}
+
 .ui-multiselect-div label {
     font-weight: normal;
 }

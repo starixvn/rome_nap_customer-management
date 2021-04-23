@@ -62,6 +62,26 @@ function CurrentVRCriteria() {
         return chkEnableCurrentVRCriteria.is(":checked");
     }
 
+    function validateFormData() {
+        var inputVRFrom = validateVRValue(txtVRFrom);
+        var inputVRTo = validateVRValue(txtVRTo);
+
+        if (inputVRFrom && inputVRTo) {
+            if (inputVRFrom > inputVRTo) {
+                CMS.showTipsyError(txtVRFrom, resources.fromGreaterThanToError, "nw");
+                return;
+            }
+
+            CMS.clearTipsyError(txtVRFrom);
+            CMS.clearTipsyError(txtVRTo);
+
+            return {
+                VRFrom: inputVRFrom,
+                VRTo: inputVRTo
+            };
+        }
+    }
+
     function validateVRValue(txtNumber) {
         var inputNumber = $.trim(txtNumber.val());
 
@@ -78,7 +98,7 @@ function CurrentVRCriteria() {
         var number = parseInt(inputNumber.replace(/,/g, ""));
 
         if (number < -99 || number > 200) {
-            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
+            CMS.showTipsyError(txtNumber, resources.vrValueOutOfRangeError, "nw");
             return;
         }
 
@@ -99,24 +119,7 @@ function CurrentVRCriteria() {
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            var inputVRFrom = validateVRValue(txtVRFrom);
-            var inputVRTo = validateVRValue(txtVRTo);
-
-            if (inputVRFrom && inputVRTo) {
-                if (inputVRFrom > inputVRTo) {
-                    CMS.showTipsyError(txtVRFrom, resources.invalidValueError, "nw");
-                    CMS.showTipsyError(txtVRTo, resources.invalidValueError, "nw");
-                    return;
-                }
-
-                CMS.clearTipsyError(txtVRFrom);
-                CMS.clearTipsyError(txtVRTo);
-
-                return {
-                    VRFrom: inputVRFrom,
-                    VRTo: inputVRTo
-                };
-            }
+            return validateFormData();
         }
     };
 }

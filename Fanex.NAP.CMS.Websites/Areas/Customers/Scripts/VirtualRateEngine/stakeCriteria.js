@@ -56,6 +56,46 @@ function StakeCriteria() {
         txtStakeTo.prop("disabled", isDisabled);
     }
 
+    function isEnableCriteria() {
+        return chkEnableStakeCriteria.is(":checked");
+    }
+
+    function validateFormData() {
+        var inputStakeFrom = validateStakeValue(txtStakeFrom);
+        var inputStakeTo = validateStakeValue(txtStakeTo);
+
+        if (inputStakeFrom && inputStakeTo) {
+            if (inputStakeFrom > inputStakeTo) {
+                CMS.showTipsyError(inputStakeFrom, resources.fromGreaterThanToError, "nw");
+                return;
+            }
+
+            CMS.clearTipsyError(txtStakeFrom);
+            CMS.clearTipsyError(txtStakeTo);
+
+            return {
+                stakeFrom: inputStakeFrom,
+                stakeTo: inputStakeTo
+            };
+        }
+    }
+
+    function validateStakeValue(txtNumber) {
+        var inputNumber = $.trim(txtNumber.val());
+
+        if (inputNumber.length === 0) {
+            CMS.showTipsyError(txtNumber, resources.requiredFieldError, "nw");
+            return;
+        }
+
+        if (!CMS.isNumeric(inputNumber)) {
+            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
+            return;
+        }
+
+        return parseInt(inputNumber.replace(/,/g, ""));
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -66,5 +106,11 @@ function StakeCriteria() {
         renderHtml(criteriaContainer);
         chkEnableStakeCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return validateFormData();
+        }
     };
 }

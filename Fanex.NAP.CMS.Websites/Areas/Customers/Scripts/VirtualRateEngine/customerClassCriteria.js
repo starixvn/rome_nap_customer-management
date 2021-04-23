@@ -65,7 +65,7 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     this.getFormData = function () {
         if (isEnableCriteria()) {
             return {
-                customerClass: ddlCustomerClass.getCheckedItems().join(","),
+                customerClass: ddlCustomerClass.multiSelect("getCheckedItems").join(","),
                 condition: ddlCustomerClassCondition.val()
             };
         }

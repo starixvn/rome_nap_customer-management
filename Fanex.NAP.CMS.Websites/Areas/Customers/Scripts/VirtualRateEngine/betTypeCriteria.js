@@ -12,18 +12,18 @@ function BetTypeCriteria(conditionList, betTypeList) {
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-betTypeNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-betTypeCondition"></select>
                 </div>
                 <div class="ddl-second bet-type-box">
                     <div id="ddl-betType"></div>
                 </div>
             </div>
         </div>`
-    var chkEnableBetTypeCriteria, ddlBetTypeNotIn, ddlBetType;
+    var chkEnableBetTypeCriteria, ddlBetTypeCondition, ddlBetType;
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlBetTypeNotIn = virtualRateEngineHelper.renderCombobox("ddl-betTypeNotIn", conditionList);
+        ddlBetTypeCondition = virtualRateEngineHelper.renderCombobox("ddl-betTypeCondition", conditionList);
         ddlBetType = virtualRateEngineHelper.renderMultiSelect("ddl-betType", betTypeList);
         chkEnableBetTypeCriteria = $("#chk-enableBetTypeCriteria");
     }
@@ -41,13 +41,13 @@ function BetTypeCriteria(conditionList, betTypeList) {
     }
 
     function enableCriteria(isEnabled) {
-        if (isEnabled) {
-            ddlBetTypeNotIn.combobox("enable");
-            //ddlBetType.
-        } else {
-            ddlBetTypeNotIn.combobox("disable");
-            //ddlBetType.
-        }
+        var action = isEnabled ? "enable" : "disable";
+        ddlBetTypeCondition.combobox(action);
+        ddlBetType.multiSelect(action);
+    }
+
+    function isEnableCriteria() {
+        return chkEnableBetTypeCriteria.is(":checked");
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -60,5 +60,14 @@ function BetTypeCriteria(conditionList, betTypeList) {
         renderHtml(criteriaContainer);
         chkEnableBetTypeCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                betType: ddlBetType.multiSelect("getCheckedItems").join(","),
+                condition: ddlBetTypeCondition.val()
+            };
+        }
     };
 }

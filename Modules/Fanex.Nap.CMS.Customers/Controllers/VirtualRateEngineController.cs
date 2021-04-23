@@ -41,7 +41,12 @@
                 HasRight(CMSFunctionKeys.FullPermission, Constant.Policy.Host),
                 sitesModel.Credits.Select(s => new IdNameModel { Id = s.SiteId, Name = s.SiteName }),
                 sitesModel.Licensees.Select(s => new IdNameModel { Id = s.SiteId, Name = s.SiteName }),
-                vrEngineService.GetCustomerClasses());
+                vrEngineService.GetCustomerClasses(),
+                vrEngineService.GetSports(),
+                vrEngineService.GetBetTypes(),
+                vrEngineService.GetLeagueGroups(),
+                vrEngineService.GetLeagues(),
+                vrEngineService.GetBetfromList());
 
             return View("~/Areas/Customers/Views/VirtualRateEngine/Index.cshtml", viewModel);
         }

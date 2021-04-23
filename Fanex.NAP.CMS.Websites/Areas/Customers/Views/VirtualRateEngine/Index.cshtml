@@ -16,7 +16,10 @@
     <script type="text/javascript">
         var resources = {
             requiredFieldError: "@Labels.ThisFieldIsRequired",
-            invalidValueError: "@Labels.InvalidValueError"
+            invalidValueError: "@Labels.InvalidValueError",
+            vrValueOutOfRangeError: "@VirtualRateEngineResource.VirtualRateValueOutOfRangeError",
+            fromGreaterThanToError: "@VirtualRateEngineResource.FromGreaterThanToError"
+
         };
         var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
     </script>
@@ -62,8 +65,7 @@
     </table>
 </div>
 <div id="divPopupContent" class="display-none">
-    @using (Html.BeginForm("AddNewRule", "VirtualRateEngine", FormMethod.Post, new { @class = "form", id = "form-addNewRule" }))
-    {
+    <div class="form" id="form-addNewRule">
         <div class="form-row">
             <div class="lbl-field">
                 <label for="txt-ruleTitle">Rule Title</label>
@@ -78,7 +80,7 @@
                 <span class="text-red">*</span>
             </div>
             <div class="edit-field">
-                <input type="text" class="width-60" id="txt-priorityOrder" />
+                <input type="text" class="width-60" id="txt-priorityOrder" autocomplete="off" maxlength="5" />
                 <span class="priority-note">Range: [1;10,000] the lower value, the higher priority.</span>
             </div>
         </div>
@@ -94,7 +96,7 @@
                 <select class="combobox-autocomplete width-180" id="ddl-adjustment"></select>
                 <div class="active-value">
                     <input type="text" class="width-60" id="txt-adjustment" autocomplete="off" maxlength="7" />
-                    <span>%</span>
+                    &nbsp;<span>%</span>
                 </div>
             </div>
         </div>
@@ -105,8 +107,8 @@
             </div>
         </div>
         <div class="button-row">
-            <button type="submit" class="blue-button" id="btn-addNew">Submit</button>
+            <button type="submit" class="blue-button" id="btn-addNewRule">Submit</button>
             <button type="button" class="red-button" id="btn-cancel">Cancel</button>
         </div>
-    }
+    </div>
 </div>

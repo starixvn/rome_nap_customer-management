@@ -12,18 +12,18 @@ function TicketDoWCriteria(conditionList, dowList) {
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-ticketDoWNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-ticketDoWCondition"></select>
                 </div>
                 <div class="ddl-second ticket-box">
                     <div id="ddl-ticketDoW"></div>
                 </div>
             </div>
         </div>`
-    var chkEnableTicketDoWCriteria, ddlTicketDoWNotIn, ddlTicketDoW;
+    var chkEnableTicketDoWCriteria, ddlTicketDoWCondition, ddlTicketDoW;
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlTicketDoWNotIn = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWNotIn", conditionList);
+        ddlTicketDoWCondition = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList);
         ddlTicketDoW = virtualRateEngineHelper.renderMultiSelect("ddl-ticketDoW", dowList);
         chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria");
     }
@@ -41,13 +41,13 @@ function TicketDoWCriteria(conditionList, dowList) {
     }
 
     function enableCriteria(isEnabled) {
-        if (isEnabled) {
-            ddlTicketDoWNotIn.combobox("enable");
-            //ddlTicketDoW.
-        } else {
-            ddlTicketDoWNotIn.combobox("disable");
-            //ddlTicketDoW.
-        }
+        var action = isEnabled ? "enable" : "disable";
+        ddlTicketDoWCondition.combobox(action);
+        ddlTicketDoW.multiSelect(action);
+    }
+
+    function isEnableCriteria() {
+        return chkEnableTicketDoWCriteria.is(":checked");
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -60,5 +60,14 @@ function TicketDoWCriteria(conditionList, dowList) {
         renderHtml(criteriaContainer);
         chkEnableTicketDoWCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                dateOfWeek: ddlTicketDoW.multiSelect("getCheckedItems").join(","),
+                condition: ddlSiteCondition.val()
+            };
+        }
     };
 }

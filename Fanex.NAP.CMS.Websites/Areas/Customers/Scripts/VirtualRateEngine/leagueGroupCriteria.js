@@ -12,7 +12,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList, leagueList) {
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-leagueGroupNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-leagueGroupCondition"></select>
                 </div>
                 <div class="ddl-second league-box-1">
                     <div id="ddl-leagueGroup"></div>
@@ -26,20 +26,20 @@ function LeagueGroupCriteria(conditionList, leagueGroupList, leagueList) {
             <div class="enable-criteria-container"></div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-leagueNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-leagueCondition"></select>
                 </div>
                 <div class="ddl-second league-box-2">
                     <div id="ddl-league"></div>
                 </div>
             </div>
         </div>`
-    var chkEnableLeagueGroupCriteria, ddlLeagueGroupNotIn, ddlLeagueGroup, ddlLeagueNotIn, ddlLeague;
+    var chkEnableLeagueGroupCriteria, ddlLeagueGroupCondition, ddlLeagueGroup, ddlLeagueCondition, ddlLeague;
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlLeagueGroupNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueGroupNotIn", conditionList);
+        ddlLeagueGroupCondition = virtualRateEngineHelper.renderCombobox("ddl-leagueGroupCondition", conditionList);
         ddlLeagueGroup = virtualRateEngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList);
-        ddlLeagueNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueNotIn", conditionList);
+        ddlLeagueCondition = virtualRateEngineHelper.renderCombobox("ddl-leagueCondition", conditionList);
         ddlLeague = virtualRateEngineHelper.renderMultiSelect("ddl-league", leagueList);
         chkEnableLeagueGroupCriteria = $("#chk-enableLeagueGroupCriteria");
     }
@@ -57,17 +57,15 @@ function LeagueGroupCriteria(conditionList, leagueGroupList, leagueList) {
     }
 
     function enableCriteria(isEnabled) {
-        if (isEnabled) {
-            ddlLeagueGroupNotIn.combobox("enable");
-            //ddlLeagueGroup
-            ddlLeagueNotIn.combobox("enable");
-            //ddlLeague
-        } else {
-            ddlLeagueGroupNotIn.combobox("disable");
-            //ddlLeagueGroup
-            ddlLeagueNotIn.combobox("disable");
-            //ddlLeague
-        }
+        var action = isEnabled ? "enable" : "disable";
+        ddlLeagueGroupCondition.combobox(action);
+        ddlLeagueGroup.multiSelect(action);
+        ddlLeagueCondition.combobox(action);
+        ddlLeague.multiSelect(action);
+    }
+
+    function isEnableCriteria() {
+        return chkEnableLeagueGroupCriteria.is(":checked");
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -80,5 +78,16 @@ function LeagueGroupCriteria(conditionList, leagueGroupList, leagueList) {
         renderHtml(criteriaContainer);
         chkEnableLeagueGroupCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                leagueGroup: ddlLeagueGroup.multiSelect("getCheckedItems").join(","),
+                leagueGroupCondition: ddlLeagueCondition.val(),
+                league: ddlLeague.multiSelect("getCheckedItems").join(","),
+                leagueCondition: ddlLeagueCondition.val()
+            };
+        }
     };
 }

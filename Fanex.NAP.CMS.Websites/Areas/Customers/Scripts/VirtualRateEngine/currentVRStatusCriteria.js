@@ -38,6 +38,10 @@ function CurrentVRStatusCriteria(vrStatusList) {
         ddlCurrentVRStatus.combobox(isEnabled ? "enable" : "disable");
     }
 
+    function isEnableCriteria() {
+        return chkEnableCurrentVRStatusCriteria.is(":checked");
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -48,5 +52,13 @@ function CurrentVRStatusCriteria(vrStatusList) {
         renderHtml(criteriaContainer);
         chkEnableSportCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                VRStatus: ddlCurrentVRStatus.val()
+            };
+        }
     };
 }

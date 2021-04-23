@@ -197,6 +197,8 @@
     <Compile Include="Constants\VirtualRateEngine\ActiveConst.cs" />
     <Compile Include="Constants\VirtualRateEngine\AdjustmentConst.cs" />
     <Compile Include="Constants\VirtualRateEngine\ConditionConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\CurrentVRStatusConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\EventConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\LimitNewDownlineController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
@@ -328,6 +330,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProblemAccountResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\VirtualRateEngineResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VirtualRateEngineResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\WhitelistBigCreditMembersResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -422,6 +429,10 @@
     <EmbeddedResource Include="Resources\ProblemAccountResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemAccountResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\VirtualRateEngineResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VirtualRateEngineResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WhitelistBigCreditMembersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

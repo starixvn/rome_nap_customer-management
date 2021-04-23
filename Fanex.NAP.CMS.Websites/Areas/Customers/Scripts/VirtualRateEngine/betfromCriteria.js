@@ -38,6 +38,10 @@ function BetfromCriteria(betfromList) {
         ddlBetfrom.combobox(isEnabled ? "enable" : "disable");
     }
 
+    function isEnableCriteria() {
+        return chkEnableBetfromCriteria.is(":checked");
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -48,5 +52,13 @@ function BetfromCriteria(betfromList) {
         renderHtml();
         chkEnableBetfromCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                betfrom: ddlBetfrom.val(),
+            };
+        }
     };
 }

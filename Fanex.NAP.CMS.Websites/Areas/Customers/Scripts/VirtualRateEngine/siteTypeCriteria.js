@@ -83,7 +83,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
         if (isEnableCriteria()) {
             return {
                 siteType: ddlSiteType.val(),
-                site: ddlSite.getCheckedItems().join(","),
+                site: ddlSite.multiSelect("getCheckedItems").join(","),
                 condition: ddlSiteCondition.val()
             };
         }

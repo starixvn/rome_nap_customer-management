@@ -38,6 +38,10 @@ function EventCriteria(eventList) {
         ddlEvent.combobox(isEnabled ? "enable" : "disable");
     }
 
+    function isEnableCriteria() {
+        return chkEnableEventCriteria.is(":checked");
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -48,5 +52,13 @@ function EventCriteria(eventList) {
         renderHtml(criteriaContainer);
         chkEnableEventCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        if (isEnableCriteria()) {
+            return {
+                liveIndicator: ddlEvent.val(),
+            };
+        }
     };
 }

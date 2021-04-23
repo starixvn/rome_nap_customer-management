@@ -1,5 +1,5 @@
 ﻿"use strict";
-function CurrentVRStatusCriteria($selector, vrStatusList) {
+function CurrentVRStatusCriteria(vrStatusList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -16,8 +16,8 @@ function CurrentVRStatusCriteria($selector, vrStatusList) {
         </div>`
     var chkEnableCurrentVRStatusCriteria, ddlCurrentVRStatus;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         ddlCurrentVRStatus = virtualRateEngineHelper.renderCombobox("ddl-currentVRStatus", vrStatusList);
         chkEnableCurrentVRStatusCriteria = $("#chk-enableCurrentVRStatusCriteria");
     }
@@ -38,14 +38,14 @@ function CurrentVRStatusCriteria($selector, vrStatusList) {
         ddlCurrentVRStatus.combobox(isEnabled ? "enable" : "disable");
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableSportCriteria.remove();
         bindEvents();
     };

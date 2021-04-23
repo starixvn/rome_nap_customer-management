@@ -1,7 +1,11 @@
-﻿@using Fanex.Nap.CMS.Customers.AppStart
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.AppStart
+@using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
+@model VirtualRateEngineIndexViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Virtual Rate Engine";
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
 @section Head
 {
@@ -11,8 +15,10 @@
 {
     <script type="text/javascript">
         var resources = {
-            requiredField: "@Labels.ThisFieldIsRequired"
+            requiredFieldError: "@Labels.RequiredFieldError",
+            invalidValueError: "@Labels.InvalidValueError"
         };
+        var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
     </script>
     @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
 }
@@ -56,7 +62,7 @@
     </table>
 </div>
 <div id="divPopupContent" class="display-none">
-    @using (Html.BeginForm("AddNewRule", "OverwriteVirtualRateOnTicket", FormMethod.Post, new { @class = "form", id = "form-addNewRule" }))
+    @using (Html.BeginForm("AddNewRule", "VirtualRateEngine", FormMethod.Post, new { @class = "form", id = "form-addNewRule" }))
     {
         <div class="form-row">
             <div class="lbl-field">
@@ -68,11 +74,11 @@
         </div>
         <div class="form-row">
             <div class="lbl-field">
-                <label for="txt-priority">Priority Order</label>
+                <label for="txt-priorityOrder">Priority Order</label>
                 <span class="text-red">*</span>
             </div>
             <div class="edit-field">
-                <input type="text" class="width-60" id="txt-priority" />
+                <input type="text" class="width-60" id="txt-priorityOrder" />
                 <span class="priority-note">Range: [1;10,000] the lower value, the higher priority.</span>
             </div>
         </div>
@@ -99,7 +105,7 @@
             </div>
         </div>
         <div class="button-row">
-            <button type="submit" class="blue-button">Submit</button>
+            <button type="submit" class="blue-button" id="btn-addNew">Submit</button>
             <button type="button" class="red-button" id="btn-cancel">Cancel</button>
         </div>
     }

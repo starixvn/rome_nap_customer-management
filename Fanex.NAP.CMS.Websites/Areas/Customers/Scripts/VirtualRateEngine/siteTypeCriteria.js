@@ -1,5 +1,5 @@
 ﻿"use strict";
-function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
+function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -21,19 +21,19 @@ function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
             <div class="enable-criteria-container"></div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-siteNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-siteCondition"></select>
                 </div>
                 <div class="ddl-second site-type-box">
                     <div id="ddl-site"></div>
                 </div>
             </div>
         </div>`
-    var chkEnableSiteTypeCriteria, ddlSiteType, ddlSiteNotIn, ddlSite;
+    var chkEnableSiteTypeCriteria, ddlSiteType, ddlSiteCondition, ddlSite;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         ddlSiteType = virtualRateEngineHelper.renderCombobox("ddl-siteType", siteTypeList);
-        ddlSiteNotIn = virtualRateEngineHelper.renderCombobox("ddl-siteNotIn", notInList);
+        ddlSiteCondition = virtualRateEngineHelper.renderCombobox("ddl-siteCondition", conditionList);
         ddlSite = virtualRateEngineHelper.renderMultiSelect("ddl-site", siteList);
         chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria");
     }
@@ -59,23 +59,23 @@ function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
     function enableCriteria(isEnabled) {
         if (isEnabled) {
             ddlSiteType.combobox("enable");
-            ddlSiteNotIn.combobox("enable");
+            ddlSiteCondition.combobox("enable");
             //ddlSite
         } else {
             ddlSiteType.combobox("disable");
-            ddlSiteNotIn.combobox("disable");
+            ddlSiteCondition.combobox("disable");
             //ddlSite
         }
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableCustomerClassCriteria.remove();
         bindEvents();
     };
@@ -84,7 +84,7 @@ function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
         return {
             siteType: ddlSiteType.val(),
             site: ddlSite.getCheckedItems().join(","),
-            notIn: ddlSiteNotIn.val()
+            condition: ddlSiteCondition.val()
         };
     };
 }

@@ -1,5 +1,5 @@
 ﻿"use strict";
-function TicketDoWCriteria($selector, notInList, dowList) {
+function TicketDoWCriteria(conditionList, dowList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -21,9 +21,9 @@ function TicketDoWCriteria($selector, notInList, dowList) {
         </div>`
     var chkEnableTicketDoWCriteria, ddlTicketDoWNotIn, ddlTicketDoW;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
-        ddlTicketDoWNotIn = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWNotIn", notInList);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
+        ddlTicketDoWNotIn = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWNotIn", conditionList);
         ddlTicketDoW = virtualRateEngineHelper.renderMultiSelect("ddl-ticketDoW", dowList);
         chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria");
     }
@@ -50,14 +50,14 @@ function TicketDoWCriteria($selector, notInList, dowList) {
         }
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableTicketDoWCriteria.remove();
         bindEvents();
     };

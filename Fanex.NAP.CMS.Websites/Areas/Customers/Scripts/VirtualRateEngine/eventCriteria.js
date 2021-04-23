@@ -1,5 +1,5 @@
 ﻿"use strict";
-function EventCriteria($selector, eventList) {
+function EventCriteria(eventList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -16,8 +16,8 @@ function EventCriteria($selector, eventList) {
         </div>`
     var chkEnableEventCriteria, ddlEvent;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         ddlEvent = virtualRateEngineHelper.renderCombobox("ddl-event", eventList);
         chkEnableEventCriteria = $("#chk-enableEventCriteria");
     }
@@ -38,14 +38,14 @@ function EventCriteria($selector, eventList) {
         ddlEvent.combobox(isEnabled ? "enable" : "disable");
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableEventCriteria.remove();
         bindEvents();
     };

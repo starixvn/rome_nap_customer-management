@@ -194,6 +194,9 @@
     <Compile Include="Constants\ProblemAccount\SiteTypeConst.cs" />
     <Compile Include="Constants\ProblemAccount\SQLErrorCodeConst.cs" />
     <Compile Include="Constants\ProblemAccountLicenseeSite\VIPConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\ActiveConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\AdjustmentConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\ConditionConst.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\LimitNewDownlineController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
@@ -292,6 +295,7 @@
     <Compile Include="Repositories\ProblemAccount\ProblemAccountCN88Repository.cs" />
     <Compile Include="Repositories\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\ProblemAccountRepositoryBase.cs" />
+    <Compile Include="Repositories\VirtualRateEngine\VirtualRateEngineRepository.cs" />
     <Compile Include="Repositories\WhitelistBigCreditMembers\IWhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Repositories\WhitelistBigCreditMembers\WhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
@@ -349,6 +353,7 @@
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="Services\RobotsExporter.cs" />
+    <Compile Include="Services\VirtualRateEngine\VirtualRateEngineService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\IWhitelistBigCreditMembersService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\WhitelistBigCreditMembersService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -379,6 +384,7 @@
     <Compile Include="ViewModels\ProblemAccount\SearchViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UnmarkViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UpdateInformingStatusViewModel.cs" />
+    <Compile Include="ViewModels\VirtualRateEngine\VirtualRateEngineIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -432,7 +438,10 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Criteria\VirtualRateEngine\" />
+    <Folder Include="Models\VirtualRateEngine\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,5 +1,5 @@
 ﻿"use strict";
-function CurrentVRCriteria($selector) {
+function CurrentVRCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -25,8 +25,8 @@ function CurrentVRCriteria($selector) {
         </div>`
     var chkEnableCurrentVRCriteria, txtVRFrom, txtVRTo;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         txtVRFrom = $("#txt-currentVRFrom").clearfield();
         txtVRTo = $("#txt-currentVRTo").clearfield();
         chkEnableCurrentVRCriteria = $("#chk-enableCurrentVRCriteria");
@@ -58,22 +58,63 @@ function CurrentVRCriteria($selector) {
         txtVRTo.prop("disabled", isDisabled);
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    function validateNumber(txtNumber) {
+        var inputNumber = $.trim(txtNumber.val());
+
+        if (inputNumber.length === 0) {
+            CMS.showTipsyError(txtNumber, resources.requiredFieldError, "nw");
+            return;
+        }
+
+        if (!CMS.isNumeric(inputNumber)) {
+            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
+            return;
+        }
+
+        var number = parseInt(inputNumber.replace(/,/g, ""));
+
+        if (number < -99 || number > 200) {
+            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
+            return;
+        }
+
+        CMS.clearTipsyError(txtNumber);
+        return number;
+    }
+
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableCurrentVRCriteria.remove();
         bindEvents();
     };
 
+    this.isEnableRule = function () {
+        chkEnableCurrentVRCriteria.is(":checked");
+    };
+
     this.getFormData = function () {
-        var inputVRFrom = $.trim(txtVRFrom.val());
-        if (!inputVRFrom.length) {
-            CMS.showTipsyError(txtVRFrom, resources.requiredField, "");
+        if (chkEnableCurrentVRCriteria.is(":checked")) {
+            var inputVRFrom = validateNumber(txtVRFrom);
+            var inputVRTo = validateNumber(txtVRTo);
+
+            if (inputVRFrom && inputVRTo) {
+                if (inputVRFrom > inputVRTo) {
+                    CMS.showTipsyError(txtVRFrom, resources.invalidValueError, "nw");
+                    CMS.showTipsyError(txtVRTo, resources.invalidValueError, "nw");
+                    return;
+                }
+
+                return {
+                    VRFrom: inputVRFrom,
+                    VRTo: inputVRTo
+                };
+            }
         }
     };
 }

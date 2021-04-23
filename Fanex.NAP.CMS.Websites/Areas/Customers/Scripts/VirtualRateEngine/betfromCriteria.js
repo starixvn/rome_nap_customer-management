@@ -1,5 +1,5 @@
 ﻿"use strict";
-function BetfromCriteria($selector, betfromList) {
+function BetfromCriteria(betfromList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -16,8 +16,8 @@ function BetfromCriteria($selector, betfromList) {
         </div>`
     var chkEnableBetfromCriteria, ddlBetfrom;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         ddlBetfrom = virtualRateEngineHelper.renderCombobox("ddl-betfrom", betfromList);
         chkEnableBetfromCriteria = $("#chk-enableBetfromCriteria");
     }
@@ -38,13 +38,13 @@ function BetfromCriteria($selector, betfromList) {
         ddlBetfrom.combobox(isEnabled ? "enable" : "disable");
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
+    this.initUpdate = function (criteriaContainer) {
         renderHtml();
         chkEnableBetfromCriteria.remove();
         bindEvents();

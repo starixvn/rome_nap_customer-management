@@ -268,6 +268,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid value!.
+        /// </summary>
+        public static string InvalidValueError {
+            get {
+                return ResourceManager.GetString("InvalidValueError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IP.
         /// </summary>
         public static string IP {

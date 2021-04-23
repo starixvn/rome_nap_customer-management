@@ -1,5 +1,5 @@
 ﻿"use strict";
-function StakeCriteria($selector) {
+function StakeCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -23,8 +23,8 @@ function StakeCriteria($selector) {
         </div>`
     var chkEnableStakeCriteria, txtStakeFrom, txtStakeTo;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         txtStakeFrom = $("#txt-stakeFrom").clearfield();
         txtStakeTo = $("#txt-stakeTo").clearfield();
         chkEnableStakeCriteria = $("#chk-enableStakeCriteria");
@@ -56,14 +56,14 @@ function StakeCriteria($selector) {
         txtStakeTo.prop("disabled", isDisabled);
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableStakeCriteria.remove();
         bindEvents();
     };

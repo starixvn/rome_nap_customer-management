@@ -1,5 +1,5 @@
 ﻿"use strict";
-function TicketTimeCriteria($selector) {
+function TicketTimeCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -23,8 +23,8 @@ function TicketTimeCriteria($selector) {
         </div>`
     var chkEnableTicketTimeCriteria, txtTicketTimeFrom, txtTicketTimeTo;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
         txtTicketTimeFrom = $("#txt-ticketTimeFrom").clearfield();
         txtTicketTimeTo = $("#txt-ticketTimeTo").clearfield();
         chkEnableTicketTimeCriteria = $("#chk-enableTicketTimeCriteria");
@@ -48,14 +48,14 @@ function TicketTimeCriteria($selector) {
         txtTicketTimeTo.prop("disabled", isDisabled);
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableTicketTimeCriteria.remove();
         bindEvents();
     };

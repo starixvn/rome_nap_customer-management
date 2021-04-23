@@ -1,5 +1,5 @@
 ﻿"use strict";
-function CustomerClassCriteria($selector, notInList, customerClassList) {
+function CustomerClassCriteria(conditionList, customerClassList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -21,9 +21,9 @@ function CustomerClassCriteria($selector, notInList, customerClassList) {
         </div>`
     var chkEnableCustomerClassCriteria, ddlCustomerClasNotIn, ddlCustomerClass;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
-        ddlCustomerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", notInList);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
+        ddlCustomerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", conditionList);
         ddlCustomerClass = virtualRateEngineHelper.renderMultiSelect("ddl-customerClass", customerClassList);
         chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria");
     };
@@ -46,14 +46,14 @@ function CustomerClassCriteria($selector, notInList, customerClassList) {
         ddlCustomerClass.combobox(actionName);
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableCustomerClassCriteria.remove();
         bindEvents();
     };

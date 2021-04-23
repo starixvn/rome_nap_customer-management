@@ -1,5 +1,5 @@
 ﻿"use strict";
-function BetTypeCriteria($selector, notInList, betTypeList) {
+function BetTypeCriteria(conditionList, betTypeList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -21,9 +21,9 @@ function BetTypeCriteria($selector, notInList, betTypeList) {
         </div>`
     var chkEnableBetTypeCriteria, ddlBetTypeNotIn, ddlBetType;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
-        ddlBetTypeNotIn = virtualRateEngineHelper.renderCombobox("ddl-betTypeNotIn", notInList);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
+        ddlBetTypeNotIn = virtualRateEngineHelper.renderCombobox("ddl-betTypeNotIn", conditionList);
         ddlBetType = virtualRateEngineHelper.renderMultiSelect("ddl-betType", betTypeList);
         chkEnableBetTypeCriteria = $("#chk-enableBetTypeCriteria");
     }
@@ -50,14 +50,14 @@ function BetTypeCriteria($selector, notInList, betTypeList) {
         }
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableBetTypeCriteria.remove();
         bindEvents();
     };

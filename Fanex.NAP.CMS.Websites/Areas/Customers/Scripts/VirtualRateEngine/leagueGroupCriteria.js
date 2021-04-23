@@ -1,5 +1,5 @@
 ﻿"use strict";
-function LeagueGroupCriteria($selector, notInList, leagueGroupList, leagueList) {
+function LeagueGroupCriteria(conditionList, leagueGroupList, leagueList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -35,11 +35,11 @@ function LeagueGroupCriteria($selector, notInList, leagueGroupList, leagueList) 
         </div>`
     var chkEnableLeagueGroupCriteria, ddlLeagueGroupNotIn, ddlLeagueGroup, ddlLeagueNotIn, ddlLeague;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
-        ddlLeagueGroupNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueGroupNotIn", notInList);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
+        ddlLeagueGroupNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueGroupNotIn", conditionList);
         ddlLeagueGroup = virtualRateEngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList);
-        ddlLeagueNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueNotIn", notInList);
+        ddlLeagueNotIn = virtualRateEngineHelper.renderCombobox("ddl-leagueNotIn", conditionList);
         ddlLeague = virtualRateEngineHelper.renderMultiSelect("ddl-league", leagueList);
         chkEnableLeagueGroupCriteria = $("#chk-enableLeagueGroupCriteria");
     }
@@ -70,14 +70,14 @@ function LeagueGroupCriteria($selector, notInList, leagueGroupList, leagueList) 
         }
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableLeagueGroupCriteria.remove();
         bindEvents();
     };

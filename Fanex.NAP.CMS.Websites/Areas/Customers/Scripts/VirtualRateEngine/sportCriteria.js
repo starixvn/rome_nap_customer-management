@@ -1,5 +1,5 @@
 ﻿"use strict";
-function SportCriteria($selector, notInList, sportList) {
+function SportCriteria(conditionList, sportList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -21,9 +21,9 @@ function SportCriteria($selector, notInList, sportList) {
         </div>`
     var chkEnableSportCriteria, ddlSportNotIn, ddlSport;
 
-    function renderHtml() {
-        $selector.append(htmlTemplate);
-        ddlSportNotIn = virtualRateEngineHelper.renderCombobox("ddl-sportNotIn", notInList);
+    function renderHtml(criteriaContainer) {
+        criteriaContainer.append(htmlTemplate);
+        ddlSportNotIn = virtualRateEngineHelper.renderCombobox("ddl-sportNotIn", conditionList);
         ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList);
         chkEnableSportCriteria = $("#chk-enableSportCriteria");
     }
@@ -50,14 +50,14 @@ function SportCriteria($selector, notInList, sportList) {
         }
     }
 
-    this.initAddNew = function () {
-        renderHtml();
+    this.initAddNew = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         enableCriteria(false);
         bindEvents();
     };
 
-    this.initUpdate = function () {
-        renderHtml();
+    this.initUpdate = function (criteriaContainer) {
+        renderHtml(criteriaContainer);
         chkEnableSportCriteria.remove();
         bindEvents();
     };

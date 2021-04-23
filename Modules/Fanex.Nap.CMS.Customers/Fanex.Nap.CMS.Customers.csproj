@@ -353,6 +353,7 @@
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="Services\RobotsExporter.cs" />
+    <Compile Include="Services\VirtualRateEngine\IVirtualRateEngineService.cs" />
     <Compile Include="Services\VirtualRateEngine\VirtualRateEngineService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\IWhitelistBigCreditMembersService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\WhitelistBigCreditMembersService.cs" />

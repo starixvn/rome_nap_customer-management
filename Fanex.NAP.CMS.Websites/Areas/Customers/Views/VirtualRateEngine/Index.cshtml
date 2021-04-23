@@ -15,7 +15,7 @@
 {
     <script type="text/javascript">
         var resources = {
-            requiredFieldError: "@Labels.RequiredFieldError",
+            requiredFieldError: "@Labels.ThisFieldIsRequired",
             invalidValueError: "@Labels.InvalidValueError"
         };
         var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
@@ -93,7 +93,7 @@
             <div class="edit-field">
                 <select class="combobox-autocomplete width-180" id="ddl-adjustment"></select>
                 <div class="active-value">
-                    <input type="text" class="width-60" id="txt-adjustment" autocomplete="off" maxlength="4" />
+                    <input type="text" class="width-60" id="txt-adjustment" autocomplete="off" maxlength="7" />
                     <span>%</span>
                 </div>
             </div>

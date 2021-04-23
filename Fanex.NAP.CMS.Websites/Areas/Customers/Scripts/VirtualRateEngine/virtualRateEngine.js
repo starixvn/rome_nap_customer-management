@@ -1,19 +1,6 @@
 ﻿"use strict";
 (function ($) {
     var formAddNewRule = $("#form-addNewRule");
-    var siteList = [
-        { Value: 1, Text: "BEST-ODDS" },
-        { Value: 2, Text: "CN88" },
-        { Value: 3, Text: "INDO" },
-        { Value: 4, Text: "12Bet" },
-        { Value: 5, Text: "TLC" },
-        { Value: 6, Text: "Athena000" }
-    ];
-    var customerClassList = [
-        { Value: 1, Text: "Group Betting" },
-        { Value: 2, Text: "Hedging" },
-        { Value: 3, Text: "Fixed" }
-    ];
     var vrStatusList = [
         { Value: 0, Text: "Enabled" },
         { Value: 1, Text: "Disabled" }
@@ -52,8 +39,8 @@
         { Value: 0, Text: "Sunday" }
     ];
     var siteTypeCriteria = new SiteTypeCriteria(vm.SiteTypes, vm.Conditions, vm.CreditSites.concat(vm.LicenseeSites));
-    //var customerClassCriteria = new CustomerClassCriteria(notInList, customerClassList);
-    //var currentVRCriteria = new CurrentVRCriteria();
+    var customerClassCriteria = new CustomerClassCriteria(vm.Conditions, vm.CustomerClasses);
+    var currentVRCriteria = new CurrentVRCriteria();
     //var currentVRStatusCriteria = new CurrentVRStatusCriteria(vrStatusList);
     //var sportCriteria = new SportCriteria(notInList, sportList);
     //var betTypeCriteria = new BetTypeCriteria(notInList, betTypeList);
@@ -67,8 +54,8 @@
     function initAddNewRule(form) {
         var $criteriaContainer = form.find("#div-criteriaContainer");
         siteTypeCriteria.initAddNew($criteriaContainer);
-        //customerClassCriteria.initAddNew($criteriaContainer);
-        //currentVRCriteria.initAddNew($criteriaContainer);
+        customerClassCriteria.initAddNew($criteriaContainer);
+        currentVRCriteria.initAddNew($criteriaContainer);
         //currentVRStatusCriteria.initAddNew($criteriaContainer);
         //sportCriteria.initAddNew($criteriaContainer);
         //betTypeCriteria.initAddNew($criteriaContainer);

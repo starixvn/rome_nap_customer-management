@@ -13,12 +13,14 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
             bool hasHostVirtualRateEnginePermission,
             bool hasHostFullPermission,
             IEnumerable<IdNameModel> creditSites,
-            IEnumerable<IdNameModel> licenseeSites)
+            IEnumerable<IdNameModel> licenseeSites,
+            IEnumerable<IdNameModel> customerClasses)
         {
             HasHostVirtualRateEnginePermission = hasHostVirtualRateEnginePermission;
             HasHostFullPermission = hasHostFullPermission;
             CreditSites = creditSites;
             LicenseeSites = licenseeSites;
+            CustomerClasses = customerClasses;
         }
 
         public bool HasHostVirtualRateEnginePermission { get; }
@@ -44,6 +46,8 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
 
         public IEnumerable<IdNameModel> LicenseeSites { get; }
 
+        public IEnumerable<IdNameModel> CustomerClasses { get; }
+
         public IEnumerable<IdNameModel> Adjustments
             => new[]
             {
@@ -54,8 +58,8 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
         public IEnumerable<IdNameModel> Actives
             => new[]
             {
-                BuildIdNameModel(ActiveConst.PROD, nameof(ActiveConst.PROD)),
                 BuildIdNameModel(ActiveConst.UAT, nameof(ActiveConst.UAT)),
+                BuildIdNameModel(ActiveConst.PROD, nameof(ActiveConst.PROD)),
                 BuildIdNameModel(ActiveConst.Inactive, nameof(ActiveConst.Inactive))
             };
 

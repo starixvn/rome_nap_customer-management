@@ -12,18 +12,18 @@ function CustomerClassCriteria(conditionList, customerClassList) {
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
-                    <select class="combobox-autocomplete width-60" id="ddl-customerClasNotIn"></select>
+                    <select class="combobox-autocomplete width-60" id="ddl-customerClassCondition"></select>
                 </div>
                 <div class="ddl-second class-customer-box">
                     <div id="ddl-customerClass"></div>
                 </div>
             </div>
         </div>`
-    var chkEnableCustomerClassCriteria, ddlCustomerClasNotIn, ddlCustomerClass;
+    var chkEnableCustomerClassCriteria, ddlCustomerClassCondition, ddlCustomerClass;
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlCustomerClasNotIn = virtualRateEngineHelper.renderCombobox("ddl-customerClasNotIn", conditionList);
+        ddlCustomerClassCondition = virtualRateEngineHelper.renderCombobox("ddl-customerClassCondition", conditionList);
         ddlCustomerClass = virtualRateEngineHelper.renderMultiSelect("ddl-customerClass", customerClassList);
         chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria");
     };
@@ -41,9 +41,9 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     }
 
     function enableCriteria(isEnabled) {
-        var actionName = isEnabled ? "enable" : "disable";
-        ddlCustomerClasNotIn.combobox(actionName);
-        ddlCustomerClass.combobox(actionName);
+        var action = isEnabled ? "enable" : "disable";
+        ddlCustomerClassCondition.combobox(action);
+        ddlCustomerClass.multiSelect(action);
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -56,5 +56,12 @@ function CustomerClassCriteria(conditionList, customerClassList) {
         renderHtml(criteriaContainer);
         chkEnableCustomerClassCriteria.remove();
         bindEvents();
+    };
+
+    this.getFormData = function () {
+        return {
+            customerClass: ddlCustomerClass.getCheckedItems().join(","),
+            condition: ddlCustomerClassCondition.val()
+        };
     };
 }

@@ -58,7 +58,11 @@ function CurrentVRCriteria() {
         txtVRTo.prop("disabled", isDisabled);
     }
 
-    function validateNumber(txtNumber) {
+    function isEnableCriteria() {
+        return chkEnableCurrentVRCriteria.is(":checked");
+    }
+
+    function validateVRValue(txtNumber) {
         var inputNumber = $.trim(txtNumber.val());
 
         if (inputNumber.length === 0) {
@@ -78,7 +82,6 @@ function CurrentVRCriteria() {
             return;
         }
 
-        CMS.clearTipsyError(txtNumber);
         return number;
     }
 
@@ -94,14 +97,10 @@ function CurrentVRCriteria() {
         bindEvents();
     };
 
-    this.isEnableRule = function () {
-        chkEnableCurrentVRCriteria.is(":checked");
-    };
-
     this.getFormData = function () {
-        if (chkEnableCurrentVRCriteria.is(":checked")) {
-            var inputVRFrom = validateNumber(txtVRFrom);
-            var inputVRTo = validateNumber(txtVRTo);
+        if (isEnableCriteria()) {
+            var inputVRFrom = validateVRValue(txtVRFrom);
+            var inputVRTo = validateVRValue(txtVRTo);
 
             if (inputVRFrom && inputVRTo) {
                 if (inputVRFrom > inputVRTo) {
@@ -109,6 +108,9 @@ function CurrentVRCriteria() {
                     CMS.showTipsyError(txtVRTo, resources.invalidValueError, "nw");
                     return;
                 }
+
+                CMS.clearTipsyError(txtVRFrom);
+                CMS.clearTipsyError(txtVRTo);
 
                 return {
                     VRFrom: inputVRFrom,

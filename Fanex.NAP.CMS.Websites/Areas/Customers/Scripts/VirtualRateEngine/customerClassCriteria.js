@@ -46,6 +46,10 @@ function CustomerClassCriteria(conditionList, customerClassList) {
         ddlCustomerClass.multiSelect(action);
     }
 
+    function isEnableCriteria() {
+        return chkEnableCustomerClassCriteria.is(":checked");
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -59,9 +63,11 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     };
 
     this.getFormData = function () {
-        return {
-            customerClass: ddlCustomerClass.getCheckedItems().join(","),
-            condition: ddlCustomerClassCondition.val()
-        };
+        if (isEnableCriteria()) {
+            return {
+                customerClass: ddlCustomerClass.getCheckedItems().join(","),
+                condition: ddlCustomerClassCondition.val()
+            };
+        }
     };
 }

@@ -63,6 +63,10 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
         ddlSite.multiSelect(action);
     }
 
+    function isEnableCriteria() {
+        return chkEnableSiteTypeCriteria.is(":checked");
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -76,10 +80,12 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
     };
 
     this.getFormData = function () {
-        return {
-            siteType: ddlSiteType.val(),
-            site: ddlSite.getCheckedItems().join(","),
-            condition: ddlSiteCondition.val()
-        };
+        if (isEnableCriteria()) {
+            return {
+                siteType: ddlSiteType.val(),
+                site: ddlSite.getCheckedItems().join(","),
+                condition: ddlSiteCondition.val()
+            };
+        }
     };
 }

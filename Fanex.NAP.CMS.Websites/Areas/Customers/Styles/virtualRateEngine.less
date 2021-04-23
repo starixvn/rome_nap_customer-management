@@ -154,11 +154,37 @@
         }
 
         .ddl-second {
-            width: calc(~"100% - 108px");
+            //width: calc(~"100% - 108px");
+            width: 407px;
+            position: fixed;
+            z-index: 9990;
 
             .ui-multiselect-widget {
                 width: calc(~"100% - 3px") !important;
             }
+            &.site-type-box {
+                z-index: 9998;
+            }
+            &.class-customer-box {
+                z-index: 9997;
+            }
+            &.sport-box {
+                z-index: 9996;
+            }
+            &.bet-type-box {
+                z-index: 9995;
+            }
+            &.league-box-1 {
+                z-index: 9994;
+            }
+            &.league-box-2 {
+                z-index: 9993;
+            }
+            &.ticket-box {
+                z-index: 9992;
+            }
+
+
         }
 
         .combobox-autocomplete {

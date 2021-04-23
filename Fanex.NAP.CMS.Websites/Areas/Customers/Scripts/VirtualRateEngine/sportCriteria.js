@@ -14,7 +14,7 @@ function SportCriteria($selector, notInList, sportList) {
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-sportNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second sport-box">
                     <div id="ddl-sport"></div>
                 </div>
             </div>

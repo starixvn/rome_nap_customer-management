@@ -14,7 +14,7 @@ function TicketDoWCriteria($selector, notInList, dowList) {
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-ticketDoWNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second ticket-box">
                     <div id="ddl-ticketDoW"></div>
                 </div>
             </div>

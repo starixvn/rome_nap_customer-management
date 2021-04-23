@@ -14,7 +14,7 @@ function LeagueGroupCriteria($selector, notInList, leagueGroupList, leagueList) 
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueGroupNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second league-box-1">
                     <div id="ddl-leagueGroup"></div>
                 </div>
             </div>
@@ -28,7 +28,7 @@ function LeagueGroupCriteria($selector, notInList, leagueGroupList, leagueList) 
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second league-box-2">
                     <div id="ddl-league"></div>
                 </div>
             </div>

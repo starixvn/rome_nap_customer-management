@@ -14,7 +14,7 @@ function BetTypeCriteria($selector, notInList, betTypeList) {
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-betTypeNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second bet-type-box">
                     <div id="ddl-betType"></div>
                 </div>
             </div>

@@ -23,7 +23,7 @@ function SiteTypeCriteria($selector, siteTypeList, notInList, siteList) {
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-siteNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second site-type-box">
                     <div id="ddl-site"></div>
                 </div>
             </div>

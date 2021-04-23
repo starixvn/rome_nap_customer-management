@@ -14,7 +14,7 @@ function CustomerClassCriteria($selector, notInList, customerClassList) {
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-customerClasNotIn"></select>
                 </div>
-                <div class="ddl-second">
+                <div class="ddl-second class-customer-box">
                     <div id="ddl-customerClass"></div>
                 </div>
             </div>

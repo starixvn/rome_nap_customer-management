@@ -262,9 +262,15 @@
     }
 }
 
-.ui-multiselect-widget input[type='text'].ui-multiselect-state-default {
-    height: 21px !important;
-    cursor: pointer;
-    width: calc(~"100% - 18px") !important;
-    margin-right: 0;
+.ui-multiselect-widget {
+    input[type='text'].ui-multiselect-state-default {
+        height: 21px !important;
+        cursor: pointer;
+        width: calc(~"100% - 18px") !important;
+        margin-right: 0;
+    }
+
+    &.ui-multiselect-state-disabled {
+        background-color: #f3efee;
+    }
 }

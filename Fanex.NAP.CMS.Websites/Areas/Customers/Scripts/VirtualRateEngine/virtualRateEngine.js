@@ -120,6 +120,7 @@
             var form = formAddNewRule.clone();
             CMS.modal("Add New Rule", form, {
                 height: "auto",
+                width: "600px",
                 resizable: false,
                 position: {
                     my: "center top",

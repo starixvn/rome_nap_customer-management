@@ -11,7 +11,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
                 <span class="note-info-message" id="span-noteSiteTypeCriteria"></span>
             </div>
             <div class="detail-rule">
-                <select class="combobox-autocomplete width-60" id="ddl-siteType"></select>
+                <select class="combobox-autocomplete" id="ddl-siteType"></select>
             </div>
         </div>
         <div class="form-row-sub">

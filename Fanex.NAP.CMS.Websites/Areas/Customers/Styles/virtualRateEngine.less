@@ -92,12 +92,21 @@
     margin-bottom: 8px;
 }
 
+#dialog-popup {
+    width: calc(~"100% - 24px") !important;
+
+    #form-addNewRule {
+        width: 100%;
+    }
+}
+
+
 .form .form-row {
     min-height: unset;
 
     .edit-field {
         #txt-ruleTitle {
-            width: 100%;
+            width: calc(~"100% - 6px");
         }
 
         .priority-note {
@@ -115,6 +124,7 @@
 
         .edit-field {
             display: flex;
+
             .ui-combobox {
                 width: unset;
             }
@@ -155,9 +165,10 @@
 
         .ddl-second {
             //width: calc(~"100% - 108px");
-            width: 407px;
+            width: 200px;
             position: fixed;
             z-index: 9990;
+            margin-left: 109px;
 
             .ui-multiselect-widget {
                 width: calc(~"100% - 3px") !important;

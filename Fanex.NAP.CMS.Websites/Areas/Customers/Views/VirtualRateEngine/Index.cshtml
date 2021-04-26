@@ -13,16 +13,20 @@
 }
 @section Foot
 {
-    <script type="text/javascript">
+<script type="text/javascript">
         var resources = {
             requiredFieldError: "@Labels.ThisFieldIsRequired",
             invalidValueError: "@Labels.InvalidValueError",
+            priorityOrderValueOutOfRangeError: "@VirtualRateEngineResource.PriorityOrderValueOutOfRangeError",
             vrValueOutOfRangeError: "@VirtualRateEngineResource.VirtualRateValueOutOfRangeError",
-            fromGreaterThanToError: "@VirtualRateEngineResource.FromGreaterThanToError"
-
+            VRFromGreaterThanVRToError: "@VirtualRateEngineResource.VRFromGreaterThanVRToError",
+            noneSelectedOptionError: "@VirtualRateEngineResource.NoneSelectedOptionError",
+            invalidTimeFormat: "@VirtualRateEngineResource.InvalidTimeFormat",
+            fromStakeGreaterThanToStake: "@VirtualRateEngineResource.FromStakeGreaterThanToStake",
+            fromTimeGreaterThanToTime: "@VirtualRateEngineResource.FromTimeGreaterThanToTime"
         };
         var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
-    </script>
+</script>
     @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
 }
 @section Headline

@@ -50,6 +50,21 @@ function CustomerClassCriteria(conditionList, customerClassList) {
         return chkEnableCustomerClassCriteria.is(":checked");
     }
 
+    function validateFromData() {
+        var customerClass = ddlCustomerClass.multiSelect("getCheckedItems").join(",");
+
+        if (!customerClass.length) {
+            CMS.showTipsyError(ddlCustomerClass, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlCustomerClass);
+        return {
+            customerClass: customerClass,
+            customerClassCondition: ddlCustomerClassCondition.val()
+        };
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -63,11 +78,8 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     };
 
     this.getFormData = function () {
-        if (isEnableCriteria()) {
-            return {
-                customerClass: ddlCustomerClass.multiSelect("getCheckedItems").join(","),
-                condition: ddlCustomerClassCondition.val()
-            };
+        if (isEnableCriteria) {
+            return validateFromData();
         }
     };
 }

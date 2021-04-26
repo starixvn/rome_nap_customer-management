@@ -123,11 +123,20 @@
   <data name="FixedValue" xml:space="preserve">
     <value>Fixed Value</value>
   </data>
-  <data name="FromGreaterThanToError" xml:space="preserve">
-    <value>From must be less than or equal to To.</value>
+  <data name="FromStakeGreaterThanToStake" xml:space="preserve">
+    <value>From Stake must be less than or equal to To Stake</value>
+  </data>
+  <data name="FromTimeGreaterThanToTime" xml:space="preserve">
+    <value>From Time must be less than or equal to To Time</value>
   </data>
   <data name="In" xml:space="preserve">
     <value>in</value>
+  </data>
+  <data name="InvalidTimeFormat" xml:space="preserve">
+    <value>Invalid time format</value>
+  </data>
+  <data name="NoneSelectedOptionError" xml:space="preserve">
+    <value>Please select at least one option</value>
   </data>
   <data name="NonLive" xml:space="preserve">
     <value>Non Live</value>
@@ -135,7 +144,13 @@
   <data name="NotIn" xml:space="preserve">
     <value>not in</value>
   </data>
+  <data name="PriorityOrderValueOutOfRangeError" xml:space="preserve">
+    <value>Value must be in this range [1;10,000]</value>
+  </data>
   <data name="VirtualRateValueOutOfRangeError" xml:space="preserve">
-    <value>Value must be in this range [-99;200].</value>
+    <value>Value must be in this range [-99;200]</value>
+  </data>
+  <data name="VRFromGreaterThanVRToError" xml:space="preserve">
+    <value>Virtual Rate From must be less than or equal to Virtual Rate To</value>
   </data>
 </root>

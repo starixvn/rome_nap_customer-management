@@ -79,11 +79,20 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From must be less than or equal to To..
+        ///   Looks up a localized string similar to From Stake must be less than or equal to To Stake.
         /// </summary>
-        public static string FromGreaterThanToError {
+        public static string FromStakeGreaterThanToStake {
             get {
-                return ResourceManager.GetString("FromGreaterThanToError", resourceCulture);
+                return ResourceManager.GetString("FromStakeGreaterThanToStake", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From Time must be less than or equal to To Time.
+        /// </summary>
+        public static string FromTimeGreaterThanToTime {
+            get {
+                return ResourceManager.GetString("FromTimeGreaterThanToTime", resourceCulture);
             }
         }
         
@@ -93,6 +102,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string In {
             get {
                 return ResourceManager.GetString("In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid time format.
+        /// </summary>
+        public static string InvalidTimeFormat {
+            get {
+                return ResourceManager.GetString("InvalidTimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select at least one option.
+        /// </summary>
+        public static string NoneSelectedOptionError {
+            get {
+                return ResourceManager.GetString("NoneSelectedOptionError", resourceCulture);
             }
         }
         
@@ -115,11 +142,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value must be in this range [-99;200]..
+        ///   Looks up a localized string similar to Value must be in this range [1;10,000].
+        /// </summary>
+        public static string PriorityOrderValueOutOfRangeError {
+            get {
+                return ResourceManager.GetString("PriorityOrderValueOutOfRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value must be in this range [-99;200].
         /// </summary>
         public static string VirtualRateValueOutOfRangeError {
             get {
                 return ResourceManager.GetString("VirtualRateValueOutOfRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate From must be less than or equal to Virtual Rate To.
+        /// </summary>
+        public static string VRFromGreaterThanVRToError {
+            get {
+                return ResourceManager.GetString("VRFromGreaterThanVRToError", resourceCulture);
             }
         }
     }

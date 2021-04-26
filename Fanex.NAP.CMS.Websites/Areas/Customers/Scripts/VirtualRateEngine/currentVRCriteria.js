@@ -66,43 +66,33 @@ function CurrentVRCriteria() {
         var inputVRFrom = validateVRValue(txtVRFrom);
         var inputVRTo = validateVRValue(txtVRTo);
 
-        if (inputVRFrom && inputVRTo) {
-            if (inputVRFrom > inputVRTo) {
-                CMS.showTipsyError(txtVRFrom, resources.fromGreaterThanToError, "nw");
-                return;
-            }
-
-            CMS.clearTipsyError(txtVRFrom);
-            CMS.clearTipsyError(txtVRTo);
-
-            return {
-                VRFrom: inputVRFrom,
-                VRTo: inputVRTo
-            };
+        if (typeof inputVRFrom === "undefined" || typeof inputVRTo === "undefined") {
+            return { isInvalid: true };
         }
+
+        if (inputVRFrom > inputVRTo) {
+            CMS.showTipsyError(txtVRFrom, resources.VRFromGreaterThanVRToError, "nw");
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(txtVRFrom);
+        CMS.clearTipsyError(txtVRTo);
+
+        return {
+            VRFrom: inputVRFrom,
+            VRTo: inputVRTo
+        };
     }
 
     function validateVRValue(txtNumber) {
-        var inputNumber = $.trim(txtNumber.val());
+        var inputNumber = virtualRateEngineHelper.validateNumber(txtNumber);
 
-        if (inputNumber.length === 0) {
-            CMS.showTipsyError(txtNumber, resources.requiredFieldError, "nw");
-            return;
-        }
-
-        if (!CMS.isNumeric(inputNumber)) {
-            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
-            return;
-        }
-
-        var number = parseInt(inputNumber.replace(/,/g, ""));
-
-        if (number < -99 || number > 200) {
+        if (inputNumber && (inputNumber < -99 || inputNumber > 200)) {
             CMS.showTipsyError(txtNumber, resources.vrValueOutOfRangeError, "nw");
             return;
         }
 
-        return number;
+        return inputNumber;
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -116,6 +106,8 @@ function CurrentVRCriteria() {
         chkEnableCurrentVRCriteria.remove();
         bindEvents();
     };
+
+
 
     this.getFormData = function () {
         if (isEnableCriteria()) {

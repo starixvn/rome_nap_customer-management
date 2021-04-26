@@ -21,10 +21,10 @@ function SportCriteria(conditionList, sportList) {
         </div>`
     var chkEnableSportCriteria, ddlSportCondition, ddlSport;
 
-    function renderHtml(criteriaContainer) {
+    function renderHtml(criteriaContainer, selectedSportList) {
         criteriaContainer.append(htmlTemplate);
         ddlSportCondition = virtualRateEngineHelper.renderCombobox("ddl-sportCondition", conditionList);
-        ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList);
+        ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList);
         chkEnableSportCriteria = $("#chk-enableSportCriteria");
     }
 
@@ -50,24 +50,36 @@ function SportCriteria(conditionList, sportList) {
         return chkEnableSportCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
+    function validateFromData() {
+        var sportType = ddlSport.multiSelect("getCheckedItems").join(",");
+
+        if (!sportType.length) {
+            CMS.showTipsyError(ddlSport, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlSport);
+        return {
+            sportType: sportType,
+            sportTypeCondition: ddlSportCondition.val()
+        };
+    }
+
+    this.initAddNew = function (criteriaContainer, selectedSportList) {
+        renderHtml(criteriaContainer, selectedSportList);
         enableCriteria(false);
         bindEvents();
     };
 
     this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
+        renderHtml(criteriaContainer, selectedSportList);
         chkEnableSportCriteria.remove();
         bindEvents();
     };
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            return {
-                sport: ddlSport.multiSelect("getCheckedItems").join(","),
-                condition: ddlSportCondition.val()
-            };
+            return validateFromData();
         }
     };
 }

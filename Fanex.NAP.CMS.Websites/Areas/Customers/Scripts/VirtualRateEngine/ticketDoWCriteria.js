@@ -21,10 +21,10 @@ function TicketDoWCriteria(conditionList, dowList) {
         </div>`
     var chkEnableTicketDoWCriteria, ddlTicketDoWCondition, ddlTicketDoW;
 
-    function renderHtml(criteriaContainer) {
+    function renderHtml(criteriaContainer, selectedDoWList) {
         criteriaContainer.append(htmlTemplate);
         ddlTicketDoWCondition = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList);
-        ddlTicketDoW = virtualRateEngineHelper.renderMultiSelect("ddl-ticketDoW", dowList);
+        ddlTicketDoW = virtualRateEngineHelper.renderMultiSelect("ddl-ticketDoW", dowList, selectedDoWList);
         chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria");
     }
 
@@ -50,8 +50,23 @@ function TicketDoWCriteria(conditionList, dowList) {
         return chkEnableTicketDoWCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
+    function validateFromData() {
+        var dow = ddlTicketDoW.multiSelect("getCheckedItems").join(",");
+
+        if (!dow.length) {
+            CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlTicketDoW);
+        return {
+            dateOfWeek: dow,
+            dateOfWeekCondition: ddlTicketDoWCondition.val()
+        };
+    }
+
+    this.initAddNew = function (criteriaContainer, selectedDoWList) {
+        renderHtml(criteriaContainer, selectedDoWList);
         enableCriteria(false);
         bindEvents();
     };
@@ -64,10 +79,7 @@ function TicketDoWCriteria(conditionList, dowList) {
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            return {
-                dateOfWeek: ddlTicketDoW.multiSelect("getCheckedItems").join(","),
-                condition: ddlSiteCondition.val()
-            };
+            return validateFromData();
         }
     };
 }

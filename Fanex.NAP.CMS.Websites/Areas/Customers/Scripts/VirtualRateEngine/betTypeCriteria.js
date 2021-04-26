@@ -21,10 +21,10 @@ function BetTypeCriteria(conditionList, betTypeList) {
         </div>`
     var chkEnableBetTypeCriteria, ddlBetTypeCondition, ddlBetType;
 
-    function renderHtml(criteriaContainer) {
+    function renderHtml(criteriaContainer, selectedBetTypeList) {
         criteriaContainer.append(htmlTemplate);
         ddlBetTypeCondition = virtualRateEngineHelper.renderCombobox("ddl-betTypeCondition", conditionList);
-        ddlBetType = virtualRateEngineHelper.renderMultiSelect("ddl-betType", betTypeList);
+        ddlBetType = virtualRateEngineHelper.renderMultiSelect("ddl-betType", betTypeList, selectedBetTypeList);
         chkEnableBetTypeCriteria = $("#chk-enableBetTypeCriteria");
     }
 
@@ -50,8 +50,23 @@ function BetTypeCriteria(conditionList, betTypeList) {
         return chkEnableBetTypeCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
+    function validateFromData() {
+        var betType = ddlBetType.multiSelect("getCheckedItems").join(",");
+
+        if (!betType.length) {
+            CMS.showTipsyError(ddlBetType, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlBetType);
+        return {
+            betType: betType,
+            betTypeCondition: ddlBetTypeCondition.val()
+        };
+    }
+
+    this.initAddNew = function (criteriaContainer, selectedBetTypeList) {
+        renderHtml(criteriaContainer, selectedBetTypeList);
         enableCriteria(false);
         bindEvents();
     };
@@ -64,10 +79,7 @@ function BetTypeCriteria(conditionList, betTypeList) {
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            return {
-                betType: ddlBetType.multiSelect("getCheckedItems").join(","),
-                condition: ddlBetTypeCondition.val()
-            };
+            return validateFromData();
         }
     };
 }

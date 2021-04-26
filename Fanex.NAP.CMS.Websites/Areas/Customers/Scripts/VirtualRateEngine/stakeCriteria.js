@@ -61,39 +61,25 @@ function StakeCriteria() {
     }
 
     function validateFormData() {
-        var inputStakeFrom = validateStakeValue(txtStakeFrom);
-        var inputStakeTo = validateStakeValue(txtStakeTo);
+        var inputStakeFrom = virtualRateEngineHelper.validateNumber(txtStakeFrom);
+        var inputStakeTo = virtualRateEngineHelper.validateNumber(txtStakeTo);
 
-        if (inputStakeFrom && inputStakeTo) {
-            if (inputStakeFrom > inputStakeTo) {
-                CMS.showTipsyError(inputStakeFrom, resources.fromGreaterThanToError, "nw");
-                return;
-            }
-
-            CMS.clearTipsyError(txtStakeFrom);
-            CMS.clearTipsyError(txtStakeTo);
-
-            return {
-                stakeFrom: inputStakeFrom,
-                stakeTo: inputStakeTo
-            };
-        }
-    }
-
-    function validateStakeValue(txtNumber) {
-        var inputNumber = $.trim(txtNumber.val());
-
-        if (inputNumber.length === 0) {
-            CMS.showTipsyError(txtNumber, resources.requiredFieldError, "nw");
-            return;
+        if (typeof inputStakeFrom === "undefined" || typeof inputStakeTo === "undefined") {
+            return { isInvalid: true };
         }
 
-        if (!CMS.isNumeric(inputNumber)) {
-            CMS.showTipsyError(txtNumber, resources.invalidValueError, "nw");
-            return;
+        if (inputStakeFrom > inputStakeTo) {
+            CMS.showTipsyError(txtStakeFrom, resources.fromStakeGreaterThanToStake, "nw");
+            return { isInvalid: true };
         }
 
-        return parseInt(inputNumber.replace(/,/g, ""));
+        CMS.clearTipsyError(txtStakeFrom);
+        CMS.clearTipsyError(txtStakeTo);
+
+        return {
+            stakeFrom: inputStakeFrom,
+            stakeTo: inputStakeTo
+        };
     }
 
     this.initAddNew = function (criteriaContainer) {

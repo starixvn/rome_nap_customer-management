@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
 using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
+using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
 using Fanex.Nap.CMS.Customers.Resources;
 using Fanex.Nap.CMS.Infrastructure.Models;
 
 namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
 {
-    public class VirtualRateEngineIndexViewModel
+    public class VREngineIndexViewModel
     {
-        public VirtualRateEngineIndexViewModel(
+        public VREngineIndexViewModel(
             bool hasHostVirtualRateEnginePermission,
             bool hasHostFullPermission,
             IEnumerable<IdNameModel> creditSites,
@@ -18,8 +19,7 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
             IEnumerable<IdNameModel> sports,
             IEnumerable<IdNameModel> betTypes,
             IEnumerable<IdNameModel> leagueGroups,
-            IEnumerable<IdNameModel> leagues,
-            IEnumerable<IdNameModel> betfromList)
+            IEnumerable<VREngineBetfrom> betfromList)
         {
             HasHostVirtualRateEnginePermission = hasHostVirtualRateEnginePermission;
             HasHostFullPermission = hasHostFullPermission;
@@ -29,7 +29,6 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
             Sports = sports;
             BetTypes = betTypes;
             LeagueGroups = leagueGroups;
-            Leagues = leagues;
             BetfromList = betfromList;
         }
 
@@ -40,8 +39,8 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
         public IEnumerable<IdNameModel> Conditions
             => new[]
             {
-                new IdNameModel { Id = ConditionConst.In, Name = VirtualRateEngineResource.In },
-                new IdNameModel { Id = ConditionConst.NotIn, Name = VirtualRateEngineResource.NotIn }
+                new IdNameModel { Id = ConditionConst.In, Name = VREngineResource.In },
+                new IdNameModel { Id = ConditionConst.NotIn, Name = VREngineResource.NotIn }
             };
 
         public IEnumerable<IdNameModel> SiteTypes
@@ -69,36 +68,34 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
 
         public IEnumerable<IdNameModel> BetTypes { get; }
 
-        public IEnumerable<IdNameModel> BetfromList { get; }
-
         public IEnumerable<IdNameModel> Events
             => new[]
             {
                 BuildIdNameModel(EventConst.Live, nameof(EventConst.Live)),
-                BuildIdNameModel(EventConst.NonLive, VirtualRateEngineResource.NonLive)
+                BuildIdNameModel(EventConst.NonLive, VREngineResource.NonLive)
             };
 
         public IEnumerable<IdNameModel> LeagueGroups { get; }
 
-        public IEnumerable<IdNameModel> Leagues { get; }
+        public IEnumerable<VREngineBetfrom> BetfromList { get; }
 
         public IEnumerable<IdNameModel> DateOfWeeks
              => new[]
             {
-                BuildIdNameModel((byte)DayOfWeek.Monday, nameof(DayOfWeek.Monday)),
-                BuildIdNameModel((byte)DayOfWeek.Tuesday, nameof(DayOfWeek.Tuesday)),
-                BuildIdNameModel((byte)DayOfWeek.Wednesday, nameof(DayOfWeek.Wednesday)),
-                BuildIdNameModel((byte)DayOfWeek.Thursday, nameof(DayOfWeek.Thursday)),
-                BuildIdNameModel((byte)DayOfWeek.Friday, nameof(DayOfWeek.Friday)),
-                BuildIdNameModel((byte)DayOfWeek.Saturday, nameof(DayOfWeek.Saturday)),
-                BuildIdNameModel((byte)DayOfWeek.Sunday, nameof(DayOfWeek.Sunday))
+                BuildIdNameModel((int)DayOfWeek.Monday + 1, nameof(DayOfWeek.Monday)),
+                BuildIdNameModel((int)DayOfWeek.Tuesday + 1, nameof(DayOfWeek.Tuesday)),
+                BuildIdNameModel((int)DayOfWeek.Wednesday + 1, nameof(DayOfWeek.Wednesday)),
+                BuildIdNameModel((int)DayOfWeek.Thursday + 1, nameof(DayOfWeek.Thursday)),
+                BuildIdNameModel((int)DayOfWeek.Friday + 1, nameof(DayOfWeek.Friday)),
+                BuildIdNameModel((int)DayOfWeek.Saturday + 1, nameof(DayOfWeek.Saturday)),
+                BuildIdNameModel((int)DayOfWeek.Sunday + 1, nameof(DayOfWeek.Sunday))
             };
 
         public IEnumerable<IdNameModel> Adjustments
             => new[]
             {
-                BuildIdNameModel(AdjustmentConst.AdjustCurrentVirtualRate, VirtualRateEngineResource.AdjustCurrentVirtualRate),
-                BuildIdNameModel(AdjustmentConst.FixedValue, VirtualRateEngineResource.FixedValue)
+                BuildIdNameModel(AdjustmentConst.AdjustCurrentVirtualRate, VREngineResource.AdjustCurrentVirtualRate),
+                BuildIdNameModel(AdjustmentConst.FixedValue, VREngineResource.FixedValue)
             };
 
         public IEnumerable<IdNameModel> Actives

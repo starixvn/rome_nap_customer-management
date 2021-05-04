@@ -1,5 +1,5 @@
 ﻿"use strict";
-function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
+function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeSiteList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -11,7 +11,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
                 <span class="note-info-message" id="span-noteSiteTypeCriteria"></span>
             </div>
             <div class="detail-rule">
-                <select class="combobox-autocomplete" id="ddl-siteType"></select>
+                <select class="combobox-autocomplete width-60" id="ddl-siteType"></select>
             </div>
         </div>
         <div class="form-row-sub">
@@ -34,7 +34,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
         criteriaContainer.append(htmlTemplate);
         ddlSiteType = virtualRateEngineHelper.renderCombobox("ddl-siteType", siteTypeList);
         ddlSiteCondition = virtualRateEngineHelper.renderCombobox("ddl-siteCondition", conditionList);
-        ddlSite = virtualRateEngineHelper.renderMultiSelect("ddl-site", siteList);
+        ddlSite = virtualRateEngineHelper.renderMultiSelect("ddl-site", [].concat(creditSiteList, licenseeSiteList));
         chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria");
     }
 
@@ -52,7 +52,14 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
         ddlSiteType
             .off("change")
             .on("change", function () {
-                alert(this.value);
+                var siteType = this.value;
+                if (siteType === "1") { // Credit
+                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, creditSiteList);
+                } else if (siteType === "2") { // Licensee
+                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, licenseeSiteList);
+                } else { // All
+                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, [].concat(creditSiteList, licenseeSiteList));
+                }
             });
     }
 
@@ -65,6 +72,22 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
 
     function isEnableCriteria() {
         return chkEnableSiteTypeCriteria.is(":checked");
+    }
+
+    function validateFromData() {
+        var site = ddlSite.multiSelect("getCheckedItems").join(",");
+
+        if (!site.length) {
+            CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlSite);
+        return {
+            siteType: ddlSiteType.val(),
+            site: site,
+            siteCondition: ddlSiteCondition.val()
+        };
     }
 
     this.initAddNew = function (criteriaContainer) {
@@ -81,11 +104,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, siteList) {
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            return {
-                siteType: ddlSiteType.val(),
-                site: ddlSite.multiSelect("getCheckedItems").join(","),
-                condition: ddlSiteCondition.val()
-            };
+            return validateFromData();
         }
     };
 }

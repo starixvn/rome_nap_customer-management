@@ -1022,6 +1022,7 @@
     <Content Include="Areas\Customers\Styles\whitelistBigCreditMembers.less" />
     <Content Include="Areas\Customers\Styles\virtualRateEngine.less" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\VirtualRateEngine\_AddNewRule.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

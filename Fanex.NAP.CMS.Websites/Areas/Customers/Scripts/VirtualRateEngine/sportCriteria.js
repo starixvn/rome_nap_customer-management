@@ -24,7 +24,7 @@ function SportCriteria(conditionList, sportList) {
     function renderHtml(criteriaContainer, selectedSportList) {
         criteriaContainer.append(htmlTemplate);
         ddlSportCondition = virtualRateEngineHelper.renderCombobox("ddl-sportCondition", conditionList);
-        ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList);
+        ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList, 260);
         chkEnableSportCriteria = $("#chk-enableSportCriteria");
     }
 

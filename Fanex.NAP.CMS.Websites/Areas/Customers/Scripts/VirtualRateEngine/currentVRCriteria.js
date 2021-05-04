@@ -107,8 +107,6 @@ function CurrentVRCriteria() {
         bindEvents();
     };
 
-
-
     this.getFormData = function () {
         if (isEnableCriteria()) {
             return validateFormData();

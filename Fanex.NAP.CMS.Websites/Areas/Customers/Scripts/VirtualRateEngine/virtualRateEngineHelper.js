@@ -21,7 +21,7 @@
         return $("#" + id).html(html.join("")).combobox();
     }
 
-    function renderMultiSelect(id, dataList, selectedList) {
+    function renderMultiSelect(id, dataList, selectedList, maxHeight) {
         var datum,
             selectedObject,
             data = [],
@@ -45,7 +45,9 @@
 
         var selector = "#" + id;
         $(selector).multiSelect({
+            showTooltip: false,
             shadow: true,
+            maxHeight: maxHeight || 350,
             isCheckAll: isCheckAll,
             showFooter: false,
             showFilter: true,
@@ -55,6 +57,34 @@
         });
 
         return $(selector);
+    }
+
+    function updateMultiSelect($ddl, dataList) {
+        var datum,
+            data = [],
+            id = $ddl.attr("id");
+        for (var i = 0, max = dataList.length; i < max; i++) {
+            datum = dataList[i];
+            data.push({
+                Id: id + "-" + datum.Id,
+                Value: datum.Id,
+                Text: datum.Name,
+                Checked: true,
+                Enable: true
+            });
+        }
+
+        $ddl.multiSelect("updateItems", {
+            shadow: true,
+            isCheckAll: true,
+            showFooter: false,
+            showFilter: true,
+            checkAllText: "All",
+            tooltipNoItem: "Please select at least one option",
+            listData: data
+        });
+
+        return $("#" + id);
     }
 
     function toObject(array) {
@@ -86,6 +116,7 @@
     return {
         renderCombobox: renderCombobox,
         renderMultiSelect: renderMultiSelect,
+        updateMultiSelect: updateMultiSelect,
         validateNumber: validateNumber
     };
 })(jQuery);

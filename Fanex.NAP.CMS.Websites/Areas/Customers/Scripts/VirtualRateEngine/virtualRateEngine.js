@@ -4,14 +4,14 @@
 
     var txtRuleTitle;
     var txtPriorityOrder;
-    var siteTypeCriteria = new SiteTypeCriteria(vm.SiteTypes, vm.Conditions, vm.CreditSites.concat(vm.LicenseeSites));
+    var siteTypeCriteria = new SiteTypeCriteria(vm.SiteTypes, vm.Conditions, vm.CreditSites, vm.LicenseeSites);
     var customerClassCriteria = new CustomerClassCriteria(vm.Conditions, vm.CustomerClasses);
     var currentVRCriteria = new CurrentVRCriteria();
     var currentVRStatusCriteria = new CurrentVRStatusCriteria(vm.CurrentVRStatus);
     var sportCriteria = new SportCriteria(vm.Conditions, vm.Sports);
     var betTypeCriteria = new BetTypeCriteria(vm.Conditions, vm.BetTypes);
     var eventCriteria = new EventCriteria(vm.Events);
-    var leagueGroupCriteria = new LeagueGroupCriteria(vm.Conditions, vm.LeagueGroups, vm.Leagues);
+    var leagueGroupCriteria = new LeagueGroupCriteria(vm.Conditions, vm.LeagueGroups);
     var betfromCriteria = new BetfromCriteria(vm.BetfromList);
     var stakeCriteria = new StakeCriteria();
     var ticketDoWCriteria = new TicketDoWCriteria(vm.Conditions, vm.DateOfWeeks);
@@ -28,17 +28,17 @@
             .on("keypress", CMS.forceNumberInput);
 
         var $criteriaContainer = form.find("#div-criteriaContainer");
-        //siteTypeCriteria.initAddNew($criteriaContainer);
+        siteTypeCriteria.initAddNew($criteriaContainer);
         customerClassCriteria.initAddNew($criteriaContainer);
         currentVRCriteria.initAddNew($criteriaContainer);
         currentVRStatusCriteria.initAddNew($criteriaContainer);
-        sportCriteria.initAddNew($criteriaContainer, [1]);
-        betTypeCriteria.initAddNew($criteriaContainer, [1]);
+        sportCriteria.initAddNew($criteriaContainer);
+        betTypeCriteria.initAddNew($criteriaContainer);
         eventCriteria.initAddNew($criteriaContainer);
-        //leagueGroupCriteria.initAddNew($criteriaContainer);
+        leagueGroupCriteria.initAddNew($criteriaContainer);
         betfromCriteria.initAddNew($criteriaContainer);
         stakeCriteria.initAddNew($criteriaContainer);
-        ticketDoWCriteria.initAddNew($criteriaContainer, [1]);
+        ticketDoWCriteria.initAddNew($criteriaContainer, [2]);
         ticketTimeCriteria.initAddNew($criteriaContainer);
 
         ddlAdjustment = virtualRateEngineHelper.renderCombobox("ddl-adjustment", vm.Adjustments);
@@ -57,79 +57,104 @@
         var buttonAddNewRule = form.find("#btn-addNewRule");
         buttonAddNewRule
             .off("click")
-            .on("click", function (e) {
-                validateAddNewRuleFormData(form);
-                //addNewRuleHandler();
+            .on("click", function () {
+                addNewRuleHandler(form);
             });
     }
 
+    function addNewRuleHandler(form) {
+        var formData = validateAddNewRuleFormData(form);
+        formData && CMS.callAjax(
+            this,
+            CMS.resolveRootUrl("Customers/VirtualRateEngine/AddNewRule"),
+            formData,
+            function (jsonString) {
+                var result = JSON.parse(jsonString);
+                if (result.Code) {
+                    CMS.showInlineErrorMsg(result.Message, form.find("#divErrorSuccessMsg"));
+                } else {
+                    CMS.showInlineSuccessMsg(result.Message, form.find("#divErrorSuccessMsg"), true, function () {
+                        //window.location.href = window.location.href;
+                    });
+                }
+            }
+        );
+    }
+
     function validateAddNewRuleFormData() {
-        var priority = validatePriorityOrder();
-        if (!priority) {
-            return;
+        var isValid = true;
+
+        var priorityOrder = validatePriorityOrder();
+        if (!priorityOrder) {
+            isValid = false;
+        }
+
+        var siteTypeFormData = siteTypeCriteria.getFormData();
+        if (siteTypeFormData && siteTypeFormData.isInvalid) {
+            isValid = false;
         }
 
         var customerClassFormData = customerClassCriteria.getFormData();
         if (customerClassFormData && customerClassFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var currentVRFormData = currentVRCriteria.getFormData();
         if (currentVRFormData && currentVRFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var sportFormData = sportCriteria.getFormData();
         if (sportFormData && sportFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var betTypeFormData = betTypeCriteria.getFormData();
         if (betTypeFormData && betTypeFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var stakeFormData = stakeCriteria.getFormData();
         if (stakeFormData && stakeFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var ticketDoWFormData = ticketDoWCriteria.getFormData();
         if (ticketDoWFormData && ticketDoWFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var ticketTimeFormData = ticketTimeCriteria.getFormData();
         if (ticketTimeFormData && ticketTimeFormData.isInvalid) {
-            return;
+            isValid = false;
         }
 
         var adjustmentValue = validateAdjustment();
         if (typeof adjustmentValue === "undefined") {
-            return;
+            isValid = false;
         }
 
-        var formData = $.extend(
-            {
-                ruleName: $.trim(txtRuleTitle.val()),
-                priority: priority,
-                adjustmentType: ddlAdjustment.val(),
-                adjustmentValue: adjustmentValue,
-                status: ddlActive.val()
-            },
-            customerClassFormData,
-            currentVRFormData,
-            currentVRStatusCriteria.getFormData(),
-            sportFormData,
-            betTypeFormData,
-            eventCriteria.getFormData(),
-            betfromCriteria.getFormData(),
-            stakeFormData,
-            ticketDoWFormData,
-            ticketTimeFormData);
-        console.dir(formData);
-
-        return formData;
+        if (isValid) {
+            return $.extend(
+                {
+                    ruleTitle: $.trim(txtRuleTitle.val()),
+                    priorityOrder: priorityOrder,
+                    adjustmentType: ddlAdjustment.val(),
+                    adjustmentValue: adjustmentValue,
+                    active: ddlActive.val()
+                },
+                siteTypeFormData,
+                customerClassFormData,
+                currentVRFormData,
+                currentVRStatusCriteria.getFormData(),
+                sportFormData,
+                betTypeFormData,
+                eventCriteria.getFormData(),
+                betfromCriteria.getFormData(),
+                stakeFormData,
+                ticketDoWFormData,
+                ticketTimeFormData);
+        }
     }
 
     function validatePriorityOrder() {
@@ -161,11 +186,6 @@
 
         CMS.clearTipsyError(txtAdjustment);
         return inputAdjustment;
-    }
-
-    function addNewRuleHandler() {
-        currentVRCriteria.getFormData();
-        sportCriteria.getFormData();
     }
 
     $(function () {

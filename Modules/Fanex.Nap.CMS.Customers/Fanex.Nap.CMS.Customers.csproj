@@ -258,6 +258,8 @@
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\SearchCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\UnmarkCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\GetVREngineLeagueCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\GetVREngineMatrixCriteria.cs" />
     <Compile Include="Criteria\WhitelistBigCreditMembers\AddMemberCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
@@ -278,6 +280,8 @@
     <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteModel.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Models\VirtualRateEngine\VREngineBetfrom.cs" />
+    <Compile Include="Models\VirtualRateEngine\VREngineMatrix.cs" />
     <Compile Include="Models\WhitelistBigCreditMembers\AddMemberResult.cs" />
     <Compile Include="Params\LogParam.cs" />
     <Compile Include="Params\PossessStatistics\GetPossessStatisticsParam.cs" />
@@ -297,7 +301,8 @@
     <Compile Include="Repositories\ProblemAccount\ProblemAccountCN88Repository.cs" />
     <Compile Include="Repositories\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\ProblemAccountRepositoryBase.cs" />
-    <Compile Include="Repositories\VirtualRateEngine\VirtualRateEngineRepository.cs" />
+    <Compile Include="Repositories\VirtualRateEngine\IVREngineRepository.cs" />
+    <Compile Include="Repositories\VirtualRateEngine\VREngineRepository.cs" />
     <Compile Include="Repositories\WhitelistBigCreditMembers\IWhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Repositories\WhitelistBigCreditMembers\WhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
@@ -330,10 +335,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProblemAccountResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\VirtualRateEngineResource.Designer.cs">
+    <Compile Include="Resources\VREngineResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VirtualRateEngineResource.resx</DependentUpon>
+      <DependentUpon>VREngineResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\WhitelistBigCreditMembersResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -360,8 +365,8 @@
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteExporter.cs" />
     <Compile Include="Services\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteService.cs" />
     <Compile Include="Services\RobotsExporter.cs" />
-    <Compile Include="Services\VirtualRateEngine\IVirtualRateEngineService.cs" />
-    <Compile Include="Services\VirtualRateEngine\VirtualRateEngineService.cs" />
+    <Compile Include="Services\VirtualRateEngine\IVREngineService.cs" />
+    <Compile Include="Services\VirtualRateEngine\VREngineService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\IWhitelistBigCreditMembersService.cs" />
     <Compile Include="Services\WhitelistBigCreditMembers\WhitelistBigCreditMembersService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
@@ -392,7 +397,8 @@
     <Compile Include="ViewModels\ProblemAccount\SearchViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UnmarkViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UpdateInformingStatusViewModel.cs" />
-    <Compile Include="ViewModels\VirtualRateEngine\VirtualRateEngineIndexViewModel.cs" />
+    <Compile Include="ViewModels\VirtualRateEngine\AddNewRuleViewModel.cs" />
+    <Compile Include="ViewModels\VirtualRateEngine\VREngineIndexViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -430,9 +436,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProblemAccountResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\VirtualRateEngineResource.resx">
+    <EmbeddedResource Include="Resources\VREngineResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>VirtualRateEngineResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>VREngineResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WhitelistBigCreditMembersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -450,10 +456,7 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Criteria\VirtualRateEngine\" />
-    <Folder Include="Models\VirtualRateEngine\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

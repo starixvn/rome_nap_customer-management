@@ -1,10 +1,10 @@
 ﻿@using Newtonsoft.Json;
 @using Fanex.Nap.CMS.Customers.AppStart
 @using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-@model VirtualRateEngineIndexViewModel
+@model VREngineIndexViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Virtual Rate Engine";
+    ViewBag.Title = VREngineResource.VirtualRateEngine;
     var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
 @section Head
@@ -13,20 +13,20 @@
 }
 @section Foot
 {
-<script type="text/javascript">
+    <script type="text/javascript">
         var resources = {
             requiredFieldError: "@Labels.ThisFieldIsRequired",
             invalidValueError: "@Labels.InvalidValueError",
-            priorityOrderValueOutOfRangeError: "@VirtualRateEngineResource.PriorityOrderValueOutOfRangeError",
-            vrValueOutOfRangeError: "@VirtualRateEngineResource.VirtualRateValueOutOfRangeError",
-            VRFromGreaterThanVRToError: "@VirtualRateEngineResource.VRFromGreaterThanVRToError",
-            noneSelectedOptionError: "@VirtualRateEngineResource.NoneSelectedOptionError",
-            invalidTimeFormat: "@VirtualRateEngineResource.InvalidTimeFormat",
-            fromStakeGreaterThanToStake: "@VirtualRateEngineResource.FromStakeGreaterThanToStake",
-            fromTimeGreaterThanToTime: "@VirtualRateEngineResource.FromTimeGreaterThanToTime"
+            priorityOrderValueOutOfRangeError: "@VREngineResource.PriorityOrderValueOutOfRangeError",
+            vrValueOutOfRangeError: "@VREngineResource.VirtualRateValueOutOfRangeError",
+            VRFromGreaterThanVRToError: "@VREngineResource.VRFromGreaterThanVRToError",
+            noneSelectedOptionError: "@VREngineResource.NoneSelectedOptionError",
+            invalidTimeFormat: "@VREngineResource.InvalidTimeFormat",
+            fromStakeGreaterThanToStake: "@VREngineResource.FromStakeGreaterThanToStake",
+            fromTimeGreaterThanToTime: "@VREngineResource.FromTimeGreaterThanToTime"
         };
         var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
-</script>
+    </script>
     @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
 }
 @section Headline
@@ -35,7 +35,10 @@
         <div><span class="curr">@ViewBag.Title</span></div>
     </div>
 }
-<button class="blue-button" id="btnAddNewRule">Add New Rule</button>
+@if (Model.HasHostFullPermission)
+{
+    <button class="blue-button" id="btnAddNewRule">@VREngineResource.AddNewRule</button>
+}
 <div class="table-container mid-margin-top">
     <table class="table table-hover">
         <thead>
@@ -68,51 +71,9 @@
         </tbody>
     </table>
 </div>
-<div id="divPopupContent" class="display-none">
-    <div class="form" id="form-addNewRule">
-        <div class="form-row">
-            <div class="lbl-field">
-                <label for="txt-ruleTitle">Rule Title</label>
-            </div>
-            <div class="edit-field">
-                <input type="text" class="rule-title" id="txt-ruleTitle" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                <label for="txt-priorityOrder">Priority Order</label>
-                <span class="text-red">*</span>
-            </div>
-            <div class="edit-field">
-                <input type="text" class="width-60" id="txt-priorityOrder" autocomplete="off" maxlength="5" />
-                <span class="priority-note">Range: [1;10,000] the lower value, the higher priority.</span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="lbl-field">
-                <label>Criteria</label>
-            </div>
-        </div>
-        <div id="div-criteriaContainer"></div>
-        <div class="form-row adjustment-row">
-            <span class="lbl-field">Adjustment</span>
-            <div class="edit-field">
-                <select class="combobox-autocomplete width-180" id="ddl-adjustment"></select>
-                <div class="active-value">
-                    <input type="text" class="width-60" id="txt-adjustment" autocomplete="off" maxlength="7" />
-                    &nbsp;<span>%</span>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <span class="lbl-field">Active</span>
-            <div class="edit-field">
-                <select class="combobox-autocomplete width-180" id="ddl-active"></select>
-            </div>
-        </div>
-        <div class="button-row">
-            <button type="submit" class="blue-button" id="btn-addNewRule">Submit</button>
-            <button type="button" class="red-button" id="btn-cancel">Cancel</button>
-        </div>
+@if (Model.HasHostFullPermission)
+{
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/Customers/Views/VirtualRateEngine/_AddNewRule.cshtml"); }
     </div>
-</div>
+}

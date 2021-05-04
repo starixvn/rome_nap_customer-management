@@ -69,4 +69,8 @@
       <Mapping DataField="Super_MaxPerMatch" ObjectProperty="SuperMaxPerMatch" />
     </Setting>
   </Function>
+  <Function Name="Virtual Rate Engine">
+    <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

@@ -22,14 +22,14 @@ namespace Fanex.Nap.CMS.Customers.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class VirtualRateEngineResource {
+    public class VREngineResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal VirtualRateEngineResource() {
+        internal VREngineResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.Nap.CMS.Customers.Resources.VirtualRateEngineResource", typeof(VirtualRateEngineResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.Nap.CMS.Customers.Resources.VREngineResource", typeof(VREngineResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,47 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Rule.
+        /// </summary>
+        public static string AddNewRule {
+            get {
+                return ResourceManager.GetString("AddNewRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjust Current Virtual Rate.
         /// </summary>
         public static string AdjustCurrentVirtualRate {
             get {
                 return ResourceManager.GetString("AdjustCurrentVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjustment.
+        /// </summary>
+        public static string Adjustment {
+            get {
+                return ResourceManager.GetString("Adjustment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Criteria.
+        /// </summary>
+        public static string Criteria {
+            get {
+                return ResourceManager.GetString("Criteria", resourceCulture);
             }
         }
         
@@ -142,11 +178,47 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Priority Order.
+        /// </summary>
+        public static string PriorityOrder {
+            get {
+                return ResourceManager.GetString("PriorityOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Range: [1;10,000] the lower value, the higher priority..
+        /// </summary>
+        public static string PriorityOrderRangeHint {
+            get {
+                return ResourceManager.GetString("PriorityOrderRangeHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value must be in this range [1;10,000].
         /// </summary>
         public static string PriorityOrderValueOutOfRangeError {
             get {
                 return ResourceManager.GetString("PriorityOrderValueOutOfRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rule Title.
+        /// </summary>
+        public static string RuleTitle {
+            get {
+                return ResourceManager.GetString("RuleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Virtual Rate Engine.
+        /// </summary>
+        public static string VirtualRateEngine {
+            get {
+                return ResourceManager.GetString("VirtualRateEngine", resourceCulture);
             }
         }
         

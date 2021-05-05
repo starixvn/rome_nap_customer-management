@@ -141,6 +141,11 @@
     align-items: center;
     padding-left: 12px;
 
+    &.league-group-extra {
+        grid-template-rows: 120px;
+        align-items: flex-start;
+    }
+
     .lbl-field {
         display: grid;
         grid-template-columns: 33px 1fr;
@@ -221,6 +226,13 @@
             }
         }
     }
+}
+
+#txt-league {
+    resize: none;
+    height: 114px;
+    max-height: 114px;
+    width: calc(~"100% - 6px");
 }
 
 .form [class*="form"] {

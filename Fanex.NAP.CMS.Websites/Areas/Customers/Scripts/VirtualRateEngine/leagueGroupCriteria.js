@@ -19,7 +19,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 </div>
             </div>
         </div>
-        <div class="form-row-sub">
+        <div class="form-row-sub league-group-extra">
             <div class="lbl-field">
                 <span class="txt-name"League</span>
             </div>

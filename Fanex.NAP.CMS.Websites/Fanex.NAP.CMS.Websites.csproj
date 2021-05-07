@@ -409,6 +409,7 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\betTypeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRStatusCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerCategory.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerClassCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\eventCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\leagueGroupCriteria.js" />
@@ -418,8 +419,8 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketDoWCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketTimeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngine.js" />
-    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngineAddNew.js" />
-    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngineHelper.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\VREngineHelper.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\VREngineHelperRuleList.js" />
     <Content Include="Areas\Customers\Scripts\WhitelistBigCreditMembers\whitelistBigCreditMembers.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
@@ -1023,6 +1024,8 @@
     <Content Include="Areas\Customers\Styles\virtualRateEngine.less" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\Index.cshtml" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\_AddNewRule.cshtml" />
+    <Content Include="Areas\Customers\Views\VirtualRateEngine\CustomerClassHint.cshtml" />
+    <Content Include="Areas\Customers\Styles\customerCategory.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

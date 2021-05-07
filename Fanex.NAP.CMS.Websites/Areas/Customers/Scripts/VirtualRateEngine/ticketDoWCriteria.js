@@ -3,12 +3,12 @@ function TicketDoWCriteria(conditionList, dowList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[11].</span>
-                <span class="txt-name">Ticket Date of Week</span>
+                <span class="lbl-field-criteria-no">11.</span>
+                <span class="txt-name">Ticket Day of Week</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableTicketDoWCriteria" />
-                <span class="note-info-message" id="span-noteTicketDoWCriteria"></span>
+                <span class="note-info-message" id="span-noteTicketDoWCriteria" title="<p>Ticket Day of Week:</p><p>- Select days to apply the virtual rate rule.</p><p>- You can select from Monday to Sunday.</p>"></span>
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
@@ -23,9 +23,14 @@ function TicketDoWCriteria(conditionList, dowList) {
 
     function renderHtml(criteriaContainer, selectedDoWList) {
         criteriaContainer.append(htmlTemplate);
-        ddlTicketDoWCondition = virtualRateEngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList);
-        ddlTicketDoW = virtualRateEngineHelper.renderMultiSelect("ddl-ticketDoW", dowList, selectedDoWList);
+        ddlTicketDoWCondition = VREngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList);
+        ddlTicketDoW = VREngineHelper.renderMultiSelect("ddl-ticketDoW", dowList, selectedDoWList);
         chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria");
+        $("#span-noteTicketDoWCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function bindEvents() {
@@ -51,7 +56,9 @@ function TicketDoWCriteria(conditionList, dowList) {
     }
 
     function validateFromData() {
-        var dow = ddlTicketDoW.multiSelect("getCheckedItems").join(",");
+        var dow = ddlTicketDoW.multiSelect("isCheckedAllItems")
+            ? "0"
+            : ddlTicketDoW.multiSelect("getCheckedItems").join(",");
 
         if (!dow.length) {
             CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError);
@@ -59,10 +66,11 @@ function TicketDoWCriteria(conditionList, dowList) {
         }
 
         CMS.clearTipsyError(ddlTicketDoW);
-        return {
-            dateOfWeek: dow,
-            dateOfWeekCondition: ddlTicketDoWCondition.val()
-        };
+
+        var formData = { name: "DateOfWeek" };
+        formData[ddlTicketDoWCondition.val() === "0" ? "dayOfWeek" : "dayOfWeekNotIn"] = dow;
+
+        return formData;
     }
 
     this.initAddNew = function (criteriaContainer, selectedDoWList) {

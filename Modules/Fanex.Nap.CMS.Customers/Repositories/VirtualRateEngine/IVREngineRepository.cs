@@ -10,5 +10,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
         VREngineMatrix GetVREngineMatrix(ICriteria criteria);
 
         IEnumerable<IdNameModel> GetLeagues(ICriteria criteria);
+
+        IEnumerable<VREngineRule> GetRules(ICriteria criteria);
+
+        Result ExecuteNonQuery(ICriteria criteria);
     }
 }

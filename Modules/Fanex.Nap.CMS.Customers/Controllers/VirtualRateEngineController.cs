@@ -46,6 +46,20 @@
         public ActionResult GetLeagues(string leagueGroupIds, string leagues)
             => JsonData(vrEngineService.GetLeagues(leagueGroupIds, leagues));
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
+        public ActionResult GetRules()
+            => JsonData(vrEngineService.GetRules());
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
+        public ActionResult CustomerClassHint()
+        {
+            var matrix = vrEngineService.GetVREngineMatrix();
+
+            return View(
+                "~/Areas/Customers/Views/VirtualRateEngine/CustomerClassHint.cshtml",
+                matrix.CustomerClasses);
+        }
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.FullPermission, Policy = Constant.Policy.Host)]
         public ActionResult AddNewRule(AddNewRuleViewModel viewModel)
@@ -54,5 +68,21 @@
             viewModel.IP = CurrentContext.IP;
             return JsonData(vrEngineService.AddNewRule(viewModel), JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Host)]
+        public ActionResult UpdateRule(int ruleId, AddNewRuleViewModel viewModel)
+        {
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
+            return JsonData(vrEngineService.UpdateRule(ruleId, viewModel), JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.FullPermission, Policy = Constant.Policy.Host)]
+        public ActionResult DeleteRule(int ruleId)
+            => JsonData(
+                vrEngineService.DeleteRule(ruleId, CurrentSession.UserId, CurrentContext.IP),
+                JsonRequestBehavior.DenyGet);
     }
 }

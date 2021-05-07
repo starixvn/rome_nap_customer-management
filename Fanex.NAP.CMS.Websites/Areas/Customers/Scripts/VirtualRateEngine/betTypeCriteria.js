@@ -3,12 +3,11 @@ function BetTypeCriteria(conditionList, betTypeList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[6].</span>
+                <span class="lbl-field-criteria-no">6.</span>
                 <span class="txt-name">Bet Type</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableBetTypeCriteria" />
-                <span class="note-info-message" id="span-noteBetTypeCriteria"></span>
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
@@ -23,8 +22,8 @@ function BetTypeCriteria(conditionList, betTypeList) {
 
     function renderHtml(criteriaContainer, selectedBetTypeList) {
         criteriaContainer.append(htmlTemplate);
-        ddlBetTypeCondition = virtualRateEngineHelper.renderCombobox("ddl-betTypeCondition", conditionList);
-        ddlBetType = virtualRateEngineHelper.renderMultiSelect("ddl-betType", betTypeList, selectedBetTypeList);
+        ddlBetTypeCondition = VREngineHelper.renderCombobox("ddl-betTypeCondition", conditionList);
+        ddlBetType = VREngineHelper.renderMultiSelect("ddl-betType", betTypeList, selectedBetTypeList);
         chkEnableBetTypeCriteria = $("#chk-enableBetTypeCriteria");
     }
 
@@ -51,7 +50,9 @@ function BetTypeCriteria(conditionList, betTypeList) {
     }
 
     function validateFromData() {
-        var betType = ddlBetType.multiSelect("getCheckedItems").join(",");
+        var betType = ddlBetType.multiSelect("isCheckedAllItems")
+            ? "0"
+            : ddlBetType.multiSelect("getCheckedItems").join(",");
 
         if (!betType.length) {
             CMS.showTipsyError(ddlBetType, resources.noneSelectedOptionError);
@@ -59,10 +60,11 @@ function BetTypeCriteria(conditionList, betTypeList) {
         }
 
         CMS.clearTipsyError(ddlBetType);
-        return {
-            betType: betType,
-            betTypeCondition: ddlBetTypeCondition.val()
-        };
+
+        var formData = { name: "Bettype" };
+        formData[ddlBetTypeCondition.val() === "0" ? "betType" : "betTypeNotIn"] = betType;
+
+        return formData;
     }
 
     this.initAddNew = function (criteriaContainer, selectedBetTypeList) {

@@ -109,4 +109,9 @@
   <Function Name="Whitelist Big Credit Members">
     <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Virtual Rate Engine">
+    <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

@@ -3,12 +3,11 @@ function EventCriteria(eventList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[7].</span>
+                <span class="lbl-field-criteria-no">7.</span>
                 <span class="txt-name">Event</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableEventCriteria" />
-                <span class="note-info-message" id="span-noteEventCriteria"></span>
             </div>
             <div class="detail-rule">
                 <select class="combobox-autocomplete width-60" id="ddl-event"></select>
@@ -18,7 +17,7 @@ function EventCriteria(eventList) {
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlEvent = virtualRateEngineHelper.renderCombobox("ddl-event", eventList);
+        ddlEvent = VREngineHelper.renderCombobox("ddl-event", eventList);
         chkEnableEventCriteria = $("#chk-enableEventCriteria");
     }
 
@@ -57,6 +56,7 @@ function EventCriteria(eventList) {
     this.getFormData = function () {
         if (isEnableCriteria()) {
             return {
+                name: "LiveIndicator",
                 liveIndicator: ddlEvent.val(),
             };
         }

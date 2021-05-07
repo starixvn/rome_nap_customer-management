@@ -199,6 +199,7 @@
     <Compile Include="Constants\VirtualRateEngine\ConditionConst.cs" />
     <Compile Include="Constants\VirtualRateEngine\CurrentVRStatusConst.cs" />
     <Compile Include="Constants\VirtualRateEngine\EventConst.cs" />
+    <Compile Include="Constants\VirtualRateEngine\VREngineDayOfWeek.cs" />
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\LimitNewDownlineController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
@@ -258,8 +259,13 @@
     <Compile Include="Criteria\ProblemAccount\RemoveReduceBLCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\SearchCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\UnmarkCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\AddNewVREngineRuleCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\DeleteVREngineRuleCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineLeagueCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineMatrixCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\GetVREngineRuleListCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\UpdateVREngineRuleCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\VREngineCriteriaBase.cs" />
     <Compile Include="Criteria\WhitelistBigCreditMembers\AddMemberCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
@@ -282,6 +288,7 @@
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineBetfrom.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineMatrix.cs" />
+    <Compile Include="Models\VirtualRateEngine\VREngineRule.cs" />
     <Compile Include="Models\WhitelistBigCreditMembers\AddMemberResult.cs" />
     <Compile Include="Params\LogParam.cs" />
     <Compile Include="Params\PossessStatistics\GetPossessStatisticsParam.cs" />

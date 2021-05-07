@@ -70,6 +70,10 @@
         },
         enable: function () {
             $(this).removeClass("ui-multiselect-state-disabled");
+        },
+        isCheckedAllItems: function () {
+            var $this = $(this);
+            return $this.next("div.ui-multiselect-options").find("#" + $this.attr("id") + "HeaderCheckBox").is(":checked");
         }
     };
 

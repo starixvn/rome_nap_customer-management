@@ -3,12 +3,11 @@ function BetfromCriteria(betfromList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[9].</span>
-                <span class="txt-name">Betfrom</span>
+                <span class="lbl-field-criteria-no">9.</span>
+                <span class="txt-name">Bet From</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableBetfromCriteria" />
-                <span class="note-info-message" id="span-noteBetfromCriteria"></span>
             </div>
             <div class="detail-rule">
                 <select class="combobox-autocomplete" id="ddl-betfrom"></select>
@@ -18,7 +17,7 @@ function BetfromCriteria(betfromList) {
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlBetfrom = virtualRateEngineHelper.renderCombobox("ddl-betfrom", betfromList);
+        ddlBetfrom = VREngineHelper.renderCombobox("ddl-betfrom", betfromList);
         chkEnableBetfromCriteria = $("#chk-enableBetfromCriteria");
     }
 
@@ -57,6 +56,7 @@ function BetfromCriteria(betfromList) {
     this.getFormData = function () {
         if (isEnableCriteria()) {
             return {
+                name: "BetFrom",
                 betfrom: ddlBetfrom.val(),
             };
         }

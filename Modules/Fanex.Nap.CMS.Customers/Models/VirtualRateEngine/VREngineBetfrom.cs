@@ -2,13 +2,13 @@
 {
     public class VREngineBetfrom
     {
-        public VREngineBetfrom(char id, string name)
+        public VREngineBetfrom(string id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        public char Id { get; }
+        public string Id { get; }
 
         public string Name { get; }
     }

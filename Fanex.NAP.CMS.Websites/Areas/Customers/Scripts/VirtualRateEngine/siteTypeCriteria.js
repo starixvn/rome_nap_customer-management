@@ -3,12 +3,12 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[1].</span>
+                <span class="lbl-field-criteria-no">1.</span>
                 <span class="txt-name">Site Type</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableSiteTypeCriteria" />
-                <span class="note-info-message" id="span-noteSiteTypeCriteria"></span>
+                <span class="note-info-message" id="span-noteSiteTypeCriteria" title="<p>Site Type:</p><p>- Load Site types.</p><p>- Options: All, Credit, Licensee.</p><p>Site:</p><p>- Load all sites follow selected site type.</p><p>- You can select one or more sites to apply virtual rate rule.</p>"></span>
             </div>
             <div class="detail-rule">
                 <select class="combobox-autocomplete width-60" id="ddl-siteType"></select>
@@ -32,10 +32,15 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlSiteType = virtualRateEngineHelper.renderCombobox("ddl-siteType", siteTypeList);
-        ddlSiteCondition = virtualRateEngineHelper.renderCombobox("ddl-siteCondition", conditionList);
-        ddlSite = virtualRateEngineHelper.renderMultiSelect("ddl-site", [].concat(creditSiteList, licenseeSiteList));
+        ddlSiteType = VREngineHelper.renderCombobox("ddl-siteType", siteTypeList);
+        ddlSiteCondition = VREngineHelper.renderCombobox("ddl-siteCondition", conditionList);
+        ddlSite = VREngineHelper.renderMultiSelect("ddl-site", [].concat(creditSiteList, licenseeSiteList));
         chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria");
+        $("#span-noteSiteTypeCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function bindEvents() {
@@ -54,11 +59,11 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
             .on("change", function () {
                 var siteType = this.value;
                 if (siteType === "1") { // Credit
-                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, creditSiteList);
+                    ddlSite = VREngineHelper.updateMultiSelect(ddlSite, creditSiteList);
                 } else if (siteType === "2") { // Licensee
-                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, licenseeSiteList);
+                    ddlSite = VREngineHelper.updateMultiSelect(ddlSite, licenseeSiteList);
                 } else { // All
-                    ddlSite = virtualRateEngineHelper.updateMultiSelect(ddlSite, [].concat(creditSiteList, licenseeSiteList));
+                    ddlSite = VREngineHelper.updateMultiSelect(ddlSite, [].concat(creditSiteList, licenseeSiteList));
                 }
             });
     }
@@ -75,19 +80,20 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
     }
 
     function validateFromData() {
-        var site = ddlSite.multiSelect("getCheckedItems").join(",");
-
+        var site = ddlSite.multiSelect("isCheckedAllItems")
+            ? "0"
+            : ddlSite.multiSelect("getCheckedItems").join(",");
         if (!site.length) {
             CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError);
             return { isInvalid: true };
         }
 
         CMS.clearTipsyError(ddlSite);
-        return {
-            siteType: ddlSiteType.val(),
-            site: site,
-            siteCondition: ddlSiteCondition.val()
-        };
+
+        var formData = { name: "Site", siteType: ddlSiteType.val() };
+        formData[ddlSiteCondition.val() === "0" ? "site" : "siteNotIn"] = site;
+
+        return formData;
     }
 
     this.initAddNew = function (criteriaContainer) {

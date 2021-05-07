@@ -1,86 +1,12 @@
 ﻿.content {
     margin: 10px 0 0 26px;
-}
 
-.table-container {
-    width: 1024px;
+    .content-grid {
+        margin-left: 0;
 
-    .table-title {
-        background-color: #ffcc33;
-        background-color: -moz-linear-gradient(#ffcc33, #ffcc35);
-        background-color: -webkit-linear-gradient(#ffcc33, #ffcc35);
-        border: solid 1px #d2b24d;
-        margin-bottom: 3px;
-        height: 25px;
-        line-height: 25px;
-        vertical-align: middle;
-
-        .table-title-label {
-            color: #4a4b4f;
-            font-size: 0.9em;
-            font-weight: bold;
-            height: 18px;
-            line-height: 18px;
-            padding: 5px 0 0 4px;
-        }
-
-        .table-title-toolbox {
-            float: right;
-        }
-    }
-
-    .table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        border-style: none;
-        width: 100%;
-
-        thead tr {
-            background: #3c5ea5;
-            background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
-            background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
-
-            th {
-                border: solid 1px #c5c5c5;
-                border-top: none;
-                color: #fff;
-                font-weight: normal;
-                font-size: 1.0em;
-                text-align: center;
-                height: 25px;
-                line-height: 25px;
-                vertical-align: middle;
-                padding: 2px;
-                -webkit-box-sizing: content-box;
-                -moz-box-sizing: content-box;
-                box-sizing: content-box;
-            }
-        }
-
-        tbody tr {
-            background-color: #fff;
-
-            td {
-                border: solid 1px #c5c5c5;
-                border-top: none;
-                font-size: 1.0em;
-                white-space: normal;
-                height: 21px;
-                line-height: 21px;
-                vertical-align: middle;
-                padding: 2px;
-                -webkit-box-sizing: content-box;
-                -moz-box-sizing: content-box;
-                box-sizing: content-box;
-            }
-        }
-    }
-
-    .table-hover {
-        tbody tr {
-            &:hover {
-                background-color: #faffa8
-            }
+        .freegrid .parent-row td {
+            background-color: #C2D9EC;
+            cursor: pointer;
         }
     }
 }
@@ -216,7 +142,7 @@
             [class*="value"] {
                 input[type="text"] {
                     width: 50px;
-                    text-align: center;
+                    text-align: right;
                 }
             }
 
@@ -241,6 +167,7 @@
 
         &:disabled {
             background-color: #f3efee;
+            color: #ccc;
         }
     }
 }
@@ -265,8 +192,18 @@
 .width-50 {
     width: 50px;
 }
+
 .error-tipsy {
     z-index: 10000;
+}
+
+.criteria-hint {
+    .tipsy-inner {
+        p {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+    }
 }
 /********************** customize multiselect  ***********************/
 .ui-multiselect-widget-content {
@@ -283,5 +220,3 @@
         margin-right: 0;
     }
 }
-
-

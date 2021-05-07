@@ -3,12 +3,12 @@ function TicketTimeCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[12].</span>
+                <span class="lbl-field-criteria-no">12.</span>
                 <span class="txt-name">Ticket Time (GMT+8)</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableTicketTimeCriteria" />
-                <span class="note-info-message" id="span-noteTicketTimeCriteria"></span>
+                <span class="note-info-message" id="span-noteTicketTimeCriteria" title="<p>Ticket Time (GMT +8):</p><p>- Apply virtual rate rule from time value to time value.</p><p>- To time should be greater than From Time.</p><p>- You should select time range in 1 day.</p>"></span>
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
@@ -28,6 +28,11 @@ function TicketTimeCriteria() {
         txtTicketTimeFrom = $("#txt-ticketTimeFrom").clearfield();
         txtTicketTimeTo = $("#txt-ticketTimeTo").clearfield();
         chkEnableTicketTimeCriteria = $("#chk-enableTicketTimeCriteria");
+        $("#span-noteTicketTimeCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function bindEvents() {
@@ -76,6 +81,7 @@ function TicketTimeCriteria() {
         CMS.clearTipsyError(txtTicketTimeFrom);
         CMS.clearTipsyError(txtTicketTimeTo);
         return {
+            name: "TicketTime",
             beginTime: beginTime,
             endTime: endTime
         };

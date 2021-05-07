@@ -3,12 +3,12 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[8].</span>
+                <span class="lbl-field-criteria-no">8.</span>
                 <span class="txt-name">League Group</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableLeagueGroupCriteria" />
-                <span class="note-info-message" id="span-noteLeagueGroupCriteria"></span>
+                <span class="note-info-message" id="span-noteLeagueGroupCriteria" title="<p>League Group:</p><p>- Apply for one or more league groups.</p><p>League:</p><p>- Load all leagues follow selected league group.</p>"></span>
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
@@ -37,9 +37,9 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
 
     function renderHtml(criteriaContainer) {
         criteriaContainer.append(htmlTemplate);
-        ddlLeagueGroupCondition = virtualRateEngineHelper.renderCombobox("ddl-leagueGroupCondition", conditionList);
-        ddlLeagueGroup = virtualRateEngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList, undefined, 220);
-        ddlLeagueCondition = virtualRateEngineHelper.renderCombobox("ddl-leagueCondition", conditionList);
+        ddlLeagueGroupCondition = VREngineHelper.renderCombobox("ddl-leagueGroupCondition", conditionList);
+        ddlLeagueGroup = VREngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList, undefined, 220);
+        ddlLeagueCondition = VREngineHelper.renderCombobox("ddl-leagueCondition", conditionList);
         txtLeague = $("#txt-league")
             // don't navigate away from the field on tab when selecting an item
             .on("keydown", function (event) {
@@ -87,6 +87,11 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 }
             });
         chkEnableLeagueGroupCriteria = $("#chk-enableLeagueGroupCriteria");
+        $("#span-noteLeagueGroupCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function split(val) {
@@ -122,6 +127,28 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
         return chkEnableLeagueGroupCriteria.is(":checked");
     }
 
+    function validateFromData() {
+        var leagueGroup = ddlLeagueGroup.multiSelect("isCheckedAllItems")
+            ? "-1"
+            : ddlLeagueGroup.multiSelect("getCheckedItems").join(",");
+
+        if (!leagueGroup.length) {
+            CMS.showTipsyError(ddlLeagueGroup, resources.noneSelectedOptionError);
+            return { isInvalid: true };
+        }
+
+        CMS.clearTipsyError(ddlLeagueGroup);
+
+        var league = $.trim(txtLeague.val());
+        league = league.length ? VREngineHelper.removeLastComma(league) : "-1";
+
+        var formData = { name: "LeagueGroup" };
+        formData[ddlLeagueGroupCondition.val() === "0" ? "leagueGroup" : "leagueGroupNotIn"] = leagueGroup;
+        formData[ddlLeagueCondition.val() === "0" ? "league" : "leagueNotIn"] = league;
+
+        return formData;
+    }
+
     this.initAddNew = function (criteriaContainer) {
         renderHtml(criteriaContainer);
         enableCriteria(false);
@@ -136,12 +163,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
 
     this.getFormData = function () {
         if (isEnableCriteria()) {
-            return {
-                leagueGroup: ddlLeagueGroup.multiSelect("getCheckedItems").join(","),
-                leagueGroupCondition: ddlLeagueCondition.val(),
-                //league: ddlLeague.multiSelect("getCheckedItems").join(","),
-                leagueCondition: ddlLeagueCondition.val()
-            };
+            return validateFromData();
         }
     };
 }

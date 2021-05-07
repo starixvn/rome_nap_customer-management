@@ -26,6 +26,8 @@
             fromTimeGreaterThanToTime: "@VREngineResource.FromTimeGreaterThanToTime"
         };
         var vm = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
+        var hasHostFullPermission = @(Model.HasHostFullPermission ? 1 : 0);
+        var hasHostVirtualRateEnginePermission = @(Model.HasHostVirtualRateEnginePermission ? 1 : 0);
     </script>
     @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
 }
@@ -39,37 +41,8 @@
 {
     <button class="blue-button" id="btnAddNewRule">@VREngineResource.AddNewRule</button>
 }
-<div class="table-container mid-margin-top">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Priority</th>
-                <th>Criteria</th>
-                <th>Adjustment</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="4">Low stake for soccer, credit, phone betting: 0%</td>
-            </tr>
-            <tr>
-                <td>1000</td>
-                <td>
-                    <div>- Sport: in (Soccer)</div>
-                    <div>- Site Type: Credit</div>
-                    <div>- Site: not in (CN88)</div>
-                    <div>- Stake (RM): from 0 to 80</div>
-                    <div>- Bet from: p (Phone betting)</div>
-                </td>
-                <td>0%</td>
-                <td class="align-center">
-                    <span class="ico-edit"></span>
-                    <span class="ico-delete"></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div class="content-grid mid-margin-top">
+    <div class="freegrid display-none" id="freegrid"></div>
 </div>
 @if (Model.HasHostFullPermission)
 {

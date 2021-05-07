@@ -70,6 +70,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added new rule successfully..
+        /// </summary>
+        public static string AddedNewRuleSuccessfully {
+            get {
+                return ResourceManager.GetString("AddedNewRuleSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New Rule.
         /// </summary>
         public static string AddNewRule {
@@ -102,6 +111,42 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Criteria {
             get {
                 return ResourceManager.GetString("Criteria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer Category.
+        /// </summary>
+        public static string CustomerCategory {
+            get {
+                return ResourceManager.GetString("CustomerCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This rule has been successfully deleted..
+        /// </summary>
+        public static string DeletedRuleSuccessfully {
+            get {
+                return ResourceManager.GetString("DeletedRuleSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Disabled {
+            get {
+                return ResourceManager.GetString("Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Enabled {
+            get {
+                return ResourceManager.GetString("Enabled", resourceCulture);
             }
         }
         
@@ -210,6 +255,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string RuleTitle {
             get {
                 return ResourceManager.GetString("RuleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated successfully..
+        /// </summary>
+        public static string UpdatedRuleSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatedRuleSuccessfully", resourceCulture);
             }
         }
         

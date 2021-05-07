@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
 using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
 using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
@@ -25,7 +25,10 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
             HasHostFullPermission = hasHostFullPermission;
             CreditSites = creditSites;
             LicenseeSites = licenseeSites;
-            CustomerClasses = customerClasses;
+            CustomerClasses = customerClasses
+                .Select(c => c.Id)
+                .Distinct()
+                .Select(c => BuildIdNameModel(c, c.ToString()));
             Sports = sports;
             BetTypes = betTypes;
             LeagueGroups = leagueGroups;
@@ -79,17 +82,7 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
 
         public IEnumerable<VREngineBetfrom> BetfromList { get; }
 
-        public IEnumerable<IdNameModel> DateOfWeeks
-             => new[]
-            {
-                BuildIdNameModel((int)DayOfWeek.Monday + 1, nameof(DayOfWeek.Monday)),
-                BuildIdNameModel((int)DayOfWeek.Tuesday + 1, nameof(DayOfWeek.Tuesday)),
-                BuildIdNameModel((int)DayOfWeek.Wednesday + 1, nameof(DayOfWeek.Wednesday)),
-                BuildIdNameModel((int)DayOfWeek.Thursday + 1, nameof(DayOfWeek.Thursday)),
-                BuildIdNameModel((int)DayOfWeek.Friday + 1, nameof(DayOfWeek.Friday)),
-                BuildIdNameModel((int)DayOfWeek.Saturday + 1, nameof(DayOfWeek.Saturday)),
-                BuildIdNameModel((int)DayOfWeek.Sunday + 1, nameof(DayOfWeek.Sunday))
-            };
+        public IEnumerable<IdNameModel> DayOfWeeks { get; } = VREngineDayOfWeek.DayOfWeeks;
 
         public IEnumerable<IdNameModel> Adjustments
             => new[]

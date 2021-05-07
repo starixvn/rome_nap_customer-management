@@ -177,4 +177,22 @@
   <data name="VirtualRateEngine" xml:space="preserve">
     <value>Virtual Rate Engine</value>
   </data>
+  <data name="AddedNewRuleSuccessfully" xml:space="preserve">
+    <value>Added new rule successfully.</value>
+  </data>
+  <data name="CustomerCategory" xml:space="preserve">
+    <value>Customer Category</value>
+  </data>
+  <data name="DeletedRuleSuccessfully" xml:space="preserve">
+    <value>This rule has been successfully deleted.</value>
+  </data>
+  <data name="UpdatedRuleSuccessfully" xml:space="preserve">
+    <value>Updated successfully.</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
 </root>

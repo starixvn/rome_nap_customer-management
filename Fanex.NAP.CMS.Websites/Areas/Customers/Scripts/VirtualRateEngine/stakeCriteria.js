@@ -3,21 +3,21 @@ function StakeCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[10].</span>
+                <span class="lbl-field-criteria-no">10.</span>
                 <span class="txt-name">Stake (RM)</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableStakeCriteria" />
-                <span class="note-info-message" id="span-noteStakeCriteria"></span>
+                <span class="note-info-message" id="span-noteStakeCriteria" title="<p>Stake (RM):</p><p>- Apply for Stake in this range [From;To] (RM).</p>"></span>
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
                 <div class="from-value">
-                    <input type="text" id="txt-stakeFrom" autocomplete="off" maxlength="4" />
+                    <input type="text" id="txt-stakeFrom" autocomplete="off" maxlength="10" value="0" />
                 </div>
                 <span class="txt">To</span>
                 <div class="to-value">
-                    <input type="text" id="txt-stakeTo" autocomplete="off" maxlength="4" />
+                    <input type="text" id="txt-stakeTo" autocomplete="off" maxlength="10" />
                 </div>
             </div>
         </div>`
@@ -28,6 +28,11 @@ function StakeCriteria() {
         txtStakeFrom = $("#txt-stakeFrom").clearfield();
         txtStakeTo = $("#txt-stakeTo").clearfield();
         chkEnableStakeCriteria = $("#chk-enableStakeCriteria");
+        $("#span-noteStakeCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function bindEvents() {
@@ -39,11 +44,11 @@ function StakeCriteria() {
 
         txtStakeFrom
             .off("keypress")
-            .on("keypress", CMS.forceNumberInput);
+            .on("keypress", CMS.forceNumericInput);
 
         txtStakeTo
             .off("keypress")
-            .on("keypress", CMS.forceNumberInput);
+            .on("keypress", CMS.forceNumericInput);
 
         $("#span-noteStakeCriteria")
             .off("click")
@@ -61,14 +66,19 @@ function StakeCriteria() {
     }
 
     function validateFormData() {
-        var inputStakeFrom = virtualRateEngineHelper.validateNumber(txtStakeFrom);
-        var inputStakeTo = virtualRateEngineHelper.validateNumber(txtStakeTo);
+        var inputStakeFrom = validateStakeValue(txtStakeFrom);
+        var inputStakeTo = validateStakeValue(txtStakeTo);
 
         if (typeof inputStakeFrom === "undefined" || typeof inputStakeTo === "undefined") {
             return { isInvalid: true };
         }
 
-        if (inputStakeFrom > inputStakeTo) {
+        if (inputStakeFrom === null && inputStakeTo === null) {
+            CMS.showTipsyError(txtStakeFrom, resources.requiredFieldError, "nw");
+            CMS.showTipsyError(txtStakeTo, resources.requiredFieldError, "nw");
+            return { isInvalid: true };
+        } else if ((inputStakeFrom !== null && inputStakeTo !== null && inputStakeFrom > inputStakeTo)
+            || (inputStakeFrom === null && inputStakeTo !== null)) {
             CMS.showTipsyError(txtStakeFrom, resources.fromStakeGreaterThanToStake, "nw");
             return { isInvalid: true };
         }
@@ -77,9 +87,25 @@ function StakeCriteria() {
         CMS.clearTipsyError(txtStakeTo);
 
         return {
+            name: "StakeRM",
             stakeFrom: inputStakeFrom,
             stakeTo: inputStakeTo
         };
+    }
+
+    function validateStakeValue(txtStake) {
+        var inputStake = $.trim(txtStake.val());
+
+        if (inputStake.length) {
+            if (!CMS.isNumeric(inputStake)) {
+                CMS.showTipsyError(txtStake, resources.invalidValueError, "nw");
+                return;
+            }
+
+            return parseFloat(inputStake);
+        }
+
+        return null;
     }
 
     this.initAddNew = function (criteriaContainer) {

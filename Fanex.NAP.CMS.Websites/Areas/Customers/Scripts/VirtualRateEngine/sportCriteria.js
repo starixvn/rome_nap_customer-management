@@ -3,12 +3,11 @@ function SportCriteria(conditionList, sportList) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[5].</span>
+                <span class="lbl-field-criteria-no">5.</span>
                 <span class="txt-name">Sport</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableSportCriteria" />
-                <span class="note-info-message" id="span-noteSportCriteria"></span>
             </div>
             <div class="detail-rule">
                 <div class="ddl-primary">
@@ -23,8 +22,8 @@ function SportCriteria(conditionList, sportList) {
 
     function renderHtml(criteriaContainer, selectedSportList) {
         criteriaContainer.append(htmlTemplate);
-        ddlSportCondition = virtualRateEngineHelper.renderCombobox("ddl-sportCondition", conditionList);
-        ddlSport = virtualRateEngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList, 260);
+        ddlSportCondition = VREngineHelper.renderCombobox("ddl-sportCondition", conditionList);
+        ddlSport = VREngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList, 260);
         chkEnableSportCriteria = $("#chk-enableSportCriteria");
     }
 
@@ -51,7 +50,9 @@ function SportCriteria(conditionList, sportList) {
     }
 
     function validateFromData() {
-        var sportType = ddlSport.multiSelect("getCheckedItems").join(",");
+        var sportType = ddlSport.multiSelect("isCheckedAllItems")
+            ? "0"
+            : ddlSport.multiSelect("getCheckedItems").join(",");
 
         if (!sportType.length) {
             CMS.showTipsyError(ddlSport, resources.noneSelectedOptionError);
@@ -59,10 +60,11 @@ function SportCriteria(conditionList, sportList) {
         }
 
         CMS.clearTipsyError(ddlSport);
-        return {
-            sportType: sportType,
-            sportTypeCondition: ddlSportCondition.val()
-        };
+
+        var formData = { name: "Sporttype" };
+        formData[ddlSportCondition.val() === "0" ? "sportType" : "sportTypeNotIn"] = sportType;
+
+        return formData;
     }
 
     this.initAddNew = function (criteriaContainer, selectedSportList) {

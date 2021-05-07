@@ -1,4 +1,4 @@
-﻿var virtualRateEngineHelper = (function ($) {
+﻿var VREngineHelper = (function ($) {
     function renderCombobox(id, dataList, selectedValue) {
         var datum, html = [];
         selectedValue = selectedValue || dataList[0].Id;
@@ -44,18 +44,7 @@
         }
 
         var selector = "#" + id;
-        $(selector).multiSelect({
-            showTooltip: false,
-            shadow: true,
-            maxHeight: maxHeight || 350,
-            isCheckAll: isCheckAll,
-            showFooter: false,
-            showFilter: true,
-            checkAllText: "All",
-            tooltipNoItem: "Please select at least one option",
-            listData: data
-        });
-
+        $(selector).multiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
         return $(selector);
     }
 
@@ -74,17 +63,22 @@
             });
         }
 
-        $ddl.multiSelect("updateItems", {
+        $ddl.multiSelect("updateItems", getMultiSelectOptions(true, data));
+        return $("#" + id);
+    }
+
+    function getMultiSelectOptions(isCheckAll, listData, maxHeight) {
+        return {
+            showTooltip: false,
             shadow: true,
-            isCheckAll: true,
+            maxHeight: maxHeight || 350,
+            isCheckAll: isCheckAll,
             showFooter: false,
             showFilter: true,
             checkAllText: "All",
             tooltipNoItem: "Please select at least one option",
-            listData: data
-        });
-
-        return $("#" + id);
+            listData: listData
+        };
     }
 
     function toObject(array) {
@@ -110,13 +104,27 @@
             return;
         }
 
-        return parseInt(inputNumber.replace(/,/g, ""));
+        return parseInt(inputNumber);
+    }
+
+    function extractHourMinute(time) {
+        return time.substring(0, 5);
+    }
+
+    function removeLastComma(text) {
+        var textLength = text.length - 1;
+
+        return text.indexOf(",", textLength) !== -1
+            ? text.substring(0, textLength)
+            : text;
     }
 
     return {
         renderCombobox: renderCombobox,
         renderMultiSelect: renderMultiSelect,
         updateMultiSelect: updateMultiSelect,
-        validateNumber: validateNumber
+        validateNumber: validateNumber,
+        extractHourMinute: extractHourMinute,
+        removeLastComma: removeLastComma
     };
 })(jQuery);

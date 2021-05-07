@@ -14,10 +14,12 @@
     var leagueGroupCriteria = new LeagueGroupCriteria(vm.Conditions, vm.LeagueGroups);
     var betfromCriteria = new BetfromCriteria(vm.BetfromList);
     var stakeCriteria = new StakeCriteria();
-    var ticketDoWCriteria = new TicketDoWCriteria(vm.Conditions, vm.DateOfWeeks);
+    var ticketDoWCriteria = new TicketDoWCriteria(vm.Conditions, vm.DayOfWeeks);
     var ticketTimeCriteria = new TicketTimeCriteria();
     var ddlAdjustment, txtAdjustment;
     var ddlActive;
+
+    var ruleList = new VREngineHelperRuleList(hasHostFullPermission, hasHostVirtualRateEnginePermission);
 
     function initAddNewRule(form) {
         txtRuleTitle = form.find("#txt-ruleTitle");
@@ -41,13 +43,13 @@
         ticketDoWCriteria.initAddNew($criteriaContainer, [2]);
         ticketTimeCriteria.initAddNew($criteriaContainer);
 
-        ddlAdjustment = virtualRateEngineHelper.renderCombobox("ddl-adjustment", vm.Adjustments);
+        ddlAdjustment = VREngineHelper.renderCombobox("ddl-adjustment", vm.Adjustments);
         txtAdjustment = form.find("#txt-adjustment");
         txtAdjustment
             .off("keypress")
             .on("keypress", CMS.forceNegativeNumberInput);
 
-        ddlActive = virtualRateEngineHelper.renderCombobox("ddl-active", vm.Actives);
+        ddlActive = VREngineHelper.renderCombobox("ddl-active", vm.Actives);
 
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel
@@ -74,7 +76,8 @@
                     CMS.showInlineErrorMsg(result.Message, form.find("#divErrorSuccessMsg"));
                 } else {
                     CMS.showInlineSuccessMsg(result.Message, form.find("#divErrorSuccessMsg"), true, function () {
-                        //window.location.href = window.location.href;
+                        CMS.closePopup();
+                        ruleList.getRuleList();
                     });
                 }
             }
@@ -89,45 +92,30 @@
             isValid = false;
         }
 
-        var siteTypeFormData = siteTypeCriteria.getFormData();
-        if (siteTypeFormData && siteTypeFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var customerClassFormData = customerClassCriteria.getFormData();
-        if (customerClassFormData && customerClassFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var currentVRFormData = currentVRCriteria.getFormData();
-        if (currentVRFormData && currentVRFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var sportFormData = sportCriteria.getFormData();
-        if (sportFormData && sportFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var betTypeFormData = betTypeCriteria.getFormData();
-        if (betTypeFormData && betTypeFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var stakeFormData = stakeCriteria.getFormData();
-        if (stakeFormData && stakeFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var ticketDoWFormData = ticketDoWCriteria.getFormData();
-        if (ticketDoWFormData && ticketDoWFormData.isInvalid) {
-            isValid = false;
-        }
-
-        var ticketTimeFormData = ticketTimeCriteria.getFormData();
-        if (ticketTimeFormData && ticketTimeFormData.isInvalid) {
-            isValid = false;
-        }
+        var formDataCriteria = [];
+        $.each([
+            siteTypeCriteria,
+            customerClassCriteria,
+            currentVRCriteria,
+            currentVRStatusCriteria,
+            sportCriteria,
+            betTypeCriteria,
+            eventCriteria,
+            leagueGroupCriteria,
+            betfromCriteria,
+            stakeCriteria,
+            ticketDoWCriteria,
+            ticketTimeCriteria
+        ], function (index, value) {
+            var formData = value.getFormData();
+            if (formData) {
+                if (formData.isInvalid) {
+                    isValid = false;
+                } else {
+                    formDataCriteria.push(formData);
+                }
+            }
+        });
 
         var adjustmentValue = validateAdjustment();
         if (typeof adjustmentValue === "undefined") {
@@ -135,30 +123,30 @@
         }
 
         if (isValid) {
-            return $.extend(
-                {
-                    ruleTitle: $.trim(txtRuleTitle.val()),
-                    priorityOrder: priorityOrder,
-                    adjustmentType: ddlAdjustment.val(),
-                    adjustmentValue: adjustmentValue,
-                    active: ddlActive.val()
-                },
-                siteTypeFormData,
-                customerClassFormData,
-                currentVRFormData,
-                currentVRStatusCriteria.getFormData(),
-                sportFormData,
-                betTypeFormData,
-                eventCriteria.getFormData(),
-                betfromCriteria.getFormData(),
-                stakeFormData,
-                ticketDoWFormData,
-                ticketTimeFormData);
+            var enabledCriteria = [];
+            var addNewRuleFormData = {
+                ruleTitle: $.trim(txtRuleTitle.val()),
+                priorityOrder: priorityOrder,
+                adjustmentType: ddlAdjustment.val(),
+                adjustmentValue: adjustmentValue,
+                active: ddlActive.val()
+            };
+
+            $.each(formDataCriteria, function (index, value) {
+                enabledCriteria.push(value.name);
+
+                delete value.name;
+                $.extend(addNewRuleFormData, value);
+            });
+
+            addNewRuleFormData.enabledColumns = enabledCriteria.join(",");
+
+            return addNewRuleFormData;
         }
     }
 
     function validatePriorityOrder() {
-        var inputPriorityOrder = virtualRateEngineHelper.validateNumber(txtPriorityOrder);
+        var inputPriorityOrder = VREngineHelper.validateNumber(txtPriorityOrder);
         if (typeof inputPriorityOrder === "undefined") {
             return;
         }
@@ -173,7 +161,7 @@
     }
 
     function validateAdjustment() {
-        var inputAdjustment = virtualRateEngineHelper.validateNumber(txtAdjustment);
+        var inputAdjustment = VREngineHelper.validateNumber(txtAdjustment);
         if (typeof inputAdjustment === "undefined") {
             return;
         }
@@ -204,6 +192,9 @@
 
             initAddNewRule(form);
         });
+
+        ruleList = new VREngineHelperRuleList(hasHostFullPermission, hasHostVirtualRateEnginePermission);
+        ruleList.getRuleList();
 
         // Empty the #divPopupContent since it's children was cached.
         // It also helps to prevent the 'for' attributes do not work correctly in the popup.

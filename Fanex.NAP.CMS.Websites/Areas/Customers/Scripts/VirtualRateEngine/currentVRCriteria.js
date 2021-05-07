@@ -3,12 +3,12 @@ function CurrentVRCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">[3].</span>
+                <span class="lbl-field-criteria-no">3.</span>
                 <span class="txt-name">Current Virtual Rate</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableCurrentVRCriteria" />
-                <span class="note-info-message" id="span-noteCurrentVRCriteria"></span>
+                <span class="note-info-message" id="span-noteCurrentVRCriteria" title="<p>Current Virtual Rate:</p><p>- Apply from current virtual rate to current virtual rate.</p><p>- From and To value should be in this range [-99%;200%].</p>"></span>
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
@@ -30,6 +30,11 @@ function CurrentVRCriteria() {
         txtVRFrom = $("#txt-currentVRFrom").clearfield();
         txtVRTo = $("#txt-currentVRTo").clearfield();
         chkEnableCurrentVRCriteria = $("#chk-enableCurrentVRCriteria");
+        $("#span-noteCurrentVRCriteria").tipsy({
+            className: "criteria-hint",
+            html: true,
+            opacity: 1
+        });
     }
 
     function bindEvents() {
@@ -79,13 +84,14 @@ function CurrentVRCriteria() {
         CMS.clearTipsyError(txtVRTo);
 
         return {
+            name: "VRValue",
             VRFrom: inputVRFrom,
             VRTo: inputVRTo
         };
     }
 
     function validateVRValue(txtNumber) {
-        var inputNumber = virtualRateEngineHelper.validateNumber(txtNumber);
+        var inputNumber = VREngineHelper.validateNumber(txtNumber);
 
         if (inputNumber && (inputNumber < -99 || inputNumber > 200)) {
             CMS.showTipsyError(txtNumber, resources.vrValueOutOfRangeError, "nw");

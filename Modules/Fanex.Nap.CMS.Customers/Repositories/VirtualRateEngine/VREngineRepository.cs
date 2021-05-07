@@ -83,7 +83,7 @@ namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
             while (reader.Read())
             {
                 betfromList.Add(new VREngineBetfrom(
-                    reader["betfrom"].ToString()[0],
+                    reader["betfrom"].ToString(),
                     reader["name"].ToString()));
             }
 
@@ -156,6 +156,69 @@ namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
             }
 
             return dataList;
+        }
+
+        public IEnumerable<VREngineRule> GetRules(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return ToRule(reader);
+                    }
+                }
+            }
+        }
+
+        private static VREngineRule ToRule(IDataReader reader)
+            => new VREngineRule(
+                Convert.ToInt32(reader["ruleid"]),
+                reader["rulename"].ToString(),
+                Convert.ToInt32(reader["priority"]),
+                Convert.ToByte(reader["sitetype"]),
+                reader["siteidlist"].ToString(),
+                reader["siteidlist_notapply"].ToString(),
+                reader["customerclasslist"].ToString(),
+                reader["customerclasslist_notapply"].ToString(),
+                Convert.ToDecimal(reader["vr_from"]),
+                Convert.ToDecimal(reader["vr_to"]),
+                Convert.ToByte(reader["vrstatus"]),
+                reader["sporttypelist"].ToString(),
+                reader["sporttypelist_notapply"].ToString(),
+                reader["bettypelist"].ToString(),
+                reader["bettypelist_notapply"].ToString(),
+                Convert.ToByte(reader["liveindicator"]),
+                reader["leaguegrouplist"].ToString(),
+                reader["leaguegrouplist_notapply"].ToString(),
+                reader["leaguelist"].ToString(),
+                reader["leaguelist_notapply"].ToString(),
+                reader["betfrom"].ToString(),
+                Convert.ToDecimal(reader["stakerm_from"]),
+                Convert.ToDecimal(reader["stakerm_to"]),
+                reader["dateofweeklist"].ToString(),
+                reader["dateofweeklist_notapply"].ToString(),
+                reader["begintime"].ToString(),
+                reader["endtime"].ToString(),
+                Convert.ToByte(reader["adjustmenttype"]),
+                Convert.ToDecimal(reader["adjustmentvalue"]),
+                Convert.ToByte(reader["status"]),
+                Convert.ToDateTime(reader["createddts"]),
+                reader["createdby"].ToString(),
+                reader["enabled_column"].ToString());
+
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result(
+                    Convert.ToInt32(outputParams["errorcode"]),
+                    outputParams["errormsg"].ToString());
+            }
         }
     }
 }

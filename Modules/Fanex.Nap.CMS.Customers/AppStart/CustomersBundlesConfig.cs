@@ -31,6 +31,8 @@
 
         public const string VirtualRateEngineScriptPath = "~/bundles/customers/virtual-rate-engine-script";
         public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
+        public const string VREngineCustomerCategoryScriptPath = "~/bundles/customers/vr-engine-customer-category-script";
+        public const string VREngineCustomerCategoryStylePath = "~/bundles/customers/vr-engine-customer-category-style";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -230,7 +232,7 @@
 
             bundles.Add(new ScriptBundle(VirtualRateEngineScriptPath).Include(
                 "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
-                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngineHelper.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/VREngineHelper.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/siteTypeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/customerClassCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/currentVRCriteria.js",
@@ -243,8 +245,15 @@
                 "~/Areas/Customers/Scripts/VirtualRateEngine/stakeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketDoWCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketTimeCriteria.js",
-                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngineAddNew.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/VREngineHelperRuleList.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
+
+            bundles.AddAndInclude(
+                VREngineCustomerCategoryStylePath,
+                "~/Areas/Customers/Styles/customerCategory.less");
+
+            bundles.Add(new ScriptBundle(VREngineCustomerCategoryScriptPath).Include(
+                "~/Areas/Customers/Scripts/VirtualRateEngine/customerCategory.js"));
 
             return bundles;
         }

@@ -1,7 +1,7 @@
-﻿using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-
-namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 {
+    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
+
     internal class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
         public AddNewVREngineRuleCriteria(AddNewRuleViewModel vm)
@@ -16,7 +16,7 @@ namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
             VR_From = vm.VRFrom;
             VR_To = vm.VRTo;
             VRStatus = vm.VRStatus;
-            SporttypeList = vm.Sport;
+            SporttypeList = vm.SportType;
             BettypeList = vm.BetType;
             LiveIndicator = vm.LiveIndicator;
             LeagueGroupList = vm.LeagueGroup;
@@ -40,23 +40,23 @@ namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 
         public int Priority { get; }
 
-        public byte SiteType { get; }
+        public byte? SiteType { get; }
 
         public string SiteIDList { get; }
 
         public string CustomerClassList { get; }
 
-        public decimal VR_From { get; }
+        public decimal? VR_From { get; }
 
-        public decimal VR_To { get; }
+        public decimal? VR_To { get; }
 
-        public byte VRStatus { get; }
+        public byte? VRStatus { get; }
 
         public string SporttypeList { get; }
 
         public string BettypeList { get; }
 
-        public byte LiveIndicator { get; }
+        public byte? LiveIndicator { get; }
 
         public string LeagueGroupList { get; }
 
@@ -64,9 +64,9 @@ namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 
         public string Betfrom { get; }
 
-        public decimal StakeRM_From { get; }
+        public decimal? StakeRM_From { get; }
 
-        public decimal StakeRM_To { get; }
+        public decimal? StakeRM_To { get; }
 
         public string DateOfWeekList { get; }
 

@@ -13,13 +13,20 @@ function CurrentVRStatusCriteria(vrStatusList) {
             <div class="detail-rule">
                 <select class="combobox-autocomplete width-60" id="ddl-currentVRStatus"></select>
             </div>
-        </div>`
+        </div>`;
     var chkEnableCurrentVRStatusCriteria, ddlCurrentVRStatus;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        ddlCurrentVRStatus = VREngineHelper.renderCombobox("ddl-currentVRStatus", vrStatusList);
-        chkEnableCurrentVRStatusCriteria = $("#chk-enableCurrentVRStatusCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedVRStatus;
+        var isEnabled = rule && rule.EnabledCurrentVRStatus;
+        if (isEnabled) {
+            selectedVRStatus = rule.VRStatus;
+        }
+
+        ddlCurrentVRStatus = VREngineHelper.renderCombobox("ddl-currentVRStatus", vrStatusList, selectedVRStatus);
+        chkEnableCurrentVRStatusCriteria = $("#chk-enableCurrentVRStatusCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableCurrentVRStatusCriteria.css("visibility", "hidden");
+
         $("#span-noteCurrentVRStatusCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -33,10 +40,6 @@ function CurrentVRStatusCriteria(vrStatusList) {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        $("#span-noteCurrentVRStatusCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -44,19 +47,16 @@ function CurrentVRStatusCriteria(vrStatusList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableCurrentVRStatusCriteria.is(":checked");
+        return chkEnableCurrentVRStatusCriteria && chkEnableCurrentVRStatusCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableSportCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableCurrentVRStatusCriteria.trigger("change");
     };
 
     this.getFormData = function () {

@@ -245,7 +245,8 @@
                 "~/Areas/Customers/Scripts/VirtualRateEngine/stakeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketDoWCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/ticketTimeCriteria.js",
-                "~/Areas/Customers/Scripts/VirtualRateEngine/VREngineHelperRuleList.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/otherControls.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/addOrUpdateRule.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
 
             bundles.AddAndInclude(

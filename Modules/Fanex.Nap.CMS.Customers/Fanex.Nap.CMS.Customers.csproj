@@ -263,6 +263,7 @@
     <Compile Include="Criteria\VirtualRateEngine\DeleteVREngineRuleCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineLeagueCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineMatrixCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\GetVREngineRuleCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineRuleListCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\UpdateVREngineRuleCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\VREngineCriteriaBase.cs" />
@@ -288,6 +289,7 @@
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineBetfrom.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineMatrix.cs" />
+    <Compile Include="Models\VirtualRateEngine\VREngineModel.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineRule.cs" />
     <Compile Include="Models\WhitelistBigCreditMembers\AddMemberResult.cs" />
     <Compile Include="Params\LogParam.cs" />
@@ -405,7 +407,7 @@
     <Compile Include="ViewModels\ProblemAccount\UnmarkViewModel.cs" />
     <Compile Include="ViewModels\ProblemAccount\UpdateInformingStatusViewModel.cs" />
     <Compile Include="ViewModels\VirtualRateEngine\AddNewRuleViewModel.cs" />
-    <Compile Include="ViewModels\VirtualRateEngine\VREngineIndexViewModel.cs" />
+    <Compile Include="ViewModels\VirtualRateEngine\VREngineMatrixViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

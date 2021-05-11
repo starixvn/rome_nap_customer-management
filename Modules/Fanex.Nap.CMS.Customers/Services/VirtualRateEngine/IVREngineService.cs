@@ -1,17 +1,22 @@
-﻿using System.Collections.Generic;
-using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
-using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-using Fanex.Nap.CMS.Infrastructure.Models;
-
-namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
 {
+    using System.Collections.Generic;
+    using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
+    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+
     public interface IVREngineService
     {
         VREngineMatrix GetVREngineMatrix();
 
-        IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagues);
+        IEnumerable<IdNameModel> GetLeagues(
+            string leagueGroupIds,
+            string leagueGroupListNotIn,
+            string leagues);
 
-        IEnumerable<VREngineRule> GetRules();
+        VREngineModel GetRules();
+
+        VREngineRule GetRule(int ruleId);
 
         Result AddNewRule(AddNewRuleViewModel viewModel);
 

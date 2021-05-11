@@ -73,5 +73,6 @@
     <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

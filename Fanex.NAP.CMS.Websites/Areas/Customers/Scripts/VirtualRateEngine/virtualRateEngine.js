@@ -1,203 +1,245 @@
 ﻿"use strict";
 (function ($) {
-    var formAddNewRule = $("#form-addNewRule");
+    var $freegrid = $("#freegrid");
+    var gridOptions = getGridOptions();
+    var totalColumns = canUpdateRule ? 7 : 6;
+    var addOrUpdateRule;
 
-    var txtRuleTitle;
-    var txtPriorityOrder;
-    var siteTypeCriteria = new SiteTypeCriteria(vm.SiteTypes, vm.Conditions, vm.CreditSites, vm.LicenseeSites);
-    var customerClassCriteria = new CustomerClassCriteria(vm.Conditions, vm.CustomerClasses);
-    var currentVRCriteria = new CurrentVRCriteria();
-    var currentVRStatusCriteria = new CurrentVRStatusCriteria(vm.CurrentVRStatus);
-    var sportCriteria = new SportCriteria(vm.Conditions, vm.Sports);
-    var betTypeCriteria = new BetTypeCriteria(vm.Conditions, vm.BetTypes);
-    var eventCriteria = new EventCriteria(vm.Events);
-    var leagueGroupCriteria = new LeagueGroupCriteria(vm.Conditions, vm.LeagueGroups);
-    var betfromCriteria = new BetfromCriteria(vm.BetfromList);
-    var stakeCriteria = new StakeCriteria();
-    var ticketDoWCriteria = new TicketDoWCriteria(vm.Conditions, vm.DayOfWeeks);
-    var ticketTimeCriteria = new TicketTimeCriteria();
-    var ddlAdjustment, txtAdjustment;
-    var ddlActive;
+    function getGridOptions() {
+        var columns = [
+            { HeaderText: "Priority", Width: 80, Name: "colPriority", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
+            { HeaderText: "Criteria", Width: 500, Name: "colCriteria", HeaderAlign: "center" },
+            { HeaderText: "Adjustment", Width: 120, Name: "colAdjustment", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Status", Width: 80, Name: "colStatus", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Created Date", Width: 120, Name: "colCreatedDate", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Created By", Width: 120, Name: "colCreatedBy", HeaderAlign: "center", CellAlign: "center" }
+        ];
 
-    var ruleList = new VREngineHelperRuleList(hasHostFullPermission, hasHostVirtualRateEnginePermission);
-
-    function initAddNewRule(form) {
-        txtRuleTitle = form.find("#txt-ruleTitle");
-
-        txtPriorityOrder = form.find("#txt-priorityOrder");
-        txtPriorityOrder
-            .off("keypress")
-            .on("keypress", CMS.forceNumberInput);
-
-        var $criteriaContainer = form.find("#div-criteriaContainer");
-        siteTypeCriteria.initAddNew($criteriaContainer);
-        customerClassCriteria.initAddNew($criteriaContainer);
-        currentVRCriteria.initAddNew($criteriaContainer);
-        currentVRStatusCriteria.initAddNew($criteriaContainer);
-        sportCriteria.initAddNew($criteriaContainer);
-        betTypeCriteria.initAddNew($criteriaContainer);
-        eventCriteria.initAddNew($criteriaContainer);
-        leagueGroupCriteria.initAddNew($criteriaContainer);
-        betfromCriteria.initAddNew($criteriaContainer);
-        stakeCriteria.initAddNew($criteriaContainer);
-        ticketDoWCriteria.initAddNew($criteriaContainer, [2]);
-        ticketTimeCriteria.initAddNew($criteriaContainer);
-
-        ddlAdjustment = VREngineHelper.renderCombobox("ddl-adjustment", vm.Adjustments);
-        txtAdjustment = form.find("#txt-adjustment");
-        txtAdjustment
-            .off("keypress")
-            .on("keypress", CMS.forceNegativeNumberInput);
-
-        ddlActive = VREngineHelper.renderCombobox("ddl-active", vm.Actives);
-
-        var buttonCancel = form.find("#btn-cancel");
-        buttonCancel
-            .off("click")
-            .on("click", CMS.closePopup);
-
-        var buttonAddNewRule = form.find("#btn-addNewRule");
-        buttonAddNewRule
-            .off("click")
-            .on("click", function () {
-                addNewRuleHandler(form);
-            });
-    }
-
-    function addNewRuleHandler(form) {
-        var formData = validateAddNewRuleFormData(form);
-        formData && CMS.callAjax(
-            this,
-            CMS.resolveRootUrl("Customers/VirtualRateEngine/AddNewRule"),
-            formData,
-            function (jsonString) {
-                var result = JSON.parse(jsonString);
-                if (result.Code) {
-                    CMS.showInlineErrorMsg(result.Message, form.find("#divErrorSuccessMsg"));
-                } else {
-                    CMS.showInlineSuccessMsg(result.Message, form.find("#divErrorSuccessMsg"), true, function () {
-                        CMS.closePopup();
-                        ruleList.getRuleList();
-                    });
-                }
-            }
-        );
-    }
-
-    function validateAddNewRuleFormData() {
-        var isValid = true;
-
-        var priorityOrder = validatePriorityOrder();
-        if (!priorityOrder) {
-            isValid = false;
+        if (canUpdateRule) {
+            columns.push({ HeaderText: "Action", Width: 80, Name: "colAction", HeaderAlign: "center", CellAlign: "center" });
         }
 
-        var formDataCriteria = [];
-        $.each([
-            siteTypeCriteria,
-            customerClassCriteria,
-            currentVRCriteria,
-            currentVRStatusCriteria,
-            sportCriteria,
-            betTypeCriteria,
-            eventCriteria,
-            leagueGroupCriteria,
-            betfromCriteria,
-            stakeCriteria,
-            ticketDoWCriteria,
-            ticketTimeCriteria
-        ], function (index, value) {
-            var formData = value.getFormData();
-            if (formData) {
-                if (formData.isInvalid) {
-                    isValid = false;
-                } else {
-                    formDataCriteria.push(formData);
-                }
-            }
+        return {
+            showDistinctRow: false,
+            gridExpandHeight: adminPermission ? 140 : 110,
+            columns: columns
+        };
+    }
+
+    function getRuleListAndMatrix() {
+        CMS.getJson(CMS.resolveRootUrl("Customers/VirtualRateEngine/GetRulesAndMatrix"), function (jsonString) {
+            var jsonData = JSON.parse(jsonString);
+            renderRuleList(jsonData.Rules);
+
+            addOrUpdateRule = new AddOrUpdateRule($("#form-addOrUpdateRule"), getRuleList, jsonData.Matrix, adminPermission);
+
+            // Empty the #divPopupContent since it's children was cached.
+            // It also helps to prevent the 'for' attributes do not work correctly in the popup.
+            $("#divPopupContent").remove();
         });
+    }
 
-        var adjustmentValue = validateAdjustment();
-        if (typeof adjustmentValue === "undefined") {
-            isValid = false;
+    function getRuleList() {
+        CMS.getJson(CMS.resolveRootUrl("Customers/VirtualRateEngine/GetRules"), function (jsonString) {
+            renderRuleList(JSON.parse(jsonString));
+        });
+    }
+
+    function renderRuleList(ruleList) {
+        var bodyRows = [];
+
+        $.each(ruleList, function (index, rule) {
+            bodyRows.push(renderRuleIdAndName(rule));
+            bodyRows.push(renderRuleContent(rule));
+        })
+
+        gridOptions.bodyRows = bodyRows;
+        $freegrid
+            .removeClass("display-none")
+            .fanexGrid(gridOptions);
+
+        bindEventsAfterRenderSuccessfully();
+    }
+
+    function renderRuleIdAndName(rule) {
+        return {
+            Columns: [
+                {
+                    Name: "colPriority",
+                    Value: ['<span class="grid-collapse-expand grid-expand"></span>', rule.RuleId, " - ", rule.RuleName].join(""),
+                    CellAlign: "left",
+                    MergeColNumber: totalColumns
+                }
+            ],
+            CssClass: "parent-row",
+            CustomAttr: 'data-ruleid="' + rule.RuleId + '"'
+        };
+    }
+
+    function renderRuleContent(rule) {
+        var columns = [
+            { Name: "colPriority", Value: rule.Priority },
+            { Name: "colCriteria", Value: renderCriteriaCell(rule) },
+            { Name: "colAdjustment", Value: rule.AdjustmentCell },
+            { Name: "colStatus", Value: rule.StatusName },
+            { Name: "colCreatedDate", Value: rule.CreatedDate },
+            { Name: "colCreatedBy", Value: rule.CreatedBy }
+        ];
+
+        if (canUpdateRule) {
+            columns.push({ Name: "colAction", Value: renderActionCell(rule) });
         }
 
-        if (isValid) {
-            var enabledCriteria = [];
-            var addNewRuleFormData = {
-                ruleTitle: $.trim(txtRuleTitle.val()),
-                priorityOrder: priorityOrder,
-                adjustmentType: ddlAdjustment.val(),
-                adjustmentValue: adjustmentValue,
-                active: ddlActive.val()
-            };
+        return {
+            Columns: columns,
+            CssClass: "child-row-" + rule.RuleId
+        };
+    }
 
-            $.each(formDataCriteria, function (index, value) {
-                enabledCriteria.push(value.name);
+    function renderCriteriaCell(rule) {
+        var html = [];
+        var pushMultipleSelectionCriteria = function (criteriaName, nameList, nameListNotIn) {
+            if (nameListNotIn) {
+                html.push(criteriaName + "not in (" + nameListNotIn + ")");
+            } else {
+                html.push(criteriaName + "in (" + nameList + ")");
+            }
+        };
 
-                delete value.name;
-                $.extend(addNewRuleFormData, value);
+        if (rule.EnabledSiteType) {
+            html.push("1. Site Type: " + rule.SiteTypeName);
+            pushMultipleSelectionCriteria("&nbsp;&nbsp;&nbsp;&nbsp;Site: ", rule.SiteNameList, rule.SiteNameListNotIn);
+        }
+
+        rule.EnabledCustomerClass
+            && pushMultipleSelectionCriteria("2. Customer Class: ", rule.CustomerClassList, rule.CustomerClassListNotIn);
+
+        rule.EnabledCurrentVR
+            && html.push("3. Current Virtual Rate: From " + rule.VRFrom + "% To " + rule.VRTo + "%");
+
+        rule.EnabledCurrentVRStatus
+            && html.push("4. Current Virtual Rate Status: " + rule.VRStatusName);
+
+        rule.EnabledSport
+            && pushMultipleSelectionCriteria("5. Sport: ", rule.SportTypeNameList, rule.SportTypeNameListNotIn);
+
+        rule.EnabledBetType
+            && pushMultipleSelectionCriteria("6. Bet Type: ", rule.BetTypeNameList, rule.BetTypeNameListNotIn);
+
+        rule.EnabledEvent
+            && html.push("7. Event: " + rule.LiveIndicatorName);
+
+        if (rule.EnabledLeagueGroup) {
+            pushMultipleSelectionCriteria("8. League Group: ", rule.LeagueGroupNameList, rule.LeagueGroupNameListNotIn);
+            pushMultipleSelectionCriteria("&nbsp;&nbsp;&nbsp;&nbsp;League: ", rule.LeagueList === "-1" ? "All" : rule.LeagueList, rule.LeagueListNotIn);
+        }
+
+        rule.EnabledBetfrom
+            && html.push("9. Bet From: " + rule.BetfromName);
+
+        rule.EnabledStake
+            && html.push("10. Stake (RM): From " + rule.StakeFrom + " To " + (rule.StakeTo === 0 ? "Unlimited" : rule.StakeTo));
+
+        rule.EnabledTicketDoW
+            && pushMultipleSelectionCriteria("11. Ticket Day of Week: ", rule.DoWNameList, rule.DoWNameListNotIn);
+
+        rule.EnabledTicketTime
+            && html.push("12. Ticket Time (GMT+8): From " + VREngineHelper.extractHourMinute(rule.BeginTime) + " To " + VREngineHelper.extractHourMinute(rule.EndTime));
+
+        return html.join("<br/>");
+    }
+
+    function renderActionCell(rule) {
+        var html = [];
+
+        if (canUpdateRule) {
+            html.push('<span class="ico-edit" title="Update" data-ruleid="');
+            html.push(rule.RuleId);
+            html.push('"></span>');
+        }
+
+        if (adminPermission) {
+            html.push('&nbsp;&nbsp;<span class="ico-delete" title="Delete" data-ruleid="');
+            html.push(rule.RuleId);
+            html.push('"></span>');
+        }
+
+        return html.join("");
+    }
+
+    function bindEventsAfterRenderSuccessfully() {
+        $freegrid.find(".parent-row")
+            .off("click")
+            .on("click", collapseExpandRowHandler);
+
+        $freegrid.find(".ico-edit")
+            .off("click")
+            .on("click", updateRuleHandler);
+
+        $freegrid.find(".ico-delete")
+            .off("click")
+            .on("click", deleteRuleHandler);
+    }
+
+    function collapseExpandRowHandler() {
+        var $this = $(this);
+        var trChildRow = $freegrid.find(".child-row-" + $this.data("ruleid"));
+        var iconCollapseExpand = $this.find(".grid-collapse-expand");
+        if (iconCollapseExpand.hasClass("grid-expand")) {
+            trChildRow.addClass("display-none");
+            iconCollapseExpand
+                .removeClass("grid-expand")
+                .addClass("grid-collapse");
+        } else {
+            trChildRow.removeClass("display-none");
+            iconCollapseExpand
+                .removeClass("grid-collapse")
+                .addClass("grid-expand");
+        }
+
+        $freegrid.fanexGrid("resizeGrid");
+    }
+
+    function deleteRuleHandler() {
+        var ruleId = $(this).data("ruleid");
+        CMS.showConfirmMessage(
+            "Are you sure you want to delete the selected title?",
+            function () {
+                CMS.disableInput();
+                CMS.callAjax(
+                    this,
+                    CMS.resolveRootUrl("Customers/VirtualRateEngine/DeleteRule"),
+                    { ruleId: ruleId },
+                    function (jsonString) {
+                        var result = JSON.parse(jsonString);
+                        if (result.Code) {
+                            CMS.showErrorMessage(result.Message);
+                        } else {
+                            CMS.showSuccessMessage(result.Message, getRuleList);
+                        }
+                    });
             });
-
-            addNewRuleFormData.enabledColumns = enabledCriteria.join(",");
-
-            return addNewRuleFormData;
-        }
     }
 
-    function validatePriorityOrder() {
-        var inputPriorityOrder = VREngineHelper.validateNumber(txtPriorityOrder);
-        if (typeof inputPriorityOrder === "undefined") {
-            return;
-        }
-
-        if (inputPriorityOrder < 1 || inputPriorityOrder > 10000) {
-            CMS.showTipsyError(txtPriorityOrder, resources.priorityOrderValueOutOfRangeError, "nw");
-            return;
-        }
-
-        CMS.clearTipsyError(txtPriorityOrder);
-        return inputPriorityOrder;
-    }
-
-    function validateAdjustment() {
-        var inputAdjustment = VREngineHelper.validateNumber(txtAdjustment);
-        if (typeof inputAdjustment === "undefined") {
-            return;
-        }
-
-        var isFixedValue = ddlAdjustment.val() === "1";
-        if (isFixedValue && (inputAdjustment < -99 || inputAdjustment > 200)) {
-            CMS.showTipsyError(txtAdjustment, resources.vrValueOutOfRangeError, "nw");
-            return;
-        }
-
-        CMS.clearTipsyError(txtAdjustment);
-        return inputAdjustment;
+    function updateRuleHandler() {
+        var $this = $(this);
+        var ruleId = $this.data("ruleid");
+        CMS.getJson(
+            CMS.resolveRootUrl("Customers/VirtualRateEngine/GetRule?ruleId=" + ruleId),
+            function (jsonString) {
+                if (jsonString) {
+                    addOrUpdateRule.openModal("Update Rule", JSON.parse(jsonString));
+                } else {
+                    CMS.showErrorMessage("The rule does not exist.");
+                }
+            });
     }
 
     $(function () {
+        getRuleListAndMatrix();
+
         $("#btnAddNewRule").click(function () {
-            var form = formAddNewRule.clone();
-            CMS.modal("Add New Rule", form, {
-                height: "auto",
-                width: "640px",
-                resizable: false,
-                position: {
-                    my: "center top",
-                    at: "center top",
-                    of: "#headline"
-                }
-            });
-
-            initAddNewRule(form);
+            addOrUpdateRule.openModal("Add New Rule");
         });
-
-        ruleList = new VREngineHelperRuleList(hasHostFullPermission, hasHostVirtualRateEnginePermission);
-        ruleList.getRuleList();
-
-        // Empty the #divPopupContent since it's children was cached.
-        // It also helps to prevent the 'for' attributes do not work correctly in the popup.
-        $("#divPopupContent").remove();
     });
 })(jQuery);

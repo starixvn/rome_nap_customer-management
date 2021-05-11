@@ -18,14 +18,23 @@ function TicketDoWCriteria(conditionList, dowList) {
                     <div id="ddl-ticketDoW"></div>
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableTicketDoWCriteria, ddlTicketDoWCondition, ddlTicketDoW;
 
-    function renderHtml(criteriaContainer, selectedDoWList) {
-        criteriaContainer.append(htmlTemplate);
-        ddlTicketDoWCondition = VREngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList);
-        ddlTicketDoW = VREngineHelper.renderMultiSelect("ddl-ticketDoW", dowList, selectedDoWList);
-        chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedDoW, condition;
+        var isEnabled = rule && rule.EnabledTicketDoW;
+        if (rule) {
+            condition = rule.DoWListNotIn ? 1 : 0;
+            selectedDoW = rule.DoWListNotIn || rule.DoWList;
+        }
+
+        ddlTicketDoWCondition = VREngineHelper.renderCombobox("ddl-ticketDoWCondition", conditionList, condition);
+        ddlTicketDoW = VREngineHelper.renderMultiSelect("ddl-ticketDoW", dowList, selectedDoW);
+
+        chkEnableTicketDoWCriteria = $("#chk-enableTicketDoWCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableTicketDoWCriteria.css("visibility", "hidden");
+
         $("#span-noteTicketDoWCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -39,10 +48,6 @@ function TicketDoWCriteria(conditionList, dowList) {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        $("#span-noteTicketDoWCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -52,7 +57,7 @@ function TicketDoWCriteria(conditionList, dowList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableTicketDoWCriteria.is(":checked");
+        return chkEnableTicketDoWCriteria && chkEnableTicketDoWCriteria.is(":checked");
     }
 
     function validateFromData() {
@@ -61,7 +66,7 @@ function TicketDoWCriteria(conditionList, dowList) {
             : ddlTicketDoW.multiSelect("getCheckedItems").join(",");
 
         if (!dow.length) {
-            CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError);
+            CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };
         }
 
@@ -73,16 +78,13 @@ function TicketDoWCriteria(conditionList, dowList) {
         return formData;
     }
 
-    this.initAddNew = function (criteriaContainer, selectedDoWList) {
-        renderHtml(criteriaContainer, selectedDoWList);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableTicketDoWCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableTicketDoWCriteria.trigger("change");
     };
 
     this.getFormData = function () {

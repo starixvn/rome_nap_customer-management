@@ -1,5 +1,5 @@
 ﻿"use strict";
-function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeSiteList) {
+function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeSiteList, adminPermission) {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
@@ -27,15 +27,35 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
                     <div id="ddl-site"></div>
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableSiteTypeCriteria, ddlSiteType, ddlSiteCondition, ddlSite;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        ddlSiteType = VREngineHelper.renderCombobox("ddl-siteType", siteTypeList);
-        ddlSiteCondition = VREngineHelper.renderCombobox("ddl-siteCondition", conditionList);
-        ddlSite = VREngineHelper.renderMultiSelect("ddl-site", [].concat(creditSiteList, licenseeSiteList));
-        chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedSiteType, condition, selectedSites, sites;
+        var isEnabled = rule && rule.EnabledSiteType;
+        if (isEnabled) {
+            selectedSiteType = rule.SiteType;
+            if (selectedSiteType === 1) { // Credit
+                sites = creditSiteList;
+            } else if (selectedSiteType === 2) { // Licensee
+                sites = licenseeSiteList;
+            } else { // All
+                sites = [].concat(creditSiteList, licenseeSiteList);
+            }
+
+            condition = rule.SiteIdListNotIn ? 1 : 0;
+            selectedSites = rule.SiteIdListNotIn || rule.SiteIdList;
+        } else {
+            sites = [].concat(creditSiteList, licenseeSiteList);
+        }
+
+        ddlSiteType = VREngineHelper.renderCombobox("ddl-siteType", siteTypeList, selectedSiteType);
+        ddlSiteCondition = VREngineHelper.renderCombobox("ddl-siteCondition", conditionList, condition);
+        ddlSite = VREngineHelper.renderMultiSelect("ddl-site", sites, selectedSites);
+
+        chkEnableSiteTypeCriteria = $("#chk-enableSiteTypeCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableSiteTypeCriteria.css("visibility", "hidden");
+
         $("#span-noteSiteTypeCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -49,10 +69,6 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
             .on("change", function () {
                 enableCriteria(this.checked)
             });
-
-        $("#span-noteSiteTypeCriteria")
-            .off("click")
-            .on("click", function () { });
 
         ddlSiteType
             .off("change")
@@ -76,7 +92,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
     }
 
     function isEnableCriteria() {
-        return chkEnableSiteTypeCriteria.is(":checked");
+        return chkEnableSiteTypeCriteria && chkEnableSiteTypeCriteria.is(":checked");
     }
 
     function validateFromData() {
@@ -84,7 +100,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
             ? "0"
             : ddlSite.multiSelect("getCheckedItems").join(",");
         if (!site.length) {
-            CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError);
+            CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };
         }
 
@@ -96,16 +112,13 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
         return formData;
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableCustomerClassCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableSiteTypeCriteria.trigger("change");
     };
 
     this.getFormData = function () {

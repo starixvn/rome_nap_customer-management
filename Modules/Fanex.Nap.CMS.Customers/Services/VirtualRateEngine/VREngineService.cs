@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Fanex.Data.Repository;
-using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
-using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
-using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
-using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
-using Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine;
-using Fanex.Nap.CMS.Customers.Resources;
-using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-using Fanex.Nap.CMS.Infrastructure.Extensions;
-using Fanex.Nap.CMS.Infrastructure.Models;
-
-namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
+    using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
+    using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
+    using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
+    using Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine;
+    using Fanex.Nap.CMS.Customers.Resources;
+    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+
     public class VREngineService : IVREngineService
     {
         private const string SiteType = "Site";
@@ -38,18 +38,29 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
         public VREngineMatrix GetVREngineMatrix()
             => repository.GetVREngineMatrix(new GetVREngineMatrixCriteria());
 
-        public IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagues)
-            => repository.GetLeagues(new GetVREngineLeagueCriteria(leagueGroupIds, leagues));
+        public IEnumerable<IdNameModel> GetLeagues(
+            string leagueGroupIds,
+            string leagueGroupListNotIn,
+            string leagues)
+            => repository.GetLeagues(
+                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues));
 
-        public IEnumerable<VREngineRule> GetRules()
+        public VREngineModel GetRules()
         {
             var matrix = GetVREngineMatrix();
+
+            return new VREngineModel(GetRules(matrix), matrix);
+        }
+
+        private IEnumerable<VREngineRule> GetRules(VREngineMatrix matrix)
+        {
             var rules = repository.GetRules(new GetVREngineRuleListCriteria());
 
             foreach (var rule in rules)
             {
                 if (!string.IsNullOrWhiteSpace(rule.EnabledCriteria))
                 {
+                    SetEnabledCriteria(rule);
                     BuildCriteriaCell(rule, matrix);
                 }
 
@@ -61,103 +72,114 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             }
         }
 
+        public VREngineRule GetRule(int ruleId)
+        {
+            var rule = repository.GetRule(new GetVREngineRuleCriteria(ruleId));
+
+            if (rule != null && !string.IsNullOrWhiteSpace(rule.EnabledCriteria))
+            {
+                SetEnabledCriteria(rule);
+            }
+
+            return rule;
+        }
+
+        private static void SetEnabledCriteria(VREngineRule rule)
+        {
+            var enabledCriteria = rule.EnabledCriteria.ToArray().ToDictionary(kvp => kvp, kvp => true);
+            rule.EnabledSiteType = enabledCriteria.ContainsKey(SiteType);
+            rule.EnabledCustomerClass = enabledCriteria.ContainsKey(CustomerClass);
+            rule.EnabledCurrentVR = enabledCriteria.ContainsKey(CurrentVR);
+            rule.EnabledCurrentVRStatus = enabledCriteria.ContainsKey(CurrentVRStatus);
+            rule.EnabledSport = enabledCriteria.ContainsKey(Sport);
+            rule.EnabledBetType = enabledCriteria.ContainsKey(BetType);
+            rule.EnabledEvent = enabledCriteria.ContainsKey(Event);
+            rule.EnabledLeagueGroup = enabledCriteria.ContainsKey(LeagueGroup);
+            rule.EnabledBetfrom = enabledCriteria.ContainsKey(Betfrom);
+            rule.EnabledStake = enabledCriteria.ContainsKey(Stake);
+            rule.EnabledTicketDoW = enabledCriteria.ContainsKey(TicketDoW);
+            rule.EnabledTicketTime = enabledCriteria.ContainsKey(TicketTime);
+        }
+
         #region Build Criteria methods
 
         private static void BuildCriteriaCell(VREngineRule rule, VREngineMatrix matrix)
         {
-            var enabledCriteria = rule.EnabledCriteria.ToArray().ToDictionary(kvp => kvp, kvp => true);
+            BuildSiteTypeCriteria(rule, matrix.CreditSites, matrix.LicenseeSites);
 
-            BuildSiteTypeCriteria(enabledCriteria, rule, matrix.CreditSites, matrix.LicenseeSites);
+            BuildCurrentVRStatusCriteria(rule);
 
-            rule.EnabledCustomerClass = enabledCriteria.ContainsKey(CustomerClass);
+            BuildSportCriteria(rule, matrix.Sports);
 
-            rule.EnabledCurrentVR = enabledCriteria.ContainsKey(CurrentVR);
+            BuildBetTypeCriteria(rule, matrix.BetTypes);
 
-            BuildCurrentVRStatusCriteria(enabledCriteria, rule);
+            BuildEventCriteria(rule);
 
-            BuildSportCriteria(enabledCriteria, rule, matrix.Sports);
+            BuildLeagueGroupCriteria(rule, matrix.LeagueGroups);
 
-            BuildBetTypeCriteria(enabledCriteria, rule, matrix.BetTypes);
+            BuildBetfromCriteria(rule, matrix.BetfromList);
 
-            BuildEventCriteria(enabledCriteria, rule);
-
-            BuildLeagueGroupCriteria(enabledCriteria, rule, matrix.LeagueGroups);
-
-            BuildBetfromCriteria(enabledCriteria, rule, matrix.BetfromList);
-
-            rule.EnabledStake = enabledCriteria.ContainsKey(Stake);
-
-            BuildTicketDoWCriteria(enabledCriteria, rule);
-
-            rule.EnabledTicketTime = enabledCriteria.ContainsKey(TicketTime);
+            BuildTicketDoWCriteria(rule);
         }
 
         private static void BuildSiteTypeCriteria(
-            IDictionary<string, bool> enabledCriteria,
             VREngineRule rule,
             IEnumerable<IdNameModel> creditSites,
             IEnumerable<IdNameModel> licenseeSites)
         {
-            rule.EnabledSiteType = enabledCriteria.ContainsKey(SiteType);
-
-            if (rule.EnabledSiteType)
+            if (!rule.EnabledSiteType)
             {
-                IEnumerable<IdNameModel> sites = Enumerable.Empty<IdNameModel>();
+                return;
+            }
 
-                var hasSiteIdList = rule.SiteIdList != "0";
-                var hasSiteIdListNotApply = rule.SiteIdListNotIn != "0";
+            IEnumerable<IdNameModel> sites = Enumerable.Empty<IdNameModel>();
+            var isBuildSiteName = !string.IsNullOrWhiteSpace(rule.SiteIdListNotIn) || rule.SiteIdList != "0";
 
-                if (rule.SiteType == SiteTypeConst.Credit)
+            if (rule.SiteType == SiteTypeConst.Credit)
+            {
+                rule.SiteTypeName = nameof(SiteTypeConst.Credit);
+
+                if (isBuildSiteName)
                 {
-                    rule.SiteTypeName = nameof(SiteTypeConst.Credit);
-
-                    if (hasSiteIdList || hasSiteIdListNotApply)
-                    {
-                        sites = creditSites;
-                    }
+                    sites = creditSites;
                 }
-                else if (rule.SiteType == SiteTypeConst.Licensee)
+            }
+            else if (rule.SiteType == SiteTypeConst.Licensee)
+            {
+                rule.SiteTypeName = nameof(SiteTypeConst.Licensee);
+
+                if (isBuildSiteName)
                 {
-                    rule.SiteTypeName = nameof(SiteTypeConst.Licensee);
-
-                    if (hasSiteIdList || hasSiteIdListNotApply)
-                    {
-                        sites = licenseeSites;
-                    }
+                    sites = licenseeSites;
                 }
-                else
+            }
+            else
+            {
+                rule.SiteTypeName = Labels.All;
+
+                if (isBuildSiteName)
                 {
-                    rule.SiteTypeName = Labels.All;
-
-                    if (hasSiteIdList || hasSiteIdListNotApply)
-                    {
-                        sites = creditSites.Concat(licenseeSites);
-                    }
+                    sites = creditSites.Concat(licenseeSites);
                 }
+            }
 
-                var nameTuple = BuildMultipleSelectionCriteria(rule.SiteIdList, rule.SiteIdListNotIn, sites);
-                rule.SiteNameList = nameTuple.Item1;
-                rule.SiteNameListNotIn = nameTuple.Item2;
+            var nameTuple = BuildMultipleSelectionCriteria(rule.SiteIdList, rule.SiteIdListNotIn, sites);
+            rule.SiteNameList = nameTuple.Item1;
+            rule.SiteNameListNotIn = nameTuple.Item2;
+        }
+
+        private static void BuildCurrentVRStatusCriteria(VREngineRule rule)
+        {
+            if (rule.EnabledCurrentVRStatus)
+            {
+                rule.VRStatusName = rule.VRStatus == CurrentVRStatusConst.Enable
+                    ? VREngineResource.Enabled
+                    : VREngineResource.Disabled;
             }
         }
 
-        private static void BuildCurrentVRStatusCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule)
+        private static void BuildSportCriteria(VREngineRule rule, IEnumerable<IdNameModel> sports)
         {
-            rule.EnabledCurrentVRStatus = enabledCriteria.ContainsKey(CurrentVRStatus);
-            rule.VRStatusName = rule.VRStatus == CurrentVRStatusConst.Enable
-                ? VREngineResource.Enabled
-                : VREngineResource.Disabled;
-        }
-
-        private static void BuildSportCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule,
-            IEnumerable<IdNameModel> sports)
-        {
-            rule.EnabledSport = enabledCriteria.ContainsKey(Sport);
-
             if (rule.EnabledSport)
             {
                 var nameTuple = BuildMultipleSelectionCriteria(
@@ -170,13 +192,8 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             }
         }
 
-        private static void BuildBetTypeCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule,
-            IEnumerable<IdNameModel> betTypes)
+        private static void BuildBetTypeCriteria(VREngineRule rule, IEnumerable<IdNameModel> betTypes)
         {
-            rule.EnabledBetType = enabledCriteria.ContainsKey(BetType);
-
             if (rule.EnabledBetType)
             {
                 var nameTuple = BuildMultipleSelectionCriteria(
@@ -189,23 +206,18 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             }
         }
 
-        private static void BuildEventCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule)
+        private static void BuildEventCriteria(VREngineRule rule)
         {
-            rule.EnabledEvent = enabledCriteria.ContainsKey(Event);
-            rule.LiveIndicatorName = rule.LiveIndicator == EventConst.Live
-                ? nameof(EventConst.Live)
-                : VREngineResource.NonLive;
+            if (rule.EnabledEvent)
+            {
+                rule.LiveIndicatorName = rule.LiveIndicator == EventConst.Live
+                    ? nameof(EventConst.Live)
+                    : VREngineResource.NonLive;
+            }
         }
 
-        private static void BuildLeagueGroupCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule,
-            IEnumerable<IdNameModel> leagueGroups)
+        private static void BuildLeagueGroupCriteria(VREngineRule rule, IEnumerable<IdNameModel> leagueGroups)
         {
-            rule.EnabledLeagueGroup = enabledCriteria.ContainsKey(LeagueGroup);
-
             if (rule.EnabledLeagueGroup)
             {
                 var nameTuple = BuildMultipleSelectionCriteria(
@@ -219,30 +231,25 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             }
         }
 
-        private static void BuildBetfromCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule,
-            IEnumerable<VREngineBetfrom> betfromList)
+        private static void BuildBetfromCriteria(VREngineRule rule, IEnumerable<VREngineBetfrom> betfromList)
         {
-            rule.EnabledBetfrom = enabledCriteria.ContainsKey(Betfrom);
-            rule.BetfromName = betfromList.FirstOrDefault(b => b.Id == rule.Betfrom)?.Name;
+            if (rule.EnabledBetfrom)
+            {
+                rule.BetfromName = betfromList.FirstOrDefault(b => b.Id == rule.Betfrom)?.Name;
+            }
         }
 
-        private static void BuildTicketDoWCriteria(
-            IDictionary<string, bool> enabledCriteria,
-            VREngineRule rule)
+        private static void BuildTicketDoWCriteria(VREngineRule rule)
         {
-            rule.EnabledTicketDoW = enabledCriteria.ContainsKey(TicketDoW);
-
             if (rule.EnabledTicketDoW)
             {
                 var nameTuple = BuildMultipleSelectionCriteria(
-                    rule.DateOfWeekList,
-                    rule.DateOfWeekListNotIn,
+                    rule.DoWList,
+                    rule.DoWListNotIn,
                     VREngineDayOfWeek.DayOfWeeks);
 
-                rule.DateOfWeekNameList = nameTuple.Item1;
-                rule.DateOfWeekNameListNotIn = nameTuple.Item2;
+                rule.DoWNameList = nameTuple.Item1;
+                rule.DoWNameListNotIn = nameTuple.Item2;
             }
         }
 
@@ -255,7 +262,7 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             string nameList = null;
             string nameListNotApply = null;
 
-            if (!string.IsNullOrWhiteSpace(idListNotApply) && idListNotApply != allValue)
+            if (!string.IsNullOrWhiteSpace(idListNotApply))
             {
                 nameListNotApply = ToString(GetNameList(idListNotApply, idNameList.ToDictionary(kvp => kvp.Id, kvp => kvp.Name)));
             }
@@ -265,7 +272,7 @@ namespace Fanex.Nap.CMS.Customers.Services.VirtualRateEngine
             }
             else
             {
-                nameList= Labels.All;
+                nameList = Labels.All;
             }
 
             return new Tuple<string, string>(nameList, nameListNotApply);

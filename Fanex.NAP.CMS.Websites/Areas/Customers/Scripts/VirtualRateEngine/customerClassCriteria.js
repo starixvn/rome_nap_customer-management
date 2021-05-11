@@ -18,16 +18,25 @@ function CustomerClassCriteria(conditionList, customerClassList) {
                     <div id="ddl-customerClass"></div>
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableCustomerClassCriteria, spanHintCustomerClassCriteria, ddlCustomerClassCondition, ddlCustomerClass;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        ddlCustomerClassCondition = VREngineHelper.renderCombobox("ddl-customerClassCondition", conditionList);
-        ddlCustomerClass = VREngineHelper.renderMultiSelect("ddl-customerClass", customerClassList);
-        chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedCustomerClass, condition;
+        var isEnabled = rule && rule.EnabledCustomerClass;
+        if (isEnabled) {
+            condition = rule.CustomerClassListNotIn ? 1 : 0;
+            selectedCustomerClass = rule.CustomerClassListNotIn || rule.CustomerClassList;
+        }
+
+        ddlCustomerClassCondition = VREngineHelper.renderCombobox("ddl-customerClassCondition", conditionList, condition);
+        ddlCustomerClass = VREngineHelper.renderMultiSelect("ddl-customerClass", customerClassList, selectedCustomerClass);
+
+        chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableCustomerClassCriteria.css("visibility", "hidden");
+
         spanHintCustomerClassCriteria = $("#span-noteCustomerClassCriteria").tipsy({ className: "criteria-hint", opacity: 1 });
-    };
+    }
 
     function bindEvents() {
         chkEnableCustomerClassCriteria
@@ -50,7 +59,7 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableCustomerClassCriteria.is(":checked");
+        return chkEnableCustomerClassCriteria && chkEnableCustomerClassCriteria.is(":checked");
     }
 
     function validateFromData() {
@@ -59,7 +68,7 @@ function CustomerClassCriteria(conditionList, customerClassList) {
             : ddlCustomerClass.multiSelect("getCheckedItems").join(",");
 
         if (!customerClass.length) {
-            CMS.showTipsyError(ddlCustomerClass, resources.noneSelectedOptionError);
+            CMS.showTipsyError(ddlCustomerClass, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };
         }
 
@@ -70,17 +79,14 @@ function CustomerClassCriteria(conditionList, customerClassList) {
 
         return formData;
     }
+    
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
-    };
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableCustomerClassCriteria.remove();
-        bindEvents();
+        chkEnableCustomerClassCriteria.trigger("change");
     };
 
     this.getFormData = function () {

@@ -1,7 +1,7 @@
-﻿using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-
-namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 {
+    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
+
     internal class UpdateVREngineRuleCriteria : AddNewVREngineRuleCriteria
     {
         public UpdateVREngineRuleCriteria(int ruleId, AddNewRuleViewModel vm)

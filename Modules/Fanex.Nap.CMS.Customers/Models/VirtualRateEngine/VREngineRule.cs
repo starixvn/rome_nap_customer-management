@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
 {
+    using System;
+
     public class VREngineRule
     {
         public VREngineRule(
@@ -73,8 +73,8 @@ namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
             StakeFrom = stakeFrom;
             StakeTo = stakeTo;
 
-            DateOfWeekList = dateOfWeekList;
-            DateOfWeekListNotIn = dateOfWeekListNotIn;
+            DoWList = dateOfWeekList;
+            DoWListNotIn = dateOfWeekListNotIn;
 
             BeginTime = beginTime;
             EndTime = endTime;
@@ -146,11 +146,11 @@ namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
         public decimal StakeTo { get; }
         public bool EnabledStake { get; set; }
 
-        public string DateOfWeekList { get; }
-        public string DateOfWeekListNotIn { get; }
+        public string DoWList { get; }
+        public string DoWListNotIn { get; }
         public bool EnabledTicketDoW { get; set; }
-        public string DateOfWeekNameList { get; set; }
-        public string DateOfWeekNameListNotIn { get; set; }
+        public string DoWNameList { get; set; }
+        public string DoWNameListNotIn { get; set; }
 
         public string BeginTime { get; }
         public string EndTime { get; }

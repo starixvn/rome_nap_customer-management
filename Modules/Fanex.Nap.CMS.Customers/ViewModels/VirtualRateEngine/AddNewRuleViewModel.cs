@@ -1,7 +1,7 @@
-﻿using System.Text;
-
-namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
 {
+    using System.Text;
+
     public class AddNewRuleViewModel
     {
         public string RuleTitle { get; set; }
@@ -9,7 +9,7 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
         public int PriorityOrder { get; set; }
 
         // [1]
-        public byte SiteType { get; set; }
+        public byte? SiteType { get; set; }
         public string Site { get; set; }
         public string SiteNotIn { get; set; }
 
@@ -18,22 +18,22 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
         public string CustomerClassNotIn { get; set; }
 
         // [3]
-        public decimal VRFrom { get; set; }
-        public decimal VRTo { get; set; }
+        public decimal? VRFrom { get; set; }
+        public decimal? VRTo { get; set; }
 
         // [4]
-        public byte VRStatus { get; set; }
+        public byte? VRStatus { get; set; }
 
         // [5]
-        public string Sport { get; set; }
-        public string SportNotIn { get; set; }
+        public string SportType { get; set; }
+        public string SportTypeNotIn { get; set; }
 
         // [6]
         public string BetType { get; set; }
         public string BetTypeNotIn { get; set; }
 
         // [7]
-        public byte LiveIndicator { get; set; }
+        public byte? LiveIndicator { get; set; }
 
         // [8]
         public string LeagueGroup { get; set; }
@@ -45,8 +45,8 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
         public string Betfrom { get; set; }
 
         // [10]
-        public decimal StakeFrom { get; set; }
-        public decimal StakeTo { get; set; }
+        public decimal? StakeFrom { get; set; }
+        public decimal? StakeTo { get; set; }
 
         // [11]
         public string DayOfWeek { get; set; }
@@ -79,9 +79,9 @@ namespace Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine
                     criteriaRows.AppendFormat("<Row Criteria=\"CustomerClassList\" Value=\"{0}\"/>", CustomerClassNotIn);
                 }
 
-                if (!string.IsNullOrWhiteSpace(SportNotIn))
+                if (!string.IsNullOrWhiteSpace(SportTypeNotIn))
                 {
-                    criteriaRows.AppendFormat("<Row Criteria=\"SporttypeList\" Value=\"{0}\"/>", SportNotIn);
+                    criteriaRows.AppendFormat("<Row Criteria=\"SporttypeList\" Value=\"{0}\"/>", SportTypeNotIn);
                 }
 
                 if (!string.IsNullOrWhiteSpace(BetTypeNotIn))

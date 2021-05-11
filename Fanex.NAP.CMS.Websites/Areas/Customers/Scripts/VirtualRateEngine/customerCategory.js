@@ -24,6 +24,7 @@
             9: "bg-red",
             10: "bg-red",
             11: "bg-red",
+            12: "bg-red",
             13: "bg-red",
             100: "bg-green"
         };

@@ -169,7 +169,7 @@
     <value>Rule Title</value>
   </data>
   <data name="VirtualRateValueOutOfRangeError" xml:space="preserve">
-    <value>Value must be in this range [-99;200]</value>
+    <value>Value must be in this range [-100;200]</value>
   </data>
   <data name="VRFromGreaterThanVRToError" xml:space="preserve">
     <value>Virtual Rate From must be less than or equal to Virtual Rate To</value>

@@ -127,6 +127,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Virtual Rate Engine
         public const string VirtualRateEngine = "VirtualRateEngine";
-        public const string FullPermission = "FullPermission";
+        public const string VirtualRateEngineAdminPermission = "AdminPermission";
+        public const string VirtualRateEngineUserPermission = "UserPermission";
     }
 }

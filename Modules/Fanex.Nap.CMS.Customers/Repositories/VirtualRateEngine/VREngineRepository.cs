@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using Fanex.Data;
-using Fanex.Data.Repository;
-using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
-using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
-using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Web;
-
-namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
+    using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Web;
+
     public class VREngineRepository : IVREngineRepository
     {
         public VREngineMatrix GetVREngineMatrix(ICriteria criteria)
@@ -170,6 +170,22 @@ namespace Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine
                     }
                 }
             }
+        }
+
+        public VREngineRule GetRule(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    if (reader.Read())
+                    {
+                        return ToRule(reader);
+                    }
+                }
+            }
+
+            return null;
         }
 
         private static VREngineRule ToRule(IDataReader reader)

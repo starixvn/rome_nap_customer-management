@@ -8,7 +8,7 @@ function CurrentVRCriteria() {
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableCurrentVRCriteria" />
-                <span class="note-info-message" id="span-noteCurrentVRCriteria" title="<p>Current Virtual Rate:</p><p>- Apply from current virtual rate to current virtual rate.</p><p>- From and To value should be in this range [-99%;200%].</p>"></span>
+                <span class="note-info-message" id="span-noteCurrentVRCriteria" title="<p>Current Virtual Rate:</p><p>- Apply from current virtual rate to current virtual rate.</p><p>- From and To value should be in this range [-100%;200%].</p>"></span>
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
@@ -22,14 +22,22 @@ function CurrentVRCriteria() {
                     <span>%</span>
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableCurrentVRCriteria, txtVRFrom, txtVRTo;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        txtVRFrom = $("#txt-currentVRFrom").clearfield();
-        txtVRTo = $("#txt-currentVRTo").clearfield();
-        chkEnableCurrentVRCriteria = $("#chk-enableCurrentVRCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        txtVRFrom = $("#txt-currentVRFrom");
+        txtVRTo = $("#txt-currentVRTo");
+
+        var isEnabled = rule && rule.EnabledCurrentVR;
+        if (isEnabled) {
+            txtVRFrom.val(rule.VRFrom);
+            txtVRTo.val(rule.VRTo);
+        }
+
+        chkEnableCurrentVRCriteria = $("#chk-enableCurrentVRCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableCurrentVRCriteria.css("visibility", "hidden");
+
         $("#span-noteCurrentVRCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -51,10 +59,6 @@ function CurrentVRCriteria() {
         txtVRTo
             .off("keypress")
             .on("keypress", CMS.forceNegativeNumberInput);
-
-        $("#span-noteCurrentVRCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -64,14 +68,17 @@ function CurrentVRCriteria() {
     }
 
     function isEnableCriteria() {
-        return chkEnableCurrentVRCriteria.is(":checked");
+        return chkEnableCurrentVRCriteria && chkEnableCurrentVRCriteria.is(":checked");
     }
 
     function validateFormData() {
         var inputVRFrom = validateVRValue(txtVRFrom);
-        var inputVRTo = validateVRValue(txtVRTo);
+        if (typeof inputVRFrom === "undefined") {
+            return { isInvalid: true };
+        }
 
-        if (typeof inputVRFrom === "undefined" || typeof inputVRTo === "undefined") {
+        var inputVRTo = validateVRValue(txtVRTo);
+        if (typeof inputVRTo === "undefined") {
             return { isInvalid: true };
         }
 
@@ -93,7 +100,7 @@ function CurrentVRCriteria() {
     function validateVRValue(txtNumber) {
         var inputNumber = VREngineHelper.validateNumber(txtNumber);
 
-        if (inputNumber && (inputNumber < -99 || inputNumber > 200)) {
+        if (inputNumber && (inputNumber < -100 || inputNumber > 200)) {
             CMS.showTipsyError(txtNumber, resources.vrValueOutOfRangeError, "nw");
             return;
         }
@@ -101,16 +108,13 @@ function CurrentVRCriteria() {
         return inputNumber;
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableCurrentVRCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableCurrentVRCriteria.trigger("change");
     };
 
     this.getFormData = function () {

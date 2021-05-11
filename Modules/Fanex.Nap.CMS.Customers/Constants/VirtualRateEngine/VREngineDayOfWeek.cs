@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Fanex.Nap.CMS.Infrastructure.Models;
-
-namespace Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine
 {
+    using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+
     public static class VREngineDayOfWeek
     {
         public const byte Sunday = 1;

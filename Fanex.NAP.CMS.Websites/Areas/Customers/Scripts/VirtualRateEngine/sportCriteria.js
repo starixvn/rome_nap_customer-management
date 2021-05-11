@@ -17,14 +17,22 @@ function SportCriteria(conditionList, sportList) {
                     <div id="ddl-sport"></div>
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableSportCriteria, ddlSportCondition, ddlSport;
 
-    function renderHtml(criteriaContainer, selectedSportList) {
-        criteriaContainer.append(htmlTemplate);
-        ddlSportCondition = VREngineHelper.renderCombobox("ddl-sportCondition", conditionList);
-        ddlSport = VREngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportList, 260);
-        chkEnableSportCriteria = $("#chk-enableSportCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedSportType, condition;
+        var isEnabled = rule && rule.EnabledSport;
+        if (isEnabled) {
+            condition = rule.SportTypeListNotIn ? 1 : 0;
+            selectedSportType = rule.SportTypeListNotIn || rule.SportTypeList;
+        }
+
+        ddlSportCondition = VREngineHelper.renderCombobox("ddl-sportCondition", conditionList, condition);
+        ddlSport = VREngineHelper.renderMultiSelect("ddl-sport", sportList, selectedSportType, 260);
+
+        chkEnableSportCriteria = $("#chk-enableSportCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableSportCriteria.css("visibility", "hidden");
     }
 
     function bindEvents() {
@@ -33,10 +41,6 @@ function SportCriteria(conditionList, sportList) {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        $("#span-noteSportCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -46,7 +50,7 @@ function SportCriteria(conditionList, sportList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableSportCriteria.is(":checked");
+        return chkEnableSportCriteria && chkEnableSportCriteria.is(":checked");
     }
 
     function validateFromData() {
@@ -55,7 +59,7 @@ function SportCriteria(conditionList, sportList) {
             : ddlSport.multiSelect("getCheckedItems").join(",");
 
         if (!sportType.length) {
-            CMS.showTipsyError(ddlSport, resources.noneSelectedOptionError);
+            CMS.showTipsyError(ddlSport, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };
         }
 
@@ -67,16 +71,13 @@ function SportCriteria(conditionList, sportList) {
         return formData;
     }
 
-    this.initAddNew = function (criteriaContainer, selectedSportList) {
-        renderHtml(criteriaContainer, selectedSportList);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer, selectedSportList);
-        chkEnableSportCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableSportCriteria.trigger("change");
     };
 
     this.getFormData = function () {

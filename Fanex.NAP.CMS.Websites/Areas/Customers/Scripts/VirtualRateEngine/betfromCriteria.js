@@ -12,13 +12,19 @@ function BetfromCriteria(betfromList) {
             <div class="detail-rule">
                 <select class="combobox-autocomplete" id="ddl-betfrom"></select>
             </div>
-        </div>`
+        </div>`;
     var chkEnableBetfromCriteria, ddlBetfrom;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        ddlBetfrom = VREngineHelper.renderCombobox("ddl-betfrom", betfromList);
-        chkEnableBetfromCriteria = $("#chk-enableBetfromCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedBetfrom;
+        var isEnabled = rule && rule.EnabledBetfrom;
+        if (isEnabled) {
+            selectedBetfrom = rule.Betfrom;
+        }
+
+        ddlBetfrom = VREngineHelper.renderCombobox("ddl-betfrom", betfromList, selectedBetfrom);
+        chkEnableBetfromCriteria = $("#chk-enableBetfromCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableBetfromCriteria.css("visibility", "hidden");
     }
 
     function bindEvents() {
@@ -27,10 +33,6 @@ function BetfromCriteria(betfromList) {
             .on("change", function () {
                 enableCriteria(this.checked)
             });
-
-        $("#span-noteBetfromCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -38,19 +40,16 @@ function BetfromCriteria(betfromList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableBetfromCriteria.is(":checked");
+        return chkEnableBetfromCriteria && chkEnableBetfromCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml();
-        chkEnableBetfromCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableBetfromCriteria.trigger("change");
     };
 
     this.getFormData = function () {

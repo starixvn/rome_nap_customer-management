@@ -8,26 +8,36 @@ function StakeCriteria() {
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableStakeCriteria" />
-                <span class="note-info-message" id="span-noteStakeCriteria" title="<p>Stake (RM):</p><p>- Apply for Stake in this range [From;To] (RM).</p>"></span>
+                <span class="note-info-message" id="span-noteStakeCriteria" title="<p>Stake (RM):</p><p>- Apply for Stake in this range [From;To] (RM).</p><p>- If you want to input the unlimited stake on To, you can leave this field blank.</p>"></span>
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
                 <div class="from-value">
-                    <input type="text" id="txt-stakeFrom" autocomplete="off" maxlength="10" value="0" />
+                    <input type="text" id="txt-stakeFrom" autocomplete="off" maxlength="10" />
                 </div>
                 <span class="txt">To</span>
                 <div class="to-value">
                     <input type="text" id="txt-stakeTo" autocomplete="off" maxlength="10" />
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableStakeCriteria, txtStakeFrom, txtStakeTo;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        txtStakeFrom = $("#txt-stakeFrom").clearfield();
-        txtStakeTo = $("#txt-stakeTo").clearfield();
-        chkEnableStakeCriteria = $("#chk-enableStakeCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        txtStakeFrom = $("#txt-stakeFrom");
+        txtStakeTo = $("#txt-stakeTo");
+
+        var isEnabled = rule && rule.EnabledStake;
+        if (isEnabled) {
+            txtStakeFrom.val(rule.StakeFrom);
+            txtStakeTo.val(rule.StakeTo === 0 ? "" : rule.StakeTo);
+        } else {
+            txtStakeFrom.val("0");
+        }
+
+        chkEnableStakeCriteria = $("#chk-enableStakeCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableStakeCriteria.css("visibility", "hidden");
+
         $("#span-noteStakeCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -49,10 +59,6 @@ function StakeCriteria() {
         txtStakeTo
             .off("keypress")
             .on("keypress", CMS.forceNumericInput);
-
-        $("#span-noteStakeCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -62,20 +68,22 @@ function StakeCriteria() {
     }
 
     function isEnableCriteria() {
-        return chkEnableStakeCriteria.is(":checked");
+        return chkEnableStakeCriteria && chkEnableStakeCriteria.is(":checked");
     }
 
     function validateFormData() {
         var inputStakeFrom = validateStakeValue(txtStakeFrom);
-        var inputStakeTo = validateStakeValue(txtStakeTo);
+        if (typeof inputStakeFrom === "undefined") {
+            return { isInvalid: true };
+        }
 
-        if (typeof inputStakeFrom === "undefined" || typeof inputStakeTo === "undefined") {
+        var inputStakeTo = validateStakeValue(txtStakeTo);
+        if (typeof inputStakeTo === "undefined") {
             return { isInvalid: true };
         }
 
         if (inputStakeFrom === null && inputStakeTo === null) {
             CMS.showTipsyError(txtStakeFrom, resources.requiredFieldError, "nw");
-            CMS.showTipsyError(txtStakeTo, resources.requiredFieldError, "nw");
             return { isInvalid: true };
         } else if ((inputStakeFrom !== null && inputStakeTo !== null && inputStakeFrom > inputStakeTo)
             || (inputStakeFrom === null && inputStakeTo !== null)) {
@@ -108,16 +116,13 @@ function StakeCriteria() {
         return null;
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableStakeCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableStakeCriteria.trigger("change");
     };
 
     this.getFormData = function () {

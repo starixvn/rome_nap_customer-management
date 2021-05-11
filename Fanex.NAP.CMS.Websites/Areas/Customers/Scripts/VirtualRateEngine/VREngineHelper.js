@@ -1,7 +1,9 @@
 ﻿var VREngineHelper = (function ($) {
     function renderCombobox(id, dataList, selectedValue) {
         var datum, html = [];
-        selectedValue = selectedValue || dataList[0].Id;
+        if (typeof selectedValue === "undefined") {
+            selectedValue = dataList[0].Id;
+        }
 
         for (var i = 0, max = dataList.length; i < max; i++) {
             datum = dataList[i];
@@ -26,10 +28,10 @@
             selectedObject,
             data = [],
             max = dataList.length;
-        var isCheckAll = !selectedList || selectedList.length === max;
+        var isCheckAll = typeof selectedList === "undefined" || selectedList === "0" || selectedList === "-1";
 
         if (!isCheckAll) {
-            selectedObject = toObject(selectedList);
+            selectedObject = toObject(selectedList.split(","));
         }
 
         for (var i = 0; i < max; i++) {
@@ -111,20 +113,11 @@
         return time.substring(0, 5);
     }
 
-    function removeLastComma(text) {
-        var textLength = text.length - 1;
-
-        return text.indexOf(",", textLength) !== -1
-            ? text.substring(0, textLength)
-            : text;
-    }
-
     return {
         renderCombobox: renderCombobox,
         renderMultiSelect: renderMultiSelect,
         updateMultiSelect: updateMultiSelect,
         validateNumber: validateNumber,
-        extractHourMinute: extractHourMinute,
-        removeLastComma: removeLastComma
+        extractHourMinute: extractHourMinute
     };
 })(jQuery);

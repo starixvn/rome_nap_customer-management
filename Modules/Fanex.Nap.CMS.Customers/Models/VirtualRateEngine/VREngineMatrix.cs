@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Fanex.Nap.CMS.Infrastructure.Models;
-
-namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
+﻿namespace Fanex.Nap.CMS.Customers.Models.VirtualRateEngine
 {
+    using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+
     public class VREngineMatrix
     {
         public VREngineMatrix(

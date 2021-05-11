@@ -12,13 +12,19 @@ function EventCriteria(eventList) {
             <div class="detail-rule">
                 <select class="combobox-autocomplete width-60" id="ddl-event"></select>
             </div>
-        </div>`
+        </div>`;
     var chkEnableEventCriteria, ddlEvent;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        ddlEvent = VREngineHelper.renderCombobox("ddl-event", eventList);
-        chkEnableEventCriteria = $("#chk-enableEventCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        var selectedLiveIndicator;
+        var isEnabled = rule && rule.EnabledEvent;
+        if (isEnabled) {
+            selectedLiveIndicator = rule.LiveIndicator;
+        }
+
+        ddlEvent = VREngineHelper.renderCombobox("ddl-event", eventList, selectedLiveIndicator);
+        chkEnableEventCriteria = $("#chk-enableEventCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableEventCriteria.css("visibility", "hidden");
     }
 
     function bindEvents() {
@@ -27,10 +33,6 @@ function EventCriteria(eventList) {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        $("#span-noteEventCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -38,19 +40,16 @@ function EventCriteria(eventList) {
     }
 
     function isEnableCriteria() {
-        return chkEnableEventCriteria.is(":checked");
+        return chkEnableEventCriteria && chkEnableEventCriteria.is(":checked");
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableEventCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableEventCriteria.trigger("change");
     };
 
     this.getFormData = function () {

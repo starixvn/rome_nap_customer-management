@@ -13,21 +13,32 @@ function TicketTimeCriteria() {
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
                 <div class="from-value">
-                    <input type="text" id="txt-ticketTimeFrom" autocomplete="off" maxlength="5" placeholder="hh:mm" value="00:00" />
+                    <input type="text" id="txt-ticketTimeFrom" autocomplete="off" maxlength="5" placeholder="hh:mm" />
                 </div>
                 <span class="txt">To</span>
                 <div class="to-value">
-                    <input type="text" id="txt-ticketTimeTo" autocomplete="off" maxlength="5" placeholder="hh:mm" value="00:00" />
+                    <input type="text" id="txt-ticketTimeTo" autocomplete="off" maxlength="5" placeholder="hh:mm" />
                 </div>
             </div>
-        </div>`
+        </div>`;
     var chkEnableTicketTimeCriteria, txtTicketTimeFrom, txtTicketTimeTo;
 
-    function renderHtml(criteriaContainer) {
-        criteriaContainer.append(htmlTemplate);
-        txtTicketTimeFrom = $("#txt-ticketTimeFrom").clearfield();
-        txtTicketTimeTo = $("#txt-ticketTimeTo").clearfield();
-        chkEnableTicketTimeCriteria = $("#chk-enableTicketTimeCriteria");
+    function cacheElements(rule, isHideEnabledCheckbox) {
+        txtTicketTimeFrom = $("#txt-ticketTimeFrom");
+        txtTicketTimeTo = $("#txt-ticketTimeTo");
+
+        var isEnabled = rule && rule.EnabledTicketTime;
+        if (isEnabled) {
+            txtTicketTimeFrom.val(VREngineHelper.extractHourMinute(rule.BeginTime));
+            txtTicketTimeTo.val(VREngineHelper.extractHourMinute(rule.EndTime));
+        } else {
+            txtTicketTimeFrom.val("00:00");
+            txtTicketTimeTo.val("00:00");
+        }
+
+        chkEnableTicketTimeCriteria = $("#chk-enableTicketTimeCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkEnableTicketTimeCriteria.css("visibility", "hidden");
+
         $("#span-noteTicketTimeCriteria").tipsy({
             className: "criteria-hint",
             html: true,
@@ -41,10 +52,6 @@ function TicketTimeCriteria() {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        $("#span-noteTicketTimeCriteria")
-            .off("click")
-            .on("click", function () { });
     }
 
     function enableCriteria(isEnabled) {
@@ -54,14 +61,17 @@ function TicketTimeCriteria() {
     }
 
     function isEnableCriteria() {
-        return chkEnableTicketTimeCriteria.is(":checked");
+        return chkEnableTicketTimeCriteria && chkEnableTicketTimeCriteria.is(":checked");
     }
 
     function validateFormData() {
         var beginTime = validateHourMinute(txtTicketTimeFrom);
-        var endTime = validateHourMinute(txtTicketTimeTo);
+        if (!beginTime) {
+            return { isInvalid: true };
+        }
 
-        if (!beginTime || !endTime) {
+        var endTime = validateHourMinute(txtTicketTimeTo);
+        if (!endTime) {
             return { isInvalid: true };
         }
 
@@ -98,16 +108,13 @@ function TicketTimeCriteria() {
         return inputTime;
     }
 
-    this.initAddNew = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        enableCriteria(false);
-        bindEvents();
-    };
+    this.init = function (criteriaContainer, rule, isHideEnabledCheckbox) {
+        criteriaContainer.append(htmlTemplate);
 
-    this.initUpdate = function (criteriaContainer) {
-        renderHtml(criteriaContainer);
-        chkEnableTicketTimeCriteria.remove();
+        cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
+
+        chkEnableTicketTimeCriteria.trigger("change");
     };
 
     this.getFormData = function () {

@@ -24,31 +24,39 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            HasRight(CMSFunctionKeys.VirtualRateEngine, Constant.Policy.Host);
-            HasRight(CMSFunctionKeys.FullPermission, Constant.Policy.Host);
-            var matrix = vrEngineService.GetVREngineMatrix();
+            var adminPermission = HasRight(CMSFunctionKeys.VirtualRateEngineAdminPermission, Constant.Policy.Host);
+            var userPermission = HasRight(CMSFunctionKeys.VirtualRateEngineUserPermission, Constant.Policy.Host);
 
-            var viewModel = new VREngineIndexViewModel(
-                HasRight(CMSFunctionKeys.VirtualRateEngine, Constant.Policy.Host),
-                HasRight(CMSFunctionKeys.FullPermission, Constant.Policy.Host),
-                matrix.CreditSites,
-                matrix.LicenseeSites,
-                matrix.CustomerClasses,
-                matrix.Sports,
-                matrix.BetTypes,
-                matrix.LeagueGroups,
-                matrix.BetfromList);
+            ViewBag.AdminPermission = adminPermission;
+            ViewBag.UserPermission = userPermission;
+            ViewBag.CanUpdateRule = adminPermission || userPermission;
 
-            return View("~/Areas/Customers/Views/VirtualRateEngine/Index.cshtml", viewModel);
+            return View("~/Areas/Customers/Views/VirtualRateEngine/Index.cshtml");
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
-        public ActionResult GetLeagues(string leagueGroupIds, string leagues)
-            => JsonData(vrEngineService.GetLeagues(leagueGroupIds, leagues));
+        public ActionResult GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues)
+            => JsonData(vrEngineService.GetLeagues(leagueGroupIds, leagueGroupListNotIn, leagues));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
         public ActionResult GetRules()
-            => JsonData(vrEngineService.GetRules());
+        {
+            var model = vrEngineService.GetRules();
+
+            return JsonData(model.Rules);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
+        public ActionResult GetRule(int ruleId)
+            => JsonData(vrEngineService.GetRule(ruleId));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
+        public ActionResult GetRulesAndMatrix()
+        {
+            var model = vrEngineService.GetRules();
+
+            return JsonData(new { model.Rules, Matrix = new VREngineMatrixViewModel(model.Matrix) });
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
         public ActionResult CustomerClassHint()
@@ -61,7 +69,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.FullPermission, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngineAdminPermission, Policy = Constant.Policy.Host)]
         public ActionResult AddNewRule(AddNewRuleViewModel viewModel)
         {
             viewModel.UserId = CurrentSession.UserId;
@@ -70,16 +78,21 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Host)]
         public ActionResult UpdateRule(int ruleId, AddNewRuleViewModel viewModel)
         {
-            viewModel.UserId = CurrentSession.UserId;
-            viewModel.IP = CurrentContext.IP;
-            return JsonData(vrEngineService.UpdateRule(ruleId, viewModel), JsonRequestBehavior.DenyGet);
+            if (HasRight(CMSFunctionKeys.VirtualRateEngineAdminPermission, Constant.Policy.Host)
+                || HasRight(CMSFunctionKeys.VirtualRateEngineUserPermission, Constant.Policy.Host))
+            {
+                viewModel.UserId = CurrentSession.UserId;
+                viewModel.IP = CurrentContext.IP;
+                return JsonData(vrEngineService.UpdateRule(ruleId, viewModel), JsonRequestBehavior.DenyGet);
+            }
+
+            return Forbidden();
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.FullPermission, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngineAdminPermission, Policy = Constant.Policy.Host)]
         public ActionResult DeleteRule(int ruleId)
             => JsonData(
                 vrEngineService.DeleteRule(ruleId, CurrentSession.UserId, CurrentContext.IP),

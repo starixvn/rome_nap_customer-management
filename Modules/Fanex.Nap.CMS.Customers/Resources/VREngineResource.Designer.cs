@@ -277,7 +277,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value must be in this range [-99;200].
+        ///   Looks up a localized string similar to Value must be in this range [-100;200].
         /// </summary>
         public static string VirtualRateValueOutOfRangeError {
             get {

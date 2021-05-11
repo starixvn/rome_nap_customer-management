@@ -1,11 +1,11 @@
-﻿<div class="form" id="form-addNewRule">
+﻿<div class="form" id="form-addOrUpdateRule">
     <div id="divErrorSuccessMsg" class="inline-message"></div>
     <div class="form-row">
         <div class="lbl-field">
             <label for="txt-ruleTitle">@VREngineResource.RuleTitle</label>
         </div>
         <div class="edit-field">
-            <input type="text" class="rule-title" id="txt-ruleTitle" autocomplete="off" maxlength="1000" />
+            <input type="text" class="rule-title" id="txt-ruleTitle" autocomplete="off" maxlength="100" />
         </div>
     </div>
     <div class="form-row">
@@ -29,7 +29,7 @@
         <div class="edit-field">
             <select class="combobox-autocomplete width-180" id="ddl-adjustment"></select>
             <div class="active-value">
-                <input type="text" class="width-60 align-right" id="txt-adjustment" autocomplete="off" maxlength="7" />
+                <input type="text" class="width-60 align-right" id="txt-adjustment" autocomplete="off" maxlength="4" />
                 &nbsp;<span>%</span>
             </div>
         </div>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="button-row">
-        <button type="submit" class="blue-button" id="btn-addNewRule">@Labels.Submit</button>
+        <button type="submit" class="blue-button" id="btn-addOrUpdateRule">@Labels.Submit</button>
         <button type="button" class="red-button" id="btn-cancel">@Labels.Cancel</button>
     </div>
 </div>

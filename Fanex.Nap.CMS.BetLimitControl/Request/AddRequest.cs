@@ -6,6 +6,8 @@
 
         public int BetLimitTypeID { get; set; }
 
+        public byte Mode { get; set; }
+
         public decimal MaxBet { get; set; }
 
         public decimal MaxPerMatch { get; set; }

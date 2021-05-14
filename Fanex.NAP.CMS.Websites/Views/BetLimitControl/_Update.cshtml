@@ -1,5 +1,6 @@
 ﻿@using Fanex.Nap.CMS.Customers.Resources
-@model IEnumerable<Fanex.NAP.CMS.BetLimitControl.Models.BetLimitTypeModel>
+@using Fanex.NAP.CMS.BetLimitControl.Models
+@model IEnumerable<BetLimitTypeModel>
 
 <div class="display-none">
     <div id="frmUpd" class="form expand-form">
@@ -22,6 +23,18 @@
                     {
                         <option value="@betLimitType.BetLimitTypeId">@betLimitType.BetLimitType</option>
                     }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
+                <label for="txtBetLimitModeUpdate">@ViewLang.BetLimitMode<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="txtBetLimitModeUpdate" class="bet-limit-type-select">
+                    <option value="">Please Select</option>
+                    <option value="@((byte)Modes.Fixed)">@ViewLang.BetLimitFixedMode</option>
+                    <option value="@((byte)Modes.Percentage)">@ViewLang.BetLimitPercentageMode</option>
                 </select>
             </div>
         </div>

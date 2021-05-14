@@ -12,11 +12,15 @@
         public int BetLimitTypeID { get; set; }
         public decimal? MaxBet { get; set; }
         public decimal? MaxPerMatch { get; set; }
+        public byte? Mode { get; set; }
         public decimal? AgentMaxBet { get; set; }
         public decimal? AgentMaxPerMatch { get; set; }
+        public byte? AgentMode { get; set; }
         public decimal? MasterMaxBet { get; set; }
         public decimal? MasterMaxPerMatch { get; set; }
+        public byte? MasterMode { get; set; }
         public decimal? SuperMaxBet { get; set; }
         public decimal? SuperMaxPerMatch { get; set; }
+        public byte? SuperMode { get; set; }
     }
 }

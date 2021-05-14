@@ -105,6 +105,7 @@
     <Compile Include="Models\BetLimitTypeModel.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />
     <Compile Include="Models\CustomerBetLimitModel.cs" />
+    <Compile Include="Models\Modes.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Service.cs" />
     <Compile Include="Request\SearchRequest.cs" />
     <Compile Include="Models\IndexViewModel.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">

@@ -344,7 +344,7 @@ Fanex.CMS.BetLimitControl = function () {
                 case fixedMode:
                     return numeral(number).format(CMSConstants.NumberFormat.IntNumber);
                 case percentageMode:
-                    return 'x ' + numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber);
+                    return 'x ' + numeral(number).format(CMSConstants.NumberFormat.TwoDecimalNumber2);
                 default:
                     return '';
             }

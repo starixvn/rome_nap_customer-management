@@ -6,7 +6,7 @@ namespace Fanex.NAP.CMS.BetLimitControl
     {
         public static bool IsValidMode(byte mode)
         {
-            return mode == (byte)Modes.Fixed && mode== (byte)Modes.Percentage;
+            return mode == (byte)Modes.Fixed || mode== (byte)Modes.Percentage;
         }
     }
 }

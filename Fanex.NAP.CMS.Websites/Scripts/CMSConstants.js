@@ -5,7 +5,8 @@
 var CMSConstants = {
     NumberFormat: {
         IntNumber: "#,###",
-        TwoDecimalNumber: '#,###.00'
+        TwoDecimalNumber: '#,###.00',
+        TwoDecimalNumber2: '#,###.[00]',
     },
     LeagueId: {
         All: 0

@@ -259,32 +259,32 @@ Fanex.CMS.BetLimitControl = function () {
                     },
                     {
                         Name: 'AgentMaxPerMatch',
-                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxPerMatch, betLimitType.Mode) : '',
+                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxPerMatch, betLimitType.AgentMode) : '',
                         TdClass: hasAgent ? '' : 'cell-disable'
                     },
                     {
                         Name: 'AgentMaxBet',
-                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxBet, betLimitType.Mode) : '',
+                        Value: hasAgent ? FormatNumber(betLimitType.AgentMaxBet, betLimitType.AgentMode) : '',
                         TdClass: hasAgent ? '' : 'cell-disable'
                     },
                     {
                         Name: 'MasterMaxPerMatch',
-                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxPerMatch, betLimitType.Mode) : '',
+                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxPerMatch, betLimitType.MasterMode) : '',
                         TdClass: hasMaster ? '' : 'cell-disable'
                     },
                     {
                         Name: 'MasterMaxBet',
-                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxBet, betLimitType.Mode) : '',
+                        Value: hasMaster ? FormatNumber(betLimitType.MasterMaxBet, betLimitType.MasterMode) : '',
                         TdClass: hasMaster ? '' : 'cell-disable'
                     },
                     {
                         Name: 'SuperMaxPerMatch',
-                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxPerMatch, betLimitType.Mode) : '',
+                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxPerMatch, betLimitType.SuperMode) : '',
                         TdClass: hasSuper ? '' : 'cell-disable'
                     },
                     {
                         Name: 'SuperMaxBet',
-                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxBet, betLimitType.Mode) : '',
+                        Value: hasSuper ? FormatNumber(betLimitType.SuperMaxBet, betLimitType.SuperMode) : '',
                         TdClass: hasSuper ? '' : 'cell-disable'
                     }
                 ]);

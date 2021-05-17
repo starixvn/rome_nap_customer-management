@@ -174,7 +174,7 @@
                 "~/Content/Pages/BetLimitControl/index.less");
 
             bundles.Add(new ScriptBundle(BetLimitControlScriptPath).Include(
-                "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
+                "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
                 FanexMultiSelectScriptPath,
                 "~/Content/Pages/BetLimitControl/index.js"));
 

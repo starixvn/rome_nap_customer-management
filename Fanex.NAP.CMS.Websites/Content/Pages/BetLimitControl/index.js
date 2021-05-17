@@ -5,6 +5,11 @@
 
 Namespace.Register("Fanex.CMS.BetLimitControl");
 Fanex.CMS.BetLimitControl = function () {
+    var Modes = {
+        FixedValue: 1,
+        Percentage: 2
+    };
+
     var self = this;
 
     this.isHost = false;
@@ -33,9 +38,12 @@ Fanex.CMS.BetLimitControl = function () {
         betLimitType: null,
         betLimitMode: null,
         maxPerMatch: null,
+        maxPerMatchAutoNumeric: null,
         maxBet: null,
+        maxBetAutoNumeric: null,
         msgAddError: null,
-        msgAddSuccess: null
+        msgAddSuccess: null,
+        percentageTips: null
     }
 
     this.popupUpdate = {
@@ -47,8 +55,13 @@ Fanex.CMS.BetLimitControl = function () {
         betLimitMode: null,
         oldBetLimitMode: null,
         maxPerMatch: null,
+        oldMaxPerMatch: null,
+        maxPerMatchAutoNumeric: null,
         maxBet: null,
-        custID: null
+        oldMaxBet: null,
+        maxBetAutoNumeric: null,
+        custID: null,
+        percentageTips: null
     }
 
     this.cachedElements = function () {
@@ -316,12 +329,12 @@ Fanex.CMS.BetLimitControl = function () {
 
         this.elements.divBetLimitControl.find(".ico-edit").on("click touchend", function () {
             var $this = $(this);
-            var custId = $(this).attr("data-cust-id");
+            var custId = parseInt($(this).attr("data-cust-id"));
             var username = $this.attr('data-username');
-            var betlimitType = $this.attr('data-betlimit-type');
-            var mode = $this.attr('data-mode');
-            var maxbet = $this.attr('data-maxbet');
-            var maxpermatch = $this.attr('data-maxpermatch');
+            var betlimitType = parseInt($this.attr('data-betlimit-type'));
+            var mode = parseInt($this.attr('data-mode'));
+            var maxbet = parseFloat($this.attr('data-maxbet'));
+            var maxpermatch = parseFloat($this.attr('data-maxpermatch'));
             self.openUpdateDialog(custId, username, betlimitType, mode, maxbet, maxpermatch);
         });
 
@@ -351,13 +364,6 @@ Fanex.CMS.BetLimitControl = function () {
         }
     }
 
-    function IsPositiveNumber(number) {
-        if (number && number >= 0) {
-            return true;
-        }
-        return false;
-    }
-
     function add() {
         CMS.clearTipsyError(self.popupAdd.username);
         CMS.clearTipsyError(self.popupAdd.betLimitType);
@@ -379,34 +385,44 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        var betLimitMode = self.popupAdd.betLimitMode.val();
-        if (!betLimitMode || betLimitMode === "") {
-            CMS.showTipsyError(self.popupAdd.betLimitMode, 'This field is required', "w");
-            return;
-        }
+        var betLimitMode = parseInt(self.popupAdd.betLimitMode.val());
 
-        var maxPerMatchString = self.popupAdd.maxPerMatch.val();
+        var maxPerMatchString = self.popupAdd.maxPerMatchAutoNumeric.get();
         if (!maxPerMatchString) {
             CMS.showTipsyError(self.popupAdd.maxPerMatch, 'This field is required', "w");
             return;
         }
 
-        var maxPerMatch = numeral().unformat(maxPerMatchString);
-        if (!IsPositiveNumber(maxPerMatch)) {
-            CMS.showTipsyError(self.popupAdd.maxPerMatch, 'Please input a positive whole number.', "w");
-            return;
+        var maxPerMatch = self.popupAdd.maxPerMatchAutoNumeric.getNumber();
+        if (betLimitMode === Modes.FixedValue) {
+            if (maxPerMatch === 0) {
+                CMS.showTipsyError(self.popupAdd.maxPerMatch, 'Please input a positive whole number.', "w");
+                return;
+            }
+        } else {
+            if (maxPerMatch < 0.5) {
+                CMS.showTipsyError(self.popupAdd.maxPerMatch, 'Please input a positive decimal number from 0.5.', "w");
+                return;
+            }
         }
 
-        var maxBetString = self.popupAdd.maxBet.val();
+        var maxBetString = self.popupAdd.maxBetAutoNumeric.get();
         if (!maxBetString) {
             CMS.showTipsyError(self.popupAdd.maxBet, 'This field is required', "w");
             return;
         }
 
-        var maxBet = numeral().unformat(maxBetString);
-        if (!IsPositiveNumber(maxBet)) {
-            CMS.showTipsyError(self.popupAdd.maxBet, 'Please input a positive whole number.', "w");
-            return;
+        var maxBet = self.popupAdd.maxBetAutoNumeric.getNumber();
+        if (betLimitMode === Modes.FixedValue) {
+            if (maxBet === 0) {
+                CMS.showTipsyError(self.popupAdd.maxBet, 'Please input a positive whole number.', "w");
+                return;
+            }
+        } else {
+            if (maxBet === 0 || maxBet > 1) {
+                CMS.showTipsyError(self.popupAdd.maxBet, 'Please input a positive decimal number and up to 1.', "w");
+                return;
+            }
         }
 
         if (maxBet > maxPerMatch) {
@@ -417,7 +433,7 @@ Fanex.CMS.BetLimitControl = function () {
         var request = {
             username: username,
             betLimitTypeID: betLimitType,
-            mode: parseInt(betLimitMode),
+            mode: betLimitMode,
             maxBet: maxBet,
             maxPerMatch: maxPerMatch
         }
@@ -507,9 +523,63 @@ Fanex.CMS.BetLimitControl = function () {
         self.popupAdd.maxBet = $("#txtMaxBetAdd");
         self.popupAdd.msgAddError = $("#msgAdd");
         self.popupAdd.msgAddSuccess = $("#msgAddSuccess");
+        self.popupAdd.percentageTips = $(".percentage-tip-add");
 
         $("#btnSaveAdd").click(add);
         $("#btnCancelAdd").click(CMS.closePopup);
+        self.popupAdd.betLimitMode.change(showAddDialogModeChange);
+        showAddDialogModeChange();
+    }
+
+    function showAddDialogModeChange() {
+        if (self.popupAdd.maxPerMatchAutoNumeric) {
+            self.popupAdd.maxPerMatchAutoNumeric.wipe();
+            self.popupAdd.maxPerMatchAutoNumeric = null;
+        }
+
+        if (self.popupAdd.maxBetAutoNumeric) {
+            self.popupAdd.maxBetAutoNumeric.wipe();
+            self.popupAdd.maxBetAutoNumeric = null;
+        }
+
+        var mode = parseInt(self.popupAdd.betLimitMode.val());
+        if (mode === Modes.FixedValue) {
+            self.popupAdd.maxPerMatchAutoNumeric = new AutoNumeric("#txtMaxPerMatchAdd", CMSConstants.AutoNumericOptions.IntNumber);
+            self.popupAdd.maxBetAutoNumeric = new AutoNumeric("#txtMaxBetAdd", CMSConstants.AutoNumericOptions.IntNumber);
+            self.popupAdd.percentageTips.hide();
+        } else {
+            self.popupAdd.maxPerMatchAutoNumeric = new AutoNumeric("#txtMaxPerMatchAdd", CMSConstants.AutoNumericOptions.TwoDecimalNumber);
+            self.popupAdd.maxBetAutoNumeric = new AutoNumeric("#txtMaxBetAdd", CMSConstants.AutoNumericOptions.TwoDecimalNumber);
+            self.popupAdd.percentageTips.show();
+        }
+    }
+
+    function openUpdateDialogModeChange() {
+        if (self.popupUpdate.maxPerMatchAutoNumeric) {
+            self.popupUpdate.maxPerMatchAutoNumeric.wipe();
+            self.popupUpdate.maxPerMatchAutoNumeric = null;
+        }
+
+        if (self.popupUpdate.maxBetAutoNumeric) {
+            self.popupUpdate.maxBetAutoNumeric.wipe();
+            self.popupUpdate.maxBetAutoNumeric = null;
+        }
+
+        var mode = parseInt(self.popupUpdate.betLimitMode.val());
+        if (mode === Modes.FixedValue) {
+            self.popupUpdate.maxPerMatchAutoNumeric = new AutoNumeric("#txtMaxPerMatchUpdate", CMSConstants.AutoNumericOptions.IntNumber);
+            self.popupUpdate.maxBetAutoNumeric = new AutoNumeric("#txtMaxBetUpdate", CMSConstants.AutoNumericOptions.IntNumber);
+            self.popupUpdate.percentageTips.hide();
+        } else {
+            self.popupUpdate.maxPerMatchAutoNumeric = new AutoNumeric("#txtMaxPerMatchUpdate", CMSConstants.AutoNumericOptions.TwoDecimalNumber);
+            self.popupUpdate.maxBetAutoNumeric = new AutoNumeric("#txtMaxBetUpdate", CMSConstants.AutoNumericOptions.TwoDecimalNumber);
+            self.popupUpdate.percentageTips.show();
+        }
+
+        if (mode === self.popupUpdate.oldBetLimitMode) {
+            self.popupUpdate.maxPerMatchAutoNumeric.set(self.popupUpdate.oldMaxPerMatch);
+            self.popupUpdate.maxBetAutoNumeric.set(self.popupUpdate.oldMaxBet);
+        }
     }
 
     function update() {
@@ -524,34 +594,44 @@ Fanex.CMS.BetLimitControl = function () {
             return;
         }
 
-        var betLimitMode = self.popupUpdate.betLimitMode.val();
-        if (!betLimitMode || betLimitMode === "") {
-            CMS.showTipsyError(self.popupUpdate.betLimitMode, 'This field is required', "w");
-            return;
-        }
+        var betLimitMode = parseInt(self.popupUpdate.betLimitMode.val());
 
-        var maxPerMatchString = self.popupUpdate.maxPerMatch.val();
+        var maxPerMatchString = self.popupUpdate.maxPerMatchAutoNumeric.get();
         if (!maxPerMatchString) {
             CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'This field is required', "w");
             return;
         }
 
-        var maxPerMatch = numeral().unformat(maxPerMatchString);
-        if (!IsPositiveNumber(maxPerMatch)) {
-            CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'Please input a positive whole number.', "w");
-            return;
+        var maxPerMatch = self.popupUpdate.maxPerMatchAutoNumeric.getNumber();
+        if (betLimitMode === Modes.FixedValue) {
+            if (maxPerMatch === 0) {
+                CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'Please input a positive whole number.', "w");
+                return;
+            }
+        } else {
+            if (maxPerMatch < 0.5) {
+                CMS.showTipsyError(self.popupUpdate.maxPerMatch, 'Please input a positive decimal number from 0.5.', "w");
+                return;
+            }
         }
 
-        var maxBetString = self.popupUpdate.maxBet.val();
+        var maxBetString = self.popupUpdate.maxBetAutoNumeric.get();
         if (!maxBetString) {
             CMS.showTipsyError(self.popupUpdate.maxBet, 'This field is required', "w");
             return;
         }
 
-        var maxBet = numeral().unformat(maxBetString);
-        if (!IsPositiveNumber(maxBet)) {
-            CMS.showTipsyError(self.popupUpdate.maxBet, 'Please input a positive whole number.', "w");
-            return;
+        var maxBet = self.popupUpdate.maxBetAutoNumeric.getNumber();
+        if (betLimitMode === Modes.FixedValue) {
+            if (maxBet === 0) {
+                CMS.showTipsyError(self.popupUpdate.maxBet, 'Please input a positive whole number.', "w");
+                return;
+            }
+        } else {
+            if (maxBet === 0 || maxBet > 1) {
+                CMS.showTipsyError(self.popupUpdate.maxBet, 'Please input a positive decimal number and up to 1.', "w");
+                return;
+            }
         }
 
         if (maxBet > maxPerMatch) {
@@ -561,7 +641,7 @@ Fanex.CMS.BetLimitControl = function () {
 
         var request = {
             custID: self.popupUpdate.custID,
-            mode: parseInt(betLimitMode),
+            mode: betLimitMode,
             maxBet: maxBet,
             maxPerMatch: maxPerMatch,
             betLimitTypeID: self.popupUpdate.oldBetLimitType,
@@ -605,16 +685,20 @@ Fanex.CMS.BetLimitControl = function () {
         self.popupUpdate.betLimitMode = $("#selBetLimitModeUpdate");
         self.popupUpdate.maxPerMatch = $("#txtMaxPerMatchUpdate");
         self.popupUpdate.maxBet = $("#txtMaxBetUpdate");
+        self.popupUpdate.percentageTips = $(".percentage-tip-update");
 
         self.popupUpdate.username.text(username);
         self.popupUpdate.betLimitType.val(betTypeLimit);
         self.popupUpdate.betLimitMode.val(mode);
-        self.popupUpdate.maxBet.val(numeral(maxBet).format(CMSConstants.NumberFormat.IntNumber));
-        self.popupUpdate.maxPerMatch.val(numeral(maxPerMatch).format(CMSConstants.NumberFormat.IntNumber));
         self.popupUpdate.oldBetLimitType = betTypeLimit;
+        self.popupUpdate.oldBetLimitMode = mode;
+        self.popupUpdate.oldMaxPerMatch = maxPerMatch;
+        self.popupUpdate.oldMaxBet = maxBet;
         self.popupUpdate.custID = custID;
+        self.popupUpdate.betLimitMode.change(openUpdateDialogModeChange);
         $("#btnSaveUpdate").click(update);
         $("#btnCancelUpdate").click(CMS.closePopup);
+        openUpdateDialogModeChange();
     }
 
     this.delete = function (custID, betLimitTypeID) {

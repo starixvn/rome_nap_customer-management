@@ -33,7 +33,6 @@
         </div>
         <div class="edit-field">
             <select id="txtBetLimitModeAdd" class="bet-limit-type-select">
-                <option value="">Please Select</option>
                 <option value="@((byte)Modes.Fixed)">@ViewLang.BetLimitFixedMode</option>
                 <option value="@((byte)Modes.Percentage)">@ViewLang.BetLimitPercentageMode</option>
             </select>
@@ -44,7 +43,8 @@
             <label for="txtMaxPerMatchAdd">@ViewLang.MaxPerMatch<span class="required-field">*</span></label>
         </div>
         <div class="edit-field">
-            <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxPerMatchAdd" autocomplete="off" />
+            <input type="text" class="input-text-right" maxlength="13" id="txtMaxPerMatchAdd" autocomplete="off" />
+            <span class="percentage-tip-add">@ViewLang.BetLimitModePercentageSuffix</span>
         </div>
     </div>
     <div class="form-row">
@@ -52,7 +52,8 @@
             <label for="txtMaxBetAdd">@ViewLang.MaxBet<span class="required-field">*</span></label>
         </div>
         <div class="edit-field">
-            <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxBetAdd" autocomplete="off" />
+            <input type="text" class="input-text-right" maxlength="13" id="txtMaxBetAdd" autocomplete="off" />
+            <span class="percentage-tip-add">@ViewLang.BetLimitModePercentageSuffix</span>
         </div>
     </div>
     <div class="form-row float-right button-group">

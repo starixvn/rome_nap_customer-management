@@ -403,6 +403,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to x Odds&apos;s Max Bet.
+        /// </summary>
+        public static string BetLimitModePercentageSuffix {
+            get {
+                return ResourceManager.GetString("BetLimitModePercentageSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to X times of Odds&apos; Max Bet.
         /// </summary>
         public static string BetLimitPercentageMode {

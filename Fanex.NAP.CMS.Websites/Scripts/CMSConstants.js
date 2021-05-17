@@ -10,5 +10,16 @@ var CMSConstants = {
     },
     LeagueId: {
         All: 0
+    },
+    AutoNumericOptions: {
+        IntNumber: {
+            minimumValue: 0,
+            maximumValue: 9999999999,
+            decimalPlaces: 0
+        },
+        TwoDecimalNumber: {
+            minimumValue: 0,
+            maximumValue: 9999999999
+        }
     }
 };

@@ -861,4 +861,7 @@
   <data name="BetLimitPercentageMode" xml:space="preserve">
     <value>X times of Odds' Max Bet</value>
   </data>
+  <data name="BetLimitModePercentageSuffix" xml:space="preserve">
+    <value>x Odds's Max Bet</value>
+  </data>
 </root>

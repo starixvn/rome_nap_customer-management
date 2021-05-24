@@ -1064,13 +1064,11 @@
     <Content Include="Web.ConnectionString.aws.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
+    <Content Include="Web.aws.config" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </None>
-    <Content Include="Web.aws.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

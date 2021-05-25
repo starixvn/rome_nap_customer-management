@@ -13,6 +13,12 @@
     {
         public const int MaxInputUsernames = 100;
         public const int AvoidWinningTimeRange = 30;
+        protected static readonly IDictionary<int, bool> IgnoreReasons = new Dictionary<int, bool>
+        {
+            [27] = true,
+            [101] = true,
+            [255] = true
+        };
 
         protected IndexBaseViewModel(
             bool hasHostPermission,
@@ -28,7 +34,9 @@
             AutoReload = autoReload;
             SearchFilter = searchViewModel;
             Reasons = BuildFilterReasons(filterReasons, SearchFilter.Reason);
-            MarkNewReasons = BuildSelectListItem(new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect }, markNewReasons);
+            MarkNewReasons = BuildSelectListItem(
+                new IdNameModel { Id = 0, Name = ProblemAccountResource.PleaseSelect },
+                markNewReasons.Where(r => !IgnoreReasons.ContainsKey(r.Id)));
             MinFromDate = minFromDate;
             Currencies = currencies.Select(c => BuildSelectListItem(c));
             Updater = updater;

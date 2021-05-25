@@ -21,6 +21,11 @@
 #dialog-popup {
     width: calc(~"100% - 24px") !important;
 
+    @media screen and (max-height: 768px) {
+        max-height: 600px;
+        width: calc(~"100% - 16px") !important;
+    }
+
     #form-addNewRule {
         width: 100%;
     }
@@ -100,8 +105,17 @@
             z-index: 9990;
             margin-left: 109px;
 
+            @media screen and (max-height: 768px) {
+                position: relative;
+                margin-left: 0;
+            }
+
             .ui-multiselect-widget {
                 width: calc(~"100% - 3px") !important;
+
+                @media screen and (max-height: 768px) {
+                    width: 235px !important;
+                }
             }
 
             &.site-type-box {
@@ -223,3 +237,4 @@
         margin-right: 0;
     }
 }
+

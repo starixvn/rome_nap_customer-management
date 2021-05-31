@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Infrastructure.Extensions
 {
+    using System;
     using System.Text;
 
     public static class StringExtentions
@@ -16,5 +17,10 @@
 
             return sb.ToString();
         }
+
+        public static string[] ToArray(this string text, char[] separator = null)
+            => string.IsNullOrWhiteSpace(text)
+            ? Array.Empty<string>()
+            : text.Split(separator ?? new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
     }
 }

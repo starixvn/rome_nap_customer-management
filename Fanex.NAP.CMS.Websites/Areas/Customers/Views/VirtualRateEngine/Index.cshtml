@@ -1,0 +1,51 @@
+﻿@using Fanex.Nap.CMS.Customers.AppStart
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = VREngineResource.VirtualRateEngine;
+    var adminPermission = (bool)ViewBag.AdminPermission;
+    var userPermission = (bool)ViewBag.UserPermission;
+    var canUpdateRule = (bool)ViewBag.CanUpdateRule;
+}
+@section Head
+{
+    @Styles.Render(CustomersBundlesConfig.VirtualRateEngineStylePath)
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            requiredFieldError: "@Labels.ThisFieldIsRequired",
+            invalidValueError: "@Labels.InvalidValueError",
+            priorityOrderValueOutOfRangeError: "@VREngineResource.PriorityOrderValueOutOfRangeError",
+            vrValueOutOfRangeError: "@VREngineResource.VirtualRateValueOutOfRangeError",
+            VRFromGreaterThanVRToError: "@VREngineResource.VRFromGreaterThanVRToError",
+            noneSelectedOptionError: "@VREngineResource.NoneSelectedOptionError",
+            invalidTimeFormat: "@VREngineResource.InvalidTimeFormat",
+            fromStakeGreaterThanToStake: "@VREngineResource.FromStakeGreaterThanToStake",
+            fromTimeGreaterThanToTime: "@VREngineResource.FromTimeGreaterThanToTime"
+        };
+        var adminPermission = @adminPermission.ToString().ToLowerInvariant();
+        var userPermission = @userPermission.ToString().ToLowerInvariant();
+        var canUpdateRule = @canUpdateRule.ToString().ToLowerInvariant();
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.VirtualRateEngineScriptPath)
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+@if (adminPermission)
+{
+    <button class="blue-button" id="btnAddNewRule">@VREngineResource.AddNewRule</button>
+}
+<div class="content-grid mid-margin-top">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if (canUpdateRule)
+{
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/Customers/Views/VirtualRateEngine/_AddOrUpdateRule.cshtml"); }
+    </div>
+}

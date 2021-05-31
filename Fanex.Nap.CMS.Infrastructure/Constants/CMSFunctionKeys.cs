@@ -124,5 +124,10 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Whitelist Big Credit Members
         public const string WhitelistBigCreditMembers = "WhitelistBigCreditMembers";
+
+        // Virtual Rate Engine
+        public const string VirtualRateEngine = "VirtualRateEngine";
+        public const string VirtualRateEngineAdminPermission = "AdminPermission";
+        public const string VirtualRateEngineUserPermission = "UserPermission";
     }
 }

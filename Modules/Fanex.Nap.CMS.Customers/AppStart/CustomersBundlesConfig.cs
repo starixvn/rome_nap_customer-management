@@ -29,6 +29,11 @@
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
 
+        public const string VirtualRateEngineScriptPath = "~/bundles/customers/virtual-rate-engine-script";
+        public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
+        public const string VREngineCustomerCategoryScriptPath = "~/bundles/customers/vr-engine-customer-category-script";
+        public const string VREngineCustomerCategoryStylePath = "~/bundles/customers/vr-engine-customer-category-style";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles
@@ -42,7 +47,8 @@
                 .RegisterBetLimitControlBundles()
                 .RegisterDefaultMemberBetLimitBundles()
                 .RegisterLimitNewDownlineBundles()
-                .RegisterWhitelistBigCreditMembersBundles();
+                .RegisterWhitelistBigCreditMembersBundles()
+                .RegisterVirtualRateEngine();
 
             RegisterManageRobots2(bundles);
         }
@@ -213,6 +219,42 @@
 
             bundles.Add(new ScriptBundle(WhitelistBigCreditMembersScriptPath).Include(
                 "~/Areas/Customers/Scripts/WhitelistBigCreditMembers/whitelistBigCreditMembers.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterVirtualRateEngine(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                VirtualRateEngineStylePath,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
+                "~/Areas/Customers/Styles/virtualRateEngine.less");
+
+            bundles.Add(new ScriptBundle(VirtualRateEngineScriptPath).Include(
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/VREngineHelper.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/siteTypeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/customerClassCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/currentVRCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/currentVRStatusCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/sportCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/betTypeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/eventCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/leagueGroupCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/betfromCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/stakeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/ticketDoWCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/ticketTimeCriteria.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/otherControls.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/addOrUpdateRule.js",
+                "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
+
+            bundles.AddAndInclude(
+                VREngineCustomerCategoryStylePath,
+                "~/Areas/Customers/Styles/customerCategory.less");
+
+            bundles.Add(new ScriptBundle(VREngineCustomerCategoryScriptPath).Include(
+                "~/Areas/Customers/Scripts/VirtualRateEngine/customerCategory.js"));
 
             return bundles;
         }

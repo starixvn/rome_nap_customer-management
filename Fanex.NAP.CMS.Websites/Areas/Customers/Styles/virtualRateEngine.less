@@ -1,0 +1,240 @@
+﻿.content {
+    margin: 10px 0 0 26px;
+
+    .content-grid {
+        margin-left: 0;
+
+        .freegrid .parent-row td {
+            background-color: #C2D9EC;
+            cursor: pointer;
+        }
+    }
+}
+
+.form .form-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    float: unset;
+    margin-bottom: 8px;
+}
+
+#dialog-popup {
+    width: calc(~"100% - 24px") !important;
+
+    @media screen and (max-height: 768px) {
+        max-height: 600px;
+        width: calc(~"100% - 16px") !important;
+    }
+
+    #form-addNewRule {
+        width: 100%;
+    }
+}
+
+.form .form-row {
+    min-height: unset;
+
+    .edit-field {
+        #txt-ruleTitle {
+            width: calc(~"100% - 6px");
+        }
+
+        .priority-note {
+            margin-left: 16px;
+            font-style: italic;
+        }
+    }
+
+    &.adjustment-row {
+        .active-value {
+            text-align: right;
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .edit-field {
+            display: flex;
+
+            .ui-combobox {
+                width: unset;
+            }
+        }
+    }
+}
+
+.form-row-sub {
+    display: grid;
+    grid-template-columns: 200px 40px 1fr;
+    grid-template-rows: minmax(28px, auto);
+    grid-column-gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    padding-left: 12px;
+
+    &.league-group-extra {
+        grid-template-rows: 80px;
+        align-items: flex-start;
+    }
+
+    .lbl-field {
+        display: grid;
+        grid-template-columns: 33px 1fr;
+
+        .txt-name {
+            grid-column: 2 e("/") 3;
+        }
+    }
+
+    .enable-criteria-container input[type="checkbox"] {
+        position: relative;
+        top: 1px;
+        cursor: pointer;
+    }
+
+    .detail-rule {
+        display: flex;
+
+        .ddl-primary {
+            margin-right: 8px;
+        }
+
+        .ddl-second {
+            width: 240px;
+            position: fixed;
+            z-index: 9990;
+            margin-left: 109px;
+
+            @media screen and (max-height: 768px) {
+                position: relative;
+                margin-left: 0;
+            }
+
+            .ui-multiselect-widget {
+                width: calc(~"100% - 3px") !important;
+
+                @media screen and (max-height: 768px) {
+                    width: 235px !important;
+                }
+            }
+
+            &.site-type-box {
+                z-index: 9998;
+            }
+
+            &.class-customer-box {
+                z-index: 9997;
+            }
+
+            &.sport-box {
+                z-index: 9996;
+            }
+
+            &.bet-type-box {
+                z-index: 9995;
+            }
+
+            &.league-box-1 {
+                z-index: 9994;
+            }
+
+            &.league-box-2 {
+                z-index: 9993;
+            }
+
+            &.ticket-box {
+                z-index: 9992;
+            }
+        }
+
+        &.value-range {
+            display: grid;
+            grid-template-columns: 109px 1fr 48px 1fr;
+            justify-content: flex-start;
+            align-items: center;
+
+            [class*="value"] {
+                input[type="text"] {
+                    height: 20px;
+                    padding: 2px;
+                    text-align: right;
+                    width: 50px;
+                }
+            }
+
+            .txt {
+                justify-self: flex-end;
+                padding-right: 8px;
+            }
+        }
+    }
+}
+
+#txt-league {
+    border: 1px solid #c4c4c4;
+    resize: none;
+    height: 70px;
+    max-height: 70px;
+    width: calc(~"100% - 6px");
+}
+
+.form [class*="form"] {
+    input[type="text"] {
+        border: 1px solid #c4c4c4;
+
+        &:disabled {
+            background-color: #f3efee;
+            color: #ccc;
+        }
+    }
+}
+
+.button-row {
+    text-align: right;
+}
+
+.lbl-field-criteria-no {
+    padding-right: 12px;
+}
+
+.ui-combobox {
+    display: flex;
+    width: 100%;
+
+    input[role="textbox"] {
+        width: 100%;
+    }
+}
+
+.width-50 {
+    width: 50px;
+}
+
+.error-tipsy {
+    z-index: 10000;
+}
+
+.criteria-hint {
+    .tipsy-inner {
+        p {
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+    }
+}
+/********************** customize multiselect  ***********************/
+.ui-multiselect-widget-content {
+    .ui-multiselect-widget-header input[type="text"] {
+        width: calc(~"100% - 12px");
+    }
+}
+
+.ui-multiselect-widget {
+    input[type='text'].ui-multiselect-state-default {
+        height: 21px !important;
+        cursor: pointer;
+        width: calc(~"100% - 18px") !important;
+        margin-right: 0;
+    }
+}
+

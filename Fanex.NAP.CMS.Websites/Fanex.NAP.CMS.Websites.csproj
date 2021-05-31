@@ -405,6 +405,23 @@
     <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-search.js" />
     <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite-update.js" />
     <Content Include="Areas\Customers\Scripts\ProblemAccountLicenseeSite\problemAccountLicenseeSite.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\addOrUpdateRule.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\betfromCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\betTypeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRStatusCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerCategory.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerClassCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\eventCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\leagueGroupCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\otherControls.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\siteTypeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\stakeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketDoWCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketTimeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngine.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\VREngineHelper.js" />
     <Content Include="Areas\Customers\Scripts\WhitelistBigCreditMembers\whitelistBigCreditMembers.js" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
@@ -602,6 +619,9 @@
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-1.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240-2.png" />
     <Content Include="Scripts\Libs\Fanex.Multiselect\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.css" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.js" />
+    <Content Include="Scripts\Libs\Fanex.Multiselect\jquery.multiselect.min.js" />
     <Content Include="Scripts\Libs\Highcharts\exporting.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts-3d.js" />
     <Content Include="Scripts\Libs\Highcharts\highcharts.js" />
@@ -1002,6 +1022,11 @@
     <Content Include="Areas\Customers\Styles\limitNewDownline.less" />
     <Content Include="Areas\Customers\Views\WhitelistBigCreditMembers\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\whitelistBigCreditMembers.less" />
+    <Content Include="Areas\Customers\Styles\virtualRateEngine.less" />
+    <Content Include="Areas\Customers\Views\VirtualRateEngine\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\VirtualRateEngine\_AddOrUpdateRule.cshtml" />
+    <Content Include="Areas\Customers\Views\VirtualRateEngine\CustomerClassHint.cshtml" />
+    <Content Include="Areas\Customers\Styles\customerCategory.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1049,6 +1074,7 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

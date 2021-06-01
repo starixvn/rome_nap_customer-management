@@ -852,4 +852,16 @@
   <data name="UsernamesSeperatedByComma" xml:space="preserve">
     <value>Usernames (Seperated by comma ",")</value>
   </data>
+  <data name="BetLimitFixedMode" xml:space="preserve">
+    <value>Fixed Value</value>
+  </data>
+  <data name="BetLimitMode" xml:space="preserve">
+    <value>Bet Limit Mode</value>
+  </data>
+  <data name="BetLimitPercentageMode" xml:space="preserve">
+    <value>X times of Odds' Max Bet</value>
+  </data>
+  <data name="BetLimitModePercentageSuffix" xml:space="preserve">
+    <value>x Odds's Max Bet</value>
+  </data>
 </root>

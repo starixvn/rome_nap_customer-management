@@ -604,6 +604,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\CMSConstants.js" />
     <Content Include="Scripts\KeyboardManager.js" />
+    <Content Include="Scripts\Libs\autoNumeric\autoNumeric-4.6.0.min.js" />
     <Content Include="Scripts\Libs\Crypto\CryptoJS.js" />
     <Content Include="Scripts\Libs\DateRangePicker\weekly-picker.js" />
     <Content Include="Scripts\Libs\DateRangePicker\monthly-picker.js" />

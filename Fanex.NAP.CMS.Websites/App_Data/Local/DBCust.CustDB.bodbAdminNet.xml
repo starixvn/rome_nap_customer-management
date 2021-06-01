@@ -93,9 +93,9 @@
     <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_DefaultSetting_Sel" SpName="NAP_BLControl_DefaultSetting_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_DefaultSetting_Ins" SpName="NAP_BLControl_DefaultSetting_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -1,5 +1,6 @@
 ﻿@using Fanex.Nap.CMS.Customers.Resources
-@model IEnumerable<Fanex.NAP.CMS.BetLimitControl.Models.BetLimitTypeModel>
+@using Fanex.NAP.CMS.BetLimitControl.Models
+@model IEnumerable<BetLimitTypeModel>
 
 <div class="display-none">
     <div id="frmUpd" class="form expand-form">
@@ -27,10 +28,22 @@
         </div>
         <div class="form-row">
             <div class="lbl-field col-label">
+                <label for="selBetLimitModeUpdate">@ViewLang.BetLimitMode<span class="required-field">*</span></label>
+            </div>
+            <div class="edit-field">
+                <select id="selBetLimitModeUpdate" class="bet-limit-type-select">
+                    <option value="@((byte)Modes.Fixed)">@ViewLang.BetLimitFixedMode</option>
+                    <option value="@((byte)Modes.Percentage)">@ViewLang.BetLimitPercentageMode</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field col-label">
                 <label for="txtMaxPerMatchUpdate">@ViewLang.MaxPerMatch<span class="required-field">*</span></label>
             </div>
             <div class="edit-field">
-                <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxPerMatchUpdate" autocomplete="off" />
+                <input type="text" class="input-text-right" maxlength="13" id="txtMaxPerMatchUpdate" autocomplete="off" />
+                <span class="percentage-tip-update">@ViewLang.BetLimitModePercentageSuffix</span>
             </div>
         </div>
         <div class="form-row">
@@ -38,7 +51,8 @@
                 <label for="txtMaxBetUpdate">@ViewLang.MaxBet<span class="required-field">*</span></label>
             </div>
             <div class="edit-field">
-                <input type="text" class="number-separator input-text-right" maxlength="13" id="txtMaxBetUpdate" autocomplete="off" />
+                <input type="text" class="input-text-right" maxlength="13" id="txtMaxBetUpdate" autocomplete="off" />
+                <span class="percentage-tip-update">@ViewLang.BetLimitModePercentageSuffix</span>
             </div>
         </div>
         <div class="form-row float-right button-group">

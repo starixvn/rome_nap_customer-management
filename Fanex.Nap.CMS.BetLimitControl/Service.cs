@@ -58,6 +58,7 @@
             {
                 Usernames = addRequest.Username,
                 BetLimitTypeID = addRequest.BetLimitTypeID,
+                Mode = addRequest.Mode,
                 MaxBet = addRequest.MaxBet,
                 MaxPerMatch = addRequest.MaxPerMatch,
                 UserId = currentSession.UserId,
@@ -140,6 +141,7 @@
                 CustID = updateRequest.CustID,
                 BetLimitTypeID = updateRequest.BetLimitTypeID,
                 NewBetLimitTypeID = updateRequest.NewBetLimitTypeID,
+                Mode = updateRequest.Mode,
                 MaxBet = updateRequest.MaxBet,
                 MaxPerMatch = updateRequest.MaxPerMatch,
                 UserId = currentSession.UserId,

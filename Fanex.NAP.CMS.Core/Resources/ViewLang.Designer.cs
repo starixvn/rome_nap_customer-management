@@ -385,6 +385,42 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fixed Value.
+        /// </summary>
+        public static string BetLimitFixedMode {
+            get {
+                return ResourceManager.GetString("BetLimitFixedMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Limit Mode.
+        /// </summary>
+        public static string BetLimitMode {
+            get {
+                return ResourceManager.GetString("BetLimitMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to x Odds&apos;s Max Bet.
+        /// </summary>
+        public static string BetLimitModePercentageSuffix {
+            get {
+                return ResourceManager.GetString("BetLimitModePercentageSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X times of Odds&apos; Max Bet.
+        /// </summary>
+        public static string BetLimitPercentageMode {
+            get {
+                return ResourceManager.GetString("BetLimitPercentageMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Limit Type.
         /// </summary>
         public static string BetLimitType {

@@ -14,6 +14,8 @@
 
         public decimal MaxPerMatch { get; set; }
 
+        public byte Mode { get; set; }
+
         public int UserId { get; set; }
 
         public string IP { get; set; }
@@ -26,6 +28,6 @@
             => "NAP_BLControl_CustUpdate";
 
         public override bool IsValid()
-            => CustID > 0 && BetLimitTypeID > 0 && NewBetLimitTypeID > 0 && MaxBet <= MaxPerMatch && UserId > 0 && !string.IsNullOrWhiteSpace(IP);
+            => CustID > 0 && BetLimitTypeID > 0 && NewBetLimitTypeID > 0 && MaxBet <= MaxPerMatch && Utils.IsValidMode(Mode) && UserId > 0 && !string.IsNullOrWhiteSpace(IP);
     }
 }

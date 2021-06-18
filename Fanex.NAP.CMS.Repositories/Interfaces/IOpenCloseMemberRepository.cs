@@ -9,9 +9,9 @@
 
 namespace Fanex.NAP.CMS.Repositories.Interfaces
 {
-    using System.Collections.Generic;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
     using Fanex.NAP.CMS.Models.OpenCloseMember;
+    using System.Collections.Generic;
 
     public interface IOpenCloseMemberRepository
     {
@@ -21,5 +21,7 @@ namespace Fanex.NAP.CMS.Repositories.Interfaces
         /// <param name="criteria">The criteria that are use to query data.</param>
         /// <returns>List of MemberStatusInfo objects.</returns>
         IEnumerable<MemberStatusInfo> GetMembersStatusData(GetMembersStatusCriteria criteria);
+
+        UpdateResult UpdateMembersStatus(UpdateMembersStatusCriteria criteria);
     }
 }

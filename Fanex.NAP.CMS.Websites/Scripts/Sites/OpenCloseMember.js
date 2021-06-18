@@ -164,22 +164,22 @@ Fanex.CMS.CloseOpenMember = function () {
         var agentChkId;
 
         var chkFormat = '<div class="agent-column">' +
-                            '<input type="checkbox" id="{0}" data-chk-group="{1}"/>' +
-                            '<label for="{0}">{2}</label>' +
-                        '</div>';
+            '<input type="checkbox" id="{0}" data-chk-group="{1}"/>' +
+            '<label for="{0}">{2}</label>' +
+            '</div>';
         var statusHeaderFormat = '<div class="checkbox-status status-header"><input type="checkbox" id="{0}"/></div>' +
-                                 '<label for="{0}" class="lbl-for-chkStatus">{1}</label>';
+            '<label for="{0}" class="lbl-for-chkStatus">{1}</label>';
         var statusFormat = '<div class="checkbox-status">' +
-                               '<input type="checkbox" id="{0}" data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
-                           '</div>' +
-                           '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
+            '<input type="checkbox" id="{0}" data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
+            '</div>' +
+            '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
         var statusCol = statusHeaderFormat.format(statusChkColId, labels.status);
         var memberFormat = '<label>{0}</label>';
 
         var gridOptions = {
             columns: [{ HeaderText: labels.order, Width: 50, Name: 'ColOrder', HeaderAlign: 'center', CellAlign: 'center' },
-                      { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'left' },
-                      { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left', CssClass: 'chk-column'}],
+            { HeaderText: labels.member, Width: 220, Name: 'ColMember', HeaderAlign: 'center', CellAlign: 'left' },
+            { HeaderText: statusCol, Width: 120, Name: 'ColStatus', HeaderAlign: 'left', CellAlign: 'left', CssClass: 'chk-column' }],
             showDistinctRow: false,
             showNumberColumn: true,
             showPager: true,
@@ -226,16 +226,16 @@ Fanex.CMS.CloseOpenMember = function () {
 
                     $.each(agent.MemberStatusList, function (index, item) {
                         statusCol = statusFormat.format(
-                                                     item.CustId,
-                                                     item.IsChecked,
-                                                     item.Closed,
-                                                     item.SyncCasino,
-                                                     agentChkId, item.Closed ? labels.closed : labels.open);
+                            item.CustId,
+                            item.IsChecked,
+                            item.Closed,
+                            item.SyncCasino,
+                            agentChkId, item.Closed ? labels.closed : labels.open);
                         highlightClass = (item.Closed ? 'highlight ' : '') + 'hover-column';
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
-                                      { Name: 'ColMember', Value: memberFormat.format(item.Username), TdClass: highlightClass, CssClass: 'member-column' },
-                                      { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass, CssClass: 'chk-column'}]
+                            { Name: 'ColMember', Value: memberFormat.format(item.Username), TdClass: highlightClass, CssClass: 'member-column' },
+                            { Name: 'ColStatus', Value: statusCol, TdClass: highlightClass, CssClass: 'chk-column' }]
                         };
 
                         bodyData.push(row);
@@ -422,15 +422,15 @@ Fanex.CMS.CloseOpenMember = function () {
             data: JSON.stringify(updatingParameters),
             success: function (result) {
                 if (result.ErrorCode > 0) {
-                    CMS.showErrorMessage(result.ErrorMsg);
+                    handleUpdateMemberStatusError(result);
                 } else if (result.NumberOfUpdatedItems === result.TotalItems) {
                     CMS.showSuccessMessage(messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems));
                 } else if (result.NumberOfFailedItems === result.TotalItems) {
                     CMS.showErrorMessage(messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
                 } else {
                     CMS.showMixMessage(
-                            messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems),
-                            messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
+                        messages.updateStatusSuccessfully.format(result.NumberOfUpdatedItems, result.TotalItems),
+                        messages.updateStatusFailed.format(result.NumberOfFailedItems, result.TotalItems));
                 }
 
                 renderMemberList(result.MembersStatusResult);
@@ -442,6 +442,20 @@ Fanex.CMS.CloseOpenMember = function () {
                 CMS.enableInput();
             }
         });
+    };
+
+    var handleUpdateMemberStatusError = function (result) {
+        if (result.ErrorCode === 105) {
+            if (result.UpdatedCount > 0) {
+                CMS.showMixMessage(
+                    messages.updateStatusSuccessfully.format(result.UpdatedCount, result.TotalItems),
+                    `${result.ListCustRemove}: ${result.ErrorMsg}`);
+            } else {
+                CMS.showErrorMessage(`${result.ListCustRemove}: ${result.ErrorMsg}`);
+            }
+        } else {
+            CMS.showErrorMessage(result.ErrorMsg);
+        }
     };
 
     $this.InitPage = function () {

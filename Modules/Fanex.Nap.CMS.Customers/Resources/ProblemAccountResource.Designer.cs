@@ -232,7 +232,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Not problem account(s): {0} &lt;/div&gt;.
+        ///   Looks up a localized string similar to Not problem account(s): {0}.
         /// </summary>
         public static string ErrorExistingUnmarked {
             get {
@@ -241,7 +241,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Invalid account(s): {0} &lt;/div&gt;.
+        ///   Looks up a localized string similar to Invalid account(s): {0}.
         /// </summary>
         public static string ErrorInvalidAccount {
             get {
@@ -250,11 +250,11 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;div  class=&quot;error&quot;&gt;Non-Member Account(s): {0}&lt;/div&gt;.
+        ///   Looks up a localized string similar to Account(s) not in the selected level: {0}.
         /// </summary>
-        public static string ErrorNonMemberAccount {
+        public static string ErrorNotInSelectedLevelAccount {
             get {
-                return ResourceManager.GetString("ErrorNonMemberAccount", resourceCulture);
+                return ResourceManager.GetString("ErrorNotInSelectedLevelAccount", resourceCulture);
             }
         }
         
@@ -471,6 +471,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string MaxPerEvent {
             get {
                 return ResourceManager.GetString("MaxPerEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account(s).
+        /// </summary>
+        public static string MultipleAccounts {
+            get {
+                return ResourceManager.GetString("MultipleAccounts", resourceCulture);
             }
         }
         

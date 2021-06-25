@@ -385,12 +385,15 @@
     <value>The function can only unmark up to 100 accounts per request.</value>
   </data>
   <data name="ErrorExistingUnmarked" xml:space="preserve">
-    <value>&lt;div  class="error"&gt;Not problem account(s): {0} &lt;/div&gt;</value>
+    <value>Not problem account(s): {0}</value>
   </data>
   <data name="ErrorInvalidAccount" xml:space="preserve">
-    <value>&lt;div  class="error"&gt;Invalid account(s): {0} &lt;/div&gt;</value>
+    <value>Invalid account(s): {0}</value>
   </data>
-  <data name="ErrorNonMemberAccount" xml:space="preserve">
-    <value>&lt;div  class="error"&gt;Non-Member Account(s): {0}&lt;/div&gt;</value>
+  <data name="ErrorNotInSelectedLevelAccount" xml:space="preserve">
+    <value>Account(s) not in the selected level: {0}</value>
+  </data>
+  <data name="MultipleAccounts" xml:space="preserve">
+    <value>Account(s)</value>
   </data>
 </root>

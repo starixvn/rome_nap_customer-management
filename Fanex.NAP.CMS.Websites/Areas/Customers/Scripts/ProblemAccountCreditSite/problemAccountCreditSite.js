@@ -3,8 +3,7 @@
     var elements = {
         formMarkNew: $("#formMarkNew"),
         formUpdateProblemAccount: $("#formUpdateProblemAccount"),
-        formUnmarkMember: $("#formUnmarkMember"),
-        formUnmarkSMA: $("#formUnmarkSMA"),
+        formUnmark: $("#formUnmark"),
         formReduceBL: $("#formReduceBL"),
         formCloseAccount: $("#formCloseAccount"),
         formRemoveReduceBLMemmber: $("#formRemoveReduceBLMemmber"),
@@ -28,7 +27,7 @@
 
         $("#btn-unmark").click(function () {
             handleActions(function (usernames, level) {
-                var unmark = new ProblemAccountUnmark(getUnmarkForm(level).clone(), problemAccountSearch.reloadData);
+                var unmark = new ProblemAccountUnmark(elements.formUnmark.clone(), problemAccountSearch.reloadDataForMarkNew);
                 unmark.init(resources.unmarkProblemAccount, usernames, level);
             }, true);
         });
@@ -66,11 +65,7 @@
 
     function handleActions(handleActionCallback, openManually = false) {
         var problemAccount = problemAccountSearch.getCheckedProblemAccount();
-        (openManually && problemAccount.level === "1" || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames, problemAccount.level);
-    }
-
-    function getUnmarkForm(level) {
-        return isMemberLevel(level) ? elements.formUnmarkMember : elements.formUnmarkSMA;
+        (openManually || problemAccount.usernames.length) && handleActionCallback(problemAccount.usernames, problemAccount.level);
     }
 
     function getRemoveReducedBLForm(level) {

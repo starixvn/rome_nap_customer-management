@@ -1,23 +1,43 @@
 ﻿"use strict";
 function ProblemAccountUnmark(form, reloadData) {
     var inlineMessage = null,
-        txtUsernames = null;
+        ddlLevel = null,
+        spanLevel = null,
+        txtUsernames = null,
+        divSMAUnmarkExtension = null,
+        divUnmarkNote = null,
+        checkboxExcludeAbnormalMember = null,
+        checkboxExcludeDirectMark = null;
 
     function initForm(usernames, level) {
-        form.find("#txt-level").val(level);
+        if (!usernames.length) {
+            level = "0";
+        }
+
+        inlineMessage = form.find("#div-inlineMessage");
+        ddlLevel = form.find("#ddl-level").combobox();
+        ddlLevel.val(level).combobox("refresh");
+        spanLevel = form.find('span[id="ddl-level"]');
         txtUsernames = form.find("#txt-usernames");
         txtUsernames.val(usernames.join(","));
-        form.find("#span-selectedAccounts").text(usernames.join(", "));
-        inlineMessage = form.find("#div-inlineMessage");
+        divSMAUnmarkExtension = form.find("#div-smaUnmarkExtension");
+        divUnmarkNote = form.find("#divUnmarkNote");
+        checkboxExcludeAbnormalMember = form.find("#chk-excludeAbnormalMember");
+        checkboxExcludeDirectMark = form.find("#chk-excludeDirectMark");
 
-        if (level !== 1) {
-            form.find("#divUnmarkNote").tipsy({
-                className: "unmark-note",
-                html: true,
-                opacity: 1,
-                gravity: "w"
-            });
-        }
+        divUnmarkNote.tipsy({
+            className: "unmark-note",
+            html: true,
+            opacity: 1,
+            gravity: "w"
+        });
+    }
+
+    function bindEvents() {
+        ddlLevel.off("change").on("change", function () {
+            var levelId = this.value;
+            disableSMAUnmarkExtensionDiv(levelId === "1" || levelId === "0");
+        });
 
         txtUsernames.off("change").on("change", function () {
             var usernamesValue = $.trim(txtUsernames.val());
@@ -41,23 +61,23 @@ function ProblemAccountUnmark(form, reloadData) {
                 txtUsernames.val(usernamesArray.join(",").replace(/(<([^>]+)>)/ig, ""));
             }
         });
-    }
 
-    function bindEvents() {
         var buttonCancel = form.find("#btn-cancel");
         buttonCancel.off("click").on("click", CMS.closePopup);
 
         form.off("submit").on("submit", function (event) {
             event.preventDefault();
             CMS.hideInlineMsg(inlineMessage);
-            if (!ValidateUsername()) {
-                return;
+
+            if (validateLevel() && validateUsername()) {
+                CMS.disableInput();
+                $.post(form.attr("action"), form.serialize(), successHandler, "json")
+                    .fail(CMS.handleAjaxError)
+                    .always(CMS.enableInput);
             }
-            CMS.disableInput();
-            $.post(form.attr("action"), form.serialize(), successHandler, "json")
-                .fail(CMS.handleAjaxError)
-                .always(CMS.enableInput);
         });
+
+        ddlLevel.trigger("change");
     }
 
     function successHandler(data) {
@@ -73,14 +93,7 @@ function ProblemAccountUnmark(form, reloadData) {
         }
     }
 
-    this.init = function (modalTitle, usernames, level) {
-        CMS.modal(modalTitle, form, { height: "auto" });
-
-        initForm(usernames, level);
-        bindEvents();
-    };
-
-    function ValidateUsername() {
+    function validateUsername() {
         var usernames = txtUsernames.val().replace(/(<([^>]+)>)/ig, "");
         if (!usernames || usernames.length === 0) {
             CMS.showTipsyError(txtUsernames, resources.requiredFieldError, "n");
@@ -98,4 +111,35 @@ function ProblemAccountUnmark(form, reloadData) {
 
         return true;
     }
+
+    function validateLevel() {
+        if (ddlLevel.val() === "0") {
+            CMS.showTipsyError(spanLevel, resources.requiredFieldError, "w");
+            return false;
+        }
+
+        CMS.clearTipsyError(spanLevel);
+        return true;
+    }
+
+    function disableSMAUnmarkExtensionDiv(isDisabled) {
+        if (isDisabled) {
+            divSMAUnmarkExtension.attr("disabled", "disabled");
+            checkboxExcludeAbnormalMember.attr("disabled", "disabled");
+            checkboxExcludeDirectMark.attr("disabled", "disabled");
+            divUnmarkNote.removeAttr("original-title");
+        } else {
+            divSMAUnmarkExtension.removeAttr("disabled");
+            checkboxExcludeAbnormalMember.removeAttr("disabled");
+            checkboxExcludeDirectMark.removeAttr("disabled");
+            divUnmarkNote.attr("original-title", "<p>Example:</p><p>- Master1: Directly marked by OPS</p><p>&nbsp;&nbsp;- Agent1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member2: Indirectly marked because of Agent1</p><p>&nbsp;&nbsp;- Agent2: Indirectly marked because of Master1</p><p>Unmarking Master1 using this option will unmark Master1 and Agent2.<br/>Member2 will still be marked for it belongs to a directly marked upline (Agent1).</p>");  
+        }
+    }
+
+    this.init = function (modalTitle, usernames, level) {
+        CMS.modal(modalTitle, form, { height: "auto" });
+
+        initForm(usernames, level);
+        bindEvents();
+    };
 }

@@ -87,7 +87,7 @@
     @{
         Html.RenderPartial("_MarkNew", Model);
         Html.RenderPartial("_UpdateProblemAccount");
-        Html.RenderPartial("_Unmark");
+        Html.RenderPartial("_Unmark", Model.MarkNewLevels);
         Html.RenderPartial("_ReduceBetLimit");
         Html.RenderPartial("_CloseAccount");
         Html.RenderPartial("_RemoveReduceBetLimit");

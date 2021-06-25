@@ -1,9 +1,9 @@
-﻿@using (Html.BeginForm("Unmark", "ProblemAccountLicenseeSite", FormMethod.Post, new { id = "formUnmarkMember", @class = "form" }))
+﻿@using (Html.BeginForm("Unmark", "ProblemAccountLicenseeSite", FormMethod.Post, new { id = "formUnmark", @class = "form" }))
 {
     <div id="div-inlineMessage" class="inline-message"></div>
-    <div class="form-row">
+    <div class="form-row form-usernames">
         <div class="lbl-field">
-            <label for="txt-usernames">@ProblemAccountResource.MultipleMembers<span class="text-red">*</span>@ProblemAccountResource.SeperatedByComma</label>
+            <label for="txt-usernames">@ProblemAccountResource.MultipleMembers<span class="text-red">* </span>@ProblemAccountResource.SeperatedByComma</label>
         </div>
         <div class="edit-field">
             <textarea rows="7" name="usernames" maxlength="4000" id="txt-usernames"></textarea>

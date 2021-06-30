@@ -41,14 +41,15 @@
         public override ExcelColumn[] ExcelColumns =>
             new[]
             {
-                new ExcelColumn(ProblemAccountCreditDepositResource.Member, Width300),
+                new ExcelColumn(ProblemAccountCreditDepositResource.Member, Width200),
+                new ExcelColumn(ProblemAccountCreditDepositResource.RegisteredUsername, Width200),
                 new ExcelColumn(ProblemAccountResource.Currency, Width100),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxPerMatch, Width140),
                 new ExcelColumn(ProblemAccountCreditDepositResource.MaxBet, Width140),
                 new ExcelColumn(ProblemAccountCreditDepositResource.PreventiveAction, Width300),
                 new ExcelColumn(ProblemAccountResource.MarkDate, Width140),
-                new ExcelColumn(ProblemAccountResource.Reason, Width400),
-                new ExcelColumn(ProblemAccountResource.Comment, Width400),
+                new ExcelColumn(ProblemAccountResource.Reason, Width300),
+                new ExcelColumn(ProblemAccountResource.Comment, Width300),
                 new ExcelColumn(ProblemAccountResource._1stWeekInformed, Width140),
                 new ExcelColumn(ProblemAccountResource._2ndWeekInformed, Width140),
                 new ExcelColumn(ProblemAccountResource.AbnormalBet, Width140)
@@ -81,7 +82,7 @@
                 return;
             }
 
-            const int VIPColSpan = 3;
+            const int VIPColSpan = 4;
             var vipStyle = NpoiExcelExtensions.VIPStyle(ExportExcel.ExcelFile);
 
             var wrapTextStyle = ExcelStyleTemplate.TextStyle;
@@ -104,9 +105,8 @@
                 foreach (var item in siteGroup.ProblemAccounts)
                 {
                     ExportExcel.ResetCurrentColumn();
-                    ExportExcel.RenderCurrentCell(
-                        string.IsNullOrWhiteSpace(item.Username2) ? $"    {item.Username}" : $"    {item.Username}{NewLine}    {item.Username2}",
-                        wrapTextStyle);
+                    ExportExcel.RenderCurrentCell(item.Username, wrapTextStyle);
+                    ExportExcel.RenderCurrentCell(item.Username2, wrapTextStyle);
                     ExportExcel.RenderCurrentCell(item.Currency, centerTextStyle);
 
                     if (item.IsVIP)
@@ -135,12 +135,11 @@
         private static string FormatDecimal(decimal? value)
             => value == null ? "N/A" : value.Value.ToString("N0");
 
-
         private static string BuildPreventiveAction(ProblemAccountLicenseeSiteItem problemAccount)
         {
             if (problemAccount.ActionName == VoidWinningAction)
             {
-                var limitAmount = problemAccount.LimitAmount.Equals(0.0d)? Unlimited : problemAccount.LimitAmount.ToString();
+                var limitAmount = problemAccount.LimitAmount.Equals(0.0d) ? Unlimited : problemAccount.LimitAmount.ToString();
                 return $"{problemAccount.ActionName} - {problemAccount.VoidTime} - {limitAmount}";
             }
 

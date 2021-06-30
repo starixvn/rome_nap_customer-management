@@ -150,10 +150,9 @@
                 {
                     if (reader.Read())
                     {
-                        var error = new Result(
+                        var error = MapToUnMarkMessage(
                             Convert.ToInt32(reader[ErrorCodeParam]),
                             reader["username"].ToString());
-                        MapToUnMarkMessage(error);
 
                         return new Tuple<Result, string>(error, string.Empty);
                     }
@@ -168,24 +167,29 @@
             }
         }
 
-        private static void MapToUnMarkMessage(Result error)
+        private static Result MapToUnMarkMessage(int errorCode, string username)
         {
-            if (error.Code == ErrorInvalidAccount)
+            string errorMessage;
+            var newUsername = string.Join(", ", username.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+            if (errorCode == ErrorInvalidAccount)
             {
-                error.Message = string.Format(ProblemAccountResource.ErrorInvalidAccount, error.Message);
+                errorMessage = string.Format(ProblemAccountResource.ErrorInvalidAccount, newUsername);
             }
-            else if (error.Code == ErrorExistUnmarkedAccount)
+            else if (errorCode == ErrorExistUnmarkedAccount)
             {
-                error.Message = string.Format(ProblemAccountResource.ErrorExistingUnmarked, error.Message);
+                errorMessage = string.Format(ProblemAccountResource.ErrorExistingUnmarked, newUsername);
             }
-            else if (error.Code == ErrorNotInSelectedLevelAccount)
+            else if (errorCode == ErrorNotInSelectedLevelAccount)
             {
-                error.Message = string.Format(ProblemAccountResource.ErrorNotInSelectedLevelAccount, error.Message);
+                errorMessage = string.Format(ProblemAccountResource.ErrorNotInSelectedLevelAccount, newUsername);
             }
             else
             {
-                error.Message = $"{error.Code}: {error.Message}";
+                errorMessage = $"{errorCode}: {newUsername}";
             }
+
+            return new Result(errorCode, errorMessage);
         }
 
         public Result ExecuteNonQuery(ICriteria criteria)

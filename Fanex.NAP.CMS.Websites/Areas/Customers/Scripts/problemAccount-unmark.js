@@ -36,7 +36,12 @@ function ProblemAccountUnmark(form, reloadData) {
     function bindEvents() {
         ddlLevel.off("change").on("change", function () {
             var levelId = this.value;
-            disableSMAUnmarkExtensionDiv(levelId === "1" || levelId === "0");
+            var isDisabled = levelId === "1" || levelId === "0";
+            disableSMAUnmarkExtensionDiv(isDisabled);
+            if (isDisabled) {
+                checkboxExcludeAbnormalMember.prop("checked", false);
+                checkboxExcludeDirectMark.prop("checked", false);
+            }
         });
 
         txtUsernames.off("change").on("change", function () {
@@ -132,7 +137,7 @@ function ProblemAccountUnmark(form, reloadData) {
             divSMAUnmarkExtension.removeAttr("disabled");
             checkboxExcludeAbnormalMember.removeAttr("disabled");
             checkboxExcludeDirectMark.removeAttr("disabled");
-            divUnmarkNote.attr("original-title", "<p>Example:</p><p>- Master1: Directly marked by OPS</p><p>&nbsp;&nbsp;- Agent1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member2: Indirectly marked because of Agent1</p><p>&nbsp;&nbsp;- Agent2: Indirectly marked because of Master1</p><p>Unmarking Master1 using this option will unmark Master1 and Agent2.<br/>Member2 will still be marked for it belongs to a directly marked upline (Agent1).</p>");  
+            divUnmarkNote.attr("original-title", "<p>Example:</p><p>- Master1: Directly marked by OPS</p><p>&nbsp;&nbsp;- Agent1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member2: Indirectly marked because of Agent1</p><p>&nbsp;&nbsp;- Agent2: Indirectly marked because of Master1</p><p>Unmarking Master1 using this option will unmark Master1 and Agent2.<br/>Member2 will still be marked for it belongs to a directly marked upline (Agent1).</p>");
         }
     }
 

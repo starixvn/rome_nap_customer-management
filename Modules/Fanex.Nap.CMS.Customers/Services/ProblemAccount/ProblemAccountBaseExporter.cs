@@ -19,6 +19,7 @@
     {
         protected const int Width100 = 100;
         protected const int Width140 = 140;
+        protected const int Width200 = 200;
         protected const int Width300 = 300;
         protected const int Width400 = 400;
         protected const string Unlimited = "Unlimited";

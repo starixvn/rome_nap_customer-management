@@ -304,6 +304,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registered Username.
+        /// </summary>
+        public static string RegisteredUsername {
+            get {
+                return ResourceManager.GetString("RegisteredUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (separated by comma &apos;,&apos; / [tab] / [enter] / [space]).
         /// </summary>
         public static string SeperatedByComma {

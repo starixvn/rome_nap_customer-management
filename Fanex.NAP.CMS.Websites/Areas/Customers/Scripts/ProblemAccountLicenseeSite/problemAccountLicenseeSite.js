@@ -3,7 +3,7 @@
     var elements = {
         formMarkNew: $("#formMarkNew"),
         formUpdateProblemAccount: $("#formUpdateProblemAccount"),
-        formUnmarkMember: $("#formUnmarkMember"),
+        formUnmarkMember: $("#formUnmark"),
         formReduceBL: $("#formReduceBL"),
         formRemoveReduceBLMemmber: $("#formRemoveReduceBLMemmber"),
         formInformingStatus: $("#formInformingStatus")

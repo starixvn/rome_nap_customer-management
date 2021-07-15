@@ -1,51 +1,45 @@
-@using (Html.BeginForm("Unmark", "ProblemAccountCreditSite", FormMethod.Post, new { id = "formUnmarkMember", @class = "form" }))
+@model IEnumerable<SelectListItem>
+@using (Html.BeginForm("Unmark", "ProblemAccountCreditSite", FormMethod.Post, new { id = "formUnmark", @class = "form" }))
 {
-    <input type="hidden" name="level" id="txt-level" value="" />
     <div id="div-inlineMessage" class="inline-message"></div>
     <div class="form-row">
+        <div class="lbl-field width-60">
+            <label>@ProblemAccountResource.Level<span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("level", Model, new { id = "ddl-level", @class = "combobox-autocomplete" })
+        </div>
+    </div>
+    <div class="form-row form-usernames">
         <div class="lbl-field">
-            <label for="txt-usernames">@ProblemAccountResource.MultipleMembers<span class="text-red">*</span>@ProblemAccountResource.SeperatedByComma</label>
+            <label for="txt-usernames">@ProblemAccountResource.MultipleAccounts<span class="text-red">* </span>@ProblemAccountResource.SeperatedByComma</label>
         </div>
         <div class="edit-field">
             <textarea rows="7" name="usernames" maxlength="4000" id="txt-usernames"></textarea>
         </div>
     </div>
-    <div class="form-row">
-        <p class=""><span class="text-red">*</span> @ProblemAccountResource.UnmarkHint</p>
-    </div>
-    <div class="form-row button-row">
-        <button type="submit" class="blue-button">@ProblemAccountResource.OK</button>
-        <button type="button" class="red-button" id="btn-cancel">@ProblemAccountResource.Cancel</button>
-    </div>
-}
-@using (Html.BeginForm("Unmark", "ProblemAccountCreditSite", FormMethod.Post, new { id = "formUnmarkSMA", @class = "form" }))
-{
-    <input type="hidden" name="usernames" id="txt-usernames" value="" />
-    <input type="hidden" name="level" id="txt-level" value="" />
-    <div id="div-inlineMessage" class="inline-message"></div>
-    <div class="form-row min-height-25">
-        <p>@ProblemAccountResource.SelectedAccounts: <span class="bold" id="span-selectedAccounts"></span></p>
-    </div>
-    <div class="form-row min-height-25">
-        <p class="no-margin-bottom">@ProblemAccountResource.UnmarkTheSelectedAccountsAndAllDownlines</p>
-    </div>
-    <div class="form-row min-height-25">
-        <div class="lbl-field width-35 exclude">
-            <label>@ProblemAccountResource.Exclude:</label>
+    <div id="div-smaUnmarkExtension">
+        <div class="form-row min-height-25">
+            <p class="no-margin-bottom">@ProblemAccountResource.UnmarkTheSelectedAccountsAndAllDownlines</p>
         </div>
-        <div class="edit-field checkbox">
-            <input type="checkbox" name="excludeAbnormalMember" value="true" id="chk-excludeAbnormalMember" />
-            <label for="chk-excludeAbnormalMember">@ProblemAccountResource.ExcludeAbnomalBetMember</label>
+        <div class="form-row min-height-25">
+            <div class="lbl-field width-35 exclude">
+                <label>@ProblemAccountResource.Exclude:</label>
+            </div>
+            <div class="edit-field checkbox">
+                <input type="checkbox" name="excludeAbnormalMember" value="true" id="chk-excludeAbnormalMember" />
+                <label for="chk-excludeAbnormalMember">@ProblemAccountResource.ExcludeAbnomalBetMember</label>
+            </div>
         </div>
-    </div>
-    <div class="form-row min-height-25">
-        <div class="lbl-field width-35">
-            <label>&nbsp;</label>
-        </div>
-        <div class="edit-field checkbox">
-            <input type="checkbox" name="excludeDirectMark" value="true" id="chk-excludeDirectMark" />
-            <label for="chk-excludeDirectMark">@ProblemAccountResource.ExcludeDirectMarkedCust</label>
-            <div id="divUnmarkNote" class="note-info-message" title="<p>Example:</p><p>- Master1: Directly marked by OPS</p><p>&nbsp;&nbsp;- Agent1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member1: Directly marked by OPS</p><p>&nbsp;&nbsp;&nbsp;&nbsp;- Member2: Indirectly marked because of Agent1</p><p>&nbsp;&nbsp;- Agent2: Indirectly marked because of Master1</p><p>Unmarking Master1 using this option will unmark Master1 and Agent2.<br/>Member2 will still be marked for it belongs to a directly marked upline (Agent1).</p>"></div>
+        <div class="form-row min-height-25">
+            <div class="lbl-field width-35">
+                <label>&nbsp;</label>
+            </div>
+            <div class="edit-field checkbox">
+                <input type="checkbox" name="excludeDirectMark" value="true" id="chk-excludeDirectMark" />
+                <label for="chk-excludeDirectMark">@ProblemAccountResource.ExcludeDirectMarkedCust</label>
+                <div id="divUnmarkNote" class="note-info-message"></div>
+            </div>
         </div>
     </div>
     <div class="form-row min-height-25">

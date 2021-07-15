@@ -97,8 +97,7 @@
     }
 }
 
-#formMarkNew, #formUnmarkMember, #formUpdateProblemAccount {
-    width: 700px;
+#formMarkNew, #formUpdateProblemAccount {
     padding: 0;
     float: none;
     word-wrap: break-word;
@@ -127,9 +126,7 @@
     }
 }
 
-#formUnmarkSMA, #formRemoveReduceBLSMA {
-    width: 500px;
-
+#formUnmark, #formRemoveReduceBLSMA {
     .min-height-25 {
         min-height: 25px;
 
@@ -145,8 +142,39 @@
     }
 }
 
-#formReduceBL, #formInactivateAccount, #formRemoveReduceBLMemmber, #formInformingStatus, #formCloseAccount {
-    width: 450px;
+#formUnmark {
+    .form-row.form-usernames {
+        float: none;
+
+        .lbl-field, .edit-field {
+            float: none;
+            padding-bottom: 10px;
+            width: 98%;
+
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        }
+    }
+
+    #div-smaUnmarkExtension {
+        &[disabled] {
+            color: #d3d3d3;
+
+            .exclude {
+                color: #d3d3d3;
+            }
+        }
+    }
+}
+
+#formMarkNew, #formUnmark, #formUpdateProblemAccount {
+    width: 700px;
+}
+
+#formReduceBL, #formInactivateAccount, #formRemoveReduceBLSMA, #formRemoveReduceBLMemmber, #formInformingStatus, #formCloseAccount {
+    width: 500px;
 }
 
 .unmark-note {
@@ -193,7 +221,7 @@
 }
 
 .freegrid td.vip, .freegrid .grid-fixed-table td.vip {
-    color:#ff0000;
+    color: #ff0000;
     background-color: #faffa8;
     text-align: center;
 }

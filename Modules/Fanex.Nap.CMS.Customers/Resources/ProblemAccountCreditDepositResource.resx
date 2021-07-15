@@ -225,4 +225,7 @@
   <data name="VoidWinningTickets" xml:space="preserve">
     <value>Void winning tickets</value>
   </data>
+  <data name="RegisteredUsername" xml:space="preserve">
+    <value>Registered Username</value>
+  </data>
 </root>

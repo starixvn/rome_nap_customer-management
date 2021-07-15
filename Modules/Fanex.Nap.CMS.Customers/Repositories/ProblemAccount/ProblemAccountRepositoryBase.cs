@@ -13,7 +13,7 @@
     {
         private const int ErrorInvalidAccount = 100;
         private const int ErrorExistUnmarkedAccount = 101;
-        private const int ErrorNonMemberAccount = 102;
+        private const int ErrorNotInSelectedLevelAccount = 102;
         private const string ErrorCodeParam = "errcode";
 
         public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
@@ -144,21 +144,18 @@
 
         public Tuple<Result, string> Unmark(ICriteria criteria)
         {
-            var validationError = new List<Result>();
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        validationError.Add(new Result(Convert.ToInt32(reader[ErrorCodeParam]), reader["username"].ToString()));
-                    }
-                }
-                if (validationError.Count > 0)
-                {
-                    var validateErrorResult = BuildUnMarkMessage(validationError);
+                        var error = MapToUnMarkMessage(
+                            Convert.ToInt32(reader[ErrorCodeParam]),
+                            reader["username"].ToString());
 
-                    return new Tuple<Result, string>(validateErrorResult, string.Empty);
+                        return new Tuple<Result, string>(error, string.Empty);
+                    }
                 }
 
                 var ouputParams = db.GetOuputParams();
@@ -170,30 +167,29 @@
             }
         }
 
-        private static Result BuildUnMarkMessage(List<Result> validateErrors)
+        private static Result MapToUnMarkMessage(int errorCode, string username)
         {
-            var errorMsg = "";
-            foreach (var result in validateErrors)
+            string errorMessage;
+            var newUsername = string.Join(", ", username.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+            if (errorCode == ErrorInvalidAccount)
             {
-                if (result.Code == ErrorInvalidAccount)
-                {
-                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorInvalidAccount, result.Message));
-                }
-                else if (result.Code == ErrorExistUnmarkedAccount)
-                {
-                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorExistingUnmarked, result.Message));
-                }
-                else if (result.Code == ErrorNonMemberAccount)
-                {
-                    errorMsg = string.Concat(errorMsg, string.Format(ProblemAccountResource.ErrorNonMemberAccount, result.Message));
-                }
-                else
-                {
-                    errorMsg = string.Concat(errorMsg, "<div class=\"error\">", result.Message, "</div>");
-                }
+                errorMessage = string.Format(ProblemAccountResource.ErrorInvalidAccount, newUsername);
+            }
+            else if (errorCode == ErrorExistUnmarkedAccount)
+            {
+                errorMessage = string.Format(ProblemAccountResource.ErrorExistingUnmarked, newUsername);
+            }
+            else if (errorCode == ErrorNotInSelectedLevelAccount)
+            {
+                errorMessage = string.Format(ProblemAccountResource.ErrorNotInSelectedLevelAccount, newUsername);
+            }
+            else
+            {
+                errorMessage = $"{errorCode}: {newUsername}";
             }
 
-            return new Result(-1, errorMsg);
+            return new Result(errorCode, errorMessage);
         }
 
         public Result ExecuteNonQuery(ICriteria criteria)

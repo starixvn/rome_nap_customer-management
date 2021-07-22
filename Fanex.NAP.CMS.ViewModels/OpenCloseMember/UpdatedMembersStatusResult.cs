@@ -19,6 +19,10 @@ namespace Fanex.NAP.CMS.ViewModels.OpenCloseMember
     {
         public GettingMembersStatusResult MembersStatusResult { get; set; }
 
+        public string ListCustRemove { get; set; }
+
+        public int UpdatedCount { get; set; }
+
         public int ErrorCode { get; set; }
 
         public string ErrorMsg { get; set; }

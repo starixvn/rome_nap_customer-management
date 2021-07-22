@@ -21,9 +21,9 @@
     </Setting>
   </Function>
   <Function Name="OpenCloseMember">
-    <Setting Key="NAP_Misc_OpenCloseMembers_List" SpName="NAP_Misc_OpenCloseMembers_List" DbName="DBAGE.bodb02.bodbAdminNet">
+    <Setting Key="NAP_Misc_OpenCloseMembers_List" SpName="NAP_Misc_OpenCloseMembers_List_UAT4" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
-    <Setting Key="NAP_Misc_OpenCloseMembers_UPD" SpName="NAP_Misc_OpenCloseMembers_UPD" DbName="DBCust.CustDB.bodbAdminNet">
+    <Setting Key="NAP_Misc_OpenCloseMembers_UPD" SpName="NAP_Misc_OpenCloseMembers_UPD_UAT4" DbName="DBCust.CustDB.bodbAdminNet">
     </Setting>
     <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
     </Setting>

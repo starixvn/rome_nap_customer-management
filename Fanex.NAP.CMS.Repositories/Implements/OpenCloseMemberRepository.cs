@@ -9,15 +9,15 @@
 
 namespace Fanex.NAP.CMS.Repositories.Implements
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
     using Fanex.NAP.CMS.Models.OpenCloseMember;
     using Fanex.NAP.CMS.Repositories.Interfaces;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// Open/Close member repository.
@@ -72,6 +72,22 @@ namespace Fanex.NAP.CMS.Repositories.Implements
             }
 
             return memberList;
+        }
+
+        public UpdateResult UpdateMembersStatus(UpdateMembersStatusCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+
+                var outputs = db.GetOuputParams();
+
+                return new UpdateResult(
+                    Converter.ToInt(outputs["errcode"]),
+                    Converter.ToString2(outputs["errmsg"]),
+                    Converter.ToString2(outputs["listcustremove"]),
+                    Converter.ToInt(outputs["updatedcount"]));
+            }
         }
 
         /// <summary>

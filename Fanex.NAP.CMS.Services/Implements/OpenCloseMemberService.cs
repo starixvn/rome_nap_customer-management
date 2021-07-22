@@ -144,13 +144,15 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             if (members.Count > 0)
             {
-                ICommandResult updateResult = UpdateStatusInDB(members, filter);
+                var updateResult = UpdateStatusInDB(members, filter);
 
                 if (updateResult.Code > 0)
                 {
                     failedList = filter.MemberStatusList;
                     result.ErrorCode = updateResult.Code;
                     result.ErrorMsg = updateResult.Message;
+                    result.ListCustRemove = updateResult.ListCustRemove;
+                    result.UpdatedCount = updateResult.UpdatedCount;
                 }
             }
 
@@ -244,8 +246,8 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="memberList">The member list.</param>
         /// <param name="filter">The filter contains .</param>
-        /// <returns>ICommandResult instant indicates whether the updating process is success or not.</returns>
-        private ICommandResult UpdateStatusInDB(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
+        /// <returns>UpdateResult instant indicates whether the updating process is success or not.</returns>
+        private UpdateResult UpdateStatusInDB(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
         {
             var custIDs = string.Join(",", memberList.Select(obj => obj.CustId).ToArray());
             var criteria = new UpdateMembersStatusCriteria
@@ -256,7 +258,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 IP = filter.IP
             };
 
-            return this.UpdateData(criteria);
+            return _openCloseMemberRepository.UpdateMembersStatus(criteria);
         }
 
         /// <summary>

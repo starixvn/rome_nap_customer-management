@@ -32,6 +32,8 @@ namespace Fanex.NAP.CMS.Criteria.OpenCloseMember
 
         public string IP { get; set; }
 
+        public string ListCustRemove { get; set; }
+
         /// <summary>
         /// Gets the setting key.
         /// </summary>

@@ -864,4 +864,7 @@
   <data name="BetLimitModePercentageSuffix" xml:space="preserve">
     <value>x Odds's Max Bet</value>
   </data>
+  <data name="BetRestrictionBasketball" xml:space="preserve">
+    <value>Bet Restriction - Basketball</value>
+  </data>
 </root>

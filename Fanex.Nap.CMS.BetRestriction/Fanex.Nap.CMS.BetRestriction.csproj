@@ -130,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BetRestrictionBasketballController.cs" />
     <Compile Include="Controllers\BetRestrictionController.cs" />
     <Compile Include="Controllers\BetRestrictionManagementController.cs" />
     <Compile Include="Criterias\EditCurrencyCriteria.cs" />
@@ -157,6 +158,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AccountDetailModel.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\Basketball\AccountModel.cs" />
+    <Compile Include="Models\Basketball\CheckAddAccountResultModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\CheckAddAccountResultModel.cs" />
     <Compile Include="Models\Management\BetRestrictionSettingModel.cs" />
@@ -167,10 +170,15 @@
     <Compile Include="Requests\SiteRequest.cs" />
     <Compile Include="Requests\AccountRequest.cs" />
     <Compile Include="Requests\SearchRequest.cs" />
+    <Compile Include="Services\BetRestrictionBasketballService.cs" />
     <Compile Include="Services\BetRestrictionManagementService.cs" />
     <Compile Include="Services\BetRestrictionService.cs" />
+    <Compile Include="Services\IBetRestrictionBasketballService.cs" />
     <Compile Include="Services\IBetRestrictionManagementService.cs" />
     <Compile Include="Services\IBetRestrictionService.cs" />
+    <Compile Include="ViewModels\Basketball\BetRestrictionBasketballSearchViewModel.cs" />
+    <Compile Include="ViewModels\Basketball\BetRestrictionBasketballViewModel.cs" />
+    <Compile Include="ViewModels\Basketball\EditAccountViewModel.cs" />
     <Compile Include="ViewModels\BetRestrictionSearchViewModel.cs" />
     <Compile Include="ViewModels\BetRestrictionViewModel.cs" />
     <Compile Include="ViewModels\EditCurrencyViewModel.cs" />
@@ -200,5 +208,6 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

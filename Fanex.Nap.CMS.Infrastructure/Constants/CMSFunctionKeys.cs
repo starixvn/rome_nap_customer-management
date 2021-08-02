@@ -107,6 +107,7 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         public const string ManageRobots2 = "ManageRobots2";
         public const string BetRestriction = "BetRestriction";
+        public const string BetRestriction_BasketBall = "BetRestriction_BasketBall";
         public const string OnOffBetRestriction = "OnOffBetRestriction";
 
         public const string BetLimitTypeControl = "BetLimitTypeControl";

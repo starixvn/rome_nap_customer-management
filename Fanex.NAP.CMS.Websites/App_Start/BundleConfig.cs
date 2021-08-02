@@ -32,6 +32,7 @@ namespace Fanex.NAP.CMS.Websites
             RegisterLossControlBundles(bundles);
             RegisterCreditCollectionBundles(bundles);
             RegisterBetRestrictionBundles(bundles);
+            RegisterBetRestrictionBasketballBundles(bundles);
             RegisterBetRestrictionManagementBundles(bundles);
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
@@ -240,6 +241,18 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Areas/BetRestriction/Scripts/AccountManagement.js",
                 "~/Areas/BetRestriction/Scripts/SiteManagement.js",
                 "~/Areas/BetRestriction/Scripts/CurrencyManagement.js"));
+        }
+
+        public static void RegisterBetRestrictionBasketballBundles(BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                "~/styles/BetRestrictionBasketball",
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Areas/BetRestrictionBasketball/Styles/Index.less");
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionBasketball").Include(
+               "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+               "~/Areas/BetRestrictionBasketball/Scripts/Index.js",
+               "~/Areas/BetRestrictionBasketball/Scripts/AccountManagement.js"));
         }
 
         public static void RegisterBetRestrictionManagementBundles(BundleCollection bundles)

@@ -2,9 +2,12 @@
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @using Fanex.NAP.CMS.Core.Resources;
 @using System.Text;
-@model Fanex.Nap.CMS.BetRestriction.ViewModels.Basketball.BetRestrictionBasketballViewModel
+@using Fanex.Nap.CMS.Customers.AppStart
+
+@model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewLang.BetRestrictionBasketball;
 }
 @section Head
 {
@@ -32,11 +35,11 @@
             </div>
             <div class="edit-field col_6">
                 <select id="ddlLevel" class="combobox-autocomplete level-combobox col_6">
-                    <option value="0">All</option>
+                    <option selected>All</option>
                     <option value="4">@ViewLang.Super</option>
                     <option value="3">@ViewLang.Master</option>
                     <option value="2">@ViewLang.Agent</option>
-                    <option value="1" selected>@ViewLang.Member</option>
+                    <option value="1">@ViewLang.Member</option>
                 </select>
             </div>
             <div class="lbl-field col_2">
@@ -52,11 +55,11 @@
             <div class="lbl-field col_3">
                 <label for="ddlCurrency">@ViewLang.Currency</label>
             </div>
-            <div class="col_8 width-180">
+            <div class="currency-select col_5 width-160">
                 @Html.DropDownList(
                 "ddlCurrency",
                 Model.Currency,
-                new { @id = "ddlCurrency", @class = "combobox width-180 col_8" })
+                new { @id = "ddlCurrency", @class = "width-160 col_5" })
             </div>
             <div class="submit width-auto col_6">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />

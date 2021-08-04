@@ -6,7 +6,7 @@
     {
         public string UserName { get; set; }
 
-        public short SportType { get; set; }
+        public short? SportType { get; set; }
 
         public override string GetSettingKey()
         {

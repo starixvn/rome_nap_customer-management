@@ -142,7 +142,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Account {0} has already had one or many downlines existing in the list..
+        ///   Looks up a localized string similar to Account {0} has already had one or many downlines existing in the {1} list..
         /// </summary>
         public static string BetRestriction_DownlinesExisted {
             get {
@@ -151,7 +151,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upline {0}: {1} of the selected account has already exists in the bet restriction list..
+        ///   Looks up a localized string similar to Upline {0}: {1} of the selected account has already exists in the {2} list..
         /// </summary>
         public static string BetRestriction_UplineExisted {
             get {
@@ -210,24 +210,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string BetRestriction_WarningUplineSeizeBetHigher {
             get {
                 return ResourceManager.GetString("BetRestriction_WarningUplineSeizeBetHigher", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Account {0} has already had one or many downlines existing in the Bet Restriction - Basketball list..
-        /// </summary>
-        public static string BetRestrictionBasketball_DownlinesExisted {
-            get {
-                return ResourceManager.GetString("BetRestrictionBasketball_DownlinesExisted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Upline {0}: {1} of the selected account has already exists in the Bet Restriction - Basketball list..
-        /// </summary>
-        public static string BetRestrictionBasketball_UplineExisted {
-            get {
-                return ResourceManager.GetString("BetRestrictionBasketball_UplineExisted", resourceCulture);
             }
         }
         

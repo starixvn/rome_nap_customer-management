@@ -5,10 +5,10 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
 {
     public class CheckAddAccountResultModel
     {
-        public CheckAddAccountResultModel(IDataReader reader, string userName) : this(reader, userName, null)
+        public CheckAddAccountResultModel(IDataReader reader, string userName, short sportType) : this(reader, userName, sportType, null)
         { }
 
-        public CheckAddAccountResultModel(IDataReader reader, string userName, ICMSConverter converter)
+        public CheckAddAccountResultModel(IDataReader reader, string userName, short sportType, ICMSConverter converter)
         {
             ICMSConverter _converter = converter ?? new CMSConverterImplement(); 
             CustId = _converter.ToInt32(reader["CustID"]);
@@ -19,6 +19,7 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
             IsDownlineExists = _converter.ToBoolean(reader["IsDownlineExists"]);
             MinDownlineSeizeBetTicket = _converter.ToInt32Nullable(reader["Min_Downline_SeizeBetTicket"]);
             UserName = userName;
+            SportType = sportType;
         }
 
         public int CustId { get; }
@@ -36,5 +37,7 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
         public bool IsDownlineExists { get; }
 
         public int? MinDownlineSeizeBetTicket { get; }
+
+        public short SportType { get; }
     }
 }

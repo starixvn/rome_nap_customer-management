@@ -19,11 +19,11 @@
 
         BetRestrictionDataGridViewModel<T> SearchDataGrid<T>(PagingCriteria criteria);
 
-        Result CheckAddAccount(AccountRequest request);
+        Result CheckAddAccount(AccountRequest request, short sportType);
 
-        Result CheckEditAccount(AccountRequest request);
+        Result CheckEditAccount(AccountRequest request, short sportType);
 
-        EditAccountViewModel GetAccountDetailForEdit(int custId);
+        EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType);
 
         EditSiteViewModel GetSiteDetailForEdit(int siteId);
 

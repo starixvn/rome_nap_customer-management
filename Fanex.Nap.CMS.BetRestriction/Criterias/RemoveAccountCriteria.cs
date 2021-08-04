@@ -8,6 +8,8 @@
 
         public int UserId { get; set; }
 
+        public short? SportType { get; set; }
+
         public string IP { get; set; }
 
         public override string GetSettingKey()

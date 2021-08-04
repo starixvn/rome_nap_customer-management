@@ -1,39 +1,42 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Controllers
 {
-    using Fanex.Nap.CMS.BetRestriction.Criterias;
-    using Fanex.Nap.CMS.BetRestriction.Models.Basketball;
-    using Fanex.Nap.CMS.BetRestriction.Requests;
-    using Fanex.Nap.CMS.BetRestriction.Services;
-    using Fanex.Nap.CMS.BetRestriction.ViewModels.Basketball;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.BetRestriction.Criterias;
+    using Fanex.NAP.CMS.Services.Implements;
+    using Fanex.NAP.CMS.Services.Interfaces;
+    using Fanex.Nap.CMS.BetRestriction.ViewModels;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
     using System.Web.Mvc;
+    using Fanex.Nap.CMS.BetRestriction.Requests;
+    using Fanex.Nap.CMS.BetRestriction.Models;
 
     public class BetRestrictionBasketballController : BaseController
     {
-        private readonly IBetRestrictionBasketballService _betRestrictionBasketballService;
+        private readonly IBetRestrictionService _betRestrictionService;
 
         private readonly string _indexPath = "~/Areas/BetRestrictionBasketball/Index.cshtml";
+
+        private readonly short _sportType = 2;
 
         public BetRestrictionBasketballController() : this(null)
         { 
         }
 
-        public BetRestrictionBasketballController(IBetRestrictionBasketballService betRestrictionBasketballService)
+        public BetRestrictionBasketballController(IBetRestrictionService betRestrictionService)
         {
-            _betRestrictionBasketballService = betRestrictionBasketballService ?? new BetRestrictionBasketballService();
+            _betRestrictionService = betRestrictionService ?? new BetRestrictionService();
         }
 
         [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var viewModel = new BetRestrictionBasketballViewModel
+            var viewModel = new BetRestrictionViewModel
             {
-                Sites = _betRestrictionBasketballService.GetSites(new GetAllSiteCriteria()),
-                Currency = _betRestrictionBasketballService.GetCurrency(new GetAllCurrencyCriteria())
+                Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
+                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria())
             };
             return View(_indexPath, viewModel);
         }
@@ -41,53 +44,55 @@
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
         public JsonResult Search(SearchRequest request)
-            => Json(_betRestrictionBasketballService.Search(CreateSearchCriteriaFromRequest(request)));
+            => Json(_betRestrictionService.Search(CreateSearchCriteriaFromRequest(request)));
 
         public JsonResult SearchAccountPaging(SearchRequest request)
-            => Json(_betRestrictionBasketballService.SearchDataGrid<AccountModel>(CreateSearchCriteriaFromRequest(request)));
+            => Json(_betRestrictionService.SearchDataGrid<AccountModel>(CreateSearchCriteriaFromRequest(request)));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
-        public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionBasketballService.CheckAddAccount(request));
+        public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
-        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionBasketballService.CheckEditAccount(request));
+        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
-        public JsonResult AddAccount(AccountRequest request) => Json(_betRestrictionBasketballService.ExecuteNonQuery(new AddAccountCriteria
+        public JsonResult AddAccount(AccountRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new AddAccountCriteria
         {
             UserName = request.UserName,
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
-            IP = CurrentContext.IP,
-            SportType = 2
+            IP = CurrentContext.IP
         }));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
-        public JsonResult GetAccountDetail(int custId) => Json(_betRestrictionBasketballService.GetAccountDetailForEdit(custId));
+        public JsonResult GetAccountDetail(int custId) => Json(_betRestrictionService.GetAccountDetailForEdit(custId, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
-        public JsonResult EditAccount(AccountRequest request) => Json(_betRestrictionBasketballService.ExecuteNonQuery(new EditAccountCriteria
+        public JsonResult EditAccount(AccountRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new EditAccountCriteria
         {
             CustId = request.CustId,
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
-        public JsonResult RemoveAccount(int custId) => Json(_betRestrictionBasketballService.ExecuteNonQuery(new RemoveAccountCriteria
+        public JsonResult RemoveAccount(int custId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveAccountCriteria
         {
             CustId = custId,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -98,9 +103,10 @@
                 UserName = request.UserName,
                 RoleId = request.RoleId,
                 SiteId = request.SiteId,
+                SportType = _sportType,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
+                PageSize = request.PageSize
             };
     }
 }

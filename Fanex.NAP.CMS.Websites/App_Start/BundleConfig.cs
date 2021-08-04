@@ -247,10 +247,10 @@ namespace Fanex.NAP.CMS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/BetRestrictionBasketball",
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.css",
                 "~/Areas/BetRestrictionBasketball/Styles/Index.less");
             bundles.Add(new ScriptBundle("~/scripts/BetRestrictionBasketball").Include(
-               "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
+               "~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.js",
                "~/Areas/BetRestrictionBasketball/Scripts/Index.js",
                "~/Areas/BetRestrictionBasketball/Scripts/AccountManagement.js"));
         }

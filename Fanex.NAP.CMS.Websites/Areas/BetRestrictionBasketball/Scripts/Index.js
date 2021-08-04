@@ -83,7 +83,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
             UserName: DOMElements.txtUserName.val(),
             RoleId: DOMElements.ddlLevel.val(),
             SiteId: DOMElements.ddlSite.val(),
-            CurrencyIds: DOMElements.ddlCurrency.fanexMultiSelect('getItems', true).join(','),
+            CurrencyIds: DOMElements.ddlCurrency.multiSelect('getCheckedItems').join(','),
             PageSize: CMS.pageSize,
             PageIndex: 1,
         };
@@ -290,11 +290,11 @@ Fanex.CMS.BetRestrictionBasketball = function () {
         var result = [];
         DOMElements.ddlCurrency.find('option').each(function () {
             result.push({
-                id: this.value,
-                value: this.value,
-                text: this.text,
-                checked: this.text != 'UUS',
-                enable: true,
+                Id: this.value,
+                Value: this.value,
+                Text: this.text,
+                Checked: this.text != 'UUS',
+                Enable: true,
             });
         });
 
@@ -304,11 +304,15 @@ Fanex.CMS.BetRestrictionBasketball = function () {
     this.Init = function () {
         cacheDOMElements();
         bindingEvents();
-        DOMElements.ddlCurrency.fanexMultiSelect({
+        DOMElements.ddlCurrency.multiSelect({
             minWidth: DOMElements.ddlCurrency.width(),
             checkAllText: 'All',
             listData: getCurrencyItems(),
             showFilter: true,
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
+        DOMElements.ddlCurrency = $('#ddlCurrency');
     };
 };

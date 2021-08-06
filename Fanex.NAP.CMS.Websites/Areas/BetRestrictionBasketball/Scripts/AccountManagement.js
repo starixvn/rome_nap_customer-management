@@ -6,8 +6,6 @@
 Namespace.Register('Fanex.CMS.BetRestrictionBasketball.AccountManagement');
 
 Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
-    var $this = $(this);
-
     var oldData = {};
 
     var DOMElements = {
@@ -30,7 +28,6 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         DOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
         DOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
         DOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
-        DOMElements.noteInfoMessage = $('#noteInfoMessage');
         DOMElements.btnSave = $('#btnAccSave');
         DOMElements.btnCancel = $('#btnAccCancel');
     };
@@ -39,11 +36,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         DOMElements.btnCancel.click(function () {
             CMS.closePopup();
         });
-        DOMElements.noteInfoMessage.click(function () {
-            CMS.showInfoMessage(messages.NoteInfoMaxBet);
-        });
         DOMElements.selPopupAccSeizeBetTicket.change(function () {
-            if ($(this).val() == '0' || $(this).val() == '') {
+            if ($(this).val() == '0' || $(this).val() == 'FollowUpperLevel') {
                 DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
                 CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
             } else DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
@@ -54,12 +48,15 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         if (!Validator.validateForm(DOMElements.formAccountManager, 'ne')) return false;
 
         if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(DOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError);
+            CMS.showTipsyError(
+                $('span[id="selPopupAccLiveBetAccept"]'),
+                messages.RequiredFieldError
+            );
             return false;
         }
 
         if (
-            DOMElements.selPopupAccSeizeBetTicket.val() == '' ||
+            DOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == '0'
         ) {
             DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
@@ -145,15 +142,17 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             oldData = {
                 CustId: result.CustId + '',
                 UserName: result.Account,
-                LiveBetAccept: result.LiveBetAccept == null ? '' : result.LiveBetAccept + '',
-                SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket + '',
+                LiveBetAccept:
+                    result.LiveBetAccept == null ? 'FollowUpperLevel' : result.LiveBetAccept + '',
+                SeizeBetTicket:
+                    result.SeizeBetTicket == null ? 'FollowUpperLevel' : result.SeizeBetTicket + '',
                 FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
             };
 
             DOMElements.txtPopupAccUsername.val(result.Account);
             DOMElements.hidCustId.val(result.CustId);
-            DOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
-            DOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
+            DOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
+            DOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
             DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
         });
     };
@@ -168,6 +167,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         CMS.modal('Add Bet Restricted - Basketball Account', DOMElements.htmlformAccountManager);
         cacheDOMElements();
         bindingEvents();
+        DOMElements.selPopupAccLiveBetAccept.combobox();
+        DOMElements.selPopupAccSeizeBetTicket.combobox();
         DOMElements.btnSave.click(function () {
             return saveAddEditAccount(false);
         });
@@ -180,6 +181,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         CMS.modal('Edit Bet Restricted - Basketball Account', DOMElements.htmlformAccountManager);
         cacheDOMElements();
         bindingEvents();
+        DOMElements.selPopupAccLiveBetAccept.combobox();
+        DOMElements.selPopupAccSeizeBetTicket.combobox();
         loadAccountDetailForEdit(custId);
         DOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
         DOMElements.btnSave.click(function () {

@@ -64,9 +64,12 @@
             <div class="submit width-auto col_6">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
             </div>
-            <div class="submit width-auto col_6">
-                <input id="btnAddAccount" type="button" class="submit width-140" value="Add Account" />
-            </div>
+            @if (Model.HasHostPermission)
+            {
+                <div class="submit width-auto col_6">
+                    <input id="btnAddAccount" type="button" class="submit width-140" value="Add Account" />
+                </div>
+            }
         </div>
         <div class="filter-row"></div>
     </div>
@@ -83,20 +86,10 @@
 <script type="text/javascript">
     var messages = {
         RequiredFieldError: '@Messages.RequiredFieldError',
-        NoteInfoMaxBet: '@Messages.BetRestriction_NoteInfoMaxBet',
         AddAccountSuccessfully: '@Messages.BetRestriction_AddAccountSuccessfully',
         UpdateAccountSuccessfully: '@Messages.BetRestriction_UpdateAccountSuccessfully',
         RemoveAccountSuccessfully: '@Messages.BetRestriction_RemoveAccountSuccessfully',
-        AddSiteSuccessfully: '@Messages.BetRestriction_AddSiteSuccessfully',
-        UpdateSiteSuccessfully: '@Messages.BetRestriction_UpdateSiteSuccessfully',
-        RemoveSiteSuccessfully: '@Messages.BetRestriction_RemoveSiteSuccessfully',
-        AddCurrencySuccessfully: '@Messages.BetRestriction_AddCurrencySuccessfully',
-        UpdateCurrencySuccessfully: '@Messages.BetRestriction_UpdateCurrencySuccessfully',
-        RemoveCurrencySuccessfully: '@Messages.BetRestriction_RemoveCurrencySuccessfully',
         ConfirmRemoveAccount: '@Labels.BetRestriction_ConfirmRemoveAccount',
-        ConfirmRemoveSite: '@Labels.BetRestriction_ConfirmRemoveSite',
-        ConfirmRemoveCurrency: '@Labels.BetRestriction_ConfirmRemoveCurrency',
-        ValidateMaxBetMaxPerMatchError: '@Labels.BetRestriction_ValidateMaxBetMaxPerMatchError',
         NothingChanged: '@Messages.NothingChanged',
     };
 
@@ -105,6 +98,8 @@
         None: '@Labels.None'
     };
 
-    var betRestriction, accountManagement, siteManagement, currencyManagement;
+    var hasHostPermission = @Json.Encode(Model.HasHostPermission);
+
+    var betRestriction, accountManagement;
 </script>
 }

@@ -11,5 +11,7 @@
         public IEnumerable<SelectListItem> Sites { get; set; }
 
         public IEnumerable<SelectListItem> Currency { get; set; }
+
+        public bool HasHostPermission { get; set; }
     }
 }

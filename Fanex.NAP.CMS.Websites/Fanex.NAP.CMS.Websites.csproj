@@ -1033,6 +1033,7 @@
     <Content Include="Areas\BetRestrictionBasketball\Index.cshtml" />
     <Content Include="Areas\BetRestrictionBasketball\Web.config" />
     <Content Include="Areas\BetRestrictionBasketball\Styles\Index.less" />
+    <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

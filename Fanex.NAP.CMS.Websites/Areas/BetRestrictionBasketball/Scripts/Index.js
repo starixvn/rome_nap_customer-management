@@ -6,8 +6,6 @@
 Namespace.Register('Fanex.CMS.BetRestrictionBasketball');
 
 Fanex.CMS.BetRestrictionBasketball = function () {
-    var $this = $(this);
-
     var DOMElements = {
         txtUserName: null,
         ddlLevel: null,
@@ -47,40 +45,40 @@ Fanex.CMS.BetRestrictionBasketball = function () {
 
         DOMElements.btnSearch.click(betRestriction.Search);
 
-        $('#btnAddAccount').off();
-        $('#btnAddAccount').click(function () {
+        DOMElements.btnAddAccount.off().click(function () {
             accountManagement.ShowAddAccountPopup();
         });
     };
 
     var bindingGridEvents = function (data) {
-        $('.grid-toggle').off();
-        $('.grid-toggle').click(function () {
-            $('#' + $(this).attr('data-grid-id')).toggle();
-        });
+        $('.delete-account')
+            .off()
+            .click(function () {
+                var $this = $(this);
+                var custId = $this.attr('data-cust-id');
+                var userName = $this.attr('data-user-name');
+                accountManagement.RemoveAccount(custId, userName);
+            });
 
-        $('.delete-account').off();
-        $('.delete-account').click(function () {
-            var $this = $(this);
-            var custId = $this.attr('data-cust-id');
-            var userName = $this.attr('data-user-name');
-            accountManagement.RemoveAccount(custId, userName);
-        });
-
-        $('.edit-account').off();
-        $('.edit-account').click(function () {
-            var $this = $(this);
-            var custId = $this.attr('data-cust-id');
-            accountManagement.ShowEditAccountPopup(custId);
-        });
+        $('.edit-account')
+            .off()
+            .click(function () {
+                var $this = $(this);
+                var custId = $this.attr('data-cust-id');
+                accountManagement.ShowEditAccountPopup(custId);
+            });
 
         DOMElements.resultContent.height(DOMElements.content.height() * 0.95);
     };
 
     this.Search = function () {
         CMS.disableInput();
+
         cacheParamsForPaging = {
-            UserName: DOMElements.txtUserName.val(),
+            UserName: DOMElements.txtUserName
+                .val()
+                .trim()
+                .replace(/[\n\t]+/g, ''),
             RoleId: DOMElements.ddlLevel.val(),
             SiteId: DOMElements.ddlSite.val(),
             CurrencyIds: DOMElements.ddlCurrency.multiSelect('getCheckedItems').join(','),
@@ -100,35 +98,9 @@ Fanex.CMS.BetRestrictionBasketball = function () {
     };
 
     var renderAccountGrid = function (viewModel, pageIndex, pageSize) {
+        var hiddenColumns = hasHostPermission ? [] : [9];
+
         var accountGridOptions = {
-            fullHeight: false,
-            gridHeight: 365,
-            //gridExpandHeight: window.innerHeight * 0.61,
-            customizeHeader: true,
-            groupHeaderRows: [
-                {
-                    Columns: [
-                        { HeaderText: 'No.', Name: 'RowNum', MergeRowNumber: 2 },
-                        { HeaderText: 'Account', Name: 'Account', MergeRowNumber: 2 },
-                        { HeaderText: 'Level', Name: 'Level', MergeRowNumber: 2 },
-                        { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
-                        { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
-                        {
-                            HeaderText: 'Live Bet Accept (Secs)',
-                            Name: 'LiveBetAccept',
-                            MergeRowNumber: 2,
-                        },
-                        {
-                            HeaderText: 'Seize Bet Ticket (%)',
-                            Name: 'SeizeBetTicket',
-                            MergeRowNumber: 2,
-                        },
-                        { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
-                        { HeaderText: '8RM Account', Name: 'FollowAccount', MergeRowNumber: 2 },
-                        { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 },
-                    ],
-                },
-            ],
             columns: [
                 {
                     HeaderText: 'No.',
@@ -189,7 +161,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     CellAlign: 'center',
                 },
                 {
-                    HeaderText: 'Follow Account',
+                    HeaderText: '8RM Account',
                     Width: 120,
                     Name: 'FollowAccount',
                     HeaderAlign: 'center',
@@ -213,6 +185,8 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                 pagerSelectCallBack: reRenderAfterPagedAccountGrid,
                 totalItem: viewModel.TotalItems,
             },
+            enableHiddenColumns: false,
+            hiddenColumns: hiddenColumns,
         };
 
         accountGridOptions.bodyRows = [];
@@ -249,7 +223,6 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     },
                 ],
             };
-
             accountGridOptions.bodyRows.push(row);
         }
 

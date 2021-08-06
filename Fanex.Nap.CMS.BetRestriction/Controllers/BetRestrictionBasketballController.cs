@@ -16,9 +16,9 @@
     {
         private readonly IBetRestrictionService _betRestrictionService;
 
-        private readonly string _indexPath = "~/Areas/BetRestrictionBasketball/Index.cshtml";
+        private const string _indexPath = "~/Areas/BetRestrictionBasketball/Index.cshtml";
 
-        private readonly short _sportType = 2;
+        private const short _sportType = 2;
 
         public BetRestrictionBasketballController() : this(null)
         { 
@@ -36,7 +36,8 @@
             var viewModel = new BetRestrictionViewModel
             {
                 Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
-                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria())
+                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria()),
+                HasHostPermission = HasRight(CMSFunctionKeys.BetRestriction_BasketBall, Constant.Policy.Host)
             };
             return View(_indexPath, viewModel);
         }

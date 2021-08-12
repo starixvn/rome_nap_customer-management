@@ -19,6 +19,12 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         btnSave: null,
         btnCancel: null,
         htmlformAccountManager: null,
+        optsPopupAccLiveBetAccept: null,
+        inpPopupAccLiveBetAccept: null,
+        spanPopupAccLiveBetAccept: null,
+        optsPopupAccSeizeBetTicket: null,
+        inpPopupAccSeizeBetTicket: null,
+        spanPopupAccSeizeBetTicket: null,
     };
 
     var cacheDOMElements = function () {
@@ -47,10 +53,37 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
     var validateForm = function () {
         if (!Validator.validateForm(DOMElements.formAccountManager, 'ne')) return false;
 
-        if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
+        cacheComboboxDOMElements();
+
+        if (
+            !validateCombobox(
+                DOMElements.inpPopupAccLiveBetAccept,
+                DOMElements.optsPopupAccLiveBetAccept,
+                DOMElements.selPopupAccLiveBetAccept
+            )
+        ) {
             CMS.showTipsyError(
-                $('span[id="selPopupAccLiveBetAccept"]'),
-                messages.RequiredFieldError
+                DOMElements.spanPopupAccLiveBetAccept,
+                getNotMatchMessage(DOMElements.inpPopupAccLiveBetAccept.val())
+            );
+            return false;
+        }
+
+        if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(DOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError);
+            return false;
+        }
+
+        if (
+            !validateCombobox(
+                DOMElements.inpPopupAccSeizeBetTicket,
+                DOMElements.optsPopupAccSeizeBetTicket,
+                DOMElements.selPopupAccSeizeBetTicket
+            )
+        ) {
+            CMS.showTipsyError(
+                DOMElements.spanPopupAccSeizeBetTicket,
+                getNotMatchMessage(DOMElements.inpPopupAccSeizeBetTicket.val())
             );
             return false;
         }
@@ -81,8 +114,45 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 return false;
             }
         }
+        return true;
+    };
+
+    var cacheComboboxDOMElements = function () {
+        DOMElements.optsPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept > option');
+        DOMElements.inpPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"] > input');
+        DOMElements.spanPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"]');
+        DOMElements.optsPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket > option');
+        DOMElements.inpPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"] > input');
+        DOMElements.spanPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"]');
+    };
+
+    var validateCombobox = function (input, options, select) {
+        var optValue = getOptionValue(input, options);
+        if (!optValue) {
+            return false;
+        }
+
+        if (input.val() !== select.text) {
+            select.val(optValue).combobox('refresh');
+        }
 
         return true;
+    };
+
+    var getOptionValue = function (input, options) {
+        var value = null;
+        options.each(function () {
+            if (input.val() === this.text) {
+                value = this.value;
+                return;
+            }
+        });
+
+        return value;
+    };
+
+    var getNotMatchMessage = function (text) {
+        return text + " didn't match any item.";
     };
 
     var saveAddEditAccount = function (isEdit) {
@@ -154,6 +224,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             DOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
             DOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
             DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+
+            DOMElements.selPopupAccSeizeBetTicket.trigger('change');
         });
     };
 
@@ -179,6 +251,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         oldData = null;
         CMS.disableInput();
         CMS.modal('Edit Bet Restricted - Basketball Account', DOMElements.htmlformAccountManager);
+        $('#popupAccUsernameRequired').remove();
         cacheDOMElements();
         bindingEvents();
         DOMElements.selPopupAccLiveBetAccept.combobox();

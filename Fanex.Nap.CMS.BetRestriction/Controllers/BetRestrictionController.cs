@@ -74,6 +74,7 @@
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -93,6 +94,7 @@
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -102,6 +104,7 @@
         public JsonResult RemoveAccount(int custId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveAccountCriteria
         {
             CustId = custId,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));

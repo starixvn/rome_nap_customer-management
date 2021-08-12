@@ -5,13 +5,14 @@
     {
         id = "formAccountManager",
         @class =
-    "form display-none",
+    "form display-none expand-form",
         @onsubmit = "return false;"
     }))
     {
         <div class="form-row">
             <div class="lbl-field normal-label width-160">
-                <label for="txtPopupAccUsername">@ViewLang.Username</label><span class="red float-right">*</span>
+                <label for="txtPopupAccUsername">@ViewLang.Username</label><span class="red float-right"
+                id="popupAccUsernameRequired">*</span>
             </div>
             <div class="edit-field">
                 <input type="text" id="txtPopupAccUsername" autocomplete="off" maxlength="30"

@@ -439,7 +439,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bet Restriction.
+        ///   Looks up a localized string similar to Bet Restriction - Soccer.
         /// </summary>
         public static string BetRestriction {
             get {

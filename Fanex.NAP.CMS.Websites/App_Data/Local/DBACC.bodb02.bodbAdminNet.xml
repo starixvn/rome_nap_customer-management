@@ -36,7 +36,7 @@
   </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SelAllSite" SpName="NAP_BetRestriction_SelAllSite" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CustomerSel" SpName="NAP_BetRestriction_CustomerSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CustomerSel" SpName="NAP_BetRestriction_CustomerSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_SiteSel" SpName="NAP_BetRestriction_SiteSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_SelAllCurrency" SpName="NAP_BetRestriction_SelAllCurrency" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CurrencySel" SpName="NAP_BetRestriction_CurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
@@ -46,10 +46,10 @@
     <Setting Key="NAP_BetRestriction_CustomerSelDetail" SpName="NAP_BetRestriction_CustomerSelDetail" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_ValidateCustomer" SpName="NAP_BetRestriction_ValidateCustomer" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CurrencySelDetail" SpName="NAP_BetRestriction_CurrencySelDetail" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CheckExistLine" SpName="NAP_BetRestriction_CheckExistLine_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CheckExistLine" SpName="NAP_BetRestriction_CheckExistLine" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Bet Restriction Management">
-    <Setting Key="NAP_BetRestriction_SettingSel" SpName="NAP_BetRestriction_SettingSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_SettingSel" SpName="NAP_BetRestriction_SettingSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Bet Limit Control">
     <Setting Key="NAP_BLControl_SportBettypeSel" SpName="NAP_BLControl_SportBettypeSel" DbName="DBACC.bodb02.bodbAdminNet">

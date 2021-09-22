@@ -17,7 +17,9 @@
     {
         private readonly IBetRestrictionService _betRestrictionService;
 
-        private readonly string _indexPath = "~/Areas/BetRestriction/Index.cshtml";
+        private const string _indexPath = "~/Areas/BetRestriction/Index.cshtml";
+
+        private const short _sportType = 1;
 
         public BetRestrictionController() : this(null)
         {
@@ -56,11 +58,11 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
-        public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request));
+        public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
-        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request));
+        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
@@ -72,6 +74,7 @@
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -79,7 +82,7 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
-        public JsonResult GetAccountDetail(int custId) => Json(_betRestrictionService.GetAccountDetailForEdit(custId));
+        public JsonResult GetAccountDetail(int custId) => Json(_betRestrictionService.GetAccountDetailForEdit(custId, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
@@ -91,6 +94,7 @@
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -100,6 +104,7 @@
         public JsonResult RemoveAccount(int custId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveAccountCriteria
         {
             CustId = custId,
+            SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
@@ -191,7 +196,8 @@
                 SiteId = request.SiteId,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex,
-                PageSize = request.PageSize
+                PageSize = request.PageSize,
+                SportType = _sportType
             };
     }
 }

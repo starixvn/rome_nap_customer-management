@@ -382,6 +382,8 @@
     <Content Include="App_Data\Local\NAPCMSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\BetRestrictionBasketball\Scripts\AccountManagement.js" />
+    <Content Include="Areas\BetRestrictionBasketball\Scripts\Index.js" />
     <Content Include="Areas\BetRestrictionManagement\Scripts\Index.js" />
     <Content Include="Areas\BetRestriction\Scripts\CurrencyManagement.js" />
     <Content Include="Areas\BetRestriction\Scripts\SiteManagement.js" />
@@ -1028,6 +1030,10 @@
     <Content Include="Areas\Customers\Views\VirtualRateEngine\_AddOrUpdateRule.cshtml" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\CustomerClassHint.cshtml" />
     <Content Include="Areas\Customers\Styles\customerCategory.less" />
+    <Content Include="Areas\BetRestrictionBasketball\Index.cshtml" />
+    <Content Include="Areas\BetRestrictionBasketball\Web.config" />
+    <Content Include="Areas\BetRestrictionBasketball\Styles\Index.less" />
+    <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

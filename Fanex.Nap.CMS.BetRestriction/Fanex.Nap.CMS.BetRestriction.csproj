@@ -130,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BetRestrictionBasketballController.cs" />
     <Compile Include="Controllers\BetRestrictionController.cs" />
     <Compile Include="Controllers\BetRestrictionManagementController.cs" />
     <Compile Include="Criterias\EditCurrencyCriteria.cs" />
@@ -200,5 +201,6 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

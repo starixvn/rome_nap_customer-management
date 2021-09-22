@@ -69,11 +69,11 @@
             TotalItems = criteria.TotalItems
         };
 
-        public Result CheckAddAccount(AccountRequest request) => CheckAccount(request, ComposeCheckAddAccountMessage);
+        public Result CheckAddAccount(AccountRequest request, short sportType) => CheckAccount(request, ComposeCheckAddAccountMessage, sportType);
 
-        public EditAccountViewModel GetAccountDetailForEdit(int custId) => Repository.Get<EditAccountViewModel>(new GetAccountDetailCriteria { CustId = custId });
+        public EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType) => Repository.Get<EditAccountViewModel>(new GetAccountDetailCriteria { CustId = custId, SportType = sportType });
 
-        public Result CheckEditAccount(AccountRequest request) => CheckAccount(request, ComposeCheckEditAccountMessage);
+        public Result CheckEditAccount(AccountRequest request, short sportType) => CheckAccount(request, ComposeCheckEditAccountMessage, sportType);
 
         public EditSiteViewModel GetSiteDetailForEdit(int siteId) => Repository.Get<EditSiteViewModel>(new GetSiteDetailCriteria { SiteId = siteId });
 
@@ -84,11 +84,12 @@
             Type = type
         });
 
-        private Result CheckAccount(AccountRequest request, Func<AccountRequest, CheckAddAccountResultModel, string> composeMsgFunction)
+        private Result CheckAccount(AccountRequest request, Func<AccountRequest, CheckAddAccountResultModel, string> composeMsgFunction, short sportType)
         {
             var criteria = new CheckAccountCriteria
             {
-                UserName = request.UserName
+                UserName = request.UserName,
+                SportType = sportType
             };
 
             using (var objDb = new ObjectDb(criteria.GetSettingKey()))
@@ -97,7 +98,7 @@
                 var reader = objDb.ExecuteReader();
                 if (reader.Read())
                 {
-                    var errMsg = composeMsgFunction(request, new CheckAddAccountResultModel(reader, criteria.UserName));
+                    var errMsg = composeMsgFunction(request, new CheckAddAccountResultModel(reader, criteria.UserName, sportType));
                     return string.IsNullOrWhiteSpace(errMsg) ? new Result() : new Result(500, errMsg + Labels.BetRestriction_WarningProceed);
                 }
                 else
@@ -109,15 +110,16 @@
 
         private string ComposeCheckAddAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
+            var sportBetRestrictionName = checkResult.SportType == 1 ? "Bet Restriction - Soccer" : "Bet Restriction - Basketball";
             var result = string.Empty;
             if (checkResult.IsDownlineExists)
             {
-                result += string.Format(Labels.BetRestriction_DownlinesExisted, checkResult.UserName) + Environment.NewLine;
+                result += string.Format(Labels.BetRestriction_DownlinesExisted, checkResult.UserName, sportBetRestrictionName) + Environment.NewLine;
             }
 
             if (checkResult.IsUplineExists)
             {
-                result += string.Format(Labels.BetRestriction_UplineExisted, checkResult.UplineLevel, checkResult.ExistingUplineUserName) + Environment.NewLine;
+                result += string.Format(Labels.BetRestriction_UplineExisted, checkResult.UplineLevel, checkResult.ExistingUplineUserName, sportBetRestrictionName) + Environment.NewLine;
             }
 
             return result + ComposeCheckEditAccountMessage(request, checkResult);

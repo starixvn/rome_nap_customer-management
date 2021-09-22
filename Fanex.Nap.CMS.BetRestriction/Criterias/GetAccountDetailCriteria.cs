@@ -6,6 +6,8 @@
     {
         public int CustId { get; set; }
 
+        public short? SportType { get; set; }
+
         public override string GetSettingKey()
         {
             return "NAP_BetRestriction_CustomerSelDetail";

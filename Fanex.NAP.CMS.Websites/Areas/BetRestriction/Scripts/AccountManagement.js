@@ -190,7 +190,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
 
     this.ShowAddAccountPopup = function () {
         oldData = null;
-        CMS.modal('Add Bet Restricted Account', DOMElements.htmlformAccountManager);
+        CMS.modal('Add Bet Restricted - Soccer Account', DOMElements.htmlformAccountManager);
         cacheDOMElements();
         bindingEvents();
         DOMElements.btnSave.click(function () { return saveAddEditAccount(false); });
@@ -200,7 +200,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
     this.ShowEditAccountPopup = function (custId) {
         oldData = null;
         CMS.disableInput();
-        CMS.modal('Edit Bet Restricted Account', DOMElements.htmlformAccountManager);
+        CMS.modal('Edit Bet Restricted - Soccer Account', DOMElements.htmlformAccountManager);
         cacheDOMElements();
         bindingEvents();
         loadAccountDetailForEdit(custId);

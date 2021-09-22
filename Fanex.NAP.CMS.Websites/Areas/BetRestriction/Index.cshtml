@@ -5,18 +5,19 @@
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewLang.BetRestriction;
 }
 @section Head
 {
-    @Styles.Render("~/styles/BetRestriction")
+@Styles.Render("~/styles/BetRestriction")
 }
 @section Headline
 {
-    <div class="title">
-        <div>
-            <span class="curr">@ViewLang.BetRestriction</span>
-        </div>
+<div class="title">
+    <div>
+        <span class="curr">@ViewLang.BetRestriction</span>
     </div>
+</div>
 }
 <div class="filter-bar">
     <div class="filter-form">
@@ -57,18 +58,19 @@
             </div>
             <div class="edit-field col_7">
                 @Html.DropDownList(
-                    "ddlSite",
-                    (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true } }).Union(Model.Sites),
-                    new { @id = "ddlSite", @class = "combobox level-combobox col_7" })
+                "ddlSite",
+                (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true }
+                }).Union(Model.Sites),
+                new { @id = "ddlSite", @class = "combobox level-combobox col_7" })
             </div>
             <div class="lbl-field col_3">
                 <label for="ddlCurrency">@ViewLang.Currency</label>
             </div>
-            <div class="col_5">
+            <div class="currency-select col_5">
                 @Html.DropDownList(
-                    "ddlCurrency",
-                    Model.Currency,
-                    new { @id = "ddlCurrency", @class = "combobox level-combobox col_5" })
+                "ddlCurrency",
+                Model.Currency,
+                new { @id = "ddlCurrency", @class = "combobox level-combobox col_5" })
             </div>
             <div class="submit width-auto col_3">
                 <input id="btnSearch" type="button" class="submit" value="@ViewLang.Search" />
@@ -77,7 +79,7 @@
         <div class="filter-row"></div>
     </div>
 </div>
-<div id="result-content" >
+<div id="result-content">
     <div class="display-none content-grid">
         <div id="grdAccount" class="freegrid"></div>
     </div>
@@ -95,32 +97,32 @@
 @Html.Partial("~/Areas/BetRestriction/CurrencyManagement.cshtml", Model)
 @section Foot
 {
-    @Scripts.Render("~/scripts/BetRestriction")
-    <script type="text/javascript">
-        var messages = {
-            RequiredFieldError: '@Messages.RequiredFieldError',
-            NoteInfoMaxBet: '@Messages.BetRestriction_NoteInfoMaxBet',
-            AddAccountSuccessfully: '@Messages.BetRestriction_AddAccountSuccessfully',
-            UpdateAccountSuccessfully: '@Messages.BetRestriction_UpdateAccountSuccessfully',
-            RemoveAccountSuccessfully: '@Messages.BetRestriction_RemoveAccountSuccessfully',
-            AddSiteSuccessfully: '@Messages.BetRestriction_AddSiteSuccessfully',
-            UpdateSiteSuccessfully: '@Messages.BetRestriction_UpdateSiteSuccessfully',
-            RemoveSiteSuccessfully: '@Messages.BetRestriction_RemoveSiteSuccessfully',
-            AddCurrencySuccessfully: '@Messages.BetRestriction_AddCurrencySuccessfully',
-            UpdateCurrencySuccessfully: '@Messages.BetRestriction_UpdateCurrencySuccessfully',
-            RemoveCurrencySuccessfully: '@Messages.BetRestriction_RemoveCurrencySuccessfully',
-            ConfirmRemoveAccount: '@Labels.BetRestriction_ConfirmRemoveAccount',
-            ConfirmRemoveSite: '@Labels.BetRestriction_ConfirmRemoveSite',
-            ConfirmRemoveCurrency: '@Labels.BetRestriction_ConfirmRemoveCurrency',
-            ValidateMaxBetMaxPerMatchError: '@Labels.BetRestriction_ValidateMaxBetMaxPerMatchError',
-            NothingChanged: '@Messages.NothingChanged',
-        };
+@Scripts.Render("~/scripts/BetRestriction")
+<script type="text/javascript">
+    var messages = {
+        RequiredFieldError: '@Messages.RequiredFieldError',
+        NoteInfoMaxBet: '@Messages.BetRestriction_NoteInfoMaxBet',
+        AddAccountSuccessfully: '@Messages.BetRestriction_AddAccountSuccessfully',
+        UpdateAccountSuccessfully: '@Messages.BetRestriction_UpdateAccountSuccessfully',
+        RemoveAccountSuccessfully: '@Messages.BetRestriction_RemoveAccountSuccessfully',
+        AddSiteSuccessfully: '@Messages.BetRestriction_AddSiteSuccessfully',
+        UpdateSiteSuccessfully: '@Messages.BetRestriction_UpdateSiteSuccessfully',
+        RemoveSiteSuccessfully: '@Messages.BetRestriction_RemoveSiteSuccessfully',
+        AddCurrencySuccessfully: '@Messages.BetRestriction_AddCurrencySuccessfully',
+        UpdateCurrencySuccessfully: '@Messages.BetRestriction_UpdateCurrencySuccessfully',
+        RemoveCurrencySuccessfully: '@Messages.BetRestriction_RemoveCurrencySuccessfully',
+        ConfirmRemoveAccount: '@Labels.BetRestriction_ConfirmRemoveAccount',
+        ConfirmRemoveSite: '@Labels.BetRestriction_ConfirmRemoveSite',
+        ConfirmRemoveCurrency: '@Labels.BetRestriction_ConfirmRemoveCurrency',
+        ValidateMaxBetMaxPerMatchError: '@Labels.BetRestriction_ValidateMaxBetMaxPerMatchError',
+        NothingChanged: '@Messages.NothingChanged',
+    };
 
-        var resources = {
-            FollowUpperLevel: '@Labels.FollowUpperLevel',
-            None: '@Labels.None'
-        };
+    var resources = {
+        FollowUpperLevel: '@Labels.FollowUpperLevel',
+        None: '@Labels.None'
+    };
 
-        var betRestriction, accountManagement, siteManagement, currencyManagement;
-    </script>
+    var betRestriction, accountManagement, siteManagement, currencyManagement;
+</script>
 }

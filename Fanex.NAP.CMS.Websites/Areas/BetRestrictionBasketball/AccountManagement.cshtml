@@ -1,0 +1,69 @@
+﻿@using Fanex.NAP.CMS.Core.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Resources;
+<div id="containerFormAccountManager">
+    @using (Html.BeginForm("AddAccount", "BetRestriction", FormMethod.Post, new
+    {
+        id = "formAccountManager",
+        @class =
+    "form display-none expand-form",
+        @onsubmit = "return false;"
+    }))
+    {
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="txtPopupAccUsername">@ViewLang.Username</label><span class="red float-right"
+                id="popupAccUsernameRequired">*</span>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtPopupAccUsername" autocomplete="off" maxlength="30"
+                data-val-required="@Messages.RequiredFieldError" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="selPopupAccLiveBetAccept">@Labels.LiveBetAccept</label><span class="red float-right">*</span>
+            </div>
+            <div class="edit-field">
+                <select id="selPopupAccLiveBetAccept" class="combobox-select">
+                    <option selected>Please select</option>
+                    <option value="FollowUpperLevel">@Labels.FollowUpperLevel</option>
+                    @for (int i = -5; i <= 60; i++)
+                    {
+                        <option value="@i.ToString()">@i.ToString()</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="selPopupAccSeizeBetTicket">@Labels.SeizeBetTicket</label>
+            </div>
+            <div class="edit-field">
+                <select id="selPopupAccSeizeBetTicket" class="combobox-select">
+                    <option value="FollowUpperLevel">@Labels.FollowUpperLevel</option>
+                    <option selected value="0">None</option>
+                    @for (int i = 10; i <= 100; i += 5)
+                    {
+                        <option value="@i.ToString()">@i.ToString() %</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="txtPopupAcc8RMAccount">@ViewLang._8RMAccount</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" id="txtPopupAcc8RMAccount" autocomplete="off" disabled="disabled" />
+            </div>
+        </div>
+        <div class="form-row button-row">
+            <div class="lbl-field normal-label width-120"></div>
+            <div class="edit-field">
+                <button type="button" id="btnAccSave" class="blue-button">@ViewLang.Save</button>
+                <button type="button" id="btnAccCancel" class="red-button">@ViewLang.Cancel</button>
+            </div>
+        </div>
+        <input id="hidCustId" type="hidden" />
+    }
+</div>

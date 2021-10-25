@@ -20,6 +20,9 @@
         public const string DefaultMemberBetLimitScriptPath = "~/bundles/default-member-bet-limit-scripts";
         public const string DefaultMemberBetLimitStylePath = "~/bundles/default-member-bet-limit-styles";
 
+        public const string LimitDailyPTUpdateScriptPath = "~/bundles/limit-daily-pt-update-scripts";
+        public const string LimitDailyPTUpdateStylePath = "~/bundles/limit-daily-pt-update-styles";
+
         public const string LimitNewDownlineScriptPath = "~/bundles/limit-new-downline-scripts";
         public const string LimitNewDownlineStylePath = "~/bundles/limit-new-downline-styles";
 
@@ -46,6 +49,7 @@
                 .RegisterBetLimitTypeControlBundles()
                 .RegisterBetLimitControlBundles()
                 .RegisterDefaultMemberBetLimitBundles()
+                .RegisterLimitDailyPTUpdateBundles()
                 .RegisterLimitNewDownlineBundles()
                 .RegisterWhitelistBigCreditMembersBundles()
                 .RegisterVirtualRateEngine();
@@ -192,6 +196,19 @@
                 "~/Scripts/Libs/InputFormatter/number-commar-seperator.js",
                 FanexMultiSelectScriptPath,
                 "~/Content/Pages/DefaultMemberBetLimit/index.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterLimitDailyPTUpdateBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(LimitDailyPTUpdateStylePath, FanexMultiSelectStylePath, "~/Areas/Customers/Styles/limitDailyPTUpdate.less");
+
+            bundles.Add(new ScriptBundle(LimitDailyPTUpdateScriptPath).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/LimitDailyPTUpdate/limitDailyPTUpdate.js",
+                "~/Areas/Customers/Scripts/LimitDailyPTUpdate/manageLimit.js"
+                ));
 
             return bundles;
         }

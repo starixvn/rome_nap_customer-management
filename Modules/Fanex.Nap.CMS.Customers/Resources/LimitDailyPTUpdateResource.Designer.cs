@@ -61,6 +61,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added rule successfully.
+        /// </summary>
+        public static string AddLimitSuccessfully {
+            get {
+                return ResourceManager.GetString("AddLimitSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add New.
         /// </summary>
         public static string AddNew {
@@ -93,6 +102,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duplicated account(s): {0}.
+        /// </summary>
+        public static string DuplicatedAccountsError {
+            get {
+                return ResourceManager.GetString("DuplicatedAccountsError", resourceCulture);
             }
         }
         
@@ -133,11 +151,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product is required..
+        /// </summary>
+        public static string ProductIsRequired {
+            get {
+                return ResourceManager.GetString("ProductIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete the selected rule ?.
         /// </summary>
         public static string RemoveLimitConfirmationMessage {
             get {
                 return ResourceManager.GetString("RemoveLimitConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed rule successfully.
+        /// </summary>
+        public static string RemoveLimitSuccessfully {
+            get {
+                return ResourceManager.GetString("RemoveLimitSuccessfully", resourceCulture);
             }
         }
         
@@ -151,11 +187,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Site/Currency.
+        /// </summary>
+        public static string SiteCurrency {
+            get {
+                return ResourceManager.GetString("SiteCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site is required..
         /// </summary>
         public static string SiteIsRequired {
             get {
                 return ResourceManager.GetString("SiteIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMA Line.
+        /// </summary>
+        public static string SMALine {
+            get {
+                return ResourceManager.GetString("SMALine", resourceCulture);
             }
         }
         

@@ -4,12 +4,16 @@
     {
         public byte Type { get; set; }
 
-        public string Product { get; set; }
+        public byte Product { get; set; }
 
-        public string SMA { get; set; }
+        public string SMAs { get; set; }
 
-        public string Site { get; set; }
+        public byte Site { get; set; }
 
-        public string Currency { get; set; }
+        public byte Currency { get; set; }
+
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
     }
 }

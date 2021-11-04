@@ -1,10 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 {
     using Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate;
+    using Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline;
     using Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate;
+    using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public class LimitDailyPTUpdateService : ILimitDailyPTUpdateService
     {
@@ -15,39 +18,71 @@
             this.repository = repository ?? new LimitDailyPTUpdateRepository();
         }
 
-        public IEnumerable<string> GetSites()
-            => repository.GetSites();
+        public IEnumerable<SelectListItem> GetSites()
+            => repository.GetSites(new GetCreditSiteCriteria(0));
 
-        public IEnumerable<string> GetProducts()
-           => repository.GetProducts();
+        public IEnumerable<SelectListItem> GetProducts()
+           => repository.GetProducts(new GetProductListCriteria(0));
 
-        public IEnumerable<string> GetCurrencies()
-           => repository.GetCurrencies();
+        public IEnumerable<SelectListItem> GetCurrencies()
+           => repository.GetCurrencies(new GetCurrencyListCriteria());
 
         public LimitDailyPTUpdateReport GetLimitReport(SearchDailyPTUpdateViewModel viewModel)
         {
             var criteria = new GetLimitDailyPTUpdateListCriteria(
                     viewModel.Username == null ? string.Empty : viewModel.Username.Trim(),
-                    viewModel.Site,
-                    viewModel.Currency,
-                    viewModel.Product,
-                    viewModel.Type,
+                    viewModel.SiteNames ?? string.Empty,
+                    viewModel.CurrencyIds ?? string.Empty,
+                    viewModel.ProductId,
+                    viewModel.TypeId,
                     viewModel.PageIndex,
                     viewModel.PageSize);
             var limitDailyPTUpdateList = repository.GetLimitDailyPTUpdateList(criteria);
 
             // TODO: Update criteria.TotalItems as 2nd params
-            return new LimitDailyPTUpdateReport(limitDailyPTUpdateList, 3);
+            return new LimitDailyPTUpdateReport(limitDailyPTUpdateList, criteria.TotalItems);
         }
 
         public AddNewOrRemoveLimitResult AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel)
         {
-            return new AddNewOrRemoveLimitResult(0, "Successfully added");
+            var result = repository.ExecuteNonQuery(
+                new AddNewLimitDailyPTUpdateCriteria(
+                    viewModel.Product,
+                    viewModel.SMAs,
+                    viewModel.Currency,
+                    viewModel.Site,
+                    viewModel.Type,
+                    viewModel.UserId,
+                    viewModel.IP
+                ));
+
+            if (result.IsSuccess)
+            {
+                result.Message = LimitDailyPTUpdateResource.AddLimitSuccessfully;
+            }
+
+            return result;
         }
 
-        public AddNewOrRemoveLimitResult RemoveLimit(string username)
+        public AddNewOrRemoveLimitResult RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel)
         {
-            return new AddNewOrRemoveLimitResult(0, "Successfully removed " + username);
+            var result = repository.ExecuteNonQuery(
+               new RemoveLimitDailyPTUpdateCriteria(
+                   viewModel.ProductID,
+                   viewModel.CustID,
+                   viewModel.SiteID,
+                   viewModel.Currency,
+                   viewModel.Type,
+                   viewModel.UserId,
+                   viewModel.IP
+               ));
+
+            if (result.IsSuccess)
+            {
+                result.Message = LimitDailyPTUpdateResource.RemoveLimitSuccessfully;
+            }
+
+            return result;
         }
     }
 }

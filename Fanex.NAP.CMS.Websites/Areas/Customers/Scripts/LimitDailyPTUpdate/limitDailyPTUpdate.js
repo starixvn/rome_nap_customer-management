@@ -13,35 +13,54 @@
         gridOptions = null,
         hasHostPermission = divAddNew.length > 0;
 
+
     function renderMultiSelect() {
         ddlSite.fanexMultiSelect({
             minWidth: 180,
             checkAllText: "All",
-            listData: sites.map(function (item) {
-                return { id: item, value: item, text: item, checked: true, enable: true };
-            })
+            listData: ddlSite.find("option").map(function () {
+                return {
+                    id: this.value,
+                    value: this.value,
+                    text: this.text,
+                    checked: true,
+                    enable: true
+                };
+            }),
         });
 
         ddlCurrency.fanexMultiSelect({
             minWidth: 180,
             checkAllText: "All",
-            listData: currencies.map(function (item) {
-                return { id: item, value: item, text: item, checked: true, enable: true };
-            })
+            listData: ddlCurrency.find("option").map(function () {
+                return {
+                    id: this.value,
+                    value: this.value,
+                    text: this.text,
+                    checked: true,
+                    enable: true
+                };
+            }),
         });
 
         ddlProduct.fanexMultiSelect({
             minWidth: 180,
             checkAllText: "All",
-            listData: products.map(function (item) {
-                return { id: item, value: item, text: item, checked: true, enable: true };
-            })
+            listData: ddlProduct.find("option").map(function () {
+                return {
+                    id: this.value,
+                    value: this.value,
+                    text: this.text,
+                    checked: true,
+                    enable: true
+                };
+            }),
         });
     }
 
     function bindEvents() {
         $("#note-info").click(function () {
-            CMS.popup("Information", noteInfoContentHtml, { resizedable: false, width: "600px" });
+            CMS.popup("Information", noteInfoContentHtml, { resizedable: false });
         });
 
         formSearch.submit(function (e) {
@@ -61,12 +80,23 @@
     }
 
     function getLimitDailyPTUpdateList(pageIndex, pageSize) {
+        var siteNames = "";
+        var currencyIds = "";
+
+        if (!ddlSite.fanexMultiSelect("isCheckAll")) {
+            siteNames = ddlSite.fanexMultiSelect("getItems", true).join(",");
+        }
+
+        if (!ddlCurrency.fanexMultiSelect("isCheckAll")) {
+            currencyIds = ddlCurrency.fanexMultiSelect("getItems", true).join(",");
+        }
+
         var url = formSearch.attr("action")
-            + "?username=" + txtUsername.val()
-            + "&site=" + ddlSite.fanexMultiSelect("getItems", true).join(",")
-            + "&currency=" + ddlCurrency.fanexMultiSelect("getItems", true).join(",")
-            + "&product=" + ddlProduct.fanexMultiSelect("getItems", true).join(",")
-            + "&type=" + ddlType.val()
+            + "?username=" + txtUsername.val().trim().replace(/[\n\t]+/g, '')
+            + "&siteNames=" + siteNames
+            + "&currencyIds=" + currencyIds
+            + "&productId=" + ddlProduct.fanexMultiSelect("getItems", true).join(",")
+            + "&typeId=" + ddlType.val()
             + "&pageIndex=" + (pageIndex + 1)
             + "&pageSize=" + pageSize;
 
@@ -111,13 +141,13 @@
             showPager: true,
             customPager: true,
             pagerOption: {
-                itemsPerPageArray: [50, 100, 150, 200],
-                pagerSelectCallback: function (pageIndex, pageSize) {
+                itemsPerPageArray: [50, 100, 200, 300, 500],
+                pagerSelectCallBack: function (pageIndex, pageSize) {
                     cachedPageSize = pageSize;
                     getLimitDailyPTUpdateList(pageIndex, pageSize);
                 }
             }
-        }
+        };
     }
 
     function renderLimitDailyPTUpdateList(data, startIndex) {
@@ -129,11 +159,11 @@
                 { Name: "colNo", Value: startIndex + index + 1 },
                 { Name: "colUsername", Value: value.Username },
                 { Name: "colSite", Value: value.Site },
-                { Name: "colCurrency", Value: value.Currency },
-                { Name: "colProduct", Value: value.Product },
-                { Name: "colType", Value: value.Type },
+                { Name: "colCurrency", Value: value.CurrencyName },
+                { Name: "colProduct", Value: value.ProductName },
+                { Name: "colType", Value: value.TypeName },
             ];
-            hasHostPermission && columns.push({ Name: "colDel", Value: renderDeleteCell(value.Username) });
+            hasHostPermission && columns.push({ Name: "colDel", Value: renderDeleteCell(value) });
 
             bodyRows.push({ Columns: columns });
         });
@@ -141,20 +171,31 @@
         return bodyRows;
     }
 
-    function renderDeleteCell(username) {
+    function renderDeleteCell(data) {
         return [
-            '<span class="ico-delete delete-limit" title="Delete"' + 'data-user-name="' + username + '"></span>'
+            '<span class="ico-delete delete-limit" title="Delete"'
+            + 'data-cust-id=' + data.CustID + ' '
+            + 'data-product-id=' + data.ProductID + ' '
+            + 'data-site-id=' + data.SiteID + ' '
+            + 'data-currency=' + data.Currency + ' '
+            + 'data-type=' + data.Type + ' '
+            + '"></span>'
         ].join("");
     }
 
     function bindEventsAfterRenderLimitDailyPTUpdateList() {
         $(".delete-limit").off().click(function () {
-            var username = $(this).attr("data-user-name");
+            var custID = $(this).attr("data-cust-id");
+            var productID = $(this).attr("data-product-id");
+            var siteID = $(this).attr("data-site-id");
+            var currency = $(this).attr("data-currency");
+            var type = $(this).attr("data-type");
+
             var manageLimit = new ManageLimit(
                 null,
                 CMS.resolveRootUrl("LimitDailyPTUpdate/Remove"),
                 function () { formSearch.submit(); });
-            manageLimit.RemoveLimit(username);
+            manageLimit.RemoveLimit({ custID, productID, siteID, type, currency });
         });
     }
 

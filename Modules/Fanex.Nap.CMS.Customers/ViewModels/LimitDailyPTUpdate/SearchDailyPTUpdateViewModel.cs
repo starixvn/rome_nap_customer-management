@@ -4,13 +4,13 @@
     {
         public string Username { get; set; }
 
-        public string Site { get; set; }
+        public string SiteNames { get; set; }
 
-        public string Currency { get; set; }
+        public string CurrencyIds { get; set; }
 
-        public string Product { get; set; }
+        public byte ProductId { get; set; }
 
-        public byte Type { get; set; }
+        public byte TypeId { get; set; }
 
         public int PageIndex { get; set; }
 

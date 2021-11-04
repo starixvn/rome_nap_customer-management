@@ -1,23 +1,27 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate
 {
-    using System;
+    using Fanex.Nap.CMS.Customers.Constants.LimitDailyPTUpdate;
 
     public class LimitDailyPTUpdateItem
     {
         public string Username { get; set; }
 
-        public byte RoleId { get; set; }
+        public int ProductID { get; set; }
+
+        public string ProductName { get; set; }
+
+        public int CustID { get; set; }
+
+        public int SiteID { get; set; }
 
         public string Site { get; set; }
 
-        public string Currency { get; set; }
+        public int Currency { get; set; }
 
-        public string Product { get; set; }
+        public string CurrencyName { get; set; }
 
-        // TODO: Maybe update this prop
-        public string Type { get; set; }
+        public string TypeName => TypeConst.TypeList[Type];
 
-        public DateTime CreatedDate { get; set; }
-
+        public byte Type { get; set; }
     }
 }

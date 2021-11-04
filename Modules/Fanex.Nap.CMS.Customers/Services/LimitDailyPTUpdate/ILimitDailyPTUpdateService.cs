@@ -3,19 +3,20 @@
     using Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public interface ILimitDailyPTUpdateService
     {
-        IEnumerable<string> GetSites();
+        IEnumerable<SelectListItem> GetSites();
 
-        IEnumerable<string> GetProducts();
+        IEnumerable<SelectListItem> GetProducts();
 
-        IEnumerable<string> GetCurrencies();
+        IEnumerable<SelectListItem> GetCurrencies();
 
         LimitDailyPTUpdateReport GetLimitReport(SearchDailyPTUpdateViewModel viewModel);
 
         AddNewOrRemoveLimitResult AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel);
 
-        AddNewOrRemoveLimitResult RemoveLimit(string username);
+        AddNewOrRemoveLimitResult RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel);
     }
 }

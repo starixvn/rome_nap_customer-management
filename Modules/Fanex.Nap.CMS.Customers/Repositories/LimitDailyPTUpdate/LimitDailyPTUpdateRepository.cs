@@ -1,41 +1,92 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate;
+    using System;
     using System.Collections.Generic;
+    using System.Web.Mvc;
 
     public class LimitDailyPTUpdateRepository : ILimitDailyPTUpdateRepository
     {
-        public IEnumerable<string> GetSites()
+        public IEnumerable<SelectListItem> GetSites(ICriteria criteria)
         {
-            //TODO: Add query to db
-            return new[] { "123", "456", "789", "1111111", "333333", "555555" };
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SelectListItem
+                        {
+                            Text = reader["site"].ToString(),
+                            Value = reader["siteid"].ToString()
+                        };
+                    }
+                }
+            }
         }
 
-        public IEnumerable<string> GetProducts()
+        public IEnumerable<SelectListItem> GetProducts(ICriteria criteria)
         {
-            //TODO: Add query to db
-            return new[] { "Happy 5", "Number Game", "Happy 5 Linked Game" };
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SelectListItem
+                        {
+                            Text = reader["ProductName"].ToString(),
+                            Value = reader["ProductID"].ToString()
+                        };
+                    }
+                }
+            }
         }
 
-        public IEnumerable<string> GetCurrencies()
+        public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
         {
-            //TODO: Add query to db
-            return new[] { "USD", "VND", "BTC", "BTAAAAAA", "AAACCCCCBBB" };
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new SelectListItem
+                        {
+                            Text = reader["Currency"].ToString(),
+                            Value = reader["ExchangeID"].ToString()
+                        };
+                    }
+                }
+            }
         }
 
         public IEnumerable<LimitDailyPTUpdateItem> GetLimitDailyPTUpdateList(GetLimitDailyPTUpdateListCriteria criteria)
         {
-            //TODO: Add query to db
-            var limitDailyPTUpdateList = new List<LimitDailyPTUpdateItem>
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                new LimitDailyPTUpdateItem {Username = "Test", Site = "733333", Currency = "UUS", Product = "Macau Games", Type = "SMA Line"},
-                new LimitDailyPTUpdateItem {Username = "Test1", Site = "733333", Currency = "", Product = "Macau Games", Type = "Site"},
-                new LimitDailyPTUpdateItem {Username = "Test2", Site = "", Currency = "HKK", Product = "Macau Games", Type = "Currency"},
-            };
-            return limitDailyPTUpdateList;
+                var limitDailyPTUpdateList = db.Query<LimitDailyPTUpdateItem>(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                criteria.TotalItems = Convert.ToInt32(outputParams["totalitems"]);
+
+                return limitDailyPTUpdateList;
+            }
         }
-       
+
+        public AddNewOrRemoveLimitResult ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new AddNewOrRemoveLimitResult(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    outputParams["errmsg"].ToString());
+            }
+        }
     }
 }

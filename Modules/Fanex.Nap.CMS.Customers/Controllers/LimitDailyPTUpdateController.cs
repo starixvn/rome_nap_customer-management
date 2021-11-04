@@ -44,18 +44,19 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.LimitDailyPTUpdate, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(AddNewLimitDailyPTUpdateViewModel viewModel)
         {
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
             return JsonData(service.AddNewLimit(viewModel), JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.LimitDailyPTUpdate, Policy = Constant.Policy.Host)]
-        public ActionResult Remove(string username)
+        public ActionResult Remove(RemoveLimitDailyPTUpdateViewModel viewModel)
         {
-            var result = string.IsNullOrWhiteSpace(username)
-                ? new Result((int)HttpStatusCode.BadRequest, Labels.BadRequest)
-                : service.RemoveLimit(username);
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
 
-            return JsonData(result, JsonRequestBehavior.DenyGet);
+            return JsonData(service.RemoveLimit(viewModel), JsonRequestBehavior.DenyGet);
         }
     }
 }

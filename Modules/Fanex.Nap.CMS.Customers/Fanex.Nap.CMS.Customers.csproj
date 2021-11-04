@@ -177,6 +177,7 @@
   <ItemGroup>
     <Compile Include="AppStart\CustomersAreaRegistration.cs" />
     <Compile Include="AppStart\CustomersBundlesConfig.cs" />
+    <Compile Include="Constants\LimitDailyPTUpdate\TypeConst.cs" />
     <Compile Include="Constants\ProblemAccount\AccountStatusConst.cs" />
     <Compile Include="Constants\ProblemAccountCreditSite\AccountStatusCreditSiteConst.cs" />
     <Compile Include="Constants\ProblemAccountLicenseeSite\AcknowledgementTypeConst.cs" />
@@ -216,7 +217,11 @@
     <Compile Include="Criteria\BetList\GetAbnormalBetTicketCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCreditLicenseeCriteria.cs" />
     <Compile Include="Criteria\BetList\GetTotalSportsbookTicketCriteria.cs" />
+    <Compile Include="Criteria\LimitDailyPTUpdate\AddNewLimitDailyPTUpdateCriteria.cs" />
+    <Compile Include="Criteria\LimitDailyPTUpdate\GetCurrencyListCriteria.cs" />
     <Compile Include="Criteria\LimitDailyPTUpdate\GetLimitDailyPTUpdateListCriteria.cs" />
+    <Compile Include="Criteria\LimitDailyPTUpdate\GetProductListCriteria.cs" />
+    <Compile Include="Criteria\LimitDailyPTUpdate\RemoveLimitDailyPTUpdateCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\AddNewLimitCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\GetCreditSiteCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\GetLimitDownlineListCriteria.cs" />
@@ -397,6 +402,7 @@
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\AddNewLimitDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\LimitDailyPTUpdateViewModel.cs" />
+    <Compile Include="ViewModels\LimitDailyPTUpdate\RemoveLimitDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\SearchDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\LimitNewDownlineViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\SearchLimitDownlineViewModel.cs" />

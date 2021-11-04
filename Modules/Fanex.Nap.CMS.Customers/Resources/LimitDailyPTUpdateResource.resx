@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddLimitSuccessfully" xml:space="preserve">
+    <value>Added rule successfully</value>
+  </data>
   <data name="AddNew" xml:space="preserve">
     <value>Add New</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Del</value>
+  </data>
+  <data name="DuplicatedAccountsError" xml:space="preserve">
+    <value>Duplicated account(s): {0}</value>
   </data>
   <data name="InputInvalidSMAsError" xml:space="preserve">
     <value>You are not allowed to input backslash {0} into the SMA(s) field.</value>
@@ -141,14 +147,26 @@
   <data name="Product" xml:space="preserve">
     <value>Product</value>
   </data>
+  <data name="ProductIsRequired" xml:space="preserve">
+    <value>Product is required.</value>
+  </data>
   <data name="RemoveLimitConfirmationMessage" xml:space="preserve">
     <value>Are you sure you want to delete the selected rule ?</value>
+  </data>
+  <data name="RemoveLimitSuccessfully" xml:space="preserve">
+    <value>Removed rule successfully</value>
   </data>
   <data name="SeperatedByComma" xml:space="preserve">
     <value>Each super, direct master or direct agent, separated by ','</value>
   </data>
+  <data name="SiteCurrency" xml:space="preserve">
+    <value>Site/Currency</value>
+  </data>
   <data name="SiteIsRequired" xml:space="preserve">
     <value>Site is required.</value>
+  </data>
+  <data name="SMALine" xml:space="preserve">
+    <value>SMA Line</value>
   </data>
   <data name="SMAUsernameIsRequired" xml:space="preserve">
     <value>SMA username is required.</value>

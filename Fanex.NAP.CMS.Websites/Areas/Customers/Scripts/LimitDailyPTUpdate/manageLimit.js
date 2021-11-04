@@ -52,16 +52,16 @@ function ManageLimit(div, postUrl, reloadData) {
             clearErrorTips();
 
             switch ($(this).val()) {
-                case '0':
+                case '1':
                     showInputsWhenSMALineIsSelected();
                     break;
-                case '1':
+                case '2':
                     showInputsWhenSiteIsSelected();
                     break;
-                case '2':
+                case '3':
                     showInputsWhenCurrencyIsSelected();
                     break;
-                case '3':
+                case '4':
                     showInputsWhenSiteCurrencyIsSelected();
                     break;
                 default:
@@ -96,25 +96,24 @@ function ManageLimit(div, postUrl, reloadData) {
             var formData = {};
 
             formData.type = ddlPopupType.val();
-            formData.products = ddlPopupProduct.fanexMultiSelect("getItems", true).join(",");
 
             switch (formData.type) {
-                case '0':
+                case '1':
                     var inputSMAs = getInputSMAs();
                     if (inputSMAs.length === 0) return;
                     formData.SMAs = inputSMAs;
                     break;
-                case '1':
+                case '2':
                     var selectedSite = getSelectedSite();
                     if (selectedSite === "") return;
                     formData.site = selectedSite;
                     break;
-                case '2':
+                case '3':
                     var selectedCurrency = getSelectedCurrency();
                     if (selectedCurrency === "") return;
                     formData.currency = selectedCurrency;
                     break;
-                case '3':
+                case '4':
                     var selectedSite = getSelectedSite();
                     var selectedCurrency = getSelectedCurrency();
                     if (selectedSite === "" || selectedCurrency === "") return;
@@ -124,9 +123,11 @@ function ManageLimit(div, postUrl, reloadData) {
                 default:
                     break;
             }
-         
-            // Submit
-            console.log(formData);
+
+            var selectedProducts = getSelectedProducts();
+            if (selectedProducts === "") return;
+            formData.product = selectedProducts;
+
             submitForm(formData);
         });
     }
@@ -144,16 +145,24 @@ function ManageLimit(div, postUrl, reloadData) {
         ddlPopupProduct.fanexMultiSelect({
             minWidth: 180,
             checkAllText: "All",
-            listData: products.map(function (item) {
-                return { id: item, value: item, text: item, checked: true, enable: true };
-            })
+            listData: ddlPopupProduct.find("option").map(function () {
+                return {
+                    id: this.value,
+                    value: this.value,
+                    text: this.text,
+                    checked: true,
+                    enable: true
+                };
+            }),
         });
+        ddlPopupProduct = div.find('#ddlPopup-product');
     }
 
     function clearErrorTips() {
         CMS.clearTipsyError(txtSMA);
         CMS.clearTipsyError(spanPopupSite);
         CMS.clearTipsyError(spanPopupCurrency);
+        CMS.clearTipsyError(ddlPopupProduct);
     }
 
     function showInputsWhenSMALineIsSelected() {
@@ -163,18 +172,22 @@ function ManageLimit(div, postUrl, reloadData) {
     }
 
     function showInputsWhenSiteIsSelected() {
+        ddlPopupSite.val("0").combobox("refresh");
         fieldPopupSite.show();
         fieldPopupSMA.hide();
         fieldPopupCurrency.hide();
     }
 
     function showInputsWhenCurrencyIsSelected() {
+        ddlPopupCurrency.val("0").combobox("refresh");
         fieldPopupCurrency.show();
         fieldPopupSMA.hide();
         fieldPopupSite.hide();
     }
 
     function showInputsWhenSiteCurrencyIsSelected() {
+        ddlPopupSite.val("0").combobox("refresh");
+        ddlPopupCurrency.val("0").combobox("refresh");
         fieldPopupSite.show();
         fieldPopupCurrency.show();
         fieldPopupSMA.hide();
@@ -184,22 +197,32 @@ function ManageLimit(div, postUrl, reloadData) {
         var inputSMAs = $.trim(txtSMA.val());
 
         if (inputSMAs.length === 0) {
-            CMS.showTipsyError(txtSMA, resources.smaUsernameIsRequired , "nw");
+            CMS.showTipsyError(txtSMA, resources.smaUsernameIsRequired , "se");
             return "";
         }
 
         // Check usernames contains '\'.
         if (inputSMAs.indexOf("\\") >= 0) {
-            CMS.showTipsyError(txtSMA, resources.inputInvalidSMAsError.replace("{0}", '\\') , "nw");
+            CMS.showTipsyError(txtSMA, resources.inputInvalidSMAsError.replace("{0}", '\\'), "se");
             return "";
         }
 
+        // Check max input
         var smasArray = inputSMAs.split(",");
         if (smasArray.length > maxInputSMAs) {
-            CMS.showTipsyError(txtSMA, resources.overSMAsLimitationError.replace("{0}", maxInputSMAs) , "nw");
+            CMS.showTipsyError(txtSMA, resources.overSMAsLimitationError.replace("{0}", maxInputSMAs), "se");
             return "";
         }
 
+        // Check duplicate
+        var smasDuplicateArray = smasArray.filter(function (item, index) {
+            return smasArray.indexOf(item) != index;
+        });
+        if (smasDuplicateArray.length > 0) {
+            CMS.showTipsyError(txtSMA, resources.duplicatedAccountsError.replace("{0}", smasDuplicateArray.join(',')), "se");
+            return "";
+        }
+        
         CMS.clearTipsyError(txtSMA);
         return inputSMAs;
     }
@@ -208,7 +231,7 @@ function ManageLimit(div, postUrl, reloadData) {
         var selectedSite = ddlPopupSite.val();
 
         if (selectedSite === '0') {
-            CMS.showTipsyError(spanPopupSite, resources.siteIsRequired, "nw");
+            CMS.showTipsyError(spanPopupSite, resources.siteIsRequired, "w");
             return "";
         }
 
@@ -220,12 +243,24 @@ function ManageLimit(div, postUrl, reloadData) {
         var selectedCurrency = ddlPopupCurrency.val();
 
         if (selectedCurrency === '0') {
-            CMS.showTipsyError(spanPopupCurrency, resources.currencyIsRequired, "nw");
+            CMS.showTipsyError(spanPopupCurrency, resources.currencyIsRequired, "w");
             return "";
         }
 
         CMS.clearTipsyError(spanPopupCurrency);
         return selectedCurrency;
+    }
+
+    function getSelectedProducts() {
+        var selectedProducts = ddlPopupProduct.fanexMultiSelect("getItems", true).join(",");
+
+        if (selectedProducts === '') {
+            CMS.showTipsyError(ddlPopupProduct, resources.productIsRequired, "w");
+            return "";
+        }
+
+        CMS.clearTipsyError(ddlPopupProduct);
+        return selectedProducts;
     }
 
     function submitForm(formData) {
@@ -258,9 +293,9 @@ function ManageLimit(div, postUrl, reloadData) {
         bindEvents();
     }
 
-    this.RemoveLimit = function (username) {
+    this.RemoveLimit = function (data) {
         CMS.showConfirmMessage(resources.removeLimitConfirmationMessage, function () {
-            CMS.callAjax(this, 'Remove', { Username: username }, function (result) {
+            CMS.callAjax(this, 'Remove', data, function (result) {
                 var jsonData = $.parseJSON(result);
                 if (jsonData.Code === 0) {
                     CMS.showSuccessMessage(jsonData.Message);

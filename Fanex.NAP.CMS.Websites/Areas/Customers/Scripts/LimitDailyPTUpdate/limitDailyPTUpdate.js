@@ -41,6 +41,7 @@
                     enable: true
                 };
             }),
+            showFilter: true,
         });
 
         ddlProduct.fanexMultiSelect({

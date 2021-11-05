@@ -39,7 +39,7 @@
 
         public int TotalItems { get; set; }
 
-        public int SettingStatus => AppSettings.SettingStatus;
+        public byte SettingStatus => AppSettings.SettingStatus;
 
         public override string GetSettingKey()
            => "NAP_LimitPTDaily_Sel";

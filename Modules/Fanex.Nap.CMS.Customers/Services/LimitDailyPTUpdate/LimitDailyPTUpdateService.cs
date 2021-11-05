@@ -39,7 +39,6 @@
                     viewModel.PageSize);
             var limitDailyPTUpdateList = repository.GetLimitDailyPTUpdateList(criteria);
 
-            // TODO: Update criteria.TotalItems as 2nd params
             return new LimitDailyPTUpdateReport(limitDailyPTUpdateList, criteria.TotalItems);
         }
 

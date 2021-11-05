@@ -163,6 +163,7 @@ function ManageLimit(div, postUrl, reloadData) {
         CMS.clearTipsyError(spanPopupSite);
         CMS.clearTipsyError(spanPopupCurrency);
         CMS.clearTipsyError(ddlPopupProduct);
+        CMS.hideInlineMsg(divInlineMessage);
     }
 
     function showInputsWhenSMALineIsSelected() {

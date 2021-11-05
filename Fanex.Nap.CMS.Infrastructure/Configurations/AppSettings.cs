@@ -79,7 +79,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
 
         public static string Environment => GetValue("Environment");
 
-        public static int SettingStatus => String.IsNullOrWhiteSpace(GetValue("SettingStatus")) ? 0 : 1;
+        public static byte SettingStatus => String.IsNullOrWhiteSpace(GetValue("SettingStatus")) ? Convert.ToByte(0) : Convert.ToByte(GetValue("SettingStatus"));
 
         /// <summary>
         /// Gets the value from web configuration.

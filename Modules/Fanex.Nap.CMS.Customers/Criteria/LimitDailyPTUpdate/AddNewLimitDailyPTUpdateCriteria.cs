@@ -26,7 +26,7 @@
 
         public byte Type { get; }
 
-        public int SettingStatus => AppSettings.SettingStatus;
+        public byte SettingStatus => AppSettings.SettingStatus;
 
         public int UserId { get; }
 

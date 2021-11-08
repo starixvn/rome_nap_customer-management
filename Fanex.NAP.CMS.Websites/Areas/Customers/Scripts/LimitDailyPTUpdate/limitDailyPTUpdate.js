@@ -15,48 +15,64 @@
 
 
     function renderMultiSelect() {
-        ddlSite.fanexMultiSelect({
+        ddlSite.multiSelect({
             minWidth: 180,
             checkAllText: "All",
+            isCheckAll: true,
             listData: ddlSite.find("option").map(function () {
                 return {
-                    id: this.value,
-                    value: this.value,
-                    text: this.text,
-                    checked: true,
-                    enable: true
+                    Id: this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
                 };
             }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
 
-        ddlCurrency.fanexMultiSelect({
+        ddlCurrency.multiSelect({
             minWidth: 180,
             checkAllText: "All",
+            isCheckAll: true,
             listData: ddlCurrency.find("option").map(function () {
                 return {
-                    id: this.value,
-                    value: this.value,
-                    text: this.text,
-                    checked: true,
-                    enable: true
+                    Id: this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
                 };
             }),
             showFilter: true,
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
 
-        ddlProduct.fanexMultiSelect({
+        ddlProduct.multiSelect({
             minWidth: 180,
             checkAllText: "All",
+            isCheckAll: true,
             listData: ddlProduct.find("option").map(function () {
                 return {
-                    id: this.value,
-                    value: this.value,
-                    text: this.text,
-                    checked: true,
-                    enable: true
+                    Id: this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
                 };
             }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
+
+        ddlSite = $("#ddl-site");
+        ddlCurrency = $("#ddl-currency");
+        ddlProduct = $("#ddl-product");
     }
 
     function bindEvents() {
@@ -84,19 +100,19 @@
         var siteNames = "";
         var currencyIds = "";
 
-        if (!ddlSite.fanexMultiSelect("isCheckAll")) {
-            siteNames = ddlSite.fanexMultiSelect("getItems", true).join(",");
+        if (!ddlSite.multiSelect("isCheckedAllItems")) {
+            siteNames = ddlSite.multiSelect("getCheckedItems").join(",");
         }
 
-        if (!ddlCurrency.fanexMultiSelect("isCheckAll")) {
-            currencyIds = ddlCurrency.fanexMultiSelect("getItems", true).join(",");
+        if (!ddlCurrency.multiSelect("isCheckedAllItems")) {
+            currencyIds = ddlCurrency.multiSelect("getCheckedItems").join(",");
         }
 
         var url = formSearch.attr("action")
             + "?username=" + txtUsername.val().trim().replace(/[\n\t]+/g, '')
             + "&siteNames=" + siteNames
             + "&currencyIds=" + currencyIds
-            + "&productId=" + ddlProduct.fanexMultiSelect("getItems", true).join(",")
+            + "&productId=" + ddlProduct.multiSelect("getCheckedItems").join(",")
             + "&typeId=" + ddlType.val()
             + "&pageIndex=" + (pageIndex + 1)
             + "&pageSize=" + pageSize;

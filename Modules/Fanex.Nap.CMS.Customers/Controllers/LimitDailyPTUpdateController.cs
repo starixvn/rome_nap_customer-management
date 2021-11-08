@@ -55,7 +55,6 @@
         {
             viewModel.UserId = CurrentSession.UserId;
             viewModel.IP = CurrentContext.IP;
-
             return JsonData(service.RemoveLimit(viewModel), JsonRequestBehavior.DenyGet);
         }
     }

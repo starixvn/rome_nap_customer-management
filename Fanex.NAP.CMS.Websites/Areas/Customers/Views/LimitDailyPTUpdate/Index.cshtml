@@ -78,8 +78,8 @@
             <div class="lbl-field col_2">
                 <label>@Labels.Type</label>
             </div>
-            <div class="edit-field col_5">
-                @Html.DropDownList("type", Model.Types().Where(s => s.Value != "4").ToArray(), new { id = "ddl-type", @class = "combobox-autocomplete width-80" })
+            <div class="edit-field col_6">
+                @Html.DropDownList("type", Model.Types(), new { id = "ddl-type", @class = "combobox-autocomplete width-90" })
             </div>
             <div class="submit width-auto col_4">
                 <button type="submit" class="submit btn-search">@Labels.Search</button>

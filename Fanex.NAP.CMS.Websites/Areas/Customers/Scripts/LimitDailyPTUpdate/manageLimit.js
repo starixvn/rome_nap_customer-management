@@ -142,18 +142,22 @@ function ManageLimit(div, postUrl, reloadData) {
     }
 
     function renderMultiSelectProduct() {
-        ddlPopupProduct.fanexMultiSelect({
+        ddlPopupProduct.multiSelect({
             minWidth: 180,
             checkAllText: "All",
+            isCheckAll: true,
             listData: ddlPopupProduct.find("option").map(function () {
                 return {
-                    id: this.value,
-                    value: this.value,
-                    text: this.text,
-                    checked: true,
-                    enable: true
+                    Id: this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
                 };
             }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
         ddlPopupProduct = div.find('#ddlPopup-product');
     }
@@ -253,7 +257,7 @@ function ManageLimit(div, postUrl, reloadData) {
     }
 
     function getSelectedProducts() {
-        var selectedProducts = ddlPopupProduct.fanexMultiSelect("getItems", true).join(",");
+        var selectedProducts = ddlPopupProduct.multiSelect("getCheckedItems").join(",");
 
         if (selectedProducts === '') {
             CMS.showTipsyError(ddlPopupProduct, resources.productIsRequired, "w");

@@ -202,10 +202,13 @@
 
         private static BundleCollection RegisterLimitDailyPTUpdateBundles(this BundleCollection bundles)
         {
-            bundles.AddAndInclude(LimitDailyPTUpdateStylePath, FanexMultiSelectStylePath, "~/Areas/Customers/Styles/limitDailyPTUpdate.less");
+            bundles.AddAndInclude(
+                LimitDailyPTUpdateStylePath,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
+                "~/Areas/Customers/Styles/limitDailyPTUpdate.less");
 
             bundles.Add(new ScriptBundle(LimitDailyPTUpdateScriptPath).Include(
-                FanexMultiSelectScriptPath,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
                 "~/Areas/Customers/Scripts/LimitDailyPTUpdate/limitDailyPTUpdate.js",
                 "~/Areas/Customers/Scripts/LimitDailyPTUpdate/manageLimit.js"
                 ));

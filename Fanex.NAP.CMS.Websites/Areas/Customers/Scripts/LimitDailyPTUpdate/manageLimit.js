@@ -264,10 +264,6 @@ function ManageLimit(div, postUrl, reloadData) {
             return "";
         }
 
-        if (ddlPopupProduct.multiSelect("isCheckedAllItems")) {
-            selectedProducts = '0';
-        }
-
         CMS.clearTipsyError(ddlPopupProduct);
         return selectedProducts;
     }

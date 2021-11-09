@@ -33,7 +33,7 @@
                     viewModel.Username == null ? string.Empty : viewModel.Username.Trim(),
                     viewModel.SiteNames ?? string.Empty,
                     viewModel.CurrencyIds ?? string.Empty,
-                    viewModel.ProductId,
+                    viewModel.ProductId ?? string.Empty,
                     viewModel.TypeId,
                     viewModel.PageIndex,
                     viewModel.PageSize);

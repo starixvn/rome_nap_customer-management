@@ -9,7 +9,7 @@
             string custName,
             string multiSite,
             string multiCurrency,
-            byte productId,
+            string productId,
             byte type,
             int pageIndex,
             int pageSize)
@@ -29,7 +29,7 @@
 
         public string MutilCurrency { get; }
 
-        public byte ProductID { get; }
+        public string ProductID { get; }
 
         public byte Type { get; }
 

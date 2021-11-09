@@ -97,22 +97,30 @@
     }
 
     function getLimitDailyPTUpdateList(pageIndex, pageSize) {
-        var siteNames = "";
-        var currencyIds = "";
+        var siteNames = "0";
+        var currencyIds = "0";
+        var productIds = "0";
 
-        if (!ddlSite.multiSelect("isCheckedAllItems")) {
+        if (!ddlSite.multiSelect("isCheckedAllItems"))
+        {
             siteNames = ddlSite.multiSelect("getCheckedItems").join(",");
         }
 
-        if (!ddlCurrency.multiSelect("isCheckedAllItems")) {
+        if (!ddlCurrency.multiSelect("isCheckedAllItems")) 
+        {
             currencyIds = ddlCurrency.multiSelect("getCheckedItems").join(",");
+        }
+
+        if (!ddlProduct.multiSelect("isCheckedAllItems"))
+        {
+            productIds = ddlProduct.multiSelect("getCheckedItems").join(",");
         }
 
         var url = formSearch.attr("action")
             + "?username=" + txtUsername.val().trim().replace(/[\n\t]+/g, '')
             + "&siteNames=" + siteNames
             + "&currencyIds=" + currencyIds
-            + "&productId=" + ddlProduct.multiSelect("getCheckedItems").join(",")
+            + "&productId=" + productIds
             + "&typeId=" + ddlType.val()
             + "&pageIndex=" + (pageIndex + 1)
             + "&pageSize=" + pageSize;

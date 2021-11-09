@@ -8,7 +8,7 @@
 
         public string CurrencyIds { get; set; }
 
-        public byte ProductId { get; set; }
+        public string ProductId { get; set; }
 
         public byte TypeId { get; set; }
 

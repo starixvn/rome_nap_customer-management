@@ -5,7 +5,7 @@
 
     public class AddNewLimitDailyPTUpdateCriteria : CriteriaBase 
     {
-        public AddNewLimitDailyPTUpdateCriteria(byte productId, string smaName, byte currency, int siteId, byte type, int userId, string ip)
+        public AddNewLimitDailyPTUpdateCriteria(string productId, string smaName, byte currency, int siteId, byte type, int userId, string ip)
         {
             ProductID = productId;
             SMAName = smaName;
@@ -16,7 +16,7 @@
             IP = ip;
         }
 
-        public byte ProductID { get; }
+        public string ProductID { get; }
 
         public string SMAName { get; }
 

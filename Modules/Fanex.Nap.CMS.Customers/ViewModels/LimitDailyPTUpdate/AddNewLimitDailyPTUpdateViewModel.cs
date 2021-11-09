@@ -4,7 +4,7 @@
     {
         public byte Type { get; set; }
 
-        public byte Product { get; set; }
+        public string Product { get; set; }
 
         public string SMAs { get; set; }
 

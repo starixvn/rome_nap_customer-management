@@ -217,16 +217,7 @@ function ManageLimit(div, postUrl, reloadData) {
         if (smasArray.length > maxInputSMAs) {
             CMS.showTipsyError(txtSMA, resources.overSMAsLimitationError.replace("{0}", maxInputSMAs), "se");
             return "";
-        }
-
-        // Check duplicate
-        var smasDuplicateArray = smasArray.filter(function (item, index) {
-            return smasArray.indexOf(item) != index;
-        });
-        if (smasDuplicateArray.length > 0) {
-            CMS.showTipsyError(txtSMA, resources.duplicatedAccountsError.replace("{0}", smasDuplicateArray.join(',')), "se");
-            return "";
-        }
+        }        
         
         CMS.clearTipsyError(txtSMA);
         return inputSMAs;

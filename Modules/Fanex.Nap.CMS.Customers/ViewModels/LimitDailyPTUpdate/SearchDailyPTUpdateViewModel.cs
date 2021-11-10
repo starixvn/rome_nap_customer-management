@@ -1,7 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate
 {
+    using System.Web.Mvc;
+
     public class SearchDailyPTUpdateViewModel
     {
+        [AllowHtml]
         public string Username { get; set; }
 
         public string SiteNames { get; set; }

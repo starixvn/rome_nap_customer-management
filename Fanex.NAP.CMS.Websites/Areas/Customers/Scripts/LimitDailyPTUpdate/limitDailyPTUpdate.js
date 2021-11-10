@@ -21,7 +21,7 @@
             isCheckAll: true,
             listData: ddlSite.find("option").map(function () {
                 return {
-                    Id: this.value,
+                    Id: this.text + "-" + this.value,
                     Value: this.value,
                     Text: this.text,
                     Checked: true,
@@ -39,7 +39,7 @@
             isCheckAll: true,
             listData: ddlCurrency.find("option").map(function () {
                 return {
-                    Id: this.value,
+                    Id: this.text + "-" + this.value,
                     Value: this.value,
                     Text: this.text,
                     Checked: true,
@@ -58,7 +58,7 @@
             isCheckAll: true,
             listData: ddlProduct.find("option").map(function () {
                 return {
-                    Id: this.value,
+                    Id: this.text + "-" + this.value,
                     Value: this.value,
                     Text: this.text,
                     Checked: true,

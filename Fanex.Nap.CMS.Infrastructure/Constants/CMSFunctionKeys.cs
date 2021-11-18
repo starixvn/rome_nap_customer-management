@@ -120,6 +120,9 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ManageProblemAccountLicenseeSites = "ManageProblemAccount_LicenseeSites";
         public const string ProblemAccountManageLicenseeAcknowledgement = "ProblemAccount_ManageLicenseeAcknowledgement";
 
+        // Limit Daily PT Update
+        public const string LimitDailyPTUpdate = "LimitDailyPTUpdate";
+
         // Limit New Downline Per Day
         public const string LimitNewDownlinePerDay = "LimitNewDownlinePerDay";
 

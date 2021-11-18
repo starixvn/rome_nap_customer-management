@@ -1,0 +1,167 @@
+﻿@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = LimitDailyPTUpdateResource.LimitDailyPTUpdate;
+}
+@model LimitDailyPTUpdateViewModel
+@section Head {
+    @Styles.Render(CustomersBundlesConfig.LimitDailyPTUpdateStylePath)
+}
+@section Foot {
+    <script type="text/javascript">
+        var resources = {
+            username: "@Labels.Username",
+            site: "@Labels.Site",
+            currency: "@Labels.Currency",
+            product: "@LimitDailyPTUpdateResource.Product",
+            type: "@Labels.Type",
+            delete: "@LimitDailyPTUpdateResource.Delete",
+            overSMAsLimitationError: "@LimitDailyPTUpdateResource.OverSMAsLimitationError",
+            alreadyExistsError: "@LimitDailyPTUpdateResource.AlreadyExistsError",
+            smaUsernameIsRequired: "@LimitDailyPTUpdateResource.SMAUsernameIsRequired",
+            siteIsRequired: "@LimitDailyPTUpdateResource.SiteIsRequired",
+            currencyIsRequired: "@LimitDailyPTUpdateResource.CurrencyIsRequired",
+            productIsRequired: "@LimitDailyPTUpdateResource.ProductIsRequired",
+            removeLimitConfirmationMessage: "@LimitDailyPTUpdateResource.RemoveLimitConfirmationMessage",
+            inputInvalidSMAsError: "@LimitDailyPTUpdateResource.InputInvalidSMAsError",
+            duplicatedAccountsError:  "@LimitDailyPTUpdateResource.DuplicatedAccountsError"
+        };
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.LimitDailyPTUpdateScriptPath)
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <span id="note-info" class="note-info-message"></span>
+    @using (Html.BeginForm("Search", "LimitDailyPTUpdate", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label for="txt-username">@Labels.Username</label>
+            </div>
+            <div class="edit-field col_6">
+                <input type="text" style="width:100%" id="txt-username" autocomplete="off" maxlength="50" />
+            </div>
+            <div class="lbl-field col_2">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_7">
+               @Html.DropDownList(
+               "ddlSite",
+               Model.Sites,
+               new { @id = "ddl-site"})
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                "ddlCurrency",
+                Model.Currencies,
+                new { @id = "ddl-currency" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@LimitDailyPTUpdateResource.Product</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                "ddlProduct",
+                Model.Products,
+                new { @id = "ddl-product" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@Labels.Type</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("type", Model.Types(), new { id = "ddl-type", @class = "combobox-autocomplete width-90" })
+            </div>
+            <div class="submit width-auto col_4">
+                <button type="submit" class="submit btn-search">@Labels.Search</button>
+            </div>
+            @if (Model.HasHostPermission)
+            {
+                <div class="button-list width-auto col_4">
+                    <button type="button" class="blue-button" id="btn-addNew">@LimitDailyPTUpdateResource.AddNew</button>
+                </div>
+            }
+            <div class="filter-row"></div>
+        </div>
+    }
+</div>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+
+<div id="divPopupContent" class="display-none">
+    <div id="note-info-content">
+        <div class="message">
+            <p>- Downlines of the rules added into this function can only be updated up to twice per day by each upline. (e.g. a member can have up to 6 times of PT update, 2 by agent, 2 by master and 2 by super).</p>
+            <p>- The restriction is applied on Alpha Site only. Updates done via NAP Site or External NAP Site does not count in the daily count.</p>
+            <p>- Currently the restriction is applied for Macau Game product only.</p>
+        </div>
+    </div>
+    @if (Model.HasHostPermission)
+    {
+        <div class="form" id="addNew">
+            <div id="inline-message" class="inline-message"></div>
+            <div class="form-row" id="field-type">
+                <div class="lbl-field">
+                    <label>@Labels.Type</label>
+                </div>
+                <div class="edit-field">
+                    @Html.DropDownList("type", Model.Types().Where(t => t.Value != "0").ToArray(), new { id = "ddlPopup-type", @class = "combobox-autocomplete" })
+                </div>
+            </div>
+            <div class="form-row field-sma">
+                <div class="lbl-field">
+                    <label for="txt-sma">SMA(s)<span class="text-red">&nbsp;*</span></label>
+                </div>
+                <div class="edit-field">
+                    <textarea rows="10" name="usernames" id="txt-sma"></textarea>
+                    <div>@LimitDailyPTUpdateResource.SeperatedByComma</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field"><label>Site<span class="text-red">&nbsp;*</span></label></div>
+                <div class="edit-field">
+                    @Html.DropDownList(
+                   "site",
+                   (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
+                   }).Union(Model.Sites),
+                   new { id = "ddlPopup-site", @class = "combobox-autocomplete" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field"><label>Currency<span class="text-red">&nbsp;*</span></label></div>
+                <div class="edit-field">
+                    @Html.DropDownList(
+                   "currency",
+                   (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
+                   }).Union(Model.Currencies),
+                   new { id = "ddlPopup-currency", @class = "combobox-autocomplete" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="lbl-field">
+                    <label>@LimitDailyPTUpdateResource.Product <span class="text-red">&nbsp;*</span></label>
+                </div>
+                <div class="edit-field">
+                    @Html.DropDownList("product", Model.Products, new { id = "ddlPopup-product", @class = "combobox-autocomplete" })
+                </div>
+            </div>
+            <div class="form-row button-row">
+                <button type="button" class="blue-button" id="btn-save">@Labels.Save</button>
+                <button type="button" class="red-button" id="btn-cancel">@Labels.Cancel</button>
+            </div>
+        </div>
+    }
+</div>
+
+

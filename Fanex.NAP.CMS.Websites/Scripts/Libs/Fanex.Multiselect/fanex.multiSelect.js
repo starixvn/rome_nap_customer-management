@@ -54,6 +54,14 @@
                 }
                 var $headerCheckbox = $me.next().find("#" + $me.attr('id') + "HeaderCheckBox");
                 $headerCheckbox.prop('checked', !check).trigger('click');
+            },
+            isCheckAll: function () {
+                var $me = $(this);
+                if ($me.parent().length === 0) {
+                    $me = $('#' + $me.attr('id'));
+                }
+                var $headerCheckbox = $me.next().find("#" + $me.attr('id') + "HeaderCheckBox");
+                return $headerCheckbox.is(':checked');
             }
         };
 

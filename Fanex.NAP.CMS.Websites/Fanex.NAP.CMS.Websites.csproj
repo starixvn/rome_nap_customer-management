@@ -392,6 +392,8 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\limitDailyPTUpdate.js" />
+    <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />
     <Content Include="Areas\Customers\Scripts\LimitNewDownline\addNewOrRemoveLimit.js" />
     <Content Include="Areas\Customers\Scripts\LimitNewDownline\limitNewDownline.js" />
     <Content Include="Areas\Customers\Scripts\ManageLicenseeAcknowledgement\manageLicensee.js" />
@@ -1034,6 +1036,8 @@
     <Content Include="Areas\BetRestrictionBasketball\Web.config" />
     <Content Include="Areas\BetRestrictionBasketball\Styles\Index.less" />
     <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
+    <Content Include="Areas\Customers\Views\LimitDailyPTUpdate\Index.cshtml" />
+    <Content Include="Areas\Customers\Styles\limitDailyPTUpdate.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

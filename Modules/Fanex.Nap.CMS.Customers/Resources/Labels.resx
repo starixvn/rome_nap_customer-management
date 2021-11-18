@@ -285,4 +285,7 @@
   <data name="InvalidValueError" xml:space="preserve">
     <value>Invalid value!</value>
   </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
 </root>

@@ -102,6 +102,13 @@
     <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Limit Daily PT Update">
+    <Setting Key="NAP_LimitPTDaily_ProductList" SpName="NAP_LimitPTDaily_ProductList" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LimitPTDaily_Sel" SpName="NAP_LimitPTDaily_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LimitPTDaily_Ins" SpName="NAP_LimitPTDaily_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LimitPTDaily_Del" SpName="NAP_LimitPTDaily_Del" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
   <Function Name="Limit number of new created account">
     <Setting Key="Nap_ProblemAccountLimitDownlineSel" SpName="Nap_ProblemAccountLimitDownlineSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Nap_ProblemAccountLimitDownlineIns" SpName="Nap_ProblemAccountLimitDownlineIns" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -9,6 +9,7 @@
 
 namespace Fanex.Nap.CMS.Infrastructure.Configurations
 {
+    using System;
     using System.Configuration;
     using Fanex.Common;
 
@@ -77,6 +78,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
         public static string RavenLibPath => GetValue("RavenLibPath");
 
         public static string Environment => GetValue("Environment");
+
+        public static byte SettingStatus => String.IsNullOrWhiteSpace(GetValue("SettingStatus")) ? Convert.ToByte(0) : Convert.ToByte(GetValue("SettingStatus"));
 
         /// <summary>
         /// Gets the value from web configuration.

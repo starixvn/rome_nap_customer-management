@@ -81,6 +81,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
 
         public static byte SettingStatus => String.IsNullOrWhiteSpace(GetValue("SettingStatus")) ? Convert.ToByte(0) : Convert.ToByte(GetValue("SettingStatus"));
 
+        public static string CTSAPIURL => GetValue("CTSAPIURL");
+
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

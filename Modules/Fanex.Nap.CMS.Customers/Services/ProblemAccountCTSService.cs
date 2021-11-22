@@ -2,49 +2,72 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.Nap.CMS.Customers.Models.ProblemAccount;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Newtonsoft.Json;
 
     public interface IProblemAccountCTSService
     {
         void RemoveProblemAccounts(string custIds);
+
+        void UpdateProblemAccounts(CTSUpdateProblemAccount accounts);
     }
 
     public class ProblemAccountCTSService : IProblemAccountCTSService
     {
+        private const string RemoveProblemAccountsURL = "/api/Cts/RemoveProblemAccounts";
+        private const string UpdateProblemAccountsURL = "/api/Cts/UpdateCategoryToCTSWhenPAUpdated";
+
         public void RemoveProblemAccounts(string custIds)
         {
-            if (!string.IsNullOrWhiteSpace(custIds))
+            if (!string.IsNullOrWhiteSpace(custIds) && !string.IsNullOrWhiteSpace(AppSettings.CTSAPIURL))
             {
-                var ctsUrl = ConfigurationManager.AppSettings["CTSRemoveProblemAccountsURL"];
-
-                if (!string.IsNullOrWhiteSpace(ctsUrl))
+                Task.Factory.StartNew(async () =>
                 {
-                    Task.Factory.StartNew(() =>
-                    {
-                        RemoveProblemAccountsBackgroundJob(ctsUrl, custIds);
-                    });
-                }
+                    await CallCTSAPIAync(
+                        $"{AppSettings.CTSAPIURL}{RemoveProblemAccountsURL}",
+                        JsonConvert.SerializeObject(custIds),
+                        "RemoveProblemAccounts_CustIds");
+                });
             }
         }
 
-        private static void RemoveProblemAccountsBackgroundJob(string url, string custIds)
+        public void UpdateProblemAccounts(CTSUpdateProblemAccount accounts)
+        {
+            if (!string.IsNullOrWhiteSpace(AppSettings.CTSAPIURL))
+            {
+                Task.Factory.StartNew(async () =>
+                {
+                    await CallCTSAPIAync(
+                        $"{AppSettings.CTSAPIURL}{UpdateProblemAccountsURL}",
+                        JsonConvert.SerializeObject(accounts),
+                        "UpdateProblemAccounts_Params");
+                });
+            }
+        }
+
+        private static async Task CallCTSAPIAync(string url, string inputParams, string errorCustomDataKey)
         {
             using (var client = new HttpClient())
             {
-                using (var content = new StringContent(JsonConvert.SerializeObject(custIds), Encoding.UTF8, "application/json"))
+                using (var content = new StringContent(inputParams, Encoding.UTF8, "application/json"))
                 {
                     try
                     {
-                        var result = client.PostAsync(new Uri(url), content).Result;
+                        var result = await client.PostAsync(new Uri(url), content);
                     }
                     catch (Exception ex)
                     {
-                        ExceptionHandler.Handle(ex, new Dictionary<string, object> { ["RemoveProblemAccounts_CustIds"] = custIds });
+                        ExceptionHandler.Handle(
+                            ex,
+                            new Dictionary<string, object>
+                            {
+                                [errorCustomDataKey] = inputParams
+                            });
                     }
                 }
             }

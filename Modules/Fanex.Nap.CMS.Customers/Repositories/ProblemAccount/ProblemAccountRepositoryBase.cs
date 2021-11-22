@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Repositories.ProblemAccount
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Data;
@@ -192,17 +193,45 @@
             return new Result(errorCode, errorMessage);
         }
 
+        public Tuple<Result, IEnumerable<CTSCustomerReason>> Update(ICriteria criteria, byte newReasonId)
+        {
+            var ctsCustomerReasons = new List<CTSCustomerReason>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        ctsCustomerReasons.Add(new CTSCustomerReason(
+                            Convert.ToInt32(reader["custid"]),
+                            ToInt32(reader["oldreasonid"]),
+                            newReasonId));
+                    }
+                }
+
+                return new Tuple<Result, IEnumerable<CTSCustomerReason>>(ToResult(db.GetOuputParams()), ctsCustomerReasons);
+            }
+        }
+
         public Result ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
 
-                return new Result(
-                    Convert.ToInt32(ouputParams[ErrorCodeParam]),
-                    ouputParams["errmsg"].ToString());
+                return ToResult(db.GetOuputParams());
             }
         }
+
+        private static Result ToResult(Hashtable ouputParams)
+            => new Result(
+                Convert.ToInt32(ouputParams[ErrorCodeParam]),
+                ouputParams["errmsg"].ToString());
+
+        private static int? ToInt32(object value)
+            => value == null || value == DBNull.Value
+            ? default(int?)
+            : Convert.ToInt32(value);
     }
 }

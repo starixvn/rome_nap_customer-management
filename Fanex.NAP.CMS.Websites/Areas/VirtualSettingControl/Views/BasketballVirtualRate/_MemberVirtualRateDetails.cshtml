@@ -1,5 +1,5 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
-@using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
+@using Fanex.Nap.CMS.VirtualSettingControl.Resources
 @model VirtualRateDetailsReport
 <div id="grid-title" class="grid-title full-mode">
     <div class="grid-title-label">@ViewLang.VirtualRateDetails - @Model.Username <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span></div>
@@ -24,7 +24,10 @@
                 <button type="button" id="btn-view-compact-mode" class="submit btn-view-compact-mode">@ViewLang.ViewCompactMode</button>
                 <span class="ico-collapse"></span>
             </th>
-            <th colspan="2">@ViewLang.NonLive</th>
+            <th colspan="2">
+                @ViewLang.NonLive
+                <span id="spnNote" class="note-info-message" title="@ESportsResource.AutoSuspendNonLiveNote"></span>
+            </th>
             <th colspan="2">@ViewLang.Live</th>
         </tr>
         <tr class="elm-full-mode">

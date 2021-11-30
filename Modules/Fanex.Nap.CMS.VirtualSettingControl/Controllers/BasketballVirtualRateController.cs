@@ -71,13 +71,19 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.Basketball_VirtualRateDetails, Policy = Constant.Policy.Host)]
-        public ActionResult SaveVirtualRateDetails(int custId, bool isMember, bool isManualUpdate, VirtualRateDetailsReport rates)
+        public ActionResult SaveVirtualRateDetails(
+            int custId,
+            bool isMember,
+            bool isMemberCompactMode,
+            bool isManualUpdate,
+            VirtualRateDetailsReport rates)
         {
             var result = service.SaveVirtualRateDetails(new SaveVirtualRateDetailsCriteria
             {
                 CustId = custId,
                 SportType = SportTypeConstants.Basketball,
                 IsMember = isMember,
+                IsMemberCompactMode = isMemberCompactMode,
                 IsManualUpdate = isManualUpdate,
                 Rates = rates,
                 UserId = CurrentSession.UserId,
@@ -101,13 +107,19 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.Basketball_VirtualRateDetails, Policy = Constant.Policy.Host)]
-        public JsonResult SaveAssociatedAccounts(string accounts, bool isMember, bool isManualUpdate, VirtualRateDetailsReport rates)
+        public JsonResult SaveAssociatedAccounts(
+            string accounts,
+            bool isMember,
+            bool isMemberCompactMode,
+            bool isManualUpdate,
+            VirtualRateDetailsReport rates)
         {
             var result = service.SaveAssociatedAccounts(new SaveAssociatedAccountsCriteria
             {
                 Accounts = accounts,
                 SportType = SportTypeConstants.Basketball,
                 IsMember = isMember,
+                IsMemberCompactMode = isMemberCompactMode,
                 IsManualUpdate = isManualUpdate,
                 Rates = rates,
                 UserId = CurrentSession.UserId,

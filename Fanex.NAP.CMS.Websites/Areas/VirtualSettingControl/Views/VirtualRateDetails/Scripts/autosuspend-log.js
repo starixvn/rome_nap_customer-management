@@ -118,7 +118,7 @@
 
         var html = "";
         if (rs.Logs.length == 0) {
-            html += "<tr><td colspan='3' align='center'>" + resources.Message_NoReportData + "</td></tr>";
+            html += "<tr><td colspan='5' align='center'>" + resources.Message_NoReportData + "</td></tr>";
         } else {
             for (var i = 0; i < rs.Logs.length; i++) {
                 html += this.renderLog(rs.Logs[i]);
@@ -135,7 +135,7 @@
     this.renderLog = function (log) {
         var html = "";
         html += "<tr data-level='0' data-log-id='" + log.LogId + "'>\
-                    <td colspan='3'>\
+                    <td colspan='5'>\
                         <span class='group-toggle group-expand'>[−]</span>" + log.UpdatedDateText + " - " + resources.Update + " " + log.Username + " - " + resources.By + " " + log.Editor;
         html += "</td></tr>";
 
@@ -148,9 +148,11 @@
     this.renderBetTypeLog = function (log, betType) {
         var html = "";
         html += "<tr data-level='1' data-log-id='" + log.LogId + "'>\
-                    <td>" + betType.SportName + " > " + betType.LeagueGroupName + " > " + betType.BetTypeGroupName + " > " + betType.BetTypeName + "</td>"
+                    <td class='col-bettype'>" + betType.SportName + " > " + betType.LeagueGroupName + " > " + betType.BetTypeGroupName + " > " + betType.BetTypeName + "</td>"
             + this.renderStatus(betType.NewNonliveAutoSuspend, betType.NonliveAutoSuspend)
-            + this.renderStatus(betType.NewLiveAutoSuspend, betType.LiveAutoSuspend) +
+            + this.renderStatus(betType.IsOverrideASNonliveNew, betType.IsOverrideASNonlive)
+            + this.renderStatus(betType.NewLiveAutoSuspend, betType.LiveAutoSuspend)
+            + this.renderStatus(betType.IsOverrideASLiveNew, betType.IsOverrideASLive)
             "</tr>";
         return html;
     };

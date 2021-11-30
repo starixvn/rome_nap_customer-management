@@ -74,8 +74,10 @@
                         new ExcelColumn(ViewLang.Level, 400),
                         new ExcelColumn(ViewLang.NonLive, 200),
                         new ExcelColumn(ViewLang.AutoSuspend_Nonlive, 200),
+                        new ExcelColumn(ViewLang.OverrideAutoSuspend_Nonlive, 200),
                         new ExcelColumn(ViewLang.Live, 200),
-                        new ExcelColumn(ViewLang.AutoSuspend_Live, 200)
+                        new ExcelColumn(ViewLang.AutoSuspend_Live, 200),
+                        new ExcelColumn(ViewLang.OverrideAutoSuspend_Live, 200)
                     }
                     : new[] {
                         new ExcelColumn(ViewLang.Level, 400),
@@ -90,9 +92,9 @@
         protected override void ExportHeader()
         {
             ExportExcel.SetColumnWidthByFontWidth(
-                _isMember ? new[] { 100, 400, 200, 200, 200, 200 } : new[] { 100, 400, 200, 200 });
+                _isMember ? new[] { 100, 400, 200, 200, 200, 200, 200, 200 } : new[] { 100, 400, 200, 200 });
 
-            ExportExcel.MaxColumnIndex = _isMember ? 5 : 3;
+            ExportExcel.MaxColumnIndex = _isMember ? 7 : 3;
 
             ExportExcel.CreateCurrentNPOIRow();
             ExportExcel.RenderRow(Title, BodyTextStyle);
@@ -142,6 +144,7 @@
             if (_isMember)
             {
                 ExportExcel.RenderCurrentCell(ViewLang.AutoSuspend_Nonlive, _report.EnableNonLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+                ExportExcel.RenderCurrentCell(ViewLang.OverrideAutoSuspend_Nonlive, HeaderTextStyle);
             }
 
             ExportExcel.RenderCurrentCell(ViewLang.Live, _report.EnableLive ? HeaderTextStyle : HeaderDisabledTextStyle);
@@ -149,6 +152,7 @@
             if (_isMember)
             {
                 ExportExcel.RenderCurrentCell(ViewLang.AutoSuspend_Live, _report.EnableLive ? HeaderTextStyle : HeaderDisabledTextStyle);
+                ExportExcel.RenderCurrentCell(ViewLang.OverrideAutoSuspend_Live, HeaderTextStyle);
             }
 
             ExportExcel.CurrentRow++;
@@ -277,25 +281,30 @@
             ExportExcel.RenderCurrentCell(paddingText + nonliveText, _report.EnableNonLive ? enabledStyle : disabledStyle);
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.DisableNonliveAutoSuspend, rate.NonliveAutoSuspend) : string.Empty;
+                var autoSuspendtext = isBetType ? AutoSuspendText(rate.DisableNonliveAutoSuspend, rate.NonliveAutoSuspend) : string.Empty;
+                var overrideAutoSuspendtext = isBetType ? (rate.IsOverrideASNonlive ? ViewLang.Yes : ViewLang.No) : string.Empty;
 
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableNonLive ? enabledStyle : disabledStyle);
                 style.Alignment = HorizontalAlignment.Center;
 
-                ExportExcel.RenderCurrentCell(text, style);
+                ExportExcel.RenderCurrentCell(autoSuspendtext, style);
+                ExportExcel.RenderCurrentCell(overrideAutoSuspendtext, style);
             }
 
             ExportExcel.RenderCurrentCell(paddingText + liveText, _report.EnableLive ? enabledStyle : disabledStyle);
 
             if (_isMember)
             {
-                var text = isBetType ? AutoSuspendText(rate.DisableLiveAutoSuspend, rate.LiveAutoSuspend) : string.Empty;
+                var autoSuspendtext = isBetType ? AutoSuspendText(rate.DisableLiveAutoSuspend, rate.LiveAutoSuspend) : string.Empty;
+                var overrideAutoSuspendtext = isBetType ? (rate.IsOverrideASLive ? ViewLang.Yes : ViewLang.No) : string.Empty;
+
                 var style = ExportExcel.ExcelFile.CreateCellStyle();
                 style.CloneStyleFrom(_report.EnableLive ? enabledStyle : disabledStyle);
                 style.Alignment = HorizontalAlignment.Center;
 
-                ExportExcel.RenderCurrentCell(text, style);
+                ExportExcel.RenderCurrentCell(autoSuspendtext, style);
+                ExportExcel.RenderCurrentCell(overrideAutoSuspendtext, style);
             }
 
             ExportExcel.CurrentRow++;

@@ -70,15 +70,6 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;p&gt;- Auto Suspend (without override) takes place if the VR% is get on the member and VR% &gt;= Global Auto Suspend Threshold.&lt;/p&gt;&lt;p&gt;Override Auto Suspend takes place if member place bet on the bet type regardless VR% and Global Auto Suspend Threshold.&lt;/p&gt;.
-        /// </summary>
-        public static string AutoSuspendNonLiveNote {
-            get {
-                return ResourceManager.GetString("AutoSuspendNonLiveNote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Browse.
         /// </summary>
         public static string Browse {

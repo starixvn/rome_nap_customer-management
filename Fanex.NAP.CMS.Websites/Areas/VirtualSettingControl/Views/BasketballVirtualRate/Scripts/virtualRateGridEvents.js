@@ -388,12 +388,23 @@ var virtualRateGridEvents = (function ($) {
 
         tableBody.find(".chk-autosuspend:not(.display-none)").each(function () {
             var column = $(this).closest("td");
-            var iconNonAutosuspend = column.find(".icon-non-autosuspend");
 
-            if (this.checked) {
-                iconNonAutosuspend.addClass("display-none");
+            if (column.data("override")) {
+                var iconCheckedOverrideAutosuspend = column.find(".icon-checked-override-autosuspend");
+
+                if (this.checked) {
+                    iconCheckedOverrideAutosuspend.removeClass("display-none");
+                } else {
+                    iconCheckedOverrideAutosuspend.addClass("display-none");
+                }
             } else {
-                iconNonAutosuspend.removeClass("display-none");
+                var iconNonAutosuspend = column.find(".icon-non-autosuspend");
+
+                if (this.checked) {
+                    iconNonAutosuspend.addClass("display-none");
+                } else {
+                    iconNonAutosuspend.removeClass("display-none");
+                }
             }
         });
 
@@ -424,7 +435,7 @@ var virtualRateGridEvents = (function ($) {
         }
 
         var showHideAutoSuspendControlFunc = value < threshold ? hideAutoSuspendControl : showAutoSuspendControl;
-        showHideAutoSuspendControlFunc(row.find('.col-autosuspend[data-col="' + colName + '"]'))
+        showHideAutoSuspendControlFunc(row.find('.col-autosuspend[data-col="' + colName + '"][data-override="0"]'));
 
         if (level < 4) {
             var selector = 'tr[data-level="' + (level + 1) + '"][data-sportid="' + sportId + '"]';
@@ -502,8 +513,8 @@ var virtualRateGridEvents = (function ($) {
             }
         }
 
-        selector += ' [data-col="' + column.data("col") + '"]';
-        tableBody.find(selector + " .chk-autosuspend").prop("checked", checked);
+        selector += ' [data-col="' + column.data("col") + '"][data-override="' + column.data("override") + '"] .chk-autosuspend';
+        tableBody.find(selector).prop("checked", checked);
     }
 
     function autoSuspendCopyToRelated(element) {
@@ -524,7 +535,7 @@ var virtualRateGridEvents = (function ($) {
             selector += '[data-bettypeid="' + row.data("bettypeid") + '"]';
         }
 
-        selector += ' [data-col="' + column.data("col") + '"] .chk-autosuspend';
+        selector += ' [data-col="' + column.data("col") + '"][data-override="' + column.data("override") + '"] .chk-autosuspend';
         tableBody.find(selector).prop("checked", checked);
     }
 
@@ -643,23 +654,39 @@ var virtualRateGridEvents = (function ($) {
             var nonliveAutoSuspend = getIsAutoSuspend(element, "non-live");
             data.NonliveAutoSuspend = nonliveAutoSuspend.value;
             data.DisableNonliveAutoSuspend = nonliveAutoSuspend.isDisable;
+            data.IsOverrideASNonlive = nonliveAutoSuspend.isOverrideAS;
 
             var liveAutoSuspend = getIsAutoSuspend(element, "live");
             data.LiveAutoSuspend = liveAutoSuspend.value;
             data.DisableLiveAutoSuspend = liveAutoSuspend.isDisable;
+            data.IsOverrideASLive = liveAutoSuspend.isOverrideAS;
         }
 
         return data;
     }
 
     function getIsAutoSuspend(row, colName) {
-        var chkAutosuspend = row.find('td[data-col="' + colName + '"] .chk-autosuspend');
-        var value = row.find('td[data-col="' + colName + '"] .ddl-rate');
+        var chkAutosuspend = row.find('td[data-col="' + colName + '"][data-override="0"] .chk-autosuspend');
+        var chkOverrideAutosuspend = row.find('td[data-col="' + colName + '"][data-override="1"] .chk-autosuspend');
         var threshold = parseInt(row.data(colName + "-threshold"));
 
+        var level = row.data("level");
+        var sportId = row.data("sportid");
+        var gameId = row.data("gameid");
+        var betTypeGroupId = row.data("bettypegroupid");
+        var valueString = row.find('td[data-col="' + colName + '"] .ddl-rate').val();
+        var value;
+
+        if (level <= 1 || valueString !== followParentValue) {
+            value = parseInt(valueString);
+        } else {
+            value = getRateValueOfParent(level, colName, sportId, gameId, betTypeGroupId);
+        }
+
         return {
-            isDisable: isCompactMode() || (value < threshold),
-            value: chkAutosuspend.is(":checked")
+            isDisable: value < threshold,
+            value: chkAutosuspend.is(":checked"),
+            isOverrideAS: chkOverrideAutosuspend.is(":checked")
         };
     }
 
@@ -926,6 +953,7 @@ var virtualRateGridEvents = (function ($) {
         bindEventsGlobalSettings: bindEventsGlobalSettings,
         bindEventsGlobalAutoSuspendThreshold: bindEventsGlobalAutoSuspendThreshold,
         getSportsGlobalAutoSuspendThreshold: getSportsGlobalAutoSuspendThreshold,
-        isSportsChangedGlobalAutoSuspendThreshold: isSportsChangedGlobalAutoSuspendThreshold
+        isSportsChangedGlobalAutoSuspendThreshold: isSportsChangedGlobalAutoSuspendThreshold,
+        isCompactMode: isCompactMode
     };
 })(jQuery);

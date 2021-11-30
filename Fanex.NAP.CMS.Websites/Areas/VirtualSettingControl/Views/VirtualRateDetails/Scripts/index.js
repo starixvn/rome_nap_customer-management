@@ -1057,7 +1057,8 @@
                 Rates: currentValue,
                 sportType: resources.SportType,
                 isMember: self.isMember,
-                IsManualUpdate: isManualUpdatedAccount
+                IsManualUpdate: isManualUpdatedAccount,
+                isMemberCompactMode: $("#tbl-virtual-rate-report-member").hasClass("compact-mode")
             }),
             beforeSend: function () {
                 CMS.disableInput();

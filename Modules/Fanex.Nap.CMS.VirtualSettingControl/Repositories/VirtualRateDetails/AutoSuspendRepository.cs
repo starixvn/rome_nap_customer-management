@@ -62,7 +62,11 @@
                 NewNonliveAutoSuspend = Converter.ToBool(reader["IsNonLiveAutoSuspendNew"]),
                 NewLiveAutoSuspend = Converter.ToBool(reader["IsLiveAutoSuspendNew"]),
                 NonliveAutoSuspend = Converter.ToBool(reader["IsNonLiveAutoSuspendOld"]),
-                LiveAutoSuspend = Converter.ToBool(reader["IsLiveAutoSuspendOld"])
+                LiveAutoSuspend = Converter.ToBool(reader["IsLiveAutoSuspendOld"]),
+                IsOverrideASLive = Converter.ToBool(reader["IsOverrideASLiveOld"]),
+                IsOverrideASLiveNew = Converter.ToBool(reader["IsOverrideASLiveNew"]),
+                IsOverrideASNonlive = Converter.ToBool(reader["IsOverrideASNonLiveOld"]),
+                IsOverrideASNonliveNew = Converter.ToBool(reader["IsOverrideASNonLiveNew"])
             };
 
             dto.SportName = CacheRef.GetSportName(dto.SportType);

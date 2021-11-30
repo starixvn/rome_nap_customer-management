@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ViewLang {
@@ -313,7 +313,7 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply above setting (Virtual Rate and AutoSuspend) to.
+        ///   Looks up a localized string similar to Apply above setting (Virtual Rate, Auto Suspend and Override Auto Suspend) to.
         /// </summary>
         public static string ApplyAboveSettingToVR_AS {
             get {
@@ -363,6 +363,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string AutoSuspendLog {
             get {
                 return ResourceManager.GetString("AutoSuspendLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;- Auto Suspend (without override) takes place if the VR% is get on the member and&lt;br/&gt;VR% &gt;= Global Auto Suspend Threshold.&lt;/p&gt;&lt;p&gt;- Override Auto Suspend takes place if member place bet on the bet type&lt;br/&gt;regardless VR% and Global Auto Suspend Threshold.&lt;/p&gt;.
+        /// </summary>
+        public static string AutoSuspendNote {
+            get {
+                return ResourceManager.GetString("AutoSuspendNote", resourceCulture);
             }
         }
         
@@ -1632,6 +1641,33 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string Othercodes {
             get {
                 return ResourceManager.GetString("Othercodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Auto Suspend.
+        /// </summary>
+        public static string OverrideAutoSuspend {
+            get {
+                return ResourceManager.GetString("OverrideAutoSuspend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Auto Suspend Live.
+        /// </summary>
+        public static string OverrideAutoSuspend_Live {
+            get {
+                return ResourceManager.GetString("OverrideAutoSuspend_Live", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Override Auto Suspend Non-Live.
+        /// </summary>
+        public static string OverrideAutoSuspend_Nonlive {
+            get {
+                return ResourceManager.GetString("OverrideAutoSuspend_Nonlive", resourceCulture);
             }
         }
         

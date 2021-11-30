@@ -569,6 +569,7 @@
     <Content Include="Content\Themes\img\icon-no.png" />
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
+    <Content Include="Content\Themes\img\icon-yes.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\light-information-icon2.png" />
     <Content Include="Content\Themes\img\loading.gif" />

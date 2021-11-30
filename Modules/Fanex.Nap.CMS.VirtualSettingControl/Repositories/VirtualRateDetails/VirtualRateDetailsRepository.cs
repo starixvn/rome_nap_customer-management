@@ -76,6 +76,12 @@
                             LiveAutoSuspend = Converter.ToBool(reader["IsLiveAutoSuspend"], true)
                         };
 
+                        if (!criteria.IsGlobalSetting)
+                        {
+                            dto.IsOverrideASLive = Converter.ToBool(reader["IsOverrideASLive"]);
+                            dto.IsOverrideASNonlive = Converter.ToBool(reader["IsOverrideASNonLive"]);
+                        }
+
                         dto.SportName = CacheRef.GetSportName(dto.SportType);
                         dto.BetTypeName = GetBetTypeName(dto.SportType, dto.BetTypeId);
                         virtualRateDTOs.Add(dto);
@@ -160,7 +166,8 @@
                     IP = criteria.IP,
                     Rates = criteria.Rates,
                     IsMember = criteria.IsMember,
-                    IsManualUpdate = criteria.IsManualUpdate
+                    IsManualUpdate = criteria.IsManualUpdate,
+                    IsMemberCompactMode = criteria.IsMemberCompactMode
                 });
 
                 if (updateResult.Code != 0)

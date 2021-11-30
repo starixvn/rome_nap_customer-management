@@ -81,3 +81,24 @@
         <span class="icon-copy2child-autosuspend elm-autosuspend-edit @canEditClass" title="@ViewLang.CopyToAllChildren"></span>
     }
 }
+
+@helper RenderOverrideAutoSuspend(bool isOverrideAS, bool copyToRelated, string copyToRelatedText, bool copyToChildren = false)
+{
+    <span class="icon-checked-override-autosuspend elm-autosuspend-view @(isOverrideAS ? string.Empty: "display-none")"></span>
+
+    if (copyToRelated)
+    {
+        <span class="icon-copy2related-autosuspend elm-autosuspend-edit" title="@string.Format("{0} \"{1}\"", ViewLang.CopyToAll, copyToRelatedText)"></span>
+    }
+    else
+    {
+        <span class="padding-icon-copy2related elm-autosuspend-edit"></span>
+    }
+
+    <input type="checkbox" class="chk-autosuspend elm-autosuspend-edit" @(isOverrideAS ? "checked=checked" : string.Empty) />
+
+    if (copyToChildren)
+    {
+        <span class="icon-copy2child-autosuspend elm-autosuspend-edit" title="@ViewLang.CopyToAllChildren"></span>
+    }
+}

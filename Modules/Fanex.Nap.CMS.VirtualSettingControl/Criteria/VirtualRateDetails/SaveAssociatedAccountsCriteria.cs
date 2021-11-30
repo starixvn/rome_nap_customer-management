@@ -17,5 +17,7 @@
         public bool IsMember { get; set; }
 
         public bool IsManualUpdate { get; set; }
+
+        public bool IsMemberCompactMode { get; set; }
     }
 }

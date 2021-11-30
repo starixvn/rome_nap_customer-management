@@ -28,6 +28,9 @@
             LiveAutoSuspend = dto.LiveAutoSuspend;
             NonliveAutoSuspendThreshold = (dto.NonliveAutoSuspendThreshold - 1) * 100;
             LiveAutoSuspendThreshold = (dto.LiveAutoSuspendThreshold - 1) * 100;
+
+            IsOverrideASLive = dto.IsOverrideASLive;
+            IsOverrideASNonlive = dto.IsOverrideASNonlive;
         }
 
         public VirtualRateDetailsByGroup(LogDTO dto, int groupLevel)
@@ -89,6 +92,10 @@
         public decimal NonliveAutoSuspendThreshold { get; set; }
 
         public decimal LiveAutoSuspendThreshold { get; set; }
+
+        public bool IsOverrideASLive { get; set; }
+
+        public bool IsOverrideASNonlive { get; set; }
 
         public IEnumerable<VirtualRateDetailsByGroup> Childs { get; set; }
     }

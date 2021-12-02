@@ -291,6 +291,8 @@
     <Compile Include="Models\ManageRobots2\RobotSitesModel.cs" />
     <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountSiteGroup.cs" />
     <Compile Include="Models\ProblemAccountLicenseeSite\LicenseeAcknowledgement.cs" />
+    <Compile Include="Models\ProblemAccount\CTSCustomerReason.cs" />
+    <Compile Include="Models\ProblemAccount\CTSUpdateProblemAccount.cs" />
     <Compile Include="Models\ProblemAccount\MarkNewResult.cs" />
     <Compile Include="Models\ProblemAccount\PreventiveActionReason.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountItem.cs" />

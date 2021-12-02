@@ -212,12 +212,16 @@
             int userId,
             string ip)
         {
-            var result = repository.ExecuteNonQuery(
-                new UpdateLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount,updateTime, updateLimitAmount, userId, ip));
+            var updateResult = repository.Update(
+                new UpdateLicenseeSiteCriteria(usernames, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount,updateTime, updateLimitAmount, userId, ip),
+                reasonId);
+            var result = updateResult.Item1;
 
             if (result.IsSuccess)
             {
                 result.Message = ProblemAccountCreditDepositResource.UpdateProblemAccountSuccessfully;
+
+                ctsService.UpdateProblemAccounts(new CTSUpdateProblemAccount(updateResult.Item2, userId));
             }
 
             return result;

@@ -20,6 +20,8 @@
 
         Tuple<Result, string> Unmark(ICriteria criteria);
 
+        Tuple<Result, IEnumerable<CTSCustomerReason>> Update(ICriteria criteria, byte newReasonId);
+
         Result ExecuteNonQuery(ICriteria criteria);
     }
 }

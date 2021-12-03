@@ -188,18 +188,25 @@
         this.elements.btnAutoSuspendView.addClass("display-none");
         this.elements.btnAutoSuspendEdit.removeClass("display-none");
 
-        $(".icon-non-autosuspend").each(function () {
-            var elem = $(this);
-            var td = elem.parent();
-            var tr = td.parent();
-            var colName = td.attr("data-col");
-            var threshold = parseInt(tr.attr("data-" + colName + "-threshold"));
-            var value = self.getRealValue(elem);
-            var isChecked = td.find(".chk-autosuspend").is(":checked");
-            if (value >= threshold && !isChecked) {
-                elem.removeClass("display-none");
+        $(".chk-autosuspend:not(.display-none)").each(function () {
+            var column = $(this).closest("td");
+
+            if (column.data("override")) {
+                var iconCheckedOverrideAutosuspend = column.find(".icon-checked-override-autosuspend");
+
+                if (this.checked) {
+                    iconCheckedOverrideAutosuspend.removeClass("display-none");
+                } else {
+                    iconCheckedOverrideAutosuspend.addClass("display-none");
+                }
             } else {
-                elem.addClass("display-none");
+                var iconNonAutosuspend = column.find(".icon-non-autosuspend");
+
+                if (this.checked) {
+                    iconNonAutosuspend.addClass("display-none");
+                } else {
+                    iconNonAutosuspend.removeClass("display-none");
+                }
             }
         });
     };

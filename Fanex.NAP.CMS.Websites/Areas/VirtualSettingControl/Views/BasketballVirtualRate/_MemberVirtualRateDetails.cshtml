@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
 @using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
 @model VirtualRateDetailsReport
-<div id="grid-title" class="grid-title full-mode">
+<div id="grid-title" class="grid-title full-mode basketball">
     <div class="grid-title-label">@ViewLang.VirtualRateDetails - @Model.Username <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span></div>
     <div class="grid-toolbox">
         @Html.ActionLink(ViewLang.ViewRealValues, "ViewRealValues", new { custid = Model.CustId }, new { id = "lnk-view-real-values", @class = "lnk-view-real-values", area = "VirtualSettingControl" })
@@ -9,10 +9,10 @@
         <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export" />
     </div>
 </div>
-<table id="tbl-report" class="tbl-report full-mode autosuspend-view">
+<table id="tbl-report" class="tbl-report full-mode basketball autosuspend-view">
     <thead>
         <tr class="elm-compact-mode">
-            <th class="width-420">
+            <th class="width-220">
                 <button type="button" id="btn-view-full-mode" class="submit btn-view-full-mode">@ViewLang.ViewFullMode</button>
                 <span class="ico-collapse"></span>
             </th>
@@ -20,7 +20,7 @@
             <th class="col-live">@ViewLang.Live</th>
         </tr>
         <tr class="elm-full-mode">
-            <th class="width-320" rowspan="2">
+            <th class="width-220" rowspan="2">
                 <button type="button" id="btn-view-compact-mode" class="submit btn-view-compact-mode">@ViewLang.ViewCompactMode</button>
                 <span class="ico-collapse"></span>
             </th>
@@ -33,10 +33,10 @@
                 @ViewLang.AutoSuspend
                 <span id="spnAutoSuspendNote" class="light-note-info-message" title="@ViewLang.AutoSuspendNote"></span>
             </th>
-            <th class="width-160">@ViewLang.OverrideAutoSuspend</th>
+            <th class="width-140">@ViewLang.OverrideAutoSuspend</th>
             <th data-col="live">@ViewLang.VirtualRate</th>
             <th class="width-140">@ViewLang.AutoSuspend</th>
-            <th class="width-160">@ViewLang.OverrideAutoSuspend</th>
+            <th class="width-140">@ViewLang.OverrideAutoSuspend</th>
         </tr>
     </thead>
     <tbody>

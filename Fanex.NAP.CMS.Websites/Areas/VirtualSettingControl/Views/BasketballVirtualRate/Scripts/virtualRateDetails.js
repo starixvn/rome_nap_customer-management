@@ -190,9 +190,11 @@
         if (gridEvents.isMemberLevel()) {
             lblApplyVR.addClass("display-none");
             lblApplyVR_AS.removeClass("display-none");
+            lblApplyVROnly.addClass("display-none");
         } else {
             lblApplyVR.removeClass("display-none");
             lblApplyVR_AS.addClass("display-none");
+            lblApplyVROnly.addClass("display-none");
         }
     }
 

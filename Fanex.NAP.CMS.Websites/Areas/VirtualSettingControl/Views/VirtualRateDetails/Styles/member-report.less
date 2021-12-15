@@ -20,19 +20,21 @@
 .btn-tick-all {
     .btn;
     height: 20px;
-    width: 70px;
+    width: 60px;
     background-color: #1E84C4;
     border-radius: 4px;
     border: none;
+    font-size: 12px;
 }
 
 .btn-untick-all {
     .btn;
     height: 20px;
-    width: 70px;
+    width: 60px;
     background-color: #D9534F;
     border-radius: 4px;
     border: none;
+    font-size: 12px;
 }
 
 .compact-mode .elm-full-mode,
@@ -44,11 +46,19 @@
 
 #report-container {
     .grid-title.full-mode {
-        width: 1447px;
+        width: 1437px;
+    }
+
+    .grid-title.full-mode.basketball {
+        width: 1337px;
     }
 
     .tbl-report.full-mode {
-        width: 1450px;
+        width: 1440px;
+    }
+
+    .tbl-report.full-mode.basketball {
+        width: 1340px;
     }
 }
 
@@ -94,6 +104,17 @@
         margin-right: 5px;
         background-size: 100%;
     }
+
+    .icon-checked-override-autosuspend {
+        background: url(../../../../../Content/Themes/img/icon-yes.png) no-repeat;
+        display: inline-block;
+        position: relative;
+        height: 16px;
+        width: 13px;
+        top: 3px;
+        margin-right: 5px;
+        background-size: 100%;
+    }
 }
 
 .autosuspend-edit {
@@ -108,22 +129,46 @@
 
 #report-container {
     .autosuspend-edit tr[data-level] td.col-autosuspend {
-        padding-left: 100px;
+        padding-left: 65px;
+    }
+
+    .autosuspend-edit tr[data-level] td.col-autosuspend.basketball {
+        padding-left: 50px;
     }
 
     .autosuspend-view {
-        tr[data-level="1"], tr[data-level="2"], tr[data-level="3"] {
+        tr[data-level="1"], tr[data-level="2"], tr[data-level="3"], tr[data-level="4"] {
             td.col-autosuspend {
-                padding-left: 115px;
+                padding-left: 15px;
+                text-align: center;
             }
         }
+    }
+
+    .width-220 {
+        width: 220px!important;
     }
 
     .width-240 {
         width: 240px;
     }
 
-    .width-420 {
-        width: 420px;
+    .light-note-info-message {
+        background-position: 0 0;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        position: absolute;
+        right: 5px;
     }
+
+    .lnk-view-real-values {
+        vertical-align: middle;
+    }
+}
+
+.auto-suspend-note p {
+    margin-bottom: 0;
+    line-height: 2;
 }

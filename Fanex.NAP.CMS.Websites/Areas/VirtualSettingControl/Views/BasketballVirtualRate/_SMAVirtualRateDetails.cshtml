@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
 @using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
 @model VirtualRateDetailsReport
-<div class="grid-title">
+<div class="grid-title basketball">
     <div class="grid-title-label">@ViewLang.VirtualRateDetails - @Model.Username <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span></div>
     <div class="grid-toolbox">
         @Html.ActionLink(ViewLang.ViewRealValues, "ViewRealValues", new { custid = Model.CustId }, new { id = "lnk-view-real-values", @class = "lnk-view-real-values", area = "VirtualSettingControl" })
@@ -9,10 +9,10 @@
         <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export" />
     </div>
 </div>
-<table id="tbl-report" class="tbl-report">
+<table id="tbl-report" class="tbl-report basketball">
     <thead>
         <tr>
-            <th class="col-group">
+            <th class="col-group width-220">
                 <button type="button" id="btn-view-compact-mode" class="submit btn-view-compact-mode">@ViewLang.ViewCompactMode</button>
                 <button type="button" id="btn-view-full-mode" class="submit btn-view-full-mode display-none">@ViewLang.ViewFullMode</button>
                 <span class="ico-collapse"></span>

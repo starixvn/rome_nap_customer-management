@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources
 @using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
 @model VirtualRateDetailsReport
-<div id="grid-title" class="grid-title full-mode">
+<div id="grid-title" class="grid-title full-mode basketball">
     <div class="grid-title-label">@ViewLang.VirtualRateDetails - @Model.Username <span class="lbl-curreny">@ViewLang.Currency: @Model.Currency</span></div>
     <div class="grid-toolbox">
         @Html.ActionLink(ViewLang.ViewRealValues, "ViewRealValues", new { custid = Model.CustId }, new { id = "lnk-view-real-values", @class = "lnk-view-real-values", area = "VirtualSettingControl" })
@@ -9,10 +9,10 @@
         <input type="button" id="btn-export-excel" class="btnExcel" title="@ViewLang.Export" />
     </div>
 </div>
-<table id="tbl-report" class="tbl-report full-mode autosuspend-view">
+<table id="tbl-report" class="tbl-report full-mode basketball autosuspend-view">
     <thead>
         <tr class="elm-compact-mode">
-            <th class="width-420">
+            <th class="width-220">
                 <button type="button" id="btn-view-full-mode" class="submit btn-view-full-mode">@ViewLang.ViewFullMode</button>
                 <span class="ico-collapse"></span>
             </th>
@@ -20,18 +20,23 @@
             <th class="col-live">@ViewLang.Live</th>
         </tr>
         <tr class="elm-full-mode">
-            <th class="width-420" rowspan="2">
+            <th class="width-220" rowspan="2">
                 <button type="button" id="btn-view-compact-mode" class="submit btn-view-compact-mode">@ViewLang.ViewCompactMode</button>
                 <span class="ico-collapse"></span>
             </th>
-            <th colspan="2">@ViewLang.NonLive</th>
-            <th colspan="2">@ViewLang.Live</th>
+            <th colspan="3">@ViewLang.NonLive</th>
+            <th colspan="3">@ViewLang.Live</th>
         </tr>
         <tr class="elm-full-mode">
             <th data-col="non-live">@ViewLang.VirtualRate</th>
-            <th class="width-240">@ViewLang.AutoSuspend</th>
+            <th class="relative width-140">
+                @ViewLang.AutoSuspend
+                <span id="spnAutoSuspendNote" class="light-note-info-message" title="@ViewLang.AutoSuspendNote"></span>
+            </th>
+            <th class="width-140">@ViewLang.OverrideAutoSuspend</th>
             <th data-col="live">@ViewLang.VirtualRate</th>
-            <th class="width-240">@ViewLang.AutoSuspend</th>
+            <th class="width-140">@ViewLang.AutoSuspend</th>
+            <th class="width-140">@ViewLang.OverrideAutoSuspend</th>
         </tr>
     </thead>
     <tbody>
@@ -43,14 +48,20 @@
                 <td data-col="non-live">
                     @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.NonLiveValue, sport.HasRepetition, sport.GroupName, hasGames, ViewLang.FollowUpline, Model.ActualRate)
                 </td>
-                <td data-col="non-live" class="elm-full-mode col-autosuspend">
+                <td data-col="non-live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                     @VRHtmlHelpers.RenderAutoSuspend(!sport.DisableNonliveAutoSuspend, sport.NonliveAutoSuspend, sport.HasRepetition, sport.GroupName, hasGames)
+                </td>
+                <td data-col="non-live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                    @VRHtmlHelpers.RenderOverrideAutoSuspend(sport.IsOverrideASNonlive, sport.HasRepetition, sport.GroupName, hasGames)
                 </td>
                 <td data-col="live">
                     @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, sport.MinRate, sport.MaxRate, sport.LiveValue, sport.HasRepetition, sport.GroupName, hasGames, ViewLang.FollowUpline, Model.ActualRate)
                 </td>
-                <td data-col="live" class="elm-full-mode col-autosuspend">
+                <td data-col="live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                     @VRHtmlHelpers.RenderAutoSuspend(!sport.DisableLiveAutoSuspend, sport.LiveAutoSuspend, sport.HasRepetition, sport.GroupName, hasGames)
+                </td>
+                <td data-col="live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                    @VRHtmlHelpers.RenderOverrideAutoSuspend(sport.IsOverrideASLive, sport.HasRepetition, sport.GroupName, hasGames)
                 </td>
             </tr>
 
@@ -62,14 +73,20 @@
                     <td data-col="non-live">
                         @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.NonLiveValue, game.HasRepetition, game.GroupName, hasBetTypeGroups, ViewLang.FollowParent, Model.ActualRate)
                     </td>
-                    <td data-col="non-live" class="elm-full-mode col-autosuspend">
+                    <td data-col="non-live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                         @VRHtmlHelpers.RenderAutoSuspend(!game.DisableNonliveAutoSuspend, game.NonliveAutoSuspend, game.HasRepetition, game.GroupName, hasBetTypeGroups)
+                    </td>
+                    <td data-col="non-live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                        @VRHtmlHelpers.RenderOverrideAutoSuspend(game.IsOverrideASNonlive, game.HasRepetition, game.GroupName, hasBetTypeGroups)
                     </td>
                     <td data-col="live">
                         @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, game.MinRate, game.MaxRate, game.LiveValue, game.HasRepetition, game.GroupName, hasBetTypeGroups, ViewLang.FollowParent, Model.ActualRate)
                     </td>
-                    <td data-col="live" class="elm-full-mode col-autosuspend">
+                    <td data-col="live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                         @VRHtmlHelpers.RenderAutoSuspend(!game.DisableLiveAutoSuspend, game.LiveAutoSuspend, game.HasRepetition, game.GroupName, hasBetTypeGroups)
+                    </td>
+                    <td data-col="live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                        @VRHtmlHelpers.RenderOverrideAutoSuspend(game.IsOverrideASLive, game.HasRepetition, game.GroupName, hasBetTypeGroups)
                     </td>
                 </tr>
 
@@ -92,14 +109,20 @@
                         <td data-col="non-live">
                             @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.NonLiveValue, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes, ViewLang.FollowParent, Model.ActualRate)
                         </td>
-                        <td data-col="non-live" class="elm-full-mode col-autosuspend">
+                        <td data-col="non-live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                             @VRHtmlHelpers.RenderAutoSuspend(!betTypeGroup.DisableNonliveAutoSuspend, betTypeGroup.NonliveAutoSuspend, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)
+                        </td>
+                        <td data-col="non-live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                            @VRHtmlHelpers.RenderOverrideAutoSuspend(betTypeGroup.IsOverrideASNonlive, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)
                         </td>
                         <td data-col="live">
                             @VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betTypeGroup.MinRate, betTypeGroup.MaxRate, betTypeGroup.LiveValue, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes, ViewLang.FollowParent, Model.ActualRate)
                         </td>
-                        <td data-col="live" class="elm-full-mode col-autosuspend">
+                        <td data-col="live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                             @VRHtmlHelpers.RenderAutoSuspend(!betTypeGroup.DisableLiveAutoSuspend, betTypeGroup.LiveAutoSuspend, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)
+                        </td>
+                        <td data-col="live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                            @VRHtmlHelpers.RenderOverrideAutoSuspend(betTypeGroup.IsOverrideASLive, betTypeGroup.HasRepetition, betTypeGroup.GroupName, hasBetTypes)
                         </td>
                     </tr>
 
@@ -110,12 +133,18 @@
                             <tr data-level="@betType.GroupLevel" data-levelid="@betType.LevelId" data-sportid="@sport.GroupId" data-gameid="@game.GroupId" data-bettypegroupid="@betTypeGroup.GroupId" data-bettypeid="@betType.GroupId" data-non-live-threshold="@betType.NonliveAutoSuspendThreshold" data-live-threshold="@betType.LiveAutoSuspendThreshold" class="display-none">
                                 <td data-col="groupname">@betType.GroupName</td>
                                 <td data-col="non-live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.NonLiveValue, betType.HasRepetition, betType.GroupName, false, ViewLang.FollowParent, Model.ActualRate)</td>
-                                <td data-col="non-live" class="elm-full-mode col-autosuspend">
+                                <td data-col="non-live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                                     @VRHtmlHelpers.RenderAutoSuspend(!betType.DisableNonliveAutoSuspend, betType.NonliveAutoSuspend, betType.HasRepetition, betType.GroupName)
                                 </td>
+                                <td data-col="non-live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                                    @VRHtmlHelpers.RenderOverrideAutoSuspend(betType.IsOverrideASNonlive, betType.HasRepetition, betType.GroupName)
+                                </td>
                                 <td data-col="live">@VRHtmlHelpers.RenderRateRange(Model.VirtualRateValueRange, betType.MinRate, betType.MaxRate, betType.LiveValue, betType.HasRepetition, betType.GroupName, false, ViewLang.FollowParent, Model.ActualRate)</td>
-                                <td data-col="live" class="elm-full-mode col-autosuspend">
+                                <td data-col="live" data-override="0" class="elm-full-mode col-autosuspend basketball">
                                     @VRHtmlHelpers.RenderAutoSuspend(!betType.DisableLiveAutoSuspend, betType.LiveAutoSuspend, betType.HasRepetition, betType.GroupName)
+                                </td>
+                                <td data-col="live" data-override="1" class="elm-full-mode col-autosuspend basketball">
+                                    @VRHtmlHelpers.RenderOverrideAutoSuspend(betType.IsOverrideASLive, betType.HasRepetition, betType.GroupName)
                                 </td>
                             </tr>
                         }

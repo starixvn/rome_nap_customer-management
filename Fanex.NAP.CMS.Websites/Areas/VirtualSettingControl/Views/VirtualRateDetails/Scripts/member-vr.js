@@ -70,6 +70,13 @@
                 return resources.VirtualRateDetails_LeaveSiteWarning;
             }
         };
+
+        $("#spnAutoSuspendNote").tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: "sw",
+            className: "auto-suspend-note"
+        });
     };
 
     this.hideReport = function () {
@@ -181,17 +188,25 @@
         this.elements.btnAutoSuspendView.addClass("display-none");
         this.elements.btnAutoSuspendEdit.removeClass("display-none");
 
-        $(".icon-non-autosuspend").each(function () {
-            var elem = $(this);
-            var parent = elem.parent().parent();
-            var colName = elem.parent().attr("data-col");
-            var threshold = parseInt(parent.attr("data-" + colName + "-threshold"));
-            var value = self.getRealValue(elem);
-            var isChecked = parent.find("[data-col='" + colName + "'] .chk-autosuspend").is(":checked");
-            if (value >= threshold && !isChecked) {
-                elem.removeClass("display-none");
+        $(".chk-autosuspend:not(.display-none)").each(function () {
+            var column = $(this).closest("td");
+
+            if (column.data("override")) {
+                var iconCheckedOverrideAutosuspend = column.find(".icon-checked-override-autosuspend");
+
+                if (this.checked) {
+                    iconCheckedOverrideAutosuspend.removeClass("display-none");
+                } else {
+                    iconCheckedOverrideAutosuspend.addClass("display-none");
+                }
             } else {
-                elem.addClass("display-none");
+                var iconNonAutosuspend = column.find(".icon-non-autosuspend");
+
+                if (this.checked) {
+                    iconNonAutosuspend.addClass("display-none");
+                } else {
+                    iconNonAutosuspend.removeClass("display-none");
+                }
             }
         });
     };
@@ -238,9 +253,11 @@
         var html = "<tr data-level='1' data-sportid='" + sport.GroupId + "'>\
                         <td data-col='username'>" + sport.GroupName + "</td>\
                         <td data-col='non-live'>" + ddlNonlive + "</td>\
-                        <td data-col='non-live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                         <td data-col='live'>" + ddlLive + "</td>\
-                        <td data-col='live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                     </tr>";
         return html;
     };
@@ -276,9 +293,11 @@
                         <td data-col='username'>\
                             <span class='group-toggle group-expand'>[−]</span>" + game.GroupName + "</td>\
                         <td data-col='non-live'>" + ddlNonlive + "</td>\
-                        <td data-col='non-live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                         <td data-col='live'>" + ddlLive + "</td>\
-                        <td data-col='live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                     </tr>";
         return html;
     };
@@ -314,9 +333,11 @@
                         <td data-col='username'>\
                             <span class='group-toggle group-expand'>[−]</span>" + betTypeGroup.GroupName + "</td>\
                         <td data-col='non-live'>" + ddlNonlive + "</td>\
-                        <td data-col='non-live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='non-live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                         <td data-col='live'>" + ddlLive + "</td>\
-                        <td data-col='live' class='elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='0' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
+                        <td data-col='live' data-override='1' class='no-padding align-center elm-full-mode'>" + this.checkAllButtonsHtml + "</td>\
                     </tr>";
         return html;
     };
@@ -355,6 +376,10 @@
             isAutoSuspend: betType.NonliveAutoSuspend,
             copyToRelatedText: copyToRelatedText
         });
+        var overrideAutoSuspendNonlive = this.renderOverrideAutoSuspend(
+            betType.IsOverrideASNonlive,
+            hasRepetition,
+            copyToRelatedText);
 
         var autoSuspendLive = this.renderAutoSuspend({
             copyToRelated: hasRepetition,
@@ -362,6 +387,10 @@
             isAutoSuspend: betType.LiveAutoSuspend,
             copyToRelatedText: copyToRelatedText
         });
+        var overrideAutoSuspendLive = this.renderOverrideAutoSuspend(
+            betType.IsOverrideASLive,
+            hasRepetition,
+            copyToRelatedText);
 
         var html = "<tr data-level='4' data-sportid='" + sport.GroupId
             + "' data-gameid='" + game.GroupId + "' data-bettypegroupid='" + betTypeGroup.GroupId
@@ -371,9 +400,11 @@
             + ">\
                         <td data-col='username'>" + betType.GroupName + "</td>\
                         <td data-col='non-live'>" + ddlNonlive + "</td>\
-                        <td data-col='non-live' class='elm-full-mode col-autosuspend'>" + autoSuspendNonlive + "</td>\
+                        <td data-col='non-live' data-override='0'  class='elm-full-mode col-autosuspend'>" + autoSuspendNonlive + "</td>\
+                        <td data-col='non-live' data-override='1' class='elm-full-mode col-autosuspend'>" + overrideAutoSuspendNonlive + "</td>\
                         <td data-col='live'>" + ddlLive + "</td>\
-                        <td data-col='live' class='elm-full-mode col-autosuspend'>"+ autoSuspendLive + "</td>\
+                        <td data-col='live' data-override='0' class='elm-full-mode col-autosuspend'>" + autoSuspendLive + "</td>\
+                        <td data-col='live' data-override='1' class='elm-full-mode col-autosuspend'>" + overrideAutoSuspendLive + "</td>\
                     </tr>";
         return html;
     };
@@ -386,6 +417,15 @@
             : "<span class='padding-icon-copy2related elm-autosuspend-edit " + (!options.canEditAutoSuspend ? "display-none" : "") + "'></span>";
         html += "<input class='chk-autosuspend elm-autosuspend-edit " + (!options.canEditAutoSuspend ? "display-none" : "") + "' type='checkbox' " +
             (options.isAutoSuspend ? "checked='checked'" : "") + " />";
+
+        return html;
+    };
+    this.renderOverrideAutoSuspend = function (isOverrideAS, copyToRelated, copyToRelatedText) {
+        var html = "<span class='icon-checked-override-autosuspend elm-autosuspend-view" + (isOverrideAS ? "" : " display-none") + "'></span>";
+        html += copyToRelated
+            ? "<span class='icon-copy2related-autosuspend elm-autosuspend-edit' title='" + copyToRelatedText + "'></span>"
+            : "<span class='padding-icon-copy2related elm-autosuspend-edit'></span>";
+        html += "<input class='chk-autosuspend elm-autosuspend-edit' type='checkbox'" + (isOverrideAS ? " checked='checked'" : "") + " />";
 
         return html;
     };
@@ -452,12 +492,14 @@
         });
     };
     this.checkAllChild = function (elem, isChecked) {
-        var parent = elem.parent().parent();
-        var level = parent.attr("data-level");
-        var selector = "tr" + this.getRowSelector(level, parent);
+        var td = elem.parent();
+        var tr = td.parent();
+        var level = tr.attr("data-level");
+        var selector = "tr" + this.getRowSelector(level, tr);
 
-        var colName = elem.parent().attr("data-col");
-        selector += " [data-col='" + colName + "'] .chk-autosuspend";
+        var colName = td.attr("data-col");
+        var override = td.attr("data-override");
+        selector += " [data-col='" + colName + "'][data-override='" + override + "'] .chk-autosuspend";
 
         this.elements.tblVirtualRateReportMember.find(selector).attr("checked", isChecked ? "checked" : null);
     };
@@ -479,11 +521,13 @@
         return selector;
     };
     this.copyToRelatedAutoSuspend = function (elem) {
-        var parent = elem.parent().parent();
-        var colName = elem.parent().attr("data-col");
-        var value = parent.find("[data-col='" + colName + "'] .chk-autosuspend").is(":checked");
-        var betTypeId = parseInt(parent.attr("data-bettypeid"));
-        var selector = "tr[data-level='4'][data-bettypeid='" + betTypeId + "'] [data-col='" + colName + "'] .chk-autosuspend";
+        var td = elem.parent();
+        var tr = td.parent();
+        var colName = td.attr("data-col");
+        var override = td.attr("data-override");
+        var value = td.find(".chk-autosuspend").is(":checked");
+        var betTypeId = parseInt(tr.attr("data-bettypeid"));
+        var selector = "tr[data-level='4'][data-bettypeid='" + betTypeId + "'] [data-col='" + colName + "'][data-override='" + override + "'] .chk-autosuspend";
         this.elements.tblVirtualRateReportMember.find(selector).attr("checked", value ? "checked" : null);
     };
     this.rateChanged = function (elem) {
@@ -496,7 +540,7 @@
 
         var colName = elem.parent().attr("data-col");
         var threshold = parseInt(parent.attr("data-" + colName + "-threshold"));
-        var td = parent.find("[data-col='" + colName + "']");
+        var td = parent.find("[data-col='" + colName + "'][data-override='0']");
         var value = this.getRealValue(elem);
 
         if (value < threshold) {
@@ -538,15 +582,17 @@
         selector += "[data-bettypeid='" + betTypeId + "']";
 
         var row = this.elements.tblVirtualRateReportMember.find(selector);
-        var chk = row.find("[data-col='" + colName + "'] .chk-autosuspend");
+        var chk = row.find("[data-col='" + colName + "'][data-override='0'] .chk-autosuspend");
+        var chkOverrideAS = row.find("[data-col='" + colName + "'][data-override='1'] .chk-autosuspend");
 
         var ddl = row.find("[data-col='" + colName + "'] .ddl-rate");
         var value = this.getRealValue(ddl);
         var threshold = parseInt(row.attr("data-" + colName + "-threshold"));
 
         return {
-            isDisable: this.isCompactMode || (value < threshold),
-            value: chk.is(":checked")
+            isDisable: value < threshold,
+            value: chk.is(":checked"),
+            isOverrideAS: chkOverrideAS.is(":checked")
         };
     };
 
@@ -570,7 +616,8 @@
                 sportType: resources.SportType,
                 custId: this.pageHandler.oldReport.CustId,
                 IsGlobalSetting: false,
-                isMember: true
+                isMember: true,
+                isMemberCompactMode: this.isCompactMode
             }),
             beforeSend: function () {
                 CMS.disableInput();
@@ -614,7 +661,9 @@
                 NonliveAutoSuspend: nonliveAutoSuspend.value,
                 LiveAutoSuspend: liveAutoSuspend.value,
                 DisableNonliveAutoSuspend: nonliveAutoSuspend.isDisable,
-                DisableLiveAutoSuspend: liveAutoSuspend.isDisable
+                DisableLiveAutoSuspend: liveAutoSuspend.isDisable,
+                IsOverrideASNonlive: nonliveAutoSuspend.isOverrideAS,
+                IsOverrideASLive: liveAutoSuspend.isOverrideAS
             });
         }
 

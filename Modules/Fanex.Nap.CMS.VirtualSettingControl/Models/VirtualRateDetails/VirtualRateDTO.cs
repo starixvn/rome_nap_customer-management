@@ -47,5 +47,13 @@
         public decimal NonliveAutoSuspendThreshold { get; set; }
 
         public decimal LiveAutoSuspendThreshold { get; set; }
+
+        public bool IsOverrideASLive { get; set; }
+
+        public bool IsOverrideASNonlive { get; set; }
+
+        public bool IsOverrideASLiveNew { get; set; }
+
+        public bool IsOverrideASNonliveNew { get; set; }
     }
 }

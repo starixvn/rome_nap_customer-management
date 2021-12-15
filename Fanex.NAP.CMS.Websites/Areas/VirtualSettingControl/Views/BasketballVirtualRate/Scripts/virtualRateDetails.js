@@ -103,6 +103,12 @@
         oldSports = gridEvents.getSports();
 
         hideTxtUsernameError();
+        $("#spnAutoSuspendNote").tipsy({
+            html: true,
+            opacity: 0.9,
+            gravity: "sw",
+            className: "auto-suspend-note"
+        });
     }
 
     function showTxtUsernameError(error) {
@@ -141,6 +147,7 @@
         var formData = {
             custId: gridEvents.getCustId(),
             isMember: gridEvents.isMemberLevel(),
+            isMemberCompactMode: gridEvents.isMemberLevel() && gridEvents.isCompactMode(),
             isManualUpdate: isManualUpdatedAccount,
             rates: {
                 sports: newSports
@@ -183,9 +190,11 @@
         if (gridEvents.isMemberLevel()) {
             lblApplyVR.addClass("display-none");
             lblApplyVR_AS.removeClass("display-none");
+            lblApplyVROnly.addClass("display-none");
         } else {
             lblApplyVR.removeClass("display-none");
             lblApplyVR_AS.addClass("display-none");
+            lblApplyVROnly.addClass("display-none");
         }
     }
 
@@ -239,6 +248,7 @@
             {
                 accounts: accounts,
                 isMember: gridEvents.isMemberLevel(),
+                isMemberCompactMode: gridEvents.isMemberLevel() && gridEvents.isCompactMode(),
                 isManualUpdate: isManualUpdatedAccount,
                 rates: {
                     sports: gridEvents.getSports()

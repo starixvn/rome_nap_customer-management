@@ -26,6 +26,9 @@
         [SpParam(Ignored = true)]
         public bool IsMember { get; set; }
 
+        [SpParam(Ignored = true)]
+        public bool IsMemberCompactMode { get; set; }
+
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplier_Upd";
 
@@ -51,21 +54,21 @@
 
             foreach (var sport in Rates.Sports)
             {
-                xml.Append(GetRowXML(sport, canSetAutoSuspendOnAllLevels));
+                xml.Append(BuildXMLRow(sport, canSetAutoSuspendOnAllLevels));
 
                 foreach (var game in sport.Childs)
                 {
-                    xml.Append(GetRowXML(game, canSetAutoSuspendOnAllLevels));
+                    xml.Append(BuildXMLRow(game, canSetAutoSuspendOnAllLevels));
 
                     foreach (var betTypeGroup in game.Childs)
                     {
-                        xml.Append(GetRowXML(betTypeGroup, canSetAutoSuspendOnAllLevels));
+                        xml.Append(BuildXMLRow(betTypeGroup, canSetAutoSuspendOnAllLevels));
 
                         if (betTypeGroup.Childs != null)
                         {
                             foreach (var betType in betTypeGroup.Childs)
                             {
-                                xml.Append(GetRowXML(betType, true));
+                                xml.Append(BuildXMLRow(betType, true));
                             }
                         }
                     }
@@ -77,29 +80,41 @@
             return xml.ToString();
         }
 
-        private string GetRowXML(VirtualRateDetailsByGroup rate, bool isBetType = false)
+        private string BuildXMLRow(VirtualRateDetailsByGroup rate, bool isBetType)
+            => !IsMemberCompactMode && IsMember && isBetType
+            ? BuildXMLRowAutoSuspend(rate)
+            : BuildXMLRowWithoutAutoSuspend(rate);
+
+        private string BuildXMLRowAutoSuspend(VirtualRateDetailsByGroup rate)
         {
-            if (IsMember && isBetType)
+            var xml = new StringBuilder();
+            xml.AppendFormat(
+                "<Row LevelID=\"{0}\" ValueIDLive=\"{1}\" ValueIDNonLive=\"{2}\" IsOverrideASNonLive=\"{3}\" IsOverrideASLive=\"{4}\"",
+                rate.LevelId,
+                rate.LiveId,
+                rate.NonliveId,
+                BoolToInt(rate.IsOverrideASNonlive),
+                BoolToInt(rate.IsOverrideASLive));
+            if (!rate.DisableNonliveAutoSuspend)
             {
-                if (rate.LiveId == 0
-                    && rate.NonliveId == 0
-                    && rate.DisableNonliveAutoSuspend
-                    && rate.DisableLiveAutoSuspend)
-                {
-                    return string.Empty;
-                }
-
-                return $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\"" +
-                    (rate.DisableNonliveAutoSuspend ? string.Empty : " IsNonLiveAutoSuspend=\"" + (rate.NonliveAutoSuspend ? 1 : 0) + "\"") +
-                    (rate.DisableLiveAutoSuspend ? string.Empty : " IsLiveAutoSuspend=\"" + (rate.LiveAutoSuspend ? 1 : 0) + "\"") + " />";
+                xml.AppendFormat(" IsNonLiveAutoSuspend=\"{0}\"", BoolToInt(rate.NonliveAutoSuspend));
             }
 
-            if (rate.LiveId == 0 && rate.NonliveId == 0)
+            if (!rate.DisableLiveAutoSuspend)
             {
-                return string.Empty;
+                xml.AppendFormat(" IsLiveAutoSuspend=\"{0}\"", BoolToInt(rate.LiveAutoSuspend));
             }
 
-            return $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\" />";
+            xml.Append(" />");
+
+            return xml.ToString();
         }
+
+        private static int BoolToInt(bool value) => value ? 1 : 0;
+
+        private static string BuildXMLRowWithoutAutoSuspend(VirtualRateDetailsByGroup rate)
+            => rate.LiveId == 0 && rate.NonliveId == 0
+            ? string.Empty
+            : $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\" />";
     }
 }

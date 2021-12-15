@@ -817,7 +817,7 @@
     <value>Apply above setting (Virtual Rate only) to</value>
   </data>
   <data name="ApplyAboveSettingToVR_AS" xml:space="preserve">
-    <value>Apply above setting (Virtual Rate and AutoSuspend) to</value>
+    <value>Apply above setting (Virtual Rate, Auto Suspend and Override Auto Suspend) to</value>
   </data>
   <data name="FollowOldVR" xml:space="preserve">
     <value>Follow Old VR</value>
@@ -866,5 +866,17 @@
   </data>
   <data name="BetRestrictionBasketball" xml:space="preserve">
     <value>Bet Restriction - Basketball</value>
+  </data>
+  <data name="AutoSuspendNote" xml:space="preserve">
+    <value>&lt;p&gt;- Auto Suspend (without override) takes place if the VR% is get on the member and&lt;br/&gt;VR% &gt;= Global Auto Suspend Threshold.&lt;/p&gt;&lt;p&gt;- Override Auto Suspend takes place if member place bet on the bet type&lt;br/&gt;regardless VR% and Global Auto Suspend Threshold.&lt;/p&gt;</value>
+  </data>
+  <data name="OverrideAutoSuspend" xml:space="preserve">
+    <value>Override Auto Suspend</value>
+  </data>
+  <data name="OverrideAutoSuspend_Live" xml:space="preserve">
+    <value>Override Auto Suspend Live</value>
+  </data>
+  <data name="OverrideAutoSuspend_Nonlive" xml:space="preserve">
+    <value>Override Auto Suspend Non-Live</value>
   </data>
 </root>

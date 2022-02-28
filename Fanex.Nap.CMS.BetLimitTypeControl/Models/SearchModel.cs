@@ -26,6 +26,10 @@
 
         public string BetTypeList { get; set; }
 
+        public string LeagueGroupList { get; set; }
+
+        public string ExcludedLeagueGroupList { get; set; }
+
         public string LeagueList { get; set; }
 
         public bool IsAllProduct { get; set; }
@@ -35,5 +39,8 @@
         public bool IsAllBetType { get; set; }
 
         public bool IsAllLeague { get; set; }
+
+        public bool IsAllLeagueGroup
+            => string.IsNullOrWhiteSpace(LeagueGroupList) && string.IsNullOrWhiteSpace(ExcludedLeagueGroupList);
     }
 }

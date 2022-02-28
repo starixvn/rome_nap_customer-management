@@ -14,6 +14,10 @@
 
         public short LiveIndicator { get; set; }
 
+        public string LeagueGroupList { get; set; }
+
+        public bool IsExcludedLeagueGroup { get; set; }
+
         public string LeagueList { get; set; }
 
         public string BeginTime { get; set; }

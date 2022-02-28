@@ -109,7 +109,7 @@
     <Compile Include="Requests\InsertRequest.cs" />
     <Compile Include="Requests\SearchRequest.cs" />
     <Compile Include="Requests\UpdateRequest.cs" />
-    <Compile Include="Service.cs" />
+    <Compile Include="BetLimitTypeControlService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

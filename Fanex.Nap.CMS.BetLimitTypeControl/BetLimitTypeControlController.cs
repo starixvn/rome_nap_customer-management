@@ -1,22 +1,23 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitTypeControl
 {
+    using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using System.Web.Mvc;
 
     public class BetLimitTypeControlController : BaseController
     {
-        private readonly IService service;
+        private readonly IBetLimitTypeControlService service;
 
         public BetLimitTypeControlController() : this(null)
-        { }
-
-        public BetLimitTypeControlController(IService service)
         {
-            this.service = service ?? new Service(CurrentSession, CurrentContext);
+        }
+
+        internal BetLimitTypeControlController(IBetLimitTypeControlService service)
+        {
+            this.service = service ?? new BetLimitTypeControlService(CurrentSession, CurrentContext);
         }
 
         [HttpGet]

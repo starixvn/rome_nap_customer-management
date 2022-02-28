@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitTypeControl
 {
+    using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -9,9 +10,8 @@
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using System.Collections.Generic;
 
-    public interface IService
+    public interface IBetLimitTypeControlService
     {
         QueryFilterModel QueryFilter();
 
@@ -24,18 +24,18 @@
         Result Delete(DeleteRequest request);
     }
 
-    public class Service : IService
+    public class BetLimitTypeControlService : IBetLimitTypeControlService
     {
         private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
 
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext)
+        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext)
             : this(currentSession, currentContext, null)
         {
         }
 
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
+        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;
@@ -50,22 +50,20 @@
                 var products = reader.Read<Product>();
                 var sportTypes = reader.Read<SportType>();
                 var betTypes = reader.Read<BetType>();
+
                 return new QueryFilterModel(products, sportTypes, betTypes);
             }
         }
 
         public IEnumerable<SearchModel> Search(SearchRequest request)
-        {
-            var criteria = new SearchCriteria
+            => serviceBase.GetRepositoryData<SearchModel>(new SearchCriteria
             {
                 UserId = currentSession.UserId,
                 ProductId = request.ProductId,
                 SportType = request.SportTypeId,
                 BetType = request.BetTypeId,
                 LiveIndicator = request.LiveIndicator
-            };
-            return serviceBase.GetRepositoryData<SearchModel>(criteria);
-        }
+            });
 
         public Result Insert(InsertRequest request)
         {
@@ -76,6 +74,8 @@
                 SportTypeList = request.SportTypeList,
                 BetTypeList = request.BetTypeList,
                 LiveIndicator = request.LiveIndicator,
+                LeagueGroupList = request.LeagueGroupList,
+                IsExcludedLeagueGroup = request.IsExcludedLeagueGroup,
                 LeagueList = request.LeagueList,
                 BeginTime = request.BeginTime,
                 EndTime = request.EndTime,
@@ -83,7 +83,9 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
+
             serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -97,6 +99,8 @@
                 SportTypeList = request.SportTypeList,
                 BetTypeList = request.BetTypeList,
                 LiveIndicator = request.LiveIndicator,
+                LeagueGroupList = request.LeagueGroupList,
+                IsExcludedLeagueGroup = request.IsExcludedLeagueGroup,
                 LeagueList = request.LeagueList,
                 BeginTime = request.BeginTime,
                 EndTime = request.EndTime,
@@ -104,7 +108,9 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
+
             serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -116,7 +122,9 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
+
             serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
     }

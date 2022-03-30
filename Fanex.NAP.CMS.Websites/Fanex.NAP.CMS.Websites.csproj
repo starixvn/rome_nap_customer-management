@@ -440,6 +440,7 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
     <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\Index.cshtml" />
     <Content Include="Areas\MangeChatbots\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />

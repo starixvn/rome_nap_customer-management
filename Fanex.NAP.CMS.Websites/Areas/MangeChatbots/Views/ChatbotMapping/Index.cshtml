@@ -1,7 +1,8 @@
-﻿@{
-  
+﻿@using Fanex.Nap.CMS.ManageChatbots.Resources
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section Headline
 {
     <div class="title">
@@ -10,9 +11,45 @@
         </div>
     </div>
 }
-<div id="div-result-message" class="inline-message">
+
+<div class="filter-bar">
+    @using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_6">
+                <label for="txt-username">@Labels.UserNameSubAccount</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
+            </div>
+
+
+        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_6">
+                <label for="txt-username">@Labels.UserNameSubAccount</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@Labels.Search</button>
+            </div>
+        </div>
+    }
+</div>
+
+@*<div id="div-result-message" class="inline-message">
 </div>
 <div id="mailingListContent" class="mailingListContent">
     <div>Filter Patial View</div>
     <div>Grid View</div>
-</div>
+</div>*@

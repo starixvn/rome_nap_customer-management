@@ -440,6 +440,8 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\Index.cshtml" />
+    <Content Include="Areas\MangeChatbots\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -781,6 +783,10 @@
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.ManageChatbots\Fanex.Nap.CMS.ManageChatbots.csproj">
+      <Project>{3d0b2f17-7a0f-48bc-afc5-46d48747e9cd}</Project>
+      <Name>Fanex.Nap.CMS.ManageChatbots</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.ViewModels\Fanex.NAP.CMS.ViewModels.csproj">
       <Project>{88808f97-d8c0-45be-80d8-9c814a5cfde6}</Project>
       <Name>Fanex.NAP.CMS.ViewModels</Name>
@@ -1100,7 +1106,9 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

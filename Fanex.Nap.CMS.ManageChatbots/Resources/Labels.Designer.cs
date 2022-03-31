@@ -70,11 +70,65 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level.
+        /// </summary>
+        public static string Level {
+            get {
+                return ResourceManager.GetString("Level", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Linking Status.
+        /// </summary>
+        public static string LinkingStatus {
+            get {
+                return ResourceManager.GetString("LinkingStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messenger Username.
+        /// </summary>
+        public static string MessengerUserName {
+            get {
+                return ResourceManager.GetString("MessengerUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Site.
+        /// </summary>
+        public static string Site {
+            get {
+                return ResourceManager.GetString("Site", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Accounts Only.
+        /// </summary>
+        public static string SubAccountsOnly {
+            get {
+                return ResourceManager.GetString("SubAccountsOnly", resourceCulture);
             }
         }
         

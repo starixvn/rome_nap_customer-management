@@ -7,13 +7,15 @@
 //   <change who="Jason.Ly" date="2014.3.3">Created</change>
 // </history>
 
+
+
 namespace Fanex.NAP.CMS.Websites
 {
     using System.Web.Optimization;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.NotificationSetting.AppStart;
     using Fanex.Nap.CMS.TurnoverControl.AppStart;
-
+    using Fanex.Nap.CMS.ManageChatbots.AppStart;
     /// <summary>
     /// Bundle Configuration.
     /// </summary>
@@ -36,6 +38,7 @@ namespace Fanex.NAP.CMS.Websites
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
             NotificationSettingBundleConfig.RegisterAll(bundles);
+            ManageChatbotsBundleConfig.RegisterAll((bundles));
         }
 
         /// <summary>

@@ -13,6 +13,11 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotMapping
         
         private readonly IChatbotMappingRepository chatbotMappingRepository;
         
+        public ChatbotMappingService(IChatbotMappingRepository chatbotMappingRepository = null)
+        {
+            this.chatbotMappingRepository = chatbotMappingRepository ?? new ChatbotMappingRepository();
+        }
+        
         public IEnumerable<IdNameModel> GetCurrencies()
         {
             var currencies = CacheManager.Get<List<IdNameModel>>(CurrencyCacheKey);

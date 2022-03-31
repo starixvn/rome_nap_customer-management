@@ -1,4 +1,6 @@
-﻿@using Fanex.Nap.CMS.ManageChatbots.Resources
+﻿@using Fanex.Nap.CMS.ManageChatbots.AppStart
+@using Fanex.Nap.CMS.ManageChatbots.Resources
+@using Newtonsoft.Json
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,13 +19,24 @@
     {
         <div class="filter-row">
             <div class="lbl-field col_6">
-                <label for="txt-username">@Labels.UserNameSubAccount</label>
+                <label for="txt-username">@Labels.MessengerUserName</label>
             </div>
             <div class="edit-field col_8">
                 <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
             </div>
 
-
+            <div class="lbl-field col_3">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-site" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
+            <div class="lbl-field col_4">
+                <label>@Labels.LinkingStatus</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-linkingStatus" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
         </div>
         <div class="filter-row">
             <div class="lbl-field col_6">
@@ -32,12 +45,33 @@
             <div class="edit-field col_8">
                 <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
             </div>
+            <div class="edit-field col_1 checkbox">
+                <input type="checkbox" id="chk-subAccountsOnly"/>
+            </div>
+            <div class="lbl-field col_8 align-left">
+                <label for="chk-subAccountsOnly" class="small-margin-left">@Labels.SubAccountsOnly</label>
+            </div>
+
+            <div class="lbl-field col_3">
+                <label>@Labels.Level</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-Level" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
+
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
             </div>
             <div class="edit-field col_7">
                 <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
             </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Status</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-status" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
+
         </div>
         <div class="filter-row">
             <div class="submit width-auto col_3">
@@ -53,3 +87,14 @@
     <div>Filter Patial View</div>
     <div>Grid View</div>
 </div>*@
+@**@ @*var status =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  
+       var linkStatus =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  *@
+@section Foot
+{
+    <script type="text/javascript">
+      
+       var currencies =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  
+      
+    </script>
+    @Scripts.Render(ManageChatbotsBundleConfig.ChatbotMappingsScripts)
+}

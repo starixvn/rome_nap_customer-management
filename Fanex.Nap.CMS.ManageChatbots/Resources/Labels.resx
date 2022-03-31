@@ -126,4 +126,22 @@
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="MessengerUserName" xml:space="preserve">
+    <value>Messenger Username</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
+  </data>
+  <data name="SubAccountsOnly" xml:space="preserve">
+    <value>Sub Accounts Only</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="LinkingStatus" xml:space="preserve">
+    <value>Linking Status</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

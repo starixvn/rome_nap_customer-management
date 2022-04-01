@@ -35,7 +35,6 @@
         public const string VirtualRateEngineScriptPath = "~/bundles/customers/virtual-rate-engine-script";
         public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
         public const string VREngineCustomerCategoryScriptPath = "~/bundles/customers/vr-engine-customer-category-script";
-        public const string VREngineCustomerCategoryStylePath = "~/bundles/customers/vr-engine-customer-category-style";
 
         public static void RegisterBundles(BundleCollection bundles)
         {
@@ -268,10 +267,6 @@
                 "~/Areas/Customers/Scripts/VirtualRateEngine/otherControls.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/addOrUpdateRule.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/virtualRateEngine.js"));
-
-            bundles.AddAndInclude(
-                VREngineCustomerCategoryStylePath,
-                "~/Areas/Customers/Styles/customerCategory.less");
 
             bundles.Add(new ScriptBundle(VREngineCustomerCategoryScriptPath).Include(
                 "~/Areas/Customers/Scripts/VirtualRateEngine/customerCategory.js"));

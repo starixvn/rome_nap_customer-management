@@ -5,10 +5,6 @@
     ViewBag.Title = VREngineResource.CustomerCategory;
     var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
-@section Head
-{
-    @Styles.Render(CustomersBundlesConfig.VREngineCustomerCategoryStylePath)
-}
 @section Foot
 {
     <script type="text/javascript">
@@ -22,6 +18,6 @@
         <div><span class="curr">@ViewBag.Title</span></div>
     </div>
 }
-<div class="content-grid">
+<div class="content-grid" style="margin-left:25px;">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>

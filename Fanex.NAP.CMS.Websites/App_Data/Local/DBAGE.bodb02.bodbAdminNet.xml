@@ -15,4 +15,9 @@
   <Function Name="Limit number of new created account - Get sites">
     <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+
+  <Function Name="ManageChatBot">
+    <Setting Key="NAP_Chatbot_CurrencySel" SpName="NAP_Chatbot_CurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_Chatbot_SiteSel" SpName="NAP_Chatbot_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

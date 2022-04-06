@@ -441,6 +441,7 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ConfigChatbot.js" />
     <Content Include="Areas\MangeChatbots\Styles\ChatbotMapping\ChatbotMapping.less" />
     <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\Index.cshtml" />
     <Content Include="Areas\MangeChatbots\Views\Web.config" />
@@ -1047,6 +1048,7 @@
     <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
     <Content Include="Areas\Customers\Views\LimitDailyPTUpdate\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\limitDailyPTUpdate.less" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\_ConfigChatBot.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

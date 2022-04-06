@@ -1,14 +1,29 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
 {
     using System.Collections.Generic;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
-    using System;
-    using System.Data;
+    using System.Web.Mvc;
     using Fanex.Data;
-    public class ChatbotMappingRepository : IChatbotMappingRepository
+    using Fanex.NAP.Framework.Data;
+    using System.Data;
+    using Fanex.Nap.CMS.ManageChatBots.Models.ChatBotMapping;
+    public class ChatBotMappingRepository : IChatbotMappingRepository
     {
-        public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
+        public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                        yield return new SelectListItem
+                        {
+                            Text = reader["Currency"].ToString(),
+                            Value = reader["Id"].ToString()
+                        };
+                }
+            }
+        }
+        public IEnumerable<SelectListItem> GetSites(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -16,16 +31,32 @@
                 {
                     while (reader.Read())
                     {
-                        yield return GetCurrency(reader);
+                        yield return new SelectListItem
+                        {
+                            Text = reader["site"].ToString(),
+                        };
                     }
                 }
             }
         }
-        private static IdNameModel GetCurrency(IDataReader reader)
-            => new IdNameModel
+
+        public IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                Id = Convert.ToInt32(reader["exchangeid"]),
-                Name = reader["currency"].ToString()
-            };
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return NapAccountingPolicyModel(reader);
+                    }
+                }
+            }
+        }
+
+        private static NapAccountingPolicyModel NapAccountingPolicyModel(IDataReader reader)
+            => new NapAccountingPolicyModel(
+                reader["funcname"].ToString());
+
     }
 }

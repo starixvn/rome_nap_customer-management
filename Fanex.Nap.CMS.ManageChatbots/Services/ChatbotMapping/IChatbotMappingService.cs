@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
-using Fanex.Nap.CMS.Infrastructure.Models;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
-    public interface IChatbotMappingService
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+    using ManageChatBots.Models.ChatBotMapping;
+    using Models.ChatbotMapping;
+    public interface IChatBotMappingService
     {
-        IEnumerable<IdNameModel> GetCurrencies();
+        IEnumerable<SelectListItem> GetCurrencies();
+
+        IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission);
+        
+        bool HasSpecialSitePermission(int customerId);
+        ChatBotsMappingModel SearchChatBots();
     }
 }

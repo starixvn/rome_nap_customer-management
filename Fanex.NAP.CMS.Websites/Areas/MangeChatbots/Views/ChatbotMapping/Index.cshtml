@@ -1,8 +1,15 @@
-﻿@using Fanex.Nap.CMS.ManageChatbots.AppStart
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.ManageChatbots.AppStart
 @using Fanex.Nap.CMS.ManageChatbots.Resources
 @using Newtonsoft.Json
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping.ChatBotMappingViewModel
+
+@section Head
+{
+    @Styles.Render(ManageChatbotsBundleConfig.ChatbotMappingStyles)
 }
 
 @section Headline
@@ -15,85 +22,109 @@
 }
 
 <div class="filter-bar">
-    @using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
+    @using (Html.BeginForm("SearchChatBots", "ChatBotMapping", FormMethod.Get, new { id = "formChatbotMapping", @class = "filter-form" }))
     {
         <div class="filter-row">
             <div class="lbl-field col_6">
-                <label for="txt-username">@Labels.MessengerUserName</label>
+                <label for="txt-messengerUserName">@Labels.MessengerUserName</label>
             </div>
             <div class="edit-field col_8">
-                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
+                <input type="text" id="txt-messengerUserName" class="width-200" autocomplete="off" maxlength="50"/>
             </div>
 
             <div class="lbl-field col_3">
-                <label>@Labels.Site</label>
+                <label>@Labels.Status</label>
             </div>
             <div class="edit-field col_7">
-                <select id="ddl-site" class="combobox-autocomplete ddl-currency width-100"></select>
+                <select id="ddl-status" class="combobox-autocomplete width-100"></select>
             </div>
+
             <div class="lbl-field col_4">
                 <label>@Labels.LinkingStatus</label>
             </div>
             <div class="edit-field col_7">
-                <select id="ddl-linkingStatus" class="combobox-autocomplete ddl-currency width-100"></select>
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_6">
-                <label for="txt-username">@Labels.UserNameSubAccount</label>
-            </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50"/>
-            </div>
-            <div class="edit-field col_1 checkbox">
-                <input type="checkbox" id="chk-subAccountsOnly"/>
-            </div>
-            <div class="lbl-field col_8 align-left">
-                <label for="chk-subAccountsOnly" class="small-margin-left">@Labels.SubAccountsOnly</label>
-            </div>
-
-            <div class="lbl-field col_3">
-                <label>@Labels.Level</label>
-            </div>
-            <div class="edit-field col_7">
-                <select id="ddl-Level" class="combobox-autocomplete ddl-currency width-100"></select>
+                <select id="ddl-linkingStatus" class="combobox-autocomplete width-100"></select>
             </div>
 
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
             </div>
             <div class="edit-field col_7">
-                <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
+                @Html.DropDownList(
+                    "ddlCurrency",
+                    Model.Currencies,
+                    new { @id = "ddl-currency" })
             </div>
-            <div class="lbl-field col_3">
-                <label>@Labels.Status</label>
-            </div>
-            <div class="edit-field col_7">
-                <select id="ddl-status" class="combobox-autocomplete ddl-currency width-100"></select>
-            </div>
-
         </div>
         <div class="filter-row">
+            <div class="lbl-field col_6">
+                <label for="txt-userNameSubAccount">@Labels.UserNameSubAccount</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-userNameSubAccount" class="width-200" autocomplete="off" maxlength="50"/>
+            </div>
+
+            <div class="lbl-field col_7">
+                <input type="checkbox" id="chk-subAccountsOnly"/>
+                <label for="chk-subAccountsOnly" class="small-margin-left">@Labels.SubAccountsOnly</label>
+            </div>
+
+            <div class="lbl-field col_7">
+                <label>@Labels.Level</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-level" class="combobox-autocomplete width-100"></select>
+            </div>
+
+            <div class="lbl-field col_3">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList(
+                    "ddlSite",
+                    Model.Sites,
+                    new { @id = "ddl-site" })
+            </div>
+
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit">@Labels.Search</button>
             </div>
         </div>
+        <div class="filter-row"></div>
+        <div class="filter-row">
+
+
+        </div>
     }
 </div>
-
-@*<div id="div-result-message" class="inline-message">
+@*//var currencies =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));*@
+<div id="div-result-message" class="inline-message"></div>
+<div id="chatBots-list-container" class="content-grid">
+    <div id="chatBots-list" class="freegrid display-none">
+    </div>
 </div>
-<div id="mailingListContent" class="mailingListContent">
-    <div>Filter Patial View</div>
-    <div>Grid View</div>
-</div>*@
-@**@ @*var status =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  
-       var linkStatus =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  *@
+<div id="divPopupContent" class="display-none">
+    @{Html.RenderPartial("~/Areas/MangeChatbots/Views/ChatbotMapping/_ConfigChatBot.cshtml"); }
+</div>
+
 @section Foot
 {
     <script type="text/javascript">
       
-       var currencies =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));  
+      var viewResources = {
+           Symbol_No: '@Labels.Symbol_No',
+           ChatBotName: '@Labels.ChatBotName',
+           MessengerUserName: '@Labels.MessengerUserName',
+           UserName: '@Labels.UserName',
+           SubAccount: '@Labels.SubAccount',
+           Error_InvalidValue: '@Messages.InvalidValueError',
+           LinkingStatus: '@Labels.LinkingStatus',
+           Language: '@Labels.LinkingStatus',
+           Level: '@Labels.Level',
+           Currency: '@Labels.Currency',
+           Status: '@Labels.Status',
+           Config: '@Labels.Config',    
+      };
       
     </script>
     @Scripts.Render(ManageChatbotsBundleConfig.ChatbotMappingsScripts)

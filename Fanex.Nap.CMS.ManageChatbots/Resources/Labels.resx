@@ -144,4 +144,22 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="ChatBotName" xml:space="preserve">
+    <value>Chatbot Name</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SubAccount" xml:space="preserve">
+    <value>Sub Account</value>
+  </data>
+  <data name="Symbol_No" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>Username</value>
+  </data>
 </root>

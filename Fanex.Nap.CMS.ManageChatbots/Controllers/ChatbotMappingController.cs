@@ -1,69 +1,54 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿using System.Collections.Generic;
+
+namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
-    using Fanex.Nap.CMS.ManageChatbots.Services.ChatbotMapping;
-    using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping;
-    using Fanex.NAP.Core.Business;
-
-    public class ChatbotMappingController : BaseController
+    using Infrastructure.Controllers;
+    using Services.ChatBotMapping;
+    using ViewModels.ChatBotMapping;
+    
+    public class ChatBotMappingController : BaseController
     {
-        private readonly IChatbotMappingService chatbotMappingService;
+        private readonly IChatBotMappingService _service;
 
-        public ChatbotMappingController()
+        public ChatBotMappingController()
             : this(null)
         {
         }
 
-        public ChatbotMappingController(IChatbotMappingService chatbotMappingService)
+        public ChatBotMappingController(IChatBotMappingService service)
         {
-            this.chatbotMappingService = chatbotMappingService ?? new ChatbotMappingService();
+            this._service = service ?? new ChatBotMappingService();
         }
 
         // GET
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public ActionResult Index()
         {
-            var viewModel = new ChatbotMappingViewModel(
-                chatbotMappingService.GetCurrencies()
+            var hasSpecialSitePermission = _service.HasSpecialSitePermission(CurrentSession.UserId);
+
+            var viewModel = new ChatBotMappingViewModel(
+                _service.GetCurrencies(),
+                _service.GetSites(hasSpecialSitePermission)
             );
+            
             return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", viewModel);
         }
 
-        public JsonResult GetChatBot(GetListChatbotMappingViewModel viewModel)
+        public JsonResult SearchChatBots(SearchChatBotsViewModel viewModel)
         {
-            /*var model = !viewModel.IsValid() || !HasReadGlobalSetting(viewModel.SportType)
-                ? new GlobalSettingModel()*/
-            var model = chatbotMappingService.GetList(
-                viewModel.Username,
-                viewModel.SportType,
-                viewModel.ExchangeId,
-                viewModel.SortField,
-                viewModel.SortDirection,
-                viewModel.Page,
-                viewModel.Size,
-                viewModel.Cache);
+            
+            var model = _service.SearchChatBots();
+
+            return JsonData(model);
+        } 
+        public JsonResult ConfigChatBot(SearchChatBotsViewModel viewModel)
+        {
+            
+            var model = _service.SearchChatBots();
 
             return JsonData(model);
         }
-
-
-        public JsonResult GetCurrencies()
-            => JsonData(chatbotMappingService.GetCurrencies());
-
-        private bool HasReadChatbotMapping(short sporttype)
-            => HasPermission(sporttype, Constant.Policy.Read);
-
-        private bool HasHostChatbotMapping(short sporttype)
-            => HasPermission(sporttype, Constant.Policy.Host);
-
-        private bool HasPermission(short sporttype, Constant.Policy policy)
-        {
-            //Todo config permission
-            var permissionKey = "ChatbotMapping";
-
-
-            return HasRight(permissionKey, policy);
-        }
     }
+    
 }

@@ -41,6 +41,8 @@
                 new ChatBotModel("botA", "JackMessenger", "subaccount", "linkStatus", "eng", "Supper", "VND", "live"),
                 new ChatBotModel("botB", "JackMessenger2", "subaccount", "linkStatus", "eng", "Supper", "VND", "live")
             });
+            
+            _repository.GetChatBots()
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-function ConfigChatBotModule(viewResources, table, form,resultMessageDiv) {
+function ConfigChatBotModule(viewResources, table, form, resultMessageDiv) {
     function handler(XXXId) {
         CMS.disableInput();
         CMS.callAjax(
@@ -11,7 +11,7 @@ function ConfigChatBotModule(viewResources, table, form,resultMessageDiv) {
                 var jsonData = $.parseJSON(data);
 
                 if (jsonData.Code === 0) {
-                    CMS.showInlineSuccessMsg(jsonData.Message,resultMessageDiv, true);
+                    CMS.showInlineSuccessMsg(jsonData.Message, resultMessageDiv, true);
                 } else {
                     CMS.showInlineErrorMsg(jsonData.Message, resultMessageDiv);
                 }
@@ -32,6 +32,5 @@ function AddGlobalSetting(form) {
 
     this.initialize = function () {
         CMS.modal("Config Chatbot", form, {resizable: false});
-
     };
 }

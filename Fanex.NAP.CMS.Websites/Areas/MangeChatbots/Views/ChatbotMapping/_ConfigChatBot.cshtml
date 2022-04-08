@@ -1,71 +1,66 @@
 ﻿@using (Html.BeginForm("Add", "GlobalSetting", FormMethod.Post, new { id = "formAddGlobalSetting", @class = "form expand-form" }))
 {
-    <div class="filter-bar">
+    <div id="config-chat-bot-popup">
         <div id="div-inlineMessage" class="inline-message"></div>
-        <div class="filter-row">
-            <div class="lbl-field col_6">
-                <label>Bot SerVice:</label>
+        <div class="container">
+            <div class="col">
+                <div>Bot SerVice:</div>
+                <div>Username:</div>
+                <div>Chatbot Name:</div>
             </div>
-            <div class="edit-field col_6">
-                Telegram
+            <div class="col">
+                <div id="BotSerVice">Telegram</div>
+                <div id="Username">Jack001</div>
+                <div id="ChatBotName"> Telegram</div>
             </div>
-            <div class="lbl-field col_6">
-                <label>Msg. Username:</label>
+            <div class="col">
+                <div>Msg. Username:</div>
+                <div>Sub Account:</div>
+                <div>Status</div>
             </div>
-            <div class="edit-field col_6">
-                Telegram_Mockup03
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_6">
-                <label>Username:</label>
-            </div>
-            <div class="edit-field col_6">
-                Jack001
-            </div>
-            <div class="lbl-field col_6">
-                <label>Sub Account:</label>
-            </div>
-            <div class="edit-field col_6">
-                JackSubAccount
+            <div class="col">
+                <div id="MsgUsername">MesgUserJack</div>
+                <div id="SubAccount">Jack001</div>
+                <div>
+                    <span id="Status">Linked</span>
+                    <btn>Unlink</btn>
+                </div>
             </div>
 
-        </div>
-        <div class="filter-row">
-            <div class="lbl-field col_6">
-                <label>Chatbot Name:</label>
-            </div>
-            <div class="edit-field col_6">
-                JackChatBot001
-            </div>
-            <div class="lbl-field col_6">
-                <label>Status:</label>
-            </div>
-            <div class="edit-field col_6">
-                Linked
-            </div>
 
         </div>
-
-        <div class="filter-row">
-            <div class="lbl-field col_6">
-                <label>Language:</label>
+        <hr/>
+        <div class="container">
+            <div class="col">
+                <div>Language:</div>
+            </div>
+            <div class="col">
+                <select id="ddl-Language" class="combobox-autocomplete width-200"></select>
             </div>
         </div>
-        <table>
-            <tr>
-                <th>Functions/Notifications</th>
-                <th>Enable</th>
-            </tr>
-            <tr>
-                <td>Yesterday Win Loss Notification</td>
-                <td>Icon</td>
-            </tr>
-            <tr>
-                <td>Personal Message</td>
-                <td>Icon</td>
-            </tr>
-        </table>
+
+
+        @*<div>
+            <table>
+                <tr>
+                    <th>Functions/Notifications</th>
+                    <th>Enable</th>
+                </tr>
+                <tr>
+                    <td>Yesterday Win Loss Notification</td>
+                    <td>Icon</td>
+                </tr>
+                <tr>
+                    <td>Personal Message</td>
+                    <td>
+                        <div class="toggle-on-off status-on"/>'
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <input type="button" id="btnSubmit" class="submit" value="Save"/>
+            </div>
+
+        </div>*@
     </div>
 }
-    

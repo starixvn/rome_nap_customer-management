@@ -13,6 +13,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
         IEnumerable<SelectListItem> GetSites(ICriteria criteria);
         IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria);
 
-        ChatBotsMappingModel GetChatBots(ICriteria criteria);
+        // ChatBotsMappingModel GetChatBots(ICriteria criteria);
+        IEnumerable<ChatBotModel> GetChatBots(ICriteria criteria);
     }
 }

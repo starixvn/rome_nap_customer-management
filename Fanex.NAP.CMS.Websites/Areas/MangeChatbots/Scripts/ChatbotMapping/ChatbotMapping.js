@@ -24,9 +24,9 @@
 
     const optionsLevelDDL = [
         {Id: 0, Name: "All"},
-        {Id: 1, Name: "Super"},
-        {Id: 2, Name: "Master"},
-        {Id: 3, Name: "Agent"}];
+        {Id: 4, Name: "Super"},
+        {Id: 3, Name: "Master"},
+        {Id: 2, Name: "Agent"}];
 
     const optionsStatusDDL = [
         {Id: 0, Name: "All"},
@@ -37,12 +37,8 @@
     const getFilterParams = () => {
         var siteNames = "0";
         var currencyNames = "0";
-        if (!siteDdl.multiSelect("isCheckedAllItems")) {
-            siteNames = siteDdl.multiSelect("getCheckedItemsByText").join(",");
-        }
-        if (!currencyDdl.multiSelect("isCheckedAllItems")) {
-            currencyNames = currencyDdl.multiSelect("getCheckedItemsByText").join(",");
-        }
+        siteNames = siteDdl.multiSelect("getCheckedItems").join(",");
+        currencyNames = currencyDdl.multiSelect("getCheckedItems").join(",");
 
         const filterParams = {};
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
@@ -50,7 +46,7 @@
         filterParams.IsSubAccOnly = elements.subAccountOnly.val();
         filterParams.Level = elements.levelDropdown.val();
         filterParams.Status = elements.statusDropdown.val();
-        filterParams.LinkStatus = elements.statusDropdown.val();
+        filterParams.LinkStatus = elements.linkStatusDropdown.val();
         filterParams.Currency = currencyNames;
         filterParams.Site = siteNames;
 
@@ -70,15 +66,15 @@
                 Width: 50,
                 Name: "ColNo",
                 HeaderAlign: "center",
-                CellAlign: "center"
+                CellAlign: "center",
+                Sort: true
             }, {
                 HeaderText: viewResources.ChatBotName,
                 Width: 150,
                 Name: "ChatBotName",
                 HeaderAlign: "center",
                 CellAlign: "left",
-                Sort: true,
-                //SortDirection: "asc"
+                Sort: true
             },
             {
                 HeaderText: viewResources.MessengerUserName,
@@ -87,7 +83,6 @@
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
-                //SortDirection: "asc"
             },
             {
                 HeaderText: viewResources.UserName,
@@ -96,7 +91,6 @@
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
-                //SortDirection: "asc"
             }, {
                 HeaderText: viewResources.SubAccount,
                 Width: 160,
@@ -104,55 +98,44 @@
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
-                //SortDirection: "asc"
             }, {
                 HeaderText: viewResources.LinkingStatus,
                 Width: 100,
                 Name: "LinkingStatus",
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 Sort: true,
-                //SortDirection: "asc"
             }, {
                 HeaderText: viewResources.Language,
                 Width: 120,
                 Name: "Language",
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 Sort: true,
-                //SortDirection: "asc"
             }, {
                 HeaderText: viewResources.Level,
                 Width: 80,
                 Name: "Level",
                 HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                //SortDirection: "asc"
+                CellAlign: "center",
             }, {
                 HeaderText: viewResources.Currency,
                 Width: 80,
                 Name: "Currency",
                 HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                //SortDirection: "asc"
+                CellAlign: "center",
             }, {
                 HeaderText: viewResources.Status,
                 Width: 80,
                 Name: "Status",
                 HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                //SortDirection: "asc"
+                CellAlign: "center",
             }, {
                 HeaderText: viewResources.Config,
                 Width: 80,
                 Name: "Config",
                 HeaderAlign: "center",
                 CellAlign: "center",
-                Sort: true,
-                //SortDirection: "asc"
             }
         ];
 
@@ -171,16 +154,33 @@
             showDistinctRow: false,
             headerColumnHeight: 29,
             bodyRowHeight: 25,
-            sortOption: {
-                serverSortFunction: function (sortColumnName, sortDirection) {
-                    filterParams.SortField = sortColumnName;
-                    filterParams.SortDirection = sortDirection;
-                    filterParams.Page = 0;
-                    filterParams.Size = 100;
-                    filterParams.Cache = true;
-                    getGlobalSettings();
-                }
-            },
+           /* sortOption: {
+                /!* serverSortFunction: function (sortColumnName, sortDirection) {
+                     filterParams.SortField = sortColumnName;
+                     filterParams.SortDirection = sortDirection;
+                     filterParams.Page = 0;
+                     filterParams.Size = 100;
+                     filterParams.Cache = true;
+                     getGlobalSettings();
+                 },*!/
+                customGridSort: function (rows, sortColumnName, sortDirection) {
+                    console.log("rows", rows)
+                    console.log("sortColumnName", sortColumnName)
+                    console.log("sortDirection", sortDirection)
+                    rows.sort((a, b) => {
+                        const valueA = a.Columns.find(e=>e.Name==sortColumnName).Value;
+                        const valueB = b.Columns.find(e=>e.Name==sortColumnName).Value;
+                        if (valueA < valueB) {
+                            return -1;
+                        }
+                        if (valueA > valueB) {
+                            return 1;
+                        }
+                        return 0;
+                    })
+                    return rows;
+                },
+            },*/
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -205,13 +205,17 @@
         //ui-icon-gear
         for (var i = 0, max = data.length; i < max; i++) {
             chatbot = data[i];
+            var linkStatusCssColor = chatbot.LinkStatus == "Verifying" ? "yellow" : "green";
             columns = [
                 {Name: "ColNo", Value: numeral(i + startIndex).format(CMSConstants.NumberFormat.IntNumber)},
                 {Name: "ChatBotName", Value: chatbot.ChatBotName},
                 {Name: "MessengerUserName", Value: chatbot.MessengerUserName},
-                {Name: "UserName", Value: "chua mock"},
+                {Name: "UserName", Value: chatbot.UserName},
                 {Name: "SubAccount", Value: chatbot.SubAccount},
-                {Name: "LinkingStatus", Value: chatbot.LinkStatus},
+                {
+                    Name: "LinkingStatus",
+                    Value: `<span class="high-light-link-status-item ${linkStatusCssColor}" >${chatbot.LinkStatus}</span>`
+                },
                 {Name: "Language", Value: chatbot.Language},
                 {Name: "Level", Value: chatbot.Level},
                 {Name: "Currency", Value: chatbot.Currency},
@@ -231,7 +235,7 @@
         return bodyData;
     }
 
-    function getChatBotMapping() {
+    function getChatBot() {
         //   CMS.hideInlineMsg(elements.resultMessageDiv);
         const filterParams = getFilterParams();
 
@@ -322,7 +326,7 @@
             .submit(function (event) {
                 event.preventDefault();
                 debugger
-                getChatBotMapping();
+                getChatBot();
             });
 
         renderDropdown(optionsLinkingStatusDDL, elements.linkStatusDropdown, $("#ddl-linkingStatus.ui-combobox input"));

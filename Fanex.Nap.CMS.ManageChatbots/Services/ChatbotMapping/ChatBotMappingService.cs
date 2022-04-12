@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping;
+
+namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -34,15 +36,12 @@
             return isHasAccessSpecialSites;
         }
 
-        public ChatBotsMappingModel SearchChatBots()
+        public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel)
         {
-            return new ChatBotsMappingModel(2, new ChatBotModel[]
-            {
-                new ChatBotModel("botA", "JackMessenger", "subaccount", "linkStatus", "eng", "Supper", "VND", "live"),
-                new ChatBotModel("botB", "JackMessenger2", "subaccount", "linkStatus", "eng", "Supper", "VND", "live")
-            });
-            
-            _repository.GetChatBots()
+            var rawData = _repository.GetChatBots(new GetChatBotsCriteria(paramModel.MessengerName, paramModel.Username,
+                paramModel.IsSubAccOnly, paramModel.Site,paramModel.LinkStatus, paramModel.Level, paramModel.Currency,paramModel.Status));
+
+            return new ChatBotsMappingModel(rawData.Count(), rawData);
         }
     }
 }

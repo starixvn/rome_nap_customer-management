@@ -310,6 +310,7 @@
     <AdditionalFiles Include="..\SonarQube\fanex.nap.cm\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
+    <Content Include="App_Data\Local\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>

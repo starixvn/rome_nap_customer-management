@@ -129,7 +129,7 @@
     <Compile Include="Constants\ChatbotConst.cs" />
     <Compile Include="Controllers\ChatbotMappingController.cs" />
     <Compile Include="Criteria\ChatbotMapping\CurrencyListCriteria.cs" />
-    <Compile Include="Criteria\ChatbotMapping\GetChatbots.cs" />
+    <Compile Include="Criteria\ChatbotMapping\GetChatBotsCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetCreditSiteCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetNapAccountingPolicy.cs" />
     <Compile Include="Models\ChatbotMapping\ChatbotModel.cs" />

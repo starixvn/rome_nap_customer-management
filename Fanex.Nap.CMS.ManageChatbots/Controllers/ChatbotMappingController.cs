@@ -35,20 +35,20 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
             return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", viewModel);
         }
 
-        public JsonResult SearchChatBots(SearchChatBotsViewModel viewModel)
+        public JsonResult SearchChatBots(SearchChatBotsViewModel param)
         {
             
-            var model = _service.SearchChatBots();
+            var model = _service.SearchChatBots(param);
 
             return JsonData(model);
         } 
-        public JsonResult ConfigChatBot(SearchChatBotsViewModel viewModel)
+        public JsonResult ConfigChatBot(SearchChatBotsViewModel param)
         {
             
-            var model = _service.SearchChatBots();
+            var model = _service.SearchChatBots(param);
 
             return JsonData(model);
         }
     }
     
-}
+} 

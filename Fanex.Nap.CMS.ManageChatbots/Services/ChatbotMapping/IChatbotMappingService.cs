@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping;
+
+namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -11,6 +13,8 @@
         IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission);
         
         bool HasSpecialSitePermission(int customerId);
-        ChatBotsMappingModel SearchChatBots();
+        
+        ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel);
+        
     }
 }

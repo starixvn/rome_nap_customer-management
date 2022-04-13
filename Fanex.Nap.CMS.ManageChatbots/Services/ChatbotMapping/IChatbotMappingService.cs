@@ -1,11 +1,10 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using ManageChatBots.Models.ChatBotMapping;
     using Models.ChatbotMapping;
+    using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping;
+
     public interface IChatBotMappingService
     {
         IEnumerable<SelectListItem> GetCurrencies();

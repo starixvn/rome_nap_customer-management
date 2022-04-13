@@ -1,4 +1,4 @@
-﻿using Fanex.Nap.CMS.Infrastructure.Constants;
+﻿
 
 namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
 {
@@ -7,10 +7,11 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
     using Fanex.Data;
     using Fanex.NAP.Framework.Data;
     using System.Data;
-    using Fanex.Nap.CMS.ManageChatBots.Models.ChatBotMapping;
+    using Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping;
     using System;
+    using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
-
+    using Fanex.Common;
     public class ChatBotMappingRepository : IChatbotMappingRepository
     {
         public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
@@ -85,6 +86,8 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
                 reader["username"].ToString(), reader["SubAccount"].ToString(),
                 reader["LinkStatus"].ToString(), reader["language"].ToString(),
                 RoleIdConstants.GetRoleName(Convert.ToInt16(reader["roleid"])),
-                reader["currency"].ToString(), reader["status"].ToString());
+                reader["currency"].ToString(), reader["status"].ToString(),
+                Converter.ToInt(reader["custid"]),Converter.ToInt(reader["SubAccID"]),Converter.ToInt(reader["BotID"])
+                );
     }
 }

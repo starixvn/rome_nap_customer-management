@@ -13,7 +13,7 @@
     };
     var currencyDdl = $("#ddl-currency"),
         siteDdl = $("#ddl-site");
-
+    var filterParams = {};
     var gridOptions = null;
 
     const optionsLinkingStatusDDL = [
@@ -34,24 +34,16 @@
         {Id: 2, Name: "Closed"},
         {Id: 3, Name: "Suspended"}];
 
-    const getFilterParams = () => {
-        var siteNames = "0";
-        var currencyNames = "0";
-        siteNames = siteDdl.multiSelect("getCheckedItems").join(",");
-        currencyNames = currencyDdl.multiSelect("getCheckedItems").join(",");
 
-        const filterParams = {};
+    const getFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
         filterParams.MessengerName = $.trim(elements.messengerUserNameTextbox.val());
         filterParams.IsSubAccOnly = elements.subAccountOnly.val();
         filterParams.Level = elements.levelDropdown.val();
         filterParams.Status = elements.statusDropdown.val();
         filterParams.LinkStatus = elements.linkStatusDropdown.val();
-        filterParams.Currency = currencyNames;
-        filterParams.Site = siteNames;
-
-        filterParams.SortField = "Username";
-        filterParams.SortDirection = "asc";
+        filterParams.Currency = currencyDdl.multiSelect("getCheckedItems").join(",");
+        filterParams.Site = siteDdl.multiSelect("getCheckedItems").join(",");
         filterParams.PageIndex = 0;
         filterParams.PageSize = 100;
         filterParams.Cache = false;
@@ -59,8 +51,8 @@
         return filterParams;
     };
 
-    function getGridOptions() {
-        var headerColumns = [
+    const getGridOptions = () => {
+        const headerColumns = [
             {
                 HeaderText: viewResources.Symbol_No,
                 Width: 50,
@@ -68,7 +60,8 @@
                 HeaderAlign: "center",
                 CellAlign: "center",
                 Sort: true
-            }, {
+            },
+            {
                 HeaderText: viewResources.ChatBotName,
                 Width: 150,
                 Name: "ChatBotName",
@@ -139,7 +132,6 @@
             }
         ];
 
-
         return {
             columns: headerColumns,
             showTitle: false,
@@ -154,33 +146,6 @@
             showDistinctRow: false,
             headerColumnHeight: 29,
             bodyRowHeight: 25,
-           /* sortOption: {
-                /!* serverSortFunction: function (sortColumnName, sortDirection) {
-                     filterParams.SortField = sortColumnName;
-                     filterParams.SortDirection = sortDirection;
-                     filterParams.Page = 0;
-                     filterParams.Size = 100;
-                     filterParams.Cache = true;
-                     getGlobalSettings();
-                 },*!/
-                customGridSort: function (rows, sortColumnName, sortDirection) {
-                    console.log("rows", rows)
-                    console.log("sortColumnName", sortColumnName)
-                    console.log("sortDirection", sortDirection)
-                    rows.sort((a, b) => {
-                        const valueA = a.Columns.find(e=>e.Name==sortColumnName).Value;
-                        const valueB = b.Columns.find(e=>e.Name==sortColumnName).Value;
-                        if (valueA < valueB) {
-                            return -1;
-                        }
-                        if (valueA > valueB) {
-                            return 1;
-                        }
-                        return 0;
-                    })
-                    return rows;
-                },
-            },*/
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -190,54 +155,78 @@
                     filterParams.Page = index;
                     filterParams.Size = pageSize;
                     filterParams.Cache = true;
-                    getGlobalSettings();
+                    getChatBot();
                 }
             },
-            gridExpandHeight: 180
+            showNumberColumn: true,
+            gridExpandHeight: 180,
         };
     }
 
-    function renderGridChatBots(data) {
-        var bodyData = [];
-        var chatbot, columns;
-        /* var startIndex = filterParams.Page * filterParams.Size + 1;*/
-        var startIndex = 0;
+    const renderConfigCell = (custId, botId, subAccId) => {
+        return [
+            '<span class="ui-icon ui-icon-gear ico-config" href="javascript:;" data-custId="',
+            custId,
+            '" data-botId="',
+            botId,
+            '" data-subAccId="',
+            subAccId,
+            '"></span>'
+        ].join("");
+    }
+    const renderGridChatBots = (data) => {
+        const bodyData = [];
+        let columns;
+        let startIndex = filterParams.PageIndex * filterParams.PageSize + 1;
         //ui-icon-gear
         for (var i = 0, max = data.length; i < max; i++) {
-            chatbot = data[i];
-            var linkStatusCssColor = chatbot.LinkStatus == "Verifying" ? "yellow" : "green";
+            const {
+                ChatBotName,
+                MessengerUserName,
+                LinkStatus,
+                UserName,
+                SubAccount,
+                Language,
+                Level,
+                Currency,
+                Status,
+                CusID,
+                BotID,
+                SubAccID
+            } = data[i];
+            const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
+            const config = '<span class="ui-icon ui-icon-gear ico-config" id="btn-config-chatBot" data-cust-id="' + i + '"></span>'
+            const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
             columns = [
                 {Name: "ColNo", Value: numeral(i + startIndex).format(CMSConstants.NumberFormat.IntNumber)},
-                {Name: "ChatBotName", Value: chatbot.ChatBotName},
-                {Name: "MessengerUserName", Value: chatbot.MessengerUserName},
-                {Name: "UserName", Value: chatbot.UserName},
-                {Name: "SubAccount", Value: chatbot.SubAccount},
-                {
-                    Name: "LinkingStatus",
-                    Value: `<span class="high-light-link-status-item ${linkStatusCssColor}" >${chatbot.LinkStatus}</span>`
-                },
-                {Name: "Language", Value: chatbot.Language},
-                {Name: "Level", Value: chatbot.Level},
-                {Name: "Currency", Value: chatbot.Currency},
-                {Name: "Status", Value: chatbot.Status},
-                {
-                    Name: "Config",
-                    Value: '<span class="ui-icon ui-icon-gear ico-config" id="btn-config-chatBot" data-cust-id="' + i + '"></span>'
-                }
+                {Name: "ChatBotName", Value: ChatBotName},
+                {Name: "MessengerUserName", Value: MessengerUserName},
+                {Name: "UserName", Value: UserName},
+                {Name: "SubAccount", Value: SubAccount},
+                {Name: "LinkingStatus", Value: linkStatusFormatted},
+                {Name: "Language", Value: Language},
+                {Name: "Level", Value: Level},
+                {Name: "Currency", Value: Currency},
+                {Name: "Status", Value: Status},
+                {Name: "Config", Value: renderConfigCell(CusID,BotID,SubAccID)}
             ];
-            var css = (i & 1) == 1 ? 'freegrid-even' : '';
-            bodyData.push({
-                Columns: columns,
-                CssClass: css
-            });
+            const css = (i & 1) == 1 ? 'freegrid-even' : '';
+            bodyData.push({Columns: columns, CssClass: css});
         }
 
         return bodyData;
     }
 
-    function getChatBot() {
+    const getChatBot = () => {
         //   CMS.hideInlineMsg(elements.resultMessageDiv);
         const filterParams = getFilterParams();
+        const resetSortDirection = () => {
+            $.each(gridOptions.columns, function (index, value) {
+                value.SortDirection = value.Name !== filterParams.SortField
+                    ? ""
+                    : filterParams.SortDirection;
+            });
+        }
 
         CMS.getJson(CMS.resolveRootUrl("ChatbotMapping/SearchChatBots?" + $.param(filterParams)), function (data) {
             var jsonData = $.parseJSON(data);
@@ -245,23 +234,19 @@
             gridOptions = gridOptions || getGridOptions();
             gridOptions.bodyRows = renderGridChatBots(jsonData.ChatBots);
 
-            gridOptions.pagerOption.currentPage = filterParams.Page || 1;
-            gridOptions.pagerOption.itemsPerPage = filterParams.Size || 99;
+            gridOptions.pagerOption.currentPage = filterParams.Page;
+            gridOptions.pagerOption.itemsPerPage = filterParams.Size;
             gridOptions.pagerOption.totalItem = jsonData.TotalItems;
 
             if (!filterParams.Cache) {
-                $.each(gridOptions.columns, function (index, value) {
-                    value.SortDirection = value.Name !== filterParams.SortField
-                        ? ""
-                        : filterParams.SortDirection;
-                });
+                resetSortDirection();
             }
 
             elements.table.removeClass("display-none").fanexGrid(gridOptions);
         });
     }
 
-    const renderDropdown = (data, elementDdl, valueDDL) => {
+    const renderSingleChoiceDDL = (data, elementDdl, valueDDL) => {
         var html = [];
         for (var i = 0, max = data.length; i < max; i++) {
             html.push('<option value="');
@@ -277,7 +262,7 @@
         }
     };
 
-    function renderMultiSelect() {
+    const renderMultiChoiceDDL = () => {
         currencyDdl.multiSelect({
             minWidth: 180,
             checkAllText: "All",
@@ -320,21 +305,16 @@
 
     $(function () {
 
-        var formChatbotMapping = $("#formChatbotMapping");
+        $("#formChatbotMapping").submit(function (event) {
+            event.preventDefault();
+            getChatBot();
+        });
 
-        formChatbotMapping
-            .submit(function (event) {
-                event.preventDefault();
-                debugger
-                getChatBot();
-            });
+        renderSingleChoiceDDL(optionsLinkingStatusDDL, elements.linkStatusDropdown, $("#ddl-linkingStatus.ui-combobox input"));
+        renderSingleChoiceDDL(optionsLevelDDL, elements.levelDropdown, $("#ddl-level.ui-combobox input"));
+        renderSingleChoiceDDL(optionsStatusDDL, elements.statusDropdown, $("#ddl-status.ui-combobox input"));
 
-        renderDropdown(optionsLinkingStatusDDL, elements.linkStatusDropdown, $("#ddl-linkingStatus.ui-combobox input"));
-        renderDropdown(optionsLevelDDL, elements.levelDropdown, $("#ddl-level.ui-combobox input"));
-        renderDropdown(optionsStatusDDL, elements.statusDropdown, $("#ddl-status.ui-combobox input"));
-
-        renderMultiSelect();
-
+        renderMultiChoiceDDL();
 
         var configChatBotModule = new ConfigChatBotModule(
             viewResources,

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Fanex.Nap.CMS.ManageChatbots.AppStart
+﻿namespace Fanex.Nap.CMS.ManageChatbots.AppStart
 {
+    using System.Web.Mvc;
     public class MangeChatbotsAreaRegistration : AreaRegistration
     {
         public override string AreaName => "MangeChatbots";

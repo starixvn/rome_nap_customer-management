@@ -21,7 +21,7 @@
                     .Include(
                         "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
                         "~/Scripts/Libs/Popup/dialogbox.js",
-                        "~/Areas/MangeChatbots/Scripts/ChatbotMapping/ConfigChatbot.js",
+                        "~/Areas/MangeChatbots/Scripts/ChatbotMapping/_ConfigChatbot.js",
                         "~/Areas/MangeChatbots/Scripts/ChatbotMapping/ChatbotMapping.js"
                     )
                 );

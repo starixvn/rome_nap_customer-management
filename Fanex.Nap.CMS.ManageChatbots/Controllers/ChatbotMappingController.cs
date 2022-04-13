@@ -1,18 +1,15 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
     using Infrastructure.Controllers;
     using Services.ChatBotMapping;
-    using ViewModels.ChatBotMapping;
-    
+    using ViewModels.ChatbotMapping;
+
     public class ChatBotMappingController : BaseController
     {
         private readonly IChatBotMappingService _service;
 
-        public ChatBotMappingController()
-            : this(null)
+        public ChatBotMappingController() : this(null)
         {
         }
 
@@ -31,24 +28,22 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
                 _service.GetCurrencies(),
                 _service.GetSites(hasSpecialSitePermission)
             );
-            
+
             return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", viewModel);
         }
 
         public JsonResult SearchChatBots(SearchChatBotsViewModel param)
         {
-            
             var model = _service.SearchChatBots(param);
 
             return JsonData(model);
-        } 
+        }
+
         public JsonResult ConfigChatBot(SearchChatBotsViewModel param)
         {
-            
             var model = _service.SearchChatBots(param);
 
             return JsonData(model);
         }
     }
-    
-} 
+}

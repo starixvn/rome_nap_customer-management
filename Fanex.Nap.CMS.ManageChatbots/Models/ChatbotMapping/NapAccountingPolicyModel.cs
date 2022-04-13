@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.ManageChatBots.Models.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping
 {
     public class NapAccountingPolicyModel
     {

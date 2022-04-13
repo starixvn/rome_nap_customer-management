@@ -20,7 +20,12 @@ function ConfigChatBotModule(viewResources, table, form, resultMessageDiv) {
 
     this.initialize = function () {
         table.on("click", ".ico-config", function () {
+            var $this = $(this);
+            var custId = $this.data("custid");
+            var botId = $this.data("botid");
+            var subAccId = $this.data("subaccid");
             console.log("clicked icon config")
+            console.log("custId, botid, subaccid", custId,botId,subAccId)
             //Todo refer DeleteGlobalSetting.js
             var addHandler = new AddGlobalSetting(form);
             addHandler.initialize();

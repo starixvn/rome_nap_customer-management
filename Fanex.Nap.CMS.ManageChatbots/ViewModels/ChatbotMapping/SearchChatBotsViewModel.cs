@@ -1,4 +1,4 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
 {
     public class SearchChatBotsViewModel
     {

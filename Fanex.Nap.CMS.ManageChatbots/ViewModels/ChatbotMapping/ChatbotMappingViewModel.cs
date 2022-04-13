@@ -1,5 +1,5 @@
 ﻿
-namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping
+namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
 {
     using System.Collections.Generic;
     using Fanex.Nap.CMS.Infrastructure.Models;

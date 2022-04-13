@@ -1,6 +1,4 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatBotMapping;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,6 +6,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
     using Criteria.ChatbotMapping;
     using Repositories.ChatbotMapping;
     using Models.ChatbotMapping;
+    using ViewModels.ChatbotMapping;
 
     public class ChatBotMappingService : IChatBotMappingService
     {

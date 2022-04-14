@@ -24,26 +24,26 @@
         {
             var hasSpecialSitePermission = _service.HasSpecialSitePermission(CurrentSession.UserId);
 
-            var viewModel = new ChatBotMappingViewModel(
+            var siteCurrencies = new ChatBotMappingViewModel(
                 _service.GetCurrencies(),
                 _service.GetSites(hasSpecialSitePermission)
             );
 
-            return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", viewModel);
+            return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", siteCurrencies);
         }
 
         public JsonResult SearchChatBots(SearchChatBotsViewModel param)
         {
-            var model = _service.SearchChatBots(param);
+            var chatBots = _service.SearchChatBots(param);
 
-            return JsonData(model);
+            return JsonData(chatBots);
         }
 
-        public JsonResult ConfigChatBot(SearchChatBotsViewModel param)
+        public JsonResult ChatBotConfig(GetConfigViewModel param)
         {
-            var model = _service.SearchChatBots(param);
-
-            return JsonData(model);
+            var chatBotConfig = _service.GetConfig(param);
+            
+            return JsonData(chatBotConfig);
         }
     }
 }

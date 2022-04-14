@@ -2,5 +2,6 @@
 <Functions SiteId="102" SiteName="NAP - CM">
     <Function Name="ManageChatBot">
         <Setting Key="NAP_Chatbot_CustBotAccountListSel" SpName="NAP_Chatbot_CustBotAccountListSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
+        <Setting Key="NAP_Chatbot_CustBotAccountAllInfoSel" SpName="NAP_Chatbot_CustBotAccountAllInfoSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
     </Function>
 </Functions>

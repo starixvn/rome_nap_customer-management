@@ -12,5 +12,6 @@
         IEnumerable<SelectListItem> GetSites(ICriteria criteria);
         IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria);
         IEnumerable<ChatBotModel> GetChatBots(ICriteria criteria);
+        ChatBotsConfigModel GetConfigChatBot(ICriteria criteria);
     }
 }

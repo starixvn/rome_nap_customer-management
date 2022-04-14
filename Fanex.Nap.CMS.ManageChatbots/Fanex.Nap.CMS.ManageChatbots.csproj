@@ -128,11 +128,14 @@
     <Compile Include="AppStart\MangeChatbotsAreaRegistration.cs" />
     <Compile Include="Constants\ChatbotConst.cs" />
     <Compile Include="Controllers\ChatbotMappingController.cs" />
-    <Compile Include="Criteria\ChatbotMapping\CurrencyListCriteria.cs" />
+    <Compile Include="Criteria\ChatbotMapping\GetCurrencyListCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetChatBotsCriteria.cs" />
-    <Compile Include="Criteria\ChatbotMapping\GetCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ChatbotMapping\GetConfigChatBotCriteria.cs" />
+    <Compile Include="Criteria\ChatbotMapping\GetSiteCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetNapAccountingPolicy.cs" />
-    <Compile Include="Models\ChatbotMapping\ChatbotModel.cs" />
+    <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
+    <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
+    <Compile Include="Models\ChatbotMapping\ChatBotsConfigModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotsMappingModel.cs" />
     <Compile Include="Models\ChatbotMapping\NapAccountingPolicyModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Services\ChatbotMapping\ChatBotMappingService.cs" />
     <Compile Include="Services\ChatbotMapping\IChatbotMappingService.cs" />
     <Compile Include="ViewModels\ChatbotMapping\ChatbotMappingViewModel.cs" />
+    <Compile Include="ViewModels\ChatbotMapping\GetConfigViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\SearchChatBotsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

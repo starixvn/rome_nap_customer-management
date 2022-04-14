@@ -19,12 +19,12 @@
 
         public IEnumerable<SelectListItem> GetCurrencies()
         {
-            return _repository.GetCurrencies(new CurrencyListCriteria());
+            return _repository.GetCurrencies(new GetCurrencyListCriteria());
         }
 
         public IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission)
         {
-            return _repository.GetSites(new GetCreditSiteCriteria(hasSpecialSitePermission));
+            return _repository.GetSites(new GetSiteCriteria(hasSpecialSitePermission));
         }
 
         public bool HasSpecialSitePermission(int customerId)
@@ -38,9 +38,19 @@
         public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel)
         {
             var rawData = _repository.GetChatBots(new GetChatBotsCriteria(paramModel.MessengerName, paramModel.Username,
-                paramModel.IsSubAccOnly, paramModel.Site,paramModel.LinkStatus, paramModel.Level, paramModel.Currency,paramModel.Status));
+                paramModel.IsSubAccOnly, paramModel.Site, paramModel.LinkStatus, paramModel.Level, paramModel.Currency,
+                paramModel.AccStatus,paramModel.PageIndex,paramModel.PageSize));
 
             return new ChatBotsMappingModel(rawData.Count(), rawData);
+        }
+
+        public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
+        {
+            var chatBotsConfig =
+                _repository.GetConfigChatBot(new GetConfigChatBotCriteria(paramModel.CusId, paramModel.BotId,
+                    paramModel.SubAccId));
+
+            return chatBotsConfig;
         }
     }
 }

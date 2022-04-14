@@ -16,7 +16,7 @@
         
         public string Currency { get; set; }
         
-        public short Status { get; set; }
+        public short AccStatus { get; set; }
         
         public int PageIndex { get; set; }
         

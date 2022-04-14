@@ -14,6 +14,7 @@
         bool HasSpecialSitePermission(int customerId);
         
         ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel);
+        ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel);
         
     }
 }

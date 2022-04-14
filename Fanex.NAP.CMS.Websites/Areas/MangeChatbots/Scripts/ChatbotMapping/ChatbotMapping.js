@@ -28,7 +28,7 @@
         {Id: 3, Name: "Master"},
         {Id: 2, Name: "Agent"}];
 
-    const optionsStatusDDL = [
+    const optionsAccStatusDDL = [
         {Id: 0, Name: "All"},
         {Id: 1, Name: "Active"},
         {Id: 2, Name: "Closed"},
@@ -40,14 +40,14 @@
         filterParams.MessengerName = $.trim(elements.messengerUserNameTextbox.val());
         filterParams.IsSubAccOnly = elements.subAccountOnly.val();
         filterParams.Level = elements.levelDropdown.val();
-        filterParams.Status = elements.statusDropdown.val();
+        filterParams.AccStatus = elements.statusDropdown.val();
         filterParams.LinkStatus = elements.linkStatusDropdown.val();
         filterParams.Currency = currencyDdl.multiSelect("getCheckedItems").join(",");
         filterParams.Site = siteDdl.multiSelect("getCheckedItems").join(",");
-        filterParams.PageIndex = 0;
+        filterParams.PageIndex = 1;
         filterParams.PageSize = 100;
         filterParams.Cache = false;
-        debugger
+        //debugger
         return filterParams;
     };
 
@@ -59,7 +59,6 @@
                 Name: "ColNo",
                 HeaderAlign: "center",
                 CellAlign: "center",
-                Sort: true
             },
             {
                 HeaderText: viewResources.ChatBotName,
@@ -118,7 +117,7 @@
                 HeaderAlign: "center",
                 CellAlign: "center",
             }, {
-                HeaderText: viewResources.Status,
+                HeaderText: viewResources.AccStatus,
                 Width: 80,
                 Name: "Status",
                 HeaderAlign: "center",
@@ -174,6 +173,7 @@
             '"></span>'
         ].join("");
     }
+
     const renderGridChatBots = (data) => {
         const bodyData = [];
         let columns;
@@ -189,7 +189,7 @@
                 Language,
                 Level,
                 Currency,
-                Status,
+                AccStatus,
                 CusID,
                 BotID,
                 SubAccID
@@ -198,7 +198,7 @@
             const config = '<span class="ui-icon ui-icon-gear ico-config" id="btn-config-chatBot" data-cust-id="' + i + '"></span>'
             const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
             columns = [
-                {Name: "ColNo", Value: numeral(i + startIndex).format(CMSConstants.NumberFormat.IntNumber)},
+                {Name: "ColNo", Value: ""},
                 {Name: "ChatBotName", Value: ChatBotName},
                 {Name: "MessengerUserName", Value: MessengerUserName},
                 {Name: "UserName", Value: UserName},
@@ -207,7 +207,7 @@
                 {Name: "Language", Value: Language},
                 {Name: "Level", Value: Level},
                 {Name: "Currency", Value: Currency},
-                {Name: "Status", Value: Status},
+                {Name: "Status", Value: AccStatus},
                 {Name: "Config", Value: renderConfigCell(CusID,BotID,SubAccID)}
             ];
             const css = (i & 1) == 1 ? 'freegrid-even' : '';
@@ -234,8 +234,8 @@
             gridOptions = gridOptions || getGridOptions();
             gridOptions.bodyRows = renderGridChatBots(jsonData.ChatBots);
 
-            gridOptions.pagerOption.currentPage = filterParams.Page;
-            gridOptions.pagerOption.itemsPerPage = filterParams.Size;
+            gridOptions.pagerOption.currentPage = filterParams.PageIndex;
+            gridOptions.pagerOption.itemsPerPage = filterParams.PageSize;
             gridOptions.pagerOption.totalItem = jsonData.TotalItems;
 
             if (!filterParams.Cache) {
@@ -312,7 +312,7 @@
 
         renderSingleChoiceDDL(optionsLinkingStatusDDL, elements.linkStatusDropdown, $("#ddl-linkingStatus.ui-combobox input"));
         renderSingleChoiceDDL(optionsLevelDDL, elements.levelDropdown, $("#ddl-level.ui-combobox input"));
-        renderSingleChoiceDDL(optionsStatusDDL, elements.statusDropdown, $("#ddl-status.ui-combobox input"));
+        renderSingleChoiceDDL(optionsAccStatusDDL, elements.statusDropdown, $("#ddl-status.ui-combobox input"));
 
         renderMultiChoiceDDL();
 

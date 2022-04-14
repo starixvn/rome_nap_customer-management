@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
     using Fanex.NAP.Framework.Data;
-    public class GetCreditSiteCriteria : CriteriaBase
+    public class GetSiteCriteria : CriteriaBase
     {
-        public GetCreditSiteCriteria(bool isSpecial)
+        public GetSiteCriteria(bool isSpecial)
         {
             this.isSpecial = isSpecial;
         }

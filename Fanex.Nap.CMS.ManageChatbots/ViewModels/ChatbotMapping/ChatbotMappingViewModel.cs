@@ -1,11 +1,8 @@
-﻿
-namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
 {
     using System.Collections.Generic;
-    using Fanex.Nap.CMS.Infrastructure.Models;
     using System.Web.Mvc;
-
-
+    
     public class ChatBotMappingViewModel
     {
         public ChatBotMappingViewModel(IEnumerable<SelectListItem> currencies,IEnumerable<SelectListItem> sites) {

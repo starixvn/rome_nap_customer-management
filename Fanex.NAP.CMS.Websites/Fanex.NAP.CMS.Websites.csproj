@@ -441,6 +441,7 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotHistory\ChatbotHistory.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\_ConfigChatbot.js" />
     <Content Include="Areas\MangeChatbots\Styles\ChatbotMapping\ChatbotMapping.less" />
@@ -1050,6 +1051,8 @@
     <Content Include="Areas\Customers\Views\LimitDailyPTUpdate\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\limitDailyPTUpdate.less" />
     <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\_ConfigChatBot.cshtml" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotHistory\Index.cshtml" />
+    <Content Include="Areas\MangeChatbots\Styles\ChatbotHistory\ChatbotHistory.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1114,6 +1117,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

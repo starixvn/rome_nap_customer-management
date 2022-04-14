@@ -9,9 +9,13 @@
         public const string ChatbotMappingsScripts = "~/areas/mangechatbots/chatbotmappingscripts";
         public const string ChatbotMappingStyles = "~/areas/mangechatbots/chatbotmappingstyles";
 
+        public const string ChatbotHistoryScripts = "~/areas/mangechatbots/chatbothistoryscripts";
+        public const string ChatbotHistoryStyles = "~/areas/mangechatbots/chatbothistorystyles";
+
         public static void RegisterAll(BundleCollection bundles)
         {
             RegisterChatbotMappingBundles(bundles);
+            RegisterChatbotHistoryBundles(bundles);
         }
 
         private static void RegisterChatbotMappingBundles(BundleCollection bundles)
@@ -32,6 +36,18 @@
                 "~/Areas/MangeChatbots/Styles/ChatbotMapping/ChatbotMapping.less");
         }
 
+        private static void RegisterChatbotHistoryBundles(BundleCollection bundles)
+        {
+            bundles
+                .Add(new ScriptBundle(ChatbotHistoryScripts)
+                    .Include("~/Areas/MangeChatbots/Scripts/ChatbotHistory/ChatbotHistory.js"));
+
+            AddStyle(
+                bundles,
+                ChatbotHistoryStyles,
+                "~/Areas/MangeChatbots/Styles/ChatbotHistory/ChatbotHistory.less");
+        }
+        
         private static void AddStyle(BundleCollection bundles, string bundleVirtualPath, params string[] virtualPaths)
             => bundles.Add(new Bundle(bundleVirtualPath)
             {

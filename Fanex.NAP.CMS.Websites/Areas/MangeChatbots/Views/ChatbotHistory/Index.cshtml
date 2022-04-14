@@ -1,0 +1,80 @@
+﻿@using Fanex.Nap.CMS.ManageChatbots.AppStart;
+@using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
+@using Newtonsoft.Json
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ChatbotHistoryViewModel
+@section Head {
+    @Styles.Render(ManageChatbotsBundleConfig.ChatbotHistoryStyles)
+}
+
+@section Foot {
+    <script type="text/javascript"> 
+        var resources = {
+            defaultFromDate: "@Model.DefaultFromDate.ToShortFormatedDateWithSlash()",
+            defaultToDate: "@Model.DefaultToDate.ToShortFormatedDateWithSlash()",
+        };
+    </script>
+    @Scripts.Render(ManageChatbotsBundleConfig.ChatbotHistoryScripts)
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">Chatbot History</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "ChatbotHistory", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_7">
+                <label for="txtuserName">Username / Sub Account</label>
+            </div>
+            <div class="edit-field col_16">
+                <input type="text" id="txtUserName" class="width-400" maxlength="4000"/>
+            </div>
+            <div class="lbl-field col_8">
+                <label for="txtMessengerUsername">Chat ID</label>
+            </div>
+            <div class="edit-field col_16">
+                <input type="text" id="txtMessengerUsername" class="width-400" maxlength="4000" />
+            </div>
+        </div>
+        <div class="filter-row margin-left-15">
+            <div id="fromtodate-picker"></div>
+            <div class="lbl-field col_8">
+                <label>Function</label>
+            </div>
+            <div class="edit-field col_11">
+                @Html.DropDownList(
+                "dllFunctions",
+                Model.Functions,
+                new { @id = "ddlFunctions" })
+            </div>
+            <div class="lbl-field col_5 margin-left-5">
+                <label>Send Status</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                "ddlSendStatus",
+                Model.SendStatus,
+                new { @id = "ddlSendStatus", @class = "width-140" })
+            </div>
+        </div>
+        <div class="filter-row margin-left-15">
+            <div class="submit width-auto col_13">
+                <button type="submit" class="submit btn-search">Search</button>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>

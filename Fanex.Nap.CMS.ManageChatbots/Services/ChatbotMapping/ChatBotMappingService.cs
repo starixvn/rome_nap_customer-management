@@ -24,7 +24,7 @@
 
         public IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission)
         {
-            return _repository.GetSites(new GetSiteCriteria(hasSpecialSitePermission));
+            return _repository.GetSites(new GetSiteCriteria(0));
         }
 
         public bool HasSpecialSitePermission(int customerId)
@@ -39,7 +39,7 @@
         {
             var rawData = _repository.GetChatBots(new GetChatBotsCriteria(paramModel.MessengerName, paramModel.Username,
                 paramModel.IsSubAccOnly, paramModel.Site, paramModel.LinkStatus, paramModel.Level, paramModel.Currency,
-                paramModel.AccStatus,paramModel.PageIndex,paramModel.PageSize));
+                paramModel.AccStatus,paramModel.PageIndex+1,paramModel.PageSize));
 
             return new ChatBotsMappingModel(rawData.Count(), rawData);
         }

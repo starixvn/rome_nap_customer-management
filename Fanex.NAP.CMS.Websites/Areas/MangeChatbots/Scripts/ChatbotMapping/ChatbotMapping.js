@@ -3,7 +3,7 @@
     var elements = {
         resultMessageDiv: $("#div-result-message"),
         table: $("#chatBots-list"),
-        addGlobalSettingForm: $("#formAddGlobalSetting"),
+        formChatBotConfig: $("#formChatBotConfig"),
         messengerUserNameTextbox: $("#txt-messengerUserName"),
         userNameSubAccountTextbox: $("#txt-userNameSubAccount"),
         statusDropdown: $("#ddl-status"),
@@ -35,7 +35,7 @@
         {Id: 3, Name: "Suspended"}];
 
 
-    const getFilterParams = () => {
+    const resetFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
         filterParams.MessengerName = $.trim(elements.messengerUserNameTextbox.val());
         filterParams.IsSubAccOnly = elements.subAccountOnly.val();
@@ -43,8 +43,8 @@
         filterParams.AccStatus = elements.statusDropdown.val();
         filterParams.LinkStatus = elements.linkStatusDropdown.val();
         filterParams.Currency = currencyDdl.multiSelect("getCheckedItems").join(",");
-        filterParams.Site = siteDdl.multiSelect("getCheckedItems").join(",");
-        filterParams.PageIndex = 1;
+        filterParams.Site = siteDdl.multiSelect("getCheckedItemsByText").join(",");
+        filterParams.PageIndex = 0;
         filterParams.PageSize = 100;
         filterParams.Cache = false;
         //debugger
@@ -151,8 +151,9 @@
                 itemsPerPageArray: CMS.pagerRanges,
                 totalItem: 0,
                 pagerSelectCallBack: function (index, pageSize) {
-                    filterParams.Page = index;
-                    filterParams.Size = pageSize;
+                    console.log("index, pageSize", index, pageSize)
+                    filterParams.PageIndex = index;
+                    filterParams.PageSize = pageSize;
                     filterParams.Cache = true;
                     getChatBot();
                 }
@@ -177,7 +178,6 @@
     const renderGridChatBots = (data) => {
         const bodyData = [];
         let columns;
-        let startIndex = filterParams.PageIndex * filterParams.PageSize + 1;
         //ui-icon-gear
         for (var i = 0, max = data.length; i < max; i++) {
             const {
@@ -195,7 +195,6 @@
                 SubAccID
             } = data[i];
             const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
-            const config = '<span class="ui-icon ui-icon-gear ico-config" id="btn-config-chatBot" data-cust-id="' + i + '"></span>'
             const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
             columns = [
                 {Name: "ColNo", Value: ""},
@@ -208,7 +207,7 @@
                 {Name: "Level", Value: Level},
                 {Name: "Currency", Value: Currency},
                 {Name: "Status", Value: AccStatus},
-                {Name: "Config", Value: renderConfigCell(CusID,BotID,SubAccID)}
+                {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID)}
             ];
             const css = (i & 1) == 1 ? 'freegrid-even' : '';
             bodyData.push({Columns: columns, CssClass: css});
@@ -219,7 +218,6 @@
 
     const getChatBot = () => {
         //   CMS.hideInlineMsg(elements.resultMessageDiv);
-        const filterParams = getFilterParams();
         const resetSortDirection = () => {
             $.each(gridOptions.columns, function (index, value) {
                 value.SortDirection = value.Name !== filterParams.SortField
@@ -307,6 +305,7 @@
 
         $("#formChatbotMapping").submit(function (event) {
             event.preventDefault();
+            resetFilterParams();
             getChatBot();
         });
 
@@ -319,7 +318,7 @@
         var configChatBotModule = new ConfigChatBotModule(
             viewResources,
             elements.table,
-            elements.addGlobalSettingForm.clone(),
+            elements.formChatBotConfig.clone(),
             elements.resultMessageDiv);
         configChatBotModule.initialize();
 

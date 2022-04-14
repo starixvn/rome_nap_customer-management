@@ -5,6 +5,6 @@
     public class GetCurrencyListCriteria : CriteriaBase
     {
         public override string GetSettingKey()
-            => "NAP_Chatbot_CurrencySel";
+            => "Acc_ExchangeSel";
     }
 }

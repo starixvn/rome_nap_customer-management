@@ -3,14 +3,13 @@
     using Fanex.NAP.Framework.Data;
     public class GetSiteCriteria : CriteriaBase
     {
-        public GetSiteCriteria(bool isSpecial)
+        public GetSiteCriteria(int isSpecial)
         {
-            this.isSpecial = isSpecial;
+            this.Mode = isSpecial;
         }
 
-        public bool isSpecial { get; }
-
+        public int Mode { get; }
         public override string GetSettingKey()
-            => "NAP_Chatbot_SiteSel";
+            => "Acc_SiteSel_Credit";
     }
 }

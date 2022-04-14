@@ -23,7 +23,7 @@
                         yield return new SelectListItem
                         {
                             Text = reader["Currency"].ToString(),
-                            Value = reader["Id"].ToString()
+                            Value = reader["ExchangeID"].ToString()
                         };
                 }
             }
@@ -40,6 +40,7 @@
                         yield return new SelectListItem
                         {
                             Text = reader["site"].ToString(),
+                            Value = reader["siteid"].ToString()
                         };
                     }
                 }

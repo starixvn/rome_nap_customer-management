@@ -4,7 +4,7 @@
         resultMessageDiv: $("#div-result-message"),
         table: $("#chatBots-list"),
         formChatBotConfig: $("#formChatBotConfig"),
-        messengerUserNameTextbox: $("#txt-messengerUserName"),
+        chatIDTextbox: $("#txt-chatID"),
         userNameSubAccountTextbox: $("#txt-userNameSubAccount"),
         statusDropdown: $("#ddl-status"),
         levelDropdown: $("#ddl-level"),
@@ -37,7 +37,7 @@
 
     const resetFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
-        filterParams.MessengerName = $.trim(elements.messengerUserNameTextbox.val());
+        filterParams.ChatID = $.trim(elements.chatIDTextbox.val());
         filterParams.IsSubAccOnly = elements.subAccountOnly.val();
         filterParams.Level = elements.levelDropdown.val();
         filterParams.AccStatus = elements.statusDropdown.val();
@@ -69,9 +69,9 @@
                 Sort: true
             },
             {
-                HeaderText: viewResources.MessengerUserName,
+                HeaderText: viewResources.ChatID,
                 Width: 160,
-                Name: "MessengerUserName",
+                Name: "ChatID",
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
@@ -174,6 +174,24 @@
             '"></span>'
         ].join("");
     }
+    const renderChatIDCell=(chatId)=>{
+        return [
+            '<span class="ui-icon ui-icon-document tool-tip" href="javascript:;" title="',
+            chatId,
+            '"></span>'
+        ].join("");
+        $(".tool-tip").tooltip({
+            position: {
+                my: "left top",
+                at: "right+5 top-5",
+                collision: "none"
+            },
+            tooltipClass: "custom-tooltip-styling",
+            create: function( event, ui ) {
+                console.log("tooltip opened")
+            }
+        });
+    }
 
     const renderGridChatBots = (data) => {
         const bodyData = [];
@@ -182,7 +200,7 @@
         for (var i = 0, max = data.length; i < max; i++) {
             const {
                 ChatBotName,
-                MessengerUserName,
+                ChatID,
                 LinkStatus,
                 UserName,
                 SubAccount,
@@ -199,7 +217,7 @@
             columns = [
                 {Name: "ColNo", Value: ""},
                 {Name: "ChatBotName", Value: ChatBotName},
-                {Name: "MessengerUserName", Value: MessengerUserName},
+                {Name: "ChatID", Value: renderChatIDCell(ChatID)},
                 {Name: "UserName", Value: UserName},
                 {Name: "SubAccount", Value: SubAccount},
                 {Name: "LinkingStatus", Value: linkStatusFormatted},

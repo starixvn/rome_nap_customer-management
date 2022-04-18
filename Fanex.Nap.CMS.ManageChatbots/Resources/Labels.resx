@@ -162,4 +162,7 @@
   <data name="UserName" xml:space="preserve">
     <value>Username</value>
   </data>
+  <data name="ChatID" xml:space="preserve">
+    <value>Chat ID</value>
+  </data>
 </root>

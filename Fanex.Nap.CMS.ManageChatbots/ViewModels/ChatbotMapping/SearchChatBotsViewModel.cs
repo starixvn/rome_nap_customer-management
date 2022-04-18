@@ -22,6 +22,8 @@
         
         public int PageSize { get; set; }
         
+        public long? ChatID { get; set; }
+        
         public int TotalRows { get; set; }
         
         public bool Cache { get; set; }

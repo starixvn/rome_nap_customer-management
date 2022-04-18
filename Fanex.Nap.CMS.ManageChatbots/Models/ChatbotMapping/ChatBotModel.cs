@@ -6,12 +6,12 @@
         {
         }
 
-        public ChatBotModel(string chatBotName, string messengerUserName, string userName, string subAccount,
+        public ChatBotModel(string chatBotName, long chatID, string userName, string subAccount,
             string linkStatus, string language, string level, string currency, string accStatus, int cusId,
             int subAccId, int botId)
         {
             ChatBotName = chatBotName;
-            MessengerUserName = messengerUserName;
+            ChatID = chatID;
             UserName = userName;
             SubAccount = subAccount;
             LinkStatus = linkStatus;
@@ -26,7 +26,8 @@
 
 
         public string ChatBotName { get; set; }
-        public string MessengerUserName { get; set; }
+        
+        public long ChatID { get; set; }
         public string UserName { get; set; }
         public string SubAccount { get; set; }
         public string LinkStatus { get; set; }

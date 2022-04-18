@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
     using Infrastructure.Controllers;
@@ -36,7 +35,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 
         public JsonResult SearchChatBots(SearchChatBotsViewModel param)
         {
-            var chatBots = _service.SearchChatBots(param);
+            var chatBots = _service.SearchChatBots(param, CurrentSession.UserId);
 
             return JsonData(chatBots);
         }
@@ -44,14 +43,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         public ActionResult ChatBotConfig(GetConfigViewModel param)
         {
             var chatBotConfig = _service.GetConfig(param);
-            
-            return  View("~/Areas/MangeChatbots/Views/ChatbotMapping/_ConfigChatBot.cshtml", chatBotConfig);
-        } 
+
+            return PartialView("~/Areas/MangeChatbots/Views/ChatbotMapping/_ConfigChatBot.cshtml", chatBotConfig);
+        }
+
         //TODO LÀM PARAM CỦA UPDATECHATBOTCONFIG
         public JsonResult UpdateChatBotConfig(ChatBotsConfigModel param)
         {
             //var chatBotConfig = _service.GetConfig(param);
-            
+
             return JsonData("");
         }
     }

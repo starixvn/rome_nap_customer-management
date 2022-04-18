@@ -35,11 +35,25 @@
             return isHasAccessSpecialSites;
         }
 
-        public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel)
+        public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel, int customerId)
         {
-            var rawData = _repository.GetChatBots(new GetChatBotsCriteria(paramModel.MessengerName, paramModel.Username,
-                paramModel.IsSubAccOnly, paramModel.Site, paramModel.LinkStatus, paramModel.Level, paramModel.Currency,
-                paramModel.AccStatus,paramModel.PageIndex+1,paramModel.PageSize));
+            var criteria = new GetChatBotsCriteria
+            {
+                ChatID = paramModel.ChatID,
+                Username = paramModel.Username,
+                IsSubAccOnly = paramModel.IsSubAccOnly,
+                Site = paramModel.Site,
+                LinkStatus = paramModel.LinkStatus,
+                Level = paramModel.Level,
+                Currency = paramModel.Currency,
+                Status = paramModel.AccStatus,
+                PageIndex = paramModel.PageIndex + 1,
+                PageSize = paramModel.PageSize,
+                IsSpecialSite = HasSpecialSitePermission(customerId)
+            };
+            
+            
+            var rawData = _repository.GetChatBots(criteria);
 
             return new ChatBotsMappingModel(rawData.Count(), rawData);
         }

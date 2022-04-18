@@ -70,6 +70,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chat ID.
+        /// </summary>
+        public static string ChatID {
+            get {
+                return ResourceManager.GetString("ChatID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Config.
         /// </summary>
         public static string Config {

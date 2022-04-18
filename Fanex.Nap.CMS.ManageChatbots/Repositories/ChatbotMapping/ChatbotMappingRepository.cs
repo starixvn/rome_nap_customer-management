@@ -113,7 +113,7 @@
         private static ChatBotModel ChatBotMappingItem(IDataReader reader)
             => new ChatBotModel(
                 reader["BotName"].ToString(),
-                reader["MessengerName"].ToString(),
+                Convert.ToInt64(reader["ChatID"]),
                 reader["username"].ToString(), reader["SubAccount"].ToString(),
                 reader["LinkStatus"].ToString(), reader["language"].ToString(),
                 RoleIdConstants.GetRoleName(Convert.ToInt16(reader["roleid"])),
@@ -126,7 +126,7 @@
             var chatBotModel = new ChatBotModel
             {
                 ChatBotName = reader["BotName"].ToString(),
-                MessengerUserName = reader["MessengerName"].ToString(),
+                ChatID = Convert.ToInt64(reader["ChatID"]),
                 UserName = reader["username"].ToString(),
                 SubAccount = reader["SubAccount"].ToString(),
                 SubAccID = Converter.ToInt(reader["SubAccID"]),

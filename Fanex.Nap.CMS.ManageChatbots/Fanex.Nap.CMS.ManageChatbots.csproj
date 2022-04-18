@@ -153,7 +153,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\ChatbotMapping\ChatBotMappingService.cs" />
     <Compile Include="Services\ChatbotHistory\ChatbotHistoryService.cs" />
     <Compile Include="Services\ChatbotHistory\IChatbotHistoryService.cs" />
     <Compile Include="Services\ChatbotMapping\ChatbotMappingService.cs" />

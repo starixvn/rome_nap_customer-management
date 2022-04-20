@@ -1,39 +1,15 @@
 ﻿"use strict";
 
-function ConfigChatBotModule(viewResources, table, form, resultMessageDiv) {
-    function query(CusId, BotId, SubAccId) {
-        //  CMS.disableInput();
-        CMS.getHtml(
-            CMS.resolveRootUrl("ChatbotMapping/ChatBotConfig?" + $.param({
-                CusId: CusId,
-                BotId: BotId,
-                SubAccId: SubAccId
-            })),
-            function (html) {
-                if (html.length) {
-                    var addHandler = new AddGlobalSetting(html);
-                    addHandler.initialize();
-                }
-                /*   var jsonData = $.parseJSON(data);
-   
-                   console.log("jsonData", jsonData);
-                   /!*if (jsonData.Code === 0) {
-                       CMS.showInlineSuccessMsg(jsonData.Message, resultMessageDiv, true);
-                   } else {
-                       CMS.showInlineErrorMsg(jsonData.Message, resultMessageDiv);
-                   }*!/
-                   const renderChatBotInfo = () => {
-                       $("#Username").text = "aaaaaaaaaaaaaa";
-                       //$("#Username").val("bababababababa")
-                   }
-                   if (jsonData.ChatBotModel) {
-                       renderChatBotInfo();
-   
-                       var addHandler = new AddGlobalSetting($("#formChatBotConfig").clone());
-                       addHandler.initialize();
-                   }*/
-
-            });
+function ConfigChatBotModule(viewResources, table) {
+    function showPopup(cusId, botId, subAccId) {
+        CMS.getHtml(CMS.resolveRootUrl("ChatbotMapping/ChatBotConfig?" + $.param({
+            CusId: cusId, BotId: botId, SubAccId: subAccId
+        })), function (html) {
+            if (html.length) {
+                var popup = new PopupConfig(html);
+                popup.initialize();
+            }
+        });
     }
 
     this.initialize = function () {
@@ -43,32 +19,34 @@ function ConfigChatBotModule(viewResources, table, form, resultMessageDiv) {
             var botId = $this.data("botid");
             var subAccId = $this.data("subaccid");
             console.log("custId, botid, subaccid", custId, botId, subAccId)
-            query(custId, botId, subAccId)
+            showPopup(custId, botId, subAccId)
 
         });
     };
 }
 
-function AddGlobalSetting(form) {
+function PopupConfig(form) {
 
     const updateFunctionConfig = () => {
-        CMS.callAjax(
-            this,
-            CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"),
-            {Test: "jack update config "},
-            function (data) {
-                var jsonData = $.parseJSON(data);
-                console.log(jsonData)
+        CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), {Test: "jack update config "}, function (data) {
+            var jsonData = $.parseJSON(data);
+            console.log(jsonData)
 
-            });
+        });
     }
-
-    this.initialize = function () {
-        CMS.modal("Config Chatbot", form, {resizable: false});
-
+    const bindingEvents = () => {
+        $('.toggle-on-off').click(function (event) {
+            event.preventDefault();
+            $(this).toggleClass('status-on status-off');
+        });
         $("#formChatBotConfig").submit(function (event) {
             event.preventDefault();
             updateFunctionConfig();
         });
+    };
+    this.initialize = function () {
+        CMS.modal("Config Chatbot", form, {resizable: false});
+
+        bindingEvents();
     };
 }

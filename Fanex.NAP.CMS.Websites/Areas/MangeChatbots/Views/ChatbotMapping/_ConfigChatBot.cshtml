@@ -10,9 +10,15 @@
                 <div>Chatbot Name:</div>
             </div>
             <div class="col">
-                <div id="BotSerVice"><b>Telegram</b></div>
-                <div id="Username"><b>@Model.ChatBotModel.UserName</b></div>
-                <div id="ChatBotName"><b>@Model.ChatBotModel.ChatBotName</b></div>
+                <div id="BotSerVice">
+                    <b>Telegram</b>
+                </div>
+                <div id="Username">
+                    <b>@Model.ChatBotModel.UserName</b>
+                </div>
+                <div id="ChatBotName">
+                    <b>@Model.ChatBotModel.ChatBotName</b>
+                </div>
             </div>
             <div class="col">
                 <div>Msg. Username:</div>
@@ -20,11 +26,30 @@
                 <div>Status</div>
             </div>
             <div class="col">
-                <div id="MsgUsername"><b>@Model.ChatBotModel.ChatID</b></div>
-                <div id="SubAccount"><b>@Model.ChatBotModel.SubAccount</b></div>
+                <div id="MsgUsername">
+                    <b>@Model.ChatBotModel.ChatID</b>
+                </div>
+                <div id="SubAccount">
+                    @if (@Model.ChatBotModel.SubAccount == "")
+                    {
+                        <br/>
+                    }
+                    else
+                    {
+                        <b>@Model.ChatBotModel.SubAccount</b>
+                    }
+                </div>
                 <div>
-                    <span id="Status">Linked</span>
-                    <btn>Unlink</btn>
+
+                    @if (@Model.ChatBotModel.IsVerifyOTP && @Model.ChatBotModel.Status)
+                    {
+                        <span class="high-light green">Linked</span>
+                        <button type="button" class="red-button" id="btn-cancel">Unlink</button>
+                    }
+                    else
+                    {
+                        <span class="high-light yellow">Verifying</span>
+                    }
                 </div>
             </div>
 
@@ -39,31 +64,43 @@
                 <select id="ddl-Language" class="combobox-autocomplete width-200"></select>
             </div>
         </div>
-        <div>
-            <button type="submit" class="submit">Save</button>
-        </div>
 
-        @*<div>
+
+        <div>
             <table>
                 <tr>
                     <th>Functions/Notifications</th>
-                    <th>Enable</th>
+                    <th class="align-center">Enable</th>
                 </tr>
-                <tr>
-                    <td>Yesterday Win Loss Notification</td>
-                    <td>Icon</td>
-                </tr>
-                <tr>
-                    <td>Personal Message</td>
-                    <td>
-                        <div class="toggle-on-off status-on"/>'
-                    </td>
-                </tr>
+                @foreach (var functionConfig in @Model.FunctionConfigs)
+                {
+                    <tr>
+                        <td>@functionConfig.FunctionName</td>
+                        @if (@functionConfig.IsEnabled)
+                        {
+                            <td>
+                                <div class="float-center">
+                                    <div class="toggle-on-off status-on" funct-id=@functionConfig.FunctionId> </div>
+                                </div>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <div class="float-center">
+                                    <div class="toggle-on-off status-off" funct-id=@functionConfig.FunctionId> </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+
             </table>
-           <div>
-                <button type="submit" class="submit">Save</button>
+            <div class="popup-footer">
+                <button type="submit" class="blue-button submit">Save</button>
+                <button type="button" class="red-button">Close</button>
             </div>
 
-        </div>*@
+        </div>
     </div>
 }

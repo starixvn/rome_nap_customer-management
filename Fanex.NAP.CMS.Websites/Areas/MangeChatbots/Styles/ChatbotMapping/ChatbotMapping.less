@@ -15,21 +15,25 @@
   }
 }
 
+.high-light {
+  font-weight: bolder;
+
+  &.yellow {
+    color: #ffc326;
+  }
+
+  &.green {
+    color: #66b65c;
+  }
+}
+
 .table-cell {
   .ico-config {
     cursor: pointer;
   }
-  .high-light{
-  
-    font-weight: bolder;
-    &.yellow{
-      color: #ffc326;
-    }
-    &.green {
-      color: #66b65c;
-    }
-  }
+
 }
+
 .custom-tooltip-styling {
   padding: 10px 20px;
   color: white;
@@ -38,8 +42,10 @@
   text-transform: uppercase;
   box-shadow: 0 0 7px black;
 }
+
 #config-chat-bot-popup {
   width: auto;
+
   .container {
     display: flex;
     flex-direction: row;
@@ -48,18 +54,20 @@
       flex: content;
       margin: 0rem 0.5rem 0rem 0rem;
     }
-    
-    .col,.col-1{
-      div{
+
+    .col, .col-1 {
+      div {
         margin-bottom: 0.2rem;
       }
     }
   }
-  .ui-combobox{
+
+  .ui-combobox {
     float: right;
   }
+
   table {
-   // font-family: arial, sans-serif;
+    // font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
     margin-top: 0.5rem;
@@ -70,9 +78,35 @@
     text-align: left;
     padding: 5px;
   }
-  th{
+
+  th {
     background: #ddebf7;
   }
 
+  .status-on {
+    background-image: url('../../../../Content/Themes/img/toggleON.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    width: 41px;
+    height: 20px;
+    
+  }
+
+  .status-off {
+    background-image: url('../../../../Content/Themes/img/toggleOFF.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    width: 41px;
+    height: 20px;
+  }
+
+  .popup-footer {
+    float: right;
+    margin-top: 0.5rem;
+  }
   
+  .float-center{
+    display: flex;
+    justify-content: center;
+  }
 }

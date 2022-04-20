@@ -132,7 +132,8 @@
                 SubAccID = Converter.ToInt(reader["SubAccID"]),
                 CusID = Converter.ToInt(reader["custid"]),
                 IsVerifyOTP = Converter.ToBool(reader["isVerifyOTP"]),
-                Language = reader["language"].ToString()
+                Language = reader["language"].ToString(),
+                Status = Converter.ToBool(reader["Status"])
             };
 
             return chatBotModel;

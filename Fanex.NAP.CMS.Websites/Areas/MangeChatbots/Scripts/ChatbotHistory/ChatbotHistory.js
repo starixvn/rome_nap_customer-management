@@ -4,7 +4,10 @@
     var freegrid = $("#freegrid");
     var formSearch = $("#formSearch");
     var userName = $("#txtUserName");
-    var messengerUserName = $("#txtMessengerUsername");
+    var chatId = $("#txtChatId");
+    var functionId = $("#ddl-Functions");
+    var status = $("#ddl-SendStatus");
+    var cachedPageSize = 50;
 
     function initDateTimeFields() {
         fromToDatePicker.nexDatePicker({
@@ -36,18 +39,28 @@
         $("#dpk-todate").datepicker("setDate", resources.defaultToDate);
     }
 
-    function getGirdOptions()
+    function getGridOptions()
     {
         var columns = [
             { HeaderText: "Sent By", Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
             { HeaderText: "Message Content", Width: 840, Name: "colMessageContent", HeaderAlign: "center" },
-            { HeaderText: "Send Status", Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: "Send Status", Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
             { HeaderText: "Date (GMT - 4)", Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
         ]
 
         return {
             columns: columns,
-            girdExpandHeight: 140
+            girdExpandHeight: 140,
+            showDistinctRow: false,
+            showPager: true,
+            customPager: true,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 200, 300, 500],
+                pagerSelectCallBack: function (pageIndex, pageSize) {
+                    cachedPageSize = pageSize;
+                    getChatbotHistories(pageIndex, pageSize);
+                }
+            }
         }
     }
 
@@ -59,30 +72,37 @@
             if (userName.val().trim().includes(",")) {
                 Validator.showError(userName, "Please enter only 1 Username", "n");
             }
-            else if (messengerUserName.val().trim().includes(",")) {
-                Validator.showError(messengerUserName, "Please enter only 1 Messenger Username", "n");
+            else if (chatId.val().trim().includes(",")) {
+                Validator.showError(chatId, "Please enter only 1 Messenger Username", "n");
             } else {
-                getChatbotHistories();
+                getChatbotHistories(0, cachedPageSize);
             }
         })
     }
 
-    function getChatbotHistories() {
+    function getChatbotHistories(pageIndex, pageSize) {
+        var dateRange = fromToDatePicker.nexDatePicker("getDateRange");
+
         var url = formSearch.attr("action")
-            + "?username=" + "test"
-            + "&messengerusername=" + "test"
-            + "&fromdate=" + "1/1/2020"
-            + "&todate=" + "1/1/2021"
-            + "&function=" + "test"
-            + "&sendstatus=" + "fail";
+            + "?username=" + userName.val().trim()
+            + "&chatid=" + chatId.val().trim()
+            + "&functionid=" + functionId.val()
+            + "&fromdate=" + dateRange.FromDate
+            + "&todate=" + dateRange.ToDate
+            + "&status=" + status.val()
+            + "&pageindex=" + pageIndex + 1
+            + "&pagesize=" + pageSize;
 
         CMS.getJson(url, function (data) {
             var jsonData = $.parseJSON(data);
 
-            var girdOptions = getGirdOptions();
-            girdOptions.bodyRows = renderChatbotHistories(jsonData);
+            var gridOptions = getGridOptions();
+            gridOptions.pagerOption.currentPage = pageIndex;
+            gridOptions.pagerOption.itemsPerPage = pageSize;
+            gridOptions.pagerOption.totalItem = 49;
+            gridOptions.bodyRows = renderChatbotHistories(jsonData);
 
-            freegrid.removeClass("display-none").fanexGrid(girdOptions);
+            freegrid.removeClass("display-none").fanexGrid(gridOptions);
         });
     }
 
@@ -92,22 +112,22 @@
 
         $.each(data, function (index, value) {
             columns = [
-                { Name: "colSentBy", Value: value.SendBy },
-                { Name: "colMessageContent", Value: value.MessageContent },
-                { Name: "colSendStatus", Value: value.SendStatus },
-                { Name: "colDate", Value: value.Date },
+                { Name: "colSentBy", Value: value.SentBy },
+                { Name: "colMessageContent", Value: value.Message },
+                { Name: "colSendStatus", Value: value.StatusStr },
+                { Name: "colDate", Value: value.CreatedDateStr },
             ];
 
             data = {
                 Columns: columns
             }
 
-            if (value.SendBy === "Customer") {
+            if (value.SentBy === "Customer") {
                 columns[1]["TdClass"] = 'cell-content-class';
                 data["CssClass"] = 'body-class-bg';
             }
 
-            if (value.SendStatus === "Failed") {
+            if (value.Status === 2) {
                 data["CssClass"] = 'body-class-text';
             }
 

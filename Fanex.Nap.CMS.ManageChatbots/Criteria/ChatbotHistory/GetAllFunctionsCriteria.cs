@@ -10,6 +10,6 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
     public class GetAllFunctionsCriteria : CriteriaBase
     {
         public override string GetSettingKey()
-            => "";
+            => "Age_Chatbot_BotFunctionSelAll";
     }
 }

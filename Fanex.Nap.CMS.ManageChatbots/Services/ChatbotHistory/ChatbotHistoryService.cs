@@ -11,8 +11,11 @@ using System.Web.Mvc;
 
 namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
 {
+    using Fanex.Nap.CMS.Infrastructure.Controllers;
+
     public class ChatbotHistoryService : IChatbotHistoryService
     {
+
         private readonly IChatbotHistoryRepository repository;
 
         public ChatbotHistoryService(IChatbotHistoryRepository repository = null)
@@ -23,11 +26,14 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
         {
             var criteria = new ChatbotHistoryCriteria(
                 viewModel.Username,
-                viewModel.MessengerUsername,
+                viewModel.ChatID,
+                viewModel.FunctionID,
                 viewModel.FromDate,
                 viewModel.ToDate,
-                viewModel.Function,
-                viewModel.SendStatus);
+                viewModel.Status,
+                viewModel.IsSpecial,
+                viewModel.PageIndex,
+                viewModel.PageSize);
             var result = this.repository.GetChatbotHistories(criteria);
 
             return result;

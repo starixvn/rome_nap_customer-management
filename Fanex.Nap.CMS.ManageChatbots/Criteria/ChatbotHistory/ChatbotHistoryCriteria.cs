@@ -11,33 +11,45 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
     {
         public ChatbotHistoryCriteria(
             string userName,
-            string messengerUsername,
+            int chatID,
+            int functionID,
             DateTime fromDate,
             DateTime toDate,
-            string function,
-            string sendStatus)
+            byte sendStatus,
+            byte isSpecial,
+            int pageIndex,
+            int pageSize)
         {
-            Username = userName;
-            MessengerUsername = messengerUsername;
+            Username = userName ?? String.Empty;
+            ChatID = chatID;
+            FunctionID = functionID;
             FromDate = fromDate;
             ToDate = toDate;
-            Function = function;
-            SendStatus = sendStatus;
+            Status = sendStatus;
+            IsSpecial = isSpecial;
+            PageIndex = pageIndex;
+            PageSize = pageSize;
         }
 
-        public string Username { get; }
+        public string Username { get; set; }
 
-        public string MessengerUsername { get; }
+        public int ChatID { get; }
+
+        public int FunctionID { get; }
 
         public DateTime FromDate { get; }
 
         public DateTime ToDate { get; }
 
-        public string Function { get; }
+        public byte Status { get; }
 
-        public string SendStatus { get; }
+        public byte IsSpecial { get; }
+
+        public int PageIndex { get; }
+
+        public int PageSize { get; }
 
         public override string GetSettingKey()
-            => "";
+            => "NAP_Chatbot_CustBotMessageSel";
     }
 }

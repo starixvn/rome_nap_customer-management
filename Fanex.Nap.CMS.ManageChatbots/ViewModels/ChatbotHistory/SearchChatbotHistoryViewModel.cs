@@ -10,14 +10,20 @@ namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
     {
         public string Username { get; set; }
 
-        public string MessengerUsername { get; set; }
+        public int ChatID { get; set; }
+
+        public int FunctionID { get; set; }
 
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }
 
-        public string Function { get; set; }
+        public byte Status { get; set; }
 
-        public string SendStatus { get; set; }
+        public byte IsSpecial { get; set; }
+
+        public int PageIndex { get; set; }
+
+        public int PageSize { get; set; }
     }
 }

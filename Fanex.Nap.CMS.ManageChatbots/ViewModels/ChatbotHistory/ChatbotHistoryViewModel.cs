@@ -21,8 +21,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
             {
                  new SelectListItem{Text = "All", Value = "0"},
                  new SelectListItem{Text = "Sent", Value = "1"},
-                 new SelectListItem{Text = "Sending", Value = "2"},
-                 new SelectListItem{Text = "Failed", Value = "3"}
+                 new SelectListItem{Text = "Failed", Value = "2"}
             };
 
         public DateTime DefaultFromDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);

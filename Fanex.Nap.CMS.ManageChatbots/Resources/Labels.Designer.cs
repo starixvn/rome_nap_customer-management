@@ -196,7 +196,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UserName/Sub Account.
+        ///   Looks up a localized string similar to UserName / Sub Account.
         /// </summary>
         public static string UserNameSubAccount {
             get {

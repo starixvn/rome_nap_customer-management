@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,23 +10,28 @@ namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
     public class ChatbotHistoryModel
     {
         public ChatbotHistoryModel(
-            string sendBy,
-            string messageContent,
-            string sendStatus,
-            DateTime date) 
+            string sentBy,
+            string message,
+            DateTime createdDate,
+            byte status) 
         {
-            SendBy = sendBy;
-            MessageContent = messageContent;
-            SendStatus = sendStatus;
-            Date = date; 
+            SentBy = sentBy;
+            Message = message;
+            CreatedDate = createdDate;
+            Status = status;
         }
 
-        public string SendBy { get; }
+        public string SentBy { get; set; }
 
-        public string MessageContent { get; }
+        public string Message { get; set; }
 
-        public string SendStatus { get; }
+        public DateTime CreatedDate { get; set; }
 
-        public DateTime Date { get; }
+        public string CreatedDateStr => CreatedDate.ToString("MM/dd/yyyy HH:mm:ss") ?? string.Empty;
+
+        public byte Status { get; set; }
+
+        public string StatusStr => SendStatusConst.SendStatusList[Status];
+
     }
 }

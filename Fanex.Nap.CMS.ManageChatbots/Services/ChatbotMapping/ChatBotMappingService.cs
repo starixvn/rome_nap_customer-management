@@ -7,6 +7,7 @@
     using Repositories.ChatbotMapping;
     using Models.ChatbotMapping;
     using ViewModels.ChatbotMapping;
+    using Fanex.Nap.CMS.Infrastructure.Models;
 
     public class ChatBotMappingService : IChatBotMappingService
     {
@@ -24,15 +25,20 @@
 
         public IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission)
         {
-            return _repository.GetSites(new GetSiteCriteria(0));
+            return _repository.GetSites(new GetSiteCriteria { Mode = 0 });
         }
 
-        public bool HasSpecialSitePermission(int customerId)
+        public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
         {
-            var accountingPolicy = _repository.GetNapAccountingPolicy(new GetNapAccountingPolicy(customerId));
-            var isHasAccessSpecialSites = accountingPolicy.Any(policy => policy.FunctionName == "[AccessSpecialSites]");
+            var criteria = new GetConfigChatBotCriteria()
+            {
+                CustID = paramModel.CusId,
+                BotID = paramModel.BotId,
+                SubAccID = paramModel.SubAccId
+            };
 
-            return isHasAccessSpecialSites;
+            var chatBotsConfig = _repository.GetConfigChatBot(criteria);
+            return chatBotsConfig;
         }
 
         public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel, int customerId)
@@ -51,20 +57,41 @@
                 PageSize = paramModel.PageSize,
                 IsSpecialSite = HasSpecialSitePermission(customerId)
             };
-            
-            
+
+
             var rawData = _repository.GetChatBots(criteria);
 
             return new ChatBotsMappingModel(rawData.Count(), rawData);
         }
 
-        public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
+        public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorID, string IP,
+            int userID)
         {
-            var chatBotsConfig =
-                _repository.GetConfigChatBot(new GetConfigChatBotCriteria(paramModel.CusId, paramModel.BotId,
-                    paramModel.SubAccId));
+            var criteria = new UpdFunctionsChatBotCriteria()
+            {
+                Creator = CreatorID,
+                IP = IP,
+                FunctionConfigs = functionConfigs,
+                UserID = userID
+            };
 
-            return chatBotsConfig;
+            var result = _repository.ExecuteNonQuery(criteria);
+
+            if (result.IsSuccess)
+            {
+                result.Message = "Updated successfully";
+            }
+
+            return result;
+        }
+
+        public bool HasSpecialSitePermission(int customerId)
+        {
+            var accountingPolicy =
+                _repository.GetNapAccountingPolicy(new GetNapAccountingPolicy { CustID = customerId });
+            var isHasAccessSpecialSites = accountingPolicy.Any(policy => policy.FunctionName == "[AccessSpecialSites]");
+
+            return isHasAccessSpecialSites;
         }
     }
 }

@@ -445,6 +445,7 @@
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\_ConfigChatbot.js" />
     <Content Include="Areas\MangeChatbots\Styles\ChatbotMapping\ChatbotMapping.less" />
+    <Content Include="Areas\MangeChatbots\Styles\Images\sprites.png" />
     <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\Index.cshtml" />
     <Content Include="Areas\MangeChatbots\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
@@ -1117,7 +1118,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

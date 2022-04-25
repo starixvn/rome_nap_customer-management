@@ -62,7 +62,7 @@
             },
             {
                 HeaderText: viewResources.ChatBotName,
-                Width: 150,
+                Width: 180,
                 Name: "ChatBotName",
                 HeaderAlign: "center",
                 CellAlign: "left",
@@ -70,22 +70,21 @@
             },
             {
                 HeaderText: viewResources.ChatID,
-                Width: 160,
+                Width: 60,
                 Name: "ChatID",
                 HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
+                CellAlign: "center",
             },
             {
                 HeaderText: viewResources.UserName,
-                Width: 160,
+                Width: 180,
                 Name: "UserName",
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
             }, {
                 HeaderText: viewResources.SubAccount,
-                Width: 160,
+                Width: 180,
                 Name: "SubAccount",
                 HeaderAlign: "center",
                 CellAlign: "left",
@@ -112,7 +111,7 @@
                 CellAlign: "center",
             }, {
                 HeaderText: viewResources.Currency,
-                Width: 80,
+                Width: 70,
                 Name: "Currency",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -124,7 +123,7 @@
                 CellAlign: "center",
             }, {
                 HeaderText: viewResources.Config,
-                Width: 80,
+                Width: 60,
                 Name: "Config",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -163,12 +162,14 @@
         };
     }
 
-    const renderConfigCell = (custId, botId, subAccId) => {
+    const renderConfigCell = (custId, botId, subAccId,userId) => {
         return [
-            '<span class="ui-icon ui-icon-gear ico-config" href="javascript:;" data-custId="',
+            '<span class="ui-icon ico-config" href="javascript:;" data-custId="',
             custId,
             '" data-botId="',
             botId,
+            '" data-userId="',
+            userId,
             '" data-subAccId="',
             subAccId,
             '"></span>'
@@ -176,7 +177,7 @@
     }
     const renderChatIDCell=(chatId)=>{
         return [
-            '<span class="ui-icon ui-icon-document tool-tip" href="javascript:;" title="',
+            '<span class="ui-icon icon-chat-id tool-tip" href="javascript:;" title="',
             chatId,
             '"></span>'
         ].join("");
@@ -210,7 +211,8 @@
                 AccStatus,
                 CusID,
                 BotID,
-                SubAccID
+                SubAccID,
+                UserID
             } = data[i];
             const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
             const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
@@ -225,7 +227,7 @@
                 {Name: "Level", Value: Level},
                 {Name: "Currency", Value: Currency},
                 {Name: "Status", Value: AccStatus},
-                {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID)}
+                {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID, UserID)}
             ];
             const css = (i & 1) == 1 ? 'freegrid-even' : '';
             bodyData.push({Columns: columns, CssClass: css});

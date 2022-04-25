@@ -135,6 +135,7 @@
     <Compile Include="Criteria\ChatbotMapping\GetConfigChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetSiteCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetNapAccountingPolicy.cs" />
+    <Compile Include="Criteria\ChatbotMapping\UpdFunctionsChatBotCriteria.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotsConfigModel.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="ViewModels\ChatbotMapping\ChatbotMappingViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\GetConfigViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\SearchChatBotsViewModel.cs" />
+    <Compile Include="ViewModels\ChatbotMapping\UpdateChatBotConfigViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -180,6 +182,10 @@
     <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362d3-46e5-43e2-ae63-8c8827f5ca55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
+      <Project>{254a702a-c370-4bf6-b200-2dede2d58ac5}</Project>
+      <Name>Fanex.Nap.CMS.TurnoverControl</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

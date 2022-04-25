@@ -18,7 +18,7 @@ function ConfigChatBotModule(viewResources, table) {
             var custId = $this.data("custid");
             var botId = $this.data("botid");
             var subAccId = $this.data("subaccid");
-            console.log("custId, botid, subaccid", custId, botId, subAccId)
+
             showPopup(custId, botId, subAccId)
 
         });
@@ -26,24 +26,57 @@ function ConfigChatBotModule(viewResources, table) {
 }
 
 function PopupConfig(form) {
-
-    const updateFunctionConfig = () => {
-        CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), {Test: "jack update config "}, function (data) {
+    function submitForm(formData) {
+        CMS.disableInput();
+        CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), formData, function (data) {
             var jsonData = $.parseJSON(data);
-            console.log(jsonData)
 
+            if (jsonData.Code === 0) {
+                CMS.closePopup();
+                /*  CMS.showInlineSuccessMsg(jsonData.Message, inlineMessage, true, function () {
+                      //Todo đã upate dc, giờ sau khi update thì reload page., close popup
+                      CMS.closePopup();
+                      reloadData();
+                  });*/
+            } else {
+                //Todo lam them phan thong bao kq update config
+                //CMS.showInlineErrorMsg(jsonData.Message, inlineMessage);
+            }
         });
     }
+
     const bindingEvents = () => {
         $('.toggle-on-off').click(function (event) {
             event.preventDefault();
-            $(this).toggleClass('status-on status-off');
+            const $this = $(this);
+            $this.toggleClass('status-on status-off');
         });
         $("#formChatBotConfig").submit(function (event) {
             event.preventDefault();
-            updateFunctionConfig();
+            submitForm({ChatBotFunctionConfig: getConfigChatBotFunctions(), UserID: getUserID()})
+        });
+        $('.btn-close').click(function (event) {
+            event.preventDefault();
+            CMS.closePopup();
         });
     };
+
+    const getConfigChatBotFunctions = () => {
+        const functionsConfig = [];
+        $.each($("#functions")[0].children, function (index, item) {
+            const func = (item.cells[1].children[0].children[0]);
+            const functionsID = $(func).data("functid");
+            const functionsIsEnable = $(func).hasClass("status-on");
+            functionsConfig.push({
+                FunctionId: functionsID, IsEnabled: functionsIsEnable
+            })
+        })
+        return functionsConfig;
+    };
+    const getUserID = () => {
+        return $("#username").data("userid");
+    }
+
     this.initialize = function () {
         CMS.modal("Config Chatbot", form, {resizable: false});
 

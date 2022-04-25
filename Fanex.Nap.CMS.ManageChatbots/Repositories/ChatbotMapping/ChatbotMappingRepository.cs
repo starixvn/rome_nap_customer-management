@@ -10,7 +10,7 @@
     using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
     using Fanex.Common;
-
+    using Fanex.Nap.CMS.Infrastructure.Models;
     public class ChatBotMappingRepository : IChatbotMappingRepository
     {
         public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
@@ -133,7 +133,8 @@
                 CusID = Converter.ToInt(reader["custid"]),
                 IsVerifyOTP = Converter.ToBool(reader["isVerifyOTP"]),
                 Language = reader["language"].ToString(),
-                Status = Converter.ToBool(reader["Status"])
+                Status = Converter.ToBool(reader["Status"]),
+                UserID = Converter.ToInt(reader["UserID"]),
             };
 
             return chatBotModel;
@@ -147,6 +148,18 @@
                 Converter.ToBool(reader["status"])
                 );
             return chatBotModel;
+        }
+        public Result ExecuteNonQuery(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+
+                return new Result(
+                    Convert.ToInt32(outputParams["errcode"]),
+                    outputParams["errmsg"].ToString());
+            }
         }
     }
 }

@@ -8,7 +8,15 @@
             FunctionName = functionName;
             IsEnabled = isEnabled;
         }
-
+        public ChatBotFunctionConfig(int functionId, bool isEnabled)
+        {
+            FunctionId = functionId;
+            IsEnabled = isEnabled;
+        }
+        public ChatBotFunctionConfig()
+        {
+            
+        }
         public int FunctionId { get; set; }
         
         public string FunctionName { get; set; }

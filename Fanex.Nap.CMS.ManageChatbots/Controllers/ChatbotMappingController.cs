@@ -4,7 +4,6 @@
     using Infrastructure.Controllers;
     using Services.ChatBotMapping;
     using ViewModels.ChatbotMapping;
-    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
 
     public class ChatBotMappingController : BaseController
     {
@@ -16,7 +15,7 @@
 
         public ChatBotMappingController(IChatBotMappingService service)
         {
-            this._service = service ?? new ChatBotMappingService();
+            _service = service ?? new ChatBotMappingService();
         }
 
         // GET
@@ -46,13 +45,14 @@
 
             return PartialView("~/Areas/MangeChatbots/Views/ChatbotMapping/_ConfigChatBot.cshtml", chatBotConfig);
         }
-
-        //TODO LÀM PARAM CỦA UPDATECHATBOTCONFIG
-        public JsonResult UpdateChatBotConfig(ChatBotsConfigModel param)
+        
+        [HttpPost]
+        public JsonResult UpdateChatBotConfig(UpdateChatBotConfigViewModel viewModel)
         {
-            //var chatBotConfig = _service.GetConfig(param);
+            var result = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig, CurrentSession.UserId,
+                CurrentContext.IP, viewModel.UserID);
 
-            return JsonData("");
+            return JsonData(result, JsonRequestBehavior.DenyGet);
         }
     }
 }

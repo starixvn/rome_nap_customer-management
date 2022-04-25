@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
 {
+    using System;
     public class SearchChatBotsViewModel
     {
         public string MessengerName { get; set; }
@@ -24,17 +25,9 @@
         
         public long? ChatID { get; set; }
         
-        public int TotalRows { get; set; }
-        
-        public bool Cache { get; set; }
-        
-        public short SportType { get; set; }
-        public string SortField { get; set; }
-        public string SortDirection { get; set; }
-
-        /*public bool IsValid()
-            => ExchangeId >= 0
-               && !string.IsNullOrWhiteSpace(SortField)
-               && !string.IsNullOrWhiteSpace(SortDirection);*/
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

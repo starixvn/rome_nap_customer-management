@@ -45,5 +45,7 @@
         public int SubAccID { get; set; }
 
         public int BotID { get; set; }
+  
+        public int UserID { get; set; }
     }
 }

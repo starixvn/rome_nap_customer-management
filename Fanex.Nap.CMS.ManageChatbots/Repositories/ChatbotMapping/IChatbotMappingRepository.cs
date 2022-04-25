@@ -5,13 +5,21 @@
     using Fanex.NAP.Framework.Data;
     using Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
-
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    
     public interface IChatbotMappingRepository
     {
         IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria);
+        
         IEnumerable<SelectListItem> GetSites(ICriteria criteria);
+        
         IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria);
+        
         IEnumerable<ChatBotModel> GetChatBots(ICriteria criteria);
+        
         ChatBotsConfigModel GetConfigChatBot(ICriteria criteria);
+        
+        Result ExecuteNonQuery(ICriteria criteria);
+
     }
 }

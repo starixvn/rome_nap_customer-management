@@ -1,12 +1,8 @@
-﻿using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
 {
+    using System;
+    using Fanex.Data.Repository;
+
     public class ChatbotHistoryCriteria : CriteriaBase
     {
         public ChatbotHistoryCriteria(

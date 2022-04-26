@@ -1,13 +1,10 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
 {
+    using System;
+    using System.Web.Mvc;
+    using System.Collections.Generic;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
+
     public class ChatbotHistoryViewModel
     {
         public ChatbotHistoryViewModel(IEnumerable<SelectListItem> functions)

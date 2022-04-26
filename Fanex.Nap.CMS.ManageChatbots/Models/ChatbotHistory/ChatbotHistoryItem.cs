@@ -1,12 +1,9 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
 {
+    using System;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
+
     public class ChatbotHistoryItem
     {
         public ChatbotHistoryItem(
@@ -27,11 +24,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
 
         public DateTime CreatedDate { get; set; }
 
-        public string CreatedDateStr => CreatedDate.ToString("MM/dd/yyyy HH:mm:ss") ?? string.Empty;
+        public string CreatedDateStr => DateTimeExtensions.ToLongDate24hWithSlash(CreatedDate) ?? string.Empty;
 
         public byte Status { get; set; }
 
         public string StatusStr => SendStatusConst.SendStatusList[Status];
-
     }
 }

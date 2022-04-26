@@ -1,43 +1,38 @@
-﻿using Fanex.Nap.CMS.Infrastructure.Controllers;
-using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using Fanex.Nap.CMS.ManageChatbots.Constants;
-using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
+    using System.Web.Mvc;
+    using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
+    using Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory;
+    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.Nap.CMS.Infrastructure;
+    using Fanex.NAP.Core.Business;
+
     public class ChatbotHistoryController : BaseController
     {
         private readonly IChatbotHistoryService chatbotHistoryservice;
-        private readonly IChatBotMappingService chatbotMappingservice;
 
         public ChatbotHistoryController() : this(null)
         {
-
         }
 
         internal ChatbotHistoryController(IChatbotHistoryService servive)
         {
             this.chatbotHistoryservice = chatbotHistoryservice ?? new ChatbotHistoryService();
-            this.chatbotMappingservice = chatbotMappingservice ?? new ChatBotMappingService();
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotHistory, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var viewModel = new ChatbotHistoryViewModel(chatbotHistoryservice.GetAllFunctions());
+            var functions = new SelectList(chatbotHistoryservice.GetAllFunctions(), "Id", "Name");
+            var viewModel = new ChatbotHistoryViewModel(functions);
             return View("~/Areas/MangeChatbots/Views/ChatbotHistory/Index.cshtml", viewModel);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotHistory, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchChatbotHistoryViewModel viewModel)
         {
-            viewModel.IsSpecial = chatbotMappingservice.HasSpecialSitePermission(CurrentSession.UserId);
-            return JsonData(chatbotHistoryservice.GetChatbotHistories(viewModel));
+            return JsonData(chatbotHistoryservice.GetChatbotHistories(viewModel, CurrentSession.UserId));
         }
     }
 }

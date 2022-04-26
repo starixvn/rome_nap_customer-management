@@ -1,37 +1,34 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
 {
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using System;
+    using System.Collections.Generic;
+    using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
+    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
+    using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
+    using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
 
     public class ChatbotHistoryService : IChatbotHistoryService
     {
-
         private readonly IChatbotHistoryRepository repository;
+        private readonly IChatBotMappingService chatbotMappingservice;
 
-        public ChatbotHistoryService(IChatbotHistoryRepository repository = null)
+        public ChatbotHistoryService(IChatbotHistoryRepository repository = null, IChatBotMappingService chatbotMappingservice = null)
         {
             this.repository = repository ?? new ChatbotHistoryRepository();
+            this.chatbotMappingservice = chatbotMappingservice ?? new ChatBotMappingService();
         }
-        public ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel)
+        public ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel, int userId)
         {
             var criteria = new ChatbotHistoryCriteria(
                 viewModel.Username,
                 viewModel.ChatID,
                 viewModel.FunctionID,
-                viewModel.FromDate,
+                new DateTime(viewModel.FromDate.Year, viewModel.FromDate.Month, viewModel.FromDate.Day, 00, 00, 00),
                 new DateTime(viewModel.ToDate.Year, viewModel.ToDate.Month, viewModel.ToDate.Day, 23, 59, 59),
                 viewModel.Status,
-                viewModel.IsSpecial,
+                chatbotMappingservice.HasSpecialSitePermission(userId),
                 viewModel.PageIndex,
                 viewModel.PageSize);
             var chatbotHistories = this.repository.GetChatbotHistories(criteria);
@@ -39,10 +36,9 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
             return new ChatbotHistoryModel(chatbotHistories, criteria.TotalRows);
         }
 
-        public IEnumerable<SelectListItem> GetAllFunctions()
+        public IEnumerable<IdNameModel> GetAllFunctions()
         {
            return repository.GetAllFunctions(new GetAllFunctionsCriteria());
         }
-    }
-              
+    }  
 }

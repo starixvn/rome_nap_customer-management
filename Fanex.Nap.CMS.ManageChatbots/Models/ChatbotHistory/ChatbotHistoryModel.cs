@@ -1,12 +1,7 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
 {
+    using System.Collections.Generic;
+
     public class ChatbotHistoryModel
     {
         public ChatbotHistoryModel(IEnumerable<ChatbotHistoryItem> chatbotHistories, int totalRows)

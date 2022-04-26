@@ -42,7 +42,7 @@
     function getGridOptions()
     {
         var columns = [
-            { HeaderText: resources.sentBy, Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
+            { HeaderText: resources.sentBy, Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.messageContent, Width: 860, Name: "colMessageContent", HeaderAlign: "center" },
             { HeaderText: resources.sendStatus, Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
             { HeaderText: resources.DateGMT4, Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
@@ -50,14 +50,13 @@
 
         return {
             columns: columns,
-            girdExpandHeight: 140,
             showDistinctRow: false,
-            fullHeight: false,
-            gridHeight: 750,
+            fullHeight: true,
+            gridExpandHeight: 200,
             showPager: true,
             customPager: true,
             pagerOption: {
-                itemsPerPageArray: [50, 100, 200, 300, 500],
+                itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: function (pageIndex, pageSize) {
                     cachedPageSize = pageSize;
                     getChatbotHistories(pageIndex, pageSize);

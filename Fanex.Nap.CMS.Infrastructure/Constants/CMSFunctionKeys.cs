@@ -133,5 +133,8 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string VirtualRateEngine = "VirtualRateEngine";
         public const string VirtualRateEngineAdminPermission = "AdminPermission";
         public const string VirtualRateEngineUserPermission = "UserPermission";
+
+        // Manage Chatbots
+        public const string ChatbotHistory = "ChatbotHistory";
     }
 }

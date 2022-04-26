@@ -38,49 +38,50 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "ChatbotHistory", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
     {
-    <div class="filter-row">
-        <div id="fromtodate-picker"></div>
-      
-        <div class="lbl-field col_4">
-            <label>@Labels.Function</label>
-        </div>
-        <div class="edit-field col_10">
-            @Html.DropDownList(
-            "dllFunctions",
-            Model.Functions,
-            new { @id = "ddl-Functions", @class = "combobox-autocomplete width-200" })
-        </div>
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
 
-    </div>
-    <div class="filter-row">
-        <div class="lbl-field col_6">
-            <label for="txtuserName">@Labels.UserNameSubAccount</label>
-        </div>
-        <div class="edit-field col_8">
-            <input type="text" id="txtUserName" class="width-200" maxlength="4000" />
-        </div>
+            <div class="lbl-field col_4">
+                <label>@Labels.Function</label>
+            </div>
+            <div class="edit-field col_10">
+                @Html.DropDownList(
+                "dllFunctions",
+                Model.Functions,
+                new { @id = "ddl-Functions", @class = "combobox-autocomplete width-200" })
+            </div>
 
-        <div class="lbl-field col_4">
-            <label for="txtChatId">@Labels.ChatID</label>
         </div>
-        <div class="edit-field col_8">
-            <input type="text" id="txtChatId" class="width-200" maxlength="4000" />
-        </div>
+        <div class="filter-row">
+            <div class="lbl-field col_6">
+                <label for="txtuserName">@Labels.UserNameSubAccount</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtUserName" class="width-200" maxlength="4000" />
+            </div>
 
-        <div class="lbl-field col_4">
-            <label>@Labels.SendStatus</label>
-        </div>
-        <div class="edit-field col_10">
-            @Html.DropDownList(
-            "ddlSendStatus",
-            Model.SendStatus,
-            new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-200" })
-        </div>
+            <div class="lbl-field col_4">
+                <label for="txtChatId">@Labels.ChatID</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtChatId" class="width-200" maxlength="4000" />
+            </div>
 
-        <div class="submit width-auto col_8">
-            <button type="submit" class="submit btn-search">Search</button>
+            <div class="lbl-field col_4">
+                <label>@Labels.SendStatus</label>
+            </div>
+            <div class="edit-field col_10">
+                @Html.DropDownList(
+                "ddlSendStatus",
+                Model.SendStatus,
+                new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-200" })
+            </div>
+
+            <div class="submit width-auto col_8">
+                <button type="submit" class="submit btn-search">Search</button>
+            </div>
         </div>
-    </div>
+        <div class="filter-row"></div>
     }
 </div>
 

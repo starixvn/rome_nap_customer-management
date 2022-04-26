@@ -1,17 +1,13 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using Fanex.Nap.CMS.ManageChatbots.Constants;
-using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
 {
+    using System;
+    using System.Collections.Generic;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
+    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+
     public class ChatbotHistoryRepository : IChatbotHistoryRepository
     {
         public IEnumerable<ChatbotHistoryItem> GetChatbotHistories(ChatbotHistoryCriteria criteria)
@@ -26,10 +22,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
             }
         }
 
-        public IEnumerable<SelectListItem> GetAllFunctions(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetAllFunctions(ICriteria criteria)
         {
-            var functions = new List<SelectListItem>();
-            functions.Add(new SelectListItem { Text = "All", Value = "0" });
+            var functions = new List<IdNameModel>();
+            functions.Add(new IdNameModel { Name = "All", Id = 0 });
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {           
@@ -37,10 +33,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
                 {
                     while (reader.Read())
                     {
-                        functions.Add(new SelectListItem
+                        functions.Add(new IdNameModel
                         {
-                            Text = reader["FunctionName"].ToString(),
-                            Value = reader["FunctionID"].ToString()
+                            Name = reader["FunctionName"].ToString(),
+                            Id = Convert.ToInt32(reader["FunctionID"])
                         });
                     }
                 }

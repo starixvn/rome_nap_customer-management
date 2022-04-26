@@ -12,7 +12,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
 {
     public interface IChatbotHistoryRepository
     {
-        IEnumerable<ChatbotHistoryModel> GetChatbotHistories(ChatbotHistoryCriteria criteria);
+        IEnumerable<ChatbotHistoryItem> GetChatbotHistories(ChatbotHistoryCriteria criteria);
 
         IEnumerable<SelectListItem> GetAllFunctions(ICriteria criteria);
     }

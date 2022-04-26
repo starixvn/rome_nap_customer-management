@@ -22,21 +22,21 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
         {
             this.repository = repository ?? new ChatbotHistoryRepository();
         }
-        public IEnumerable<ChatbotHistoryModel> GetChatbotHistories(SearchChatbotHistoryViewModel viewModel)
+        public ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel)
         {
             var criteria = new ChatbotHistoryCriteria(
                 viewModel.Username,
                 viewModel.ChatID,
                 viewModel.FunctionID,
                 viewModel.FromDate,
-                viewModel.ToDate,
+                new DateTime(viewModel.ToDate.Year, viewModel.ToDate.Month, viewModel.ToDate.Day, 23, 59, 59),
                 viewModel.Status,
                 viewModel.IsSpecial,
                 viewModel.PageIndex,
                 viewModel.PageSize);
-            var result = this.repository.GetChatbotHistories(criteria);
+            var chatbotHistories = this.repository.GetChatbotHistories(criteria);
 
-            return result;
+            return new ChatbotHistoryModel(chatbotHistories, criteria.TotalRows);
         }
 
         public IEnumerable<SelectListItem> GetAllFunctions()

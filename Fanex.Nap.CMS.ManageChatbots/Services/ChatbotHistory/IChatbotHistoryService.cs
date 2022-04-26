@@ -11,7 +11,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
 {
     public interface IChatbotHistoryService
     {
-        IEnumerable<ChatbotHistoryModel> GetChatbotHistories(SearchChatbotHistoryViewModel viewModel);
+        ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel);
 
         IEnumerable<SelectListItem> GetAllFunctions();
     }

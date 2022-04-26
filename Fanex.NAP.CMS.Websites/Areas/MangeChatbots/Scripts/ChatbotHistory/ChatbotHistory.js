@@ -24,14 +24,14 @@
             firstDatePicker: {
                 Id: "dpk-fromdate",
                 Label: "From",
-                LabelCss: "lbl-field lblFilter col_2",
-                TextboxCss: "edit-field"
+                LabelCss: "lbl-field lblFilter col_6",
+                TextboxCss: "edit-field col_8"
             },
             secondDatePicker: {
                 Id: "dpk-todate",
                 Label: "To",
-                LabelCss: "lbl-field lblFilter col_3",
-                TextboxCss: "edit-field"
+                LabelCss: "lbl-field lblFilter col_4",
+                TextboxCss: "edit-field col_8"
             },
         });
 
@@ -42,16 +42,18 @@
     function getGridOptions()
     {
         var columns = [
-            { HeaderText: "Sent By", Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
-            { HeaderText: "Message Content", Width: 840, Name: "colMessageContent", HeaderAlign: "center" },
-            { HeaderText: "Send Status", Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
-            { HeaderText: "Date (GMT - 4)", Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: resources.sentBy, Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
+            { HeaderText: resources.messageContent, Width: 860, Name: "colMessageContent", HeaderAlign: "center" },
+            { HeaderText: resources.sendStatus, Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
+            { HeaderText: resources.DateGMT4, Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
         ]
 
         return {
             columns: columns,
             girdExpandHeight: 140,
             showDistinctRow: false,
+            fullHeight: false,
+            gridHeight: 750,
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -90,7 +92,7 @@
             + "&fromdate=" + dateRange.FromDate
             + "&todate=" + dateRange.ToDate
             + "&status=" + status.val()
-            + "&pageindex=" + pageIndex + 1
+            + "&pageindex=" + (pageIndex + 1)
             + "&pagesize=" + pageSize;
 
         CMS.getJson(url, function (data) {
@@ -99,8 +101,8 @@
             var gridOptions = getGridOptions();
             gridOptions.pagerOption.currentPage = pageIndex;
             gridOptions.pagerOption.itemsPerPage = pageSize;
-            gridOptions.pagerOption.totalItem = 49;
-            gridOptions.bodyRows = renderChatbotHistories(jsonData);
+            gridOptions.pagerOption.totalItem = jsonData.TotalRows;
+            gridOptions.bodyRows = renderChatbotHistories(jsonData.ChatbotHistories);
 
             freegrid.removeClass("display-none").fanexGrid(gridOptions);
         });

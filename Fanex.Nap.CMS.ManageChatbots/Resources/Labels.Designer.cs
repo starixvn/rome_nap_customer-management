@@ -97,6 +97,24 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date (GMT - 4).
+        /// </summary>
+        public static string DateGMT4 {
+            get {
+                return ResourceManager.GetString("DateGMT4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Function.
+        /// </summary>
+        public static string Function {
+            get {
+                return ResourceManager.GetString("Function", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -124,6 +142,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message Content.
+        /// </summary>
+        public static string MessageContent {
+            get {
+                return ResourceManager.GetString("MessageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messenger Username.
         /// </summary>
         public static string MessengerUserName {
@@ -138,6 +165,24 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Status.
+        /// </summary>
+        public static string SendStatus {
+            get {
+                return ResourceManager.GetString("SendStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sent By.
+        /// </summary>
+        public static string SentBy {
+            get {
+                return ResourceManager.GetString("SentBy", resourceCulture);
             }
         }
         

@@ -165,4 +165,19 @@
   <data name="ChatID" xml:space="preserve">
     <value>Chat ID</value>
   </data>
+  <data name="DateGMT4" xml:space="preserve">
+    <value>Date (GMT - 4)</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Function</value>
+  </data>
+  <data name="MessageContent" xml:space="preserve">
+    <value>Message Content</value>
+  </data>
+  <data name="SendStatus" xml:space="preserve">
+    <value>Send Status</value>
+  </data>
+  <data name="SentBy" xml:space="preserve">
+    <value>Sent By</value>
+  </data>
 </root>

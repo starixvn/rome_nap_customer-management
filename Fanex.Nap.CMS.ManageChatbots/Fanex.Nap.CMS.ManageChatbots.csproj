@@ -136,6 +136,7 @@
     <Compile Include="Criteria\ChatbotMapping\GetSiteCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetNapAccountingPolicy.cs" />
     <Compile Include="Criteria\ChatbotMapping\UpdFunctionsChatBotCriteria.cs" />
+    <Compile Include="Models\ChatbotHistory\ChatbotHistoryItem.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotsConfigModel.cs" />

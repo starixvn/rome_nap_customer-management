@@ -16,7 +16,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
             DateTime fromDate,
             DateTime toDate,
             byte sendStatus,
-            byte isSpecial,
+            bool isSpecial,
             int pageIndex,
             int pageSize)
         {
@@ -43,11 +43,13 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory
 
         public byte Status { get; }
 
-        public byte IsSpecial { get; }
+        public bool IsSpecial { get; }
 
         public int PageIndex { get; }
 
         public int PageSize { get; }
+
+        public int TotalRows { get; set; }
 
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotMessageSel";

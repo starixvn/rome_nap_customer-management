@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,12 +18,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
         public IEnumerable<SelectListItem> Functions { get; }
 
         public IEnumerable<SelectListItem> SendStatus
-            => new[]
-            {
-                 new SelectListItem{Text = "All", Value = "0"},
-                 new SelectListItem{Text = "Sent", Value = "1"},
-                 new SelectListItem{Text = "Failed", Value = "2"}
-            };
+            => new SelectList(SendStatusConst.SendStatusList, "Key", "Value");
 
         public DateTime DefaultFromDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 

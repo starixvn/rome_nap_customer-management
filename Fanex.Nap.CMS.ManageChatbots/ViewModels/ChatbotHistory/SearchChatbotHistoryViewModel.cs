@@ -20,7 +20,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory
 
         public byte Status { get; set; }
 
-        public byte IsSpecial { get; set; }
+        public bool IsSpecial { get; set; }
 
         public int PageIndex { get; set; }
 

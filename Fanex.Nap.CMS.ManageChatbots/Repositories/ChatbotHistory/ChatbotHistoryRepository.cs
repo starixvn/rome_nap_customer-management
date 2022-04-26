@@ -14,11 +14,13 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory
 {
     public class ChatbotHistoryRepository : IChatbotHistoryRepository
     {
-        public IEnumerable<ChatbotHistoryModel> GetChatbotHistories(ChatbotHistoryCriteria criteria)
+        public IEnumerable<ChatbotHistoryItem> GetChatbotHistories(ChatbotHistoryCriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                var result = db.Query<ChatbotHistoryModel>(criteria.GetSpParams());
+                var result = db.Query<ChatbotHistoryItem>(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                criteria.TotalRows = Convert.ToInt32(outputParams["totalrows"]);
 
                 return result;
             }

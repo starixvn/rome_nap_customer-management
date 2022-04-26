@@ -9,29 +9,14 @@ namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory
 {
     public class ChatbotHistoryModel
     {
-        public ChatbotHistoryModel(
-            string sentBy,
-            string message,
-            DateTime createdDate,
-            byte status) 
+        public ChatbotHistoryModel(IEnumerable<ChatbotHistoryItem> chatbotHistories, int totalRows)
         {
-            SentBy = sentBy;
-            Message = message;
-            CreatedDate = createdDate;
-            Status = status;
+            ChatbotHistories = chatbotHistories;
+            TotalRows = totalRows;
         }
 
-        public string SentBy { get; set; }
+        public IEnumerable<ChatbotHistoryItem> ChatbotHistories { get; }
 
-        public string Message { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public string CreatedDateStr => CreatedDate.ToString("MM/dd/yyyy HH:mm:ss") ?? string.Empty;
-
-        public byte Status { get; set; }
-
-        public string StatusStr => SendStatusConst.SendStatusList[Status];
-
+        public int TotalRows { get; set; }
     }
 }

@@ -13,23 +13,23 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     public class ChatBotMappingRepository : IChatbotMappingRepository
     {
-        public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
-                        yield return new SelectListItem
+                        yield return new IdNameModel
                         {
-                            Text = reader["Currency"].ToString(),
-                            Value = reader["ExchangeID"].ToString()
+                            Name = reader["Currency"].ToString(),
+                            Id = int.Parse(reader["ExchangeID"].ToString())
                         };
                 }
             }
         }
 
-        public IEnumerable<SelectListItem> GetSites(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetSites(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -37,10 +37,10 @@
                 {
                     while (reader.Read())
                     {
-                        yield return new SelectListItem
+                        yield return new IdNameModel
                         {
-                            Text = reader["site"].ToString(),
-                            Value = reader["siteid"].ToString()
+                            Name = reader["site"].ToString(),
+                            Id = int.Parse(reader["siteid"].ToString())
                         };
                     }
                 }

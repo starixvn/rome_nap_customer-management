@@ -1,12 +1,11 @@
 ﻿"use strict";
-
-function ConfigChatBotModule(viewResources, table) {
+function ConfigChatBotModule(viewResources, table, reloadData) {
     function showPopup(cusId, botId, subAccId) {
         CMS.getHtml(CMS.resolveRootUrl("ChatbotMapping/ChatBotConfig?" + $.param({
             CusId: cusId, BotId: botId, SubAccId: subAccId
         })), function (html) {
             if (html.length) {
-                var popup = new PopupConfig(html);
+                const popup = new PopupConfig(html, reloadData, cusId, botId);
                 popup.initialize();
             }
         });
@@ -14,33 +13,93 @@ function ConfigChatBotModule(viewResources, table) {
 
     this.initialize = function () {
         table.on("click", ".ico-config", function () {
-            var $this = $(this);
-            var custId = $this.data("custid");
-            var botId = $this.data("botid");
-            var subAccId = $this.data("subaccid");
-
+            const $this = $(this);
+            const custId = $this.data("custid");
+            const botId = $this.data("botid");
+            const subAccId = $this.data("subaccid");
             showPopup(custId, botId, subAccId)
-
         });
     };
 }
 
-function PopupConfig(form) {
+function PopupConfig(form, reloadData, cusId, botId) {
+    let catchBotID;
+    let divInlineMessage;
+    let oldChatBotFunctionConfig;
+    let oldLanguage;
+
+    const getConfigChatBotFunctions = () => {
+        const functionsConfig = [];
+        $.each($("#functions")[0].children, function (index, item) {
+            const func = (item.cells[1].children[0].children[0]);
+            const functionsID = $(func).data("functid");
+            const functionsIsEnable = $(func).hasClass("status-on");
+            functionsConfig.push({
+                FunctionId: functionsID, IsEnabled: functionsIsEnable,
+            })
+        })
+        return functionsConfig;
+    };
+
+    const getUserID = () => $("#username").data("userid");
+    
+    const getLanguage = () =>  $("#ddl-Language").val();
+    
+    const updateStateSaveBtn = (isConfigChange) => {
+        if (isConfigChange) {
+            $("#btn-submit-popup").prop('disabled', false);
+        } else {
+            $("#btn-submit-popup").prop('disabled', true);
+        }
+    }
+
+    const isChangeConfigFunctions = () => {
+        const currentConfig = getConfigChatBotFunctions();
+        return JSON.stringify(currentConfig) !== oldChatBotFunctionConfig;
+    }
+
+    const isChangeLanguage = () => {
+        const currentLanguage = getLanguage();
+        return JSON.stringify(currentLanguage) !== oldLanguage;
+    }
+    
     function submitForm(formData) {
         CMS.disableInput();
         CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), formData, function (data) {
             var jsonData = $.parseJSON(data);
-
-            if (jsonData.Code === 0) {
-                CMS.closePopup();
-                /*  CMS.showInlineSuccessMsg(jsonData.Message, inlineMessage, true, function () {
-                      //Todo đã upate dc, giờ sau khi update thì reload page., close popup
-                      CMS.closePopup();
-                      reloadData();
-                  });*/
+            console.log("jsonData", jsonData);
+            if (jsonData.updateFunctionResult.Code === 0 && jsonData.updateLangResult.Code === 0) {
+                const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
+                CMS.showInlineSuccessMsg(
+                    messageText.join(","),
+                    divInlineMessage, true, function () {
+                        CMS.closePopup();
+                        reloadData();
+                    }
+                );
             } else {
-                //Todo lam them phan thong bao kq update config
-                //CMS.showInlineErrorMsg(jsonData.Message, inlineMessage);
+                const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
+                CMS.showInlineErrorMsg(messageText.join(","), divInlineMessage);
+            }
+        });
+    }
+
+    function unlinkBot(formData) {
+        CMS.disableInput();
+        CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UnlinkBot"), formData, function (data) {
+            var jsonData = $.parseJSON(data);
+            if (jsonData.Code === 0) {
+                const messageText = [jsonData.Message]
+                CMS.showInlineSuccessMsg(
+                    messageText.join(","),
+                    divInlineMessage, true, function () {
+                        CMS.closePopup();
+                        reloadData();
+                    }
+                );
+            } else {
+                const messageText = [jsonData.Message]
+                CMS.showInlineErrorMsg(messageText.join(","), divInlineMessage);
             }
         });
     }
@@ -50,36 +109,49 @@ function PopupConfig(form) {
             event.preventDefault();
             const $this = $(this);
             $this.toggleClass('status-on status-off');
+            const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
+            updateStateSaveBtn(isFormChange);
         });
+        
         $("#formChatBotConfig").submit(function (event) {
             event.preventDefault();
-            submitForm({ChatBotFunctionConfig: getConfigChatBotFunctions(), UserID: getUserID()})
+            submitForm({
+                ChatBotFunctionConfig: getConfigChatBotFunctions(),
+                UserID: getUserID(),
+                Language: getLanguage(),
+                BotId: catchBotID,
+            })
         });
-        $('.btn-close').click(function (event) {
+        
+        $("#ddl-Language").click(function (){
+            const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
+            updateStateSaveBtn(isFormChange);
+        })
+        
+        $('#btn-close-popup').click(function (event) {
             event.preventDefault();
             CMS.closePopup();
         });
-    };
+        
+        $('#btn-unlink').click(function (event) {
+            event.preventDefault();
+            CMS.showConfirmMessage(
+                "Are you sure you want to unlink?",
+                () => unlinkBot({
+                    BotId: catchBotID,
+                    UserID: getUserID()
+                }));
 
-    const getConfigChatBotFunctions = () => {
-        const functionsConfig = [];
-        $.each($("#functions")[0].children, function (index, item) {
-            const func = (item.cells[1].children[0].children[0]);
-            const functionsID = $(func).data("functid");
-            const functionsIsEnable = $(func).hasClass("status-on");
-            functionsConfig.push({
-                FunctionId: functionsID, IsEnabled: functionsIsEnable
-            })
-        })
-        return functionsConfig;
+        });
     };
-    const getUserID = () => {
-        return $("#username").data("userid");
-    }
 
     this.initialize = function () {
+        catchBotID = botId;
         CMS.modal("Config Chatbot", form, {resizable: false});
-
+        divInlineMessage = $("#div-inlineMessage");
+        oldChatBotFunctionConfig = JSON.stringify(getConfigChatBotFunctions());
+        oldLanguage = JSON.stringify(getLanguage());
+        $("#ddl-Language").combobox();
         bindingEvents();
-    };
+    }
 }

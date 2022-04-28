@@ -136,5 +136,9 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // Manage Chatbots
         public const string ChatbotHistory = "ChatbotHistory";
+        public const string ChatbotMapping = "ChatbotMapping";
+        
+        //Accounting site
+        public const string SpecialSites = "[AccessSpecialSites]";
     }
 }

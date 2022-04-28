@@ -2,13 +2,13 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
     using Criteria.ChatbotMapping;
     using Repositories.ChatbotMapping;
     using Models.ChatbotMapping;
     using ViewModels.ChatbotMapping;
+    using Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
-
+    
     public class ChatBotMappingService : IChatBotMappingService
     {
         private readonly IChatbotMappingRepository _repository;
@@ -18,12 +18,13 @@
             _repository = repository ?? new ChatBotMappingRepository();
         }
 
-        public IEnumerable<SelectListItem> GetCurrencies()
+        public IEnumerable<IdNameModel> GetCurrencies()
         {
             return _repository.GetCurrencies(new GetCurrencyListCriteria());
+            ;
         }
 
-        public IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission)
+        public IEnumerable<IdNameModel> GetSites()
         {
             return _repository.GetSites(new GetSiteCriteria { Mode = 0 });
         }
@@ -79,7 +80,50 @@
 
             if (result.IsSuccess)
             {
-                result.Message = "Updated successfully";
+                result.Message = "Updated Function config successfully";
+            }
+
+            return result;
+        }
+
+        public Result UpdateLanguageConfig(int CreatorID, string IP, int UserID, int BotID, string Language)
+        {
+            var criteria = new UpdLanguageChatBotCriteria()
+            {
+                Creator = CreatorID,
+                IP = IP,
+                Language = Language,
+                UserID = UserID,
+                BotID = BotID
+            };
+
+            var result = _repository.ExecuteNonQuery(criteria);
+
+            if (result.IsSuccess)
+            {
+                result.Message = "Updated language successfully";
+            }
+
+            return result;
+        }
+
+        public Result UnlinkChatBot(int CreatorID, string IP, int UserID, int BotID, bool status, bool IsVerifyOTP)
+        {
+            var criteria = new UnlinkChatBotCriteria()
+            {
+                Creator = CreatorID,
+                IP = IP,
+                Status = status,
+                IsVerifyOTP = IsVerifyOTP,
+                UserID = UserID,
+                BotID = BotID
+            };
+
+            var result = _repository.ExecuteNonQuery(criteria);
+
+            if (result.IsSuccess)
+            {
+                result.Message = "Updated status successfully";
             }
 
             return result;
@@ -89,7 +133,8 @@
         {
             var accountingPolicy =
                 _repository.GetNapAccountingPolicy(new GetNapAccountingPolicy { CustID = customerId });
-            var isHasAccessSpecialSites = accountingPolicy.Any(policy => policy.FunctionName == "[AccessSpecialSites]");
+            var isHasAccessSpecialSites =
+                accountingPolicy.Any(policy => policy.FunctionName == CMSFunctionKeys.SpecialSites);
 
             return isHasAccessSpecialSites;
         }

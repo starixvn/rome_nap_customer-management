@@ -34,6 +34,13 @@
         {Id: 2, Name: "Closed"},
         {Id: 3, Name: "Suspended"}];
 
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).title()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
 
     const resetFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
@@ -47,7 +54,6 @@
         filterParams.PageIndex = 0;
         filterParams.PageSize = 100;
         filterParams.Cache = false;
-        //debugger
         return filterParams;
     };
 
@@ -162,7 +168,7 @@
         };
     }
 
-    const renderConfigCell = (custId, botId, subAccId,userId) => {
+    const renderConfigCell = (custId, botId, subAccId, userId) => {
         return [
             '<span class="ui-icon ico-config" href="javascript:;" data-custId="',
             custId,
@@ -175,29 +181,27 @@
             '"></span>'
         ].join("");
     }
-    const renderChatIDCell=(chatId)=>{
-        return [
-            '<span class="ui-icon icon-chat-id tool-tip" href="javascript:;" title="',
-            chatId,
-            '"></span>'
-        ].join("");
-        $(".tool-tip").tooltip({
+    const renderChatIDCell = (chatId) => {
+   /*     $(".tool-tip").tooltip({
             position: {
                 my: "left top",
                 at: "right+5 top-5",
                 collision: "none"
             },
-            tooltipClass: "custom-tooltip-styling",
-            create: function( event, ui ) {
-                console.log("tooltip opened")
-            }
-        });
+            tooltipClass: "custom-tooltip-styling"
+        });*/
+        return [
+            '<span class="ui-icon ui-icon-clipboard tool-tip" href="javascript:;" title="',
+            chatId,
+            '" data-chatid="',
+            chatId,
+            '"></span>'
+        ].join("");
     }
 
     const renderGridChatBots = (data) => {
         const bodyData = [];
         let columns;
-        //ui-icon-gear
         for (var i = 0, max = data.length; i < max; i++) {
             const {
                 ChatBotName,
@@ -229,8 +233,7 @@
                 {Name: "Status", Value: AccStatus},
                 {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID, UserID)}
             ];
-            const css = (i & 1) == 1 ? 'freegrid-even' : '';
-            bodyData.push({Columns: columns, CssClass: css});
+            bodyData.push({Columns: columns});
         }
 
         return bodyData;
@@ -261,6 +264,21 @@
             }
 
             elements.table.removeClass("display-none").fanexGrid(gridOptions);
+            $(".ui-icon-clipboard").tipsy({
+                className: "tool-tip-chat-id",
+                html: true,
+                opacity: 0.9,
+                gravity: "s",
+            });
+            $(".ui-icon-clipboard").click(async function (){
+                var $this = $(this);
+                var chatid = $this.data("chatid");
+                try {
+                    await navigator.clipboard.writeText(chatid.toString());
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+            })
         });
     }
 
@@ -338,9 +356,11 @@
         var configChatBotModule = new ConfigChatBotModule(
             viewResources,
             elements.table,
-            elements.formChatBotConfig.clone(),
-            elements.resultMessageDiv);
+            () => {
+                resetFilterParams();
+                getChatBot();
+            }
+        );
         configChatBotModule.initialize();
-
     });
 })(jQuery);

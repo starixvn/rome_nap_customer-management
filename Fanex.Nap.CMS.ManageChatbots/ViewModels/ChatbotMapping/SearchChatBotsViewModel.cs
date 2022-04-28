@@ -1,10 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotMapping
 {
-    using System;
     public class SearchChatBotsViewModel
     {
-        public string MessengerName { get; set; }
-        
         public string Username { get; set; }
         
         public bool IsSubAccOnly { get; set; }
@@ -25,9 +22,5 @@
         
         public long? ChatID { get; set; }
         
-        public bool IsValid()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,4 +1,7 @@
 ﻿@model Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping.ChatBotsConfigModel
+@{
+    var isLinked = (@Model.ChatBotModel.IsVerifyOTP && @Model.ChatBotModel.Status);
+}
 @using (Html.BeginForm("UpdateChatBotConfig", "ChatBotMapping", FormMethod.Post, new { id = "formChatBotConfig", @class = "form expand-form" }))
 {
     <div id="config-chat-bot-popup">
@@ -13,10 +16,10 @@
                 <div id="BotSerVice">
                     <b>Telegram</b>
                 </div>
-                <div id="username" data-userid="@Model.ChatBotModel.UserID" >
+                <div id="username" data-userid="@Model.ChatBotModel.UserID">
                     <b>@Model.ChatBotModel.UserName</b>
                 </div>
-                <div id="ChatBotName">
+                <div id="chatBot">
                     <b>@Model.ChatBotModel.ChatBotName</b>
                 </div>
             </div>
@@ -40,11 +43,10 @@
                     }
                 </div>
                 <div>
-
-                    @if (@Model.ChatBotModel.IsVerifyOTP && @Model.ChatBotModel.Status)
+                    @if (@isLinked)
                     {
                         <span class="high-light green">Linked</span>
-                        <button type="button" class="red-button" id="btn-cancel">Unlink</button>
+                        <button type="button" class="red-button" id="btn-unlink">Unlink</button>
                     }
                     else
                     {
@@ -53,7 +55,6 @@
                 </div>
             </div>
 
-
         </div>
         <hr/>
         <div class="container">
@@ -61,10 +62,24 @@
                 <div>Language:</div>
             </div>
             <div class="col">
-                <select id="ddl-Language" class="combobox-autocomplete width-200"></select>
+                @if (isLinked)
+                {
+                    @Html.DropDownList(
+                        "ddl-Language",
+                        Model.OptionsLanguage,
+                        new { id = "ddl-Language", @class = "combobox-autocomplete width-320 " }
+                        )
+                }
+                else
+                {
+                    @Html.DropDownList(
+                        "ddl-Language",
+                        new[] { new SelectListItem() { Text = @Model.ChatBotModel.Language, Value = @Model.ChatBotModel.Language } },
+                        new { id = "ddl-Language", @class = "combobox-autocomplete width-320 ", @disabled = "disabled" }
+                        )
+                }
             </div>
         </div>
-
 
         <div>
             <table >
@@ -79,33 +94,33 @@
                 {
                     <tr>
                         <td>@functionConfig.FunctionName</td>
-                        @if (@functionConfig.IsEnabled)
-                        {
-                            <td>
-                                <div class="float-center">
-                                    <div class="toggle-on-off status-on" data-functid=@functionConfig.FunctionId>   </div>
-                                </div>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                <div class="float-center">
-                                    <div class="toggle-on-off status-off" data-functid=@functionConfig.FunctionId> </div>
-                                </div>
-                            </td>
-                        }
+                        <div class="float-center">
+                            @if (@functionConfig.IsEnabled)
+                            {
+                                <td>
+                                    <div class="float-center">
+                                        <div class="toggle-on-off status-on" data-functid=@functionConfig.FunctionId> </div>
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="float-center">
+                                        <div class="toggle-on-off status-off" data-functid=@functionConfig.FunctionId> </div>
+                                    </div>
+                                </td>
+                            }
+                        </div>
                     </tr>
                 }
                 </tbody>
-
-
             </table>
-            <div class="popup-footer">
-                <button type="submit" class="blue-button submit">Save</button>
-                <button type="button" class="red-button btn-close">Close</button>
-            </div>
 
+            <div class="popup-footer">
+                <button type="submit" class="blue-button" id="btn-submit-popup" disabled>Save</button>
+                <button type="button" class="red-button" id="btn-close-popup">Close</button>
+            </div>
         </div>
     </div>
 }

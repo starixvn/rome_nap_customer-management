@@ -5,20 +5,23 @@
     using Models.ChatbotMapping;
     using ViewModels.ChatbotMapping;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    
+
     public interface IChatBotMappingService
     {
-        IEnumerable<SelectListItem> GetCurrencies();
+        IEnumerable<IdNameModel> GetCurrencies();
 
-        IEnumerable<SelectListItem> GetSites(bool hasSpecialSitePermission);
-        
+        IEnumerable<IdNameModel> GetSites();
+
         bool HasSpecialSitePermission(int customerId);
-        
-        ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel,  int customerId );
-        
+
+        ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel, int customerId);
+
         ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel);
-        
+
         Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorId, string IP, int UserID);
 
+        Result UpdateLanguageConfig(int CreatorId, string IP, int UserID, int BotID, string Language);
+
+        Result UnlinkChatBot(int CreatorId, string IP, int UserID, int BotID, bool status, bool IsVerifyOTP);
     }
 }

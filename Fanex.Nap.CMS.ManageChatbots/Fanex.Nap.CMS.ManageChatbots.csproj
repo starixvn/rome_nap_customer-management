@@ -135,7 +135,9 @@
     <Compile Include="Criteria\ChatbotMapping\GetConfigChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetSiteCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetNapAccountingPolicy.cs" />
+    <Compile Include="Criteria\ChatbotMapping\UnlinkChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\UpdFunctionsChatBotCriteria.cs" />
+    <Compile Include="Criteria\ChatbotMapping\UpdLanguageChatBotCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryItem.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
@@ -164,6 +166,7 @@
     <Compile Include="ViewModels\ChatbotMapping\ChatbotMappingViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\GetConfigViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\SearchChatBotsViewModel.cs" />
+    <Compile Include="ViewModels\ChatbotMapping\UnlinkBotViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\UpdateChatBotConfigViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

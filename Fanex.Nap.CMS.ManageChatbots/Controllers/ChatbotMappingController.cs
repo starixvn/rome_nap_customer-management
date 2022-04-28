@@ -4,7 +4,11 @@
     using Infrastructure.Controllers;
     using Services.ChatBotMapping;
     using ViewModels.ChatbotMapping;
-
+    using System.Collections.Generic;
+    using NAP.Core.Web.Attribute;
+    using Infrastructure;
+    using NAP.Core.Business;
+    
     public class ChatBotMappingController : BaseController
     {
         private readonly IChatBotMappingService _service;
@@ -19,19 +23,18 @@
         }
 
         // GET
-        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var hasSpecialSitePermission = _service.HasSpecialSitePermission(CurrentSession.UserId);
-
             var siteCurrencies = new ChatBotMappingViewModel(
                 _service.GetCurrencies(),
-                _service.GetSites(hasSpecialSitePermission)
+                _service.GetSites()
             );
 
             return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", siteCurrencies);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public JsonResult SearchChatBots(SearchChatBotsViewModel param)
         {
             var chatBots = _service.SearchChatBots(param, CurrentSession.UserId);
@@ -39,20 +42,54 @@
             return JsonData(chatBots);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public ActionResult ChatBotConfig(GetConfigViewModel param)
         {
             var chatBotConfig = _service.GetConfig(param);
 
+            chatBotConfig.OptionsLanguage = new List<SelectListItem>()
+            {
+                new SelectListItem() { Text = "CN", Value = "CN" },
+                new SelectListItem() { Text = "TW", Value = "TW" },
+                new SelectListItem() { Text = "en-US", Value = "en-US" }
+            };
+            var optionLangue = chatBotConfig.OptionsLanguage.Find(c => c.Value == chatBotConfig.ChatBotModel.Language);
+            if (optionLangue != null)
+            {
+                optionLangue.Selected = true;
+            }
+
             return PartialView("~/Areas/MangeChatbots/Views/ChatbotMapping/_ConfigChatBot.cshtml", chatBotConfig);
         }
-        
+
         [HttpPost]
+       [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
         public JsonResult UpdateChatBotConfig(UpdateChatBotConfigViewModel viewModel)
         {
-            var result = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig, CurrentSession.UserId,
+            var updateFunctionResult = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig,
+                CurrentSession.UserId,
                 CurrentContext.IP, viewModel.UserID);
 
+            var updateLangResult = _service.UpdateLanguageConfig(CurrentSession.UserId,
+                CurrentContext.IP, viewModel.UserID, viewModel.BotId, viewModel.Language);
+
+            var result = new
+            {
+                updateFunctionResult,
+                updateLangResult
+            };
+
             return JsonData(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
+        public JsonResult UnlinkBot(UnlinkBotViewModel viewModel)
+        {
+            var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
+                CurrentContext.IP, viewModel.UserID, viewModel.BotId, false, false);
+
+            return JsonData(updateLangResult, JsonRequestBehavior.DenyGet);
         }
     }
 }

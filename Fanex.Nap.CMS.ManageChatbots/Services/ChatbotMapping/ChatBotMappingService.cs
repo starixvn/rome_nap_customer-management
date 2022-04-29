@@ -8,7 +8,8 @@
     using ViewModels.ChatbotMapping;
     using Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    
+    using Resources;
+
     public class ChatBotMappingService : IChatBotMappingService
     {
         private readonly IChatbotMappingRepository _repository;
@@ -80,7 +81,7 @@
 
             if (result.IsSuccess)
             {
-                result.Message = "Updated Function config successfully";
+                result.Message = string.Format(Labels.UpdateSuccess, "Functions");
             }
 
             return result;
@@ -101,7 +102,7 @@
 
             if (result.IsSuccess)
             {
-                result.Message = "Updated language successfully";
+                result.Message = string.Format(Labels.UpdateSuccess, "Language");
             }
 
             return result;
@@ -123,7 +124,7 @@
 
             if (result.IsSuccess)
             {
-                result.Message = "Updated status successfully";
+                result.Message = string.Format(Labels.UpdateSuccess, "Status");
             }
 
             return result;

@@ -1,4 +1,5 @@
 ﻿"use strict";
+
 function ConfigChatBotModule(viewResources, table, reloadData) {
     function showPopup(cusId, botId, subAccId) {
         CMS.getHtml(CMS.resolveRootUrl("ChatbotMapping/ChatBotConfig?" + $.param({
@@ -42,9 +43,9 @@ function PopupConfig(form, reloadData, cusId, botId) {
     };
 
     const getUserID = () => $("#username").data("userid");
-    
-    const getLanguage = () =>  $("#ddl-Language").val();
-    
+
+    const getLanguage = () => $("#ddl-Language").val();
+
     const updateStateSaveBtn = (isConfigChange) => {
         if (isConfigChange) {
             $("#btn-submit-popup").prop('disabled', false);
@@ -62,96 +63,96 @@ function PopupConfig(form, reloadData, cusId, botId) {
         const currentLanguage = getLanguage();
         return JSON.stringify(currentLanguage) !== oldLanguage;
     }
-    
-    function submitForm(formData) {
+
+    const submitForm = (formData) => {
         CMS.disableInput();
         CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), formData, function (data) {
             var jsonData = $.parseJSON(data);
-            console.log("jsonData", jsonData);
-            if (jsonData.updateFunctionResult.Code === 0 && jsonData.updateLangResult.Code === 0) {
+            if (jsonData.updateFunctionResult?.Code === 0 && jsonData.updateLangResult?.Code === 0) {
                 const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
-                CMS.showInlineSuccessMsg(
-                    messageText.join(","),
-                    divInlineMessage, true, function () {
-                        CMS.closePopup();
-                        reloadData();
-                    }
-                );
+                CMS.showInlineSuccessMsg(messageText.join(" "), divInlineMessage, true, function () {
+                    CMS.closePopup();
+                    reloadData();
+                });
             } else {
                 const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
-                CMS.showInlineErrorMsg(messageText.join(","), divInlineMessage);
+                CMS.showInlineErrorMsg(messageText.join(" "), divInlineMessage);
             }
         });
     }
 
-    function unlinkBot(formData) {
+    const unlinkBot = (formData) => {
         CMS.disableInput();
         CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UnlinkBot"), formData, function (data) {
             var jsonData = $.parseJSON(data);
             if (jsonData.Code === 0) {
-                const messageText = [jsonData.Message]
-                CMS.showInlineSuccessMsg(
-                    messageText.join(","),
-                    divInlineMessage, true, function () {
-                        CMS.closePopup();
-                        reloadData();
-                    }
-                );
+                CMS.showInlineSuccessMsg(jsonData.Message, divInlineMessage, true, function () {
+                    CMS.closePopup();
+                    reloadData();
+                });
             } else {
-                const messageText = [jsonData.Message]
-                CMS.showInlineErrorMsg(messageText.join(","), divInlineMessage);
+                CMS.showInlineErrorMsg(jsonData.Message, divInlineMessage);
             }
         });
     }
 
     const bindingEvents = () => {
-        $('.toggle-on-off').click(function (event) {
-            event.preventDefault();
-            const $this = $(this);
-            $this.toggleClass('status-on status-off');
-            const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
-            updateStateSaveBtn(isFormChange);
-        });
-        
-        $("#formChatBotConfig").submit(function (event) {
-            event.preventDefault();
-            submitForm({
-                ChatBotFunctionConfig: getConfigChatBotFunctions(),
-                UserID: getUserID(),
-                Language: getLanguage(),
-                BotId: catchBotID,
-            })
-        });
-        
-        $("#ddl-Language").click(function (){
-            const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
-            updateStateSaveBtn(isFormChange);
-        })
-        
+        if ($("#Status").data("islink")==="True") {
+            $('.toggle-on-off').click(function (event) {
+                event.preventDefault();
+                const $this = $(this);
+
+                $this.toggleClass('status-on status-off');
+            });
+        }
+
+
         $('#btn-close-popup').click(function (event) {
             event.preventDefault();
             CMS.closePopup();
         });
-        
+
         $('#btn-unlink').click(function (event) {
             event.preventDefault();
-            CMS.showConfirmMessage(
-                "Are you sure you want to unlink?",
-                () => unlinkBot({
-                    BotId: catchBotID,
-                    UserID: getUserID()
-                }));
+            CMS.showConfirmMessage("Are you sure you want to unlink?", () => unlinkBot({
+                BotId: catchBotID, UserID: getUserID()
+            }));
 
         });
+
+        const formPopup = $("#formChatBotConfig");
+
+        formPopup.submit(function (event) {
+            event.preventDefault();
+
+            const ChangeLanguage = isChangeLanguage();
+            const ChangeConfigFunctions = isChangeConfigFunctions();
+            const formData = {UserID: getUserID(), BotId: catchBotID,};
+            if (ChangeConfigFunctions) {
+                formData.ChatBotFunctionConfig = getConfigChatBotFunctions();
+            }
+            if (ChangeLanguage) {
+                formData.Language = getLanguage();
+            }
+            submitForm(formData);
+        });
+
+        formPopup.click(function () {
+            const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
+            updateStateSaveBtn(isFormChange);
+        })
     };
 
-    this.initialize = function () {
+    const catchClientData = () => {
         catchBotID = botId;
-        CMS.modal("Config Chatbot", form, {resizable: false});
         divInlineMessage = $("#div-inlineMessage");
         oldChatBotFunctionConfig = JSON.stringify(getConfigChatBotFunctions());
         oldLanguage = JSON.stringify(getLanguage());
-        $("#ddl-Language").combobox();
+    }
+
+    this.initialize = function () {
+        CMS.modal("Config Chatbot", form, {resizable: false});
+        catchClientData();
         bindingEvents();
     }
 }

@@ -9,7 +9,8 @@
         statusDropdown: $("#ddl-status"),
         levelDropdown: $("#ddl-level"),
         linkStatusDropdown: $("#ddl-linkingStatus"),
-        subAccountOnly: $("#chk-subAccountsOnly")
+        subAccountOnly: $("#chk-subAccountsOnly"),
+
     };
     var currencyDdl = $("#ddl-currency"),
         siteDdl = $("#ddl-site");
@@ -33,14 +34,6 @@
         {Id: 1, Name: "Active"},
         {Id: 2, Name: "Closed"},
         {Id: 3, Name: "Suspended"}];
-
-    function copyToClipboard(element) {
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val($(element).title()).select();
-        document.execCommand("copy");
-        $temp.remove();
-    }
 
     const resetFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
@@ -147,7 +140,7 @@
             fullWidth: true,
             fullHeight: true,
             gridHeight: 0,
-            showDistinctRow: false,
+            showDistinctRow: true,
             headerColumnHeight: 29,
             bodyRowHeight: 25,
             showPager: true,
@@ -156,7 +149,6 @@
                 itemsPerPageArray: CMS.pagerRanges,
                 totalItem: 0,
                 pagerSelectCallBack: function (index, pageSize) {
-                    console.log("index, pageSize", index, pageSize)
                     filterParams.PageIndex = index;
                     filterParams.PageSize = pageSize;
                     filterParams.Cache = true;
@@ -182,16 +174,8 @@
         ].join("");
     }
     const renderChatIDCell = (chatId) => {
-   /*     $(".tool-tip").tooltip({
-            position: {
-                my: "left top",
-                at: "right+5 top-5",
-                collision: "none"
-            },
-            tooltipClass: "custom-tooltip-styling"
-        });*/
         return [
-            '<span class="ui-icon ui-icon-clipboard tool-tip" href="javascript:;" title="',
+            '<span class="ui-icon icon-chat-id tool-tip" href="javascript:;" title="',
             chatId,
             '" data-chatid="',
             chatId,
@@ -239,8 +223,25 @@
         return bodyData;
     }
 
+    const addToolTipChatId = () => {
+        $(".icon-chat-id").tipsy({
+            className: "tool-tip-chat-id",
+            html: true,
+            opacity: 0.9,
+            gravity: "s",
+        });
+        $(".icon-chat-id").click(async function () {
+            var $this = $(this);
+            var chatid = $this.data("chatid");
+            try {
+                await navigator.clipboard.writeText(chatid.toString());
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+            }
+        })
+    }
+
     const getChatBot = () => {
-        //   CMS.hideInlineMsg(elements.resultMessageDiv);
         const resetSortDirection = () => {
             $.each(gridOptions.columns, function (index, value) {
                 value.SortDirection = value.Name !== filterParams.SortField
@@ -251,7 +252,6 @@
 
         CMS.getJson(CMS.resolveRootUrl("ChatbotMapping/SearchChatBots?" + $.param(filterParams)), function (data) {
             var jsonData = $.parseJSON(data);
-            console.log(jsonData)
             gridOptions = gridOptions || getGridOptions();
             gridOptions.bodyRows = renderGridChatBots(jsonData.ChatBots);
 
@@ -264,21 +264,7 @@
             }
 
             elements.table.removeClass("display-none").fanexGrid(gridOptions);
-            $(".ui-icon-clipboard").tipsy({
-                className: "tool-tip-chat-id",
-                html: true,
-                opacity: 0.9,
-                gravity: "s",
-            });
-            $(".ui-icon-clipboard").click(async function (){
-                var $this = $(this);
-                var chatid = $this.data("chatid");
-                try {
-                    await navigator.clipboard.writeText(chatid.toString());
-                } catch (err) {
-                    console.error('Failed to copy: ', err);
-                }
-            })
+            addToolTipChatId()
         });
     }
 

@@ -1,4 +1,7 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿using Fanex.Common.Extensions;
+using Fanex.Nap.CMS.Infrastructure.Models;
+
+namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
     using Infrastructure.Controllers;
@@ -8,7 +11,7 @@
     using NAP.Core.Web.Attribute;
     using Infrastructure;
     using NAP.Core.Business;
-    
+
     public class ChatBotMappingController : BaseController
     {
         private readonly IChatBotMappingService _service;
@@ -49,9 +52,13 @@
 
             chatBotConfig.OptionsLanguage = new List<SelectListItem>()
             {
-                new SelectListItem() { Text = "CN", Value = "CN" },
-                new SelectListItem() { Text = "TW", Value = "TW" },
-                new SelectListItem() { Text = "en-US", Value = "en-US" }
+                new SelectListItem() { Text = "English", Value = "en-US" },
+                new SelectListItem() { Text = "Chinese", Value = "zh-CN" },
+                new SelectListItem() { Text = "Taiwan", Value = "zh-TW" },
+                new SelectListItem() { Text = "Vietnamese", Value = "vi-VN" },
+                new SelectListItem() { Text = "Thai", Value = "th-TH" },
+                new SelectListItem() { Text = "Japanese", Value = "ja-JP" },
+                new SelectListItem() { Text = "Korean", Value = "Korean" },
             };
             var optionLangue = chatBotConfig.OptionsLanguage.Find(c => c.Value == chatBotConfig.ChatBotModel.Language);
             if (optionLangue != null)
@@ -63,15 +70,24 @@
         }
 
         [HttpPost]
-       [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
         public JsonResult UpdateChatBotConfig(UpdateChatBotConfigViewModel viewModel)
         {
-            var updateFunctionResult = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig,
-                CurrentSession.UserId,
-                CurrentContext.IP, viewModel.UserID);
+            var updateLangResult = new Result();
+            var updateFunctionResult = new Result();
 
-            var updateLangResult = _service.UpdateLanguageConfig(CurrentSession.UserId,
-                CurrentContext.IP, viewModel.UserID, viewModel.BotId, viewModel.Language);
+            if (viewModel.ChatBotFunctionConfig != null)
+            {
+                updateFunctionResult = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig,
+                    CurrentSession.UserId,
+                    CurrentContext.IP, viewModel.UserID);
+            }
+
+            if (!viewModel.Language.IsNullOrTrimEmpty())
+            {
+                updateLangResult = _service.UpdateLanguageConfig(CurrentSession.UserId,
+                    CurrentContext.IP, viewModel.UserID, viewModel.BotId, viewModel.Language);
+            }
 
             var result = new
             {

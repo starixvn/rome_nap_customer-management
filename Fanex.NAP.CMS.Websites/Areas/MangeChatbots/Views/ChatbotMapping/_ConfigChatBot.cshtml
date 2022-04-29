@@ -23,7 +23,7 @@
                     <b>@Model.ChatBotModel.ChatBotName</b>
                 </div>
             </div>
-            <div class="col">
+            <div class="col margin-left">
                 <div>Msg. Username:</div>
                 <div>Sub Account:</div>
                 <div>Status</div>
@@ -42,7 +42,7 @@
                         <b>@Model.ChatBotModel.SubAccount</b>
                     }
                 </div>
-                <div>
+                <div id="Status" data-islink=@isLinked >
                     @if (@isLinked)
                     {
                         <span class="high-light green">Linked</span>

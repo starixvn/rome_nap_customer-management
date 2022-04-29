@@ -180,4 +180,7 @@
   <data name="SentBy" xml:space="preserve">
     <value>Sent By</value>
   </data>
+  <data name="UpdateSuccess" xml:space="preserve">
+    <value>{0} Update Success</value>
+  </data>
 </root>

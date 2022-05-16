@@ -183,4 +183,7 @@
   <data name="UpdateSuccess" xml:space="preserve">
     <value>{0} Update Success</value>
   </data>
+  <data name="SentTo" xml:space="preserve">
+    <value>Sent To</value>
+  </data>
 </root>

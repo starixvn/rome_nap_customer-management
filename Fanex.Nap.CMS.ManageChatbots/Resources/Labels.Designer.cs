@@ -187,6 +187,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sent To.
+        /// </summary>
+        public static string SentTo {
+            get {
+                return ResourceManager.GetString("SentTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Site.
         /// </summary>
         public static string Site {

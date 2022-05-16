@@ -8,17 +8,21 @@
     {
         public ChatbotHistoryItem(
            string sentBy,
+           string sentTo,
            string message,
            DateTime createdDate,
            byte status)
         {
             SentBy = sentBy;
+            SentTo = sentTo;
             Message = message;
             CreatedDate = createdDate;
             Status = status;
         }
 
         public string SentBy { get; set; }
+
+        public string SentTo { get; set; }
 
         public string Message { get; set; }
 

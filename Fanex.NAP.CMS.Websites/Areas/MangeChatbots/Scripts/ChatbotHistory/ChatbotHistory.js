@@ -44,6 +44,7 @@
         var columns = [
             { HeaderText: resources.sentBy, Width: 160, Name: "colSentBy", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.messageContent, Width: 860, Name: "colMessageContent", HeaderAlign: "center" },
+            { HeaderText: resources.sentTo, Width: 160, Name: "colSentTo", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.sendStatus, Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
             { HeaderText: resources.DateGMT4, Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
         ]
@@ -115,6 +116,7 @@
             columns = [
                 { Name: "colSentBy", Value: value.SentBy },
                 { Name: "colMessageContent", Value: value.Message },
+                { Name: "colSentTo", Value: value.SentTo },
                 { Name: "colSendStatus", Value: value.StatusStr },
                 { Name: "colDate", Value: value.CreatedDateStr },
             ];
@@ -123,7 +125,7 @@
                 Columns: columns
             }
 
-            if (value.SentBy === "Customer") {
+            if (value.SentBy !== "Chatbot") {
                 columns[1]["TdClass"] = 'cell-content-class';
                 data["CssClass"] = 'body-class-bg';
             }

@@ -60,10 +60,8 @@
                 IsSpecialSite = HasSpecialSitePermission(customerId)
             };
 
-
             var rawData = _repository.GetChatBots(criteria);
-
-            return new ChatBotsMappingModel(rawData.Count(), rawData);
+            return rawData;
         }
 
         public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorID, string IP,

@@ -12,10 +12,10 @@
 
         public ChatBotsMappingModel(
             int totalItems,
-            IEnumerable<ChatBotModel> globalSettings)
+            IEnumerable<ChatBotModel> chatBotModels)
         {
             TotalItems = totalItems;
-            ChatBots = globalSettings;
+            ChatBots = chatBotModels;
         }
 
         public int TotalItems { get; }

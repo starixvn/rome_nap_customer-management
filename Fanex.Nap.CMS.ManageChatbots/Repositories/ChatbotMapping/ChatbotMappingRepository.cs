@@ -65,18 +65,24 @@
             => new NapAccountingPolicyModel(
                 reader["funcname"].ToString());
 
-        public IEnumerable<ChatBotModel> GetChatBots(ICriteria criteria)
+        public ChatBotsMappingModel GetChatBots(ICriteria criteria)
         {
+            IList<ChatBotModel> chatBotModels = new List<ChatBotModel>();
+            var TotalRows = 0;
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
                     {
-                        yield return ChatBotMappingItem(reader);
+                        chatBotModels.Add(ChatBotMappingItem(reader));
                     }
+                  
                 }
+                TotalRows = Convert.ToInt32(db.GetOuputParams()["totalrows"]);
             }
+
+            return new ChatBotsMappingModel(TotalRows, chatBotModels);
         }
 
         public ChatBotsConfigModel GetConfigChatBot(ICriteria criteria)
@@ -100,6 +106,7 @@
                             functions.Add(ChatBotFuncConfig(reader));
                         }
                     }
+                   
                 }
             }
 

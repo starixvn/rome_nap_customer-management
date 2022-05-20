@@ -343,6 +343,7 @@
     <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -365,6 +366,7 @@
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>

@@ -26,6 +26,8 @@
         
         public bool IsSpecialSite { get; set; }
 
+        public int TotalRows { get; set; }
+        
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotAccountListSel";
     }

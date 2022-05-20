@@ -14,7 +14,7 @@
         
         IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria);
         
-        IEnumerable<ChatBotModel> GetChatBots(ICriteria criteria);
+        ChatBotsMappingModel GetChatBots(ICriteria criteria);
         
         ChatBotsConfigModel GetConfigChatBot(ICriteria criteria);
         

@@ -29,7 +29,6 @@ namespace Fanex.NAP.CMS.ViewModels.OpenCloseMember
                 this.CustId = rawData.CustId;
                 this.Username = rawData.Member;
                 this.Closed = rawData.Closed;
-                this.SyncCasino = rawData.SyncCasino;
             }
         }
 
@@ -40,7 +39,5 @@ namespace Fanex.NAP.CMS.ViewModels.OpenCloseMember
         public bool Closed { get; set; }
 
         public bool IsChecked { get; set; }
-
-        public bool SyncCasino { get; set; }
     }
 }

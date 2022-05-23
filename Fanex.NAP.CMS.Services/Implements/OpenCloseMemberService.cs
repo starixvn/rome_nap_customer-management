@@ -9,23 +9,17 @@
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
-    using CasinoLibrary.Model.UserException;
-    using CasinoLibrary.SBAgent;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
     using Fanex.NAP.CMS.Models.OpenCloseMember;
     using Fanex.NAP.CMS.Repositories.Implements;
     using Fanex.NAP.CMS.Repositories.Interfaces;
-    using Fanex.NAP.CMS.Services.ApiLogers;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
-    using Fanex.NAP.Framework.Command;
     using NAP.Core.Web.Session;
-    using Sunplus.Libraries.APILogger;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
 
     /// <summary>
     /// Open close member service.
@@ -37,16 +31,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
         private static int userId;
 
-        private readonly IOpenCloseMemberRepository _openCloseMemberRepository;
-
-        static OpenCloseMemberService()
-        {
-            CasinoApiLogger casinoLogger = new CasinoApiLogger(AccountingSystemId, GetUserId, GetUserId);
-            APILogManager apiLogManager = new APILogManager(casinoLogger);
-            apiLogManager.Register(
-                              typeof(CasinoLibrary.SBAgent.Customer),
-                              "Update*|Insert*|AutoInsert*|Move*|Remove*|Reset*|Rollback*");
-        }
+        private readonly IOpenCloseMemberRepository _openCloseMemberRepository;      
 
         public OpenCloseMemberService() :
             this(null)
@@ -119,36 +104,15 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>Updated result.</returns>
         public UpdatedMembersStatusResult UpdateMembersStatus(UpdatedMembersStatusFilter filter)
         {
-            var result = new UpdatedMembersStatusResult();
-            List<UpdatedMemberStatus> syncCasinoMembers = filter.MemberStatusList.Where(obj => obj.SyncCasino).ToList();
-            List<UpdatedMemberStatus> members = filter.MemberStatusList.Where(obj => !obj.SyncCasino).ToList();
-            List<UpdatedMemberStatus> updatedRnGMembers;
-
-            try
-            {
-                updatedRnGMembers = UpdateRnGCasinoStatus(syncCasinoMembers, filter);
-            }
-            catch (ErrorException casinoException)
-            {
-                result.ErrorCode = 999;
-                result.ErrorMsg = casinoException.Message;
-                updatedRnGMembers = new List<UpdatedMemberStatus>();
-            }
-
-            List<UpdatedMemberStatus> failedList = syncCasinoMembers.Except(updatedRnGMembers).ToList();
-
-            if (updatedRnGMembers.Count > 0)
-            {
-                members.AddRange(updatedRnGMembers);
-            }
+            var result = new UpdatedMembersStatusResult();          
+            List<UpdatedMemberStatus> members = filter.MemberStatusList;          
 
             if (members.Count > 0)
             {
                 var updateResult = UpdateStatusInDB(members, filter);
 
                 if (updateResult.Code > 0)
-                {
-                    failedList = filter.MemberStatusList;
+                {                   
                     result.ErrorCode = updateResult.Code;
                     result.ErrorMsg = updateResult.Message;
                     result.ListCustRemove = updateResult.ListCustRemove;
@@ -157,8 +121,8 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
 
             Thread.Sleep(CommonConstants.RepDelayTime); // Delay 3s due to the replication of DB.
-            result.MembersStatusResult = GetUpdatedStatusList(failedList, filter);
-            result.NumberOfFailedItems = failedList.Count;
+            result.MembersStatusResult = GetUpdatedStatusList(filter);
+            result.NumberOfFailedItems = 0;
             result.TotalItems = filter.MemberStatusList.Count;
             result.NumberOfUpdatedItems = result.TotalItems - result.NumberOfFailedItems;
 
@@ -177,69 +141,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             }
 
             return userId;
-        }
-
-        /// <summary>
-        /// Updates the RNG casino status.
-        /// </summary>
-        /// <param name="memberList">List of members that need to synchronize status with RNG Casino.</param>
-        /// <param name="filter">The filter contains updated data.</param>
-        /// <returns>List of members whose status is updated successfully.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2200:RethrowToPreserveStackDetails")]
-        private static List<UpdatedMemberStatus> UpdateRnGCasinoStatus(List<UpdatedMemberStatus> memberList, UpdatedMembersStatusFilter filter)
-        {
-            var updatedMembers = new List<UpdatedMemberStatus>();
-
-            if (memberList.Count > 0)
-            {
-                var customerManager = new Customer();
-                int numOfUpdatedMembers = memberList.Count;
-                int index = 0;
-
-                try
-                {
-                    while (index < numOfUpdatedMembers)
-                    {
-                        int count = Math.Min(BatchLimitation, numOfUpdatedMembers - index);
-                        IEnumerable<UpdatedMemberStatus> tempMemberList = memberList.GetRange(index, count);
-                        int[] custIdArray = tempMemberList.Select(obj => obj.CustId).ToArray();
-                        string custIDList = string.Join(",", custIdArray);
-                        bool updateResult = customerManager.UpdateMultipleCustClosed(
-                                                                custIDList,
-                                                                filter.UpdateType == UpdateStatusType.Close,
-                                                                filter.IP,
-                                                                filter.AdminId,
-                                                                filter.AdminUsername,
-                                                                AccountingSystemId);
-
-                        if (updateResult)
-                        {
-                            updatedMembers.AddRange(tempMemberList);
-                        }
-                        else
-                        {
-                            break;
-                        }
-
-                        index += count;
-                    }
-                }
-                catch (ErrorException casinoException)
-                {
-                    Logging.LogService.Error(casinoException.Message, casinoException);
-
-                    throw casinoException;
-                }
-                catch (Exception ex)
-                {
-                    // Assum that any exception occurs during calling API is a failure and CasinoApiLogger will write log for this.
-                    // No need to throw exception here.
-                   Logging.LogService.Debug(ex.Message);
-                }
-            }
-
-            return updatedMembers;
-        }
+        }      
 
         /// <summary>
         /// Updates the status in database.
@@ -267,7 +169,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <param name="failedList">The failed list.</param>
         /// <param name="filter">The filter.</param>
         /// <returns>Queried result.</returns>
-        private GettingMembersStatusResult GetUpdatedStatusList(List<UpdatedMemberStatus> failedList, UpdatedMembersStatusFilter filter)
+        private GettingMembersStatusResult GetUpdatedStatusList(UpdatedMembersStatusFilter filter)
         {
             var getStatusFilter = new GettingMembersStatusFilter
             {
@@ -276,21 +178,7 @@ namespace Fanex.NAP.CMS.Services.Implements
                 PageSize = filter.PageSize,
                 PageIndex = filter.PageIndex
             };
-            GettingMembersStatusResult statusList = this.GetMembersStatus(getStatusFilter);
-
-            foreach (var master in statusList.DownlineList)
-            {
-                foreach (var agent in master.AgentStatusList)
-                {
-                    foreach (var member in agent.MemberStatusList)
-                    {
-                        if (failedList.Any(obj => obj.CustId == member.CustId))
-                        {
-                            member.IsChecked = true;
-                        }
-                    }
-                }
-            }
+            GettingMembersStatusResult statusList = this.GetMembersStatus(getStatusFilter);         
 
             return statusList;
         }

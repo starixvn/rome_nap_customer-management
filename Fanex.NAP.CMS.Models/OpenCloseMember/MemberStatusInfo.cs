@@ -22,8 +22,6 @@ namespace Fanex.NAP.CMS.Models.OpenCloseMember
 
         public string Agent { get; set; }
 
-        public bool SyncCasino { get; set; }
-
         public bool Closed { get; set; }
     }
 }

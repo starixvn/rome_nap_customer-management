@@ -103,7 +103,6 @@ namespace Fanex.NAP.CMS.Repositories.Implements
             {
                 CustId = Convert.ToInt32(row["custid"]),
                 Member = Convert.ToString(row["member"]),
-                SyncCasino = Convert.ToBoolean(row["synccasino"]),
                 Closed = Convert.ToBoolean(row["closed"])
             };
 

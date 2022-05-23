@@ -170,9 +170,9 @@ Fanex.CMS.CloseOpenMember = function () {
         var statusHeaderFormat = '<div class="checkbox-status status-header"><input type="checkbox" id="{0}"/></div>' +
             '<label for="{0}" class="lbl-for-chkStatus">{1}</label>';
         var statusFormat = '<div class="checkbox-status">' +
-            '<input type="checkbox" id="{0}" data-checked="{1}" data-closed="{2}" data-sync-casino="{3}" data-chk-group="{4}"/>' +
+            '<input type="checkbox" id="{0}" data-checked="{1}" data-closed="{2}" data-chk-group="{3}"/>' +
             '</div>' +
-            '<label for="{0}" class="lbl-for-chkStatus">{5}</label>';
+            '<label for="{0}" class="lbl-for-chkStatus">{4}</label>';
         var statusCol = statusHeaderFormat.format(statusChkColId, labels.status);
         var memberFormat = '<label>{0}</label>';
 
@@ -229,8 +229,8 @@ Fanex.CMS.CloseOpenMember = function () {
                             item.CustId,
                             item.IsChecked,
                             item.Closed,
-                            item.SyncCasino,
-                            agentChkId, item.Closed ? labels.closed : labels.open);
+                            agentChkId,
+                            item.Closed ? labels.closed : labels.open);
                         highlightClass = (item.Closed ? 'highlight ' : '') + 'hover-column';
                         row = {
                             Columns: [{ Name: 'ColOrder', Value: currentRow },
@@ -364,8 +364,7 @@ Fanex.CMS.CloseOpenMember = function () {
                 var $member = $(member);
 
                 selectedMembers.push({
-                    CustId: $member.attr('id'),
-                    SyncCasino: $member.attr('data-sync-casino')
+                    CustId: $member.attr('id')
                 });
             });
         }

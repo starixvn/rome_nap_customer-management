@@ -20,7 +20,6 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.Core.Service.Interface;
     using Fanex.NAP.Core.Web;
     using NAP.Core.Configuration;
-    using NAP.Core.Models.ParameterObject;
     using ViewModels.UserInfo;
 
     /// <summary>
@@ -107,55 +106,6 @@ namespace Fanex.NAP.CMS.Controllers
         }
 
         #endregion Change Password
-
-        #region Profile
-
-        /// <summary>
-        /// Redirect to profile page.
-        /// </summary>
-        /// <returns>Action result.</returns>
-        [HttpGet]
-        public ActionResult UserProfile()
-        {
-            var user = this._userService.Get(CurrentSession.UserId);
-            var viewModel = new ProfileViewModel
-            {
-                CustId = user.Id,
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
-
-            return View(viewModel);
-        }
-
-        /// <summary>
-        /// Update user profile.
-        /// </summary>
-        /// <param name="criteria">Criteria using to update user profile.</param>
-        /// <returns>Action result.</returns>
-        [HttpPost]
-        public ActionResult UserProfile(ProfileViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                ViewBag.Success = _securityService.UpdateProfile(
-                    NapSettings.Settings.SiteId,
-                    new UpdateUserInfoParameter
-                    {
-                        CustId = CurrentSession.UserId,
-                        Username = CurrentSession.Username,
-                        FirstName = viewModel.FirstName ?? string.Empty,
-                        LastName = viewModel.LastName ?? string.Empty,
-                        Email = viewModel.Email ?? string.Empty
-                    });
-            }
-
-            return View(viewModel);
-        }
-
-        #endregion Profile
 
         #region Helpers
 

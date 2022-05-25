@@ -18,7 +18,7 @@ var Recheckin = (function ($) {
         reCheckin: function () {
 
             $.ajax({
-                url: Recheckin.root + 'Login/ReCheckLogin',
+                url: Recheckin.root + 'Auth/ReCheckIn',
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
@@ -26,14 +26,14 @@ var Recheckin = (function ($) {
                         Recheckin.headlineMsgBox.showInfo(Recheckin.kickedOutMsg, { closeBtn: false });
                     }
                     if (result === '-1') {
-                        window.location.href = Recheckin.root + 'Login/Offline';
+                        window.location.href = Recheckin.root + 'Auth/Offline';
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 503) {
                         var response = JSON.parse(jqXHR.responseText);
                         if (response.code === 999999) {
-                            window.location.href = Recheckin.root + 'Login/Offline';
+                            window.location.href = Recheckin.root + 'Auth/Offline';
                         }
                     }
                 }
@@ -66,7 +66,7 @@ $(document).ready(function () {
         duration: 2000,
         useAnimation: false,
         beforeClose: function () {
-            window.location.href = Recheckin.root + 'Login/LogOut';
+            window.location.href = Recheckin.root + 'Auth/LogOut';
         }
     });
 

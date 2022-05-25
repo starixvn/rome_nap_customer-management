@@ -27,16 +27,15 @@
                 @if (!string.IsNullOrEmpty(ViewBag.Enviroment))
                 {
                     @Html.Raw(string.Format("<span class='env'>({0})</span>", ViewBag.Enviroment));
-                }               
+                }
             </div>
             @Html.Action("Menu", new RouteValueDictionary(new { controller = "Home", area = "" }))
             <div class="user-info">
                 <div class="greeting">
                     <h2>Welcome <span class="info-acc">@HttpContext.Current.User.Identity.Name</span><span class="info-more"></span></h2>
                     <ul>
-                        <li>@Html.ActionLink(ViewResources.Profile, "UserProfile", "UserInfo", new { area = "" }, null)</li>
                         <li>@Html.ActionLink(ViewResources.Change_Password, "ChangePassword", "UserInfo", new { area = "" }, null)</li>
-                        <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Login", new { area = ""}, null)</li>
+                        <li>@Html.ActionLink(ViewResources.Sign_Out, "LogOut", "Auth", new { area = "" }, null)</li>
                     </ul>
                 </div>
             </div>
@@ -60,10 +59,11 @@
     @Html.Hidden("NotFoundError", Messages.NotFoundMessage)
     @Html.Hidden("InternalError", Messages.InternalError)
     @Html.Hidden("ShowMenus", showMenus)
+    <script type="text/javascript">window.rootUrl = '@Url.Content("~")';</script>
     @Scripts.Render("~/scripts/common")
     @if (ViewBag.ViewFlags != null && ViewBag.ViewFlags.IsReCheckin)
     {
-        <script src="~/Scripts/ReCheckIn.js" type="text/javascript"></script>
+        <script src="@Url.Content("~/auth/recheckinscript")" type="text/javascript"></script>
     }
     @RenderSection("Foot", false)
 </body>

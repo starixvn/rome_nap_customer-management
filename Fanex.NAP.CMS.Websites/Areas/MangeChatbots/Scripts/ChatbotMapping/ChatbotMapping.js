@@ -61,11 +61,12 @@
             },
             {
                 HeaderText: viewResources.ChatBotName,
-                Width: 180,
+                Width: 190,
                 Name: "ChatBotName",
                 HeaderAlign: "center",
                 CellAlign: "left",
-                Sort: true
+                Sort: true,
+                AllowTruncate: true,
             },
             {
                 HeaderText: viewResources.ChatID,
@@ -76,18 +77,20 @@
             },
             {
                 HeaderText: viewResources.UserName,
-                Width: 180,
+                Width: 190,
                 Name: "UserName",
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
+                AllowTruncate: true,
             }, {
                 HeaderText: viewResources.SubAccount,
-                Width: 180,
+                Width: 190,
                 Name: "SubAccount",
                 HeaderAlign: "center",
                 CellAlign: "left",
                 Sort: true,
+                AllowTruncate: true,
             }, {
                 HeaderText: viewResources.LinkingStatus,
                 Width: 100,

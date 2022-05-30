@@ -59,7 +59,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
                 new SelectListItem() { Text = "Vietnamese", Value = "vi-VN" },
                 new SelectListItem() { Text = "Thai", Value = "th-TH" },
                 new SelectListItem() { Text = "Japanese", Value = "ja-JP" },
-                new SelectListItem() { Text = "Korean", Value = "Korean" },
+                new SelectListItem() { Text = "Korean", Value = "ko-KR" },
             };
             var optionLangue = chatBotConfig.OptionsLanguage.Find(c => c.Value == chatBotConfig.ChatBotModel.Language);
             if (optionLangue != null)

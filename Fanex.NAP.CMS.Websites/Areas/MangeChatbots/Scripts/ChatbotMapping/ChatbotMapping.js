@@ -38,7 +38,7 @@
     const resetFilterParams = () => {
         filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
         filterParams.ChatID = $.trim(elements.chatIDTextbox.val());
-        filterParams.IsSubAccOnly = elements.subAccountOnly.val();
+        filterParams.IsSubAccOnly = elements.subAccountOnly.prop('checked');
         filterParams.Level = elements.levelDropdown.val();
         filterParams.AccStatus = elements.statusDropdown.val();
         filterParams.LinkStatus = elements.linkStatusDropdown.val();

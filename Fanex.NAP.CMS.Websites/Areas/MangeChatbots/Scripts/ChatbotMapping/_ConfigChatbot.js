@@ -68,6 +68,10 @@ function PopupConfig(form, reloadData, cusId, botId) {
         CMS.disableInput();
         CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UpdateChatBotConfig"), formData, function (data) {
             var jsonData = $.parseJSON(data);
+            if(jsonData.Code===500){
+                CMS.showErrorMessage(jsonData.Message);
+                return;
+            }
             if (jsonData.updateFunctionResult?.Code === 0 && jsonData.updateLangResult?.Code === 0) {
                 const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
                 CMS.showInlineSuccessMsg(messageText.join(" "), divInlineMessage, true, function () {
@@ -85,6 +89,10 @@ function PopupConfig(form, reloadData, cusId, botId) {
         CMS.disableInput();
         CMS.callAjax(this, CMS.resolveRootUrl("ChatbotMapping/UnlinkBot"), formData, function (data) {
             var jsonData = $.parseJSON(data);
+            if(jsonData.Code===500){
+                CMS.showErrorMessage(jsonData.Message);
+                return;
+            }
             if (jsonData.Code === 0) {
                 CMS.showInlineSuccessMsg(jsonData.Message, divInlineMessage, true, function () {
                     CMS.closePopup();

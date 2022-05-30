@@ -1,5 +1,6 @@
 ﻿using Fanex.Common.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Resources;
 
 namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
@@ -70,9 +71,14 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public JsonResult UpdateChatBotConfig(UpdateChatBotConfigViewModel viewModel)
         {
+            if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
+            {
+                return JsonData(new Result { Code = 500, Message = Labels.AccessDeniedMessage });
+            }
+            
             var updateLangResult = new Result();
             var updateFunctionResult = new Result();
 
@@ -99,9 +105,13 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public JsonResult UnlinkBot(UnlinkBotViewModel viewModel)
         {
+            if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
+            {
+                return JsonData(new Result { Code = 500, Message = Labels.AccessDeniedMessage });
+            }
             var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
                 CurrentContext.IP, viewModel.UserID, viewModel.BotId, false, false);
 

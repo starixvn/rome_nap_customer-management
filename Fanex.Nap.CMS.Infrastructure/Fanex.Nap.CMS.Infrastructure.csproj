@@ -240,6 +240,7 @@
     <Compile Include="Constants\CMSFunctionKeys.cs" />
     <Compile Include="Constants\DateTimeFormatConstants.cs" />
     <Compile Include="Constants\ErrorCodeConstants.cs" />
+    <Compile Include="Constants\LanguageNameConstants.cs" />
     <Compile Include="Constants\RoleIdConstants.cs" />
     <Compile Include="Constants\SessionKeyConstants.cs" />
     <Compile Include="Constants\SortDirectionConstants.cs" />

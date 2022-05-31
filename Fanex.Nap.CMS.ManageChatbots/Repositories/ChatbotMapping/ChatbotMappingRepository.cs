@@ -11,6 +11,7 @@
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
     using Fanex.Common;
     using Fanex.Nap.CMS.Infrastructure.Models;
+
     public class ChatBotMappingRepository : IChatbotMappingRepository
     {
         public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
@@ -77,8 +78,8 @@
                     {
                         chatBotModels.Add(ChatBotMappingItem(reader));
                     }
-                  
                 }
+
                 TotalRows = Convert.ToInt32(db.GetOuputParams()["totalrows"]);
             }
 
@@ -89,7 +90,7 @@
         {
             IList<ChatBotModel> chatBotModels = new List<ChatBotModel>();
             IList<ChatBotFunctionConfig> functions = new List<ChatBotFunctionConfig>();
-            
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -106,7 +107,6 @@
                             functions.Add(ChatBotFuncConfig(reader));
                         }
                     }
-                   
                 }
             }
 
@@ -121,8 +121,10 @@
             => new ChatBotModel(
                 reader["BotName"].ToString(),
                 Convert.ToInt64(reader["ChatID"]),
-                reader["username"].ToString(), reader["SubAccount"].ToString(),
-                reader["LinkStatus"].ToString(), reader["language"].ToString(),
+                reader["username"].ToString(),
+                reader["SubAccount"].ToString(),
+                reader["LinkStatus"].ToString(),
+                LanguageNameConstants.GetLanguageName(reader["language"].ToString()),
                 RoleIdConstants.GetRoleName(Convert.ToInt16(reader["roleid"])),
                 reader["currency"].ToString(), reader["status"].ToString(),
                 Converter.ToInt(reader["custid"]), Converter.ToInt(reader["SubAccID"]), Converter.ToInt(reader["BotID"])
@@ -151,11 +153,12 @@
         {
             var chatBotModel = new ChatBotFunctionConfig(
                 Converter.ToInt(reader["FunctionID"]),
-                reader["FunctionName"].ToString(), 
+                reader["FunctionName"].ToString(),
                 Converter.ToBool(reader["status"])
-                );
+            );
             return chatBotModel;
         }
+
         public Result ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))

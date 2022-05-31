@@ -4,6 +4,8 @@
 
     public class GetCurrencyListCriteria : CriteriaBase
     {
+        public byte Mode { get; set; }
+        
         public override string GetSettingKey()
             => "Acc_ExchangeSel";
     }

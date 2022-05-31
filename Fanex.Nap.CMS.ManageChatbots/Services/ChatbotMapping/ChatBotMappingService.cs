@@ -21,8 +21,7 @@
 
         public IEnumerable<IdNameModel> GetCurrencies()
         {
-            return _repository.GetCurrencies(new GetCurrencyListCriteria());
-            ;
+            return _repository.GetCurrencies(new GetCurrencyListCriteria { Mode = 1 });
         }
 
         public IEnumerable<IdNameModel> GetSites()

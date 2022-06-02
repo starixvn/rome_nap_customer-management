@@ -82,10 +82,23 @@
 
     .col, .col-1 {
       div {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.5rem;
       }
     }
   }
+
+  .custom-grid-container {
+    display: grid;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto auto;
+
+    .red-button {
+      vertical-align: text-top;
+    }
+  }
+
 
   .ui-combobox {
     float: right;
@@ -146,7 +159,8 @@
     right: 15px;
     width: 300px;
   }
-  .margin-left{
+
+  .margin-left {
     margin-left: 2rem !important;
   }
 }

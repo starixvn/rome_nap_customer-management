@@ -1,60 +1,40 @@
 ﻿@model Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping.ChatBotsConfigModel
 @{
     var isLinked = (@Model.ChatBotModel.IsVerifyOTP && @Model.ChatBotModel.Status);
+    var showSubAccountRow = @Model.ChatBotModel.SubAccount == "" ?"":"Sub Account:";
 }
 @using (Html.BeginForm("UpdateChatBotConfig", "ChatBotMapping", FormMethod.Post, new { id = "formChatBotConfig", @class = "form expand-form" }))
 {
     <div id="config-chat-bot-popup">
         <div id="div-inlineMessage" class="inline-message"></div>
-        <div class="container">
-            <div class="col">
-                <div>Bot Service:</div>
-                <div>Username:</div>
-                <div>Chatbot Name:</div>
-            </div>
-            <div class="col">
-                <div id="BotSerVice">
-                    <b>Telegram</b>
-                </div>
-                <div id="username" data-userid="@Model.ChatBotModel.UserID">
-                    <b>@Model.ChatBotModel.UserName</b>
-                </div>
-                <div id="chatBot">
-                    <b>@Model.ChatBotModel.ChatBotName</b>
-                </div>
-            </div>
-            <div class="col margin-left">
-                <div>Msg. Username:</div>
-                <div>Sub Account:</div>
-                <div>Status</div>
-            </div>
-            <div class="col">
-                <div id="MsgUsername">
-                    <b>@Model.ChatBotModel.ChatID</b>
-                </div>
-                <div id="SubAccount">
-                    @if (@Model.ChatBotModel.SubAccount == "")
-                    {
-                        <br/>
-                    }
-                    else
-                    {
-                        <b>@Model.ChatBotModel.SubAccount</b>
-                    }
-                </div>
-                <div id="Status" data-islink=@isLinked >
-                    @if (@isLinked)
-                    {
-                        <span class="high-light green">Linked</span>
-                        <button type="button" class="red-button" id="btn-unlink">Unlink</button>
-                    }
-                    else
-                    {
-                        <span class="high-light yellow">Verifying</span>
-                    }
-                </div>
-            </div>
+        <div class="custom-grid-container">
+            <div>Bot Service:</div>
+            <div id="BotSerVice"><b>Telegram</b></div>
+            
+            <div>Chat ID:</div>
+            <div id="MsgUsername"><b>@Model.ChatBotModel.ChatID</b></div>
+            
+            <div>Username:</div>
+            <div id="username" data-userid="@Model.ChatBotModel.UserID"><b>@Model.ChatBotModel.UserName</b></div>
 
+            <div>@showSubAccountRow</div>
+            <div id="SubAccount"><b>@Model.ChatBotModel.SubAccount</b></div>
+            
+            <div>Chatbot Name:</div>
+            <div id="chatBot"><b>@Model.ChatBotModel.ChatBotName</b></div>
+            
+            <div>Status:</div>
+            <div id="Status" data-islink=@isLinked>
+                @if (@isLinked)
+                {
+                    <span class="high-light green">Linked</span>
+                    <button type="button" class="red-button" id="btn-unlink">Unlink</button>
+                }
+                else
+                {
+                    <span class="high-light yellow">Verifying</span>
+                }
+            </div>
         </div>
         <hr/>
         <div class="container">

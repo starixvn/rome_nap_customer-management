@@ -18,7 +18,7 @@
 
         ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel);
 
-        Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorId, string IP, int UserID);
+        Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorId, string IP, int UserID,int BotID);
 
         Result UpdateLanguageConfig(int CreatorId, string IP, int UserID, int BotID, string Language);
 

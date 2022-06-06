@@ -64,14 +64,15 @@
         }
 
         public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorID, string IP,
-            int userID)
+            int userID, int botID)
         {
             var criteria = new UpdFunctionsChatBotCriteria()
             {
                 Creator = CreatorID,
                 IP = IP,
                 FunctionConfigs = functionConfigs,
-                UserID = userID
+                UserID = userID,
+                BotID=botID
             };
 
             var result = _repository.ExecuteNonQuery(criteria);

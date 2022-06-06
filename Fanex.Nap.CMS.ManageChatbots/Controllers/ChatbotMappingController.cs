@@ -1,7 +1,7 @@
 ﻿using Fanex.Common.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Resources;
-
+using TelegramBot.Client;
 namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
@@ -86,7 +86,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
             {
                 updateFunctionResult = _service.UpdateFunctionsConfig(viewModel.ChatBotFunctionConfig,
                     CurrentSession.UserId,
-                    CurrentContext.IP, viewModel.UserID);
+                    CurrentContext.IP, viewModel.UserID, viewModel.BotId);
             }
 
             if (!viewModel.Language.IsNullOrTrimEmpty())

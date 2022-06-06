@@ -10,6 +10,7 @@
     {
         public int UserID { get; set; }
 
+        public int BotID { get; set; }
         public int Creator { get; set; }
 
         public string IP { get; set; }
@@ -27,8 +28,9 @@
             => new Hashtable
             {
                 [nameof(UserID)] = UserID,
-                [nameof(Creator)] = Creator,
+                [nameof(BotID)] = BotID,
                 ["Setting"] = ToXml(),
+                [nameof(Creator)] = Creator,
                 [nameof(IP)] = IP,
                 [nameof(ErrCode)] = ErrCode,
                 [nameof(ErrMsg)] = ErrMsg,

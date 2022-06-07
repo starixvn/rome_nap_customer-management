@@ -10,8 +10,8 @@
         public ChatBotMappingViewModel(IEnumerable<IdNameModel> currencies, IEnumerable<IdNameModel> sites)
         {
             Currencies = currencies.ToList()
-                .ConvertAll(e => new SelectListItem() { Text = e.Name, Value = e.Id.ToString() });
-            Sites = sites.ToList().ConvertAll(e => new SelectListItem() { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+            Sites = sites.ToList().ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
         }
 
         public IEnumerable<SelectListItem> Currencies { get; }

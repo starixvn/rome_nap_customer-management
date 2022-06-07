@@ -21,11 +21,13 @@
                 using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
                     while (reader.Read())
+                    {
                         yield return new IdNameModel
                         {
                             Name = reader["Currency"].ToString(),
                             Id = int.Parse(reader["ExchangeID"].ToString())
                         };
+                    }
                 }
             }
         }
@@ -118,17 +120,24 @@
         }
 
         private static ChatBotModel ChatBotMappingItem(IDataReader reader)
-            => new ChatBotModel(
-                reader["BotName"].ToString(),
-                Convert.ToInt64(reader["ChatID"]),
-                reader["username"].ToString(),
-                reader["SubAccount"].ToString(),
-                reader["LinkStatus"].ToString(),
-                LanguageNameConstants.GetLanguageName(reader["language"].ToString()),
-                RoleIdConstants.GetRoleName(Convert.ToInt16(reader["roleid"])),
-                reader["currency"].ToString(), reader["status"].ToString(),
-                Converter.ToInt(reader["custid"]), Converter.ToInt(reader["SubAccID"]), Converter.ToInt(reader["BotID"])
-            );
+        {
+            var chatBotModel = new ChatBotModel
+            {
+                ChatBotName = reader["BotName"].ToString(),
+                ChatID = Convert.ToInt64(reader["ChatID"]),
+                UserName = reader["username"].ToString(),
+                SubAccount = reader["SubAccount"].ToString(),
+                LinkStatus = reader["LinkStatus"].ToString(),
+                Language = LanguageNameConstants.GetLanguageName(reader["language"].ToString()),
+                Level = RoleIdConstants.GetRoleName(Convert.ToInt16(reader["roleid"])),
+                Currency = reader["currency"].ToString(),
+                AccStatus = reader["status"].ToString(),
+                CusID = Converter.ToInt(reader["custid"]),
+                SubAccID = Converter.ToInt(reader["SubAccID"]),
+                BotID = Converter.ToInt(reader["BotID"])
+            };
+            return chatBotModel;
+        }
 
         private static ChatBotModel ChatBotConfig(IDataReader reader)
         {

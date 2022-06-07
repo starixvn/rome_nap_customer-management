@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Constants
 {
-    public class ChatbotConst
+    public static class ChatbotConst
     {
-        
+       public const int ManageChatbotsAccessDenied = 500;
     }
 }

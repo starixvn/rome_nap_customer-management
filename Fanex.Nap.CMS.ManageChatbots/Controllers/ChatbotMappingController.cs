@@ -1,7 +1,8 @@
 ﻿using Fanex.Common.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Resources;
-using TelegramBot.Client;
+using Fanex.Nap.CMS.ManageChatbots.Constants;
+
 namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
     using System.Web.Mvc;
@@ -53,13 +54,11 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 
             chatBotConfig.OptionsLanguage = new List<SelectListItem>()
             {
-                new SelectListItem() { Text = "English", Value = "en-US" },
-                new SelectListItem() { Text = "Chinese", Value = "zh-CN" },
-                new SelectListItem() { Text = "Taiwan", Value = "zh-TW" },
-                new SelectListItem() { Text = "Vietnamese", Value = "vi-VN" },
-                new SelectListItem() { Text = "Thai", Value = "th-TH" },
-                new SelectListItem() { Text = "Japanese", Value = "ja-JP" },
-                new SelectListItem() { Text = "Korean", Value = "ko-KR" },
+                new SelectListItem { Text = "English", Value = "en-US" },
+                new SelectListItem { Text = "Chinese", Value = "zh-Hans" },
+                new SelectListItem { Text = "Taiwan", Value = "zh-Hant" },
+                new SelectListItem { Text = "Vietnamese", Value = "vi-VN" },
+                new SelectListItem { Text = "Thai", Value = "th-TH" },
             };
             var optionLangue = chatBotConfig.OptionsLanguage.Find(c => c.Value == chatBotConfig.ChatBotModel.Language);
             if (optionLangue != null)
@@ -76,7 +75,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         {
             if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
             {
-                return JsonData(new Result { Code = 500, Message = Labels.AccessDeniedMessage });
+                return JsonData(new Result { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
             }
             
             var updateLangResult = new Result();
@@ -110,10 +109,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         {
             if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
             {
-                return JsonData(new Result { Code = 500, Message = Labels.AccessDeniedMessage });
+                return JsonData(new Result { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
             }
             var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
-                CurrentContext.IP, viewModel.UserID, viewModel.BotId, false, false);
+                CurrentContext.IP, viewModel.UserId, viewModel.BotId, viewModel.ChatId,false, false);
 
             return JsonData(updateLangResult, JsonRequestBehavior.DenyGet);
         }

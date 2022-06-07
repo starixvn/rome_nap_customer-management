@@ -43,6 +43,8 @@ function PopupConfig(form, reloadData, cusId, botId) {
     };
 
     const getUserID = () => $("#username").data("userid");
+    
+    const getChatID = () => $("#chatId").data("chatid");
 
     const getLanguage = () => $("#ddl-Language").val();
 
@@ -123,7 +125,7 @@ function PopupConfig(form, reloadData, cusId, botId) {
         $('#btn-unlink').click(function (event) {
             event.preventDefault();
             CMS.showConfirmMessage("Are you sure you want to unlink?", () => unlinkBot({
-                BotId: catchBotID, UserID: getUserID()
+                BotId: catchBotID, UserId: getUserID(), ChatId:getChatID()
             }));
 
         });

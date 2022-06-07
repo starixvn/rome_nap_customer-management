@@ -2,8 +2,10 @@
 {
     public class UnlinkBotViewModel
     {
-        public int UserID { get; set; }
+        public int UserId { get; set; }
 
         public int BotId { get; set; }
+        
+        public int ChatId { get; set; }
     }
 }

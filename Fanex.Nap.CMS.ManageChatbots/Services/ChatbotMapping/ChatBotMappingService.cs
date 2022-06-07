@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿using Fanex.Nap.CMS.Infrastructure.Configurations;
+
+namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,13 +11,20 @@
     using Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Resources;
-
+    using TelegramBot.Client.Services;
+    using System.Net.Http;
+    
     public class ChatBotMappingService : IChatBotMappingService
     {
         private readonly IChatbotMappingRepository _repository;
+        private readonly NotificationService _notificationService;
 
         public ChatBotMappingService(IChatbotMappingRepository repository = null)
         {
+            /*var telegramClient = HttpClientFactory.Create();
+            telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
+            _notificationService =  new NotificationService(telegramClient);
+            _notificationService.Notify(10, 1157271088, "result.Message");*/
             _repository = repository ?? new ChatBotMappingRepository();
         }
 
@@ -31,7 +40,7 @@
 
         public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
         {
-            var criteria = new GetConfigChatBotCriteria()
+            var criteria = new GetConfigChatBotCriteria
             {
                 CustID = paramModel.CusId,
                 BotID = paramModel.BotId,
@@ -63,13 +72,13 @@
             return rawData;
         }
 
-        public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorID, string IP,
+        public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int creatorID, string ip,
             int userID, int botID)
         {
-            var criteria = new UpdFunctionsChatBotCriteria()
+            var criteria = new UpdFunctionsChatBotCriteria
             {
-                Creator = CreatorID,
-                IP = IP,
+                Creator = creatorID,
+                IP = ip,
                 FunctionConfigs = functionConfigs,
                 UserID = userID,
                 BotID=botID
@@ -85,15 +94,15 @@
             return result;
         }
 
-        public Result UpdateLanguageConfig(int CreatorID, string IP, int UserID, int BotID, string Language)
+        public Result UpdateLanguageConfig(int creatorID, string ip, int userID, int botID, string language)
         {
-            var criteria = new UpdLanguageChatBotCriteria()
+            var criteria = new UpdLanguageChatBotCriteria
             {
-                Creator = CreatorID,
-                IP = IP,
-                Language = Language,
-                UserID = UserID,
-                BotID = BotID
+                Creator = creatorID,
+                IP = ip,
+                Language = language,
+                UserID = userID,
+                BotID = botID
             };
 
             var result = _repository.ExecuteNonQuery(criteria);
@@ -106,23 +115,24 @@
             return result;
         }
 
-        public Result UnlinkChatBot(int CreatorID, string IP, int UserID, int BotID, bool status, bool IsVerifyOTP)
+        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, int chatId, bool status, bool isVerifyOtp)
         {
-            var criteria = new UnlinkChatBotCriteria()
+            var criteria = new UnlinkChatBotCriteria
             {
-                Creator = CreatorID,
-                IP = IP,
+                Creator = creatorID,
+                IP = ip,
                 Status = status,
-                IsVerifyOTP = IsVerifyOTP,
-                UserID = UserID,
-                BotID = BotID
+                IsVerifyOTP = isVerifyOtp,
+                UserID = userId,
+                BotID = botId,
             };
-
+          
             var result = _repository.ExecuteNonQuery(criteria);
-
+            
             if (result.IsSuccess)
             {
                 result.Message = string.Format(Labels.UpdateSuccess, "Status");
+               
             }
 
             return result;

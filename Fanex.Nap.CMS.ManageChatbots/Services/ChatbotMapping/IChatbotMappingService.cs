@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using Models.ChatbotMapping;
     using ViewModels.ChatbotMapping;
     using Fanex.Nap.CMS.Infrastructure.Models;
@@ -18,10 +17,10 @@
 
         ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel);
 
-        Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int CreatorId, string IP, int UserID,int BotID);
+        Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int creatorId, string ip, int userId,int botId);
 
-        Result UpdateLanguageConfig(int CreatorId, string IP, int UserID, int BotID, string Language);
+        Result UpdateLanguageConfig(int creatorId, string ip, int userId, int botId, string language);
 
-        Result UnlinkChatBot(int CreatorId, string IP, int UserID, int BotID, bool status, bool IsVerifyOTP);
+        Result UnlinkChatBot(int creatorId, string ip, int userId, int botId,int chatId, bool status, bool isVerifyOtp);
     }
 }

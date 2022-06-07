@@ -9,8 +9,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
         private static Dictionary<string, string> _roleName = new Dictionary<string, string>
         {
             { "en-US", "English" },
-            { "zh-CN", "Chinese" },
-            { "zh-TW", "Taiwan" },
+            { "zh-Hans", "Chinese" },
+            { "zh-Han", "Taiwan" },
             { "vi-VN", "Vietnamese" },
             { "th-TH", "Thai" },
             { "ja-JP", "Japanese" },

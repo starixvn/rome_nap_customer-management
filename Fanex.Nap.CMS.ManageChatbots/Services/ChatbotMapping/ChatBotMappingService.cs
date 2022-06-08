@@ -1,33 +1,39 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Fanex.Nap.CMS.Infrastructure.Configurations;
 
 namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net.Http;
     using Criteria.ChatbotMapping;
-    using Repositories.ChatbotMapping;
-    using Models.ChatbotMapping;
-    using ViewModels.ChatbotMapping;
-    using Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Infrastructure;
+    using Models.ChatbotMapping;
+    using Repositories.ChatbotMapping;
     using Resources;
     using TelegramBot.Client.Services;
-    using System.Net.Http;
-    
+    using ViewModels.ChatbotMapping;
+
     public class ChatBotMappingService : IChatBotMappingService
     {
         private readonly IChatbotMappingRepository _repository;
-        private readonly NotificationService _notificationService;
+        private readonly INotificationService _notificationService;
 
-        public ChatBotMappingService(IChatbotMappingRepository repository = null)
+        public ChatBotMappingService(
+            IChatbotMappingRepository repository = null,
+            INotificationService notificationService = null)
         {
-            var telegramClient = HttpClientFactory.Create();
-            telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
-            _notificationService =  new NotificationService(telegramClient);
-            
             _repository = repository ?? new ChatBotMappingRepository();
+
+            if (notificationService == null)
+            {
+                var telegramClient = HttpClientFactory.Create();
+                telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
+                notificationService = new NotificationService(telegramClient);
+            }
+
+            _notificationService = notificationService;
         }
 
         public IEnumerable<IdNameModel> GetCurrencies()
@@ -74,8 +80,12 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
             return rawData;
         }
 
-        public Result UpdateFunctionsConfig(ChatBotFunctionConfig[] functionConfigs, int creatorID, string ip,
-            int userID, int botID)
+        public Result UpdateFunctionsConfig(
+            ChatBotFunctionConfig[] functionConfigs,
+            int creatorID,
+            string ip,
+            int userID,
+            int botID)
         {
             var criteria = new UpdFunctionsChatBotCriteria
             {
@@ -128,21 +138,21 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
                 UserID = userId,
                 BotID = botId,
             };
-            try
-            {
-                _notificationService.Unlink(userId, subAccId);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
             
             var result = _repository.ExecuteNonQuery(criteria);
             
             if (result.IsSuccess)
             {
                 result.Message = string.Format(Labels.UpdateSuccess, "Status");
-               
+
+                try
+                {
+                    _notificationService.Unlink(userId, subAccId);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
 
             return result;

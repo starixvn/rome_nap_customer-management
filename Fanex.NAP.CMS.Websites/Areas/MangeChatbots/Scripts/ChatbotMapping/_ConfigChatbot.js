@@ -45,6 +45,8 @@ function PopupConfig(form, reloadData, cusId, botId) {
     const getUserID = () => $("#username").data("userid");
     
     const getChatID = () => $("#chatId").data("chatid");
+    
+    const getSubAccID = () => $("#chatId").data("subaccountid");
 
     const getLanguage = () => $("#ddl-Language").val();
 
@@ -80,7 +82,12 @@ function PopupConfig(form, reloadData, cusId, botId) {
                     CMS.closePopup();
                     reloadData();
                 });
-            } else {
+            } 
+            else if(jsonData.updateFunctionResult?.Code ===102 || jsonData.updateLangResult?.Code === 0){
+                const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
+                CMS.showInlineErrorMsg(messageText[0] || messageText[1], divInlineMessage);
+            }
+            else {
                 const messageText = [jsonData.updateFunctionResult.Message, jsonData.updateLangResult.Message]
                 CMS.showInlineErrorMsg(messageText.join(" "), divInlineMessage);
             }
@@ -125,7 +132,7 @@ function PopupConfig(form, reloadData, cusId, botId) {
         $('#btn-unlink').click(function (event) {
             event.preventDefault();
             CMS.showConfirmMessage("Are you sure you want to unlink?", () => unlinkBot({
-                BotId: catchBotID, UserId: getUserID(), ChatId:getChatID()
+                BotId: catchBotID, UserId: getUserID(), SubAccId: getSubAccID()
             }));
 
         });

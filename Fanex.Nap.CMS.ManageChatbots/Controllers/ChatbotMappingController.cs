@@ -1,4 +1,5 @@
-﻿using Fanex.Common.Extensions;
+﻿using System.Threading.Tasks;
+using Fanex.Common.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Resources;
 using Fanex.Nap.CMS.ManageChatbots.Constants;
@@ -75,9 +76,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
         {
             if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
             {
-                return JsonData(new Result { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
+                return JsonData(new Result
+                    { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
             }
-            
+
             var updateLangResult = new Result();
             var updateFunctionResult = new Result();
 
@@ -105,15 +107,22 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
-        public JsonResult UnlinkBot(UnlinkBotViewModel viewModel)
+        public  JsonResult UnlinkBot(UnlinkBotViewModel viewModel)
         {
             if (!HasRight(CMSFunctionKeys.ChatbotMapping, Constant.Policy.Host))
             {
-                return JsonData(new Result { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
+                return JsonData(new Result
+                    { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
             }
-            var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
-                CurrentContext.IP, viewModel.UserId, viewModel.BotId, viewModel.ChatId,false, false);
 
+            /*var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
+                CurrentContext.IP, viewModel.UserId, viewModel.BotId, viewModel.ChatId,false, false);*/
+            var updateLangResult = _service.UnlinkChatBot(
+                CurrentSession.UserId,
+                CurrentContext.IP,
+                viewModel.UserId,
+                viewModel.BotId,
+                viewModel.SubAccId);
             return JsonData(updateLangResult, JsonRequestBehavior.DenyGet);
         }
     }

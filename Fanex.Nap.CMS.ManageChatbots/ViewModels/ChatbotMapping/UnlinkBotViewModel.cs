@@ -6,6 +6,6 @@
 
         public int BotId { get; set; }
         
-        public int ChatId { get; set; }
+        public int SubAccId { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Fanex.Nap.CMS.Infrastructure.Configurations;
+﻿using System;
+using System.Threading.Tasks;
+using Fanex.Nap.CMS.Infrastructure.Configurations;
 
 namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
@@ -21,10 +23,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 
         public ChatBotMappingService(IChatbotMappingRepository repository = null)
         {
-            /*var telegramClient = HttpClientFactory.Create();
+            var telegramClient = HttpClientFactory.Create();
             telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
             _notificationService =  new NotificationService(telegramClient);
-            _notificationService.Notify(10, 1157271088, "result.Message");*/
+            
             _repository = repository ?? new ChatBotMappingRepository();
         }
 
@@ -115,18 +117,26 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
             return result;
         }
 
-        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, int chatId, bool status, bool isVerifyOtp)
+        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, int subAccId)
         {
             var criteria = new UnlinkChatBotCriteria
             {
                 Creator = creatorID,
                 IP = ip,
-                Status = status,
-                IsVerifyOTP = isVerifyOtp,
+                Status = false,
+                IsVerifyOTP = false,
                 UserID = userId,
                 BotID = botId,
             };
-          
+            try
+            {
+                _notificationService.Unlink(userId, subAccId);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             var result = _repository.ExecuteNonQuery(criteria);
             
             if (result.IsSuccess)

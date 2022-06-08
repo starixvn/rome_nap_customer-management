@@ -7,6 +7,7 @@
         public int UserID { get; set; }
         
         public int BotId { get; set; }
+   
         
         public ChatBotFunctionConfig[] ChatBotFunctionConfig { get; set; }
 

@@ -46,8 +46,6 @@ function PopupConfig(form, reloadData, cusId, botId) {
     
     const getChatID = () => $("#chatId").data("chatid");
     
-    const getSubAccID = () => $("#chatId").data("subaccountid");
-
     const getLanguage = () => $("#ddl-Language").val();
 
     const updateStateSaveBtn = (isConfigChange) => {
@@ -65,7 +63,7 @@ function PopupConfig(form, reloadData, cusId, botId) {
 
     const isChangeLanguage = () => {
         const currentLanguage = getLanguage();
-        return JSON.stringify(currentLanguage) !== oldLanguage;
+        return currentLanguage !== oldLanguage;
     }
 
     const submitForm = (formData) => {
@@ -123,7 +121,6 @@ function PopupConfig(form, reloadData, cusId, botId) {
             });
         }
 
-
         $('#btn-close-popup').click(function (event) {
             event.preventDefault();
             CMS.closePopup();
@@ -132,7 +129,10 @@ function PopupConfig(form, reloadData, cusId, botId) {
         $('#btn-unlink').click(function (event) {
             event.preventDefault();
             CMS.showConfirmMessage("Are you sure you want to unlink?", () => unlinkBot({
-                BotId: catchBotID, UserId: getUserID(), SubAccId: getSubAccID()
+                BotId: catchBotID,
+                UserId: getUserID(),
+                ChatId: getChatID(),
+                Language: oldLanguage
             }));
 
         });
@@ -157,14 +157,14 @@ function PopupConfig(form, reloadData, cusId, botId) {
         formPopup.click(function () {
             const isFormChange = (isChangeLanguage() || isChangeConfigFunctions());
             updateStateSaveBtn(isFormChange);
-        })
+        });
     };
 
     const catchClientData = () => {
         catchBotID = botId;
         divInlineMessage = $("#div-inlineMessage");
         oldChatBotFunctionConfig = JSON.stringify(getConfigChatBotFunctions());
-        oldLanguage = JSON.stringify(getLanguage());
+        oldLanguage = getLanguage();
     }
 
     this.initialize = function () {

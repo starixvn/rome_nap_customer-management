@@ -1,12 +1,14 @@
-﻿using System;
-using Fanex.Nap.CMS.Infrastructure.Configurations;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
+    using System.Threading.Tasks;
     using Criteria.ChatbotMapping;
+    using Fanex.Logging.Extensions.Web;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Infrastructure;
     using Models.ChatbotMapping;
@@ -18,22 +20,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
     public class ChatBotMappingService : IChatBotMappingService
     {
         private readonly IChatbotMappingRepository _repository;
-        private readonly INotificationService _notificationService;
 
-        public ChatBotMappingService(
-            IChatbotMappingRepository repository = null,
-            INotificationService notificationService = null)
+        public ChatBotMappingService(IChatbotMappingRepository repository = null)
         {
             _repository = repository ?? new ChatBotMappingRepository();
-
-            if (notificationService == null)
-            {
-                var telegramClient = HttpClientFactory.Create();
-                telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
-                notificationService = new NotificationService(telegramClient);
-            }
-
-            _notificationService = notificationService;
         }
 
         public IEnumerable<IdNameModel> GetCurrencies()
@@ -127,7 +117,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
             return result;
         }
 
-        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, int subAccId)
+        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, long chatId, string language)
         {
             var criteria = new UnlinkChatBotCriteria
             {
@@ -145,17 +135,32 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
             {
                 result.Message = string.Format(Labels.UpdateSuccess, "Status");
 
-                try
-                {
-                    _notificationService.Unlink(userId, subAccId);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+                Task.Run(() => NotifyUnlink(userId, chatId, botId, language));
             }
 
             return result;
+        }
+
+        private async Task NotifyUnlink(int userId, long chatId, int botId, string language)
+        {
+            try
+            {
+                await GetNotificationService().Unlink(userId, chatId, botId, language);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
+        }
+
+        private static INotificationService GetNotificationService()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var telegramClient = HttpClientFactory.Create();
+            telegramClient.BaseAddress = AppSettings.TelegramBotClientUri;
+
+            return new NotificationService(telegramClient);
         }
 
         public bool HasSpecialSitePermission(int customerId)

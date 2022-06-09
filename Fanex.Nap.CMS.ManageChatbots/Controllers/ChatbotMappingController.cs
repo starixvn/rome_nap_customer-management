@@ -1,19 +1,17 @@
-﻿using System.Threading.Tasks;
-using Fanex.Common.Extensions;
-using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Resources;
-using Fanex.Nap.CMS.ManageChatbots.Constants;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Controllers
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Controllers
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.Common.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using Infrastructure;
     using Infrastructure.Controllers;
+    using NAP.Core.Business;
+    using NAP.Core.Web.Attribute;
     using Services.ChatBotMapping;
     using ViewModels.ChatbotMapping;
-    using System.Collections.Generic;
-    using NAP.Core.Web.Attribute;
-    using Infrastructure;
-    using NAP.Core.Business;
 
     public class ChatBotMappingController : BaseController
     {
@@ -115,14 +113,13 @@ namespace Fanex.Nap.CMS.ManageChatbots.Controllers
                     { Code = ChatbotConst.ManageChatbotsAccessDenied, Message = Labels.AccessDeniedMessage });
             }
 
-            /*var updateLangResult = _service.UnlinkChatBot(CurrentSession.UserId,
-                CurrentContext.IP, viewModel.UserId, viewModel.BotId, viewModel.ChatId,false, false);*/
             var updateLangResult = _service.UnlinkChatBot(
                 CurrentSession.UserId,
                 CurrentContext.IP,
                 viewModel.UserId,
                 viewModel.BotId,
-                viewModel.SubAccId);
+                viewModel.ChatId,
+                viewModel.Language);
             return JsonData(updateLangResult, JsonRequestBehavior.DenyGet);
         }
     }

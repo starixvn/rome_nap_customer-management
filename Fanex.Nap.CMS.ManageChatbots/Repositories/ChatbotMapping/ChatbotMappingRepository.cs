@@ -1,16 +1,15 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotMapping
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
-    using System.Data;
-    using Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping;
     using System;
-    using Fanex.Nap.CMS.Infrastructure.Constants;
-    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
+    using System.Collections.Generic;
+    using System.Data;
     using Fanex.Common;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
+    using Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping;
+    using Fanex.NAP.Framework.Data;
 
     public class ChatBotMappingRepository : IChatbotMappingRepository
     {

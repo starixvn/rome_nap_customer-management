@@ -1,11 +1,9 @@
-﻿using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 {
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Models.ChatbotMapping;
     using ViewModels.ChatbotMapping;
-    using Fanex.Nap.CMS.Infrastructure.Models;
 
     public interface IChatBotMappingService
     {
@@ -23,7 +21,6 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping
 
         Result UpdateLanguageConfig(int creatorId, string ip, int userId, int botId, string language);
 
-      //  Result UnlinkChatBot(int creatorId, string ip, int userId, int botId,int chatId, bool status, bool isVerifyOtp);
-        Result  UnlinkChatBot(int creatorId, string ip, int userId, int botId, int subAccId);
+        Result  UnlinkChatBot(int creatorId, string ip, int userId, int botId, long chatId, string language);
     }
 }

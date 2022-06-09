@@ -5,7 +5,9 @@
         public int UserId { get; set; }
 
         public int BotId { get; set; }
-        
-        public int SubAccId { get; set; }
+
+        public long ChatId { get; set; }
+
+        public string Language { get; set; }
     }
 }

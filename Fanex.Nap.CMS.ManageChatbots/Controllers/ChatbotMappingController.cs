@@ -51,7 +51,7 @@
         {
             var chatBotConfig = _service.GetConfig(param);
 
-            chatBotConfig.OptionsLanguage = new List<SelectListItem>()
+            chatBotConfig.OptionsLanguage = new List<SelectListItem>
             {
                 new SelectListItem { Text = "English", Value = "en-US" },
                 new SelectListItem { Text = "Chinese", Value = "zh-Hans" },

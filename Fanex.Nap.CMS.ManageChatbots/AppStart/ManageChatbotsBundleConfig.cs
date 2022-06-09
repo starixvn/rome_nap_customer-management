@@ -4,7 +4,7 @@
     using BundleTransformer.Core.Orderers;
     using BundleTransformer.Core.Transformers;
 
-    public class ManageChatbotsBundleConfig
+    public static class ManageChatbotsBundleConfig
     {
         public const string ChatbotMappingsScripts = "~/areas/mangechatbots/chatbotmappingscripts";
         public const string ChatbotMappingStyles = "~/areas/mangechatbots/chatbotmappingstyles";

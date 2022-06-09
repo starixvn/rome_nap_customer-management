@@ -4,7 +4,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
 {
     using System.Collections.Generic;
 
-    public class LanguageNameConstants
+    public static class LanguageNameConstants
     {
         private static Dictionary<string, string> _roleName = new Dictionary<string, string>
         {

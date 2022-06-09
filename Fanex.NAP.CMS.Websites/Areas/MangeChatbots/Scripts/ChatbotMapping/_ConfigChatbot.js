@@ -142,13 +142,13 @@ function PopupConfig(form, reloadData, cusId, botId) {
         formPopup.submit(function (event) {
             event.preventDefault();
 
-            const ChangeLanguage = isChangeLanguage();
-            const ChangeConfigFunctions = isChangeConfigFunctions();
+            const changeLanguage = isChangeLanguage();
+            const changeConfigFunctions = isChangeConfigFunctions();
             const formData = {UserID: getUserID(), BotId: catchBotID,};
-            if (ChangeConfigFunctions) {
+            if (changeConfigFunctions) {
                 formData.ChatBotFunctionConfig = getConfigChatBotFunctions();
             }
-            if (ChangeLanguage) {
+            if (changeLanguage) {
                 formData.Language = getLanguage();
             }
             submitForm(formData);
@@ -160,7 +160,7 @@ function PopupConfig(form, reloadData, cusId, botId) {
         });
     };
 
-    const catchClientData = () => {
+    const cacheClientData = () => {
         catchBotID = botId;
         divInlineMessage = $("#div-inlineMessage");
         oldChatBotFunctionConfig = JSON.stringify(getConfigChatBotFunctions());
@@ -169,7 +169,7 @@ function PopupConfig(form, reloadData, cusId, botId) {
 
     this.initialize = function () {
         CMS.modal("Config Chatbot", form, {resizable: false});
-        catchClientData();
+        cacheClientData();
         bindingEvents();
     }
 }

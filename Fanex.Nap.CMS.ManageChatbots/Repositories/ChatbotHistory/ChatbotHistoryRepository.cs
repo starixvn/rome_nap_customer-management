@@ -33,11 +33,15 @@
                 {
                     while (reader.Read())
                     {
-                        functions.Add(new IdNameModel
+                        var type = Convert.ToInt32(reader["Type"]);
+                        if (type == 1 || type == 3)
                         {
-                            Name = reader["FunctionName"].ToString(),
-                            Id = Convert.ToInt32(reader["FunctionID"])
-                        });
+                            functions.Add(new IdNameModel
+                            {
+                                Name = reader["FunctionName"].ToString(),
+                                Id = Convert.ToInt32(reader["FunctionID"])
+                            });
+                        } 
                     }
                 }
                 return functions;

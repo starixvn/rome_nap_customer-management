@@ -1,0 +1,91 @@
+﻿@using Fanex.Nap.CMS.ManageChatbots.AppStart;
+@using Fanex.Nap.CMS.ManageChatbots.Resources;
+@using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList; 
+@using Newtonsoft.Json
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model NotificationListViewModel
+@section Head {
+    @Styles.Render(ManageChatbotsBundleConfig.NotificationListStyles)
+}
+
+@section Foot {
+    <script type="text/javascript">
+
+        var resources = {
+            sentBy: '@Labels.SentBy',
+            messageContent: '@Labels.MessageContent',
+            sentTo: '@Labels.SentTo',
+            sendStatus: '@Labels.SendStatus',
+            DateGMT4: '@Labels.DateGMT4',
+            defaultFromDate: "@Model.DefaultFromDate.ToShortFormatedDateWithSlash()",
+            defaultToDate: "@Model.DefaultToDate.ToShortFormatedDateWithSlash()",
+        };
+    </script>
+    @Scripts.Render(ManageChatbotsBundleConfig.NotificationListSrcipts)
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">Notification List</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "NotificationList", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+    <div class="filter-row">
+        <div id="fromtodate-picker"></div>
+
+        <div class="lbl-field col_6">
+            <label>@Labels.Status</label>
+        </div>
+        <div class="edit-field col_10">
+            @Html.DropDownList(
+            "ddlSendStatus",
+            Model.SendStatus,
+            new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-200" })
+        </div>
+
+    </div>
+    <div class="filter-row">
+        <div class="lbl-field col_6">
+            <label for="txtRecipient">Recipient</label>
+        </div>
+        <div class="edit-field col_8">
+            <input type="text" id="txtRecipient" class="width-200" maxlength="4000" />
+        </div>
+
+        <div class="lbl-field col_6">
+            <label for="txtRecipient">Notification ID</label>
+        </div>
+        <div class="edit-field col_8">
+            <input type="text" id="txtRecipient" class="width-200" maxlength="4000" />
+        </div>
+
+        <div class="lbl-field col_6">
+            <label for="txtuserName">Notification Type</label>
+        </div>
+        <div class="edit-field col_10">
+            @Html.DropDownList(
+            "ddlNotificationType",
+            Model.NotificationType,
+            new { @id = "ddl-NotificationType" })
+        </div>
+
+        <div class="submit width-auto col_8">
+            <button type="submit" class="submit btn-search">Search</button>
+        </div>
+    </div>
+        <div class="filter-row"></div>
+    }
+</div>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>

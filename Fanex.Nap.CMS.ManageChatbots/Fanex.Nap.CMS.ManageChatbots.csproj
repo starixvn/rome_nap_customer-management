@@ -145,9 +145,11 @@
     <Compile Include="AppStart\ManageChatbotsBundleConfig.cs" />
     <Compile Include="AppStart\MangeChatbotsAreaRegistration.cs" />
     <Compile Include="Constants\ChatbotConst.cs" />
+    <Compile Include="Constants\NotificationStatus.cs" />
     <Compile Include="Constants\SendStatusConst.cs" />
     <Compile Include="Controllers\ChatbotHistoryController.cs" />
     <Compile Include="Controllers\ChatbotMappingController.cs" />
+    <Compile Include="Controllers\NotificationListController.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetCurrencyListCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetChatBotsCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\GetConfigChatBotCriteria.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Criteria\ChatbotMapping\UnlinkChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\UpdFunctionsChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\UpdLanguageChatBotCriteria.cs" />
+    <Compile Include="Criteria\NotificationList\NotificationListCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryItem.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
@@ -165,11 +168,15 @@
     <Compile Include="Criteria\ChatbotHistory\ChatbotHistoryCriteria.cs" />
     <Compile Include="Criteria\ChatbotHistory\GetAllFunctionsCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryModel.cs" />
+    <Compile Include="Models\NotificationList\NotificationListItem.cs" />
+    <Compile Include="Models\NotificationList\NotificationListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ChatbotHistory\ChatbotHistoryRepository.cs" />
     <Compile Include="Repositories\ChatbotHistory\IChatbotHistoryRepository.cs" />
     <Compile Include="Repositories\ChatbotMapping\ChatbotMappingRepository.cs" />
     <Compile Include="Repositories\ChatbotMapping\IChatbotMappingRepository.cs" />
+    <Compile Include="Repositories\NotificationList\INotificationListRepository.cs" />
+    <Compile Include="Repositories\NotificationList\NotificationListRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -179,6 +186,8 @@
     <Compile Include="Services\ChatbotHistory\IChatbotHistoryService.cs" />
     <Compile Include="Services\ChatbotMapping\ChatbotMappingService.cs" />
     <Compile Include="Services\ChatbotMapping\IChatbotMappingService.cs" />
+    <Compile Include="Services\NotificationList\INotificationListService.cs" />
+    <Compile Include="Services\NotificationList\NotificationListService.cs" />
     <Compile Include="ViewModels\ChatbotHistory\ChatbotHistoryViewModel.cs" />
     <Compile Include="ViewModels\ChatbotHistory\SearchChatbotHistoryViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\ChatbotMappingViewModel.cs" />
@@ -186,6 +195,8 @@
     <Compile Include="ViewModels\ChatbotMapping\SearchChatBotsViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\UnlinkBotViewModel.cs" />
     <Compile Include="ViewModels\ChatbotMapping\UpdateChatBotConfigViewModel.cs" />
+    <Compile Include="ViewModels\NotificationList\NotificationListViewModel.cs" />
+    <Compile Include="ViewModels\NotificationList\SearchNotificationListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

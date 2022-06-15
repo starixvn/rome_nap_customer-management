@@ -19,6 +19,6 @@
         public string ErrMsg { get; set; }
         
         public override string GetSettingKey()
-            => "NAP_Chatbot_CustBotAccountInfoUpd";
+            => "Age_Chatbot_CustBotAccountLanguageUpd";
     }
 }

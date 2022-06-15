@@ -5,6 +5,7 @@
         <Setting Key="NAP_Chatbot_CustBotAccountAllInfoSel" SpName="NAP_Chatbot_CustBotAccountAllInfoSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 		<Setting Key="Age_Chatbot_CustBotFunctionUpd" SpName="Age_Chatbot_CustBotFunctionUpd" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 		<Setting Key="NAP_Chatbot_CustBotAccountInfoUpd" SpName="NAP_Chatbot_CustBotAccountInfoUpd" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
+		<Setting Key="Age_Chatbot_CustBotAccountLanguageUpd" SpName="Age_Chatbot_CustBotAccountLanguageUpd" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 
 		<Setting Key="Age_Chatbot_BotFunctionSelAll" SpName="Age_Chatbot_BotFunctionSelAll" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 		<Setting Key="NAP_Chatbot_CustBotMessageSel" SpName="NAP_Chatbot_CustBotMessageSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />

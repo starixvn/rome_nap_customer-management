@@ -160,11 +160,47 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification ID.
+        /// </summary>
+        public static string NotificationId {
+            get {
+                return ResourceManager.GetString("NotificationId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Type.
+        /// </summary>
+        public static string NotificationType {
+            get {
+                return ResourceManager.GetString("NotificationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recipient.
+        /// </summary>
+        public static string Recipient {
+            get {
+                return ResourceManager.GetString("Recipient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send Date/Time (GMT - 4).
+        /// </summary>
+        public static string SendDateTime {
+            get {
+                return ResourceManager.GetString("SendDateTime", resourceCulture);
             }
         }
         
@@ -237,6 +273,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         public static string Symbol_No {
             get {
                 return ResourceManager.GetString("Symbol_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title/Content.
+        /// </summary>
+        public static string TitleContent {
+            get {
+                return ResourceManager.GetString("TitleContent", resourceCulture);
             }
         }
         

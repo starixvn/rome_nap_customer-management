@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Models.NotificationList
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Models.NotificationList
 {
+    using System.Collections.Generic;
+
     public class NotificationListModel
     {
         public NotificationListModel(IEnumerable<NotificationListItem> notificationLists, int totalRows)

@@ -15,11 +15,13 @@
     <script type="text/javascript">
 
         var resources = {
-            sentBy: '@Labels.SentBy',
-            messageContent: '@Labels.MessageContent',
-            sentTo: '@Labels.SentTo',
-            sendStatus: '@Labels.SendStatus',
-            DateGMT4: '@Labels.DateGMT4',
+            symbolNo: '@Labels.Symbol_No',
+            notificationId: '@Labels.NotificationId',
+            notificationType: '@Labels.NotificationType',
+            sendDateTime: '@Labels.SendDateTime',
+            recipient: '@Labels.Recipient',
+            title: '@Labels.TitleContent',
+            status: '@Labels.Status',
             defaultFromDate: "@Model.DefaultFromDate.ToShortFormatedDateWithSlash()",
             defaultToDate: "@Model.DefaultToDate.ToShortFormatedDateWithSlash()",
         };
@@ -55,21 +57,21 @@
     </div>
     <div class="filter-row">
         <div class="lbl-field col_6">
-            <label for="txtRecipient">Recipient</label>
+            <label for="txtRecipient">@Labels.Recipient</label>
         </div>
         <div class="edit-field col_8">
             <input type="text" id="txtRecipient" class="width-200" maxlength="4000" />
         </div>
 
         <div class="lbl-field col_6">
-            <label for="txtRecipient">Notification ID</label>
+            <label for="txtNotificationId">@Labels.NotificationId</label>
         </div>
         <div class="edit-field col_8">
-            <input type="text" id="txtRecipient" class="width-200" maxlength="4000" />
+            <input type="text" id="txtNotificationId" class="width-200" maxlength="4000" />
         </div>
 
         <div class="lbl-field col_6">
-            <label for="txtuserName">Notification Type</label>
+            <labe>@Labels.NotificationType</labe>
         </div>
         <div class="edit-field col_10">
             @Html.DropDownList(

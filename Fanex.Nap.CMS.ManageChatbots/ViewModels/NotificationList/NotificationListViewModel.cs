@@ -1,13 +1,10 @@
-﻿using Fanex.Nap.CMS.ManageChatbots.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-
-namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList
+﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList
 {
+    using System;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
+
     public class NotificationListViewModel
     {
         public IEnumerable<SelectListItem> NotificationType { get; set; }

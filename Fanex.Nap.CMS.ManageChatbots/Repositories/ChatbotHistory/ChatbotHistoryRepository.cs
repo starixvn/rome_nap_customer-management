@@ -22,10 +22,9 @@
             }
         }
 
-        public IEnumerable<IdNameModel> GetAllFunctions(ICriteria criteria)
+        public IEnumerable<FunctionModel> GetAllFunctions(ICriteria criteria)
         {
-            var functions = new List<IdNameModel>();
-            functions.Add(new IdNameModel { Name = "All", Id = 0 });
+            var functions = new List<FunctionModel>();
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {           
@@ -33,15 +32,12 @@
                 {
                     while (reader.Read())
                     {
-                        var type = Convert.ToInt32(reader["Type"]);
-                        if (type == 1 || type == 3)
+                        functions.Add(new FunctionModel
                         {
-                            functions.Add(new IdNameModel
-                            {
-                                Name = reader["FunctionName"].ToString(),
-                                Id = Convert.ToInt32(reader["FunctionID"])
-                            });
-                        } 
+                            FunctionId = Convert.ToInt32(reader["FunctionID"]),
+                            FunctionType = Convert.ToInt32(reader["Type"]),
+                            FunctionName = reader["FunctionName"].ToString()
+                        });      
                     }
                 }
                 return functions;

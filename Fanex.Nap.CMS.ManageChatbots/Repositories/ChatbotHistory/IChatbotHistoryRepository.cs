@@ -10,6 +10,6 @@
     {
         IEnumerable<ChatbotHistoryItem> GetChatbotHistories(ChatbotHistoryCriteria criteria);
 
-        IEnumerable<IdNameModel> GetAllFunctions(ICriteria criteria);
+        IEnumerable<FunctionModel> GetAllFunctions(ICriteria criteria);
     }
 }

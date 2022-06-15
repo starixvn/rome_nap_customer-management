@@ -7,7 +7,7 @@
     {
         public ChatbotHistoryCriteria(
             string userName,
-            int chatID,
+            long chatID,
             int functionID,
             DateTime fromDate,
             DateTime toDate,
@@ -29,7 +29,7 @@
 
         public string Username { get; set; }
 
-        public int ChatID { get; }
+        public long ChatID { get; }
 
         public int FunctionID { get; }
 

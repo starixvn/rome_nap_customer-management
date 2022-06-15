@@ -10,6 +10,6 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
     {
         ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel, int userId);
 
-        IEnumerable<IdNameModel> GetAllFunctions();
+        IEnumerable<FunctionModel> GetChatbotHistoryFunctions();
     }
 }

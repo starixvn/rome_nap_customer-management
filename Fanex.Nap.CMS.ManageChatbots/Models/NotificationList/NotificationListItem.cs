@@ -1,45 +1,47 @@
-﻿
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.ManageChatbots.Models.NotificationList
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Models.NotificationList
 {
     using System;
-    using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using Fanex.Nap.CMS.Infrastructure.Extensions;
 
     public class NotificationListItem
     {
         public NotificationListItem(
             long notificationId,
-            int notificationType,
-            DateTime sendDate,
+            string functionName,
+            string message,
             string recipient,
-            string titleContent,
-            byte status
+            DateTime sendDate,
+            string status,
+            string description,
+            byte retry
             )
         {
             NotificationId = notificationId;
-            NotificationType = notificationType;
-            SendDate = sendDate;
+            FunctionName = functionName;
+            Message = message;
             Recipient = recipient;
-            TitleContent = titleContent;
+            SendDate = sendDate;
             Status = status;
+            Description = description;
+            Retry = retry;
         }
 
         public long NotificationId { get; set; }
 
-        public int NotificationType { get; set; }
+        public string FunctionName { get; set; }
 
         public DateTime SendDate { get; set; }
 
+        public string SendDateStr => DateTimeExtensions.ToLongDate24hWithSlash(SendDate) ?? string.Empty;
+
         public string Recipient { get; set; }
 
-        public string TitleContent { get; set; }
+        public string Message { get; set; }
 
-        public byte Status { get; set; }
+        public string Status { get; set; }
 
-        public string StatusStr => NotificationStatus.NotificationStatusList[Status];
+        public string Description { get; set; }
+
+        public byte Retry { get; set; }
     }
 }

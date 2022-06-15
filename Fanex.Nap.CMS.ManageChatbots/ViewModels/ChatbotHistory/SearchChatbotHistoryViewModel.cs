@@ -6,7 +6,7 @@
     {
         public string Username { get; set; }
 
-        public int ChatID { get; set; }
+        public long ChatID { get; set; }
 
         public int FunctionID { get; set; }
 

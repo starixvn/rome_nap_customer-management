@@ -160,6 +160,7 @@
     <Compile Include="Criteria\ChatbotMapping\UpdLanguageChatBotCriteria.cs" />
     <Compile Include="Criteria\NotificationList\NotificationListCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryItem.cs" />
+    <Compile Include="Models\ChatbotHistory\FunctionModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotsConfigModel.cs" />

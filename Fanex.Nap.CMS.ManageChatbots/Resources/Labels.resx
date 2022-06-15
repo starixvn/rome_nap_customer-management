@@ -186,4 +186,19 @@
   <data name="SentTo" xml:space="preserve">
     <value>Sent To</value>
   </data>
+  <data name="NotificationId" xml:space="preserve">
+    <value>Notification ID</value>
+  </data>
+  <data name="NotificationType" xml:space="preserve">
+    <value>Notification Type</value>
+  </data>
+  <data name="Recipient" xml:space="preserve">
+    <value>Recipient</value>
+  </data>
+  <data name="SendDateTime" xml:space="preserve">
+    <value>Send Date/Time (GMT - 4)</value>
+  </data>
+  <data name="TitleContent" xml:space="preserve">
+    <value>Title/Content</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
+    using System.Linq;
 
     public class ChatbotHistoryService : IChatbotHistoryService
     {
@@ -36,9 +37,13 @@
             return new ChatbotHistoryModel(chatbotHistories, criteria.TotalRows);
         }
 
-        public IEnumerable<IdNameModel> GetAllFunctions()
+        public IEnumerable<FunctionModel> GetChatbotHistoryFunctions()
         {
-           return repository.GetAllFunctions(new GetAllFunctionsCriteria());
+            var functions = new List<FunctionModel>();
+            functions.Add(new FunctionModel { FunctionId = 0, FunctionName = "All" });
+            functions.AddRange(repository.GetAllFunctions(new GetAllFunctionsCriteria())
+                .Where(function => function.FunctionType == 1 || function.FunctionType == 3));
+           return functions;
         }
     }  
 }

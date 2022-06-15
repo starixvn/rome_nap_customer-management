@@ -24,7 +24,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotHistory, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var functions = new SelectList(chatbotHistoryservice.GetAllFunctions(), "Id", "Name");
+            var functions = new SelectList(chatbotHistoryservice.GetChatbotHistoryFunctions(), "FunctionId", "FunctionName");
             var viewModel = new ChatbotHistoryViewModel(functions);
             return View("~/Areas/MangeChatbots/Views/ChatbotHistory/Index.cshtml", viewModel);
         }

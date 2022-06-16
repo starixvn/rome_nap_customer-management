@@ -69,7 +69,7 @@
             { HeaderText: resources.notificationType, Width: 180, Name: "colNotificationType", HeaderAlign: "center", Sort: true },
             { HeaderText: resources.sendDateTime, Width: 170, Name: "colSendDate", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status", Sort: true },
             { HeaderText: resources.recipient, Width: 150, Name: "colRecipient", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true, Sort: true },
-            { HeaderText: resources.title, Width: 700, Name: "colTitleContent", HeaderAlign: "center", AllowTruncate: true },
+            { HeaderText: resources.title, Width: 700, Name: "colTitleContent", HeaderAlign: "center"},
             { HeaderText: resources.status, Width: 100, Name: "colStatus", HeaderAlign: "center", CellAlign: "center" },
         ]
 
@@ -122,6 +122,7 @@
             gridOptions.bodyRows = renderNotificationList(jsonData.NotificationLists);
 
             freegrid.removeClass("display-none").fanexGrid(gridOptions);
+            handleLoadMore();
             handleViewDetail();
         });
     }
@@ -137,7 +138,7 @@
                 { Name: "colNotificationType", Value: value.FunctionName },
                 { Name: "colSendDate", Value: value.SendDateStr },
                 { Name: "colRecipient", Value: value.Recipient },
-                { Name: "colTitleContent", Value: value.Message },
+                { Name: "colTitleContent", Value: renderContent(index, value.Message) },
                 { Name: "colStatus", Value: renderStatus(value) },
             ];
 
@@ -151,6 +152,26 @@
         return bodyRows;
     }
 
+    function renderContent(index, content) {
+        return [
+            '<div class="description"><p style="display: flex">',
+            `<span class="text content${index}">`,
+             content,
+             '</span>',
+            `<a href="#" class="more" moreid= ${index}><br>load more</a>`,
+             '</p></div>',
+        ].join("");
+    }
+
+    function handleLoadMore() {
+        $(".more").click(function () {
+            var id = $(this).attr("moreid");
+            $(this).hide();
+            var name = ".content" + id;
+            $(name).removeClass("text");
+        })
+    }
+
     function renderStatus(notification) {
         if (notification.Status === "Fail" || notification.Status === "Invalid") {
             return [
@@ -158,6 +179,8 @@
                 `${notification.Status}`,
                 '</p>',
                 '<a><p class="view-detail"',
+                'status=',
+                `"${notification.Status}"` + ' ',
                 'recipient=',
                 `"${notification.Recipient}"` + ' ',
                 'date=',
@@ -173,44 +196,28 @@
     }
 
     function handleViewDetail() {
-        $(".view-detail").click( function () {
+        $(".view-detail").click(function () {
+            var notifyStatus = $(this).attr("status");
             var rec = $(this).attr("recipient");
             var date = $(this).attr("date");
             var reason = $(this).attr("description");
             var retry = $(this).attr("retry");
-            CMS.popup("Notification Sending Error Reason", buildFailPopup(rec, date, reason, retry), { resizedable: false });
+            CMS.popup("Notification Sending Error Reason", buildFailPopup(notifyStatus, rec, date, reason, retry), { resizedable: false });
         })
     }
 
-    function buildFailPopup(rec, date, reason, retry) {
+    function buildFailPopup(status, rec, date, reason, retry) {
+        var error = status === "Fail" ? "technical error." : "business error.";
         return [
-            '<div class="notification">',
-                '<div class="title">',
-                    '<p>',
-                        'Recipient:',
-                    '</p>',
-                   '<p>',
-                        'Send at:',
-                    '</p>',
-                    '<p>',
-                        'Reason:',
-                    '</p>',
-                    '<br>',
-                    '<br>',
-                    '<br>',
-                    '<br>',
-                    '<p>',
-                        'Retry Count:',
-                    '</p>',
-                '</div>',
-                '<div style="font-weight: bold">',
-                   '<p>Super101011</p>',
-                    '<p>06/06/2022 05:10:00</p>',
-                    '<p>Notifications cannot be sent due to a business error:</p>',
-                    '<p>Customer Status: Disable or Closed</p>',
-                    '<p>5</p>',
-                '</div>',
-            '</div>',
+            '<div class="notification"><div class="title"><p>Recipient:</p>',
+            '<p>Send at:</p><p>Reason:</p><br><br><br><br>',
+            '<p>Retry Count:</p></div><div style="font-weight: bold">',
+            `<p>${rec}</p>`,
+            `<p>${date}</p>`,
+            `<p>Notifications cannot be sent due to a ${error}</p>`,
+            `<p>${reason}</p>`,
+            `<p>${retry}</p>`,
+            '</div></div>',
         ].join("");
     }
 

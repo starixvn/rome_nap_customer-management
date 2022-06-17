@@ -10,8 +10,6 @@
 }
 
 .status {
-    line-height: 5px;
-    margin-top: 10px;
     width: 100px;
 }
 
@@ -26,20 +24,20 @@
 }
 
 .description {
-    width: 650px;
+    width:700px;
 }
 
 .text {
-    width: 550px;
+    width: 640px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
-.text + span {
-    display: inline-block;
-    vertical-align: top;
-    margin-top: -1px;
+.more {
+    position: absolute;
+    top: 0px;
+    right: 10px
 }

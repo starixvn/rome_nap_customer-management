@@ -154,11 +154,11 @@
 
     function renderContent(index, content) {
         return [
-            '<div class="description"><p style="display: flex">',
+            '<div class="description"><p style="position: relative; margin-bottom: 0px">',
             `<span class="text content${index}">`,
              content,
              '</span>',
-            `<a href="#" class="more" moreid= ${index}><br>load more</a>`,
+            `<a href="#" class="more" moreid= ${index}>load more</a>`,
              '</p></div>',
         ].join("");
     }
@@ -175,10 +175,10 @@
     function renderStatus(notification) {
         if (notification.Status === "Fail" || notification.Status === "Invalid") {
             return [
-                '<div class="status"><p style="color: red">',
+                '<div class="status"><p style="color: red; margin-bottom: 0px">',
                 `${notification.Status}`,
                 '</p>',
-                '<a><p class="view-detail"',
+                '<a><p class="view-detail" style="margin-bottom: 0px"',
                 'status=',
                 `"${notification.Status}"` + ' ',
                 'recipient=',
@@ -206,8 +206,8 @@
         })
     }
 
-    function buildFailPopup(status, rec, date, reason, retry) {
-        var error = status === "Fail" ? "technical error." : "business error.";
+    function buildFailPopup(notifyStatus, rec, date, reason, retry) {
+        var error = notifyStatus === "Fail" ? "technical error." : "business error.";
         return [
             '<div class="notification"><div class="title"><p>Recipient:</p>',
             '<p>Send at:</p><p>Reason:</p><br><br><br><br>',

@@ -53,7 +53,6 @@
                     Enable: true
                 };
             }),
-            showFilter: true,
             showFooter: false,
             showTooltip: false,
             shadow: true,

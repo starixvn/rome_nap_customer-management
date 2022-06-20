@@ -9,6 +9,7 @@
     using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
     using Fanex.Nap.CMS.ManageChatbots.Repositories.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
 
     public class NotificationListService : INotificationListService
     {
@@ -39,7 +40,9 @@
 
         public IEnumerable<FunctionModel> GetNotifyFunctions()
         {
-            var functions = chatbotHistoryRepository.GetAllFunctions(new GetAllFunctionsCriteria()).Where(function => function.FunctionType == 2);
+            var functions = chatbotHistoryRepository.GetAllFunctions(new GetAllFunctionsCriteria())
+                            .Where(function => function.FunctionType == 2 
+                            && !HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId));
             return functions;
         }
     }

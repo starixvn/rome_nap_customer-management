@@ -18,7 +18,7 @@
 
         internal ChatbotHistoryController(IChatbotHistoryService servive)
         {
-            this.chatbotHistoryservice = chatbotHistoryservice ?? new ChatbotHistoryService();
+            this.chatbotHistoryservice = servive ?? new ChatbotHistoryService();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotHistory, Policy = Constant.Policy.Read)]

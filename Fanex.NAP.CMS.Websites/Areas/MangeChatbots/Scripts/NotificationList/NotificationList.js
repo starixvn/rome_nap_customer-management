@@ -153,32 +153,39 @@
     }
 
     function renderContent(index, content) {
+        const contentFormated = content.replaceAll("\n", "<br/>");
         return [
-            '<div class="description"><p style="position: relative; margin-bottom: 0px">',
-            `<span class="text content${index}">`,
-             content,
-             '</span>',
-            `<a href="#" class="more" moreid= ${index}>load more</a>`,
-             '</p></div>',
+            '<div class="description"><p class="content-text">',
+            `<span class="content-width content${index} content-overflow">`,
+            contentFormated,
+            '</span>',
+            `<a><span class="load-more" loadmore-id= ${index}>[+]</span></a>`,
+            '</p></div>',
         ].join("");
     }
 
     function handleLoadMore() {
-        $(".more").click(function () {
-            var id = $(this).attr("moreid");
-            $(this).hide();
+        $(".load-more").click(function () {
+            var id = $(this).attr("loadmore-id");
             var name = ".content" + id;
-            $(name).removeClass("text");
+            var isExpand = $(this).html() == '[−]' ? true : false;
+            if (isExpand) {
+                $(this).html("[+]");
+                $(name).addClass("content-overflow");
+                return;
+            }
+            $(this).html("[−]");
+            $(name).removeClass("content-overflow");
         })
     }
 
     function renderStatus(notification) {
         if (notification.Status === "Fail" || notification.Status === "Invalid") {
             return [
-                '<div class="status"><p style="color: red; margin-bottom: 0px">',
+                '<div class="status"><p class="status-fail">',
                 `${notification.Status}`,
                 '</p>',
-                '<a><p class="view-detail" style="margin-bottom: 0px"',
+                '<a><p class="status-detail"',
                 'status=',
                 `"${notification.Status}"` + ' ',
                 'recipient=',
@@ -189,14 +196,14 @@
                 `"${notification.Description}"` + ' ',
                 'retry=',
                 `"${notification.Retry}"` + ' ',
-                '>View Detail</p ></a ></div >'
+                '>View Detail</p></a ></div >'
             ].join("");
         }
         return notification.Status;
     }
 
     function handleViewDetail() {
-        $(".view-detail").click(function () {
+        $(".status-detail").click(function () {
             var notifyStatus = $(this).attr("status");
             var rec = $(this).attr("recipient");
             var date = $(this).attr("date");
@@ -210,8 +217,8 @@
         var error = notifyStatus === "Fail" ? "technical error." : "business error.";
         return [
             '<div class="notification"><div class="title"><p>Recipient:</p>',
-            '<p>Send at:</p><p>Reason:</p><br><br><br><br>',
-            '<p>Retry Count:</p></div><div style="font-weight: bold">',
+            '<p>Send at:</p><p class="error-title">Reason:</p>',
+            '<p>Retry Count:</p></div><div class="error">',
             `<p>${rec}</p>`,
             `<p>${date}</p>`,
             `<p>Notifications cannot be sent due to a ${error}</p>`,

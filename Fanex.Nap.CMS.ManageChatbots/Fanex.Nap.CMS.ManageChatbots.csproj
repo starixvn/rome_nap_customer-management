@@ -145,6 +145,7 @@
     <Compile Include="AppStart\ManageChatbotsBundleConfig.cs" />
     <Compile Include="AppStart\MangeChatbotsAreaRegistration.cs" />
     <Compile Include="Constants\ChatbotConst.cs" />
+    <Compile Include="Constants\HiddenNotifyFunction.cs" />
     <Compile Include="Constants\NotificationStatus.cs" />
     <Compile Include="Constants\SendStatusConst.cs" />
     <Compile Include="Controllers\ChatbotHistoryController.cs" />

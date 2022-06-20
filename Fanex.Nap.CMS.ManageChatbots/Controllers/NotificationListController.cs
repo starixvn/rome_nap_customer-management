@@ -18,7 +18,7 @@
 
         internal NotificationListController(INotificationListService servive)
         {
-            this.notificationListService = notificationListService ?? new NotificationListService();
+            this.notificationListService = servive ?? new NotificationListService();
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.NotificationList, Policy = Constant.Policy.Read)]

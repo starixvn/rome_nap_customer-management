@@ -9,8 +9,11 @@
     width: 200px;
 }
 
-.status {
-    width: 100px;
+input[type="checkbox"] {
+    &:active, &:focus, &:hover {
+        border: none;
+        box-shadow: none;
+    }
 }
 
 .notification {
@@ -27,8 +30,15 @@
     width:700px;
 }
 
-.text {
-    width: 640px;
+.error {
+    font-weight: bold;
+}
+
+.error-title {
+    margin-bottom: 36px;
+}
+
+.content-overflow {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -36,8 +46,40 @@
     -webkit-box-orient: vertical;
 }
 
-.more {
-    position: absolute;
-    top: 0px;
-    right: 10px
+.content-text {
+    display: flex;
+    margin-bottom: 0px;
 }
+
+.content-width {
+    width: 640px;
+}
+
+.status {
+    width: 100px;
+}
+
+.status-fail {
+    color: red;
+    margin-bottom: 0px;
+}
+
+.status-detail {
+    margin-bottom: 0px;
+}
+
+.status-detail:hover {
+    cursor: pointer;
+}
+
+.load-more {
+    margin-left: 10px;
+}
+
+.load-more:hover {
+    cursor: pointer;
+}
+
+
+
+

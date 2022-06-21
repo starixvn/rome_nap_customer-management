@@ -10,7 +10,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Constants
         {
             { "en-US", "English" },
             { "zh-Hans", "Chinese" },
-            { "zh-Han", "Taiwan" },
+            { "zh-Hant", "Taiwan" },
             { "vi-VN", "Vietnamese" },
             { "th-TH", "Thai" },
             { "ja-JP", "Japanese" },

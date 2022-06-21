@@ -133,7 +133,8 @@
                 AccStatus = reader["status"].ToString(),
                 CusID = Converter.ToInt(reader["custid"]),
                 SubAccID = Converter.ToInt(reader["SubAccID"]),
-                BotID = Converter.ToInt(reader["BotID"])
+                BotID = Converter.ToInt(reader["BotID"]),
+                UpdatedTime = Converter.ToDateTime(reader["UpdatedTime"])
             };
             return chatBotModel;
         }
@@ -162,7 +163,7 @@
             var chatBotModel = new ChatBotFunctionConfig(
                 Converter.ToInt(reader["FunctionID"]),
                 reader["FunctionName"].ToString(),
-                Converter.ToBool(reader["status"])
+                Converter.ToBool(reader["Status"])
             );
             return chatBotModel;
         }

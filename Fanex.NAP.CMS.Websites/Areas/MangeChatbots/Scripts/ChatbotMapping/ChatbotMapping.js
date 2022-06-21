@@ -123,7 +123,15 @@
                 Name: "Status",
                 HeaderAlign: "center",
                 CellAlign: "center",
-            }, {
+            },
+            {
+                HeaderText: viewResources.DateGMT4,
+                Width: 150,
+                Name: "DateGMT4",
+                HeaderAlign: "center",
+                CellAlign: "center",
+            },
+            {
                 HeaderText: viewResources.Config,
                 Width: 60,
                 Name: "Config",
@@ -203,7 +211,8 @@
                 CusID,
                 BotID,
                 SubAccID,
-                UserID
+                UserID,
+                UpdatedTimeStr
             } = data[i];
             const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
             const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
@@ -218,6 +227,7 @@
                 {Name: "Level", Value: Level},
                 {Name: "Currency", Value: Currency},
                 {Name: "Status", Value: AccStatus},
+                {Name: "DateGMT4", Value: UpdatedTimeStr},
                 {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID, UserID)}
             ];
             bodyData.push({Columns: columns});

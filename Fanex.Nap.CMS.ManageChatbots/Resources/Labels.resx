@@ -196,9 +196,9 @@
     <value>Recipient</value>
   </data>
   <data name="SendDateTime" xml:space="preserve">
-    <value>Send Date/Time (GMT - 4)</value>
+    <value>Sent Date (GMT - 4)</value>
   </data>
   <data name="TitleContent" xml:space="preserve">
-    <value>Title/Content</value>
+    <value>Content</value>
   </data>
 </root>

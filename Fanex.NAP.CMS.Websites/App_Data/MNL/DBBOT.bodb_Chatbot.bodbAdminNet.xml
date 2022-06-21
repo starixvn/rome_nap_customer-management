@@ -9,5 +9,7 @@
 
 		<Setting Key="Age_Chatbot_BotFunctionSelAll" SpName="Age_Chatbot_BotFunctionSelAll" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 		<Setting Key="NAP_Chatbot_CustBotMessageSel" SpName="NAP_Chatbot_CustBotMessageSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
+		
+		<Setting Key="NAP_Chatbot_CustBotNotificationListSel" SpName="NAP_Chatbot_CustBotNotificationListSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 	</Function>
 </Functions>

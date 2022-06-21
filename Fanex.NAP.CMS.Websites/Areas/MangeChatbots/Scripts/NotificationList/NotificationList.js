@@ -24,13 +24,13 @@
             firstDatePicker: {
                 Id: "dpk-fromdate",
                 Label: "From",
-                LabelCss: "lbl-field lblFilter col_6",
+                LabelCss: "lbl-field lblFilter col_3",
                 TextboxCss: "edit-field col_8"
             },
             secondDatePicker: {
                 Id: "dpk-todate",
                 Label: "To",
-                LabelCss: "lbl-field lblFilter col_6",
+                LabelCss: "lbl-field lblFilter col_4",
                 TextboxCss: "edit-field col_8"
             },
         });
@@ -41,7 +41,7 @@
 
     const renderMultiChoiceDDL = () => {
         notificationType.multiSelect({
-            minWidth: 238,
+            minWidth: 194,
             checkAllText: "All",
             isCheckAll: true,
             listData: notificationType.find("option").map(function () {
@@ -66,8 +66,8 @@
             { HeaderText: resources.symbolNo, Width: 40, Name: "col#", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.notificationId, Width: 100, Name: "colNotificationId", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: resources.notificationType, Width: 180, Name: "colNotificationType", HeaderAlign: "center", Sort: true },
-            { HeaderText: resources.sendDateTime, Width: 170, Name: "colSendDate", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status", Sort: true },
-            { HeaderText: resources.recipient, Width: 150, Name: "colRecipient", HeaderAlign: "center", CellAlign: "center", AllowTruncate: true, Sort: true },
+            { HeaderText: resources.sendDateTime, Width: 140, Name: "colSendDate", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status", Sort: true },
+            { HeaderText: resources.recipient, Width: 150, Name: "colRecipient", HeaderAlign: "center", AllowTruncate: true, Sort: true },
             { HeaderText: resources.title, Width: 700, Name: "colTitleContent", HeaderAlign: "center"},
             { HeaderText: resources.status, Width: 100, Name: "colStatus", HeaderAlign: "center", CellAlign: "center" },
         ]
@@ -87,7 +87,8 @@
                     cachedPageSize = pageSize;
                     getNotificationList(pageIndex, pageSize);
                 }
-            }
+            },
+            virtualScroller: true
         }
     }
 
@@ -121,6 +122,7 @@
             gridOptions.bodyRows = renderNotificationList(jsonData.NotificationLists);
 
             freegrid.removeClass("display-none").fanexGrid(gridOptions);
+            //renderLoadMore(pageSize);
             handleLoadMore();
             handleViewDetail();
         });
@@ -152,16 +154,50 @@
     }
 
     function renderContent(index, content) {
+        //console.log(isOverflow(content));
         const contentFormated = content.replaceAll("\n", "<br/>");
         return [
             '<div class="description"><p class="content-text">',
             `<span class="content-width content${index} content-overflow">`,
             contentFormated,
             '</span>',
-            `<a><span class="load-more" loadmore-id= ${index}>[+]</span></a>`,
+            `<a><span class="load-more loadmore${index}" loadmore-id= ${index}>[+]</span></a>`,
             '</p></div>',
         ].join("");
     }
+
+    //function renderLoadMore(pageSize) {
+    //    for (let i = 0; i < pageSize; i++) {
+    //        var att = $(`${'.content' + i}`)[0];
+    //        const offsetHeight = att.offsetHeight;
+    //        const scrollHeight = att.scrollHeight;
+    //        if (scrollHeight > offsetHeight) {
+    //            $(`${'.loadmore' + i}`).html("[+]");
+    //        }
+    //    }
+    //}
+
+    //function isOverflow(text) {
+    //    const regex = /\n/g;
+    //    const splits = text.split(regex);
+    //    let countLine = 0;
+
+    //    if (splits.length > 3) {
+    //        return true;
+    //    }
+
+    //    splits.forEach(item => {
+    //        countLine += Math.ceil(item.length / 104);     
+    //    })
+
+    //    if (countLine > 3) {
+    //        return true;
+    //    }
+
+    //    console.log(countLine);
+
+    //    return false;
+    //}
 
     function handleLoadMore() {
         $(".load-more").click(function () {

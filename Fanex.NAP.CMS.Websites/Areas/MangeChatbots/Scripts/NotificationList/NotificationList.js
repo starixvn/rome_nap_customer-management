@@ -154,7 +154,7 @@
     }
 
     function renderContent(index, content) {
-        //console.log(isOverflow(content));
+        //isOverflow(content);
         const contentFormated = content.replaceAll("\n", "<br/>");
         return [
             '<div class="description"><p class="content-text">',
@@ -183,7 +183,7 @@
     //    let countLine = 0;
 
     //    if (splits.length > 3) {
-    //        return true;
+    //        //return true;
     //    }
 
     //    splits.forEach(item => {
@@ -191,12 +191,12 @@
     //    })
 
     //    if (countLine > 3) {
-    //        return true;
+    //        //return true;
     //    }
 
     //    console.log(countLine);
 
-    //    return false;
+    //    //return false;
     //}
 
     function handleLoadMore() {
@@ -207,10 +207,12 @@
             if (isExpand) {
                 $(this).html("[+]");
                 $(name).addClass("content-overflow");
-                return;
+            } else {
+                $(this).html("[−]");
+                $(name).removeClass("content-overflow");
             }
-            $(this).html("[−]");
-            $(name).removeClass("content-overflow");
+
+            $('#freegrid').fanexGrid('resizeGrid');
         })
     }
 

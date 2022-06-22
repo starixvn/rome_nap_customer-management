@@ -168,7 +168,7 @@
     function breakContent(content) {
         const splits = content.split(/\n/g);
         const result = splits.map(item => {
-            return item.match(/.{1,104}/g).join("\n");
+            return item.match(/.{1,104}/g)?.join("\n");
         });
         return result.join("\n");
     }

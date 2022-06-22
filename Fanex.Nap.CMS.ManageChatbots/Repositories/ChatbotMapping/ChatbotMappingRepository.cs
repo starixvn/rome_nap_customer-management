@@ -149,9 +149,9 @@
                 SubAccount = reader["SubAccount"].ToString(),
                 SubAccID = Converter.ToInt(reader["SubAccID"]),
                 CusID = Converter.ToInt(reader["custid"]),
-                IsVerifyOTP = Converter.ToBool(reader["isVerifyOTP"]),
+                IsVerifyOTP = Convert.ToBoolean(reader["isVerifyOTP"]),
                 Language = reader["language"].ToString(),
-                Status = Converter.ToBool(reader["Status"]),
+                Status = Convert.ToBoolean(reader["Status"]),
                 UserID = Converter.ToInt(reader["UserID"]),
             };
 
@@ -163,7 +163,7 @@
             var chatBotModel = new ChatBotFunctionConfig(
                 Converter.ToInt(reader["FunctionID"]),
                 reader["FunctionName"].ToString(),
-                Converter.ToBool(reader["Status"])
+                Convert.ToBoolean(reader["Status"])
             );
             return chatBotModel;
         }

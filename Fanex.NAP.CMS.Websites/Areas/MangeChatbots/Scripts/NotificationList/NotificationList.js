@@ -1,13 +1,13 @@
 ﻿"use strict";
 (function ($) {
-    var fromToDatePicker = $("#fromtodate-picker");
-    var freegrid = $("#freegrid");
-    var formSearch = $("#formSearch");
-    var status = $("#ddl-SendStatus");
-    var recipient = $("#txtRecipient");
-    var notificationId = $("#txtNotificationId");
-    var notificationType = $("#ddl-NotificationType");
-    var cachedPageSize = 500;
+    const fromToDatePicker = $("#fromtodate-picker");
+    const freegrid = $("#freegrid");
+    const formSearch = $("#formSearch");
+    const status = $("#ddl-SendStatus");
+    const recipient = $("#txtRecipient");
+    const notificationId = $("#txtNotificationId");
+    let notificationType = $("#ddl-NotificationType");
+    let cachedPageSize = 500;
 
     function initDateTimeFields() {
         fromToDatePicker.nexDatePicker({
@@ -62,7 +62,7 @@
     }
 
     function getGridOptions() {
-        var columns = [
+        const columns = [
             { HeaderText: resources.symbolNo, Width: 40, Name: "col#", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.notificationId, Width: 100, Name: "colNotificationId", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: resources.notificationType, Width: 180, Name: "colNotificationType", HeaderAlign: "center", Sort: true },
@@ -100,9 +100,9 @@
     }
 
     function getNotificationList(pageIndex, pageSize) {
-        var dateRange = fromToDatePicker.nexDatePicker("getDateRange");
+        const dateRange = fromToDatePicker.nexDatePicker("getDateRange");
 
-        var url = formSearch.attr("action")
+        const url = formSearch.attr("action")
             + "?notificationtype=" + notificationType.multiSelect("getCheckedItems").join(",")
             + "&recipient=" + recipient.val().trim()
             + "&notificationid=" + notificationId.val().trim()
@@ -113,27 +113,25 @@
             + "&pagesize=" + pageSize;
 
         CMS.getJson(url, function (data) {
-            var jsonData = $.parseJSON(data);
+            const jsonData = $.parseJSON(data);
 
-            var gridOptions = getGridOptions();
+            const gridOptions = getGridOptions();
             gridOptions.pagerOption.currentPage = pageIndex;
             gridOptions.pagerOption.itemsPerPage = pageSize;
             gridOptions.pagerOption.totalItem = jsonData.TotalRows;
             gridOptions.bodyRows = renderNotificationList(jsonData.NotificationLists);
 
             freegrid.removeClass("display-none").fanexGrid(gridOptions);
-            //renderLoadMore(pageSize);
             handleLoadMore();
             handleViewDetail();
         });
     }
 
     function renderNotificationList(data) {
-        var columns;
-        var bodyRows = [];
+        const bodyRows = [];
 
         $.each(data, function (index, value) {
-            columns = [
+            const columns = [
                 { Name: "col#", Value: index },
                 { Name: "colNotificationId", Value: value.NotificationId },
                 { Name: "colNotificationType", Value: value.FunctionName },
@@ -154,56 +152,32 @@
     }
 
     function renderContent(index, content) {
-        //isOverflow(content);
-        const contentFormated = content.replaceAll("\n", "<br/>");
+        const newContent = breakContent(content);
+        const loadMore = newContent.split(/\n/g).length > 3 ? "[+]" : "";
+        const contentFormated = newContent.replaceAll("\n", "<br/>");
         return [
             '<div class="description"><p class="content-text">',
             `<span class="content-width content${index} content-overflow">`,
             contentFormated,
             '</span>',
-            `<a><span class="load-more loadmore${index}" loadmore-id= ${index}>[+]</span></a>`,
+            `<a><span class="load-more loadmore${index}" loadmore-id= ${index}>${loadMore}</span></a>`,
             '</p></div>',
         ].join("");
     }
 
-    //function renderLoadMore(pageSize) {
-    //    for (let i = 0; i < pageSize; i++) {
-    //        var att = $(`${'.content' + i}`)[0];
-    //        const offsetHeight = att.offsetHeight;
-    //        const scrollHeight = att.scrollHeight;
-    //        if (scrollHeight > offsetHeight) {
-    //            $(`${'.loadmore' + i}`).html("[+]");
-    //        }
-    //    }
-    //}
-
-    //function isOverflow(text) {
-    //    const regex = /\n/g;
-    //    const splits = text.split(regex);
-    //    let countLine = 0;
-
-    //    if (splits.length > 3) {
-    //        //return true;
-    //    }
-
-    //    splits.forEach(item => {
-    //        countLine += Math.ceil(item.length / 104);     
-    //    })
-
-    //    if (countLine > 3) {
-    //        //return true;
-    //    }
-
-    //    console.log(countLine);
-
-    //    //return false;
-    //}
+    function breakContent(content) {
+        const splits = content.split(/\n/g);
+        const result = splits.map(item => {
+            return item.match(/.{1,104}/g).join("\n");
+        });
+        return result.join("\n");
+    }
 
     function handleLoadMore() {
         $(".load-more").click(function () {
-            var id = $(this).attr("loadmore-id");
-            var name = ".content" + id;
-            var isExpand = $(this).html() == '[−]' ? true : false;
+            const id = $(this).attr("loadmore-id");
+            const name = ".content" + id;
+            const isExpand = $(this).html() == '[−]' ? true : false;
             if (isExpand) {
                 $(this).html("[+]");
                 $(name).addClass("content-overflow");
@@ -241,17 +215,17 @@
 
     function handleViewDetail() {
         $(".status-detail").click(function () {
-            var notifyStatus = $(this).attr("status");
-            var rec = $(this).attr("recipient");
-            var date = $(this).attr("date");
-            var reason = $(this).attr("description");
-            var retry = $(this).attr("retry");
+            const notifyStatus = $(this).attr("status");
+            const rec = $(this).attr("recipient");
+            const date = $(this).attr("date");
+            const reason = $(this).attr("description");
+            const retry = $(this).attr("retry");
             CMS.popup("Notification Sending Error Reason", buildFailPopup(notifyStatus, rec, date, reason, retry), { resizedable: false });
         })
     }
 
     function buildFailPopup(notifyStatus, rec, date, reason, retry) {
-        var error = notifyStatus === "Fail" ? "technical error." : "business error.";
+        const error = notifyStatus === "Fail" ? "technical error." : "business error.";
         return [
             '<div class="notification"><div class="title"><p>Recipient:</p>',
             '<p>Send at:</p><p class="error-title">Reason:</p>',

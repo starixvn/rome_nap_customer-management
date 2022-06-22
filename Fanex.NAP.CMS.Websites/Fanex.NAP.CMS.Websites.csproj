@@ -98,10 +98,10 @@
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Core.Client.2.0.0\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.NAP.Core.Client.2.0.0.1-beta5\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core.SignIn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Core.SignIn.2.0.0\lib\net461\Fanex.NAP.Core.SignIn.dll</HintPath>
+      <HintPath>..\packages\Fanex.NAP.Core.SignIn.2.0.0.1-beta3\lib\net461\Fanex.NAP.Core.SignIn.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.3\lib\net40\Fanex.NAP.Framework.dll</HintPath>
@@ -750,6 +750,7 @@
     <Content Include="WhoamI.aspx" />
     <Content Include="wwwroot\nap-auth\auth-sample.css" />
     <Content Include="wwwroot\nap-auth\auth.css" />
+    <Content Include="wwwroot\nap-auth\otp.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj">
@@ -1075,6 +1076,7 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.aws.config" />
+    <Content Include="Views\Auth\OtpLoginFlow.cshtml" />
     <Content Include="Views\Auth\Offline.cshtml" />
     <Content Include="Views\Auth\NotFound.cshtml" />
     <Content Include="Views\Auth\Index.cshtml" />

@@ -70,7 +70,7 @@
             },
             {
                 HeaderText: viewResources.ChatID,
-                Width: 60,
+                Width: 90,
                 Name: "ChatID",
                 HeaderAlign: "center",
                 CellAlign: "center",
@@ -184,15 +184,6 @@
             '"></span>'
         ].join("");
     }
-    const renderChatIDCell = (chatId) => {
-        return [
-            '<span class="ui-icon icon-chat-id tool-tip" href="javascript:;" title="',
-            chatId,
-            '" data-chatid="',
-            chatId,
-            '"></span>'
-        ].join("");
-    }
 
     const renderGridChatBots = (data) => {
         const bodyData = [];
@@ -219,7 +210,7 @@
             columns = [
                 {Name: "ColNo", Value: ""},
                 {Name: "ChatBotName", Value: ChatBotName},
-                {Name: "ChatID", Value: renderChatIDCell(ChatID)},
+                {Name: "ChatID", Value: ChatID},
                 {Name: "UserName", Value: UserName},
                 {Name: "SubAccount", Value: SubAccount},
                 {Name: "LinkingStatus", Value: linkStatusFormatted},
@@ -234,24 +225,6 @@
         }
 
         return bodyData;
-    }
-
-    const addToolTipChatId = () => {
-        $(".icon-chat-id").tipsy({
-            className: "tool-tip-chat-id",
-            html: true,
-            opacity: 0.9,
-            gravity: "s",
-        });
-        $(".icon-chat-id").click(async function () {
-            var $this = $(this);
-            var chatid = $this.data("chatid");
-            try {
-                await navigator.clipboard.writeText(chatid.toString());
-            } catch (err) {
-                console.error('Failed to copy: ', err);
-            }
-        })
     }
 
     const getChatBot = () => {
@@ -277,7 +250,6 @@
             }
 
             elements.table.removeClass("display-none").fanexGrid(gridOptions);
-            addToolTipChatId()
         });
     }
 

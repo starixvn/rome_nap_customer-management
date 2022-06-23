@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.ManageChatbots.Repositories.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using System;
 
     public class NotificationListService : INotificationListService
     {
@@ -22,14 +23,14 @@
             this.notificationListRepository = notificationListRepository ?? new NotificationListRepository();
             this.chatbotHistoryRepository = historyRepository ?? new ChatbotHistoryRepository();
         }
-        public NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel, int userId)
+        public NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel)
         {
             var criteia = new NotificationListCriteria
             {
                 FunctionIds = viewModel.NotificationType,
                 Username = viewModel.Recipient,
-                FromDate = viewModel.FromDate,
-                ToDate = viewModel.ToDate,
+                FromDate = new DateTime(viewModel.FromDate.Year, viewModel.FromDate.Month, viewModel.FromDate.Day, 00, 00, 00),
+                ToDate = new DateTime(viewModel.ToDate.Year, viewModel.ToDate.Month, viewModel.ToDate.Day, 23, 59, 59),
                 NotificationId = viewModel.NotificationId,
                 Status = viewModel.Status == "All" ? null : viewModel.Status,
                 PageIndex = viewModel.PageIndex,

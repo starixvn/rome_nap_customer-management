@@ -153,14 +153,15 @@
 
     function renderContent(index, content) {
         const newContent = breakContent(content);
-        const loadMore = newContent.split(/\n/g).length > 3 ? "[+]" : "";
+        const loadMore = newContent.split(/\n/g).length > 3 ? ">" : "";
+        const isHover = newContent.split(/\n/g).length < 4 ? "isNotHover" : "";
         const contentFormated = newContent.replaceAll("\n", "<br/>");
         return [
-            '<div class="description"><p class="content-text">',
+            `<div class="description ${isHover}" loadmore-id = ${index} isExpand = false><p class="content-text">`,
             `<span class="content-width content${index} content-overflow">`,
             contentFormated,
             '</span>',
-            `<a><span class="load-more loadmore${index}" loadmore-id= ${index}>${loadMore}</span></a>`,
+            `<a class="expand rotate${index}"><span">${loadMore}</span></a>`,
             '</p></div>',
         ].join("");
     }
@@ -174,19 +175,23 @@
     }
 
     function handleLoadMore() {
-        $(".load-more").click(function () {
+        $(".description").click(function () {
             const id = $(this).attr("loadmore-id");
-            const name = ".content" + id;
-            const isExpand = $(this).html() == '[−]' ? true : false;
-            if (isExpand) {
-                $(this).html("[+]");
-                $(name).addClass("content-overflow");
-            } else {
-                $(this).html("[−]");
-                $(name).removeClass("content-overflow");
+            const isExpand = $(this).attr("isExpand");
+            const rotateName = ".rotate" + id;
+            const contentName = ".content" + id;
+
+            if (isExpand === "false") {
+                $(rotateName).addClass("rotate");
+                $(contentName).removeClass("content-overflow");
+                $(this).attr("isExpand", "true");
             }
 
-            $('#freegrid').fanexGrid('resizeGrid');
+            else {
+                $(contentName).addClass("content-overflow");
+                $(rotateName).removeClass("rotate");
+                $(this).attr("isExpand", "false");
+            }
         })
     }
 

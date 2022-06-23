@@ -14,6 +14,10 @@
     width: 180px;
 }
 
+.status-width {
+    width: 156px;
+}
+
 input[type="checkbox"] {
     &:active,
     &:focus,
@@ -37,6 +41,10 @@ input[type="checkbox"] {
     width: 700px;
 }
 
+.description:not(.isNotHover):hover {
+    cursor: pointer;
+}
+
 .error {
     font-weight: bold;
 }
@@ -57,6 +65,7 @@ input[type="checkbox"] {
     display: flex;
     align-items: center;
     margin-bottom: 0px;
+    gap: 35px;
 }
 
 .content-width {
@@ -80,10 +89,18 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-.load-more {
-    margin-left: 38px;
+.rotate {
+    transition: linear 0.02s;
+    transform: rotate(90deg);
+    color: black;
+    margin-left: 2px;
 }
 
-.load-more:hover {
-    cursor: pointer;
+.expand {
+    color: black;
+}
+
+.expand:hover {
+    text-decoration: none;
+    color: black;
 }

@@ -186,12 +186,13 @@
                 $(contentName).removeClass("content-overflow");
                 $(this).attr("isExpand", "true");
             }
-
             else {
                 $(contentName).addClass("content-overflow");
                 $(rotateName).removeClass("rotate");
                 $(this).attr("isExpand", "false");
             }
+
+            $('#freegrid').fanexGrid('resizeGrid');
         })
     }
 

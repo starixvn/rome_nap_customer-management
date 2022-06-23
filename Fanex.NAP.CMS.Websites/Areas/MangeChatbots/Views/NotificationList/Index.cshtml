@@ -67,7 +67,7 @@
             <label for="txtNotificationId">@Labels.NotificationId</label>
         </div>
         <div class="edit-field col_8">
-            <input type="text" id="txtNotificationId" maxlength="4000" />
+            <input type="text" id="txtNotificationId" maxlength="4000" onkeydown="return CMS.forceNumericInput(event);"/>
         </div>
 
         <div class="lbl-field col_5">

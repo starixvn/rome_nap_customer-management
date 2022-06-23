@@ -166,7 +166,7 @@
     <value>Chat ID</value>
   </data>
   <data name="DateGMT4" xml:space="preserve">
-    <value>Date (GMT - 4)</value>
+    <value>Date (GMT-4)</value>
   </data>
   <data name="Function" xml:space="preserve">
     <value>Function</value>
@@ -196,7 +196,7 @@
     <value>Recipient</value>
   </data>
   <data name="SendDateTime" xml:space="preserve">
-    <value>Sent Date (GMT - 4)</value>
+    <value>Sent Date (GMT-4)</value>
   </data>
   <data name="TitleContent" xml:space="preserve">
     <value>Content</value>

@@ -97,7 +97,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date (GMT - 4).
+        ///   Looks up a localized string similar to Date (GMT-4).
         /// </summary>
         public static string DateGMT4 {
             get {
@@ -196,7 +196,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sent Date (GMT - 4).
+        ///   Looks up a localized string similar to Sent Date (GMT-4).
         /// </summary>
         public static string SendDateTime {
             get {

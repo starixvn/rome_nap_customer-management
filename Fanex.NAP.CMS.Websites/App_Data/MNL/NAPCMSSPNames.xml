@@ -24,9 +24,7 @@
     <Setting Key="NAP_Misc_OpenCloseMembers_List" SpName="NAP_Misc_OpenCloseMembers_List" DbName="DBAGE.bodb02.bodbAdminNet">
     </Setting>
     <Setting Key="NAP_Misc_OpenCloseMembers_UPD" SpName="NAP_Misc_OpenCloseMembers_UPD" DbName="DBCust.CustDB.bodbAdminNet">
-    </Setting>
-    <Setting Key="WriteLog_UserLog_CasinoAPI" SpName="WriteLog_UserLog_CasinoAPI" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet">
-    </Setting>
+    </Setting>  
   </Function>
   <Function Name="ConfigureTOByEvent">
     <Setting Key="NAP_SMATurnover_SportControlSel" SpName="NAP_SMATurnover_SportControlSel" DbName="DBAGE.bodb_AGE.bodbAdminNet">

@@ -9,12 +9,6 @@ using System.Diagnostics.CodeAnalysis;
             MessageId = "Implements",
             Justification = "Reviewed.")]
 
-[module: SuppressMessage(
-            "Microsoft.Design", 
-            "CA1031:DoNotCatchGeneralExceptionTypes", 
-            Scope = "member",
-            Target = "Fanex.NAP.CMS.Services.Implements.OpenCloseMemberService.#UpdateRnGCasinoStatus(System.Collections.Generic.List`1<Fanex.NAP.CMS.ViewModels.OpenCloseMember.UpdatedMemberStatus>,Fanex.NAP.CMS.ViewModels.OpenCloseMember.UpdatedMembersStatusFilter)",
-            Justification = "Reviewed.")]
 
 [module: SuppressMessage(
             "Microsoft.Design",

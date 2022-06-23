@@ -37,3 +37,4 @@ build/
 [Bb]in/
 [Oo]bj/
 _ReSharper/
+!Fanex.NAP.CMS.Websites/wwwroot/nap-auth/*.css

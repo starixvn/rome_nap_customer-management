@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -98,8 +98,10 @@
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Core.Client.1.2.1.12\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.NAP.Core.Client.2.0.0.1\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.NAP.Core.SignIn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.NAP.Core.SignIn.2.0.0.1\lib\net461\Fanex.NAP.Core.SignIn.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.3\lib\net40\Fanex.NAP.Framework.dll</HintPath>
@@ -658,7 +660,6 @@
     <Content Include="Scripts\Sites\credit-collection-summary.js" />
     <Content Include="Scripts\Sites\TurnoverUsage.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />
-    <Content Include="Scripts\Sites\Login.js" />
     <Content Include="Scripts\Validator.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Scripts\Libs\DatePicker\images\icon-calendar.png" />
@@ -747,6 +748,9 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="WhoamI.aspx" />
+    <Content Include="wwwroot\nap-auth\auth-sample.css" />
+    <Content Include="wwwroot\nap-auth\auth.css" />
+    <Content Include="wwwroot\nap-auth\otp.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj">
@@ -821,7 +825,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UserInfo\ChangePassword.cshtml" />
-    <Content Include="Views\UserInfo\UserProfile.cshtml" />
     <Content Include="Content\Themes\colors.less" />
     <Content Include="Content\Themes\common.less" />
     <Content Include="Content\Themes\fonts.less" />
@@ -842,8 +845,6 @@
     <Content Include="Views\CloseOpenMember\Index.cshtml" />
     <Content Include="Views\ConfigureCustomerAccess\Index.cshtml" />
     <Content Include="Views\ConfigureCustomerAccess\RequestForm.cshtml" />
-    <Content Include="Views\Login\Index.cshtml" />
-    <Content Include="Views\Login\Offline.cshtml" />
     <Content Include="Content\Sites\Login\login.less" />
     <Content Include="Content\Sites\Login\fonts\Abel.woff" />
     <Content Include="Content\Sites\Login\fonts\OpenSans.woff" />
@@ -1075,6 +1076,13 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.aws.config" />
+    <Content Include="Views\Auth\OtpLoginFlow.cshtml" />
+    <Content Include="Views\Auth\Offline.cshtml" />
+    <Content Include="Views\Auth\NotFound.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
+    <Content Include="Views\Auth\Error.cshtml" />
+    <Content Include="Views\Auth\ChangePassword.cshtml" />
+    <Content Include="Views\Auth\AccessDenied.cshtml" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -1108,7 +1116,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>8001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

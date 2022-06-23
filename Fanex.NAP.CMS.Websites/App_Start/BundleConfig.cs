@@ -25,7 +25,6 @@ namespace Fanex.NAP.CMS.Websites
         /// <param name="bundles">The bundle collections.</param>
         public static void RegisterBundles(BundleCollection bundles)
         {
-            RegisterLoginBundles(bundles);
             RegisterCommonBundles(bundles);
             RegisterCustomerBundles(bundles);
             RegisterTurnoverControlBundles(bundles);
@@ -37,21 +36,6 @@ namespace Fanex.NAP.CMS.Websites
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
             NotificationSettingBundleConfig.RegisterAll(bundles);
-        }
-
-        /// <summary>
-        /// Registers the common bundles.
-        /// </summary>
-        /// <param name="bundles">The bundle collection.</param>
-        public static void RegisterLoginBundles(BundleCollection bundles)
-        {
-            bundles.AddAndInclude(
-                "~/styles/login",
-                "~/Content/Sites/Login/login.less");
-
-            bundles.Add(new ScriptBundle("~/scripts/loginJS").Include(
-                "~/Scripts/Libs/Crypto/CryptoJS.js",
-                "~/Scripts/Sites/Login.js"));
         }
 
         /// <summary>

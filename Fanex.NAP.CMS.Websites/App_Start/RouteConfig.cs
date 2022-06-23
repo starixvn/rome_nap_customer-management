@@ -28,7 +28,7 @@ namespace Fanex.NAP.CMS.Websites
             routes.MapRoute(
                 name: "UserLogin",
                 url: "UserLogin/Login/{action}/{id}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional });
+                defaults: new { controller = "Auth", action = "Index", id = UrlParameter.Optional });
 
             routes.MapRoute(
                 name: "UserSSO",

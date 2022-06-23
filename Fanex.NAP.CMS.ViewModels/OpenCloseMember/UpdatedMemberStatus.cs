@@ -19,8 +19,6 @@ namespace Fanex.NAP.CMS.ViewModels.OpenCloseMember
     {
         public int CustId { get; set; }
 
-        public bool SyncCasino { get; set; }
-
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>

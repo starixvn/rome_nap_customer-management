@@ -113,7 +113,7 @@
         var bodyRows = [];
 
         $.each(data, function (index, value) {
-            var message = value.SentBy !== "Chatbot" ? value.Message.replaceAll("<", "&lt;").replaceAll(">", "&gt;") : value.Message;
+            var message = value.SentBy !== "Chatbot" ? value.Message.replaceAll("<", "&lt;").replaceAll(">", "&gt;") : value.Message.replaceAll("\n", "<br/>");
             columns = [
                 { Name: "colSentBy", Value: value.SentBy },
                 { Name: "colMessageContent", Value: message },

@@ -7,7 +7,7 @@
     var chatId = $("#txtChatId");
     var functionId = $("#ddl-Functions");
     var status = $("#ddl-SendStatus");
-    var cachedPageSize = 50;
+    var cachedPageSize = 100;
 
     function initDateTimeFields() {
         fromToDatePicker.nexDatePicker({

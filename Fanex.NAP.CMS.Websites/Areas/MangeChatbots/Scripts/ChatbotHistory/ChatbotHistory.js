@@ -86,8 +86,8 @@
         var dateRange = fromToDatePicker.nexDatePicker("getDateRange");
 
         var url = formSearch.attr("action")
-            + "?username=" + userName.val().trim()
-            + "&chatid=" + chatId.val().trim()
+            + "?username=" + userName.val().trim().replaceAll("#", '')
+            + "&chatid=" + chatId.val().trim().replaceAll("#", '')
             + "&functionid=" + functionId.val()
             + "&fromdate=" + dateRange.FromDate
             + "&todate=" + dateRange.ToDate

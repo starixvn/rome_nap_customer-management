@@ -104,8 +104,8 @@
 
         const url = formSearch.attr("action")
             + "?notificationtype=" + notificationType.multiSelect("getCheckedItems").join(",")
-            + "&recipient=" + recipient.val().trim()
-            + "&notificationid=" + notificationId.val().trim()
+            + "&recipient=" + recipient.val().trim().replaceAll("#", '')
+            + "&notificationid=" + notificationId.val().trim().replaceAll("#", '')
             + "&fromdate=" + dateRange.FromDate
             + "&todate=" + dateRange.ToDate
             + "&status=" + status.find('option:selected').text()

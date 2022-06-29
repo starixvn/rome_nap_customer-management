@@ -7,7 +7,7 @@
 
     public interface INotificationListService
     {
-        NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel);
+        NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel, int userId);
 
         IEnumerable<FunctionModel> GetNotifyFunctions();
     }

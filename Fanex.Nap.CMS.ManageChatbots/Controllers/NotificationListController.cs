@@ -33,7 +33,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.NotificationList, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchNotificationListViewModel viewModel)
         {
-            return JsonData(notificationListService.GetNotificationList(viewModel));
+            return JsonData(notificationListService.GetNotificationList(viewModel, CurrentSession.UserId));
         }
     }
 }

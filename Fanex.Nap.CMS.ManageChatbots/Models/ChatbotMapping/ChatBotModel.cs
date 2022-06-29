@@ -36,6 +36,8 @@
         public int UserID { get; set; }
 
         public DateTime UpdatedTime { get; set; }
+        
+        public string SiteName { get; set; }
 
         public string UpdatedTimeStr => UpdatedTime == DateTime.MinValue
             ? string.Empty

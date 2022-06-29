@@ -76,6 +76,15 @@
                 CellAlign: "center",
             },
             {
+                HeaderText: viewResources.Site,
+                Width: 120,
+                Name: "SiteName",
+                HeaderAlign: "center",
+                CellAlign: "left",
+                Sort: true,
+                AllowTruncate: true,
+            },
+            {
                 HeaderText: viewResources.UserName,
                 Width: 190,
                 Name: "UserName",
@@ -83,7 +92,8 @@
                 CellAlign: "left",
                 Sort: true,
                 AllowTruncate: true,
-            }, {
+            },
+            {
                 HeaderText: viewResources.SubAccount,
                 Width: 190,
                 Name: "SubAccount",
@@ -203,7 +213,8 @@
                 BotID,
                 SubAccID,
                 UserID,
-                UpdatedTimeStr
+                UpdatedTimeStr,
+                SiteName
             } = data[i];
             const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
             const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
@@ -211,6 +222,7 @@
                 {Name: "ColNo", Value: ""},
                 {Name: "ChatBotName", Value: ChatBotName},
                 {Name: "ChatID", Value: ChatID},
+                {Name: "SiteName", Value: SiteName},
                 {Name: "UserName", Value: UserName},
                 {Name: "SubAccount", Value: SubAccount},
                 {Name: "LinkingStatus", Value: linkStatusFormatted},

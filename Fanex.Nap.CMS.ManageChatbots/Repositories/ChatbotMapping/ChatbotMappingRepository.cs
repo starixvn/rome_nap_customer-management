@@ -134,7 +134,8 @@
                 CusID = Converter.ToInt(reader["custid"]),
                 SubAccID = Converter.ToInt(reader["SubAccID"]),
                 BotID = Converter.ToInt(reader["BotID"]),
-                UpdatedTime = Converter.ToDateTime(reader["UpdatedTime"])
+                UpdatedTime = Converter.ToDateTime(reader["UpdatedTime"]),
+                SiteName = reader["site"].ToString()
             };
             return chatBotModel;
         }

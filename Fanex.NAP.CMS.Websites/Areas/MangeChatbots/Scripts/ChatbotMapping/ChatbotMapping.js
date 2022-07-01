@@ -139,6 +139,7 @@
                 Width: 150,
                 Name: "DateGMT4",
                 HeaderAlign: "center",
+                Sort: true,
                 CellAlign: "center",
             },
             {

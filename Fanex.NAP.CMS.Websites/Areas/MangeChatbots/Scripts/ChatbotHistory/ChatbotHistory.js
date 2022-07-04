@@ -115,9 +115,9 @@
         $.each(data, function (index, value) {
             var message = value.SentBy !== "Chatbot" ? value.Message.replaceAll("<", "&lt;").replaceAll(">", "&gt;") : value.Message.replaceAll("\n", "<br/>");
             columns = [
-                { Name: "colSentBy", Value: value.SentBy },
+                { Name: "colSentBy", Value: renderName(value.SentBy, value.BotName) },
                 { Name: "colMessageContent", Value: message },
-                { Name: "colSentTo", Value: value.SentTo },
+                { Name: "colSentTo", Value: renderName(value.SentTo, value.BotName) },
                 { Name: "colSendStatus", Value: value.StatusStr },
                 { Name: "colDate", Value: value.CreatedDateStr },
             ];
@@ -139,6 +139,13 @@
         })
         
       return bodyRows;
+    }
+
+    function renderName(sender, botName) {
+        if (sender === "Chatbot") {
+            return botName;
+        }
+        return sender;
     }
       
     $(function () {

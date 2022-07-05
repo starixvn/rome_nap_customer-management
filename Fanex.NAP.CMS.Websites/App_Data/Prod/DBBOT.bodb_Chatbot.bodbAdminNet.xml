@@ -11,5 +11,6 @@
 		<Setting Key="NAP_Chatbot_CustBotMessageSel" SpName="NAP_Chatbot_CustBotMessageSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 
 		<Setting Key="NAP_Chatbot_CustBotNotificationListSel" SpName="NAP_Chatbot_CustBotNotificationListSel" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
+		<Setting Key="NAP_chatbot_BotSelAll" SpName="NAP_chatbot_BotSelAll" DbName="DBBOT.bodb_Chatbot.bodbAdminNet" />
 	</Function>
 </Functions>

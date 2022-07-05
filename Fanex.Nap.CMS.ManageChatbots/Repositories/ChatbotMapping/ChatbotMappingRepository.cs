@@ -47,6 +47,24 @@
                     }
                 }
             }
+        } 
+        
+        public IEnumerable<IdNameModel> GetChatBotNames(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return new IdNameModel
+                        {
+                            Name = reader["DisplayName"].ToString(),
+                            Id = int.Parse(reader["BotId"].ToString())
+                        };
+                    }
+                }
+            }
         }
 
         public IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria)

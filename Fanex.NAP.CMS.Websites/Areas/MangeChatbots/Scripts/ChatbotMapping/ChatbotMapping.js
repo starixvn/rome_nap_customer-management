@@ -13,7 +13,8 @@
 
     };
     var currencyDdl = $("#ddl-currency"),
-        siteDdl = $("#ddl-site");
+        siteDdl = $("#ddl-site"),
+        chatBotNamesDdl = $("#ddl-chatBotNames");
     var filterParams = {};
     var gridOptions = null;
 
@@ -44,6 +45,7 @@
         filterParams.LinkStatus = elements.linkStatusDropdown.val();
         filterParams.Currency = currencyDdl.multiSelect("getCheckedItems").join(",");
         filterParams.Site = siteDdl.multiSelect("getCheckedItemsByText").join(",");
+        filterParams.BotIDs = chatBotNamesDdl.multiSelect("getCheckedItems").join(",");
         filterParams.PageIndex = 0;
         filterParams.PageSize = 100;
         filterParams.Cache = false;
@@ -304,7 +306,7 @@
         currencyDdl = $("#ddl-currency");
 
         siteDdl.multiSelect({
-            minWidth: 180,
+            minWidth: 204,
             checkAllText: "All",
             isCheckAll: true,
             listData: siteDdl.find("option").map(function () {
@@ -321,6 +323,25 @@
             shadow: true,
         });
         siteDdl = $("#ddl-site");
+
+        chatBotNamesDdl.multiSelect({
+            minWidth: 180,
+            checkAllText: "All",
+            isCheckAll: true,
+            listData: chatBotNamesDdl.find("option").map(function () {
+                return {
+                    Id: this.text + "-" + this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
+                };
+            }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
+        });
+        chatBotNamesDdl = $("#ddl-chatBotNames");
     }
 
     $(function () {

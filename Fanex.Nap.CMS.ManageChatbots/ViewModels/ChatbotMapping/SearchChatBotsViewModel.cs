@@ -22,5 +22,7 @@
         
         public long? ChatID { get; set; }
         
+        public string BotIDs { get; set; }
+        
     }
 }

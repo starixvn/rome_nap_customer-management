@@ -16,6 +16,7 @@
     using Resources;
     using TelegramBot.Client.Services;
     using ViewModels.ChatbotMapping;
+    using Criteria.Share;
 
     public class ChatBotMappingService : IChatBotMappingService
     {
@@ -34,6 +35,11 @@
         public IEnumerable<IdNameModel> GetSites()
         {
             return _repository.GetSites(new GetSiteCriteria { Mode = 0 });
+        }
+
+        public IEnumerable<IdNameModel> GetChatBotNames()
+        {
+            return _repository.GetChatBotNames(new GetChatbotNamesCriteria());
         }
 
         public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
@@ -63,7 +69,8 @@
                 Status = paramModel.AccStatus,
                 PageIndex = paramModel.PageIndex + 1,
                 PageSize = paramModel.PageSize,
-                IsSpecialSite = HasSpecialSitePermission(customerId)
+                IsSpecialSite = HasSpecialSitePermission(customerId),
+                BotIDs = paramModel.BotIDs
             };
 
             var rawData = _repository.GetChatBots(criteria);
@@ -83,7 +90,7 @@
                 IP = ip,
                 FunctionConfigs = functionConfigs,
                 UserID = userID,
-                BotID=botID
+                BotID = botID
             };
 
             var result = _repository.ExecuteNonQuery(criteria);
@@ -128,9 +135,9 @@
                 UserID = userId,
                 BotID = botId,
             };
-            
+
             var result = _repository.ExecuteNonQuery(criteria);
-            
+
             if (result.IsSuccess)
             {
                 result.Message = string.Format(Labels.UpdateSuccess, "Status");

@@ -32,11 +32,11 @@
                 <input type="text" id="txt-chatID" class="width-200" autocomplete="off" maxlength="20" onkeydown="return CMS.forceNumericInput(event);"/>
             </div>
 
-            <div class="lbl-field col_3">
+            <div class="lbl-field col_4">
                 <label>@Labels.Status</label>
             </div>
-            <div class="edit-field col_7">
-                <select id="ddl-status" class="combobox-autocomplete width-100"></select>
+            <div class="edit-field col_8">
+                <select id="ddl-status" class="combobox-autocomplete width-141"></select>
             </div>
 
             <div class="lbl-field col_4">
@@ -64,19 +64,37 @@
                 <input type="text" id="txt-userNameSubAccount" class="width-200" autocomplete="off" maxlength="50"/>
             </div>
 
-            <div class="lbl-field col_7">
+            <div class="lbl-field col_4">
+                <label>Chatbot Name</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList(
+                    "ddlSite",
+                    Model.ChatBotNames,
+                    new { @id = "ddl-chatBotNames" })
+            </div>
+
+            <div class="lbl-field col_6">
                 <input type="checkbox" id="chk-subAccountsOnly"/>
                 <label for="chk-subAccountsOnly" class="small-margin-left">@Labels.SubAccountsOnly</label>
             </div>
 
-            <div class="lbl-field col_7">
+            <div class="lbl-field col_8">
                 <label>@Labels.Level</label>
             </div>
-            <div class="edit-field col_7">
-                <select id="ddl-level" class="combobox-autocomplete width-100"></select>
+            <div class="edit-field col_8">
+                <select id="ddl-level" class="combobox-autocomplete width-141"></select>
             </div>
 
-            <div class="lbl-field col_3">
+
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@Labels.Search</button>
+            </div>
+        </div>
+        <div class="filter-row">
+
+
+            <div class="lbl-field col_6">
                 <label>@Labels.Site</label>
             </div>
             <div class="edit-field col_8">
@@ -85,16 +103,9 @@
                     Model.Sites,
                     new { @id = "ddl-site" })
             </div>
-
-            <div class="submit width-auto col_3">
-                <button type="submit" class="submit">@Labels.Search</button>
-            </div>
         </div>
         <div class="filter-row"></div>
-        <div class="filter-row">
-
-
-        </div>
+        <div class="filter-row"></div>
     }
 </div>
 @*//var currencies =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));*@

@@ -30,12 +30,13 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            var siteCurrencies = new ChatBotMappingViewModel(
+            var viewModel = new ChatBotMappingViewModel(
                 _service.GetCurrencies(),
-                _service.GetSites()
+                _service.GetSites(),
+                _service.GetChatBotNames()
             );
 
-            return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", siteCurrencies);
+            return View("~/Areas/MangeChatbots/Views/ChatbotMapping/Index.cshtml", viewModel);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ChatbotMapping, Policy = Constant.Policy.Read)]

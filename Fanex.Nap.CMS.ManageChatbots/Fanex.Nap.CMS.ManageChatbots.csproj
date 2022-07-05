@@ -160,6 +160,7 @@
     <Compile Include="Criteria\ChatbotMapping\UpdFunctionsChatBotCriteria.cs" />
     <Compile Include="Criteria\ChatbotMapping\UpdLanguageChatBotCriteria.cs" />
     <Compile Include="Criteria\NotificationList\NotificationListCriteria.cs" />
+    <Compile Include="Criteria\Share\GetChatbotNamesCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryItem.cs" />
     <Compile Include="Models\ChatbotHistory\FunctionModel.cs" />
     <Compile Include="Models\ChatbotMapping\ChatBotFunctionConfig.cs" />
@@ -226,6 +227,5 @@
   <ItemGroup>
     <Content Include="BundleTransformer.Configuration.xsd" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

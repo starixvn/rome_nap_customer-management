@@ -10,6 +10,8 @@
         IEnumerable<IdNameModel> GetCurrencies();
 
         IEnumerable<IdNameModel> GetSites();
+        
+        IEnumerable<IdNameModel> GetChatBotNames();
 
         bool HasSpecialSitePermission(int customerId);
 

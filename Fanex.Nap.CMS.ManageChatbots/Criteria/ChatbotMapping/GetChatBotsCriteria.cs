@@ -18,6 +18,8 @@
         
         public string Currency { get; set; }
         
+        public string BotIDs { get; set; }
+        
         public short Status { get; set; }
         
         public int PageIndex { get; set; }

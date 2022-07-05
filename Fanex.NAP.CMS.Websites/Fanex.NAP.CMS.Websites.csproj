@@ -595,6 +595,7 @@
     <Content Include="Content\Themes\img\textures\fabric.png" />
     <Content Include="Content\Themes\img\textures\grid.png" />
     <Content Include="Content\Themes\img\textures\scratches.png" />
+    <Content Include="Content\Themes\img\sprites1.png" />
     <Content Include="Content\Themes\img\tick-ico-16.png" />
     <Content Include="Content\Themes\img\toggleOFF.png" />
     <Content Include="Content\Themes\img\toggleON.png" />

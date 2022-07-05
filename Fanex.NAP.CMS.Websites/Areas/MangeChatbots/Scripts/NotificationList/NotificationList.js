@@ -153,7 +153,7 @@
 
     function renderContent(index, content) {
         const newContent = breakContent(content);
-        const loadMore = newContent.split(/\n/g).length > 3 ? ">" : "";
+        const loadMore = newContent.split(/\n/g).length > 3 ? "icons-expand" : "";
         const isHover = newContent.split(/\n/g).length < 4 ? "isNotHover" : "";
         const contentFormated = newContent.replaceAll("\n", "<br/>");
         return [
@@ -161,7 +161,7 @@
             `<span class="content-width content${index} content-overflow">`,
             contentFormated,
             '</span>',
-            `<a class="expand rotate${index}"><span">${loadMore}</span></a>`,
+            `<a class="expand"><span class="rotate${index} ${loadMore}""></span></a>`,
             '</p></div>',
         ].join("");
     }
@@ -235,13 +235,14 @@
         return [
             '<div class="notification"><div class="title"><p>Recipient:</p>',
             '<p>Send at:</p><p class="error-title">Reason:</p>',
-            '<p>Retry Count:</p></div><div class="error">',
+            '</div><div class="error">',
             `<p>${rec}</p>`,
             `<p>${date}</p>`,
             `<p>Notifications cannot be sent due to a ${error}</p>`,
-            `<p>${reason}</p>`,
-            `<p>${retry}</p>`,
+            `<p class="reason">${reason}</p>`,
             '</div></div>',
+            `<div class="notification"><div class="title"><p>Retry Count:</p></div>`,
+            `<div class="error"><p>${retry}</p></div></div>`
         ].join("");
     }
 

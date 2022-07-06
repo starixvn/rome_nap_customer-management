@@ -18,6 +18,8 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.NotificationList
 
         public string Status { get; set; }
 
+        public string BotIDs { get; set; }
+
         public bool IsSpecial { get; set; }
 
         public int PageIndex { get; set; }

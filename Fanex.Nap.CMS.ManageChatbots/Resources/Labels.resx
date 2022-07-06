@@ -201,4 +201,7 @@
   <data name="TitleContent" xml:space="preserve">
     <value>Content</value>
   </data>
+  <data name="BotName" xml:space="preserve">
+    <value>Chatbot Name</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@
         public NotificationListItem(
             long notificationId,
             string functionName,
+            string botName,
             string message,
             string recipient,
             DateTime sendDate,
@@ -18,6 +19,7 @@
         {
             NotificationId = notificationId;
             FunctionName = functionName;
+            BotName = botName;
             Message = message;
             Recipient = recipient;
             SendDate = sendDate;
@@ -29,6 +31,8 @@
         public long NotificationId { get; set; }
 
         public string FunctionName { get; set; }
+
+        public string BotName { get; set; }
 
         public DateTime SendDate { get; set; }
 

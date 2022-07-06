@@ -36,6 +36,7 @@
                 ToDate = new DateTime(viewModel.ToDate.Year, viewModel.ToDate.Month, viewModel.ToDate.Day, 23, 59, 59),
                 NotificationId = viewModel.NotificationId,
                 Status = viewModel.Status == "All" ? null : viewModel.Status,
+                BotIDs = viewModel.BotIDs,
                 IsSpecial = chatbotMappingservice.HasSpecialSitePermission(userId),
                 PageIndex = viewModel.PageIndex,
                 PageSize = viewModel.PageSize

@@ -63,6 +63,15 @@ namespace Fanex.Nap.CMS.ManageChatbots.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Chatbot Name.
         /// </summary>
+        public static string BotName {
+            get {
+                return ResourceManager.GetString("BotName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chatbot Name.
+        /// </summary>
         public static string ChatBotName {
             get {
                 return ResourceManager.GetString("ChatBotName", resourceCulture);

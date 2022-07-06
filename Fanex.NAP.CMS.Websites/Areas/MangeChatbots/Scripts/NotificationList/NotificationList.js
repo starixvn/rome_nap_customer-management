@@ -7,6 +7,7 @@
     const recipient = $("#txtRecipient");
     const notificationId = $("#txtNotificationId");
     let notificationType = $("#ddl-NotificationType");
+    let bots = $("#ddl-Bots")
     let cachedPageSize = 500;
 
     function initDateTimeFields() {
@@ -58,7 +59,26 @@
             shadow: true,
         });
 
+        bots.multiSelect({
+            minWidth: 194,
+            checkAllText: "All",
+            isCheckAll: true,
+            listData: bots.find("option").map(function () {
+                return {
+                    Id: this.text + "-" + this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
+                };
+            }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
+        })
+
         notificationType = $("#ddl-NotificationType");
+        bots = $("#ddl-Bots");
     }
 
     function getGridOptions() {
@@ -67,6 +87,7 @@
             { HeaderText: resources.notificationId, Width: 100, Name: "colNotificationId", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: resources.notificationType, Width: 180, Name: "colNotificationType", HeaderAlign: "center", Sort: true },
             { HeaderText: resources.sendDateTime, Width: 140, Name: "colSendDate", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status", Sort: true },
+            { HeaderText: resources.botName, Width: 120, Name: "colBotName", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: resources.recipient, Width: 150, Name: "colRecipient", HeaderAlign: "center", AllowTruncate: true, Sort: true },
             { HeaderText: resources.title, Width: 700, Name: "colTitleContent", HeaderAlign: "center"},
             { HeaderText: resources.status, Width: 100, Name: "colStatus", HeaderAlign: "center", CellAlign: "center" },
@@ -104,6 +125,7 @@
 
         const url = formSearch.attr("action")
             + "?notificationtype=" + notificationType.multiSelect("getCheckedItems").join(",")
+            + "&botids=" + bots.multiSelect("getCheckedItems").join(",")
             + "&recipient=" + recipient.val().trim().replaceAll("#", '')
             + "&notificationid=" + notificationId.val().trim().replaceAll("#", '')
             + "&fromdate=" + dateRange.FromDate
@@ -136,6 +158,7 @@
                 { Name: "colNotificationId", Value: value.NotificationId },
                 { Name: "colNotificationType", Value: value.FunctionName },
                 { Name: "colSendDate", Value: value.SendDateStr },
+                { Name: "colBotName", Value: value.BotName },
                 { Name: "colRecipient", Value: value.Recipient },
                 { Name: "colTitleContent", Value: renderContent(index, value.Message) },
                 { Name: "colStatus", Value: renderStatus(value) },

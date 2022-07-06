@@ -12,6 +12,8 @@
         public IEnumerable<SelectListItem> SendStatus
          => new SelectList(NotificationStatus.NotificationStatusList, "Key", "Value");
 
+        public IEnumerable<SelectListItem> Bots { get; set; }
+
         public DateTime DefaultFromDate => DateTime.Today.AddDays(-7);
 
         public DateTime DefaultToDate => DateTime.Now;

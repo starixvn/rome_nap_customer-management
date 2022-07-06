@@ -16,6 +16,8 @@
 
         public string Status { get; set; }
 
+        public string BotIDs { get; set; }
+
         public int PageIndex { get; set; }
 
         public int PageSize { get; set; }

@@ -33,10 +33,13 @@
             </div>
 
             <div class="lbl-field col_4">
-                <label>@Labels.Status</label>
+                <label>Chatbot Name</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddl-status" class="combobox-autocomplete width-141"></select>
+                @Html.DropDownList(
+                    "ddlChatBotNames",
+                    Model.ChatBotNames,
+                    new { @id = "ddl-chatBotNames" })
             </div>
 
             <div class="lbl-field col_4">
@@ -55,6 +58,11 @@
                     Model.Currencies,
                     new { @id = "ddl-currency" })
             </div>
+
+            <div class="lbl-field col_6">
+                <input type="checkbox" id="chk-subAccountsOnly"/>
+                <label for="chk-subAccountsOnly">@Labels.SubAccountsOnly</label>
+            </div>
         </div>
         <div class="filter-row">
             <div class="lbl-field col_6">
@@ -63,38 +71,22 @@
             <div class="edit-field col_8">
                 <input type="text" id="txt-userNameSubAccount" class="width-200" autocomplete="off" maxlength="50"/>
             </div>
-
+            
             <div class="lbl-field col_4">
-                <label>Chatbot Name</label>
-            </div>
-            <div class="edit-field col_8">
-                @Html.DropDownList(
-                    "ddlSite",
-                    Model.ChatBotNames,
-                    new { @id = "ddl-chatBotNames" })
-            </div>
-
-            <div class="lbl-field col_6">
-                <input type="checkbox" id="chk-subAccountsOnly"/>
-                <label for="chk-subAccountsOnly" class="small-margin-left">@Labels.SubAccountsOnly</label>
-            </div>
-
-            <div class="lbl-field col_8">
                 <label>@Labels.Level</label>
             </div>
             <div class="edit-field col_8">
-                <select id="ddl-level" class="combobox-autocomplete width-141"></select>
+                <select id="ddl-level" class="combobox-autocomplete width-140"></select>
             </div>
 
-
-            <div class="submit width-auto col_3">
-                <button type="submit" class="submit">@Labels.Search</button>
+            <div class="lbl-field col_4">
+                <label>@Labels.Status</label>
             </div>
-        </div>
-        <div class="filter-row">
+            <div class="edit-field col_8">
+                <select id="ddl-status" class="combobox-autocomplete width-100"></select>
+            </div>
 
-
-            <div class="lbl-field col_6">
+            <div class="lbl-field col_2">
                 <label>@Labels.Site</label>
             </div>
             <div class="edit-field col_8">
@@ -103,7 +95,13 @@
                     Model.Sites,
                     new { @id = "ddl-site" })
             </div>
+
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit" style="margin: 0;">@Labels.Search</button>
+            </div>
         </div>
+
+
         <div class="filter-row"></div>
         <div class="filter-row"></div>
     }

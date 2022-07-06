@@ -306,7 +306,7 @@
         currencyDdl = $("#ddl-currency");
 
         siteDdl.multiSelect({
-            minWidth: 204,
+            minWidth: 180,
             checkAllText: "All",
             isCheckAll: true,
             listData: siteDdl.find("option").map(function () {
@@ -325,7 +325,7 @@
         siteDdl = $("#ddl-site");
 
         chatBotNamesDdl.multiSelect({
-            minWidth: 180,
+            minWidth: 179,
             checkAllText: "All",
             isCheckAll: true,
             listData: chatBotNamesDdl.find("option").map(function () {

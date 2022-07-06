@@ -26,6 +26,7 @@
                 viewModel.Username,
                 viewModel.ChatID,
                 viewModel.FunctionID,
+                viewModel.BotIDs,
                 new DateTime(viewModel.FromDate.Year, viewModel.FromDate.Month, viewModel.FromDate.Day, 00, 00, 00),
                 new DateTime(viewModel.ToDate.Year, viewModel.ToDate.Month, viewModel.ToDate.Day, 23, 59, 59),
                 viewModel.Status,

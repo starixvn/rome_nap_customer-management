@@ -44,11 +44,14 @@
         {
             bundles
                 .Add(new ScriptBundle(ChatbotHistoryScripts)
-                    .Include("~/Areas/MangeChatbots/Scripts/ChatbotHistory/ChatbotHistory.js"));
+                    .Include(
+                    "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                    "~/Areas/MangeChatbots/Scripts/ChatbotHistory/ChatbotHistory.js"));
 
             AddStyle(
                 bundles,
                 ChatbotHistoryStyles,
+                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
                 "~/Areas/MangeChatbots/Styles/ChatbotHistory/ChatbotHistory.less");
         }
 

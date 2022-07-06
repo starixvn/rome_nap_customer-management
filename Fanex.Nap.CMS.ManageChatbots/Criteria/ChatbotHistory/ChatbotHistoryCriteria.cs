@@ -9,6 +9,7 @@
             string userName,
             long chatID,
             int functionID,
+            string botIDs,
             DateTime fromDate,
             DateTime toDate,
             byte sendStatus,
@@ -19,6 +20,7 @@
             Username = userName ?? String.Empty;
             ChatID = chatID;
             FunctionID = functionID;
+            BotIDs = botIDs;
             FromDate = fromDate;
             ToDate = toDate;
             Status = sendStatus;
@@ -32,6 +34,8 @@
         public long ChatID { get; }
 
         public int FunctionID { get; }
+
+        public string BotIDs { get; }
 
         public DateTime FromDate { get; }
 

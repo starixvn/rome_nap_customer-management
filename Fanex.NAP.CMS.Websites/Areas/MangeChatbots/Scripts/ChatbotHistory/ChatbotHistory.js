@@ -7,6 +7,7 @@
     var chatId = $("#txtChatId");
     var functionId = $("#ddl-Functions");
     var status = $("#ddl-SendStatus");
+    let bots = $("#ddl-Bots");
     var cachedPageSize = 100;
 
     function initDateTimeFields() {
@@ -37,6 +38,28 @@
 
         $("#dpk-fromdate").datepicker("setDate", resources.defaultFromDate);
         $("#dpk-todate").datepicker("setDate", resources.defaultToDate);
+    }
+
+    const renderMultiChoiceDDL = () => {
+        bots.multiSelect({
+            minWidth: 194,
+            checkAllText: "All",
+            isCheckAll: true,
+            listData: bots.find("option").map(function () {
+                return {
+                    Id: this.text + "-" + this.value,
+                    Value: this.value,
+                    Text: this.text,
+                    Checked: true,
+                    Enable: true
+                };
+            }),
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
+        })
+
+        bots = $("#ddl-Bots");
     }
 
     function getGridOptions()
@@ -89,6 +112,7 @@
             + "?username=" + userName.val().trim().replaceAll("#", '')
             + "&chatid=" + chatId.val().trim().replaceAll("#", '')
             + "&functionid=" + functionId.val()
+            + "&botids=" + bots.multiSelect("getCheckedItems").join(",")
             + "&fromdate=" + dateRange.FromDate
             + "&todate=" + dateRange.ToDate
             + "&status=" + status.val()
@@ -152,5 +176,7 @@
         bindEvents();
 
         initDateTimeFields();
+
+        renderMultiChoiceDDL();
     });
 })(jQuery);

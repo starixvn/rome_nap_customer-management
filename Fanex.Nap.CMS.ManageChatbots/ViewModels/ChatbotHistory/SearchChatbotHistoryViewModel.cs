@@ -8,6 +8,8 @@
 
         public long ChatID { get; set; }
 
+        public string BotIDs { get; set; }
+
         public int FunctionID { get; set; }
 
         public DateTime FromDate { get; set; }

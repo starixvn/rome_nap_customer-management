@@ -39,20 +39,30 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "ChatbotHistory", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
     {
-        <div class="filter-row">
-            <div id="fromtodate-picker"></div>
+    <div class="filter-row">
+        <div id="fromtodate-picker"></div>
 
-            <div class="lbl-field col_4">
-                <label>@Labels.Function</label>
-            </div>
-            <div class="edit-field col_10">
-                @Html.DropDownList(
-                "dllFunctions",
-                Model.Functions,
-                new { @id = "ddl-Functions", @class = "combobox-autocomplete width-200" })
-            </div>
-
+        <div class="lbl-field col_4">
+            <label>@Labels.Function</label>
         </div>
+        <div class="edit-field col_10">
+            @Html.DropDownList(
+            "dllFunctions",
+            Model.Functions,
+            new { @id = "ddl-Functions", @class = "combobox-autocomplete width-200" })
+        </div>
+
+        <div class="lbl-field col_4">
+            <label>@Labels.BotName</label>
+        </div>
+        <div class="edit-field col_8">
+            @Html.DropDownList(
+            "ddlBots",
+            Model.Bots,
+            new { @id = "ddl-Bots", @class = "status-width" })
+        </div>
+
+    </div>
         <div class="filter-row">
             <div class="lbl-field col_6">
                 <label for="txtuserName">@Labels.UserNameSubAccount</label>
@@ -71,7 +81,7 @@
             <div class="lbl-field col_4">
                 <label>@Labels.SendStatus</label>
             </div>
-            <div class="edit-field col_10">
+            <div class="edit-field col_14">
                 @Html.DropDownList(
                 "ddlSendStatus",
                 Model.SendStatus,

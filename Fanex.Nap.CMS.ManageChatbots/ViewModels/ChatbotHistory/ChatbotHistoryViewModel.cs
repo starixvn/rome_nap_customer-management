@@ -17,6 +17,8 @@
         public IEnumerable<SelectListItem> SendStatus
             => new SelectList(SendStatusConst.SendStatusList, "Key", "Value");
 
+        public IEnumerable<SelectListItem> Bots { get; set; }
+
         public DateTime DefaultFromDate => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 
         public DateTime DefaultToDate => DateTime.Now;

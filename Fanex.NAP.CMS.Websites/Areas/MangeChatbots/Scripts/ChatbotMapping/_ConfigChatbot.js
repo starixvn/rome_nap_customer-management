@@ -9,7 +9,9 @@ function ConfigChatBotModule(viewResources, table, reloadData) {
                 const popup = new PopupConfig(html, reloadData, cusId, botId);
                 popup.initialize();
             }
-        });
+        }, function () {
+            reloadData();
+        })
     }
 
     this.initialize = function () {

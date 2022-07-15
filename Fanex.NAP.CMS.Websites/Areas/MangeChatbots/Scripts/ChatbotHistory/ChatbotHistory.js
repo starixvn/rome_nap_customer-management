@@ -137,7 +137,9 @@
         var bodyRows = [];
 
         $.each(data, function (index, value) {
-            var message = value.SentBy !== "Chatbot" ? value.Message.replaceAll("<", "&lt;").replaceAll(">", "&gt;") : value.Message.replaceAll("\n", "<br/>");
+            var message = value.SentBy !== "Chatbot"
+                ? value.Message.replaceAll("<", "&lt;").replaceAll(">", "&gt;").match(/.{1,95}/g).join("<br/>")
+                : value.Message.replaceAll("\n", "<br/>");
             columns = [
                 { Name: "colSentBy", Value: renderName(value.SentBy, value.BotName) },
                 { Name: "colMessageContent", Value: message },

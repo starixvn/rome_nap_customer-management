@@ -1,0 +1,106 @@
+﻿@model Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping.ChatBotsConfigModel
+@{
+    var isLinked = (@Model.ChatBotModel.IsVerifyOTP && @Model.ChatBotModel.Status);
+    var showSubAccountRow = @Model.ChatBotModel.SubAccount == "" ?"":"Sub Account:";
+}
+@using (Html.BeginForm("UpdateChatBotConfig", "ChatBotMapping", FormMethod.Post, new { id = "formChatBotConfig", @class = "form expand-form" }))
+{
+    <div id="config-chat-bot-popup">
+        <div id="div-inlineMessage" class="inline-message"></div>
+        <div class="custom-grid-container">
+            <div>Bot Service:</div>
+            <div id="BotSerVice"><b>Telegram</b></div>
+            
+            <div>Chat ID:</div>
+            <div id="chatId" data-chatid="@Model.ChatBotModel.ChatID"><b>@Model.ChatBotModel.ChatID</b></div>
+            
+            <div>Username:</div>
+            <div id="username" data-userid="@Model.ChatBotModel.UserID"><b>@Model.ChatBotModel.UserName</b></div>
+
+            <div>@showSubAccountRow</div>
+            <div id="SubAccount" data-subaccountid="@Model.ChatBotModel.SubAccID"><b>@Model.ChatBotModel.SubAccount</b></div>
+            
+            <div>Chatbot Name:</div>
+            <div id="chatBot"><b>@Model.ChatBotModel.ChatBotName</b></div>
+            
+            <div>Status:</div>
+            <div id="Status" data-islink=@isLinked>
+                @if (@isLinked)
+                {
+                    <span class="high-light green">Linked</span>
+                    <button type="button" class="red-button" id="btn-unlink">Unlink</button>
+                }
+                else
+                {
+                    <span class="high-light yellow">Verifying</span>
+                }
+            </div>
+        </div>
+        <hr/>
+        <div class="container">
+            <div class="col">
+                <div>Language:</div>
+            </div>
+            <div class="col">
+                @if (isLinked)
+                {
+                    @Html.DropDownList(
+                        "ddl-Language",
+                        Model.OptionsLanguage,
+                        new { id = "ddl-Language", @class = "combobox-autocomplete width-320 " }
+                        )
+                }
+                else
+                {
+                    @Html.DropDownList(
+                        "ddl-Language",
+                        new[] { new SelectListItem() { Text = @Model.ChatBotModel.Language, Value = @Model.ChatBotModel.Language } },
+                        new { id = "ddl-Language", @class = "combobox-autocomplete width-320 ", @disabled = "disabled" }
+                        )
+                }
+            </div>
+        </div>
+
+        <div>
+            <table >
+                <thead>
+                <tr>
+                    <th>Functions/Notifications</th>
+                    <th class="align-center">Enable</th>
+                </tr>
+                </thead>
+                <tbody id="functions">
+                @foreach (var functionConfig in @Model.FunctionConfigs)
+                {
+                    <tr>
+                        <td>@functionConfig.FunctionName</td>
+                        <div class="float-center">
+                            @if (@functionConfig.IsEnabled)
+                            {
+                                <td>
+                                    <div class="float-center">
+                                        <div class="toggle-on-off status-on" data-functid=@functionConfig.FunctionId> </div>
+                                    </div>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <div class="float-center">
+                                        <div class="toggle-on-off status-off" data-functid=@functionConfig.FunctionId> </div>
+                                    </div>
+                                </td>
+                            }
+                        </div>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+            <div class="popup-footer">
+                <button type="submit" class="blue-button" id="btn-submit-popup" disabled>Save</button>
+                <button type="button" class="red-button" id="btn-close-popup">Close</button>
+            </div>
+        </div>
+    </div>
+}

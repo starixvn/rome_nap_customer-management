@@ -1,0 +1,121 @@
+﻿.filter-bar
+    .filter-row
+    .edit-field
+    input[type="text"].ui-multiselect-state-default {
+    &:hover,
+    &:focus,
+    &:active {
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.filter-bar .filter-form .edit-field input[type="text"] {
+    width: 180px;
+}
+
+.status-width {
+    width: 156px;
+}
+
+input[type="checkbox"] {
+    &:active,
+    &:focus,
+    &:hover {
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.notification {
+    display: flex;
+    line-height: 5px;
+    margin-top: 10px;
+    width: 500px;
+}
+
+.notification .title {
+    width: 100px;
+}
+
+.description {
+    width: 700px;
+}
+
+.description:not(.isNotHover):hover {
+    cursor: pointer;
+}
+
+.error {
+    font-weight: bold;
+    width: 450px;
+}
+
+.error-title {
+    margin-bottom: 36px;
+}
+
+.content-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.content-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    gap: 35px;
+}
+
+.content-width {
+    width: 640px;
+}
+
+.status {
+    width: 100px;
+}
+
+.status-fail {
+    color: red;
+    margin-bottom: 0px;
+}
+
+.status-detail {
+    margin-bottom: 0px;
+}
+
+.status-detail:hover {
+    cursor: pointer;
+}
+
+.rotate {
+    transition: linear 0.02s;
+    transform: rotate(90deg);
+    color: black;
+    margin-left: 2px;
+}
+
+.expand {
+    color: black;
+}
+
+.expand:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.icons-expand {
+    background: url('../../../../Content/Themes/img/sprites1.png') no-repeat;
+    display: inline-block;
+    cursor: pointer;
+    height: 16px;
+    width: 13px;
+    background-position: -91px -65px;
+}
+
+.reason {
+    line-height: 20px;
+}

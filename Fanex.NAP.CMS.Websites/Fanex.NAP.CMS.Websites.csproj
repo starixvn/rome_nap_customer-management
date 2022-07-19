@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -158,8 +158,8 @@
       <HintPath>..\packages\NetUtility.4.5.6325.30210\lib\net40\NetUtility.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.3.1.0\lib\net461\ONEbook.UM.dll</HintPath>
@@ -310,6 +310,7 @@
     <AdditionalFiles Include="..\SonarQube\fanex.nap.cm\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
+    <Content Include="App_Data\Local\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Local\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -342,6 +343,7 @@
     <Content Include="App_Data\MNL\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\MNL\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -364,6 +366,7 @@
     <Content Include="App_Data\Prod\DBAGE.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\Prod\DBBOT.bodb_Chatbot.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.bodb_Licensee.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
@@ -440,6 +443,14 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotHistory\ChatbotHistory.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\_ConfigChatbot.js" />
+    <Content Include="Areas\MangeChatbots\Scripts\NotificationList\NotificationList.js" />
+    <Content Include="Areas\MangeChatbots\Styles\ChatbotMapping\ChatbotMapping.less" />
+    <Content Include="Areas\MangeChatbots\Styles\Images\sprites.png" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\Index.cshtml" />
+    <Content Include="Areas\MangeChatbots\Views\Web.config" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\MailingList.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\jquery.tokeninput.js" />
     <Content Include="Areas\NotificationSetting\Views\TurnoverControl\Scripts\TokenInput\token-input-facebook.css" />
@@ -584,6 +595,7 @@
     <Content Include="Content\Themes\img\textures\fabric.png" />
     <Content Include="Content\Themes\img\textures\grid.png" />
     <Content Include="Content\Themes\img\textures\scratches.png" />
+    <Content Include="Content\Themes\img\sprites1.png" />
     <Content Include="Content\Themes\img\tick-ico-16.png" />
     <Content Include="Content\Themes\img\toggleOFF.png" />
     <Content Include="Content\Themes\img\toggleON.png" />
@@ -780,6 +792,10 @@
     <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
       <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
       <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.ManageChatbots\Fanex.Nap.CMS.ManageChatbots.csproj">
+      <Project>{3d0b2f17-7a0f-48bc-afc5-46d48747e9cd}</Project>
+      <Name>Fanex.Nap.CMS.ManageChatbots</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.ViewModels\Fanex.NAP.CMS.ViewModels.csproj">
       <Project>{88808f97-d8c0-45be-80d8-9c814a5cfde6}</Project>
@@ -1039,6 +1055,11 @@
     <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
     <Content Include="Areas\Customers\Views\LimitDailyPTUpdate\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\limitDailyPTUpdate.less" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\_ConfigChatBot.cshtml" />
+    <Content Include="Areas\MangeChatbots\Views\ChatbotHistory\Index.cshtml" />
+    <Content Include="Areas\MangeChatbots\Styles\ChatbotHistory\ChatbotHistory.less" />
+    <Content Include="Areas\MangeChatbots\Styles\NotificationList\NotificationList.less" />
+    <Content Include="Areas\MangeChatbots\Views\NotificationList\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1099,6 +1120,9 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.CFG.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.8.9.0.19135\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

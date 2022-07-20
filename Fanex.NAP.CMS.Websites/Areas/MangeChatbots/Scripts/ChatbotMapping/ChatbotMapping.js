@@ -21,7 +21,8 @@
     const optionsLinkingStatusDDL = [
         {Id: 0, Name: "All"},
         {Id: 1, Name: "Linked"},
-        {Id: 2, Name: "Verifying"}
+        {Id: 2, Name: "Verifying"},
+        {Id: 3, Name: "Unlinked"}
     ];
 
     const optionsLevelDDL = [
@@ -184,7 +185,8 @@
         };
     }
 
-    const renderConfigCell = (custId, botId, subAccId, userId) => {
+    const renderConfigCell = (linkStatus, custId, botId, subAccId, userId) => {
+        if(linkStatus==="Unlinked") return "";
         return [
             '<span class="ui-icon ico-config" href="javascript:;" data-custId="',
             custId,
@@ -219,8 +221,7 @@
                 UpdatedTimeStr,
                 SiteName
             } = data[i];
-            const linkStatusCssColor = LinkStatus == "Verifying" ? "yellow" : "green";
-            const linkStatusFormatted = `<span class="high-light ${linkStatusCssColor}" >${LinkStatus}</span>`
+            const linkStatusFormatted = `<span class="high-light ${LinkStatus}" >${LinkStatus}</span>`
             columns = [
                 {Name: "ColNo", Value: ""},
                 {Name: "ChatBotName", Value: ChatBotName},
@@ -234,7 +235,7 @@
                 {Name: "Currency", Value: Currency},
                 {Name: "Status", Value: AccStatus},
                 {Name: "DateGMT4", Value: UpdatedTimeStr},
-                {Name: "Config", Value: renderConfigCell(CusID, BotID, SubAccID, UserID)}
+                {Name: "Config", Value: renderConfigCell(LinkStatus, CusID, BotID, SubAccID, UserID)}
             ];
             bodyData.push({Columns: columns});
         }

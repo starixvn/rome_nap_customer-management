@@ -13,7 +13,6 @@
 
 @section Foot {
     <script type="text/javascript">
-
         var resources = {
             symbolNo: '@Labels.Symbol_No',
             notificationId: '@Labels.NotificationId',
@@ -42,56 +41,53 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "NotificationList", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
     {
-    <div class="filter-row">
-        <div id="fromtodate-picker"></div>
-        <div class="lbl-field col_5">
-            <labe>@Labels.NotificationType</labe>
+        <div class="filter-row">
+            <div id="fromtodate-picker"></div>
+            <div class="lbl-field col_5">
+                <labe>@Labels.NotificationType</labe>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList(
+                "ddlNotificationType",
+                Model.NotificationType,
+                new { @id = "ddl-NotificationType" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Status</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList(
+                "ddlSendStatus",
+                Model.SendStatus,
+                new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-100" })
+            </div>
         </div>
-        <div class="edit-field col_8">
-            @Html.DropDownList(
-            "ddlNotificationType",
-            Model.NotificationType,
-            new { @id = "ddl-NotificationType" })
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txtRecipient">@Labels.Recipient</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtRecipient" maxlength="50" />
+            </div>
+            <div class="lbl-field col_4">
+                <label for="txtNotificationId">@Labels.NotificationId</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txtNotificationId" maxlength="20" onkeydown="return CMS.forceNumericInput(event);" />
+            </div>
+            <div class="lbl-field col_5">
+                <label>@Labels.BotName</label>
+            </div>
+            <div class="edit-field col_11">
+                @Html.DropDownList(
+                "ddlBots",
+                Model.Bots,
+                new { @id = "ddl-Bots", @class = "status-width" })
+            </div>
+            <div class="submit width-auto col_8">
+                <button type="submit" class="submit btn-search">Search</button>
+            </div>
         </div>
-        <div class="lbl-field col_3">
-            <label>@Labels.Status</label>
-        </div>
-        <div class="edit-field col_8">
-            @Html.DropDownList(
-            "ddlSendStatus",
-            Model.SendStatus,
-            new { @id = "ddl-SendStatus", @class = "combobox-autocomplete status-width" })
-        </div>
-    </div>
-    <div class="filter-row">
-        <div class="lbl-field col_3">
-            <label for="txtRecipient">@Labels.Recipient</label>
-        </div>
-        <div class="edit-field col_8">
-            <input type="text" id="txtRecipient" maxlength="50" />
-        </div>
-
-        <div class="lbl-field col_4">
-            <label for="txtNotificationId">@Labels.NotificationId</label>
-        </div>
-        <div class="edit-field col_8">
-            <input type="text" id="txtNotificationId" maxlength="20" onkeydown="return CMS.forceNumericInput(event);" />
-        </div>
-
-        <div class="lbl-field col_5">
-            <label>@Labels.BotName</label>
-        </div>
-        <div class="edit-field col_11">
-            @Html.DropDownList(
-            "ddlBots",
-            Model.Bots,
-            new { @id = "ddl-Bots", @class = "status-width" })
-        </div>
-
-        <div class="submit width-auto col_8">
-            <button type="submit" class="submit btn-search">Search</button>
-        </div>
-    </div>
         <div class="filter-row"></div>
     }
 </div>

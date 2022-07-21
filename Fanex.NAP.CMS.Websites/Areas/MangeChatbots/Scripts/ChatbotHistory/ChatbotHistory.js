@@ -26,7 +26,7 @@
                 Id: "dpk-fromdate",
                 Label: "From",
                 LabelCss: "lbl-field lblFilter col_6",
-                TextboxCss: "edit-field col_8"
+                TextboxCss: "edit-field col_7"
             },
             secondDatePicker: {
                 Id: "dpk-todate",
@@ -42,7 +42,7 @@
 
     const renderMultiChoiceDDL = () => {
         bots.multiSelect({
-            minWidth: 194,
+            minWidth: 160,
             checkAllText: "All",
             isCheckAll: true,
             listData: bots.find("option").map(function () {
@@ -69,7 +69,7 @@
             { HeaderText: resources.messageContent, Width: 860, Name: "colMessageContent", HeaderAlign: "center" },
             { HeaderText: resources.sentTo, Width: 160, Name: "colSentTo", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.sendStatus, Width: 120, Name: "colSendStatus", HeaderAlign: "center", CellAlign: "center", CellCssClass: "status" },
-            { HeaderText: resources.DateGMT4, Width: 240, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: resources.DateGMT4, Width: 180, Name: "colDate", HeaderAlign: "center", CellAlign: "center", Sort: true },
         ]
 
         return {

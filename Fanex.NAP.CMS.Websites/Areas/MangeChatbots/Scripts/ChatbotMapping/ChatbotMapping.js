@@ -64,7 +64,7 @@
             },
             {
                 HeaderText: viewResources.ChatBotName,
-                Width: 190,
+                Width: 140,
                 Name: "ChatBotName",
                 HeaderAlign: "center",
                 CellAlign: "left",
@@ -89,7 +89,7 @@
             },
             {
                 HeaderText: viewResources.UserName,
-                Width: 190,
+                Width: 180,
                 Name: "UserName",
                 HeaderAlign: "center",
                 CellAlign: "left",
@@ -98,7 +98,7 @@
             },
             {
                 HeaderText: viewResources.SubAccount,
-                Width: 190,
+                Width: 180,
                 Name: "SubAccount",
                 HeaderAlign: "center",
                 CellAlign: "left",
@@ -287,7 +287,7 @@
 
     const renderMultiChoiceDDL = () => {
         currencyDdl.multiSelect({
-            minWidth: 180,
+            minWidth: 150,
             checkAllText: "All",
             isCheckAll: true,
             listData: currencyDdl.find("option").map(function () {
@@ -307,7 +307,7 @@
         currencyDdl = $("#ddl-currency");
 
         siteDdl.multiSelect({
-            minWidth: 180,
+            minWidth: 150,
             checkAllText: "All",
             isCheckAll: true,
             listData: siteDdl.find("option").map(function () {
@@ -326,7 +326,7 @@
         siteDdl = $("#ddl-site");
 
         chatBotNamesDdl.multiSelect({
-            minWidth: 179,
+            minWidth: 158,
             checkAllText: "All",
             isCheckAll: true,
             listData: chatBotNamesDdl.find("option").map(function () {

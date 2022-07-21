@@ -28,27 +28,24 @@
             <div class="lbl-field col_6">
                 <label for="txt-chatID">@Labels.ChatID</label>
             </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txt-chatID" class="width-200" autocomplete="off" maxlength="20" onkeydown="return CMS.forceNumericInput(event);"/>
+            <div class="edit-field col_7">
+                <input type="text" id="txt-chatID" class="width-160" autocomplete="off" maxlength="20" onkeydown="return CMS.forceNumericInput(event);"/>
             </div>
-
             <div class="lbl-field col_4">
                 <label>@Labels.BotName</label>
             </div>
-            <div class="edit-field col_8">
+            <div class="edit-field col_7">
                 @Html.DropDownList(
                     "ddlChatBotNames",
                     Model.ChatBotNames,
                     new { @id = "ddl-chatBotNames" })
             </div>
-
             <div class="lbl-field col_4">
                 <label>@Labels.LinkingStatus</label>
             </div>
-            <div class="edit-field col_7">
-                <select id="ddl-linkingStatus" class="combobox-autocomplete width-100"></select>
+            <div class="edit-field col_6">
+                <select id="ddl-linkingStatus" class="combobox-autocomplete width-80"></select>
             </div>
-
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
             </div>
@@ -58,8 +55,7 @@
                     Model.Currencies,
                     new { @id = "ddl-currency" })
             </div>
-
-            <div class="lbl-field col_6">
+            <div class="lbl-field width-auto col_6">
                 <input type="checkbox" id="chk-subAccountsOnly"/>
                 <label for="chk-subAccountsOnly">@Labels.SubAccountsOnly</label>
             </div>
@@ -68,49 +64,40 @@
             <div class="lbl-field col_6">
                 <label for="txt-userNameSubAccount">@Labels.UserNameSubAccount</label>
             </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txt-userNameSubAccount" class="width-200" autocomplete="off" maxlength="50"/>
+            <div class="edit-field col_7">
+                <input type="text" id="txt-userNameSubAccount" class="width-160" autocomplete="off" maxlength="50"/>
             </div>
-            
             <div class="lbl-field col_4">
                 <label>@Labels.Level</label>
             </div>
-            <div class="edit-field col_8">
-                <select id="ddl-level" class="combobox-autocomplete width-140"></select>
+            <div class="edit-field col_7">
+                <select id="ddl-level" class="combobox-autocomplete width-120"></select>
             </div>
-
             <div class="lbl-field col_4">
                 <label>@Labels.Status</label>
             </div>
-            <div class="edit-field col_8">
-                <select id="ddl-status" class="combobox-autocomplete width-100"></select>
+            <div class="edit-field col_7">
+                <select id="ddl-status" class="combobox-autocomplete width-80"></select>
             </div>
-
             <div class="lbl-field col_2">
                 <label>@Labels.Site</label>
             </div>
-            <div class="edit-field col_8">
+            <div class="edit-field col_7">
                 @Html.DropDownList(
                     "ddlSite",
                     Model.Sites,
                     new { @id = "ddl-site" })
             </div>
-
             <div class="submit width-auto col_3">
                 <button type="submit" class="submit" style="margin: 0;">@Labels.Search</button>
             </div>
         </div>
-
-
-        <div class="filter-row"></div>
         <div class="filter-row"></div>
     }
 </div>
-@*//var currencies =@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));*@
 <div id="div-result-message" class="inline-message"></div>
 <div id="chatBots-list-container" class="content-grid">
-    <div id="chatBots-list" class="freegrid display-none">
-    </div>
+    <div id="chatBots-list" class="freegrid display-none"></div>
 </div>
 
 @section Foot

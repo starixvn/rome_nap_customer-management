@@ -1,7 +1,6 @@
 ﻿@using Fanex.Nap.CMS.ManageChatbots.AppStart;
 @using Fanex.Nap.CMS.ManageChatbots.Resources;
 @using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
-@using Newtonsoft.Json
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -41,53 +40,48 @@
     {
     <div class="filter-row">
         <div id="fromtodate-picker"></div>
-
-        <div class="lbl-field col_4">
+        <div class="lbl-field col_3">
             <label>@Labels.Function</label>
         </div>
-        <div class="edit-field col_10">
+        <div class="edit-field col_8">
             @Html.DropDownList(
             "dllFunctions",
             Model.Functions,
-            new { @id = "ddl-Functions", @class = "combobox-autocomplete width-200" })
+            new { @id = "ddl-Functions", @class = "combobox-autocomplete width-140" })
         </div>
-
         <div class="lbl-field col_4">
             <label>@Labels.BotName</label>
         </div>
-        <div class="edit-field col_8">
+        <div class="edit-field col_7">
             @Html.DropDownList(
             "ddlBots",
             Model.Bots,
             new { @id = "ddl-Bots", @class = "status-width" })
         </div>
-
     </div>
         <div class="filter-row">
             <div class="lbl-field col_6">
                 <label for="txtuserName">@Labels.UserNameSubAccount</label>
             </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txtUserName" class="width-200" maxlength="50" />
+            <div class="edit-field col_7">
+                <input type="text" id="txtUserName" class="width-160" maxlength="50" />
             </div>
-
             <div class="lbl-field col_4">
                 <label for="txtChatId">@Labels.ChatID</label>
             </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txtChatId" class="width-200" maxlength="20" onkeydown="return CMS.forceNumericInput(event);"/>
+            <div class="edit-field col_7">
+                <input type="text" id="txtChatId" class="width-160" maxlength="20" onkeydown="return CMS.forceNumericInput(event);"/>
             </div>
-
             <div class="lbl-field col_4">
                 <label>@Labels.SendStatus</label>
             </div>
-            <div class="edit-field col_14">
+            <div class="edit-field col_8">
                 @Html.DropDownList(
                 "ddlSendStatus",
                 Model.SendStatus,
-                new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-200" })
+                new { @id = "ddl-SendStatus", @class = "combobox-autocomplete width-140" })
             </div>
-
+            <div class="lbl-field col_4"></div>
             <div class="submit width-auto col_8">
                 <button type="submit" class="submit btn-search">Search</button>
             </div>

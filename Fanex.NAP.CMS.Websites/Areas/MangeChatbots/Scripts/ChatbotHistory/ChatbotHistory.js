@@ -161,6 +161,10 @@
                 data["CssClass"] = 'body-class-text';
             }
 
+            if (value.Status === 3) {
+                data["CssClass"] = 'body-duplicated-text';
+            }
+
             bodyRows.push(data);            
         })
         

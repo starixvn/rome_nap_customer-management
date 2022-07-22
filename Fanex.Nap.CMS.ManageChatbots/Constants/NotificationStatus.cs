@@ -1,7 +1,7 @@
-﻿
-namespace Fanex.Nap.CMS.ManageChatbots.Constants
+﻿namespace Fanex.Nap.CMS.ManageChatbots.Constants
 {
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.ManageChatbots.Resources;
 
     public static class NotificationStatus
     {
@@ -12,6 +12,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Constants
         public const byte Completed = 4;
         public const byte Invalid = 5;
         public const byte Fail = 6;
+        public const byte BotBlocked = 7;
 
         public static IDictionary<byte, string> NotificationStatusList
             => new Dictionary<byte, string>
@@ -22,7 +23,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Constants
                 [Sending] = nameof(Sending),
                 [Completed] = nameof(Completed),
                 [Invalid] = nameof(Invalid),
-                [Fail] = nameof(Fail)
+                [BotBlocked] = Labels.BotBlocked
             };
     }
 }

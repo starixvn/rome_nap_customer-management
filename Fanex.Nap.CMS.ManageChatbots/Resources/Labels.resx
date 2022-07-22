@@ -204,4 +204,7 @@
   <data name="BotName" xml:space="preserve">
     <value>Chatbot Name</value>
   </data>
+  <data name="BotBlocked" xml:space="preserve">
+    <value>Bot Blocked</value>
+  </data>
 </root>

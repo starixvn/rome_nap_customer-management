@@ -238,6 +238,8 @@
                 `"${notification.Retry}"` + ' ',
                 '>View Detail</p></a ></div >'
             ].join("");
+        } else if (notification.Status === "Bot Blocked") {
+            return ['<span class="status-fail">', notification.Status, '</span>'].join("");
         }
         return notification.Status;
     }

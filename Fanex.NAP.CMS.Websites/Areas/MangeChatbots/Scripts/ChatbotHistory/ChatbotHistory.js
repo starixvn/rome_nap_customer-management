@@ -159,9 +159,7 @@
 
             if (value.Status === 2) {
                 data["CssClass"] = 'body-class-text';
-            }
-
-            if (value.Status === 3) {
+            } else if (value.Status === 3) {
                 data["CssClass"] = 'body-duplicated-text';
             }
 

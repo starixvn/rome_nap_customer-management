@@ -48,7 +48,7 @@
         filterParams.Site = siteDdl.multiSelect("getCheckedItemsByText").join(",");
         filterParams.BotIDs = chatBotNamesDdl.multiSelect("getCheckedItems").join(",");
         filterParams.PageIndex = 0;
-        filterParams.PageSize = 100;
+        filterParams.PageSize = 1000;
         filterParams.Cache = false;
         return filterParams;
     };
@@ -171,7 +171,7 @@
             showPager: true,
             customPager: true,
             pagerOption: {
-                itemsPerPageArray: CMS.pagerRanges,
+                itemsPerPageArray: [100, 200, 500, 1000, 2000],
                 totalItem: 0,
                 pagerSelectCallBack: function (index, pageSize) {
                     filterParams.PageIndex = index;

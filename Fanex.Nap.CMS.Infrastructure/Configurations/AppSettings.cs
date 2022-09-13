@@ -84,6 +84,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
         public static string CTSAPIURL => GetValue("CTSAPIURL");
         
         public static Uri TelegramBotClientUri => new Uri(GetValue("TelegramBotClientUri"));
+
+        public static string FollowBetAccountMaster => GetValue("FollowBetAccountMaster");
+
+        public static string FollowBetAccountPrefixAgent => GetValue("FollowBetAccountPrefixAgent");
         
         /// <summary>
         /// Gets the value from web configuration.

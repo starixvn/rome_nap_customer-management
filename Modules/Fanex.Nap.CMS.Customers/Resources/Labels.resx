@@ -184,7 +184,7 @@
     <value>This field is required.</value>
   </data>
   <data name="Username_Warning" xml:space="preserve">
-    <value>You are not allowed to input [Enter] and backslash '\' into the Username field.</value>
+    <value>You are not allowed to input [Enter] and backslash '\\' into the Username field.</value>
   </data>
   <data name="Username_LimitCountWarning" xml:space="preserve">
     <value>The function can only mark up to 100 accounts per request.</value>
@@ -287,5 +287,50 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="AddNew" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="DummyAgent" xml:space="preserve">
+    <value>Dummy Agent</value>
+  </data>
+  <data name="DummyUsername" xml:space="preserve">
+    <value>Dummy Username</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddFollowBetAccounts" xml:space="preserve">
+    <value>Add Follow Bet Accounts</value>
+  </data>
+  <data name="DummyAgentIsRequired" xml:space="preserve">
+    <value>Dummy Agent is required.</value>
+  </data>
+  <data name="RemoveAccountConfirmation" xml:space="preserve">
+    <value>Are you sure you want to remove the selected account?</value>
+  </data>
+  <data name="UsernamesIsRequired" xml:space="preserve">
+    <value>Username(s) is required.</value>
+  </data>
+  <data name="ActiveAccountConfirmation" xml:space="preserve">
+    <value>Are you sure you want to active the selected account?</value>
+  </data>
+  <data name="InactiveAccountConfirmation" xml:space="preserve">
+    <value>Are you sure you want to inactive the selected account?</value>
+  </data>
+  <data name="AllAccountHaveBeenSuccessfullyAdded" xml:space="preserve">
+    <value>All accounts have been successfully added.</value>
+  </data>
+  <data name="RemovedSuccessfully" xml:space="preserve">
+    <value>Removed successfully.</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Updated successfully.</value>
   </data>
 </root>

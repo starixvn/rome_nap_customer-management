@@ -70,6 +70,33 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to active the selected account?.
+        /// </summary>
+        public static string ActiveAccountConfirmation {
+            get {
+                return ResourceManager.GetString("ActiveAccountConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Added By.
         /// </summary>
         public static string AddedBy {
@@ -84,6 +111,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string AddedDate {
             get {
                 return ResourceManager.GetString("AddedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Follow Bet Accounts.
+        /// </summary>
+        public static string AddFollowBetAccounts {
+            get {
+                return ResourceManager.GetString("AddFollowBetAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New.
+        /// </summary>
+        public static string AddNew {
+            get {
+                return ResourceManager.GetString("AddNew", resourceCulture);
             }
         }
         
@@ -147,6 +192,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All accounts have been successfully added..
+        /// </summary>
+        public static string AllAccountHaveBeenSuccessfullyAdded {
+            get {
+                return ResourceManager.GetString("AllAccountHaveBeenSuccessfullyAdded", resourceCulture);
             }
         }
         
@@ -232,6 +286,33 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dummy Agent.
+        /// </summary>
+        public static string DummyAgent {
+            get {
+                return ResourceManager.GetString("DummyAgent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dummy Agent is required..
+        /// </summary>
+        public static string DummyAgentIsRequired {
+            get {
+                return ResourceManager.GetString("DummyAgentIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dummy Username.
+        /// </summary>
+        public static string DummyUsername {
+            get {
+                return ResourceManager.GetString("DummyUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter usernames, separated by &apos;,&apos;.
         /// </summary>
         public static string EnterUsernames {
@@ -255,6 +336,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string From_Date {
             get {
                 return ResourceManager.GetString("From_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to inactive the selected account?.
+        /// </summary>
+        public static string InactiveAccountConfirmation {
+            get {
+                return ResourceManager.GetString("InactiveAccountConfirmation", resourceCulture);
             }
         }
         
@@ -439,6 +529,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove the selected account?.
+        /// </summary>
+        public static string RemoveAccountConfirmation {
+            get {
+                return ResourceManager.GetString("RemoveAccountConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed successfully..
+        /// </summary>
+        public static string RemovedSuccessfully {
+            get {
+                return ResourceManager.GetString("RemovedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Required field!.
         /// </summary>
         public static string RequiredFieldError {
@@ -493,6 +601,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -538,6 +655,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated successfully..
+        /// </summary>
+        public static string UpdatedSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -556,7 +682,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash &apos;\&apos; into the Username field..
+        ///   Looks up a localized string similar to You are not allowed to input [Enter] and backslash &apos;\\&apos; into the Username field..
         /// </summary>
         public static string Username_Warning {
             get {
@@ -570,6 +696,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Usernames {
             get {
                 return ResourceManager.GetString("Usernames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username(s) is required..
+        /// </summary>
+        public static string UsernamesIsRequired {
+            get {
+                return ResourceManager.GetString("UsernamesIsRequired", resourceCulture);
             }
         }
     }

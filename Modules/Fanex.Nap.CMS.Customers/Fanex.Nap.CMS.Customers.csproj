@@ -204,6 +204,7 @@
     <Compile Include="Controllers\BetListController.cs" />
     <Compile Include="Controllers\LimitDailyPTUpdateController.cs" />
     <Compile Include="Controllers\LimitNewDownlineController.cs" />
+    <Compile Include="Controllers\ManageFollowBetAccountController.cs" />
     <Compile Include="Controllers\ManageLicenseeAcknowledgementController.cs" />
     <Compile Include="Controllers\ManageRobots2Controller.cs" />
     <Compile Include="Controllers\PossessStatisticsController.cs" />
@@ -225,6 +226,13 @@
     <Compile Include="Criteria\LimitNewDownline\GetCreditSiteCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\GetLimitDownlineListCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\RemoveLimitCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\AddNewFollowBetAccountCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\RemoveFollowBetAccountCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\GetCreditSiteCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\GetCurrencyListCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\GetDummyAgentCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\GetFollowBetAccountListCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\UpdateFollowBetAccountCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetCurrenciesCriteria.cs" />
@@ -284,6 +292,7 @@
     <Compile Include="Models\LimitNewDownline\AddNewOrRemoveLimitResult.cs" />
     <Compile Include="Models\LimitNewDownline\LimitDownlineItem.cs" />
     <Compile Include="Models\LimitNewDownline\LimitDownlineReport.cs" />
+    <Compile Include="Models\ManageFollowBetAccount\FollowBetAccountItem.cs" />
     <Compile Include="Models\PossessStatistics\PossessStatisticsModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotModel.cs" />
     <Compile Include="Models\ManageRobots2\RobotReport.cs" />
@@ -313,6 +322,8 @@
     <Compile Include="Repositories\LimitDailyPTUpdate\LimitDailyPTUpdateRepository.cs" />
     <Compile Include="Repositories\LimitNewDownline\ILimitNewDownlineRepository.cs" />
     <Compile Include="Repositories\LimitNewDownline\LimitNewDownlineRepository.cs" />
+    <Compile Include="Repositories\ManageFollowBetAccount\IManageFollowBetAccountRepository.cs" />
+    <Compile Include="Repositories\ManageFollowBetAccount\ManageFollowBetAccountRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\BetListRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\IBetListRepository.cs" />
     <Compile Include="Repositories\IManageRobots2Repository.cs" />
@@ -377,6 +388,8 @@
     <Compile Include="Services\LimitDailyPTUpdate\LimitDailyPTUpdateService.cs" />
     <Compile Include="Services\LimitNewDownline\ILimitNewDownlineService.cs" />
     <Compile Include="Services\LimitNewDownline\LimitNewDownlineService.cs" />
+    <Compile Include="Services\ManageFollowBetAccount\IManageFollowBetAccountService.cs" />
+    <Compile Include="Services\ManageFollowBetAccount\ManageFollowBetAccountService.cs" />
     <Compile Include="Services\ProblemAccountCTSService.cs" />
     <Compile Include="Services\ProblemAccount\BetListService.cs" />
     <Compile Include="Services\ProblemAccount\IBetListService.cs" />
@@ -407,6 +420,11 @@
     <Compile Include="ViewModels\LimitDailyPTUpdate\SearchDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\LimitNewDownlineViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\SearchLimitDownlineViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\AddNewFollowBetAccountViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\ManageFollowBetAccountViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\RemoveFollowBetAccountViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\SearchFollowBetAccountViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\UpdateFollowBetAccountViewModel.cs" />
     <Compile Include="ViewModels\ManageRobots2\ManageRobots2IndexViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\FilterViewModel.cs" />
     <Compile Include="ViewModels\PossessStatistics\IndexViewModel.cs" />
@@ -477,6 +495,7 @@
     <EmbeddedResource Include="Resources\VREngineResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>VREngineResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WhitelistBigCreditMembersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -141,5 +141,8 @@ namespace Fanex.Nap.CMS.Infrastructure
         
         //Accounting site
         public const string SpecialSites = "[AccessSpecialSites]";
+
+        // ManageFollowBetAccount
+        public const string ManageFollowBetAccount = "ManageFollowBetAccount";
     }
 }

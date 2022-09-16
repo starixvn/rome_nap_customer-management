@@ -28,8 +28,7 @@
                 HasRight(CMSFunctionKeys.ManageFollowBetAccount, Constant.Policy.Host),
                 service.GetSites(),
                 service.GetCurrencies(),
-                service.GetDummyAgents()
-                );
+                service.GetDummyAgents());
             return View("~/Areas/Customers/Views/ManageFollowBetAccount/Index.cshtml", viewModel);
         }
 

@@ -309,9 +309,6 @@
   <data name="AddFollowBetAccounts" xml:space="preserve">
     <value>Add Follow Bet Accounts</value>
   </data>
-  <data name="DummyAgentIsRequired" xml:space="preserve">
-    <value>Dummy Agent is required.</value>
-  </data>
   <data name="RemoveAccountConfirmation" xml:space="preserve">
     <value>Are you sure you want to remove the selected account?</value>
   </data>

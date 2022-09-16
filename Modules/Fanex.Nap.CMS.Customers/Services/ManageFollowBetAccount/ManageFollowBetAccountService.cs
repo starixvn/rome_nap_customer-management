@@ -25,7 +25,7 @@
            => repository.GetCurrencies(new GetCurrencyListCriteria());
 
         public IEnumerable<SelectListItem> GetDummyAgents()
-            => repository.GetDummyAgents(new GetDummyAgentCriteria(AppSettings.FollowBetAccountMaster, AppSettings.FollowBetAccountPrefixAgent));
+            => repository.GetDummyAgents(new GetDummyAgentCriteria());
 
         public IEnumerable<FollowBetAccountItem> GetFollowBetAccountList(SearchFollowBetAccountViewModel viewModel)
             => repository.GetFollowBetAccountList(new GetFollowBetAccountListCriteria(

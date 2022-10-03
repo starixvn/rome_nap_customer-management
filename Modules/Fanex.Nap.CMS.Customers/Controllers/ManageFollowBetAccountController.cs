@@ -1,12 +1,12 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Controllers
 {
+    using System.Web.Mvc;
     using Fanex.Nap.CMS.Customers.Services.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using System.Web.Mvc;
 
     public class ManageFollowBetAccountController : BaseController
     {

@@ -1,12 +1,12 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Repositories.ManageFollowBetAccount
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Web.Mvc;
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     public class ManageFollowBetAccountRepository : IManageFollowBetAccountRepository
     {

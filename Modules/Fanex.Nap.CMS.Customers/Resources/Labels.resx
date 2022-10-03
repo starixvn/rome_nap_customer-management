@@ -303,9 +303,6 @@
   <data name="DummyUsername" xml:space="preserve">
     <value>Dummy Username</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="AddFollowBetAccounts" xml:space="preserve">
     <value>Add Follow Bet Accounts</value>
   </data>
@@ -329,5 +326,11 @@
   </data>
   <data name="UpdatedSuccessfully" xml:space="preserve">
     <value>Updated successfully.</value>
+  </data>
+  <data name="DummyCustId" xml:space="preserve">
+    <value>Dummy CustID</value>
+  </data>
+  <data name="DummyAgentIsRequired" xml:space="preserve">
+    <value>Dummy Agent is required.</value>
   </data>
 </root>

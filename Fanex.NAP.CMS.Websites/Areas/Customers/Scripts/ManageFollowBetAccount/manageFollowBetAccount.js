@@ -60,18 +60,19 @@
         var columns = [
             { HeaderText: "#", Width: 40, Name: "colNo", HeaderAlign: "center", CellAlign: "center", FormatNumber: "0,0" },
             { HeaderText: resources.username, Width: 180, Name: "colUsername", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: resources.dummyUsername, Width: 180, Name: "colDummyUsername", HeaderAlign: "center", CellAlign: "left"},
+            { HeaderText: resources.dummyUsername, Width: 140, Name: "colDummyUsername", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: resources.dummyCustId, Width: 140, Name: "colDummyCustId", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: resources.agent, Width: 180, Name: "colAgent", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: resources.currency, Width: 150, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.site, Width: 150, Name: "colSite", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: resources.currency, Width: 100, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.site, Width: 130, Name: "colSite", HeaderAlign: "center", CellAlign: "left" },
             { HeaderText: resources.addedBy, Width: 150, Name: "colAddedBy", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: resources.addedDate, Width: 150, Name: "colAddedDate", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.addedDate, Width: 120, Name: "colAddedDate", HeaderAlign: "center", CellAlign: "center" }
         ];
 
         hasHostPermission
             && columns.push(
-                { HeaderText: resources.active, Width: 100, Name: "colActive", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: resources.action, Width: 100, Name: "colAction", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: resources.active, Width: 80, Name: "colActive", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: resources.action, Width: 80, Name: "colAction", HeaderAlign: "center", CellAlign: "center" }
             );
 
         return {
@@ -82,7 +83,7 @@
             showHighlightRow: true,
             headerColumnHeight: 25,
             gridExpandHeight: 200,
-            columns: columns,
+            columns: columns
         };
     }
 
@@ -95,6 +96,7 @@
                 { Name: "colNo", Value: index + 1 },
                 { Name: "colUsername", Value: value.Username },
                 { Name: "colDummyUsername", Value: value.DummyUsername },
+                { Name: "colDummyCustId", Value: value.DummyCustId },
                 { Name: "colAgent", Value: value.Agent },
                 { Name: "colCurrency", Value: value.Currency },
                 { Name: "colSite", Value: value.Site },

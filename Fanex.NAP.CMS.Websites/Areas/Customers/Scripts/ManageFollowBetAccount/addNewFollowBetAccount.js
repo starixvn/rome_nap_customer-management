@@ -19,7 +19,6 @@ function AddNewFollowBetAccount(div, postUrl, reloadData) {
 
     function bindEvents() {
         ddlPopupDummyAgent.combobox();
-        ddlPopupDummyAgent.next(".ui-combobox").find("input.ui-combobox-input").attr("readonly", true);
         txtUsernames.off("change").on("change", function () {
             var usernamesValue = $.trim(txtUsernames.val());
 
@@ -44,13 +43,26 @@ function AddNewFollowBetAccount(div, postUrl, reloadData) {
         });
         buttonCancel.off("click").on("click", CMS.closePopup);
         buttonSave.off("click").on("click", function () {
-            var dummyAgentId = ddlPopupDummyAgent.val();
+            var dummyAgentId = getDummyAgentId();
             var usernames = getInputUsernames();
 
             if (dummyAgentId === "" || usernames === "") return;
 
             submitForm({ dummyAgentId, custList: usernames });
         });
+    }
+
+    function getDummyAgentId() {
+        var selectedDummyAgentId = ddlPopupDummyAgent.val();
+        var spanPopupDummyAgent = div.find('span[id="ddl-popup-dummy-agent"]');
+
+        if (selectedDummyAgentId === "0") {
+            CMS.showTipsyError(spanPopupDummyAgent, resources.dummyAgentIsRequired, "w");
+            return "";
+        }
+
+        CMS.clearTipsyError(spanPopupDummyAgent);
+        return selectedDummyAgentId;
     }
 
     function getInputUsernames() {
@@ -105,5 +117,5 @@ function AddNewFollowBetAccount(div, postUrl, reloadData) {
         CMS.modal(modalTitle, div, { resizeable: false });
         cacheElements();
         bindEvents();
-    }
+    };
 }

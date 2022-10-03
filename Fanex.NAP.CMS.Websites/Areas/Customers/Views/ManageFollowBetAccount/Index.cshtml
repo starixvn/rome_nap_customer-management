@@ -16,6 +16,7 @@
          var resources = {
             username: "@Labels.Username",
             dummyUsername: "@Labels.DummyUsername",
+            dummyCustId: "@Labels.DummyCustId",
             agent: "@Labels.Agent",
             addedBy: "@Labels.AddedBy",
             addedDate: "@Labels.AddedDate",
@@ -27,6 +28,7 @@
             activeAccountConfirmationMessage: "@Labels.ActiveAccountConfirmation",
             inactiveAccountConfirmationMessage: "@Labels.InactiveAccountConfirmation",
             addNewTitlePopup: "@Labels.AddFollowBetAccounts",
+            dummyAgentIsRequired: "@Labels.DummyAgentIsRequired",
             usernameIsRequired: "@Labels.UsernamesIsRequired",
             usernameLimitWarning: "@Labels.Username_LimitCountWarning",
             usernameWarning: "@Html.Raw(Labels.Username_Warning)"
@@ -115,12 +117,12 @@
 
         <div class="form-row" id="field-dummy-agent">
             <div class="lbl-field">
-                <label>@Labels.DummyAgent</label>
+                <label>@Labels.DummyAgent<span class="text-red">&nbsp;*</span></label>
             </div>
             <div class="edit-field">
                 @Html.DropDownList(
                     "ddlDummyAgent",
-                    Model.DummyAgents,
+                    (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true } }).Union(Model.DummyAgents),
                     new { @id = "ddl-popup-dummy-agent", @class = "combobox-autocomplete" })
             </div>
         </div>

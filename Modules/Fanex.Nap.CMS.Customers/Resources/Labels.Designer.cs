@@ -295,6 +295,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dummy Agent is required..
+        /// </summary>
+        public static string DummyAgentIsRequired {
+            get {
+                return ResourceManager.GetString("DummyAgentIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dummy CustID.
+        /// </summary>
+        public static string DummyCustId {
+            get {
+                return ResourceManager.GetString("DummyCustId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dummy Username.
         /// </summary>
         public static string DummyUsername {
@@ -588,15 +606,6 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Site {
             get {
                 return ResourceManager.GetString("Site", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

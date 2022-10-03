@@ -1,13 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Services.ManageFollowBetAccount
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Fanex.Nap.CMS.Customers.Criteria.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.Repositories.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
-    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
 
     public class ManageFollowBetAccountService : IManageFollowBetAccountService
     {
@@ -25,7 +25,7 @@
            => repository.GetCurrencies(new GetCurrencyListCriteria());
 
         public IEnumerable<SelectListItem> GetDummyAgents()
-            => repository.GetDummyAgents(new GetDummyAgentCriteria());
+            => repository.GetDummyAgents(new GetDummyAgentCriteria()).ToList();
 
         public IEnumerable<FollowBetAccountItem> GetFollowBetAccountList(SearchFollowBetAccountViewModel viewModel)
             => repository.GetFollowBetAccountList(new GetFollowBetAccountListCriteria(

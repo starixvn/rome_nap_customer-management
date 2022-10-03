@@ -11,6 +11,8 @@
 
         public string DummyUsername { get; set; }
 
+        public int DummyCustId { get; set; }
+
         public string Agent { get; set; }
 
         public string AddedBy { get; set; }

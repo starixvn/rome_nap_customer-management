@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Web.Mvc;
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
 
     public class ManageFollowBetAccountRepository : IManageFollowBetAccountRepository
     {
@@ -74,6 +76,11 @@
 
         public Result ExecuteNonQuery(ICriteria criteria)
         {
+            if (!criteria.IsValid())
+            {
+                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
+            }
+
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());

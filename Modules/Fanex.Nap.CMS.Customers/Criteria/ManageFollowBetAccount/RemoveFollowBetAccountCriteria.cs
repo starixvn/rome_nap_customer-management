@@ -25,5 +25,10 @@
         public string ErrMsg { get; set; }
 
         public override string GetSettingKey() => "NAP_Customer_FollowBetAccountDel";
+
+        public override bool IsValid()
+            => !string.IsNullOrWhiteSpace(Username)
+            && DummyAgentId > 0
+            && UserId > 0;
     }
 }

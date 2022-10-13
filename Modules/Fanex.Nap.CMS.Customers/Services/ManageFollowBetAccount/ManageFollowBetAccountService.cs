@@ -14,9 +14,7 @@
         private readonly IManageFollowBetAccountRepository repository;
 
         public ManageFollowBetAccountService(IManageFollowBetAccountRepository repository = null)
-        {
-            this.repository = repository ?? new ManageFollowBetAccountRepository();
-        }
+            => this.repository = repository ?? new ManageFollowBetAccountRepository();
 
         public IEnumerable<SelectListItem> GetSites()
             => repository.GetSites(new GetCreditSiteCriteria(0));
@@ -33,18 +31,16 @@
                 viewModel.CurrencyId,
                 viewModel.SiteName ?? string.Empty,
                 viewModel.DummyAgentId,
-                viewModel.IsActive
-                ));
+                viewModel.IsActive));
 
         public Result AddNewFollowBetAccount(AddNewFollowBetAccountViewModel viewModel)
         {
             var result = repository.ExecuteNonQuery(
-                        new AddNewFollowBetAccountCriteria(
-                            viewModel.DummyAgentId,
-                            viewModel.CustList,
-                            viewModel.UserId,
-                            viewModel.IP
-                        ));
+                new AddNewFollowBetAccountCriteria(
+                    viewModel.DummyAgentId,
+                    viewModel.CustList,
+                    viewModel.UserId,
+                    viewModel.IP));
 
             if (result.IsSuccess)
             {
@@ -57,13 +53,12 @@
         public Result UpdateFollowBetAccount(UpdateFollowBetAccountViewModel viewModel)
         {
             var result = repository.ExecuteNonQuery(
-                        new UpdateFollowBetAccountCriteria(
-                            viewModel.Username,
-                            viewModel.DummyAgentId,
-                            viewModel.IsActive,
-                            viewModel.UserId,
-                            viewModel.IP
-                        ));
+                new UpdateFollowBetAccountCriteria(
+                    viewModel.Username,
+                    viewModel.DummyAgentId,
+                    viewModel.IsActive,
+                    viewModel.UserId,
+                    viewModel.IP));
 
             if (result.IsSuccess)
             {
@@ -76,12 +71,11 @@
         public Result RemoveFollowBetAccount(RemoveFollowBetAccountViewModel viewModel)
         {
             var result = repository.ExecuteNonQuery(
-                        new RemoveFollowBetAccountCriteria(
-                            viewModel.Username,
-                            viewModel.DummyAgentId,
-                            viewModel.UserId,
-                            viewModel.IP
-                        ));
+                new RemoveFollowBetAccountCriteria(
+                    viewModel.Username,
+                    viewModel.DummyAgentId,
+                    viewModel.UserId,
+                    viewModel.IP));
 
             if (result.IsSuccess)
             {

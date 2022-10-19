@@ -122,4 +122,11 @@
     <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Manage Follow Bet Account">
+    <Setting Key="NAP_Customer_FollowBetAccountDummyAgentSel" SpName="NAP_Customer_FollowBetAccountDummyAgentSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountListSel" SpName="NAP_Customer_FollowBetAccountListSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountIns" SpName="NAP_Customer_FollowBetAccountIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountDel" SpName="NAP_Customer_FollowBetAccountDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountUpd" SpName="NAP_Customer_FollowBetAccountUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

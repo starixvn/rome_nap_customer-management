@@ -1,0 +1,145 @@
+﻿@using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Manage Follow Bet Account";
+}
+
+@model ManageFollowBetAccountViewModel
+
+@section Head {
+    @Styles.Render(CustomersBundlesConfig.ManageFollowBetAccountStylePath)
+}
+
+@section Foot {
+    <script type="text/javascript">
+         var resources = {
+            username: "@Labels.Username",
+            dummyUsername: "@Labels.DummyUsername",
+            dummyCustId: "@Labels.DummyCustId",
+            agent: "@Labels.Agent",
+            addedBy: "@Labels.AddedBy",
+            addedDate: "@Labels.AddedDate",
+            active: "@Labels.Active",
+            action: "@Labels.Action",
+            site: "@Labels.Site",
+            currency: "@Labels.Currency",
+            removeAccountConfirmationMessage: "@Labels.RemoveAccountConfirmation",
+            activeAccountConfirmationMessage: "@Labels.ActiveAccountConfirmation",
+            inactiveAccountConfirmationMessage: "@Labels.InactiveAccountConfirmation",
+            addNewTitlePopup: "@Labels.AddFollowBetAccounts",
+            dummyAgentIsRequired: "@Labels.DummyAgentIsRequired",
+            usernameIsRequired: "@Labels.UsernamesIsRequired",
+            usernameLimitWarning: "@Labels.Username_LimitCountWarning",
+            usernameWarning: "@Html.Raw(Labels.Username_Warning)"
+        };
+        var hasHostPermission = @Model.HasHostPermission.ToString().ToLowerInvariant();
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.ManageFollowBetAccountScriptPath)
+}
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "ManageFollowBetAccount", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_4">
+                <label for="txt-username">@Labels.Username</label>
+            </div>
+            <div class="edit-field col_6">
+                <input type="text" style="width:100%" id="txt-username" autocomplete="off" maxlength="100" />
+            </div>
+
+            <div class="lbl-field col_3">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                    "ddlSite",
+                    (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true }}).Union(Model.Sites),
+                    new { @id = "ddl-site", @class = "combobox-autocomplete" })
+            </div>
+
+            <div class="lbl-field col_3">
+                <label>@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                    "ddlCurrency",
+                    (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true } }).Union(Model.Currencies),
+                    new { @id = "ddl-currency", @class = "combobox-autocomplete" })
+            </div>
+
+            <div class="lbl-field col_4">
+                <label>@Labels.DummyAgent</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList(
+                    "ddlDummyAgent",
+                    Model.DummyAgents,
+                    new { @id = "ddl-dummy-agent", @class = "combobox-autocomplete" })
+            </div>
+
+            <div class="edit-field col_3 active">
+                <input type="checkbox" id="ckb-active" checked />
+                <label for="ckb-active">@Labels.Active</label>
+            </div>
+
+            <div class="submit width-auto col_6">
+                <input id="btnSearch" type="submit" class="submit btn-search" value="@Labels.Search" />
+            </div>
+
+            @if(Model.HasHostPermission)
+            {
+                <div class="submit width-auto col_6">
+                    <input id="btnAddNew" type="button" class="submit btn-add" value="@Labels.AddNew" />
+                </div>
+            }   
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+
+<div id="divPopupContent" class="display-none">
+    <div class="form" id="addNew">
+        <div id="inline-message" class="inline-message"></div>
+
+        <div class="form-row" id="field-dummy-agent">
+            <div class="lbl-field">
+                <label>@Labels.DummyAgent<span class="text-red">&nbsp;*</span></label>
+            </div>
+            <div class="edit-field">
+                @Html.DropDownList(
+                    "ddlDummyAgent",
+                    (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true } }).Union(Model.DummyAgents),
+                    new { @id = "ddl-popup-dummy-agent", @class = "combobox-autocomplete" })
+            </div>
+        </div>
+
+        <div class="form-row field-usernames">
+            <div class="lbl-field">
+                <label for="txt-usernames">Username(s)<span class="text-red">&nbsp;*</span></label>
+            </div>
+            <div class="edit-field">
+                <textarea rows="10" name="usernames" id="txt-usernames"></textarea>
+                <div>@Labels.EnterUsernames</div>
+            </div>
+        </div>
+
+        <div class="form-row button-row">
+            <button type="button" class="blue-button" id="btn-save">@Labels.Save</button>
+            <button type="button" class="red-button" id="btn-cancel">@Labels.Cancel</button>
+        </div>
+    </div>
+</div>

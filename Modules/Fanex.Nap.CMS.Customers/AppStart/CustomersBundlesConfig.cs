@@ -36,6 +36,9 @@
         public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
         public const string VREngineCustomerCategoryScriptPath = "~/bundles/customers/vr-engine-customer-category-script";
 
+        public const string ManageFollowBetAccountScriptPath = "~/bundles/customers/manage-follow-bet-account-script";
+        public const string ManageFollowBetAccountStylePath = "~/bundles/customers/manage-follow-bet-account-style";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles
@@ -51,7 +54,8 @@
                 .RegisterLimitDailyPTUpdateBundles()
                 .RegisterLimitNewDownlineBundles()
                 .RegisterWhitelistBigCreditMembersBundles()
-                .RegisterVirtualRateEngine();
+                .RegisterVirtualRateEngine()
+                .RegisterManageFollowBetAccountBundles();
 
             RegisterManageRobots2(bundles);
         }
@@ -270,6 +274,20 @@
 
             bundles.Add(new ScriptBundle(VREngineCustomerCategoryScriptPath).Include(
                 "~/Areas/Customers/Scripts/VirtualRateEngine/customerCategory.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterManageFollowBetAccountBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                ManageFollowBetAccountStylePath,
+                "~/Areas/Customers/Styles/manageFollowBetAccount.less");
+
+            bundles.Add(new ScriptBundle(ManageFollowBetAccountScriptPath).Include(
+                "~/Areas/Customers/Scripts/ManageFollowBetAccount/addNewFollowBetAccount.js",
+                "~/Areas/Customers/Scripts/ManageFollowBetAccount/manageFollowBetAccount.js"
+                ));
 
             return bundles;
         }

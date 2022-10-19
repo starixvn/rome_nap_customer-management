@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -401,6 +401,8 @@
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />
     <Content Include="Areas\Customers\Scripts\LimitNewDownline\addNewOrRemoveLimit.js" />
     <Content Include="Areas\Customers\Scripts\LimitNewDownline\limitNewDownline.js" />
+    <Content Include="Areas\Customers\Scripts\ManageFollowBetAccount\addNewFollowBetAccount.js" />
+    <Content Include="Areas\Customers\Scripts\ManageFollowBetAccount\manageFollowBetAccount.js" />
     <Content Include="Areas\Customers\Scripts\ManageLicenseeAcknowledgement\manageLicensee.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-informingStatus.js" />
     <Content Include="Areas\Customers\Scripts\ProblemAccountCreditSite\problemAccountCreditSite-marknew.js" />
@@ -432,6 +434,7 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngine.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\VREngineHelper.js" />
     <Content Include="Areas\Customers\Scripts\WhitelistBigCreditMembers\whitelistBigCreditMembers.js" />
+    <Content Include="Areas\Customers\Styles\manageFollowBetAccount.less" />
     <Content Include="Areas\Customers\Views\ManageRobots2\Scripts\index.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\data-grid.js" />
     <Content Include="Areas\Customers\Scripts\PossessStatistics\filter.js" />
@@ -1060,6 +1063,7 @@
     <Content Include="Areas\MangeChatbots\Styles\ChatbotHistory\ChatbotHistory.less" />
     <Content Include="Areas\MangeChatbots\Styles\NotificationList\NotificationList.less" />
     <Content Include="Areas\MangeChatbots\Views\NotificationList\Index.cshtml" />
+    <Content Include="Areas\Customers\Views\ManageFollowBetAccount\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

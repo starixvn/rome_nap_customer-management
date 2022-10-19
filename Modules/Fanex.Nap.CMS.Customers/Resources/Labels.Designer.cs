@@ -88,7 +88,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to active the selected account?.
+        ///   Looks up a localized string similar to Are you sure you want to activate the selected account?.
         /// </summary>
         public static string ActiveAccountConfirmation {
             get {
@@ -349,7 +349,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to inactive the selected account?.
+        ///   Looks up a localized string similar to Are you sure you want to deactivate the selected account?.
         /// </summary>
         public static string InactiveAccountConfirmation {
             get {

@@ -313,10 +313,10 @@
     <value>Username(s) is required.</value>
   </data>
   <data name="ActiveAccountConfirmation" xml:space="preserve">
-    <value>Are you sure you want to active the selected account?</value>
+    <value>Are you sure you want to activate the selected account?</value>
   </data>
   <data name="InactiveAccountConfirmation" xml:space="preserve">
-    <value>Are you sure you want to inactive the selected account?</value>
+    <value>Are you sure you want to deactivate the selected account?</value>
   </data>
   <data name="AllAccountHaveBeenSuccessfullyAdded" xml:space="preserve">
     <value>All accounts have been successfully added.</value>

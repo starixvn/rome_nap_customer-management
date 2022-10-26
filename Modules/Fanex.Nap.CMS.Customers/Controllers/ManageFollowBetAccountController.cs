@@ -62,5 +62,14 @@
             viewModel.IP = CurrentContext.IP;
             return JsonData(service.RemoveFollowBetAccount(viewModel), JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Host)]
+        public ActionResult UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel)
+        {
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
+            return JsonData(service.UpdateFollowStatus(viewModel), JsonRequestBehavior.DenyGet);
+        }
     }
 }

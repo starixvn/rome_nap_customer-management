@@ -4,13 +4,20 @@
 
     public class GetFollowBetAccountListCriteria : CriteriaBase
     {
-        public GetFollowBetAccountListCriteria(string username, byte currency, string site, int dummyAgentId, bool isActive)
+        public GetFollowBetAccountListCriteria(
+            string username,
+            byte currency,
+            string site,
+            int dummyAgentId,
+            bool isActive,
+            bool isFollow)
         {
             Username = username;
             Currency = currency;
             Site = site;
             DummyAgentId = dummyAgentId;
             IsActive = isActive;
+            IsFollow = isFollow;
         }
 
         public string Username { get; }
@@ -22,6 +29,8 @@
         public int DummyAgentId { get; }
 
         public bool IsActive { get; }
+
+        public bool IsFollow { get; }
 
         public override string GetSettingKey() => "NAP_Customer_FollowBetAccountListSel";
     }

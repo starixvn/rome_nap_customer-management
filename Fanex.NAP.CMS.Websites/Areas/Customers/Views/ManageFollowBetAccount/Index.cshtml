@@ -1,10 +1,8 @@
 ﻿@using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
-
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Manage Follow Bet Account";
 }
-
 @model ManageFollowBetAccountViewModel
 
 @section Head {
@@ -22,6 +20,7 @@
             addedDate: "@Labels.AddedDate",
             active: "@Labels.Active",
             action: "@Labels.Action",
+            follow: "@Labels.Follow",
             site: "@Labels.Site",
             currency: "@Labels.Currency",
             removeAccountConfirmationMessage: "@Labels.RemoveAccountConfirmation",
@@ -90,6 +89,11 @@
             <div class="edit-field col_3 active">
                 <input type="checkbox" id="ckb-active" checked />
                 <label for="ckb-active">@Labels.Active</label>
+            </div>
+
+            <div class="edit-field col_3 active">
+                <input type="checkbox" id="ckb-follow" checked />
+                <label for="ckb-follow">@Labels.Follow</label>
             </div>
 
             <div class="submit width-auto col_6">

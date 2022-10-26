@@ -128,5 +128,6 @@
     <Setting Key="NAP_Customer_FollowBetAccountIns" SpName="NAP_Customer_FollowBetAccountIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_Customer_FollowBetAccountDel" SpName="NAP_Customer_FollowBetAccountDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_Customer_FollowBetAccountUpd" SpName="NAP_Customer_FollowBetAccountUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountUpdFollowStatus" SpName="NAP_Customer_FollowBetAccountUpdFollowStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

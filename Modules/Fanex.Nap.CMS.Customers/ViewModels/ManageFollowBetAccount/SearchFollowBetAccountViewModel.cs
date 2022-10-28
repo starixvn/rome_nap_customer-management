@@ -14,5 +14,7 @@
         public int DummyAgentId { get; set; }
 
         public bool IsActive { get; set; }
+
+        public bool IsFollow { get; set; }
     }
 }

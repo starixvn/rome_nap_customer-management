@@ -21,6 +21,8 @@
 
         public bool IsActive { get; set; }
 
+        public bool IsFollow { get; set; }
+
         public string Site { get; set; }
 
         public string Currency { get; set; }

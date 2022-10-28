@@ -5,6 +5,7 @@
         ddlCurrency = $("#ddl-currency"),
         ddlDummyAgent = $("#ddl-dummy-agent"),
         ckbActive = $("#ckb-active"),
+        ckbFollow = $("#ckb-follow"),
         formSearch = $("#formSearch"),
         freegrid = $("#freegrid"),
         divAddNew = $("#addNew"),
@@ -39,7 +40,8 @@
             + "&siteName=" + siteName
             + "&currencyId=" + ddlCurrency.val()
             + "&dummyAgentId=" + ddlDummyAgent.val()
-            + "&isActive=" + ckbActive.is(":checked");
+            + "&isActive=" + ckbActive.is(":checked")
+            + "&isFollow=" + ckbFollow.is(":checked");
 
         CMS.getJson(url, function (data) {
             var jsonData = $.parseJSON(data);
@@ -72,6 +74,7 @@
         hasHostPermission
             && columns.push(
                 { HeaderText: resources.active, Width: 80, Name: "colActive", HeaderAlign: "center", CellAlign: "center" },
+                { HeaderText: resources.follow, Width: 80, Name: "colFollow", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: resources.action, Width: 80, Name: "colAction", HeaderAlign: "center", CellAlign: "center" }
             );
 
@@ -106,10 +109,11 @@
             hasHostPermission
                 && columns.push(
                     { Name: "colActive", Value: renderActiveCell(value) },
+                    { Name: "colFollow", Value: renderFollowCell(value) },
                     { Name: "colAction", Value: renderActionCell(value) }
                 );
 
-            bodyRows.push({ Columns: columns });
+            bodyRows.push({ Columns: columns, CssClass: value.IsFollow ? "" : "unfollow" });
         });
 
         return bodyRows;
@@ -118,24 +122,33 @@
     function renderActiveCell(data) {
         var isChecked = data.IsActive ? 'checked' : '';
         return [
-            '<input class="ckb-active" type="checkbox" '
-            + isChecked + ' '
-            + 'data-username=' + data.Username + ' '
-            + '/>'
+            '<input class="ckb-active" type="checkbox" ',
+            isChecked,
+            ' data-username="',
+            data.Username,
+            '" />'
+        ].join("");
+    }
+
+    function renderFollowCell(data) {
+        var isChecked = data.IsFollow ? 'checked' : '';
+        return [
+            '<input class="ckb-follow" type="checkbox" ',
+            isChecked,
+            ' data-username="',
+            data.Username,
+            '" />'
         ].join("");
     }
 
     function renderActionCell(data) {
-        return [
-            '<span class="ico-delete remove-account" title="Delete"'
-            + 'data-username=' + data.Username + ' '
-            + '"></span>'
-        ].join("");
+        return '<span class="ico-delete remove-account" title="Delete" data-username="' + data.Username + '"></span>';
     }
 
     function bindEventsAfterRenderFollowBetAccountList() {
         $(".remove-account").off().click(handleRemoveClick);
         $(".ckb-active").off().change(handleCkbActiveChange);
+        $(".ckb-follow").off().change(handleCkbFollowChange);
     }
 
     function handleRemoveClick() {
@@ -159,10 +172,23 @@
             });
     }
 
+    function handleCkbFollowChange() {
+        var $this = $(this);
+        var isChecked = $this.is(":checked");
+        $this.prop("checked", !isChecked);
+        var username = $this.data("username");
+
+        CMS.callAjax(
+            this,
+            'UpdateFollowStatus',
+            { username, dummyAgentId: submitedDummyAgentId, isActive: isChecked },
+            handleResult);
+    }
+
     function handleResult(result) {
         var jsonData = $.parseJSON(result);
         if (jsonData.Code === 0) {
-            CMS.showSuccessMessage(jsonData.Message);
+            jsonData.Message && CMS.showSuccessMessage(jsonData.Message);
             formSearch.submit();
         } else {
             CMS.showErrorMessage(jsonData.Message);

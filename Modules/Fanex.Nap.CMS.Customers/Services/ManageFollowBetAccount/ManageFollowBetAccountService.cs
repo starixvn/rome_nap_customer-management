@@ -31,7 +31,8 @@
                 viewModel.CurrencyId,
                 viewModel.SiteName ?? string.Empty,
                 viewModel.DummyAgentId,
-                viewModel.IsActive));
+                viewModel.IsActive,
+                viewModel.IsFollow));
 
         public Result AddNewFollowBetAccount(AddNewFollowBetAccountViewModel viewModel)
         {
@@ -84,5 +85,13 @@
 
             return result;
         }
+
+        public Result UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel)
+            => repository.ExecuteNonQuery(new UpdateFollowStatusCriteria(
+                viewModel.Username,
+                viewModel.DummyAgentId,
+                viewModel.IsActive,
+                viewModel.UserId,
+                viewModel.IP));
     }
 }

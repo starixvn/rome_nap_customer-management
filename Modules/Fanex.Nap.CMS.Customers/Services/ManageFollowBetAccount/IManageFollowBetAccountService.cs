@@ -21,5 +21,7 @@
         Result AddNewFollowBetAccount(AddNewFollowBetAccountViewModel viewModel);
 
         Result UpdateFollowBetAccount(UpdateFollowBetAccountViewModel viewModel);
+
+        Result UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel);
     }
 }

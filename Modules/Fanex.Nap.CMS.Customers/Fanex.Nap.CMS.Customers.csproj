@@ -233,6 +233,7 @@
     <Compile Include="Criteria\ManageFollowBetAccount\GetDummyAgentCriteria.cs" />
     <Compile Include="Criteria\ManageFollowBetAccount\GetFollowBetAccountListCriteria.cs" />
     <Compile Include="Criteria\ManageFollowBetAccount\UpdateFollowBetAccountCriteria.cs" />
+    <Compile Include="Criteria\ManageFollowBetAccount\UpdateFollowStatusCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\AddRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\DeleteRobotCriteria.cs" />
     <Compile Include="Criteria\ManageRobots2\GetCurrenciesCriteria.cs" />

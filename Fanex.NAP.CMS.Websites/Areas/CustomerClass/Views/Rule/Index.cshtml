@@ -1,0 +1,109 @@
+﻿@using Newtonsoft.Json
+@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.RuleViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Labels.RuleManagement;
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
+}
+
+@section Head {
+    @Styles.Render(CustomerClassBundlesConfig.RuleStyles)
+}
+
+@section Foot {
+    <script type="text/javascript">
+        const resources = {
+            ruleTitle: "@Labels.RuleTitle",
+            customerClass: "@Labels.CustomerClass",
+            sportType: "@Labels.SportType",
+            leagueGroup: "@Labels.LeagueGroup",
+            isLive: "@Labels.IsLive",
+            diffBalanceRatio: "@Labels.DiffBalanceRatio",
+            betDelay: "@Labels.BetDelay",
+            nextSuperSiteBetIntervalSec: "@Labels.NextSuperSiteBetIntervalSec",
+            minMaxBetMPM: "@Labels.MinMaxBetMPM",
+            repeatedBets: "@Labels.RepeatedBets",
+            seizeBet: "@Labels.SeizeBet",
+            enableParlay: "@Labels.EnableParlay",
+            peakHourSpread: "@Labels.PeakHourSpread",
+            enable: "@Labels.Enable",
+            action: "@Labels.Action",
+            all: "@Labels.All",
+            yes: "@Labels.Yes",
+            no: "@Labels.No",
+            addRuleSetting: "@Labels.AddRuleSetting",
+            editRuleSetting: "@Labels.EditRuleSetting",
+            cloneRuleSetting: "@Labels.CloneRuleSetting",
+            destinationCC: "@Labels.DestinationCC",
+            clone: "@Labels.Clone",
+            pleaseSelect: "@Labels.PleaseSelect",
+            pleaseSelectCustomerClass: "@Labels.PleaseSelectCustomerClass",
+            pleaseInputRuleTitle: "@Labels.PleaseInputRuleTitle",
+            requiredField: "@Labels.RequiredField",
+            ruleTitleIsExisted: "@Labels.RuleTitleIsExisted",
+            pleaseInputNumber: "@Labels.PleaseInputNumber",
+            pleaseInputPositiveNumber: "@Labels.PleaseInputPositiveNumber",
+            compareMinBetWithMaxBetError: "@Labels.CompareMinBetWithMaxBetError",
+            compareMinBetWithMaxPerMatchError: "@Labels.CompareMinBetWithMaxPerMatchError",
+            compareMaxBetWithMaxPerMatchError: "@Labels.CompareMaxBetWithMaxPerMatchError"
+        };
+        const leagueGroupList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups, jsonSettings))');
+    </script>
+    @Scripts.Render(CustomerClassBundlesConfig.RuleScripts)
+}
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "Rule", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
+    {
+        <div class="filter-row last-row">
+            <div class="lbl-field col_4">
+                <label>@Labels.CustomerClass</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("customerClass", Model.CustomerClasses.InsertAllItem(), new { @class = "combobox-autocomplete width-100", id = "ddlCustomerClass" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.SportType</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("sportType", Model.SportTypes, new { @class = "combobox-autocomplete width-100", id = "ddlSportType" })
+            </div>
+            <div class="lbl-field col_4">
+                <label>@Labels.LeagueGroup</label>
+            </div>
+            <div class="edit-field col_10" id="ddlLeagueGroupBox"></div>
+            <div class="lbl-field col_2">
+                <label>@Labels.IsLive</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList("isLive", Model.Indicators, new { @class = "combobox-autocomplete width-100", id = "ddlIndicator" })
+            </div>
+            <div class="submit width-auto">
+                <button type="submit" class="submit">@Labels.Search</button>
+                @if (Model.HasHostPermission)
+                {
+                    <button type="button" class="submit width-100" id="btnAddNewRule">@Labels.AddNewRule</button>
+                }
+            </div>
+        </div>
+    }
+</div>
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if (Model.HasHostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/CustomerClass/Views/Rule/_AddNewOrEditForm.cshtml", Model); }
+    </div>
+}

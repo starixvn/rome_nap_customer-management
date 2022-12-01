@@ -44,9 +44,12 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
             {
                 new FunctionModel { FunctionId = 0, FunctionName = "All" }
             };
+
+            const int CommonFunctions = 3;
             functions.AddRange(repository.GetAllFunctions(new GetAllFunctionsCriteria())
-                .Where(function => function.FunctionType == 1 || function.FunctionType == 3 || HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId)));
-           return functions;
+                .Where(function => function.FunctionType == 1 || function.FunctionType == CommonFunctions || HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId)));
+
+            return functions;
         }
     }  
 }

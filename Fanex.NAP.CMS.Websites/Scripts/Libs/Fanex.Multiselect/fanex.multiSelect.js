@@ -305,7 +305,7 @@
                     options = me.options,
                     tempHtml = [],
                     title = row.data.text || '',
-                    value = row.data.value || '',
+                    value = typeof row.data.value === "undefined" ? '' : row.data.value,
                     inputId = 'fanex-multiselect-' + me.id + '-' + row.data.id + '-option-' + row.groupId,
                     isDisabled = !row.data.enable,
                     labelClasses = row.data.cssClass || '',
@@ -316,7 +316,7 @@
 
                 row.hasChild = row.hasChild || false;
 
-                if (value) {
+                if (typeof row.data.value !== "undefined") {
                     liClasses += (isDisabled ? ' fanex-multiselect-disabled ' : '')
                         + (row.isLastChild ? ' rtLast' : '')
                         + (row.index === 0 && row.hasChild ? ' rtFirst' : '');

@@ -897,6 +897,10 @@ footer {
             display: inline;
             float: left;
             clear: left;
+
+            &.last-row {
+                margin-bottom: 10px;
+            }
         }
 
         .filter-cell {
@@ -2012,6 +2016,18 @@ h2 .title {
     width: 15px;
     display: inline-block;
     cursor: pointer;
+}
+
+.ico-copy {
+    background: url("img/sprites.png") no-repeat -23px -64px;
+    height: 16px;
+    width: 13px;
+    display: inline-block;
+    cursor: pointer;
+
+    &:hover {
+        background-position: -4px -64px;
+    }
 }
 
 .ico-save {

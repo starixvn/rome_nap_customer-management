@@ -5,6 +5,7 @@
 
     public class ChatbotHistoryCriteria : CriteriaBase
     {
+#pragma warning disable S107
         public ChatbotHistoryCriteria(
             string userName,
             long chatID,
@@ -16,8 +17,9 @@
             bool isSpecial,
             int pageIndex,
             int pageSize)
+#pragma warning restore S107
         {
-            Username = userName ?? String.Empty;
+            Username = userName ?? string.Empty;
             ChatID = chatID;
             FunctionID = functionID;
             BotIDs = botIDs;

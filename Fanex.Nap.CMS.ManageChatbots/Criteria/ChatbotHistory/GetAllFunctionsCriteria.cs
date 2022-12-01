@@ -5,7 +5,9 @@
 
     public class GetAllFunctionsCriteria : CriteriaBase
     {
+#pragma warning disable S2325
         public bool IsTest => AppSettings.IsTest;
+#pragma warning restore S2325
 
         public override string GetSettingKey()
             => "Age_Chatbot_BotFunctionSelAll";

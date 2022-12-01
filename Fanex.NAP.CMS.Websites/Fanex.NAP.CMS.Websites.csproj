@@ -396,6 +396,17 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
+    <Content Include="Areas\CustomerClass\Scripts\customerClassHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\ruleManagementHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\customerClassSetting.js" />
+    <Content Include="Areas\CustomerClass\Scripts\policyManagement.js" />
+    <Content Include="Areas\CustomerClass\Scripts\policyManagementAddOrEdit.js" />
+    <Content Include="Areas\CustomerClass\Scripts\policyManagementHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\ruleManagement.js" />
+    <Content Include="Areas\CustomerClass\Scripts\ruleManagementAddOrEdit.js" />
+    <Content Include="Areas\CustomerClass\Scripts\siteManagement.js" />
+    <Content Include="Areas\CustomerClass\Scripts\siteManagementAssignSiteSetting.js" />
+    <Content Include="Areas\CustomerClass\Scripts\siteManagementUpload.js" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\limitDailyPTUpdate.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />
@@ -809,6 +820,10 @@
       <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
       <Name>Fanex.Nap.CMS.ColossusBets</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.CustomerClass\Fanex.Nap.CMS.CustomerClass.csproj">
+      <Project>{d9633e17-e562-4c8f-a8b9-719df019546d}</Project>
+      <Name>Fanex.Nap.CMS.CustomerClass</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.Customers\Fanex.Nap.CMS.Customers.csproj">
       <Project>{5ca24f84-6331-4a98-8124-7c40bbd3d84d}</Project>
       <Name>Fanex.Nap.CMS.Customers</Name>
@@ -1065,6 +1080,23 @@
     <Content Include="Areas\MangeChatbots\Styles\NotificationList\NotificationList.less" />
     <Content Include="Areas\MangeChatbots\Views\NotificationList\Index.cshtml" />
     <Content Include="Areas\Customers\Views\ManageFollowBetAccount\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\CustomerClass\Views\CustomerClassSetting\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\Policy\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\Rule\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\Site\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\customerClassSetting.less" />
+    <Content Include="Areas\CustomerClass\Styles\ruleManagement.less" />
+    <Content Include="Areas\CustomerClass\Views\Rule\_AddNewOrEditForm.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\policyManagement.less" />
+    <Content Include="Areas\CustomerClass\Styles\_common.less" />
+    <Content Include="Areas\CustomerClass\Views\Policy\_AddNewOrEditForm.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\siteManagement.less" />
+    <Content Include="Areas\CustomerClass\Views\Site\_AssignSiteSettingForm.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\Site\_UploadForm.cshtml" />
+    <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1115,6 +1147,7 @@
     <Content Include="Web.Configuration\ESportsVirtualRateSection.prod.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\MultipleSelect\fanex.multiSelect-custom.less" />
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

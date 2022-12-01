@@ -1,21 +1,25 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList
 {
     using System;
-    using Fanex.Nap.CMS.ManageChatbots.Constants;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Fanex.Nap.CMS.ManageChatbots.Constants;
 
     public class NotificationListViewModel
     {
-        public IEnumerable<SelectListItem> NotificationType { get; set; }
+        private const int OneWeek = 7;
 
-        public IEnumerable<SelectListItem> SendStatus
-         => new SelectList(NotificationStatus.NotificationStatusList, "Key", "Value");
+        public IEnumerable<SelectListItem> NotificationType { get; set; }
 
         public IEnumerable<SelectListItem> Bots { get; set; }
 
-        public DateTime DefaultFromDate => DateTime.Today.AddDays(-7);
+#pragma warning disable S2325
+        public IEnumerable<SelectListItem> SendStatus
+            => new SelectList(NotificationStatus.NotificationStatusList, "Key", "Value");
+
+        public DateTime DefaultFromDate => DateTime.Today.AddDays(-OneWeek);
 
         public DateTime DefaultToDate => DateTime.Now;
+#pragma warning restore S2325
     }
 }

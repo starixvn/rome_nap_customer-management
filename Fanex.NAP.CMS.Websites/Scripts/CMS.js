@@ -5,7 +5,6 @@
 // 'use strict';
 
 var CMS = (function ($) {
-
     return {
         CMSRoot: null,
         dialogMsg: null,
@@ -515,6 +514,14 @@ var CMS = (function ($) {
 
             return (code >= keyboardManager.Enums.KeyCode.Number_0 && code <= keyboardManager.Enums.KeyCode.Number_9) ||
                 (code >= keyboardManager.Enums.KeyCode.NumberPad_0 && code <= keyboardManager.Enums.KeyCode.NumberPad_9);
+        },
+        formatDecimal: function () {
+            var textValue = this.value.replace(/,/g, "");
+            var intValue = parseInt(textValue);
+
+            if (intValue.toString() === textValue) {
+                this.value = numeral(intValue).format(CMSConstants.NumberFormat.IntNumber);
+            }
         },
         isCtrlCombine: function (e, code) {
             var charFromCode = String.fromCharCode(code).toLowerCase();

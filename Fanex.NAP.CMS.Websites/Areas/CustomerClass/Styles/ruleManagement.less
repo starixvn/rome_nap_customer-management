@@ -1,0 +1,108 @@
+﻿@import "_common.less";
+
+#viewLeagueGroupsForm {
+    max-height: 600px;
+    overflow-y: auto;
+    width: 400px;
+
+    .tbl-freegrid tbody td {
+        padding: 0 5px;
+    }
+}
+
+/*----------< Add/Edit Rule Setting >----------*/
+#addNewOrEditForm {
+    width: 960px;
+
+    .fieldset {
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+        }
+
+        border: 1px solid @border-color;
+        padding: 8px 0;
+    }
+
+    .form-row {
+        .lbl-field {
+            padding-right: 10px;
+            text-align: right;
+            width: 140px;
+        }
+
+        .edit-field {
+            width: 168px;
+
+            input[type=text] {
+                width: 144px;
+            }
+
+            #chkEnableParlay {
+                margin-top: 8px;
+            }
+
+            .width-110 {
+                width: 110px;
+            }
+
+            input[type=text].ui-multiselect-widget-header-filter {
+                width: auto;
+            }
+
+            .ui-multiselect-corner-all input[type="checkbox"] {
+                margin-right: 6px;
+            }
+        }
+    }
+
+    .width-430 {
+        width: 430px !important;
+    }
+
+    .width-463 {
+        width: 463px !important;
+    }
+
+    .width-100percent {
+        width: 100% !important;
+    }
+
+    #dynamicCCRuleTitleControl {
+        max-height: 200px;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .button-add-more {
+        margin-right: 55px;
+        text-align: right;
+    }
+}
+
+.tbl-freegrid-box {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        td.column-rule-title {
+            padding-left: 10px;
+            position: relative;
+
+            .text {
+                border: 1px solid @border-color;
+                font-size: 0.9em;
+                height: 20px;
+                padding: 2px;
+                width: 520px;
+            }
+        }
+    }
+}

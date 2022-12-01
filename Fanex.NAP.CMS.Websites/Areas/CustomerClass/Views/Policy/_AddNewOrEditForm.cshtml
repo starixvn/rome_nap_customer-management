@@ -1,0 +1,56 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.PolicyViewModel
+<div class="form" id="addNewOrEditForm">
+    <div id="inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@Labels.SportType <span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("sportType", Model.SportTypes.InsertPleaseSelectItem(), new { id = "ddlSportType" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label for="txtPolicyTitle">@Labels.PolicyTitle <span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txtPolicyTitle" autocomplete="off" maxlength="500" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label for="txtSelectRule">@Labels.SelectRule</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txtSelectRule" autocomplete="off" placeholder="@Labels.SearchRuleTitle" maxlength="500" />
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="tbl-freegrid-box">
+        <table class="tbl-freegrid" id="freegridRule">
+            <thead>
+                <tr>
+                    <th class="width-120">
+                        <select class="width-120 ddl-action" id="ddlAction">
+                            <option value="0" selected>@Labels.All</option>
+                            <option value="1">@Labels.Selected</option>
+                            <option value="2">@Labels.NonSelected</option>
+                        </select>
+                    </th>
+                    <th class="width-250">@Labels.RuleTitle</th>
+                    <th>@Labels.Criteria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" class="text-red align-center">@Labels.NoData</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="align-right margin-top">
+        <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>
+        <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
+    </div>
+</div>

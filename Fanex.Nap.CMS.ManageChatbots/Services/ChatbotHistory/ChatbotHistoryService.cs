@@ -1,15 +1,15 @@
-﻿namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
-{
-    using System;
-    using System.Collections.Generic;
-    using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
-    using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
-    using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
-    using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
+using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
+using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
+using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
+using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
+using System.Linq;
+using Fanex.Nap.CMS.ManageChatbots.Constants;
 
+namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
+{
     public class ChatbotHistoryService : IChatbotHistoryService
     {
         private readonly IChatbotHistoryRepository repository;
@@ -40,10 +40,12 @@
 
         public IEnumerable<FunctionModel> GetChatbotHistoryFunctions()
         {
-            var functions = new List<FunctionModel>();
-            functions.Add(new FunctionModel { FunctionId = 0, FunctionName = "All" });
+            var functions = new List<FunctionModel>
+            {
+                new FunctionModel { FunctionId = 0, FunctionName = "All" }
+            };
             functions.AddRange(repository.GetAllFunctions(new GetAllFunctionsCriteria())
-                .Where(function => function.FunctionType == 1 || function.FunctionType == 3));
+                .Where(function => function.FunctionType == 1 || function.FunctionType == 3 || HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId)));
            return functions;
         }
     }  

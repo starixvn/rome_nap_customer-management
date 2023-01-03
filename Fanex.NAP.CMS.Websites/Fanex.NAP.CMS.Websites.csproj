@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -1108,6 +1108,12 @@
     <Content Include="Views\Auth\Error.cshtml" />
     <Content Include="Views\Auth\ChangePassword.cshtml" />
     <Content Include="Views\Auth\AccessDenied.cshtml" />
+    <Content Include="Web.Configuration\ESportsVirtualRateSection.sit.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Configuration\ESportsVirtualRateSection.prod.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>

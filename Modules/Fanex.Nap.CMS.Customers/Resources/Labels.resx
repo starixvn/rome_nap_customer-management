@@ -187,7 +187,7 @@
     <value>You are not allowed to input [Enter] and backslash '\\' into the Username field.</value>
   </data>
   <data name="Username_LimitCountWarning" xml:space="preserve">
-    <value>The function can only mark up to 100 accounts per request.</value>
+    <value>The function can only mark up to 500 accounts per request.</value>
   </data>
   <data name="InvalidAccounts" xml:space="preserve">
     <value>Invalid account(s):</value>
@@ -335,5 +335,14 @@
   </data>
   <data name="Follow" xml:space="preserve">
     <value>Follow</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveAccountsConfirmation" xml:space="preserve">
+    <value>Are you sure you want to remove the selected account(s)?</value>
+  </data>
+  <data name="ManageFollowBetAccountExcel" xml:space="preserve">
+    <value>Manage Follow Bet Account {0}</value>
   </data>
 </root>

@@ -23,5 +23,7 @@
         Result UpdateFollowBetAccount(UpdateFollowBetAccountViewModel viewModel);
 
         Result UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel);
+
+        Result RemoveFollowBetAccounts(RemoveFollowBetAccountsViewModel viewModel);
     }
 }

@@ -1,6 +1,6 @@
 ﻿"use strict";
 function AddNewFollowBetAccount(div, postUrl, reloadData) {
-    var maxInputUsernames = 100;
+    var maxInputUsernames = 500;
     var ddlPopupDummyAgent = null,
         txtUsernames = null,
         buttonCancel = null,

@@ -421,6 +421,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Follow Bet Account {0}.
+        /// </summary>
+        public static string ManageFollowBetAccountExcel {
+            get {
+                return ResourceManager.GetString("ManageFollowBetAccountExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Robots.
         /// </summary>
         public static string ManageRobots {
@@ -547,11 +556,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string Remove {
+            get {
+                return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to remove the selected account?.
         /// </summary>
         public static string RemoveAccountConfirmation {
             get {
                 return ResourceManager.GetString("RemoveAccountConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove the selected account(s)?.
+        /// </summary>
+        public static string RemoveAccountsConfirmation {
+            get {
+                return ResourceManager.GetString("RemoveAccountsConfirmation", resourceCulture);
             }
         }
         
@@ -682,7 +709,7 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The function can only mark up to 100 accounts per request..
+        ///   Looks up a localized string similar to The function can only mark up to 500 accounts per request..
         /// </summary>
         public static string Username_LimitCountWarning {
             get {

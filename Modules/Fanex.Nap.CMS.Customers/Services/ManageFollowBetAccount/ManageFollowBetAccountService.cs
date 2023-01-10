@@ -86,6 +86,35 @@
             return result;
         }
 
+        public Result RemoveFollowBetAccounts(RemoveFollowBetAccountsViewModel viewModel)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.Usernames))
+            {
+                return new Result(0, string.Empty);
+
+            }
+
+            var usernames = viewModel.Usernames.Split(new[] { ',' });
+
+            foreach (var username in usernames)
+            {
+                var result = RemoveFollowBetAccount(new RemoveFollowBetAccountViewModel
+                {
+                    Username = username,
+                    DummyAgentId = viewModel.DummyAgentId,
+                    UserId = viewModel.UserId,
+                    IP = viewModel.IP,
+                });
+
+                if (!result.IsSuccess)
+                {
+                    return result;
+                }
+            }
+
+            return new Result(0, Resources.Labels.RemovedSuccessfully);
+        }
+
         public Result UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel)
             => repository.ExecuteNonQuery(new UpdateFollowStatusCriteria(
                 viewModel.Username,

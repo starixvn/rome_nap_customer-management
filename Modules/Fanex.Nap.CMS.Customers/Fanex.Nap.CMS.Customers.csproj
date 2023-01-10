@@ -390,6 +390,7 @@
     <Compile Include="Services\LimitNewDownline\ILimitNewDownlineService.cs" />
     <Compile Include="Services\LimitNewDownline\LimitNewDownlineService.cs" />
     <Compile Include="Services\ManageFollowBetAccount\IManageFollowBetAccountService.cs" />
+    <Compile Include="Services\ManageFollowBetAccount\ManageFollowBetAccountExporter.cs" />
     <Compile Include="Services\ManageFollowBetAccount\ManageFollowBetAccountService.cs" />
     <Compile Include="Services\ProblemAccountCTSService.cs" />
     <Compile Include="Services\ProblemAccount\BetListService.cs" />
@@ -423,6 +424,7 @@
     <Compile Include="ViewModels\LimitNewDownline\SearchLimitDownlineViewModel.cs" />
     <Compile Include="ViewModels\ManageFollowBetAccount\AddNewFollowBetAccountViewModel.cs" />
     <Compile Include="ViewModels\ManageFollowBetAccount\ManageFollowBetAccountViewModel.cs" />
+    <Compile Include="ViewModels\ManageFollowBetAccount\RemoveFollowBetAccountsViewModel.cs" />
     <Compile Include="ViewModels\ManageFollowBetAccount\RemoveFollowBetAccountViewModel.cs" />
     <Compile Include="ViewModels\ManageFollowBetAccount\SearchFollowBetAccountViewModel.cs" />
     <Compile Include="ViewModels\ManageFollowBetAccount\UpdateFollowBetAccountViewModel.cs" />

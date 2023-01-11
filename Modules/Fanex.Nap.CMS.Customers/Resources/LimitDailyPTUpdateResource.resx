@@ -139,7 +139,7 @@
     <value>You are not allowed to input backslash {0} into the SMA(s) field.</value>
   </data>
   <data name="LimitDailyPTUpdate" xml:space="preserve">
-    <value>Limit Daily PT Update</value>
+    <value>Limit PT Update</value>
   </data>
   <data name="OverSMAsLimitationError" xml:space="preserve">
     <value>The function can only support up to {0} accounts per request.</value>

@@ -91,7 +91,7 @@
                     divAddNew.clone(),
                     CMS.resolveRootUrl("LimitDailyPTUpdate/AddNew"),
                     function () { formSearch.submit(); });
-                manageLimit.ShowAddLimitPopup("New Daily PT Update Limitation");
+                manageLimit.ShowAddLimitPopup("New PT Update Limitation");
             });
         }
     }

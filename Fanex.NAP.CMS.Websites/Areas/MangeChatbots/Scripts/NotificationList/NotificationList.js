@@ -181,9 +181,9 @@
         const contentFormated = newContent.replaceAll("\n", "<br/>");
         return [
             `<div class="description ${isHover}" loadmore-id = ${index} isExpand = false><p class="content-text">`,
-            `<span class="content-width content${index} content-overflow">`,
+            `<div class="content-width content${index} content-overflow">`,
             contentFormated,
-            '</span>',
+            '</div>',
             `<a class="expand"><span class="rotate${index} ${loadMore}""></span></a>`,
             '</p></div>',
         ].join("");

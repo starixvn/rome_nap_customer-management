@@ -10,6 +10,8 @@
 
         public const int OTP = 15;
 
-        public static int[] HiddenNotifyFunctions => new[] { ChangePasswordAlert, ChangeSecurityCodeAlert, WrongPasswordAlert, OTP };
+        public const int RiskAlert = 17;
+
+        public static int[] HiddenNotifyFunctions => new[] { ChangePasswordAlert, ChangeSecurityCodeAlert, WrongPasswordAlert, OTP, RiskAlert };
     }
 }

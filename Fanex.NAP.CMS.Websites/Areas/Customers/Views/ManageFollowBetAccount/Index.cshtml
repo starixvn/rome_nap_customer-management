@@ -11,7 +11,7 @@
 
 @section Foot {
     <script type="text/javascript">
-         var resources = {
+        var resources = {
             username: "@Labels.Username",
             dummyUsername: "@Labels.DummyUsername",
             dummyCustId: "@Labels.DummyCustId",
@@ -24,13 +24,15 @@
             site: "@Labels.Site",
             currency: "@Labels.Currency",
             removeAccountConfirmationMessage: "@Labels.RemoveAccountConfirmation",
+            removeAccountsConfirmationMessage: "@Labels.RemoveAccountsConfirmation",
             activeAccountConfirmationMessage: "@Labels.ActiveAccountConfirmation",
             inactiveAccountConfirmationMessage: "@Labels.InactiveAccountConfirmation",
             addNewTitlePopup: "@Labels.AddFollowBetAccounts",
             dummyAgentIsRequired: "@Labels.DummyAgentIsRequired",
             usernameIsRequired: "@Labels.UsernamesIsRequired",
             usernameLimitWarning: "@Labels.Username_LimitCountWarning",
-            usernameWarning: "@Html.Raw(Labels.Username_Warning)"
+            usernameWarning: "@Html.Raw(Labels.Username_Warning)",
+			remove: "@Html.Raw(Labels.Remove)",
         };
         var hasHostPermission = @Model.HasHostPermission.ToString().ToLowerInvariant();
     </script>
@@ -100,12 +102,12 @@
                 <input id="btnSearch" type="submit" class="submit btn-search" value="@Labels.Search" />
             </div>
 
-            @if(Model.HasHostPermission)
+            @if (Model.HasHostPermission)
             {
                 <div class="submit width-auto col_6">
                     <input id="btnAddNew" type="button" class="submit btn-add" value="@Labels.AddNew" />
                 </div>
-            }   
+            }
         </div>
         <div class="filter-row"></div>
     }

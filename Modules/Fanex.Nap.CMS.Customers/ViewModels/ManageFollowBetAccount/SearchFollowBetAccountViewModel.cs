@@ -16,5 +16,9 @@
         public bool IsActive { get; set; }
 
         public bool IsFollow { get; set; }
+
+        public string CurrencyName { get; set; }
+
+        public string DummyAgentName { get; set; }
     }
 }

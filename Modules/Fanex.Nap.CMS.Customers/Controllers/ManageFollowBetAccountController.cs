@@ -35,7 +35,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchFollowBetAccountViewModel viewModel)
             => JsonData(service.GetFollowBetAccountList(viewModel));
-        
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Host)]
         public ActionResult AddNew(AddNewFollowBetAccountViewModel viewModel)
@@ -65,11 +65,29 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Host)]
+        public ActionResult RemoveAccounts(RemoveFollowBetAccountsViewModel viewModel)
+        {
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
+
+            return JsonData(service.RemoveFollowBetAccounts(viewModel), JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Host)]
         public ActionResult UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel)
         {
             viewModel.UserId = CurrentSession.UserId;
             viewModel.IP = CurrentContext.IP;
             return JsonData(service.UpdateFollowStatus(viewModel), JsonRequestBehavior.DenyGet);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageFollowBetAccount, Policy = Constant.Policy.Read)]
+        public void Export(SearchFollowBetAccountViewModel viewModel)
+        {
+            var data = service.GetFollowBetAccountList(viewModel);
+            var exporter = new ManageFollowBetAccountExporter(viewModel, data);
+            exporter.ResponseStream();
         }
     }
 }

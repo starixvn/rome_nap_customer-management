@@ -10,7 +10,8 @@
         freegrid = $("#freegrid"),
         divAddNew = $("#addNew"),
         gridOptions = null,
-        submitedDummyAgentId = null;
+        submitedDummyAgentId = null,
+        filterParams = null;
 
     function bindEvents() {
         ddlCurrency.combobox();
@@ -35,19 +36,25 @@
 
     function getFollowBetAccountList() {
         var siteName = ddlSite.val() === "0" ? "" : ddlSite.find("option:selected").text();
-        var url = formSearch.attr("action")
-            + "?username=" + txtUsername.val().trim().replace(/[\n\t]+/g, '')
-            + "&siteName=" + siteName
-            + "&currencyId=" + ddlCurrency.val()
-            + "&dummyAgentId=" + ddlDummyAgent.val()
-            + "&isActive=" + ckbActive.is(":checked")
-            + "&isFollow=" + ckbFollow.is(":checked");
+        filterParams = {
+            username: txtUsername.val().trim().replace(/[\n\t]+/g, ''),
+            siteName: siteName,
+            currencyId: ddlCurrency.val(),
+            dummyAgentId: ddlDummyAgent.val(),
+            isActive: ckbActive.is(":checked"),
+            isFollow: ckbFollow.is(":checked"),
+
+            currencyName: ddlCurrency.find('option:selected').text(),
+            dummyAgentName: ddlDummyAgent.find('option:selected').text(),
+        };
+
+        var url = formSearch.attr("action") + "?" + $.param(filterParams);
 
         CMS.getJson(url, function (data) {
             var jsonData = $.parseJSON(data);
 
             gridOptions = gridOptions || initGridOptions();
-            gridOptions.bodyRows = jsonData.length > 0 ? renderFollowBetAccountList(jsonData) : []; 
+            gridOptions.bodyRows = jsonData.length > 0 ? renderFollowBetAccountList(jsonData) : [];
 
             freegrid.removeClass("display-none").fanexGrid(gridOptions);
 
@@ -75,11 +82,18 @@
             && columns.push(
                 { HeaderText: resources.active, Width: 80, Name: "colActive", HeaderAlign: "center", CellAlign: "center" },
                 { HeaderText: resources.follow, Width: 80, Name: "colFollow", HeaderAlign: "center", CellAlign: "center" },
-                { HeaderText: resources.action, Width: 80, Name: "colAction", HeaderAlign: "center", CellAlign: "center" }
+                { HeaderText: resources.remove + '<br /><div class="act-delete"><input id="ckb-all" type="checkbox" /><div class="ico-delete-all" title="' + resources.remove + '"></div></div><div></div>', Width: 80, Name: "colRemove", HeaderAlign: "center", CellAlign: "center" }
             );
 
         return {
-            showTitle: false,
+            showTitle: true,
+            titleInfo: {
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("ManageFollowBetAccount/Export"), filterParams);
+                }
+            },
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
@@ -110,7 +124,7 @@
                 && columns.push(
                     { Name: "colActive", Value: renderActiveCell(value) },
                     { Name: "colFollow", Value: renderFollowCell(value) },
-                    { Name: "colAction", Value: renderActionCell(value) }
+                    { Name: "colRemove", Value: renderActionCell(value) }
                 );
 
             bodyRows.push({ Columns: columns, CssClass: value.IsFollow ? "" : "unfollow" });
@@ -142,11 +156,13 @@
     }
 
     function renderActionCell(data) {
-        return '<span class="ico-delete remove-account" title="Delete" data-username="' + data.Username + '"></span>';
+        return '<input type="checkbox" class="ckb-delete remove-account" data-username="' + data.Username + '" />';
     }
 
     function bindEventsAfterRenderFollowBetAccountList() {
-        $(".remove-account").off().click(handleRemoveClick);
+        $("#ckb-all").off().click(handleCheckAllClick);
+        $(".ckb-delete").off().click(handleRemoveClick);
+        $(".ico-delete-all").off().click(handleRemoveAllClick);
         $(".ckb-active").off().change(handleCkbActiveChange);
         $(".ckb-follow").off().change(handleCkbFollowChange);
     }
@@ -195,6 +211,40 @@
         }
     }
 
+    function handleCheckAllClick() {
+        if ($(this).attr('checked')) {
+            $(".ckb-delete").attr("checked", true);
+        } else {
+            $(".ckb-delete").attr("checked", null);
+        }
+    }
+
+    function handleRemoveAllClick() {
+        var selectedBoxes = $(".ckb-delete:checked");
+        if (selectedBoxes.length == 0) {
+            return;
+        }
+
+        var selectedUsernames = [];
+        selectedBoxes.each(function (i, e) {
+            var username = $(e).attr("data-username");
+            selectedUsernames.push(username);
+        });
+
+        CMS.showConfirmMessage(resources.removeAccountsConfirmationMessage, function () {
+            CMS.callAjax(this, 'RemoveAccounts', { usernames: selectedUsernames.join(","), dummyAgentId: submitedDummyAgentId }, handleResult);
+        });
+    }
+
+    function handleRemoveClick() {
+        var chks = $(".ckb-delete").length;
+        var selectedChks = $(".ckb-delete:checked").length;
+        if (chks === selectedChks) {
+            $("#ckb-all").attr('checked', true);
+        } else {
+            $("#ckb-all").attr('checked', null);
+        }
+    }
     $(function () {
         bindEvents();
         $("#divPopupContent").remove();

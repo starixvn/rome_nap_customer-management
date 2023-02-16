@@ -26,7 +26,7 @@
 
         protected static readonly string NewLine = Environment.NewLine;
         protected static readonly string[] RoleShortNameMapper = new[] { "S:", "M:", "A:", "mb:" };
-        
+
         protected readonly IEnumerable<IdNameModel> reasons;
 
         protected ProblemAccountBaseExporter(IEnumerable<IdNameModel> reasons)

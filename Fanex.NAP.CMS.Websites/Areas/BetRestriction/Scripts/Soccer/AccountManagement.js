@@ -10,7 +10,11 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
 
     var oldData = {};
 
-    var DOMElements = {
+    var MainDOMElements = {
+        formAccountManager: null
+    };
+
+    var CachedDOMElements = {
         formAccountManager: null,
         hidCustId: null,
         txtPopupAccUsername: null,
@@ -21,78 +25,77 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         txtPopupAcc8RMAccount: null,
         noteInfoMessage: null,
         btnSave: null,
-        btnCancel: null,
-        htmlformAccountManager: null
+        btnCancel: null
     };
 
     var cacheDOMElements = function () {
-        DOMElements.formAccountManager = $('#formAccountManager');
-        DOMElements.hidCustId = $('#hidCustId');
-        DOMElements.txtPopupAccUsername = $('#txtPopupAccUsername');
-        DOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
-        DOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
-        DOMElements.txtPopupAccMaxBet = $('#txtPopupAccMaxBet');
-        DOMElements.txtPopupAccMaxPerMatch = $('#txtPopupAccMaxPerMatch');
-        DOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
-        DOMElements.noteInfoMessage = $('#noteInfoMessage');
-        DOMElements.btnSave = $('#btnAccSave');
-        DOMElements.btnCancel = $('#btnAccCancel');
+        CachedDOMElements.formAccountManager = $('#formSoccerAccountManager');
+        CachedDOMElements.hidCustId = $('#hidCustId');
+        CachedDOMElements.txtPopupAccUsername = $('#txtPopupAccUsername');
+        CachedDOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
+        CachedDOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
+        CachedDOMElements.txtPopupAccMaxBet = $('#txtPopupAccMaxBet');
+        CachedDOMElements.txtPopupAccMaxPerMatch = $('#txtPopupAccMaxPerMatch');
+        CachedDOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
+        CachedDOMElements.noteInfoMessage = $('#noteInfoMessage');
+        CachedDOMElements.btnSave = $('#btnAccSave');
+        CachedDOMElements.btnCancel = $('#btnAccCancel');
     };
 
     var bindingEvents = function () {
-        DOMElements.txtPopupAccMaxBet.keydown(function (e) { return CMS.forceNumericInput(e, true); });
-        DOMElements.txtPopupAccMaxBet.on("cut copy paste", function (e) {
+        CachedDOMElements.txtPopupAccMaxBet.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        CachedDOMElements.txtPopupAccMaxBet.on("cut copy paste", function (e) {
             e.preventDefault();
         });
-        DOMElements.txtPopupAccMaxPerMatch.keydown(function (e) { return CMS.forceNumericInput(e, true); });
-        DOMElements.txtPopupAccMaxPerMatch.on("cut copy paste", function (e) {
+        CachedDOMElements.txtPopupAccMaxPerMatch.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        CachedDOMElements.txtPopupAccMaxPerMatch.on("cut copy paste", function (e) {
             e.preventDefault();
         });
-        DOMElements.btnCancel.click(function () { CMS.closePopup(); });
-        DOMElements.noteInfoMessage.click(function () { CMS.showInfoMessage(messages.NoteInfoMaxBet); });
-        DOMElements.selPopupAccSeizeBetTicket.change(function () {
+        CachedDOMElements.btnCancel.click(function () { CMS.closePopup(); });
+        CachedDOMElements.noteInfoMessage.click(function () { CMS.showInfoMessage(messages.NoteInfoMaxBet); });
+        CachedDOMElements.selPopupAccSeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == '') {
-                DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
+                CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
             }
             else
-                DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+                CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
         });
 
     };
 
     var validateForm = function () {
-        if (!Validator.validateForm(DOMElements.formAccountManager, 'ne'))
+        if (!Validator.validateForm(CachedDOMElements.formAccountManager, 'ne'))
             return false;
 
-        if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(DOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError);
-            return false;
-        }
-
-        if (DOMElements.selPopupAccSeizeBetTicket.val() == '' || DOMElements.selPopupAccSeizeBetTicket.val() == '0') {
-            DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
-        }
-        else if (DOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
+        if (CachedDOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(CachedDOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
-        if ((DOMElements.txtPopupAccMaxBet.val().length > 0 || DOMElements.txtPopupAccMaxPerMatch.val().length > 0)
-            && parseInt(DOMElements.txtPopupAccMaxBet.val()) > parseInt(DOMElements.txtPopupAccMaxPerMatch.val())) {
-            CMS.showTipsyError(DOMElements.txtPopupAccMaxBet, messages.ValidateMaxBetMaxPerMatchError);
+        if (CachedDOMElements.selPopupAccSeizeBetTicket.val() == '' || CachedDOMElements.selPopupAccSeizeBetTicket.val() == '0') {
+            CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+        }
+        else if (CachedDOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
+            CMS.showTipsyError(CachedDOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
+            return false;
+        }
+
+        if ((CachedDOMElements.txtPopupAccMaxBet.val().length > 0 || CachedDOMElements.txtPopupAccMaxPerMatch.val().length > 0)
+            && parseInt(CachedDOMElements.txtPopupAccMaxBet.val()) > parseInt(CachedDOMElements.txtPopupAccMaxPerMatch.val())) {
+            CMS.showTipsyError(CachedDOMElements.txtPopupAccMaxBet, messages.ValidateMaxBetMaxPerMatchError);
             return false;
         }
 
         if (oldData) {
             var newData = {
-                CustId: DOMElements.hidCustId.val(),
-                UserName: DOMElements.txtPopupAccUsername.val(),
-                LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
-                SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
-                MaxBet: DOMElements.txtPopupAccMaxBet.val(),
-                MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
-                FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
+                CustId: CachedDOMElements.hidCustId.val(),
+                UserName: CachedDOMElements.txtPopupAccUsername.val(),
+                LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
+                SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+                MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
+                MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
+                FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -112,13 +115,13 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         }
 
         var params = {
-            CustId: DOMElements.hidCustId.val(),
-            UserName: DOMElements.txtPopupAccUsername.val(),
-            LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
-            MaxBet: DOMElements.txtPopupAccMaxBet.val(),
-            MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
-            FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
+            CustId: CachedDOMElements.hidCustId.val(),
+            UserName: CachedDOMElements.txtPopupAccUsername.val(),
+            LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
+            SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+            MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
+            MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
+            FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
         };
 
         if (isEdit) {
@@ -180,41 +183,41 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                     FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
                 };
 
-                DOMElements.txtPopupAccUsername.val(result.Account);
-                DOMElements.hidCustId.val(result.CustId);
-                DOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
-                DOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
-                DOMElements.txtPopupAccMaxBet.val(result.MaxBet);
-                DOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
-                DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+                CachedDOMElements.txtPopupAccUsername.val(result.Account);
+                CachedDOMElements.hidCustId.val(result.CustId);
+                CachedDOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
+                CachedDOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
+                CachedDOMElements.txtPopupAccMaxBet.val(result.MaxBet);
+                CachedDOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
+                CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
             }
         );
     };
 
     this.Init = function () {
-        DOMElements.htmlformAccountManager = $('#containerFormAccountManager').html();//.replace('display-none', '');
-        $('#containerFormAccountManager').remove();
+        MainDOMElements.formAccountManager = $('#formSoccerAccountManager').clone();
+        $('#containerFormAccountManager').empty();
     };
 
     this.ShowAddAccountPopup = function () {
         oldData = null;
-        CMS.modal('Add Bet Restricted - Soccer Account', DOMElements.htmlformAccountManager);
+        var form = MainDOMElements.formAccountManager.clone();
+        CMS.modal('Add Bet Restricted - Soccer Account', form);
         cacheDOMElements();
         bindingEvents();
-        DOMElements.btnSave.click(function () { return saveAddEditAccount(false); });
-        DOMElements.formAccountManager.removeClass('display-none');
+        CachedDOMElements.btnSave.click(function () { return saveAddEditAccount(false); });
     };
 
     this.ShowEditAccountPopup = function (custId) {
         oldData = null;
         CMS.disableInput();
-        CMS.modal('Edit Bet Restricted - Soccer Account', DOMElements.htmlformAccountManager);
+        var form = MainDOMElements.formAccountManager.clone();
+        CMS.modal('Edit Bet Restricted - Soccer Account', form);
         cacheDOMElements();
         bindingEvents();
         loadAccountDetailForEdit(custId);
-        DOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
-        DOMElements.btnSave.click(function () { return saveAddEditAccount(true); });
-        DOMElements.formAccountManager.removeClass('display-none');
+        CachedDOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
+        CachedDOMElements.btnSave.click(function () { return saveAddEditAccount(true); });
     };
 
     this.RemoveAccount = function (custId, userName) {

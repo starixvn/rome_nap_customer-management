@@ -5,18 +5,18 @@
     {
         id = "formAccountManager",
         @class =
-    "form display-none expand-form",
+    "form",
         @onsubmit = "return false;"
     }))
     {
         <div class="form-row">
             <div class="lbl-field normal-label width-160">
                 <label for="txtPopupAccUsername">@ViewLang.Username</label><span class="red float-right"
-                id="popupAccUsernameRequired">*</span>
+                                                                                 id="popupAccUsernameRequired">*</span>
             </div>
             <div class="edit-field">
                 <input type="text" id="txtPopupAccUsername" autocomplete="off" maxlength="30"
-                data-val-required="@Messages.RequiredFieldError" />
+                       data-val-required="@Messages.RequiredFieldError" />
             </div>
         </div>
         <div class="form-row">
@@ -47,6 +47,18 @@
                         <option value="@i.ToString()">@i.ToString() %</option>
                     }
                 </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field normal-label width-160">
+                <label for="selPopupLeagueGroup">@Labels.LeagueGroup</label>
+            </div>
+            <div class="edit-field">
+                <select id="selPopupLeagueGroup" class="combobox-select">
+                    <option value="FollowUpperLevel">@Labels.FollowUpperLevel</option>
+                    <option selected value="0">None</option>
+                </select><br />
+                <span>(@Labels.BetRestriction_WarningLeagueGroupRequired)</span>
             </div>
         </div>
         <div class="form-row">

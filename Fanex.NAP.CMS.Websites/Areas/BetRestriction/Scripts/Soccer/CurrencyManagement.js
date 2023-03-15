@@ -10,7 +10,11 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
 
     var oldData = {};
 
-    var DOMElements = {
+    var MainDOMElements = {
+        formCurrencyManagement: null
+    };
+
+    var CachedDOMElements = {
         formCurrencyManagement: null,
         hidExchangeId: null,
         txtPopupCurrency: null,
@@ -21,70 +25,69 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
         selPopupCurrencySeizeBetTicket: null,
         txtPopupCurrency8RMAccount: null,
         btnCurrencySave: null,
-        btnCurrencyCancel: null,
-        htmlformCurrencyManagement: null
+        btnCurrencyCancel: null
     };
 
     var cacheDOMElements = function () {
-        DOMElements.formCurrencyManagement = $('#formCurrencyManagement');
-        DOMElements.hidExchangeId = $('#hidExchangeId');
-        DOMElements.txtPopupCurrency = $('#txtPopupCurrency');
-        DOMElements.ddlPopupCurrency = $('#ddlPopupCurrency');
-        DOMElements.ddlPopupCurrencyType = $('#ddlPopupCurrencyType');
-        DOMElements.hidCurrentType = $('#hidCurrentType');
-        DOMElements.selPopupCurrencyLiveBetAccept = $('#selPopupCurrencyLiveBetAccept');
-        DOMElements.selPopupCurrencySeizeBetTicket = $('#selPopupCurrencySeizeBetTicket');
-        DOMElements.txtPopupCurrency8RMAccount = $('#txtPopupCurrency8RMAccount');
-        DOMElements.btnCurrencySave = $('#btnCurrencySave');
-        DOMElements.btnCurrencyCancel = $('#btnCurrencyCancel');
-    }
+        CachedDOMElements.formCurrencyManagement = $('#formCurrencyManagement');
+        CachedDOMElements.hidExchangeId = $('#hidExchangeId');
+        CachedDOMElements.txtPopupCurrency = $('#txtPopupCurrency');
+        CachedDOMElements.ddlPopupCurrency = $('#ddlPopupCurrency');
+        CachedDOMElements.ddlPopupCurrencyType = $('#ddlPopupCurrencyType');
+        CachedDOMElements.hidCurrentType = $('#hidCurrentType');
+        CachedDOMElements.selPopupCurrencyLiveBetAccept = $('#selPopupCurrencyLiveBetAccept');
+        CachedDOMElements.selPopupCurrencySeizeBetTicket = $('#selPopupCurrencySeizeBetTicket');
+        CachedDOMElements.txtPopupCurrency8RMAccount = $('#txtPopupCurrency8RMAccount');
+        CachedDOMElements.btnCurrencySave = $('#btnCurrencySave');
+        CachedDOMElements.btnCurrencyCancel = $('#btnCurrencyCancel');
+    };
 
     var bindingEvents = function () {
-        DOMElements.btnCurrencyCancel.click(function () { CMS.closePopup(); });
-        DOMElements.selPopupCurrencySeizeBetTicket.change(function () {
+        CachedDOMElements.btnCurrencyCancel.click(function () { CMS.closePopup(); });
+        CachedDOMElements.selPopupCurrencySeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == '') {
-                DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(DOMElements.txtPopupCurrency8RMAccount);
+                CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupCurrency8RMAccount);
             }
             else
-                DOMElements.txtPopupCurrency8RMAccount.removeAttr('disabled');
+                CachedDOMElements.txtPopupCurrency8RMAccount.removeAttr('disabled');
         });
 
-    }
+    };
 
     var validateForm = function (isEdit) {
-        if (!isEdit && DOMElements.ddlPopupCurrency.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.ddlPopupCurrency, messages.RequiredFieldError, 'ne');
+        if (!isEdit && CachedDOMElements.ddlPopupCurrency.val().length <= 0) {
+            CMS.showTipsyError(CachedDOMElements.ddlPopupCurrency, messages.RequiredFieldError, 'ne');
             return false;
         }
 
-        if (DOMElements.ddlPopupCurrencyType.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.ddlPopupCurrencyType, messages.RequiredFieldError);
+        if (CachedDOMElements.ddlPopupCurrencyType.val().length <= 0) {
+            CMS.showTipsyError(CachedDOMElements.ddlPopupCurrencyType, messages.RequiredFieldError);
             return false;
         }
 
-        if (DOMElements.selPopupCurrencyLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(DOMElements.selPopupCurrencyLiveBetAccept, messages.RequiredFieldError);
+        if (CachedDOMElements.selPopupCurrencyLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(CachedDOMElements.selPopupCurrencyLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
-        if (DOMElements.selPopupCurrencySeizeBetTicket.val() == '' || DOMElements.selPopupCurrencySeizeBetTicket.val() == '0') {
-            DOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+        if (CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '' || CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '0') {
+            CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
         }
-        else if (DOMElements.txtPopupCurrency8RMAccount.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.txtPopupCurrency8RMAccount, messages.RequiredFieldError);
+        else if (CachedDOMElements.txtPopupCurrency8RMAccount.val().length <= 0) {
+            CMS.showTipsyError(CachedDOMElements.txtPopupCurrency8RMAccount, messages.RequiredFieldError);
             return false;
         }
 
         if (oldData) {
             var newData = {
-                ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
-                Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
-                NewType: DOMElements.ddlPopupCurrencyType.val(),
-                LiveBetAccept: DOMElements.selPopupCurrencyLiveBetAccept.val(),
-                SeizeBetTicket: DOMElements.selPopupCurrencySeizeBetTicket.val(),
-                FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
-            }
+                ExchangeId: isEdit ? CachedDOMElements.hidExchangeId.val() : CachedDOMElements.ddlPopupCurrency.val(),
+                Type: isEdit ? CachedDOMElements.hidCurrentType.val() : CachedDOMElements.ddlPopupCurrencyType.val(),
+                NewType: CachedDOMElements.ddlPopupCurrencyType.val(),
+                LiveBetAccept: CachedDOMElements.selPopupCurrencyLiveBetAccept.val(),
+                SeizeBetTicket: CachedDOMElements.selPopupCurrencySeizeBetTicket.val(),
+                FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val()
+            };
 
             if (CMS.isValueEqual(oldData, newData)) {
                 CMS.showErrorMessage(messages.NothingChanged);
@@ -93,7 +96,7 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
         }
 
         return true;
-    }
+    };
 
     var saveAddEditCurrency = function (isEdit) {
         CMS.disableInput();
@@ -103,12 +106,12 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
         }
 
         var params = {
-            ExchangeId: isEdit ? DOMElements.hidExchangeId.val() : DOMElements.ddlPopupCurrency.val(),
-            Type: isEdit ? DOMElements.hidCurrentType.val() : DOMElements.ddlPopupCurrencyType.val(),
-            NewType: DOMElements.ddlPopupCurrencyType.val(),
-            LiveBetAccept: DOMElements.selPopupCurrencyLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.selPopupCurrencySeizeBetTicket.val(),
-            FollowAccount: DOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupCurrency8RMAccount.val()
+            ExchangeId: isEdit ? CachedDOMElements.hidExchangeId.val() : CachedDOMElements.ddlPopupCurrency.val(),
+            Type: isEdit ? CachedDOMElements.hidCurrentType.val() : CachedDOMElements.ddlPopupCurrencyType.val(),
+            NewType: CachedDOMElements.ddlPopupCurrencyType.val(),
+            LiveBetAccept: CachedDOMElements.selPopupCurrencyLiveBetAccept.val(),
+            SeizeBetTicket: CachedDOMElements.selPopupCurrencySeizeBetTicket.val(),
+            FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val()
         }
 
         CMS.callAjax(
@@ -128,7 +131,7 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                 }
             }
         );
-    }
+    };
 
     var loadCurrencyDetailForEdit = function (exchangeId, type) {
         CMS.callAjax(
@@ -145,42 +148,43 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                     FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount
                 };
 
-                DOMElements.hidExchangeId.val(result.ExchangeId);
-                DOMElements.txtPopupCurrency.val(result.Currency);
-                DOMElements.ddlPopupCurrency.val(result.ExchangeId);
-                DOMElements.ddlPopupCurrencyType.val(result.Type);
-                DOMElements.hidCurrentType.val(result.Type);
-                DOMElements.selPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
-                DOMElements.selPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
-                DOMElements.txtPopupCurrency8RMAccount.val(result.FollowAccount);
+                CachedDOMElements.hidExchangeId.val(result.ExchangeId);
+                CachedDOMElements.txtPopupCurrency.val(result.Currency);
+                CachedDOMElements.ddlPopupCurrency.val(result.ExchangeId);
+                CachedDOMElements.ddlPopupCurrencyType.val(result.Type);
+                CachedDOMElements.hidCurrentType.val(result.Type);
+                CachedDOMElements.selPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
+                CachedDOMElements.selPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
+                CachedDOMElements.txtPopupCurrency8RMAccount.val(result.FollowAccount);
             }
         );
-    }
+    };
 
     this.Init = function () {
-        DOMElements.htmlformCurrencyManagement = $('#containerFormCurrencyManager').clone();//.replace('display-none', '');
-    }
+        MainDOMElements.formCurrencyManagement = $('#formCurrencyManager').clone();
+        $('#containerFormCurrencyManager').empty();
+    };
 
     this.ShowAddCurrencyPopup = function () {
-        CMS.modal('Add Bet Restricted Currency', DOMElements.htmlformCurrencyManagement);
+        var form = MainDOMElements.formCurrencyManagement.clone();
+        CMS.modal('Add Bet Restricted Currency', form);
         cacheDOMElements();
         bindingEvents();
-        DOMElements.hidExchangeId.remove();
-        DOMElements.txtPopupCurrency.remove();
-        DOMElements.formCurrencyManagement.removeClass('display-none');
-        DOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(false); });
-    }
+        CachedDOMElements.hidExchangeId.remove();
+        CachedDOMElements.txtPopupCurrency.remove();
+        CachedDOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(false); });
+    };
 
     this.ShowEditCurrencyPopup = function (exchangeId, type) {
         CMS.disableInput();
-        CMS.modal('Edit Bet Restricted Currency', DOMElements.htmlformCurrencyManagement);
+        var form = MainDOMElements.formCurrencyManagement.clone();
+        CMS.modal('Edit Bet Restricted Currency', form);
         cacheDOMElements();
         bindingEvents();
-        DOMElements.ddlPopupCurrency.remove();
-        loadCurrencyDetailForEdit(exchangeId, type)
-        DOMElements.formCurrencyManagement.removeClass('display-none');
-        DOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(true); });
-    }
+        CachedDOMElements.ddlPopupCurrency.remove();
+        loadCurrencyDetailForEdit(exchangeId, type);
+        CachedDOMElements.btnCurrencySave.click(function () { return saveAddEditCurrency(true); });
+    };
 
     this.RemoveCurrency = function (exchangeId, currency, type) {
         CMS.showConfirmMessage(messages.ConfirmRemoveCurrency.replace('{0}', currency), function () {
@@ -201,5 +205,5 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                 }
             );
         });
-    }
-}
+    };
+};

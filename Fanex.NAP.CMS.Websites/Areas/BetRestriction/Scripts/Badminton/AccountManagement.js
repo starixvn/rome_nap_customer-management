@@ -8,7 +8,11 @@ Namespace.Register('Fanex.CMS.BetRestrictionBadminton.AccountManagement');
 Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
     var oldData = {};
 
-    var DOMElements = {
+    var MainDOMElements = {
+        formAccountManager: null
+    };
+
+    var CachedDOMElements = {
         formAccountManager: null,
         hidCustId: null,
         txtPopupAccUsername: null,
@@ -18,7 +22,6 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         noteInfoMessage: null,
         btnSave: null,
         btnCancel: null,
-        htmlformAccountManager: null,
         optsPopupAccLiveBetAccept: null,
         inpPopupAccLiveBetAccept: null,
         spanPopupAccLiveBetAccept: null,
@@ -28,85 +31,85 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
     };
 
     var cacheDOMElements = function () {
-        DOMElements.formAccountManager = $('#formAccountManager');
-        DOMElements.hidCustId = $('#hidCustId');
-        DOMElements.txtPopupAccUsername = $('#txtPopupAccUsername');
-        DOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
-        DOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
-        DOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
-        DOMElements.btnSave = $('#btnAccSave');
-        DOMElements.btnCancel = $('#btnAccCancel');
+        CachedDOMElements.formAccountManager = $('#formAccountManager');
+        CachedDOMElements.hidCustId = $('#hidCustId');
+        CachedDOMElements.txtPopupAccUsername = $('#txtPopupAccUsername');
+        CachedDOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
+        CachedDOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
+        CachedDOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
+        CachedDOMElements.btnSave = $('#btnAccSave');
+        CachedDOMElements.btnCancel = $('#btnAccCancel');
     };
 
     var bindingEvents = function () {
-        DOMElements.btnCancel.click(function () {
+        CachedDOMElements.btnCancel.click(function () {
             CMS.closePopup();
         });
-        DOMElements.selPopupAccSeizeBetTicket.change(function () {
+        CachedDOMElements.selPopupAccSeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == 'FollowUpperLevel') {
-                DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
-            } else DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+                CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
+            } else CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
         });
     };
 
     var validateForm = function () {
-        if (!Validator.validateForm(DOMElements.formAccountManager, 'ne')) return false;
+        if (!Validator.validateForm(CachedDOMElements.formAccountManager, 'ne')) return false;
 
-        cacheComboboxDOMElements();
+        cacheComboboxCachedDOMElements();
 
         if (
             !validateCombobox(
-                DOMElements.inpPopupAccLiveBetAccept,
-                DOMElements.optsPopupAccLiveBetAccept,
-                DOMElements.selPopupAccLiveBetAccept
+                CachedDOMElements.inpPopupAccLiveBetAccept,
+                CachedDOMElements.optsPopupAccLiveBetAccept,
+                CachedDOMElements.selPopupAccLiveBetAccept
             )
         ) {
             CMS.showTipsyError(
-                DOMElements.spanPopupAccLiveBetAccept,
-                getNotMatchMessage(DOMElements.inpPopupAccLiveBetAccept.val())
+                CachedDOMElements.spanPopupAccLiveBetAccept,
+                getNotMatchMessage(CachedDOMElements.inpPopupAccLiveBetAccept.val())
             );
             return false;
         }
 
-        if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(DOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError);
+        if (CachedDOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
+            CMS.showTipsyError(CachedDOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError);
             return false;
         }
 
         if (
             !validateCombobox(
-                DOMElements.inpPopupAccSeizeBetTicket,
-                DOMElements.optsPopupAccSeizeBetTicket,
-                DOMElements.selPopupAccSeizeBetTicket
+                CachedDOMElements.inpPopupAccSeizeBetTicket,
+                CachedDOMElements.optsPopupAccSeizeBetTicket,
+                CachedDOMElements.selPopupAccSeizeBetTicket
             )
         ) {
             CMS.showTipsyError(
-                DOMElements.spanPopupAccSeizeBetTicket,
-                getNotMatchMessage(DOMElements.inpPopupAccSeizeBetTicket.val())
+                CachedDOMElements.spanPopupAccSeizeBetTicket,
+                getNotMatchMessage(CachedDOMElements.inpPopupAccSeizeBetTicket.val())
             );
             return false;
         }
 
         if (
-            DOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
-            DOMElements.selPopupAccSeizeBetTicket.val() == '0'
+            CachedDOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
+            CachedDOMElements.selPopupAccSeizeBetTicket.val() == '0'
         ) {
-            DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
-        } else if (DOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
-            CMS.showTipsyError(DOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
+            CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+        } else if (CachedDOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
+            CMS.showTipsyError(CachedDOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
             return false;
         }
 
         if (oldData) {
             var newData = {
-                CustId: DOMElements.hidCustId.val(),
-                UserName: DOMElements.txtPopupAccUsername.val(),
-                LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
-                SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
-                FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled')
+                CustId: CachedDOMElements.hidCustId.val(),
+                UserName: CachedDOMElements.txtPopupAccUsername.val(),
+                LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
+                SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+                FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled')
                     ? ''
-                    : DOMElements.txtPopupAcc8RMAccount.val(),
+                    : CachedDOMElements.txtPopupAcc8RMAccount.val(),
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -117,13 +120,13 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         return true;
     };
 
-    var cacheComboboxDOMElements = function () {
-        DOMElements.optsPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept > option');
-        DOMElements.inpPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"] > input');
-        DOMElements.spanPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"]');
-        DOMElements.optsPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket > option');
-        DOMElements.inpPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"] > input');
-        DOMElements.spanPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"]');
+    var cacheComboboxCachedDOMElements = function () {
+        CachedDOMElements.optsPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept > option');
+        CachedDOMElements.inpPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"] > input');
+        CachedDOMElements.spanPopupAccLiveBetAccept = $('span[id="selPopupAccLiveBetAccept"]');
+        CachedDOMElements.optsPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket > option');
+        CachedDOMElements.inpPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"] > input');
+        CachedDOMElements.spanPopupAccSeizeBetTicket = $('span[id="selPopupAccSeizeBetTicket"]');
     };
 
     var validateCombobox = function (input, options, select) {
@@ -163,13 +166,13 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         }
 
         var params = {
-            CustId: DOMElements.hidCustId.val(),
-            UserName: DOMElements.txtPopupAccUsername.val(),
-            LiveBetAccept: DOMElements.selPopupAccLiveBetAccept.val(),
-            SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
-            FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled')
+            CustId: CachedDOMElements.hidCustId.val(),
+            UserName: CachedDOMElements.txtPopupAccUsername.val(),
+            LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
+            SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+            FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled')
                 ? ''
-                : DOMElements.txtPopupAcc8RMAccount.val()
+                : CachedDOMElements.txtPopupAcc8RMAccount.val()
         };
 
         if (isEdit) {
@@ -223,49 +226,49 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
                 FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
             };
 
-            DOMElements.txtPopupAccUsername.val(result.Account);
-            DOMElements.hidCustId.val(result.CustId);
-            DOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
-            DOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
-            DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+            CachedDOMElements.txtPopupAccUsername.val(result.Account);
+            CachedDOMElements.hidCustId.val(result.CustId);
+            CachedDOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
+            CachedDOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
+            CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
 
-            DOMElements.selPopupAccSeizeBetTicket.trigger('change');
+            CachedDOMElements.selPopupAccSeizeBetTicket.trigger('change');
         });
     };
 
     this.Init = function () {
-        DOMElements.htmlformAccountManager = $('#containerFormAccountManager').html(); //.replace('display-none', '');
-        $('#containerFormAccountManager').remove();
+        MainDOMElements.formAccountManager = $('#formAccountManager').clone();
+        $('#containerFormAccountManager').empty();
     };
 
     this.ShowAddAccountPopup = function () {
         oldData = null;
-        CMS.modal('Add Bet Restricted - Badminton Account', DOMElements.htmlformAccountManager);
+        var form = MainDOMElements.formAccountManager.clone();
+        CMS.modal('Add Bet Restricted - Badminton Account', form);
         cacheDOMElements();
         bindingEvents();
-        DOMElements.selPopupAccLiveBetAccept.combobox();
-        DOMElements.selPopupAccSeizeBetTicket.combobox();
-        DOMElements.btnSave.click(function () {
+        CachedDOMElements.selPopupAccLiveBetAccept.combobox();
+        CachedDOMElements.selPopupAccSeizeBetTicket.combobox();
+        CachedDOMElements.btnSave.click(function () {
             return saveAddEditAccount(false);
         });
-        DOMElements.formAccountManager.removeClass('display-none');
     };
 
     this.ShowEditAccountPopup = function (custId) {
         oldData = null;
         CMS.disableInput();
-        CMS.modal('Edit Bet Restricted - Badminton Account', DOMElements.htmlformAccountManager);
+        var form = MainDOMElements.formAccountManager.clone();
+        CMS.modal('Edit Bet Restricted - Badminton Account', form);
         $('#popupAccUsernameRequired').remove();
         cacheDOMElements();
         bindingEvents();
-        DOMElements.selPopupAccLiveBetAccept.combobox();
-        DOMElements.selPopupAccSeizeBetTicket.combobox();
+        CachedDOMElements.selPopupAccLiveBetAccept.combobox();
+        CachedDOMElements.selPopupAccSeizeBetTicket.combobox();
         loadAccountDetailForEdit(custId);
-        DOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
-        DOMElements.btnSave.click(function () {
+        CachedDOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
+        CachedDOMElements.btnSave.click(function () {
             return saveAddEditAccount(true);
         });
-        DOMElements.formAccountManager.removeClass('display-none');
     };
 
     this.RemoveAccount = function (custId, userName) {

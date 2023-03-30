@@ -125,5 +125,22 @@
 
             return result;
         }
+
+        public IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria)
+        {
+            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                objDb.AssignParamValues(criteria.GetSpParams());
+                var reader = objDb.ExecuteReader();
+                while (reader.Read())
+                {
+                    yield return new SelectListItem
+                    {
+                        Text = reader["groupname"].ToString(),
+                        Value = reader["groupid"].ToString()
+                    };
+                }
+            }
+        }
     }
 }

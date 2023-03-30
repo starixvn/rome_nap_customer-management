@@ -28,5 +28,7 @@
         EditCurrencyViewModel GetCurrencyDetailForEdit(int exchangeId, int type);
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria);
     }
 }

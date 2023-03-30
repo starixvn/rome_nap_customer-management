@@ -37,8 +37,10 @@
             var viewModel = new BetRestrictionViewModel
             {
                 Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
-                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria())
+                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria()),
+                LeagueGroups = _betRestrictionService.GetLeagueGroup(new GetAllLeagueGroupCriteria(_sportType))
             };
+
             return View(_indexPath, viewModel);
         }
 

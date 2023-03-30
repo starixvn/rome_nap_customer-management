@@ -168,7 +168,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 2 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 3 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Bet Limit Control', Name: 'MaxBet', MergeColNumber: 2 },
                         { HeaderText: 'Problem Account', Name: 'ProblemAccount', MergeRowNumber: 2 },
@@ -179,13 +179,14 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             columns: [
                 { HeaderText: 'No.', Width: 50, Name: 'RowNum', HeaderAlign: 'center', CellAlign: 'center', FormatNumber: "0,0" },
                 { HeaderText: 'Headline', Width: 200, Name: 'Headline', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
-                { HeaderText: 'Account', Width: 330, Name: 'Account', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'Account', Width: 250, Name: 'Account', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Level', Width: 70, Name: 'Level', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Status', Width: 70, Name: 'Status', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Site', Width: 80, Name: 'Site', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Live Bet Accept (Secs)', Width: 80, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Seize Bet Ticket (%)', Width: 85, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: '8RM Account', Width: 200, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'League Group', Width: 150, Name: 'LeagueGroup', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: '8RM Account', Width: 100, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Currency', Width: 60, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
@@ -194,11 +195,11 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             ],
             showTitle: true,
             titleInfo:
-                {
-                    showButtonsWhenNoData: true,
-                    text: '<span class="grid-toggle" data-grid-id="grdAccount">[−]</span> By Super/Master/Agent/Member',
-                    customButtons: '<input id="btnAddAccount" type="button" class="title-button" value="Add Account">'
-                },
+            {
+                showButtonsWhenNoData: true,
+                text: '<span class="grid-toggle" data-grid-id="grdAccount">[−]</span> By Super/Master/Agent/Member',
+                customButtons: '<input id="btnAddAccount" type="button" class="title-button" value="Add Account">'
+            },
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -222,6 +223,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
+                    { Name: 'LeagueGroup', Value: getDisplayValueOfLeagueGroup(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
@@ -235,7 +237,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
         }
 
         DOMElements.grdAccount.fanexGrid(accountGridOptions);
-    }
+    };
 
     var reRenderAfterPagedAccountGrid = function (currentPageIndex, currentPageSize) {
         CMS.disableInput();
@@ -334,11 +336,11 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             ],
             showTitle: true,
             titleInfo:
-                {
-                    showButtonsWhenNoData: true,
-                    text: '<span class="grid-toggle" data-grid-id="grdCurrency">[−]</span> By Currency',
-                    customButtons: '<input id="btnAddCurrency" type="button" class="title-button" value="Add Currency">'
-                },
+            {
+                showButtonsWhenNoData: true,
+                text: '<span class="grid-toggle" data-grid-id="grdCurrency">[−]</span> By Currency',
+                customButtons: '<input id="btnAddCurrency" type="button" class="title-button" value="Add Currency">'
+            },
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -368,7 +370,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
         }
 
         DOMElements.grdCurrency.fanexGrid(currencyGridOptions);
-    }
+    };
 
     var reRenderAfterPagedCurrencyGrid = function (currentPageIndex, currentPageSize) {
         CMS.disableInput();
@@ -384,14 +386,14 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                 bindingGridEvents();
             }
         );
-    }
+    };
 
     var getDisplayValueOfLiveBetAccept = function (value) {
         if (value == undefined)
             return resources.FollowUpperLevel;
 
         return value;
-    }
+    };
 
     var getDisplayValueOfSeizeBetTicket = function (value) {
         if (value == undefined)
@@ -401,7 +403,11 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             return resources.None;
 
         return value;
-    }
+    };
+
+    var getDisplayValueOfLeagueGroup = function (value) {
+        return value;
+    };
 
     var getCurrencyItems = function () {
         var result = [];

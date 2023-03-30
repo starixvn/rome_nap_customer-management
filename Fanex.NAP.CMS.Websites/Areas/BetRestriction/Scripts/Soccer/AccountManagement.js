@@ -20,6 +20,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         txtPopupAccUsername: null,
         selPopupAccLiveBetAccept: null,
         selPopupAccSeizeBetTicket: null,
+        multiSelPopupLeagueGroup: null,
         txtPopupAccMaxBet: null,
         txtPopupAccMaxPerMatch: null,
         txtPopupAcc8RMAccount: null,
@@ -40,6 +41,18 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         CachedDOMElements.noteInfoMessage = $('#noteInfoMessage');
         CachedDOMElements.btnSave = $('#btnAccSave');
         CachedDOMElements.btnCancel = $('#btnAccCancel');
+        
+        $('#selPopupLeagueGroup').multiSelect({
+            minWidth: 280,
+            maxHeight: 120,
+            checkAllText: 'All',
+            listData: getLeagueGroupItems(false, []),
+            showFilter: true,
+            showFooter: false,
+            showTooltip: false,
+            shadow: true
+        });
+        CachedDOMElements.multiSelPopupLeagueGroup = $('#selPopupLeagueGroup');
     };
 
     var bindingEvents = function () {
@@ -93,6 +106,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                 UserName: CachedDOMElements.txtPopupAccUsername.val(),
                 LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
                 SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+                LeagueGroupId: CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').join(','),
                 MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
                 MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
                 FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
@@ -119,6 +133,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             UserName: CachedDOMElements.txtPopupAccUsername.val(),
             LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
             SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
+            LeagueGroupId: CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').join(','),
             MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
             MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
             FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
@@ -190,6 +205,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                 CachedDOMElements.txtPopupAccMaxBet.val(result.MaxBet);
                 CachedDOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
                 CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+                updateLeagueGroupItems(result.LeagueGroupId);
             }
         );
     };
@@ -240,4 +256,48 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             );
         });
     };
+
+    var getLeagueGroupItems = function (isCheckAll, checkedLeagueGroupIds) {
+        var result = [{
+            Id: "none",
+            Value: "0",
+            Text: "None",
+            Checked: isCheckAll || checkedLeagueGroupIds.includes("0"),
+            Enable: true
+        }];
+
+        leagueGroups.forEach(function (league) {
+            result.push({
+                Id: league.Value,
+                Value: league.Value,
+                Text: league.Text,
+                Checked: isCheckAll || checkedLeagueGroupIds.includes(league.Value),
+                Enable: true
+            });
+        });
+
+        return result;
+    };
+    
+    var updateLeagueGroupItems = function (leagueGroupIds) {
+        var data = getLeagueGroupItems(leagueGroupIds === "All", leagueGroupIds ? leagueGroupIds.split(",") : []);
+
+        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("updateItems", getMultiSelectOptions(leagueGroupIds === "All", data));
+    };
+
+    var getMultiSelectOptions = function (isCheckAll, listData) {
+        return {
+            minWidth: 280,
+            showTooltip: false,
+            shadow: true,
+            maxHeight: 120,
+            isCheckAll: isCheckAll,
+            showFooter: false,
+            showFilter: true,
+            checkAllText: "All",
+            tooltipNoItem: "Please select at least one option",
+            listData: listData
+        };
+    };
+
 };

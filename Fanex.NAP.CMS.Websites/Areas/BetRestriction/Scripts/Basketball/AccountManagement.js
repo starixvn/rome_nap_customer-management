@@ -18,6 +18,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         txtPopupAccUsername: null,
         selPopupAccLiveBetAccept: null,
         selPopupAccSeizeBetTicket: null,
+        multiSelPopupLeagueGroup: null,
         txtPopupAcc8RMAccount: null,
         noteInfoMessage: null,
         btnSave: null,
@@ -27,7 +28,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         spanPopupAccLiveBetAccept: null,
         optsPopupAccSeizeBetTicket: null,
         inpPopupAccSeizeBetTicket: null,
-        spanPopupAccSeizeBetTicket: null,
+        spanPopupAccSeizeBetTicket: null
     };
 
     var cacheDOMElements = function () {
@@ -39,6 +40,19 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         CachedDOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
         CachedDOMElements.btnSave = $('#btnAccSave');
         CachedDOMElements.btnCancel = $('#btnAccCancel');
+
+        $('#selPopupLeagueGroup').multiSelect({
+            minWidth: 280,
+            maxHeight: 120,
+            checkAllText: 'All',
+            listData: getLeagueGroupItems(false, []),
+            showFilter: true,
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
+            disabled: true
+        });
+        CachedDOMElements.multiSelPopupLeagueGroup = $('#selPopupLeagueGroup');
     };
 
     var bindingEvents = function () {
@@ -48,8 +62,13 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         CachedDOMElements.selPopupAccSeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == 'FollowUpperLevel') {
                 CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
                 CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
-            } else CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+                CMS.clearTipsyError(CachedDOMElements.multiSelPopupLeagueGroup);
+            } else {
+                CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+                CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("enable");
+            }
         });
     };
 
@@ -91,11 +110,12 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             return false;
         }
 
-        if (
-            CachedDOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
-            CachedDOMElements.selPopupAccSeizeBetTicket.val() == '0'
-        ) {
+        if (!HasSeizeBetTicket()) {
             CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+            CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('disable');
+        } else if (CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').length === 0) {
+            CMS.showTipsyError(CachedDOMElements.multiSelPopupLeagueGroup, messages.RequiredFieldError);
+            return false;
         } else if (CachedDOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
             CMS.showTipsyError(CachedDOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
             return false;
@@ -107,9 +127,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 UserName: CachedDOMElements.txtPopupAccUsername.val(),
                 LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
                 SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
-                FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled')
-                    ? ''
-                    : CachedDOMElements.txtPopupAcc8RMAccount.val(),
+                LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
+                FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -170,9 +189,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             UserName: CachedDOMElements.txtPopupAccUsername.val(),
             LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
             SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
-            FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled')
-                ? ''
-                : CachedDOMElements.txtPopupAcc8RMAccount.val()
+            LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
+            FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
         };
 
         if (isEdit) {
@@ -223,16 +241,17 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                     result.LiveBetAccept == null ? 'FollowUpperLevel' : result.LiveBetAccept + '',
                 SeizeBetTicket:
                     result.SeizeBetTicket == null ? 'FollowUpperLevel' : result.SeizeBetTicket + '',
-                FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
+                LeagueGroupId:
+                    result.LeagueGroupId == null ? '' : result.LeagueGroupId + '',
+                FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount
             };
 
+            updateLeagueGroupItems(result.LeagueGroupId);
             CachedDOMElements.txtPopupAccUsername.val(result.Account);
             CachedDOMElements.hidCustId.val(result.CustId);
-            CachedDOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
-            CachedDOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
+            CachedDOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh').trigger('change');
             CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
-
-            CachedDOMElements.selPopupAccSeizeBetTicket.trigger('change');
+            CachedDOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh').trigger('change');
         });
     };
 
@@ -285,4 +304,58 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             });
         });
     };
+
+    this.HasSeizeBetTicket = function () {
+        return CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '0';
+    };
+
+    function updateLeagueGroupItems(leagueGroupIds) {
+        var data = getLeagueGroupItems(leagueGroupIds === "All", leagueGroupIds ? leagueGroupIds.split(",") : []);
+
+        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("updateItems", getMultiSelectOptions(leagueGroupIds === "All", data));
+
+        CachedDOMElements.multiSelPopupLeagueGroup = $('#selPopupLeagueGroup');
+    }
+
+
+    function getLeagueGroupItems(isCheckAll, checkedLeagueGroupIds) {
+        var result = [{
+            Id: "none",
+            Value: "0",
+            Text: "None",
+            Checked: isCheckAll || checkedLeagueGroupIds.includes("0"),
+            Enable: true
+        }];
+
+        leagueGroups.forEach(function (league) {
+            result.push({
+                Id: league.Value,
+                Value: league.Value,
+                Text: league.Text,
+                Checked: isCheckAll || checkedLeagueGroupIds.includes(league.Value),
+                Enable: true
+            });
+        });
+
+        return result;
+    }
+
+    function getMultiSelectOptions(isCheckAll, listData) {
+        return {
+            minWidth: 280,
+            showTooltip: false,
+            shadow: true,
+            maxHeight: 120,
+            isCheckAll: isCheckAll,
+            showFooter: false,
+            showFilter: true,
+            checkAllText: "All",
+            tooltipNoItem: "Please select at least one option",
+            listData: listData
+        };
+    }
+
+    function GetLeagueGroupCheckedItems(selLeagueGroup) {
+        return selLeagueGroup.multiSelect('isCheckedAllItems') ? "All" : selLeagueGroup.multiSelect('getCheckedItems').join(',');
+    }
 };

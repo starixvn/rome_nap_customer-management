@@ -132,6 +132,13 @@
             {
                 objDb.AssignParamValues(criteria.GetSpParams());
                 var reader = objDb.ExecuteReader();
+
+                yield return new SelectListItem
+                {
+                    Text = "None",
+                    Value = "0"
+                };
+
                 while (reader.Read())
                 {
                     yield return new SelectListItem

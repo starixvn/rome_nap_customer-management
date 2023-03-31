@@ -50,7 +50,8 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             showFilter: true,
             showFooter: false,
             showTooltip: false,
-            shadow: true
+            shadow: true,
+            disabled: true
         });
         CachedDOMElements.multiSelPopupLeagueGroup = $('#selPopupLeagueGroup');
     };
@@ -69,10 +70,14 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         CachedDOMElements.selPopupAccSeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == '') {
                 CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
                 CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
+                CMS.clearTipsyError(CachedDOMElements.multiSelPopupLeagueGroup);
             }
-            else
+            else {
                 CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+                CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("enable");
+            }
         });
 
     };
@@ -86,8 +91,13 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             return false;
         }
 
-        if (CachedDOMElements.selPopupAccSeizeBetTicket.val() == '' || CachedDOMElements.selPopupAccSeizeBetTicket.val() == '0') {
+        if (!HasSeizeBetTicket()) {
             CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+            CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('disable');
+        }
+        else if (CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').length === 0) {
+            CMS.showTipsyError(CachedDOMElements.multiSelPopupLeagueGroup, messages.RequiredFieldError);
+            return false;
         }
         else if (CachedDOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
             CMS.showTipsyError(CachedDOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
@@ -100,16 +110,17 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             return false;
         }
 
+
         if (oldData) {
             var newData = {
                 CustId: CachedDOMElements.hidCustId.val(),
                 UserName: CachedDOMElements.txtPopupAccUsername.val(),
                 LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
                 SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
-                LeagueGroupId: CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').join(','),
+                LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
                 MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
                 MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
-                FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
+                FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -133,10 +144,10 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             UserName: CachedDOMElements.txtPopupAccUsername.val(),
             LiveBetAccept: CachedDOMElements.selPopupAccLiveBetAccept.val(),
             SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
-            LeagueGroupId: CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').join(','),
+            LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
             MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
             MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
-            FollowAccount: CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupAcc8RMAccount.val()
+            FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
         };
 
         if (isEdit) {
@@ -193,11 +204,13 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                     UserName: result.Account,
                     LiveBetAccept: result.LiveBetAccept == null ? '' : result.LiveBetAccept + '',
                     SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket + '',
+                    LeagueGroupId: result.LeagueGroupId == null ? '' : result.LeagueGroupId + '',
                     MaxBet: result.MaxBet == null ? '' : result.MaxBet + '',
                     MaxPerMatch: result.MaxPerMatch == null ? '' : result.MaxPerMatch + '',
                     FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
                 };
 
+                updateLeagueGroupItems(result.LeagueGroupId);
                 CachedDOMElements.txtPopupAccUsername.val(result.Account);
                 CachedDOMElements.hidCustId.val(result.CustId);
                 CachedDOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
@@ -205,7 +218,6 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                 CachedDOMElements.txtPopupAccMaxBet.val(result.MaxBet);
                 CachedDOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
                 CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
-                updateLeagueGroupItems(result.LeagueGroupId);
             }
         );
     };
@@ -257,14 +269,22 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         });
     };
 
-    var getLeagueGroupItems = function (isCheckAll, checkedLeagueGroupIds) {
-        var result = [{
-            Id: "none",
-            Value: "0",
-            Text: "None",
-            Checked: isCheckAll || checkedLeagueGroupIds.includes("0"),
-            Enable: true
-        }];
+
+    this.HasSeizeBetTicket = function () {
+        return CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '0';
+    };
+
+    function updateLeagueGroupItems(leagueGroupIds) {
+        var data = getLeagueGroupItems(leagueGroupIds === "All", leagueGroupIds ? leagueGroupIds.split(",") : []);
+
+        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("updateItems", getMultiSelectOptions(leagueGroupIds === "All", data));
+
+        CachedDOMElements.multiSelPopupLeagueGroup = $('#selPopupLeagueGroup');
+    }
+
+
+    function getLeagueGroupItems(isCheckAll, checkedLeagueGroupIds) {
+        var result = [];
 
         leagueGroups.forEach(function (league) {
             result.push({
@@ -277,15 +297,9 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         });
 
         return result;
-    };
-    
-    var updateLeagueGroupItems = function (leagueGroupIds) {
-        var data = getLeagueGroupItems(leagueGroupIds === "All", leagueGroupIds ? leagueGroupIds.split(",") : []);
+    }
 
-        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("updateItems", getMultiSelectOptions(leagueGroupIds === "All", data));
-    };
-
-    var getMultiSelectOptions = function (isCheckAll, listData) {
+    function getMultiSelectOptions(isCheckAll, listData) {
         return {
             minWidth: 280,
             showTooltip: false,
@@ -298,6 +312,9 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             tooltipNoItem: "Please select at least one option",
             listData: listData
         };
-    };
+    }
 
+    function GetLeagueGroupCheckedItems(selLeagueGroup) {
+        return selLeagueGroup.multiSelect('isCheckedAllItems') ? "All" : selLeagueGroup.multiSelect('getCheckedItems').join(',');
+    }
 };

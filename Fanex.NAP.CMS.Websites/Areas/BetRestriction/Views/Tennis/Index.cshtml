@@ -3,6 +3,7 @@
 @using Fanex.NAP.CMS.Core.Resources;
 @using System.Text;
 @using Fanex.Nap.CMS.Customers.AppStart
+@using Newtonsoft.Json;
 
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 @{
@@ -80,7 +81,7 @@
         <div id="grdAccount" class="freegrid"></div>
     </div>
 </div>
-@Html.Partial("~/Areas/BetRestriction/Views/Tennis/AccountManagement.cshtml")
+@Html.Partial("~/Areas/BetRestriction/Views/Tennis/AccountManagement.cshtml", Model)
 @section Foot
 {
     <script src="~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.js"></script>
@@ -98,8 +99,10 @@
 
     var resources = {
         FollowUpperLevel: '@Labels.FollowUpperLevel',
+        leagueGroup: "@Labels.LeagueGroup",
         None: '@Labels.None'
     };
+    var leagueGroups = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups))');
 
     var hasHostPermission = @Json.Encode(Model.HasHostPermission);
 

@@ -124,8 +124,10 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             currencyManagement.ShowAddCurrencyPopup();
         });
 
+        $('.link-leagueGroups').off().click(handleViewLeagueGroups);
+
         DOMElements.resultContent.height(DOMElements.content.height() * 0.95);
-    }
+    };
 
     this.Search = function () {
         CMS.disableInput();
@@ -223,7 +225,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
-                    { Name: 'LeagueGroup', Value: getDisplayValueOfLeagueGroup(viewModel.DataList[i].LeagueGroupID) },
+                    { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
@@ -405,10 +407,6 @@ Fanex.CMS.BetRestrictionSoccer = function () {
         return value;
     };
 
-    var getDisplayValueOfLeagueGroup = function (value) {
-        return value;
-    };
-
     var getCurrencyItems = function () {
         var result = [];
         DOMElements.ddlCurrency.find('option').each(function () {
@@ -438,4 +436,50 @@ Fanex.CMS.BetRestrictionSoccer = function () {
         });
         DOMElements.ddlCurrency = $('#ddlCurrency');
     }
+}
+
+
+
+function renderLeagueGroupCell(leagueGroupIds) {
+    if (leagueGroupIds === "All") {
+        return `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">All</a>`;
+    }
+
+    const leagueGroupArray = leagueGroupIds.split(",");
+    const numOfLeagues = leagueGroupArray.length;
+    return numOfLeagues <= 2
+        ? leagueGroupArray.join(", ")
+        : `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">${numOfLeagues}</a>`;
+}
+
+function handleViewLeagueGroups() {
+    let html = [
+        '<div class="form viewLeagueGroupsForm">',
+        '<table class="tbl-freegrid">',
+        '<thead><tr><th class="width-60">#</th><th>', resources.leagueGroup, '</th></tr></thead>',
+        '<tbody>'
+    ];
+    if ($(this).data("league-groups") === "All") {
+        leagueGroups.forEach(function (league, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', league.Text, '</td></tr>');
+        });
+    } else {
+        $(this).data("league-groups").split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+        });
+    }
+
+    html.push('</tbody></table></div>');
+
+    CMS.modal(
+        resources.leagueGroup,
+        html.join(""),
+        {
+            resizable: false,
+            position: {
+                my: "center top",
+                at: "center top",
+                of: "#headline"
+            }
+        });
 }

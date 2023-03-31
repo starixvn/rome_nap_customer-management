@@ -8,6 +8,8 @@
 
         public int? SeizeBetTicket { get; set; }
 
+        public string LeagueGroupId { get; set; }
+
         public decimal? MaxBet { get; set; }
 
         public decimal? MaxPerMatch { get; set; }

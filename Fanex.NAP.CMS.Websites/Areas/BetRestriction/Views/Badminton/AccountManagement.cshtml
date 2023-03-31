@@ -1,5 +1,6 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources;
 @using Fanex.Nap.CMS.Infrastructure.Resources;
+@model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 <div id="containerFormAccountManager" class="hidden">
     @using (Html.BeginForm("AddAccount", "BetRestrictionBadminton", FormMethod.Post, new
     {
@@ -54,10 +55,11 @@
                 <label for="selPopupLeagueGroup">@Labels.LeagueGroup</label>
             </div>
             <div class="edit-field">
-                <select id="selPopupLeagueGroup" class="combobox-select">
-                    <option value="FollowUpperLevel">@Labels.FollowUpperLevel</option>
-                    <option selected value="0">None</option>
-                </select><br />
+                @Html.DropDownList(
+                "selPopupLeagueGroup",
+                (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "", Selected = true } }).Union(Model.LeagueGroups),
+                new { @id = "selPopupLeagueGroup" })
+                <br />
                 <span>(@Labels.BetRestriction_WarningLeagueGroupRequired)</span>
             </div>
         </div>
@@ -69,6 +71,8 @@
                 <input type="text" id="txtPopupAcc8RMAccount" autocomplete="off" disabled="disabled" />
             </div>
         </div>
+        <div class="form-row"></div>
+        <div class="form-row"></div>
         <div class="form-row button-row">
             <div class="edit-field">
                 <button type="button" id="btnAccSave" class="blue-button">@ViewLang.Save</button>

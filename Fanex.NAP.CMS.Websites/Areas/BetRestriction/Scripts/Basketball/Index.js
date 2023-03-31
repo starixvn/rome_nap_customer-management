@@ -68,6 +68,8 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                 accountManagement.ShowEditAccountPopup(custId);
             });
 
+        $('.link-leagueGroups').off().click(handleViewLeagueGroups);
+
         DOMElements.resultContent.height(DOMElements.content.height() * 0.95);
     };
 
@@ -111,7 +113,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 2 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 3 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
                     ]
@@ -170,6 +172,13 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     CellAlign: 'center',
                 },
                 {
+                    HeaderText: 'League Group',
+                    Width: 150,
+                    Name: 'LeagueGroup',
+                    HeaderAlign: 'center',
+                    CellAlign: 'center'
+                },
+                {
                     HeaderText: '8RM Account',
                     Width: 120,
                     Name: 'FollowAccount',
@@ -222,8 +231,9 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                         Name: 'SeizeBetTicket',
                         Value: getDisplayValueOfSeizeBetTicket(
                             viewModel.DataList[i].SeizeBetTicket
-                        ),
+                        )
                     },
+                    { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     {
@@ -283,7 +293,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                 Value: this.value,
                 Text: this.text,
                 Checked: this.text != 'UUS',
-                Enable: true,
+                Enable: true
             });
         });
 
@@ -305,3 +315,47 @@ Fanex.CMS.BetRestrictionBasketball = function () {
         DOMElements.ddlCurrency = $('#ddlCurrency');
     };
 };
+
+function renderLeagueGroupCell(leagueGroupIds) {
+    if (leagueGroupIds === "All") {
+        return `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">All</a>`;
+    }
+
+    const leagueGroupArray = leagueGroupIds.split(",");
+    const numOfLeagues = leagueGroupArray.length;
+    return numOfLeagues <= 2
+        ? leagueGroupArray.join(", ")
+        : `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">${numOfLeagues}</a>`;
+}
+
+function handleViewLeagueGroups() {
+    let html = [
+        '<div class="form viewLeagueGroupsForm">',
+        '<table class="tbl-freegrid">',
+        '<thead><tr><th class="width-60">#</th><th>', resources.leagueGroup, '</th></tr></thead>',
+        '<tbody>'
+    ];
+    if ($(this).data("league-groups") === "All") {
+        leagueGroups.forEach(function (league, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', league.Text, '</td></tr>');
+        });
+    } else {
+        $(this).data("league-groups").split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+        });
+    }
+
+    html.push('</tbody></table></div>');
+
+    CMS.modal(
+        resources.leagueGroup,
+        html.join(""),
+        {
+            resizable: false,
+            position: {
+                my: "center top",
+                at: "center top",
+                of: "#headline"
+            }
+        });
+}

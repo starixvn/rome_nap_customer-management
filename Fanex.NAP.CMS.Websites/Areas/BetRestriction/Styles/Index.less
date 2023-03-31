@@ -118,5 +118,39 @@ body {
 
 #selPopupLeagueGroup {
     padding: 1px 2px;
-    
+    input {
+        padding: 1px !important;
+    }
+}
+
+.viewLeagueGroupsForm {
+    max-height: 600px;
+    overflow-y: auto;
+    width: 400px;
+
+    .tbl-freegrid {
+        border-collapse: collapse;
+        border-spacing: 0;
+        border-style: none;
+        width: 100%;
+
+        thead th, tbody td {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+            border: solid 1px #c5c5c5;
+            height: 30px;
+            vertical-align: middle;
+            padding: 0 5px;
+        }
+
+        thead th {
+            background: #3c5ea5;
+            background: -moz-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
+            background: -webkit-linear-gradient(#3c5ea5, #3c5ea5) #3c5ea5;
+            color: #fff;
+            font-weight: normal;
+            text-align: center;
+        }
+    }
 }

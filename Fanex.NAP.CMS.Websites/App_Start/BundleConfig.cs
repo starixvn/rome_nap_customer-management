@@ -127,6 +127,17 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Sites/ManageSmartPunters/ControlSmartPuntersLog.js",
                 "~/Scripts/Sites/ManageSmartPunters/ActionMonitoring.js"));
 
+            // Admin
+            bundles.AddAndInclude(
+                "~/bundles/concurrent-user/index",
+                "~/Areas/Admin/Views/ConcurrentUser/Styles/index.less",
+                "~/Content/Themes/style.less");
+            bundles.Add(new ScriptBundle("~/scripts/concurrent-user").Include(
+               "~/Areas/Admin/Views/ConcurrentUser/Scripts/index.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/concurrent-user/history").Include(
+               "~/Areas/Admin/Views/ConcurrentUser/Scripts/history.js"));
+
         }
 
         /// <summary>

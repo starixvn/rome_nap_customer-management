@@ -148,5 +148,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ManageFollowBetAccount = "ManageFollowBetAccount";
 
         public const string CustomerClassManagement = "CustomerClassManagement";
+        // Admin
+        public const string ConcurrentUserReport = "ConcurrentUserReport";
     }
 }

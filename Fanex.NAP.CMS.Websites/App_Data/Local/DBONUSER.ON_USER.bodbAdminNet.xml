@@ -5,4 +5,7 @@
     <Setting Key="NAP_Customer_RobotAccountNew_Del" SpName="NAP_Customer_RobotAccountNew_Del" DbName="DBONUSER.ON_USER.bodbAdminNet" />
     <Setting Key="NAP_Customer_RobotAccountNew_Ins" SpName="NAP_Customer_RobotAccountNew_Ins" DbName="DBONUSER.ON_USER.bodbAdminNet" />
   </Function>
+  <Function Name="Concurrent User">
+    <Setting Key="Age_rpt_ConcurrentOnlineUser" SpName="Age_rpt_ConcurrentOnlineUser" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+  </Function>
 </Functions>

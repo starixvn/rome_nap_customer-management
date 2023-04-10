@@ -9,37 +9,86 @@
 
 namespace Fanex.Nap.CMS.Infrastructure.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.Framework.Data;
 
-    /// <summary>
-    /// Base Repository.
-    /// </summary>
     public class BaseRepository : IBaseRepository
     {
-        /// <summary>
-        /// Does the action.
-        /// </summary>
-        /// <param name="criteria">The criteria.</param>
-        /// <returns>Action result.</returns>
-        public Result DoAction(ICriteria criteria)
+        public T GetSingle<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
         {
-            Result actionResult = null;
-            using (var objectDB = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                objectDB.AssignParamValues(criteria.GetSpParams());
-                objectDB.ExecuteNonQuery();
-                var outputParams = objectDB.GetOuputParams();
-                actionResult = new Result
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    Code = Converter.ToInt(outputParams["errcode"]),
-                    Message = Converter.ToString2(outputParams["errmsg"])
-                };
+                    if (reader.Read())
+                    {
+                        return funcMapper(reader);
+                    }
+                }
             }
 
-            return actionResult;
+            return default(T);
+        }
+
+        public IEnumerable<T> ExecuteReader<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        yield return funcMapper(reader);
+                    }
+                }
+            }
+        }
+
+        public Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        {
+            var totalItems = 0;
+            IList<T> resultSet = new List<T>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        resultSet.Add(funcMapper(reader));
+                    }
+                }
+
+                var totalItemsOutputValue = db.GetOuputParams()["totalitems"];
+                if (totalItemsOutputValue != null && totalItemsOutputValue != DBNull.Value)
+                {
+                    totalItems = Convert.ToInt32(totalItemsOutputValue);
+                }
+            }
+
+            return Tuple.Create<int, IEnumerable<T>>(totalItems, resultSet);
+        }
+
+        public Result DoAction(ICriteria criteria, string successfullyMessage = null)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+                var outputParams = db.GetOuputParams();
+
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = code == 0
+                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
+                    : Converter.ToString2(outputParams["errmsg"]);
+
+                return new Result { Code = code, Message = message };
+            }
         }
     }
 }

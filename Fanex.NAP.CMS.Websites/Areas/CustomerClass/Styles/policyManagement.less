@@ -1,0 +1,75 @@
+﻿@import "_common.less";
+
+.content {
+    margin-left: 26px;
+
+    .blue-button {
+        width: 135px;
+    }
+}
+
+.note-box {
+    width: 930px;
+
+    p.float-left {
+        margin: 5px 0 0 0;
+    }
+}
+
+.content-grid {
+    margin: 10px 0 0 0;
+
+    .freegrid .parent-row td {
+        background-color: #c2d9ec;
+    }
+}
+
+.content-grid .freegrid .cell-criteria, .tbl-freegrid .cell-criteria {
+    padding: 5px 0 5px 5px;
+
+    div {
+        line-height: 1.6;
+    }
+}
+
+/*----------< Add/Edit Policy Setting >----------*/
+.form {
+    width: 960px;
+
+    .form-row .edit-field input[type=text] {
+        width: 500px;
+    }
+}
+
+.tbl-freegrid-box {
+    max-height: 500px;
+    overflow-y: auto;
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+        }
+
+        .ddl-action {
+            background: @table-header-bgColor;
+            background: -moz-linear-gradient(@table-header-bgColor, @table-header-bgColor) @table-header-bgColor;
+            background: -webkit-linear-gradient(@table-header-bgColor, @table-header-bgColor) @table-header-bgColor;
+            color: @white-color;
+            height: 30px;
+            text-align: center;
+        }
+
+        .chk-all {
+            margin: 0 16px 0 54px;
+        }
+
+        .cell-rule-title {
+            padding: 0 5px;
+        }
+
+        .disabled-cell {
+            background-color: #cfcfcf;
+        }
+    }
+}

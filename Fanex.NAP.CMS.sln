@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.2092
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.Websites", "Fanex.NAP.CMS.Websites\Fanex.NAP.CMS.Websites.csproj", "{14C507F3-3AEF-4BFF-B597-EA9FC46B75C1}"
 EndProject
@@ -61,6 +61,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.DefaultMemberBetLimit", "Fanex.Nap.CMS.DefaultMemberBetLimit\Fanex.Nap.CMS.DefaultMemberBetLimit.csproj", "{3B7D1E54-061B-45C2-B1B3-E2C68BEE530C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.ManageChatbots", "Fanex.Nap.CMS.ManageChatbots\Fanex.Nap.CMS.ManageChatbots.csproj", "{3D0B2F17-7A0F-48BC-AFC5-46D48747E9CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.CustomerClass", "Modules\Fanex.Nap.CMS.CustomerClass\Fanex.Nap.CMS.CustomerClass.csproj", "{D9633E17-E562-4C8F-A8B9-719DF019546D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,6 +154,10 @@ Global
 		{3D0B2F17-7A0F-48BC-AFC5-46D48747E9CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D0B2F17-7A0F-48BC-AFC5-46D48747E9CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D0B2F17-7A0F-48BC-AFC5-46D48747E9CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9633E17-E562-4C8F-A8B9-719DF019546D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9633E17-E562-4C8F-A8B9-719DF019546D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9633E17-E562-4C8F-A8B9-719DF019546D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9633E17-E562-4C8F-A8B9-719DF019546D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +183,7 @@ Global
 		{C34ED2AC-3A75-4029-8110-265864B9EE1F} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{3B7D1E54-061B-45C2-B1B3-E2C68BEE530C} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{3D0B2F17-7A0F-48BC-AFC5-46D48747E9CD} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{D9633E17-E562-4C8F-A8B9-719DF019546D} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E08A2867-264F-4443-BC13-A4DD81DAB9FC}

@@ -1,0 +1,41 @@
+﻿@border-color: #c4c4c4;
+@text-color: #000;
+
+.filter-bar .filter-row .edit-field input[type="text"]&.fanex-multiselect-state-default {
+	&:hover, &:focus, &:active {
+		box-shadow: none;
+	}
+}
+
+.fanex-multiselect-state-default {
+    border-color: @border-color;
+}
+
+.fanex-multiselect-treeview {
+    .filter-text, .delete-button {
+        display: none;
+    }
+
+    .fanex-multiselect-filter input {
+        border: 1px solid @border-color;
+        font-size: 12px;
+        margin: 3px;
+        height: 20px;
+        width: calc(100% - 8px) !important;
+    }
+
+    .fanex-multiselect-header label {
+        color: @text-color;
+    }
+
+    .fanex-multiselect-check-all input[type=checkbox],
+    .fanex-multiselect-group-mark input[type=checkbox],
+    .fanex-multiselect-div input[type=checkbox] {
+        margin-right: 5px !important;
+    }
+
+    .custom-multi-select-rtUL {
+        margin: 0 0 0 1.7em;
+        padding-left: 0;
+    }
+}

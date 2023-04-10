@@ -1,0 +1,106 @@
+﻿@import "_common.less";
+
+.filter-bar .filter-row .submit .green-button {
+    float: left;
+    margin: 0 3px;
+    text-align: center;
+}
+
+#viewCurrenciesForm {
+    max-height: 600px;
+    overflow-y: auto;
+    width: 300px;
+
+    .tbl-freegrid tbody td {
+        padding: 0 5px;
+    }
+}
+
+/*----------< Assign Site Currency >----------*/
+#assignSiteSettingForm {
+    min-height: 340px;
+    width: 900px;
+    position: relative;
+
+    .width-390 {
+        width: 390px;
+    }
+
+    .form-row .lbl-field {
+        text-align: right;
+        width: 90px;
+    }
+
+    #dynamicSiteCurrencyControl {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .button-add-more {
+        margin: 12px 60px 32px 0;
+        text-align: right;
+    }
+
+    .button-list {
+        position: absolute;
+        bottom: 5px;
+        right: 60px;
+    }
+}
+
+.msgbox.custom-confirm {
+    max-width: 960px;
+    max-height: 500px;
+
+    .existed-site-setting {
+        margin-bottom: 10px;
+    }
+
+    .existed-site-setting-confirm {
+        margin: 16px 0 0 0;
+    }
+}
+
+#uploadForm {
+    width: 800px;
+
+    .form-row {
+        min-height: unset;
+
+        .fileUpload {
+            display: inline-block;
+            margin: 0 5px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .width-280 {
+            width: 280px;
+        }
+
+        a {
+            color: @link-color;
+        }
+    }
+
+    .tbl-freegrid-box {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+    }
+
+    .tbl-freegrid-title.error {
+        color: #db2c2c;
+    }
+
+    .tbl-freegrid tbody td {
+        padding: 0 2px;
+    }
+}

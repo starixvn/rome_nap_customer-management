@@ -1,0 +1,152 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.RuleViewModel
+@{
+    var minValueShort = short.MinValue;
+    var maxValueShort = short.MaxValue;
+    var maxValueInt = int.MaxValue;
+    var maxValueByte = byte.MaxValue;
+}
+
+<div class="form" id="addNewOrEditForm">
+    <div id="inlineMessage" class="inline-message"></div>
+    <div class="form-row clone">
+        <div class="lbl-field">
+            <label class="label">@Labels.TargetRuleTitle</label>
+        </div>
+        <div class="edit-field width-463">
+            <input type="text" class="width-100percent" id="txtTargetRuleTitle" disabled />
+        </div>
+    </div>
+    <div class="form-row row-cc-ruletitle">
+        <div class="lbl-field">
+            <label class="label" for="txtCustomerClass" id="lblCustomerClass">@Labels.CustomerClass</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            <input type="text" class="text" id="txtCustomerClass" maxlength="5" data-val-range="0;@maxValueShort" />
+        </div>
+        <div class="lbl-field">
+            <label class="label" for="txtRuleTitle" id="lblRuleTitle">@Labels.RuleTitle <span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field width-430">
+            <input type="text" class="width-100percent" id="txtRuleTitle" autocomplete="off" maxlength="500" />
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div id="dynamicCCRuleTitleControl"></div>
+    <div class="button-add-more">
+        <button type="button" class="green-button" id="btnAddMore">@Labels.AddMore</button>
+    </div>
+    <fieldset class="fieldset margin-top">
+        <legend>@Labels.Conditions</legend>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label">@Labels.SportType</label>
+                <span class="text-red">*</span>
+            </div>
+            <div class="edit-field">
+                @Html.DropDownList("sportType", Model.SportTypes.InsertPleaseSelectItem(), new { @class = "width-110", id = "ddlPopupSportType" })
+            </div>
+            <div class="lbl-field">
+                <label class="label">@Labels.LeagueGroup</label>
+                <span class="text-red">*</span>
+            </div>
+            <div class="edit-field" id="ddlPopupLeagueGroupBox"></div>
+            <div class="lbl-field">
+                <label class="label">@Labels.IsLive</label>
+            </div>
+            <div class="edit-field">
+                @Html.DropDownList("isLive", Model.Indicators, new { @class = "width-110", id = "ddlPopupIndicator" })
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset margin-top">
+        <legend>@Labels.Settings</legend>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtDiffBalanceRatio">@Labels.DiffBalanceRatio</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtDiffBalanceRatio" autocomplete="off" maxlength="8" data-val-range="-90;999999" /> %
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtBetDelay">@Labels.BetDelay</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtBetDelay" autocomplete="off" maxlength="8" data-val-range="-90;999999" /> %
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtNextBetIntervalSec">@Labels.NextBetIntervalSec</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtNextBetIntervalSec" autocomplete="off" maxlength="7" data-val-range="@minValueShort;@maxValueShort" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtSuperBetIntervalSec">@Labels.SuperBetIntervalSec</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtSuperBetIntervalSec" autocomplete="off" maxlength="7" data-val-range="@minValueShort;@maxValueShort" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtSiteBetIntervalSec">@Labels.SiteBetIntervalSec</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtSiteBetIntervalSec" autocomplete="off" maxlength="7" data-val-range="@minValueShort;@maxValueShort" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtMinBet">@Labels.MinBet</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtMinBet" autocomplete="off" maxlength="13" data-val-range="0;@maxValueInt" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtMaxBet">@Labels.MaxBet</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtMaxBet" autocomplete="off" maxlength="13" data-val-range="0;@maxValueInt" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtMaxPerMatch">@Labels.MaxPerMatch</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtMaxPerMatch" autocomplete="off" maxlength="13" data-val-range="0;@maxValueInt" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtRepeatedBets">@Labels.RepeatedBets</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtRepeatedBets" autocomplete="off" maxlength="3" data-val-range="0;@maxValueByte" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtSeizeBet">@Labels.SeizeBet</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtSeizeBet" autocomplete="off" maxlength="3" data-val-range="0;100" /> %
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="chkEnableParlay">@Labels.EnableParlay</label>
+            </div>
+            <div class="edit-field">
+                <input type="checkbox" id="chkEnableParlay" />
+            </div>
+        </div>
+        @*<div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtPeakHourSpread">@Labels.PeakHourSpread</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtPeakHourSpread" autocomplete="off" maxlength="6" data-val-range="0;@maxValueShort" />
+            </div>
+        </div>*@
+    </fieldset>
+    <div class="margin-top align-right">
+        <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>
+        <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
+    </div>
+</div>

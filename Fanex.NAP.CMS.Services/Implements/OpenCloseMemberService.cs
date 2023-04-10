@@ -9,6 +9,9 @@
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
     using Fanex.NAP.CMS.Models.OpenCloseMember;
@@ -16,21 +19,12 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Repositories.Interfaces;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
-    using NAP.Core.Web.Session;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
 
     /// <summary>
     /// Open close member service.
     /// </summary>
     public class OpenCloseMemberService : CMSBaseService, IOpenCloseMemberService
     {
-        private const int BatchLimitation = 50;
-        private const int AccountingSystemId = 3;
-
-        private static int userId;
-
         private readonly IOpenCloseMemberRepository _openCloseMemberRepository;      
 
         public OpenCloseMemberService() :
@@ -128,20 +122,6 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             return result;
         }
-
-        /// <summary>
-        /// Gets the user identifier.
-        /// </summary>
-        /// <returns>The user ID.</returns>
-        private static int GetUserId()
-        {
-            if (userId == 0)
-            {
-                userId = new CurrentSession().UserId;
-            }
-
-            return userId;
-        }      
 
         /// <summary>
         /// Updates the status in database.

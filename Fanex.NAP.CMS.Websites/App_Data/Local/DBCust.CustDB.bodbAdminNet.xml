@@ -129,4 +129,25 @@
     <Setting Key="NAP_Customer_FollowBetAccountUpd" SpName="NAP_Customer_FollowBetAccountUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_Customer_FollowBetAccountUpdFollowStatus" SpName="NAP_Customer_FollowBetAccountUpdFollowStatus" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Customer Class Management">
+    <!--Rule-->
+    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleIns" SpName="NAP_LM_CustomerClassRuleIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleEnable" SpName="NAP_LM_CustomerClassRuleEnable" DbName="DBCust.CustDB.bodbAdminNet" />
+    <!--Policy-->
+    <Setting Key="NAP_LM_CustomerClassPolicySel" SpName="NAP_LM_CustomerClassPolicySel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <!--Site-->
+    <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteIns" SpName="NAP_LM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <!--Customer Class Setting-->
+    <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

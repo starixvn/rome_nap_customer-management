@@ -270,4 +270,7 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>Access denied!</value>
   </data>
+  <data name="PleaseSelect" xml:space="preserve">
+    <value>Please select</value>
+  </data>
 </root>

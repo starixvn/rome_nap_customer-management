@@ -5,6 +5,7 @@
 
     public class NotificationListItem
     {
+#pragma warning disable S107
         public NotificationListItem(
             long notificationId,
             string functionName,
@@ -14,8 +15,8 @@
             DateTime sendDate,
             string status,
             string description,
-            byte retry
-            )
+            byte retry)
+#pragma warning restore S107
         {
             NotificationId = notificationId;
             FunctionName = functionName;

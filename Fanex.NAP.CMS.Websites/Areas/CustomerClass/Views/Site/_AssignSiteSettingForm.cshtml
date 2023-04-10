@@ -1,0 +1,31 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.SiteViewModel
+
+<div class="form" id="assignSiteSettingForm">
+    <div id="inlineMessageAssignSiteSetting" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@Labels.SportType <span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("sportType", Model.SportTypes.InsertPleaseSelectItem(), new { @class = "width-120", id = "ddlSportType" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label>@Labels.PolicyTitle <span class="text-red">*</span></label>
+        </div>
+        <div class="edit-field" id="ddlPopupPolicyTitleBox">
+            @Html.DropDownList("policyTitle", new SelectListItem[0].InsertPleaseSelectItem(), new { @class = "width-390", id = "ddlPopupPolicyTitle" })
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div id="dynamicSiteCurrencyControl"></div>
+    <div class="button-add-more">
+        <button type="button" class="green-button" id="btnAddMore">@Labels.AddMore</button>
+    </div>
+    <div class="button-list">
+        <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>
+        <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
+    </div>
+</div>

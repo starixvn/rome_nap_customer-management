@@ -79,18 +79,18 @@
 
         public Result UpdateFunctionsConfig(
             ChatBotFunctionConfig[] functionConfigs,
-            int creatorID,
+            int creatorId,
             string ip,
-            int userID,
-            int botID)
+            int userId,
+            int botId)
         {
             var criteria = new UpdFunctionsChatBotCriteria
             {
-                Creator = creatorID,
+                Creator = creatorId,
                 IP = ip,
                 FunctionConfigs = functionConfigs,
-                UserID = userID,
-                BotID = botID
+                UserID = userId,
+                BotID = botId
             };
 
             var result = _repository.ExecuteNonQuery(criteria);
@@ -103,15 +103,15 @@
             return result;
         }
 
-        public Result UpdateLanguageConfig(int creatorID, string ip, int userID, int botID, string language)
+        public Result UpdateLanguageConfig(int creatorId, string ip, int userId, int botId, string language)
         {
             var criteria = new UpdLanguageChatBotCriteria
             {
-                Creator = creatorID,
+                Creator = creatorId,
                 IP = ip,
                 Language = language,
-                UserID = userID,
-                BotID = botID
+                UserID = userId,
+                BotID = botId
             };
 
             var result = _repository.ExecuteNonQuery(criteria);
@@ -124,11 +124,11 @@
             return result;
         }
 
-        public Result UnlinkChatBot(int creatorID, string ip, int userId, int botId, long chatId, string language)
+        public Result UnlinkChatBot(int creatorId, string ip, int userId, int botId, long chatId, string language)
         {
             var criteria = new UnlinkChatBotCriteria
             {
-                Creator = creatorID,
+                Creator = creatorId,
                 IP = ip,
                 Status = false,
                 IsVerifyOTP = false,
@@ -148,7 +148,7 @@
             return result;
         }
 
-        private async Task NotifyUnlink(int userId, long chatId, int botId, string language)
+        private static async Task NotifyUnlink(int userId, long chatId, int botId, string language)
         {
             try
             {

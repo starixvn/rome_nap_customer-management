@@ -92,6 +92,7 @@
             MaxBet = request.MaxBet,
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
+            LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
             SportType = _sportType,
             UserId = CurrentSession.UserId,

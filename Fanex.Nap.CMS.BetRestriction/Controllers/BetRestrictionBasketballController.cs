@@ -62,6 +62,7 @@
             UserName = request.UserName,
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
+            LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
@@ -80,6 +81,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            LeagueGroupId = request.LeagueGroupId,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP

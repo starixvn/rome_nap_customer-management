@@ -271,11 +271,11 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             ],
             showTitle: true,
             titleInfo:
-                {
-                    showButtonsWhenNoData: true,
-                    text: '<span class="grid-toggle" data-grid-id="grdSite">[−]</span> By Site',
-                    customButtons: '<input id="btnAddSite" type="button" class="title-button" value="Add Site">'
-                },
+            {
+                showButtonsWhenNoData: true,
+                text: '<span class="grid-toggle" data-grid-id="grdSite">[−]</span> By Site',
+                customButtons: '<input id="btnAddSite" type="button" class="title-button" value="Add Site">'
+            },
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -420,7 +420,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
         });
 
         return result;
-    }
+    };
 
     this.Init = function () {
         cacheDOMElements();
@@ -435,8 +435,8 @@ Fanex.CMS.BetRestrictionSoccer = function () {
             shadow: true,
         });
         DOMElements.ddlCurrency = $('#ddlCurrency');
-    }
-}
+    };
+};
 
 
 
@@ -447,9 +447,17 @@ function renderLeagueGroupCell(leagueGroupIds) {
 
     const leagueGroupArray = leagueGroupIds.split(",");
     const numOfLeagues = leagueGroupArray.length;
-    return numOfLeagues <= 2
-        ? leagueGroupArray.join(", ")
-        : `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">${numOfLeagues}</a>`;
+    if (numOfLeagues > 2) {
+        return `<a href="javascript:;" class="link-leagueGroups" data-league-groups="${leagueGroupIds}">${numOfLeagues}</a>`;
+    }
+
+    var leagueGroupName = [];
+    leagueGroupArray.forEach(function (item) {
+        var lg = leagueGroups.find(leaG => leaG.Value === item);
+        lg ? leagueGroupName.push(lg.Text) : leagueGroupName.push(item);
+    });
+
+    return leagueGroupName.join(", ");
 }
 
 function handleViewLeagueGroups() {
@@ -465,7 +473,8 @@ function handleViewLeagueGroups() {
         });
     } else {
         $(this).data("league-groups").split(",").forEach(function (item, index) {
-            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+            var lg = leagueGroups.find(leaG => leaG.Value === item);
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', lg ? lg.Text : item, '</td></tr>');
         });
     }
 

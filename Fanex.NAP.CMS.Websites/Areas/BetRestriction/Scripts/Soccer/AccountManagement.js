@@ -269,10 +269,9 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         });
     };
 
-
-    this.HasSeizeBetTicket = function () {
+    function HasSeizeBetTicket() {
         return CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '0';
-    };
+    }
 
     function updateLeagueGroupItems(leagueGroupIds) {
         var data = getLeagueGroupItems(leagueGroupIds === "All", leagueGroupIds ? leagueGroupIds.split(",") : []);

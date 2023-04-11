@@ -287,7 +287,7 @@
 
     const renderMultiChoiceDDL = () => {
         currencyDdl.multiSelect({
-            minWidth: 150,
+            minWidth: 180,
             checkAllText: "All",
             isCheckAll: true,
             listData: currencyDdl.find("option").map(function () {
@@ -306,25 +306,34 @@
         });
         currencyDdl = $("#ddl-currency");
 
-        siteDdl.multiSelect({
-            minWidth: 150,
-            checkAllText: "All",
-            isCheckAll: true,
-            listData: siteDdl.find("option").map(function () {
-                return {
-                    Id: this.text + "-" + this.value,
-                    Value: this.value,
-                    Text: this.text,
+        var buildSiteData = function (siteList) {
+            var dataList = [];
+            $.each(siteList, function (i, site) {
+                dataList.push({
+                    Id: site.Id,
+                    Value: site.Name,
+                    Text: site.Name,
                     Checked: true,
-                    Enable: true
-                };
-            }),
-            showFooter: false,
-            showTooltip: false,
+                    Enable: true,
+                    Items: site.IsParent ? buildSiteData(site.ChildSites) : []
+                });
+            });
+
+            return dataList;
+        };
+        siteDdl.multiSelect({
+            minWidth: 180,
+            maxHeight: 450,
             shadow: true,
+            showHeader: true,
+            isCheckAll: true,
+            showFooter: false,
+            checkAllText: "All",
+            listData: buildSiteData(jsonSites),
+            selectableOptgroup: true,            
+            noItemText: "No site found."
         });
         siteDdl = $("#ddl-site");
-
         chatBotNamesDdl.multiSelect({
             minWidth: 158,
             checkAllText: "All",

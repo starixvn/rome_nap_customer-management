@@ -10,7 +10,7 @@
     {
         IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria);
         
-        IEnumerable<IdNameModel> GetSites(ICriteria criteria);
+        IEnumerable<SiteModel> GetSites(ICriteria criteria);
         
         IEnumerable<IdNameModel> GetChatBotNames(ICriteria criteria);
         

@@ -31,7 +31,7 @@
             }
         }
 
-        public IEnumerable<IdNameModel> GetSites(ICriteria criteria)
+        public IEnumerable<SiteModel> GetSites(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
@@ -39,10 +39,11 @@
                 {
                     while (reader.Read())
                     {
-                        yield return new IdNameModel
+                        yield return new SiteModel
                         {
-                            Name = reader["site"].ToString(),
-                            Id = int.Parse(reader["siteid"].ToString())
+                            SiteName = reader["site"].ToString(),
+                            SiteId = int.Parse(reader["siteid"].ToString()),
+                            SiteLabel = reader["sitelabel"].ToString()
                         };
                     }
                 }

@@ -9,7 +9,7 @@
     {
         IEnumerable<IdNameModel> GetCurrencies();
 
-        IEnumerable<IdNameModel> GetSites();
+        IEnumerable<SiteViewModel> GetSites();
         
         IEnumerable<IdNameModel> GetChatBotNames();
 

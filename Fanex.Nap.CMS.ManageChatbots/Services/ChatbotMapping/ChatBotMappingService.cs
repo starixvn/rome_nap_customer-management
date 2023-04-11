@@ -32,9 +32,26 @@
             return _repository.GetCurrencies(new GetCurrencyListCriteria { Mode = 1 });
         }
 
-        public IEnumerable<IdNameModel> GetSites()
+        public IEnumerable<SiteViewModel> GetSites()
         {
-            return _repository.GetSites(new GetSiteCriteria { Mode = 0 });
+            var sites = new List<SiteViewModel>();
+            _repository.GetSites(new GetSiteCriteria { Mode = 0 })
+               .GroupBy(p => p.SiteLabel)
+               .ToList()
+               .ForEach(grp =>
+               {
+                   if (string.IsNullOrEmpty(grp.Key))
+                   {
+                       sites.AddRange(grp.Select(pt => new SiteViewModel(pt.SiteId.ToString(), pt.SiteName, null)));
+                   }
+                   else
+                   {
+                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), p.SiteName, null))));
+                   }
+               });
+
+            return sites;
+
         }
 
         public IEnumerable<IdNameModel> GetChatBotNames()

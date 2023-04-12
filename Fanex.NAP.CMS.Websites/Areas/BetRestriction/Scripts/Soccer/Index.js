@@ -173,7 +173,6 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                         { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 3 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Bet Limit Control', Name: 'MaxBet', MergeColNumber: 2 },
-                        { HeaderText: 'Problem Account', Name: 'ProblemAccount', MergeRowNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
                     ]
                 },
@@ -192,7 +191,6 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                 { HeaderText: 'Currency', Width: 60, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
-                { HeaderText: 'Problem Account', Width: 60, Name: 'ProblemAccount', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Action', Width: 60, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
@@ -230,7 +228,6 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
                     { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
-                    { Name: 'ProblemAccount', Value: viewModel.DataList[i].ProblemAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-account" data-cust-id="' + viewModel.DataList[i].CustId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-account" data-cust-id="' + viewModel.DataList[i].CustId + '" data-user-name="' + viewModel.DataList[i].Account + '"></span>' }
                 ]
             };

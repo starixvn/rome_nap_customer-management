@@ -8,6 +8,8 @@ namespace Fanex.Nap.CMS.Admin.Services.ConcurrentUser
     public interface IConcurrentUserService
     {
         ConcurrentUserViewModel GetDataLatest();
+        ConcurrentUserHistoryViewModel GetDataHistory(DateTime date);
+
         ConcurrentUserHistoryViewModel GetDataHistory(DateTime fromDate, DateTime toDate);
     }
 
@@ -18,6 +20,14 @@ namespace Fanex.Nap.CMS.Admin.Services.ConcurrentUser
         public ConcurrentUserService(ConcurrentUserRepository repository = null)
         {
             _repository = repository ?? new ConcurrentUserRepository();
+        }
+
+        public ConcurrentUserHistoryViewModel GetDataHistory(DateTime date)
+        {
+            var criteria = new GetConcurrentUserCriteria(date);
+
+            var viewModel = _repository.GetDataHistory(criteria);
+            return viewModel;
         }
 
         public ConcurrentUserHistoryViewModel GetDataHistory(DateTime fromDate, DateTime toDate)

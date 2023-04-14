@@ -6,7 +6,7 @@
 
     function initDateTimeFields() {
         fromToDatePicker.nexDatePicker({
-            nexDatePickerType: "daterange",
+            nexDatePickerType: "single",
             blankable: true,
             datePickerFormat: {
                 dateFormat: CMS.formats.DateFormat,
@@ -14,20 +14,15 @@
                 changeYear: true,
                 showOtherMonths: true,
                 selectOtherMonths: true,
-                maxDate: "",
+                maxDate: resources.maxDate,
+                minDate: resources.minDate
             },
             firstDatePicker: {
                 Id: "dpk-fromdate",
-                Label: "From",
+                Label: "Date",
                 LabelCss: "lbl-field lblFilter col_2",
                 TextboxCss: "edit-field col_5"
-            },
-            secondDatePicker: {
-                Id: "dpk-todate",
-                Label: "To",
-                LabelCss: "lbl-field lblFilter col_2",
-                TextboxCss: "edit-field col_6"
-            },
+            }
         });
 
         $("#dpk-fromdate").datepicker("setDate", resources.defaultFromDate);
@@ -59,7 +54,7 @@
             ]
             for (var i = 0; i < 24; i++) {
                 var column = {
-                    HeaderText: i + "H" + "-" + (i + 1) + "H",
+                    HeaderText: i + "H" + " - " + (i + 1) + "H",
                     Width: 60,
                     Name: "col" + i,
                     HeaderAlign: "center",
@@ -147,26 +142,26 @@
     function DetailGrid(jsonData) {
         function renderColor(bodyRows) {
             for (var i = 0; i < bodyRows.length; i++) {
-                var minCounter = bodyRows[i].Columns[1].Value;
+                var minCounter = bodyRows[i].Columns[1].Value != "-" ? bodyRows[i].Columns[1].Value : 999999999999999999;
                 var maxCounter = 0;
-                for (var c = 1; c < 24; c++) {
-                    if (bodyRows[i].Columns[c].Value != "-" && bodyRows[i].Columns[c].Value > maxCounter) {
-                        maxCounter = bodyRows[i].Columns[c].Value;
+                for (var c = 0; c < 24; c++) {
+                    if (bodyRows[i].Columns[c + 1].Value != "-" && bodyRows[i].Columns[c + 1].Value > maxCounter) {
+                        maxCounter = bodyRows[i].Columns[c + 1].Value;
                     }
 
-                    if (bodyRows[i].Columns[c].Value != "-" && bodyRows[i].Columns[c].Value < minCounter) {
-                        minCounter = bodyRows[i].Columns[c].Value;
+                    if (bodyRows[i].Columns[c + 1].Value != "-" && bodyRows[i].Columns[c + 1].Value < minCounter) {
+                        minCounter = bodyRows[i].Columns[c + 1].Value;
                     }
                 }
 
                 if (maxCounter != minCounter) {
-                    for (var c = 1; c < 24; c++) {
-                        if (bodyRows[i].Columns[c].Value != "-" && bodyRows[i].Columns[c].Value == maxCounter) {
-                            bodyRows[i].Columns[c].TdClass = "maxColor";
+                    for (var c = 0; c < 24; c++) {
+                        if (bodyRows[i].Columns[c + 1].Value != "-" && bodyRows[i].Columns[c + 1].Value == maxCounter) {
+                            bodyRows[i].Columns[c + 1].TdClass = "maxColor";
                         }
 
-                        if (bodyRows[i].Columns[c].Value != "-" && bodyRows[i].Columns[c].Value == minCounter) {
-                            bodyRows[i].Columns[c].TdClass = "minColor";
+                        if (bodyRows[i].Columns[c + 1].Value != "-" && bodyRows[i].Columns[c + 1].Value == minCounter) {
+                            bodyRows[i].Columns[c + 1].TdClass = "minColor";
                         }
                     }
                 }
@@ -302,7 +297,7 @@
             ]
             for (var i = 0; i < 24; i++) {
                 var column = {
-                    HeaderText: i + "H" + "-" + (i + 1) + "H",
+                    HeaderText: i + "H" + " - " + (i + 1) + "H",
                     Width: 60,
                     Name: "col" + i,
                     HeaderAlign: "center",
@@ -385,13 +380,22 @@
         var dateRange = fromToDatePicker.nexDatePicker("getDateRange");
 
         var url = formSearch.attr("action")
-            + "?fromdate=" + dateRange.FromDate
-            + "&todate=" + dateRange.ToDate;
+            + "?date=" + dateRange.FromDate;
 
         CMS.getJson(url, function (data) {
             var jsonData = $.parseJSON(data);
-            SummaryGrid(jsonData.Summary);
-            DetailGrid(jsonData)
+            if (jsonData.Summary.length == 0) {
+                $("#div-result-message").removeClass("display-none");
+                $("#summaryFreegrid").addClass("display-none");
+                $("#detailFreegrid").addClass("display-none");
+                $("#summaryFreegrid-grid-title").addClass("display-none");
+                $("#detailFreegrid-grid-title").addClass("display-none");
+            } else {
+                $("#div-result-message").addClass("display-none");
+                SummaryGrid(jsonData.Summary);
+                DetailGrid(jsonData)
+            }
+            
         });
     }
 

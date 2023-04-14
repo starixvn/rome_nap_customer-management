@@ -127,7 +127,7 @@
     <value>Concurrent Users Report</value>
   </data>
   <data name="HistoricalData" xml:space="preserve">
-    <value>Historical Data</value>
+    <value>Hourly Report</value>
   </data>
   <data name="InstantData" xml:space="preserve">
     <value>Instant Data</value>
@@ -143,5 +143,8 @@
   </data>
   <data name="Super" xml:space="preserve">
     <value>Super</value>
+  </data>
+  <data name="DailyReport" xml:space="preserve">
+    <value>Daily Report</value>
   </data>
 </root>

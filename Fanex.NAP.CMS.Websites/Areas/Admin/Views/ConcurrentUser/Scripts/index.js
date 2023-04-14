@@ -28,7 +28,7 @@
             var row, childRow, subRows;
             $.each(dataBySiteLabel, function (i, item) {
                 var detailjs = '<span>' + item.SiteLabel + '</span>'
-                detailjs += '<span class="more-detail grid-collapse" data-sitelabel="'+ item.SiteLabel+'" data-check="0"></span>';
+                detailjs += '<span class="more-detail grid-expand" data-sitelabel="'+ item.SiteLabel+'" data-check="1"></span>';
                 row = {
                     Columns: [
                         { Name: "ColSiteLabel", Value: detailjs, Width: 400},
@@ -50,7 +50,7 @@
                                 { Name: "ColMaster", Value: child.Master, Width: 150 },
                                 { Name: "ColAgent", Value: child.Agent, Width: 150 }
                             ],
-                            CssClass: "display-none " + "child_" + item.SiteLabel
+                            CssClass: "child_" + item.SiteLabel
                         };
                         bodyData.push(childRow);
                     }

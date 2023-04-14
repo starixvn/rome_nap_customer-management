@@ -3,7 +3,13 @@
 namespace Fanex.Nap.CMS.Admin.Models.ConcurrentUser
 {
     public class ConcurrentUserHistoryModel
-    {       
+    {
+        public string DayOfWeek => Date.ToString("ddd");
+
+        public string Day => Date.ToString("MMM-d");
+
+        public DateTime Date { get; set; }
+
         public int Hour { get; set; }
 
         public int UserCount { get; set; }

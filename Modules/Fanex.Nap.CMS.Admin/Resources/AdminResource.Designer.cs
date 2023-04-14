@@ -88,7 +88,16 @@ namespace Fanex.Nap.CMS.Admin.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Historical Data.
+        ///   Looks up a localized string similar to Daily Report.
+        /// </summary>
+        public static string DailyReport {
+            get {
+                return ResourceManager.GetString("DailyReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hourly Report.
         /// </summary>
         public static string HistoricalData {
             get {

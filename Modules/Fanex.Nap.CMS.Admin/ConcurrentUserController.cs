@@ -32,17 +32,27 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ConcurrentUserReport, Policy = Constant.Policy.Read)]
         public ActionResult History()
-            => View("~/Areas/Admin/Views/ConcurrentUser/History.cshtml", new ConcurrentUserHistoryViewModel());
-
+            => View("~/Areas/Admin/Views/ConcurrentUser/History.cshtml", new ConcurrentUserHistoryViewModel(DateTime.UtcNow));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.ConcurrentUserReport, Policy = Constant.Policy.Read)]
-        public ActionResult GetHistory(DateTime fromDate, DateTime toDate)
+        public ActionResult HistoryByDaily()
+            => View("~/Areas/Admin/Views/ConcurrentUser/HistoryByDaily.cshtml", new ConcurrentUserHistoryViewModel(DateTime.UtcNow.AddDays(-1), DateTime.UtcNow));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ConcurrentUserReport, Policy = Constant.Policy.Read)]
+        public ActionResult GetHistory(DateTime date)
+        {
+            var viewModel = service.GetDataHistory(date);
+
+            return JsonData(viewModel);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.ConcurrentUserReport, Policy = Constant.Policy.Read)]
+        public ActionResult GetHistoryDaily(DateTime fromDate, DateTime toDate)
         {
             var viewModel = service.GetDataHistory(fromDate, toDate);
 
             return JsonData(viewModel);
         }
-
         public ActionResult RequestForm()
             => View("~/Areas/Admin/Views/ConcurrentUser/popup.cshtml");
     }

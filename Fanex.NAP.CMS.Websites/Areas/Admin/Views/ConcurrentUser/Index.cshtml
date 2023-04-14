@@ -1,5 +1,4 @@
-﻿@using Fanex.NAP.CMS.Core.Resources
-@using Fanex.Nap.CMS.Admin.ViewModels.ConcurrentUser
+﻿@using Fanex.Nap.CMS.Admin.ViewModels.ConcurrentUser;
 @using Newtonsoft.Json;
 @using Fanex.Nap.CMS.Admin.Resources;
 
@@ -22,9 +21,10 @@
 }
 <div class="custom-tabs">
     <span class="active">@AdminResource.InstantData</span>    |
-    @Html.ActionLink(AdminResource.HistoricalData, "History", "ConcurrentUser")
+    @Html.ActionLink(AdminResource.HistoricalData, "History", "ConcurrentUser") |
+    @Html.ActionLink(AdminResource.DailyReport, "HistoryByDaily", "ConcurrentUser")
 </div>
-<div class="filter-bar">    
+<div class="filter-bar">
     <div class="filter-form">
         <div class="filter-row">
             <div class="lbl-field col_5">

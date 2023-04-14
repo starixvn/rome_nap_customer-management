@@ -1,8 +1,7 @@
-﻿@using Fanex.NAP.CMS.Core.Resources
-@using Fanex.Nap.CMS.Admin.ViewModels.ConcurrentUser
-@using Newtonsoft.Json;
-@using Fanex.Nap.CMS.Infrastructure.Extensions;
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions;
+@using Fanex.Nap.CMS.Admin.ViewModels.ConcurrentUser;
 @using Fanex.Nap.CMS.Admin.Resources;
+@using Fanex.Nap.CMS.Infrastructure.Resources;
 
 @model ConcurrentUserHistoryViewModel
 @{
@@ -23,7 +22,8 @@
 <div class="custom-tabs">
     @Html.ActionLink(AdminResource.InstantData, "index", "ConcurrentUser")
     |
-    <span class="active">@AdminResource.HistoricalData</span>
+    <span class="active">@AdminResource.HistoricalData</span> |
+    @Html.ActionLink(AdminResource.DailyReport, "HistoryByDaily", "ConcurrentUser")
 </div>
 
 <div class="filter-bar">
@@ -41,6 +41,7 @@
 </div>
 
 <div class="content-grid">
+    <div id="div-result-message" class="no-data-message display-none">@Labels.Message_NoReportData</div>
     <div class="freegrid display-none" id="summaryFreegrid"></div>
 
     <div class="freegrid display-none detailGrid" id="detailFreegrid"></div>
@@ -55,6 +56,8 @@
         var resources = {
             defaultFromDate: "@Model.FromDate.ToShortFormatedDateWithSlash()",
             defaultToDate: "@Model.ToDate.ToShortFormatedDateWithSlash()",
+            maxDate: "@Model.MaxDate.ToShortFormatedDateWithSlash()",
+            minDate: "@Model.MinDate.ToShortFormatedDateWithSlash()"
         };
     </script>
     @Scripts.Render("~/scripts/concurrent-user/history")

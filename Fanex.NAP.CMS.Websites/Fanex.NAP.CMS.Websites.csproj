@@ -394,6 +394,7 @@
     <Content Include="Areas\Admin\Views\ConcurrentUser\images\collapse-small.png" />
     <Content Include="Areas\Admin\Views\ConcurrentUser\images\expand-small.png" />
     <Content Include="Areas\Admin\Views\ConcurrentUser\images\information-icon2.png" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Scripts\history-bydaily.js" />
     <Content Include="Areas\Admin\Views\ConcurrentUser\Scripts\history.js" />
     <Content Include="Areas\BetRestriction\Scripts\BetRestrictionManagement\Index.js" />
     <Content Include="Areas\BetRestriction\Scripts\Soccer\AccountManagement.js" />
@@ -1106,6 +1107,7 @@
     <Content Include="Areas\CustomerClass\Views\Site\_UploadForm.cshtml" />
     <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
     <Content Include="Areas\BetRestriction\Views\Tennis\AccountManagement.cshtml" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\HistoryByDaily.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Tennis\Index.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Badminton\AccountManagement.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Badminton\Index.cshtml" />

@@ -29,7 +29,7 @@ namespace Fanex.Nap.CMS.Admin.Repositories
                 var bySiteName = reader.Read<ConcurrentUserHistoryModel>();
                 var byRoleName = reader.Read<ConcurrentUserHistoryModel>();
 
-                return new ConcurrentUserHistoryViewModel(summary, bySiteLabel, bySiteName, byRoleName);
+                return new ConcurrentUserHistoryViewModel(criteria.FromDate, criteria.ToDate, summary, bySiteLabel, bySiteName, byRoleName);
             }
         }
 

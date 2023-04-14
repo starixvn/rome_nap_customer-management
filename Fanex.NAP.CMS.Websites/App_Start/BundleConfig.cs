@@ -138,6 +138,9 @@ namespace Fanex.NAP.CMS.Websites
             bundles.Add(new ScriptBundle("~/scripts/concurrent-user/history").Include(
                "~/Areas/Admin/Views/ConcurrentUser/Scripts/history.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/concurrent-user/historybydaily").Include(
+               "~/Areas/Admin/Views/ConcurrentUser/Scripts/history-bydaily.js"));
+
         }
 
         /// <summary>

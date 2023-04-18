@@ -287,7 +287,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
 
         leagueGroups.forEach(function (league) {
             result.push({
-                Id: league.Value,
+                Id: "soccer_lg_" + league.Value,
                 Value: league.Value,
                 Text: league.Text,
                 Checked: isCheckAll || checkedLeagueGroupIds.includes(league.Value),

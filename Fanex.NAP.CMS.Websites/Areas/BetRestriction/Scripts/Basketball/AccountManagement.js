@@ -319,17 +319,11 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
 
 
     function getLeagueGroupItems(isCheckAll, checkedLeagueGroupIds) {
-        var result = [{
-            Id: "none",
-            Value: "0",
-            Text: "None",
-            Checked: isCheckAll || checkedLeagueGroupIds.includes("0"),
-            Enable: true
-        }];
+        var result = [];
 
         leagueGroups.forEach(function (league) {
             result.push({
-                Id: league.Value,
+                Id: "basketball_lg_" + league.Value,
                 Value: league.Value,
                 Text: league.Text,
                 Checked: isCheckAll || checkedLeagueGroupIds.includes(league.Value),

@@ -71,8 +71,8 @@
   </Function>
   <Function Name="Bet Restriction">
     <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CustomerIns" SpName="NAP_BetRestriction_CustomerIns_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_CustomerIns" SpName="NAP_BetRestriction_CustomerIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CurrencyDel" SpName="NAP_BetRestriction_CurrencyDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_CustomerUpd" SpName="NAP_BetRestriction_CustomerUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_BetRestriction_SiteUpd" SpName="NAP_BetRestriction_SiteUpd" DbName="DBCust.CustDB.bodbAdminNet" />

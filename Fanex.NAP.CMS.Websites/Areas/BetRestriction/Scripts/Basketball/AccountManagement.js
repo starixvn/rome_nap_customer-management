@@ -92,7 +92,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         }
 
         if (CachedDOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(CachedDOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError);
+            CMS.showTipsyError(CachedDOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError, 'ne');
             return false;
         }
 

@@ -70,7 +70,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         }
 
         if (DOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(DOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError);
+            CMS.showTipsyError(DOMElements.spanPopupAccLiveBetAccept, messages.RequiredFieldError, 'ne');
             return false;
         }
 

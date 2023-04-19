@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources;
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
-<div id="containerFormSiteManager">
+<div id="containerFormSiteManager" class="hidden">
     @using (Html.BeginForm("", "BetRestrictionSoccer", FormMethod.Post, new { id = "formSiteManager", @class = "form", @onsubmit = "return false;" }))
     {
         <div id="div-popupResult-message" class="inline-message"></div>

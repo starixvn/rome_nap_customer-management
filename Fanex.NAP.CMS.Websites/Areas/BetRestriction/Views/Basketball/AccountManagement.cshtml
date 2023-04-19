@@ -1,7 +1,7 @@
 ﻿@using Fanex.NAP.CMS.Core.Resources;
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
-<div id="containerFormAccountManager">
+<div id="containerFormAccountManager" class="hidden">
     @using (Html.BeginForm("AddAccount", "BetRestriction", FormMethod.Post, new
     {
         id = "formAccountManager",

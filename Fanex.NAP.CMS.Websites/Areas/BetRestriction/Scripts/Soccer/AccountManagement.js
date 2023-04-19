@@ -87,7 +87,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             return false;
 
         if (CachedDOMElements.selPopupAccLiveBetAccept.val() == 'Please select') {
-            CMS.showTipsyError(CachedDOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError);
+            CMS.showTipsyError(CachedDOMElements.selPopupAccLiveBetAccept, messages.RequiredFieldError, 'ne');
             return false;
         }
 

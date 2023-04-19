@@ -146,7 +146,7 @@
         public JsonResult RemoveSite(int siteId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveSiteCriteria
         {
             SiteId = siteId,
-            UserId = AppSession.CurrentUser.Id,
+            UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
 

@@ -306,7 +306,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
     };
 
     function HasSeizeBetTicket() {
-        return CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '0';
+        return CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== '0' && CachedDOMElements.selPopupAccSeizeBetTicket.val() !== 'FollowUpperLevel';
     }
 
     function updateLeagueGroupItems(leagueGroupIds) {

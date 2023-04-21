@@ -89,6 +89,7 @@ Fanex.CMS.BetRestrictionTennis.AccountManagement = function () {
         }
 
         if (
+            DOMElements.selPopupAccSeizeBetTicket.val() == '' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == '0'
         ) {

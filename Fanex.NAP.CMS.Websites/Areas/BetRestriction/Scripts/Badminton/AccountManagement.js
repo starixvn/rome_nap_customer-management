@@ -89,6 +89,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         }
 
         if (
+            DOMElements.selPopupAccSeizeBetTicket.val() == '' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == '0'
         ) {

@@ -268,6 +268,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         bindingEvents();
         CachedDOMElements.selPopupAccLiveBetAccept.combobox();
         CachedDOMElements.selPopupAccSeizeBetTicket.combobox();
+        updateLeagueGroupItems(null);
+        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
         CachedDOMElements.btnSave.click(function () {
             return saveAddEditAccount(false);
         });

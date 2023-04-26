@@ -233,6 +233,8 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         CMS.modal('Add Bet Restricted - Soccer Account', form);
         cacheDOMElements();
         bindingEvents();
+        updateLeagueGroupItems(null);
+        CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
         CachedDOMElements.btnSave.click(function () { return saveAddEditAccount(false); });
     };
 

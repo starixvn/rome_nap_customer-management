@@ -35,7 +35,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Websites.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -45,7 +45,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.CMS.Websites.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -391,6 +391,11 @@
     <Content Include="Areas\BetRestriction\Scripts\Badminton\Index.js" />
     <Content Include="Areas\BetRestriction\Scripts\Basketball\AccountManagement.js" />
     <Content Include="Areas\BetRestriction\Scripts\Basketball\Index.js" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\images\collapse-small.png" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\images\expand-small.png" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\images\information-icon2.png" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Scripts\history-bydaily.js" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Scripts\history.js" />
     <Content Include="Areas\BetRestriction\Scripts\BetRestrictionManagement\Index.js" />
     <Content Include="Areas\BetRestriction\Scripts\Soccer\AccountManagement.js" />
     <Content Include="Areas\BetRestriction\Scripts\Soccer\CurrencyManagement.js" />
@@ -509,6 +514,7 @@
     <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\HouseTurnoverPopup.js" />
     <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\TurnoverMonitorManager.js" />
     <Content Include="Areas\TurnoverControl\Styles\Images\_100.png" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Scripts\index.js" />
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\autoSuspendLogs.js" />
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\globalAutoSuspendThreshold.js" />
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\globalAutoSuspendThresholdLogs.js" />
@@ -818,6 +824,10 @@
       <Project>{88808f97-d8c0-45be-80d8-9c814a5cfde6}</Project>
       <Name>Fanex.NAP.CMS.ViewModels</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.csproj">
+      <Project>{8bb82249-f026-4061-a9dc-82067dd0fb09}</Project>
+      <Name>Fanex.Nap.CMS.Admin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
       <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
       <Name>Fanex.Nap.CMS.ColossusBets</Name>
@@ -1007,10 +1017,8 @@
     <Content Include="Areas\Customers\Styles\possessStatistics.less" />
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateDangerLevel.cshtml" />
     <Content Include="Areas\Customers\Views\PossessStatistics\_UpdateMonitorStatus.cshtml" />
-    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\member-report.less" />
     <Content Include="Areas\Customers\Views\ProblemAccount\_InformingStatus.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\AutoSuspendLog.cshtml" />
-    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\auto-suspend-log.less" />
     <Content Include="Areas\TurnoverControl\Styles\GlobalSetting.less" />
     <Content Include="Areas\TurnoverControl\Styles\ImportGlobalSetting.less" />
     <Content Include="Areas\TurnoverControl\Styles\TurnoverMonitor.less" />
@@ -1081,6 +1089,13 @@
     <Content Include="Areas\CustomerClass\Views\Policy\Index.cshtml" />
     <Content Include="Areas\CustomerClass\Views\Rule\Index.cshtml" />
     <Content Include="Areas\CustomerClass\Views\Site\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\Styles\index.less" />
+    <Content Include="Areas\Admin\Views\Web.config" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\auto-suspend-log.less" />
+    <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\member-report.less" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\History.cshtml" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\popup.cshtml" />
     <Content Include="Areas\CustomerClass\Styles\customerClassSetting.less" />
     <Content Include="Areas\CustomerClass\Styles\ruleManagement.less" />
     <Content Include="Areas\CustomerClass\Views\Rule\_AddNewOrEditForm.cshtml" />
@@ -1092,6 +1107,7 @@
     <Content Include="Areas\CustomerClass\Views\Site\_UploadForm.cshtml" />
     <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
     <Content Include="Areas\BetRestriction\Views\Tennis\AccountManagement.cshtml" />
+    <Content Include="Areas\Admin\Views\ConcurrentUser\HistoryByDaily.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Tennis\Index.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Badminton\AccountManagement.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Badminton\Index.cshtml" />

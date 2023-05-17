@@ -1,0 +1,82 @@
+﻿@using Fanex.Nap.CMS.Admin.ViewModels.ConcurrentUser;
+@using Newtonsoft.Json;
+@using Fanex.Nap.CMS.Admin.Resources;
+
+@model ConcurrentUserViewModel
+@{
+    ViewBag.Title = AdminResource.ConcurrentUsersTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime currentDate = DateTime.Today;
+}
+@section Head
+{
+    @Styles.Render("~/bundles/concurrent-user/index")
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+        <div><span class="popup" id="noteMessage"></span></div>
+    </div>
+}
+<div class="custom-tabs">
+    <span class="active">@AdminResource.InstantData</span>    |
+    @Html.ActionLink(AdminResource.HistoricalData, "History", "ConcurrentUser") |
+    @Html.ActionLink(AdminResource.DailyReport, "HistoryByDaily", "ConcurrentUser")
+</div>
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_5">
+                <span>@AdminResource.ConcurrentUsers</span>
+            </div>
+            <div class="submit col_4">
+                <input id="btn-search" type="button" class="submit" value="Refresh" />
+            </div>
+            <div class="lbl-field col_11">
+                <span>@AdminResource.LastUpdated: @Model.CurrentTime.ToString() GMT+8</span>
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    </div>
+</div>
+<div id="report-container">
+    <div class="summary info">
+        <div class="box-s">
+            <div class="box super">
+                <p>@Model.Summary.Super</p>
+            </div>
+            <p>@AdminResource.Super</p>
+        </div>
+        <div class="box-s">
+            <div class="box master">
+                <p>@Model.Summary.Master</p>
+            </div>
+            <p>@AdminResource.Master</p>
+
+        </div>
+        <div class="box-s">
+            <div class="box agent">
+                <p>@Model.Summary.Agent</p>
+            </div>
+            <p>@AdminResource.Agent</p>
+
+        </div>
+
+    </div>
+    <div class="content-grid">
+        <div id="divLasteFreegrid" class="freegrid display-none"></div>
+    </div>
+</div>
+
+<div id="divPopupContent" class="display-none">
+    @Html.Action("RequestForm")
+</div>
+@section Foot
+{
+    <script type="text/javascript">
+        var data = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, Formatting.None))')
+    </script>
+    @Scripts.Render("~/scripts/concurrent-user")
+
+}

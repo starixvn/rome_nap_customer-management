@@ -101,6 +101,22 @@ Fanex.CMS.BetRestrictionBasketball = function () {
         var hiddenColumns = hasHostPermission ? [] : [9];
 
         var accountGridOptions = {
+            customizeHeader: true,
+            groupHeaderRows: [
+                {
+                    Columns: [
+                        { HeaderText: 'No.', Name: 'RowNum', MergeRowNumber: 2 },
+                        { HeaderText: 'Account', Name: 'Account', MergeRowNumber: 2 },
+                        { HeaderText: 'Level', Name: 'Level', MergeRowNumber: 2 },
+                        { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
+                        { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
+                        { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 2 },
+                        { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
+                        { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
+                    ]
+                },
+            ],
             columns: [
                 {
                     HeaderText: 'No.',
@@ -154,19 +170,19 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     CellAlign: 'center',
                 },
                 {
-                    HeaderText: 'Currency',
-                    Width: 115,
-                    Name: 'Currency',
-                    HeaderAlign: 'center',
-                    CellAlign: 'center',
-                },
-                {
                     HeaderText: '8RM Account',
                     Width: 120,
                     Name: 'FollowAccount',
                     HeaderAlign: 'center',
                     CellAlign: 'left',
                     AllowTruncate: true,
+                },
+                {
+                    HeaderText: 'Currency',
+                    Width: 115,
+                    Name: 'Currency',
+                    HeaderAlign: 'center',
+                    CellAlign: 'center',
                 },
                 {
                     HeaderText: 'Action',
@@ -208,8 +224,8 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                             viewModel.DataList[i].SeizeBetTicket
                         ),
                     },
-                    { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     {
                         Name: 'Action',
                         Value:

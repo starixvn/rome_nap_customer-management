@@ -7,19 +7,20 @@
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = ViewLang.BetRestrictionBasketball;
+    ViewBag.Title = ViewLang.BetRestrictionBadminton;
 }
 @section Head
 {
-@Styles.Render("~/styles/BetRestrictionBasketball")
+    <link rel="stylesheet" href="~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.css" />
+    @Styles.Render("~/styles/BetRestriction")
 }
 @section Headline
 {
-<div class="title">
-    <div>
-        <span class="curr">@ViewLang.BetRestrictionBasketball</span>
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.BetRestrictionBadminton</span>
+        </div>
     </div>
-</div>
 }
 <div class="filter-bar">
     <div class="filter-form">
@@ -79,11 +80,14 @@
         <div id="grdAccount" class="freegrid"></div>
     </div>
 </div>
-@Html.Partial("~/Areas/BetRestrictionBasketball/AccountManagement.cshtml")
+@Html.Partial("~/Areas/BetRestriction/Views/Badminton/AccountManagement.cshtml")
 @section Foot
 {
-@Scripts.Render("~/scripts/BetRestrictionBasketball")
-<script type="text/javascript">
+    <script src="~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.js"></script>
+
+    @Scripts.Render("~/scripts/BetRestriction")
+    @Scripts.Render("~/scripts/BetRestrictionBadminton")
+    <script type="text/javascript">
     var messages = {
         RequiredFieldError: '@Messages.RequiredFieldError',
         AddAccountSuccessfully: '@Messages.BetRestriction_AddAccountSuccessfully',
@@ -101,5 +105,5 @@
     var hasHostPermission = @Json.Encode(Model.HasHostPermission);
 
     var betRestriction, accountManagement;
-</script>
+    </script>
 }

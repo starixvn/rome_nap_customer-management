@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    betRestriction = new Fanex.CMS.BetRestriction();
+    betRestriction = new Fanex.CMS.BetRestrictionSoccer();
     betRestriction.Init();
 });
 
-Namespace.Register('Fanex.CMS.BetRestriction');
+Namespace.Register('Fanex.CMS.BetRestrictionSoccer');
 
-Fanex.CMS.BetRestriction = function () {
+Fanex.CMS.BetRestrictionSoccer = function () {
     var $this = $(this);
 
     var DOMElements = {
@@ -134,14 +134,14 @@ Fanex.CMS.BetRestriction = function () {
             RoleId: DOMElements.ddlLevel.val(),
             Status: DOMElements.ddlStatus.val(),
             SiteId: DOMElements.ddlSite.val(),
-            CurrencyIds: DOMElements.ddlCurrency.fanexMultiSelect('getItems', true).join(','),
+            CurrencyIds: DOMElements.ddlCurrency.multiSelect('getCheckedItems').join(','),
             PageSize: CMS.pageSize,
             PageIndex: 1
         };
 
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl('BetRestriction/Search'),
+            CMS.resolveRootUrl('BetRestrictionSoccer/Search'),
             cacheParamsForPaging,
             function (data) {
                 renderAccountGrid(data.AccountViewModel, 0, CMS.pageSize);
@@ -168,11 +168,10 @@ Fanex.CMS.BetRestriction = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet Ticket (%)', Name: 'SeizeBetTicket', MergeRowNumber: 2 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 2 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Bet Limit Control', Name: 'MaxBet', MergeColNumber: 2 },
                         { HeaderText: 'Problem Account', Name: 'ProblemAccount', MergeRowNumber: 2 },
-                        { HeaderText: '8RM Account', Name: 'FollowAccount', MergeRowNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
                     ]
                 },
@@ -186,11 +185,11 @@ Fanex.CMS.BetRestriction = function () {
                 { HeaderText: 'Site', Width: 80, Name: 'Site', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Live Bet Accept (Secs)', Width: 80, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Seize Bet Ticket (%)', Width: 85, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
+                { HeaderText: '8RM Account', Width: 200, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Currency', Width: 60, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
                 { HeaderText: 'Problem Account', Width: 60, Name: 'ProblemAccount', HeaderAlign: 'center', CellAlign: 'center' },
-                { HeaderText: 'Follow Account', Width: 200, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
                 { HeaderText: 'Action', Width: 60, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
@@ -223,11 +222,11 @@ Fanex.CMS.BetRestriction = function () {
                     { Name: 'Site', Value: viewModel.DataList[i].Site },
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
+                    { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
                     { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
                     { Name: 'ProblemAccount', Value: viewModel.DataList[i].ProblemAccount },
-                    { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
                     { Name: 'Action', Value: '<span class="ico-edit edit-account" data-cust-id="' + viewModel.DataList[i].CustId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-account" data-cust-id="' + viewModel.DataList[i].CustId + '" data-user-name="' + viewModel.DataList[i].Account + '"></span>' }
                 ]
             };
@@ -245,7 +244,7 @@ Fanex.CMS.BetRestriction = function () {
 
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl('BetRestriction/SearchAccountPaging'),
+            CMS.resolveRootUrl('BetRestrictionSoccer/SearchAccountPaging'),
             cacheParamsForPaging,
             function (data) {
                 renderAccountGrid(data, currentPageIndex, currentPageSize);
@@ -310,7 +309,7 @@ Fanex.CMS.BetRestriction = function () {
 
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl('BetRestriction/SearchSitePaging'),
+            CMS.resolveRootUrl('BetRestrictionSoccer/SearchSitePaging'),
             cacheParamsForPaging,
             function (data) {
                 renderSiteGrid(data, currentPageIndex, currentPageSize);
@@ -378,7 +377,7 @@ Fanex.CMS.BetRestriction = function () {
 
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl('BetRestriction/SearchCurrencyPaging'),
+            CMS.resolveRootUrl('BetRestrictionSoccer/SearchCurrencyPaging'),
             cacheParamsForPaging,
             function (data) {
                 renderCurrencyGrid(data, currentPageIndex, currentPageSize);
@@ -408,11 +407,11 @@ Fanex.CMS.BetRestriction = function () {
         var result = [];
         DOMElements.ddlCurrency.find('option').each(function () {
             result.push({
-                id: this.value,
-                value: this.value,
-                text: this.text,
-                checked: this.text != 'UUS',
-                enable: true
+                Id: this.value,
+                Value: this.value,
+                Text: this.text,
+                Checked: this.text != 'UUS',
+                Enable: true
             });
         });
 
@@ -422,10 +421,15 @@ Fanex.CMS.BetRestriction = function () {
     this.Init = function () {
         cacheDOMElements();
         bindingEvents();
-        DOMElements.ddlCurrency.fanexMultiSelect({
+        DOMElements.ddlCurrency.multiSelect({
             minWidth: DOMElements.ddlCurrency.width(),
-            checkAllText: "All",
-            listData: getCurrencyItems()
+            checkAllText: 'All',
+            listData: getCurrencyItems(),
+            showFilter: true,
+            showFooter: false,
+            showTooltip: false,
+            shadow: true,
         });
+        DOMElements.ddlCurrency = $('#ddlCurrency');
     }
 }

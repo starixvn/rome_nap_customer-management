@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -387,12 +387,17 @@
     <Content Include="App_Data\Local\NAPCMSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\BetRestrictionBasketball\Scripts\AccountManagement.js" />
-    <Content Include="Areas\BetRestrictionBasketball\Scripts\Index.js" />
-    <Content Include="Areas\BetRestrictionManagement\Scripts\Index.js" />
-    <Content Include="Areas\BetRestriction\Scripts\CurrencyManagement.js" />
-    <Content Include="Areas\BetRestriction\Scripts\SiteManagement.js" />
-    <Content Include="Areas\BetRestriction\Scripts\AccountManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Badminton\AccountManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Badminton\Index.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Basketball\AccountManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Basketball\Index.js" />
+    <Content Include="Areas\BetRestriction\Scripts\BetRestrictionManagement\Index.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Soccer\AccountManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Soccer\CurrencyManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Soccer\Index.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Soccer\SiteManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Tennis\AccountManagement.js" />
+    <Content Include="Areas\BetRestriction\Scripts\Tennis\Index.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
@@ -757,9 +762,6 @@
     <Content Include="Scripts\Libs\msgbox\msgbox-0.0.1.js" />
     <Content Include="Scripts\Sites\ConfigureCustomerAccess.js" />
     <Content Include="Scripts\Sites\OpenCloseMember.js" />
-    <Content Include="Areas\BetRestriction\Scripts\Index.js" />
-    <Content Include="Areas\BetRestriction\SiteManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\CurrencyManagement.cshtml" />
     <Content Include="Content\Pages\BetLimitTypeControl\index.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -984,12 +986,8 @@
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\Styles\index.less" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewLog.cshtml" />
     <Content Include="Areas\VirtualSettingControl\Views\VirtualRateDetails\ViewRealValues.cshtml" />
-    <Content Include="Areas\BetRestriction\AccountManagement.cshtml" />
     <Content Include="Areas\BetRestriction\Styles\Index.less" />
     <Content Include="Areas\BetRestriction\Web.config" />
-    <Content Include="Areas\BetRestrictionManagement\Index.cshtml" />
-    <Content Include="Areas\BetRestrictionManagement\Web.config" />
-    <Content Include="Areas\BetRestrictionManagement\Styles\Index.less" />
     <Content Include="Areas\Customers\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1068,10 +1066,6 @@
     <Content Include="Areas\Customers\Views\VirtualRateEngine\Index.cshtml" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\_AddOrUpdateRule.cshtml" />
     <Content Include="Areas\Customers\Views\VirtualRateEngine\CustomerClassHint.cshtml" />
-    <Content Include="Areas\BetRestrictionBasketball\Index.cshtml" />
-    <Content Include="Areas\BetRestrictionBasketball\Web.config" />
-    <Content Include="Areas\BetRestrictionBasketball\Styles\Index.less" />
-    <Content Include="Areas\BetRestrictionBasketball\AccountManagement.cshtml" />
     <Content Include="Areas\Customers\Views\LimitDailyPTUpdate\Index.cshtml" />
     <Content Include="Areas\Customers\Styles\limitDailyPTUpdate.less" />
     <Content Include="Areas\MangeChatbots\Views\ChatbotMapping\_ConfigChatBot.cshtml" />
@@ -1097,6 +1091,18 @@
     <Content Include="Areas\CustomerClass\Views\Site\_AssignSiteSettingForm.cshtml" />
     <Content Include="Areas\CustomerClass\Views\Site\_UploadForm.cshtml" />
     <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
+    <Content Include="Areas\BetRestriction\Views\Tennis\AccountManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Tennis\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Badminton\AccountManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Badminton\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Basketball\AccountManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Basketball\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\BetRestrictionManagement\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Soccer\AccountManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Soccer\CurrencyManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Soccer\Index.cshtml" />
+    <Content Include="Areas\BetRestriction\Views\Soccer\SiteManagement.cshtml" />
+    <Content Include="Areas\BetRestriction\Styles\BetRestrictionManagement\Index.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1106,7 +1112,6 @@
     <Content Include="Views\CreditCollectionSummary\Index.cshtml" />
     <Content Include="Content\Sites\credit-collection-summary.less" />
     <Content Include="Views\StatusLog\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Index.cshtml" />
     <Content Include="Web.Configuration\ESportsVirtualRateSection.config">
       <SubType>Designer</SubType>
     </Content>

@@ -129,9 +129,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BetRestrictionBadmintonController.cs" />
     <Compile Include="Controllers\BetRestrictionBasketballController.cs" />
-    <Compile Include="Controllers\BetRestrictionController.cs" />
     <Compile Include="Controllers\BetRestrictionManagementController.cs" />
+    <Compile Include="Controllers\BetRestrictionSoccerController.cs" />
+    <Compile Include="Controllers\BetRestrictionTennisController.cs" />
     <Compile Include="Criterias\EditCurrencyCriteria.cs" />
     <Compile Include="Criterias\AddCurrencyCriteria.cs" />
     <Compile Include="Criterias\GetCurrencyDetailCriteria.cs" />

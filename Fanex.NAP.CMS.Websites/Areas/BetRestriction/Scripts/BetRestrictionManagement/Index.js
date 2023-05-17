@@ -148,7 +148,7 @@ Fanex.CMS.BetRestrictionManagement = function () {
                     {
                         Name: 'BetLimitStatus',
                         Value:
-                            viewModel[i].SportName === 'Basketball'
+                            viewModel[i].SportType !== 1
                                 ? ''
                                 : '<div class="toggle-on-off ' +
                                   (viewModel[i].BetLimitStatus ? 'status-on' : 'status-off') +

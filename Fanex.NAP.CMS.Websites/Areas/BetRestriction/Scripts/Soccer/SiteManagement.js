@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    siteManagement = new Fanex.CMS.BetRestriction.SiteManagement();
+    siteManagement = new Fanex.CMS.BetRestrictionSoccer.SiteManagement();
     siteManagement.Init();
 });
 
-Namespace.Register('Fanex.CMS.BetRestriction.SiteManagement');
+Namespace.Register('Fanex.CMS.BetRestrictionSoccer.SiteManagement');
 
-Fanex.CMS.BetRestriction.SiteManagement = function () {
+Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
     var $this = $(this);
 
     var DOMElements = {
@@ -117,8 +117,7 @@ Fanex.CMS.BetRestriction.SiteManagement = function () {
     }
 
     this.Init = function () {
-        DOMElements.htmlformSiteManagement = $('#containerFormSiteManager').html();//.replace('display-none', '');
-        $('#containerFormSiteManager').remove();
+        DOMElements.htmlformSiteManagement = $('#containerFormSiteManager').clone();//.replace('display-none', '');
     }
 
     this.ShowAddSitePopup = function () {

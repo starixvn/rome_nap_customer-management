@@ -448,11 +448,20 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bet Restriction - Soccer.
+        ///   Looks up a localized string similar to Bet Restriction.
         /// </summary>
         public static string BetRestriction {
             get {
                 return ResourceManager.GetString("BetRestriction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Restriction - Badminton.
+        /// </summary>
+        public static string BetRestrictionBadminton {
+            get {
+                return ResourceManager.GetString("BetRestrictionBadminton", resourceCulture);
             }
         }
         
@@ -462,6 +471,24 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string BetRestrictionBasketball {
             get {
                 return ResourceManager.GetString("BetRestrictionBasketball", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Restriction - Soccer.
+        /// </summary>
+        public static string BetRestrictionSoccer {
+            get {
+                return ResourceManager.GetString("BetRestrictionSoccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Restriction - Tennis.
+        /// </summary>
+        public static string BetRestrictionTennis {
+            get {
+                return ResourceManager.GetString("BetRestrictionTennis", resourceCulture);
             }
         }
         

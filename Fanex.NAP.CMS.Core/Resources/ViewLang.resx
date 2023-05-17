@@ -763,7 +763,7 @@
     <value>Ex.Rate</value>
   </data>
   <data name="BetRestriction" xml:space="preserve">
-    <value>Bet Restriction - Soccer</value>
+    <value>Bet Restriction</value>
   </data>
   <data name="ViewOnly" xml:space="preserve">
     <value>View Only</value>
@@ -878,5 +878,14 @@
   </data>
   <data name="OverrideAutoSuspend_Nonlive" xml:space="preserve">
     <value>Override Auto Suspend Non-Live</value>
+  </data>
+  <data name="BetRestrictionTennis" xml:space="preserve">
+    <value>Bet Restriction - Tennis</value>
+  </data>
+  <data name="BetRestrictionSoccer" xml:space="preserve">
+    <value>Bet Restriction - Soccer</value>
+  </data>
+  <data name="BetRestrictionBadminton" xml:space="preserve">
+    <value>Bet Restriction - Badminton</value>
   </data>
 </root>

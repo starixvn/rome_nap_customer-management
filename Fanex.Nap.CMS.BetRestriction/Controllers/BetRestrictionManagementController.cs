@@ -11,7 +11,7 @@
 
     public class BetRestrictionManagementController : BaseController
     {
-        private readonly string _indexPath = "~/Areas/BetRestrictionManagement/Index.cshtml";
+        private readonly string _indexPath = "~/Areas/BetRestriction/Views/BetRestrictionManagement/Index.cshtml";
 
         private readonly IBetRestrictionManagementService _betRestrictionManagementService;
 

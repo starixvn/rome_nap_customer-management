@@ -25,7 +25,7 @@
     height: 25px;
 }
 
-body{
+body {
     overflow: visible !important;
 }
 
@@ -33,9 +33,73 @@ body{
     color: red;
 }
 
+.form .form-col {
+    display: flex;
+}
+
+
 .form .form-row select {
     -ms-box-sizing: content-box;
     -moz-box-sizing: content-box;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
+}
+
+
+.btn-search {
+    margin-left: 30px;
+}
+
+.form .form-row {
+    display: flex;
+}
+
+.form .button-row {
+    display: initial;
+    width: 100%;
+
+    > .edit-field {
+        float: right;
+    }
+}
+
+.form .form-row .form-col .lbl-field {
+    text-align: end;
+    margin-left: 18px;
+
+    > label {
+        vertical-align: middle;
+    }
+}
+
+.level-combobox {
+    width: 100px !important;
+}
+
+.currency-select {
+    .ui-multiselect-widget-header-filter {
+        width: 92% !important;
+    }
+}
+
+.ui-widget-overlay {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.combobox-select {
+    width: 245px;
+    height: 20px;
+    padding: 2px;
+    border: 1px solid #c4c4c4;
+    font-size: 0.9em;
+    color: #000000;
+}
+
+#formAccountManager {
+    width: 580px;
+}
+
+.hidden {
+    visibility: hidden;
 }

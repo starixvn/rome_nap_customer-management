@@ -16,7 +16,7 @@
     {
         private readonly IBetRestrictionService _betRestrictionService;
 
-        private const string _indexPath = "~/Areas/BetRestrictionBasketball/Index.cshtml";
+        private const string _indexPath = "~/Areas/BetRestriction/Views/Basketball/Index.cshtml";
 
         private const short _sportType = 2;
 
@@ -51,12 +51,8 @@
             => Json(_betRestrictionService.SearchDataGrid<AccountModel>(CreateSearchCriteriaFromRequest(request)));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
         public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
-
-        [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Read)]
-        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request, _sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]

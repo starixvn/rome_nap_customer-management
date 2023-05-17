@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    currencyManagement = new Fanex.CMS.BetRestriction.CurrencyManagement();
+    currencyManagement = new Fanex.CMS.BetRestrictionSoccer.CurrencyManagement();
     currencyManagement.Init();
 });
 
-Namespace.Register('Fanex.CMS.BetRestriction.CurrencyManagement');
+Namespace.Register('Fanex.CMS.BetRestrictionSoccer.CurrencyManagement');
 
-Fanex.CMS.BetRestriction.CurrencyManagement = function () {
+Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
     var $this = $(this);
 
     var oldData = {};
@@ -158,8 +158,7 @@ Fanex.CMS.BetRestriction.CurrencyManagement = function () {
     }
 
     this.Init = function () {
-        DOMElements.htmlformCurrencyManagement = $('#containerFormCurrencyManager').html();//.replace('display-none', '');
-        $('#containerFormCurrencyManager').remove();
+        DOMElements.htmlformCurrencyManagement = $('#containerFormCurrencyManager').clone();//.replace('display-none', '');
     }
 
     this.ShowAddCurrencyPopup = function () {

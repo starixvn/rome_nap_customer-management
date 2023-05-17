@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    accountManagement = new Fanex.CMS.BetRestriction.AccountManagement();
+    accountManagement = new Fanex.CMS.BetRestrictionSoccer.AccountManagement();
     accountManagement.Init();
 });
 
-Namespace.Register('Fanex.CMS.BetRestriction.AccountManagement');
+Namespace.Register('Fanex.CMS.BetRestrictionSoccer.AccountManagement');
 
-Fanex.CMS.BetRestriction.AccountManagement = function () {
+Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
     var $this = $(this);
 
     var oldData = {};
@@ -37,7 +37,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         DOMElements.noteInfoMessage = $('#noteInfoMessage');
         DOMElements.btnSave = $('#btnAccSave');
         DOMElements.btnCancel = $('#btnAccCancel');
-    }
+    };
 
     var bindingEvents = function () {
         DOMElements.txtPopupAccMaxBet.keydown(function (e) { return CMS.forceNumericInput(e, true); });
@@ -59,7 +59,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
         });
 
-    }
+    };
 
     var validateForm = function () {
         if (!Validator.validateForm(DOMElements.formAccountManager, 'ne'))
@@ -93,7 +93,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 MaxBet: DOMElements.txtPopupAccMaxBet.val(),
                 MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
                 FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
-            }
+            };
 
             if (CMS.isValueEqual(oldData, newData)) {
                 CMS.showErrorMessage(messages.NothingChanged);
@@ -102,7 +102,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         }
 
         return true;
-    }
+    };
 
     var saveAddEditAccount = function (isEdit) {
         CMS.disableInput();
@@ -119,22 +119,30 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
             MaxBet: DOMElements.txtPopupAccMaxBet.val(),
             MaxPerMatch: DOMElements.txtPopupAccMaxPerMatch.val(),
             FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled') ? '' : DOMElements.txtPopupAcc8RMAccount.val()
-        }
+        };
 
-        CMS.callAjax(
-            this,
-            isEdit ? 'CheckEditAccount' : 'CheckAddAccount',
-            params,
-            function (result) {
-                if (result.Code > 0) {
-                    CMS.showConfirmMessage('<span style="white-space: pre-line">' + result.Message + '</span>', function () { return saveAccount(params, isEdit); });
+        if (isEdit) {
+            saveAccount(params, isEdit);
+        } else {
+            CMS.callAjax(
+                this,
+                'CheckAddAccount',
+                params,
+                function (result) {
+                    if (result.Code > 0) {
+                        CMS.showConfirmMessage(
+                            '<span style="white-space: pre-line">' + result.Message + '</span>',
+                            function () {
+                                return saveAccount(params, isEdit);
+                            }
+                        );
+                    } else {
+                        saveAccount(params, isEdit);
+                    }
                 }
-                else {
-                    saveAccount(params, isEdit);
-                }
-            }
-        );
-    }
+            );
+        }
+    };
 
     var saveAccount = function (params, isEdit) {
         CMS.callAjax(
@@ -154,7 +162,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 }
             }
         );
-    }
+    };
 
     var loadAccountDetailForEdit = function (custId) {
         CMS.callAjax(
@@ -181,12 +189,12 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
             }
         );
-    }
+    };
 
     this.Init = function () {
         DOMElements.htmlformAccountManager = $('#containerFormAccountManager').html();//.replace('display-none', '');
         $('#containerFormAccountManager').remove();
-    }
+    };
 
     this.ShowAddAccountPopup = function () {
         oldData = null;
@@ -195,7 +203,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         bindingEvents();
         DOMElements.btnSave.click(function () { return saveAddEditAccount(false); });
         DOMElements.formAccountManager.removeClass('display-none');
-    }
+    };
 
     this.ShowEditAccountPopup = function (custId) {
         oldData = null;
@@ -207,7 +215,7 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
         DOMElements.txtPopupAccUsername.attr('disabled', 'disabled');
         DOMElements.btnSave.click(function () { return saveAddEditAccount(true); });
         DOMElements.formAccountManager.removeClass('display-none');
-    }
+    };
 
     this.RemoveAccount = function (custId, userName) {
         CMS.showConfirmMessage(messages.ConfirmRemoveAccount.replace('{0}', userName), function () {
@@ -228,5 +236,5 @@ Fanex.CMS.BetRestriction.AccountManagement = function () {
                 }
             );
         });
-    }
-}
+    };
+};

@@ -1,0 +1,108 @@
+﻿@using System.Linq;
+@using Fanex.Nap.CMS.Infrastructure.Resources;
+@using Fanex.NAP.CMS.Core.Resources;
+@using System.Text;
+@using Fanex.Nap.CMS.Customers.AppStart
+
+@model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = ViewLang.BetRestrictionBasketball;
+}
+@section Head
+{
+    <link rel="stylesheet" href="~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.css" />
+    @Styles.Render("~/styles/BetRestriction")
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewLang.BetRestrictionBasketball</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    <div class="filter-form">
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txtUserName">@ViewLang.Username</label>
+            </div>
+            <div class="edit-field col_7">
+                <input type="text" id="txtUserName" class="width-180" />
+            </div>
+            <div class="lbl-field col_3">
+                <label for="ddlLevel">@ViewLang.Level</label>
+            </div>
+            <div class="edit-field col_6">
+                <select id="ddlLevel" class="combobox-autocomplete level-combobox col_6">
+                    <option selected>All</option>
+                    <option value="4">@ViewLang.Super</option>
+                    <option value="3">@ViewLang.Master</option>
+                    <option value="2">@ViewLang.Agent</option>
+                    <option value="1">@ViewLang.Member</option>
+                </select>
+            </div>
+            <div class="lbl-field col_2">
+                <label for="ddlSite">@ViewLang.Site</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList(
+                "ddlSite",
+                (new List<SelectListItem> { new SelectListItem { Text = "All", Value = "0", Selected = true }
+                }).Union(Model.Sites),
+                new { @id = "ddlSite", @class = "combobox-autocomplete level-combobox col_7" })
+            </div>
+            <div class="lbl-field col_3">
+                <label for="ddlCurrency">@ViewLang.Currency</label>
+            </div>
+            <div class="currency-select col_5 width-160">
+                @Html.DropDownList(
+                "ddlCurrency",
+                Model.Currency,
+                new { @id = "ddlCurrency", @class = "width-160 col_5" })
+            </div>
+            <div class="submit width-auto col_6">
+                <input id="btnSearch" type="button" class="submit btn-search" value="@ViewLang.Search" />
+            </div>
+            @if (Model.HasHostPermission)
+            {
+                <div class="submit width-auto col_6">
+                    <input id="btnAddAccount" type="button" class="submit width-140" value="Add Account" />
+                </div>
+            }
+        </div>
+        <div class="filter-row"></div>
+    </div>
+</div>
+<div id="result-content">
+    <div class="display-none content-grid">
+        <div id="grdAccount" class="freegrid"></div>
+    </div>
+</div>
+@Html.Partial("~/Areas/BetRestriction/Views/Basketball/AccountManagement.cshtml")
+@section Foot
+{
+    <script src="~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.js"></script>
+    @Scripts.Render("~/scripts/BetRestriction")
+    @Scripts.Render("~/scripts/BetRestrictionBasketball")
+    <script type="text/javascript">
+    var messages = {
+        RequiredFieldError: '@Messages.RequiredFieldError',
+        AddAccountSuccessfully: '@Messages.BetRestriction_AddAccountSuccessfully',
+        UpdateAccountSuccessfully: '@Messages.BetRestriction_UpdateAccountSuccessfully',
+        RemoveAccountSuccessfully: '@Messages.BetRestriction_RemoveAccountSuccessfully',
+        ConfirmRemoveAccount: '@Labels.BetRestriction_ConfirmRemoveAccount',
+        NothingChanged: '@Messages.NothingChanged',
+    };
+
+    var resources = {
+        FollowUpperLevel: '@Labels.FollowUpperLevel',
+        None: '@Labels.None'
+    };
+
+    var hasHostPermission = @Json.Encode(Model.HasHostPermission);
+
+    var betRestriction, accountManagement;
+    </script>
+}

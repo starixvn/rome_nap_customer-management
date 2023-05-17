@@ -13,25 +13,25 @@
     using Fanex.Nap.CMS.BetRestriction.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
 
-    public class BetRestrictionController : BaseController
+    public class BetRestrictionSoccerController : BaseController
     {
         private readonly IBetRestrictionService _betRestrictionService;
 
-        private const string _indexPath = "~/Areas/BetRestriction/Index.cshtml";
+        private const string _indexPath = "~/Areas/BetRestriction/Views/Soccer/Index.cshtml";
 
         private const short _sportType = 1;
 
-        public BetRestrictionController() : this(null)
+        public BetRestrictionSoccerController() : this(null)
         {
         }
 
-        public BetRestrictionController(IBetRestrictionService betRestrictionService)
+        public BetRestrictionSoccerController(IBetRestrictionService betRestrictionService)
         {
             _betRestrictionService = betRestrictionService ?? new BetRestrictionService();
         }
 
         [HttpGet]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new BetRestrictionViewModel
@@ -43,7 +43,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Read)]
         public JsonResult Search(SearchRequest request)
             => Json(_betRestrictionService.Search(CreateSearchCriteriaFromRequest(request)));
 
@@ -57,15 +57,11 @@
             => Json(_betRestrictionService.SearchDataGrid<CurrencyModel>(new SearchCurrencyCriteria(request.PageSize, request.PageIndex)));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
-        public JsonResult CheckEditAccount(AccountRequest request) => Json(_betRestrictionService.CheckEditAccount(request, _sportType));
-
-        [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult AddAccount(AccountRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new AddAccountCriteria
         {
             UserName = request.UserName,
@@ -81,11 +77,11 @@
 
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Read)]
         public JsonResult GetAccountDetail(int custId) => Json(_betRestrictionService.GetAccountDetailForEdit(custId, _sportType));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult EditAccount(AccountRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new EditAccountCriteria
         {
             CustId = request.CustId,
@@ -100,7 +96,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult RemoveAccount(int custId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveAccountCriteria
         {
             CustId = custId,
@@ -110,7 +106,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult AddSite(SiteRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new AddSiteCriteria
         {
             SiteId = request.SiteId,
@@ -122,15 +118,15 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Read)]
         public JsonResult GetSiteDetail(int siteId) => Json(_betRestrictionService.GetSiteDetailForEdit(siteId));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Read)]
         public JsonResult GetCurrencyDetail(int exchangeId, int type) => Json(_betRestrictionService.GetCurrencyDetailForEdit(exchangeId, type));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult EditSite(SiteRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new EditSiteCriteria
         {
             SiteId = request.SiteId,
@@ -142,7 +138,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult RemoveSite(int siteId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveSiteCriteria
         {
             SiteId = siteId,
@@ -151,7 +147,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult AddCurrency(CurrencyRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new AddCurrencyCriteria
         {
             ExchangeId = request.ExchangeId,
@@ -164,7 +160,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult EditCurrency(CurrencyRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new EditCurrencyCriteria
         {
             ExchangeId = request.ExchangeId,
@@ -178,7 +174,7 @@
         }));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]
         public JsonResult RemoveCurrency(CurrencyRequest request) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveCurrencyCriteria
         {
             ExchangeId = request.ExchangeId,

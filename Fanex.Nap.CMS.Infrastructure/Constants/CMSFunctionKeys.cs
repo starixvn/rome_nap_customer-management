@@ -106,8 +106,10 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string Basketball_UploadVirtualRate = "Basketball_UploadVirtualRate";
 
         public const string ManageRobots2 = "ManageRobots2";
-        public const string BetRestriction = "BetRestriction";
+        public const string BetRestriction_Soccer = "BetRestriction_Soccer";
         public const string BetRestriction_BasketBall = "BetRestriction_BasketBall";
+        public const string BetRestriction_Badminton = "BetRestriction_Badminton";
+        public const string BetRestriction_Tennis = "BetRestriction_Tennis";
         public const string OnOffBetRestriction = "OnOffBetRestriction";
 
         public const string BetLimitTypeControl = "BetLimitTypeControl";
@@ -138,7 +140,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string ChatbotHistory = "ChatbotHistory";
         public const string ChatbotMapping = "ChatbotMapping";
         public const string NotificationList = "NotificationList";
-        
+
         //Accounting site
         public const string SpecialSites = "[AccessSpecialSites]";
 

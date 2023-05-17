@@ -1,11 +1,11 @@
 ﻿$(document).ready(function () {
-    accountManagement = new Fanex.CMS.BetRestrictionBasketball.AccountManagement();
+    accountManagement = new Fanex.CMS.BetRestrictionBadminton.AccountManagement();
     accountManagement.Init();
 });
 
-Namespace.Register('Fanex.CMS.BetRestrictionBasketball.AccountManagement');
+Namespace.Register('Fanex.CMS.BetRestrictionBadminton.AccountManagement');
 
-Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
+Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
     var oldData = {};
 
     var DOMElements = {
@@ -169,26 +169,30 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
             FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled')
                 ? ''
-                : DOMElements.txtPopupAcc8RMAccount.val(),
+                : DOMElements.txtPopupAcc8RMAccount.val()
         };
 
-        CMS.callAjax(
-            this,
-            isEdit ? 'CheckEditAccount' : 'CheckAddAccount',
-            params,
-            function (result) {
-                if (result.Code > 0) {
-                    CMS.showConfirmMessage(
-                        '<span style="white-space: pre-line">' + result.Message + '</span>',
-                        function () {
-                            return saveAccount(params, isEdit);
-                        }
-                    );
-                } else {
-                    saveAccount(params, isEdit);
+        if (isEdit) {
+            saveAccount(params, isEdit);
+        } else {
+            CMS.callAjax(
+                this,
+                'CheckAddAccount',
+                params,
+                function (result) {
+                    if (result.Code > 0) {
+                        CMS.showConfirmMessage(
+                            '<span style="white-space: pre-line">' + result.Message + '</span>',
+                            function () {
+                                return saveAccount(params, isEdit);
+                            }
+                        );
+                    } else {
+                        saveAccount(params, isEdit);
+                    }
                 }
-            }
-        );
+            );
+        }
     };
 
     var saveAccount = function (params, isEdit) {
@@ -236,7 +240,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
 
     this.ShowAddAccountPopup = function () {
         oldData = null;
-        CMS.modal('Add Bet Restricted - Basketball Account', DOMElements.htmlformAccountManager);
+        CMS.modal('Add Bet Restricted - Badminton Account', DOMElements.htmlformAccountManager);
         cacheDOMElements();
         bindingEvents();
         DOMElements.selPopupAccLiveBetAccept.combobox();
@@ -250,7 +254,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
     this.ShowEditAccountPopup = function (custId) {
         oldData = null;
         CMS.disableInput();
-        CMS.modal('Edit Bet Restricted - Basketball Account', DOMElements.htmlformAccountManager);
+        CMS.modal('Edit Bet Restricted - Badminton Account', DOMElements.htmlformAccountManager);
         $('#popupAccUsernameRequired').remove();
         cacheDOMElements();
         bindingEvents();

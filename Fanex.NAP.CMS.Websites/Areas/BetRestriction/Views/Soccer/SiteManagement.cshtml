@@ -2,7 +2,7 @@
 @using Fanex.Nap.CMS.Infrastructure.Resources;
 @model Fanex.Nap.CMS.BetRestriction.ViewModels.BetRestrictionViewModel
 <div id="containerFormSiteManager">
-    @using (Html.BeginForm("", "BetRestriction", FormMethod.Post, new { id = "formSiteManagement", @class = "form display-none", @onsubmit = "return false;" }))
+    @using (Html.BeginForm("", "BetRestrictionSoccer", FormMethod.Post, new { id = "formSiteManagement", @class = "form display-none", @onsubmit = "return false;" }))
     {
         <div id="div-popupResult-message" class="inline-message"></div>
         <div class="form-row">
@@ -56,7 +56,6 @@
             </div>
         </div>
         <div class="form-row button-row">
-            <div class="lbl-field normal-label width-120"></div>
             <div class="edit-field">
                 <button type="button" id="btnSiteSave" class="blue-button">@ViewLang.Save</button>
                 <button type="button" id="btnSiteCancel" class="red-button">@ViewLang.Cancel</button>

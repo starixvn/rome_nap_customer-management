@@ -21,8 +21,6 @@
 
         Result CheckAddAccount(AccountRequest request, short sportType);
 
-        Result CheckEditAccount(AccountRequest request, short sportType);
-
         EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType);
 
         EditSiteViewModel GetSiteDetailForEdit(int siteId);

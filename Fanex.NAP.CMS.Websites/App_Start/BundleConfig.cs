@@ -32,7 +32,6 @@ namespace Fanex.NAP.CMS.Websites
             RegisterLossControlBundles(bundles);
             RegisterCreditCollectionBundles(bundles);
             RegisterBetRestrictionBundles(bundles);
-            RegisterBetRestrictionBasketballBundles(bundles);
             RegisterBetRestrictionManagementBundles(bundles);
 
             TurnoverControlBundleConfig.RegisterAll(bundles);
@@ -223,32 +222,35 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css",
                 "~/Areas/BetRestriction/Styles/Index.less");
             bundles.Add(new ScriptBundle("~/scripts/BetRestriction").Include(
-                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js",
-                "~/Areas/BetRestriction/Scripts/Index.js",
-                "~/Areas/BetRestriction/Scripts/AccountManagement.js",
-                "~/Areas/BetRestriction/Scripts/SiteManagement.js",
-                "~/Areas/BetRestriction/Scripts/CurrencyManagement.js"));
-        }
+                "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js"));
 
-        public static void RegisterBetRestrictionBasketballBundles(BundleCollection bundles)
-        {
-            bundles.AddAndInclude(
-                "~/styles/BetRestrictionBasketball",
-                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.css",
-                "~/Areas/BetRestrictionBasketball/Styles/Index.less");
+
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionSoccer").Include(
+                "~/Areas/BetRestriction/Scripts/Soccer/Index.js",
+                "~/Areas/BetRestriction/Scripts/Soccer/AccountManagement.js",
+                "~/Areas/BetRestriction/Scripts/Soccer/SiteManagement.js",
+                "~/Areas/BetRestriction/Scripts/Soccer/CurrencyManagement.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/BetRestrictionBasketball").Include(
-               "~/Scripts/Libs/Fanex.Multiselect/jquery.multiSelect.js",
-               "~/Areas/BetRestrictionBasketball/Scripts/Index.js",
-               "~/Areas/BetRestrictionBasketball/Scripts/AccountManagement.js"));
+                "~/Areas/BetRestriction/Scripts/Basketball/Index.js",
+                "~/Areas/BetRestriction/Scripts/Basketball/AccountManagement.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionBadminton").Include(
+                "~/Areas/BetRestriction/Scripts/Badminton/Index.js",
+                "~/Areas/BetRestriction/Scripts/Badminton/AccountManagement.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionTennis").Include(
+                "~/Areas/BetRestriction/Scripts/Tennis/Index.js",
+                "~/Areas/BetRestriction/Scripts/Tennis/AccountManagement.js"));
         }
 
         public static void RegisterBetRestrictionManagementBundles(BundleCollection bundles)
         {
             bundles.AddAndInclude(
                 "~/styles/BetRestrictionManagement",
-                "~/Areas/BetRestrictionManagement/Styles/Index.less");
+                "~/Areas/BetRestriction/Styles/BetRestrictionManagement/Index.less");
             bundles.Add(new ScriptBundle("~/scripts/BetRestrictionManagement").Include(
-                "~/Areas/BetRestrictionManagement/Scripts/Index.js"));
+                "~/Areas/BetRestriction/Scripts/BetRestrictionManagement/Index.js"));
         }
     }
 }

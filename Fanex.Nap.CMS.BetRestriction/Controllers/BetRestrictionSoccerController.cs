@@ -37,8 +37,10 @@
             var viewModel = new BetRestrictionViewModel
             {
                 Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
-                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria())
+                Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria()),
+                LeagueGroups = _betRestrictionService.GetLeagueGroup(new GetAllLeagueGroupCriteria(_sportType))
             };
+
             return View(_indexPath, viewModel);
         }
 
@@ -69,6 +71,7 @@
             MaxBet = request.MaxBet,
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
+            LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
@@ -89,6 +92,7 @@
             MaxBet = request.MaxBet,
             MaxPerMatch = request.MaxPerMatch,
             SeizeBetTicket = request.SeizeBetTicket,
+            LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
@@ -142,7 +146,7 @@
         public JsonResult RemoveSite(int siteId) => Json(_betRestrictionService.ExecuteNonQuery(new RemoveSiteCriteria
         {
             SiteId = siteId,
-            UserId = AppSession.CurrentUser.Id,
+            UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
         }));
 

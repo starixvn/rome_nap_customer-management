@@ -196,6 +196,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to League Group is only for Seize Bet.
+        /// </summary>
+        public static string BetRestriction_WarningLeagueGroupRequired {
+            get {
+                return ResourceManager.GetString("BetRestriction_WarningLeagueGroupRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to proceed?.
         /// </summary>
         public static string BetRestriction_WarningProceed {
@@ -273,6 +282,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string Last6m {
             get {
                 return ResourceManager.GetString("Last6m", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League Group.
+        /// </summary>
+        public static string LeagueGroup {
+            get {
+                return ResourceManager.GetString("LeagueGroup", resourceCulture);
             }
         }
         

@@ -37,6 +37,7 @@
             {
                 Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
                 Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria()),
+                LeagueGroups = _betRestrictionService.GetLeagueGroup(new GetAllLeagueGroupCriteria(_sportType)),
                 HasHostPermission = HasRight(CMSFunctionKeys.BetRestriction_BasketBall, Constant.Policy.Host)
             };
             return View(_indexPath, viewModel);
@@ -61,6 +62,7 @@
             UserName = request.UserName,
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
+            LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
@@ -79,6 +81,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            LeagueGroupId = request.LeagueGroupId,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP

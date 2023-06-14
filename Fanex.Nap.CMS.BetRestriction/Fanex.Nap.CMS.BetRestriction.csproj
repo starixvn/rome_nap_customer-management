@@ -136,6 +136,7 @@
     <Compile Include="Controllers\BetRestrictionTennisController.cs" />
     <Compile Include="Criterias\EditCurrencyCriteria.cs" />
     <Compile Include="Criterias\AddCurrencyCriteria.cs" />
+    <Compile Include="Criterias\GetAllLeagueGroupCriteria.cs" />
     <Compile Include="Criterias\GetCurrencyDetailCriteria.cs" />
     <Compile Include="Criterias\GetSiteDetailCriteria.cs" />
     <Compile Include="Criterias\Management\EditSettingCriteria.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\CheckAddAccountResultModel.cs" />
+    <Compile Include="Models\LeagueGroupModel.cs" />
     <Compile Include="Models\Management\BetRestrictionSettingModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

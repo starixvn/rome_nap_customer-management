@@ -16,6 +16,8 @@ namespace Fanex.Nap.CMS.BetRestriction.ViewModels
 
         public byte? SeizeBetTicket { get; set; }
 
+        public string LeagueGroupId { get; set; }
+
         public decimal? MaxBet { get; set; }
 
         public decimal? MaxPerMatch { get; set; }

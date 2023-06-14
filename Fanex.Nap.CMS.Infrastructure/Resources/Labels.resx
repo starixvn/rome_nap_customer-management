@@ -273,4 +273,10 @@
   <data name="PleaseSelect" xml:space="preserve">
     <value>Please select</value>
   </data>
+  <data name="LeagueGroup" xml:space="preserve">
+    <value>League Group</value>
+  </data>
+  <data name="BetRestriction_WarningLeagueGroupRequired" xml:space="preserve">
+    <value>League Group is only for Seize Bet</value>
+  </data>
 </root>

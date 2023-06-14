@@ -24,6 +24,8 @@
 
         public byte? SeizeBetTicket { get; set; }
 
+        public string LeagueGroupID { get;set; }
+
         public string Currency { get; set; }
 
         public decimal? MaxBet { get; set; }

@@ -12,6 +12,8 @@
 
         public IEnumerable<SelectListItem> Currency { get; set; }
 
+        public IEnumerable<SelectListItem> LeagueGroups { get; set; }
+
         public bool HasHostPermission { get; set; }
     }
 }

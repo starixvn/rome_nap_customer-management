@@ -135,16 +135,22 @@
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Criteria\AddPolicyCriteria.cs" />
     <Compile Include="Criteria\AddRuleCriteria.cs" />
+    <Compile Include="Criteria\AddSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\AssignSiteSettingCriteria.cs" />
     <Compile Include="Criteria\CommandCriteriaBase.cs" />
+    <Compile Include="Criteria\DeleteSpreadCriteria.cs" />
+    <Compile Include="Criteria\EditSpreadRuleCriteria.cs" />
+    <Compile Include="Criteria\EnableSpreadCriteria.cs" />
     <Compile Include="Criteria\GetDuplicatedSiteSettingCriteria.cs" />
     <Compile Include="Criteria\GetPagedRuleListCriteria.cs" />
     <Compile Include="Criteria\GetPolicyCriteria.cs" />
     <Compile Include="Criteria\GetPolicyTitleCriteria.cs" />
     <Compile Include="Criteria\GetRuleListBySportType.cs" />
     <Compile Include="Criteria\GetSiteSettingCriteria.cs" />
+    <Compile Include="Criteria\GetSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\QueryCriteriaBase.cs" />
     <Compile Include="Criteria\EditPolicyCriteria.cs" />
     <Compile Include="Criteria\EditRuleCriteria.cs" />
@@ -158,6 +164,7 @@
     <Compile Include="DataAccesses\PolicyDataAccess.cs" />
     <Compile Include="DataAccesses\RuleDataAccess.cs" />
     <Compile Include="DataAccesses\SiteDataAccess.cs" />
+    <Compile Include="DataAccesses\SpreadDataAccess.cs" />
     <Compile Include="Models\ExcelError.cs" />
     <Compile Include="Models\LeagueGroup.cs" />
     <Compile Include="Models\PagedSiteSetting.cs" />
@@ -167,12 +174,15 @@
     <Compile Include="Models\PagedRule.cs" />
     <Compile Include="Models\SiteSetting.cs" />
     <Compile Include="Models\SiteSettingExcel.cs" />
+    <Compile Include="Models\SpreadRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddPolicyRequest.cs" />
     <Compile Include="Requests\AddRuleRequest.cs" />
+    <Compile Include="Requests\AddEditSpreadRuleRequest.cs" />
     <Compile Include="Requests\AssignSiteSettingRequest.cs" />
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
     <Compile Include="Requests\SearchCustomerClassSettingRequest.cs" />
+    <Compile Include="Requests\SearchSpreadRuleRequest.cs" />
     <Compile Include="Requests\SiteCurrencyRequest.cs" />
     <Compile Include="Requests\CustomerClassRuleTitleRequest.cs" />
     <Compile Include="Requests\EnableRuleRequest.cs" />
@@ -182,16 +192,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Responses\AddSpreadRuleResponse.cs" />
     <Compile Include="Services\FilterService.cs" />
     <Compile Include="Services\PolicyService.cs" />
     <Compile Include="Services\RuleService.cs" />
     <Compile Include="Services\SiteService.cs" />
     <Compile Include="Services\SiteUploadService.cs" />
+    <Compile Include="Services\SpreadService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerClassSettingViewModel.cs" />
     <Compile Include="ViewModels\PolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="ViewModels\SiteViewModel.cs" />
+    <Compile Include="ViewModels\SpreadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -210,5 +223,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

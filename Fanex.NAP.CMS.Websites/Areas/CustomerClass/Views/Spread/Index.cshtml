@@ -1,0 +1,82 @@
+﻿@using Newtonsoft.Json
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Labels.SpreadManagement;
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
+}
+
+@section Head {
+    @Styles.Render(CustomerClassBundlesConfig.SpreadStyles)
+}
+
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    <form class="filter-form" id="formSearch">
+        <div class="filter-row last-row">
+            <div class="lbl-field col_4">
+                <label>@Labels.CustomerClass</label>
+            </div>
+            <div class="edit-field col_6">
+                <div id="ddlCustomerClasses"></div>
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Spread</label>
+            </div>
+            <div class="edit-field col_4">
+                <input id="filterSpread" type="text" />
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Site</label>
+            </div>  
+            <div class="edit-field col_8">
+                <div id="ddlSites"></div>
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_6">
+                <div id="ddlCurrencies"></div>
+            </div>
+            <div class="submit width-auto">
+                <button type="submit" class="submit">@Labels.Search</button>
+                @if (Model.HasHostPermission)
+                {
+                    <button type="button" class="green-button" id="btnAdd">@Labels.Add</button>
+                }
+            </div>
+        </div>
+    </form>
+</div>
+<div class="content-grid">
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+
+@section Foot {
+    <script type="text/javascript">
+        const resources = {
+            title: "@Labels.Title",
+            customerClass: "@Labels.CustomerClass",
+            site: "@Labels.Site",
+            currency: "@Labels.Currency",
+            platform: "@Labels.Platform",
+            spread: "@Labels.Spread",
+            enable: "@Labels.Enable",
+            action: "@Labels.Action",
+            all: "@Labels.All",
+            yes: "@Labels.Yes",
+            no: "@Labels.No"
+        };
+        const customerClassList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.CustomerClasses, jsonSettings))');
+        const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
+        const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');
+    </script>
+    @Scripts.Render(CustomerClassBundlesConfig.SpreadScripts)
+}

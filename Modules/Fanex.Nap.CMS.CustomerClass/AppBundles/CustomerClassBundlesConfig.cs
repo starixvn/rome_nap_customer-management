@@ -17,6 +17,10 @@
         public const string SiteStyles = "~/bundles/customerclass/site-styles";
         public const string SiteScripts = "~/bundles/customerclass/site-scripts";
 
+
+        public const string SpreadStyles = "~/bundles/customerclass/spread-styles";
+        public const string SpreadScripts = "~/bundles/customerclass/spread-scripts";
+
         private const string FanexMultiSelectStyle = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
         private const string FanexMultiSelectCustomStyle = "~/Content/MultipleSelect/fanex.multiSelect-custom.less";
         private const string FanexMultiSelectScript = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
@@ -26,7 +30,8 @@
             .RegisterCustomerClassSettingBundles()
             .RegisterRuleBundles()
             .RegisterPolicyBundles()
-            .RegisterSiteBundles();
+            .RegisterSiteBundles()
+            .RegisterSpreadBundles();
 
         private static BundleCollection RegisterCustomerClassSettingBundles(this BundleCollection bundles)
         {
@@ -88,6 +93,23 @@
                 "~/Areas/CustomerClass/Scripts/siteManagementAssignSiteSetting.js",
                 "~/Areas/CustomerClass/Scripts/siteManagementUpload.js",
                 "~/Areas/CustomerClass/Scripts/siteManagement.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterSpreadBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                SpreadStyles,
+                FanexMultiSelectStyle,
+                FanexMultiSelectCustomStyle,
+                "~/Areas/CustomerClass/Styles/spreadManagement.less");
+
+            bundles.Add(new ScriptBundle(SpreadScripts).Include(
+                FanexMultiSelectScript,
+                "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
+                "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
+                "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
 
             return bundles;
         }

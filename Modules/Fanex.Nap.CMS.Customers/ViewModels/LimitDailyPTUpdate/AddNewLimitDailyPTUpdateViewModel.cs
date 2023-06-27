@@ -11,12 +11,13 @@
         [AllowHtml]
         public string SMAs { get; set; }
 
-        public byte Site { get; set; }
+        public int Site { get; set; }
 
         public byte Currency { get; set; }
 
         public int UserId { get; set; }
 
         public string IP { get; set; }
+        public bool LimitNewAccUpdPT { get; set; }
     }
 }

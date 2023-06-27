@@ -221,6 +221,7 @@
     <Compile Include="Criteria\LimitDailyPTUpdate\GetCurrencyListCriteria.cs" />
     <Compile Include="Criteria\LimitDailyPTUpdate\GetLimitDailyPTUpdateListCriteria.cs" />
     <Compile Include="Criteria\LimitDailyPTUpdate\GetProductListCriteria.cs" />
+    <Compile Include="Criteria\LimitDailyPTUpdate\UpdateLimitPTUpdateNewAccountCriteria.cs" />
     <Compile Include="Criteria\LimitDailyPTUpdate\RemoveLimitDailyPTUpdateCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\AddNewLimitCriteria.cs" />
     <Compile Include="Criteria\LimitNewDownline\GetCreditSiteCriteria.cs" />
@@ -287,7 +288,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
-    <Compile Include="Models\LimitDailyPTUpdate\AddNewOrRemoveLimitResult.cs" />
     <Compile Include="Models\LimitDailyPTUpdate\LimitDailyPTUpdateItem.cs" />
     <Compile Include="Models\LimitDailyPTUpdate\LimitDailyPTUpdateReport.cs" />
     <Compile Include="Models\LimitNewDownline\AddNewOrRemoveLimitResult.cs" />
@@ -418,6 +418,7 @@
     <Compile Include="ViewModels\BetList\AbnormalBetTicketViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\AddNewLimitDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\LimitDailyPTUpdateViewModel.cs" />
+    <Compile Include="ViewModels\LimitDailyPTUpdate\UpdateLimitPTUpdateNewAccountViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\RemoveLimitDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitDailyPTUpdate\SearchDailyPTUpdateViewModel.cs" />
     <Compile Include="ViewModels\LimitNewDownline\LimitNewDownlineViewModel.cs" />
@@ -474,10 +475,12 @@
     <EmbeddedResource Include="Resources\Labels.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Labels.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LimitDailyPTUpdateResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LimitDailyPTUpdateResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\LimitNewDownlineResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -171,4 +171,16 @@
   <data name="SMAUsernameIsRequired" xml:space="preserve">
     <value>SMA username is required.</value>
   </data>
+  <data name="UpdateLimitConfirmationMessage" xml:space="preserve">
+    <value>Are you sure you want to update Limit New Account Update PT of the selected rule?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="UpdateLimitSuccessfully" xml:space="preserve">
+    <value>Updated rule successfully</value>
+  </data>
 </root>

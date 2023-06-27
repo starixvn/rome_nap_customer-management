@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
+﻿using Fanex.Nap.CMS.Infrastructure.Models;
+
+namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 {
     using Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate;
@@ -15,8 +17,10 @@
 
         LimitDailyPTUpdateReport GetLimitReport(SearchDailyPTUpdateViewModel viewModel);
 
-        AddNewOrRemoveLimitResult AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel);
+        Result AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel);
 
-        AddNewOrRemoveLimitResult RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel);
+        Result RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel);
+
+        Result UpdateLimit(UpdateLimitPTUpdateNewAccountViewModel viewModel);
     }
 }

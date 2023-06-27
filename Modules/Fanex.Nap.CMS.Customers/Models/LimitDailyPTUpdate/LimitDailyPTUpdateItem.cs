@@ -17,11 +17,12 @@
         public string Site { get; set; }
 
         public int Currency { get; set; }
-
         public string CurrencyName { get; set; }
 
         public string TypeName => TypeConst.TypeList[Type];
 
         public byte Type { get; set; }
+
+        public bool LimitNewAccUpdPT { get; set; }
     }
 }

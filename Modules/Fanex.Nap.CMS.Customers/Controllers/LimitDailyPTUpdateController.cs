@@ -57,5 +57,15 @@
             viewModel.IP = CurrentContext.IP;
             return JsonData(service.RemoveLimit(viewModel), JsonRequestBehavior.DenyGet);
         }
+
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.LimitDailyPTUpdate, Policy = Constant.Policy.Host)]
+        public ActionResult Update(UpdateLimitPTUpdateNewAccountViewModel viewModel)
+        {
+            viewModel.UserId = CurrentSession.UserId;
+            viewModel.IP = CurrentContext.IP;
+            return JsonData(service.UpdateLimit(viewModel), JsonRequestBehavior.DenyGet);
+        }
     }
 }

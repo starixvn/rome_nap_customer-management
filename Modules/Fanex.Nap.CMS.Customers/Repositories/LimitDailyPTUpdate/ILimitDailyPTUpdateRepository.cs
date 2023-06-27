@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
+﻿using Fanex.Nap.CMS.Infrastructure.Models;
+
+namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 {
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate;
@@ -16,6 +18,6 @@
 
         IEnumerable<LimitDailyPTUpdateItem> GetLimitDailyPTUpdateList(GetLimitDailyPTUpdateListCriteria criteria);
 
-        AddNewOrRemoveLimitResult ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(ICriteria criteria);
     }
 }

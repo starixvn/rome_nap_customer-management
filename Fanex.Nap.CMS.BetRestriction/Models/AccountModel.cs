@@ -26,6 +26,8 @@
 
         public string LeagueGroupID { get;set; }
 
+        public byte AccumulateBalance { get; set; }
+
         public string Currency { get; set; }
 
         public decimal? MaxBet { get; set; }

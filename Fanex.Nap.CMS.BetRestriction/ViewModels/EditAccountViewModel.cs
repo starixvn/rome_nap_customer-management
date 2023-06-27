@@ -25,5 +25,7 @@ namespace Fanex.Nap.CMS.BetRestriction.ViewModels
         public int? FollowAccountID { get; set; }
 
         public string FollowAccount { get; set; }
+
+        public byte AccumulateBalance { get; set; }
     }
 }

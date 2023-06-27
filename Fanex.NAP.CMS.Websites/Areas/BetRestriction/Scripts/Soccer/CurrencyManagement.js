@@ -38,21 +38,32 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
         CachedDOMElements.selPopupCurrencyLiveBetAccept = $('#selPopupCurrencyLiveBetAccept');
         CachedDOMElements.selPopupCurrencySeizeBetTicket = $('#selPopupCurrencySeizeBetTicket');
         CachedDOMElements.txtPopupCurrency8RMAccount = $('#txtPopupCurrency8RMAccount');
+        CachedDOMElements.ckbCurrencyAccumulateBalance = $('#ckbCurrencyAccumulateBalance');
         CachedDOMElements.btnCurrencySave = $('#btnCurrencySave');
         CachedDOMElements.btnCurrencyCancel = $('#btnCurrencyCancel');
     };
 
     var bindingEvents = function () {
         CachedDOMElements.btnCurrencyCancel.click(function () { CMS.closePopup(); });
+        CachedDOMElements.ckbCurrencyAccumulateBalance.change(update8RMAccountStatus);
         CachedDOMElements.selPopupCurrencySeizeBetTicket.change(function () {
-            if ($(this).val() == '0' || $(this).val() == '') {
-                CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(CachedDOMElements.txtPopupCurrency8RMAccount);
+            if ($(this).val() === '0' || $(this).val() === '') {
+                CachedDOMElements.ckbCurrencyAccumulateBalance.attr('disabled', 'disabled');
             }
-            else
-                CachedDOMElements.txtPopupCurrency8RMAccount.removeAttr('disabled');
+            else {
+                CachedDOMElements.ckbCurrencyAccumulateBalance.removeAttr('disabled');
+                update8RMAccountStatus();
+            }
         });
+    };
 
+    var update8RMAccountStatus = function () {
+        if (CachedDOMElements.selPopupCurrencySeizeBetTicket.val() === '0' || CachedDOMElements.selPopupCurrencySeizeBetTicket.val() === '' || CachedDOMElements.ckbCurrencyAccumulateBalance.is(":checked")) {
+            CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+            CMS.clearTipsyError(CachedDOMElements.txtPopupCurrency8RMAccount);
+        } else {
+            CachedDOMElements.txtPopupCurrency8RMAccount.removeAttr('disabled');
+        }
     };
 
     var validateForm = function (isEdit) {
@@ -71,7 +82,7 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
             return false;
         }
 
-        if (CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '' || CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '0') {
+        if (CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '' || CachedDOMElements.selPopupCurrencySeizeBetTicket.val() == '0' || CachedDOMElements.ckbCurrencyAccumulateBalance.is(":checked")) {
             CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
         }
         else if (CachedDOMElements.txtPopupCurrency8RMAccount.val().length <= 0) {
@@ -86,7 +97,8 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                 NewType: CachedDOMElements.ddlPopupCurrencyType.val(),
                 LiveBetAccept: CachedDOMElements.selPopupCurrencyLiveBetAccept.val(),
                 SeizeBetTicket: CachedDOMElements.selPopupCurrencySeizeBetTicket.val(),
-                FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val()
+                FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val(),
+                AccumulateBalance: CachedDOMElements.ckbCurrencyAccumulateBalance.attr('disabled') || !CachedDOMElements.ckbCurrencyAccumulateBalance.is(":checked") ? 0 : 1
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -111,8 +123,9 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
             NewType: CachedDOMElements.ddlPopupCurrencyType.val(),
             LiveBetAccept: CachedDOMElements.selPopupCurrencyLiveBetAccept.val(),
             SeizeBetTicket: CachedDOMElements.selPopupCurrencySeizeBetTicket.val(),
-            FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val()
-        }
+            FollowAccount: CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupCurrency8RMAccount.val(),
+            AccumulateBalance: CachedDOMElements.ckbCurrencyAccumulateBalance.attr('disabled') || !CachedDOMElements.ckbCurrencyAccumulateBalance.is(":checked") ? 0 : 1
+        };
 
         CMS.callAjax(
             this,
@@ -145,7 +158,8 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                     NewType: result.Type + '',
                     LiveBetAccept: result.LiveBetAccept + '',
                     SeizeBetTicket: result.SeizeBetTicket == null ? '' : result.SeizeBetTicket,
-                    FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount
+                    FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
+                    AccumulateBalance: result.AccumulateBalance
                 };
 
                 CachedDOMElements.hidExchangeId.val(result.ExchangeId);
@@ -154,8 +168,9 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
                 CachedDOMElements.ddlPopupCurrencyType.val(result.Type);
                 CachedDOMElements.hidCurrentType.val(result.Type);
                 CachedDOMElements.selPopupCurrencyLiveBetAccept.val(result.LiveBetAccept);
-                CachedDOMElements.selPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
                 CachedDOMElements.txtPopupCurrency8RMAccount.val(result.FollowAccount);
+                CachedDOMElements.ckbCurrencyAccumulateBalance.prop('checked', result.AccumulateBalance);
+                CachedDOMElements.selPopupCurrencySeizeBetTicket.val(result.SeizeBetTicket).change();
             }
         );
     };

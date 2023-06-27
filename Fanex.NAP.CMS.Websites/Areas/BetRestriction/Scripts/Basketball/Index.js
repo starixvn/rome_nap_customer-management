@@ -113,7 +113,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 3 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 4 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
                     ]
@@ -187,6 +187,12 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     AllowTruncate: true,
                 },
                 {
+                    HeaderText: 'Accumulate Balance',
+                    Width: 80, Name: 'AccumulateBalance',
+                    HeaderAlign: 'center',
+                    CellAlign: 'center'
+                },
+                {
                     HeaderText: 'Currency',
                     Width: 115,
                     Name: 'Currency',
@@ -235,6 +241,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     },
                     { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     {
                         Name: 'Action',

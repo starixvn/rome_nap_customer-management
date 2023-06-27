@@ -88,6 +88,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accumulate Balance.
+        /// </summary>
+        public static string AccumulateBalance {
+            get {
+                return ResourceManager.GetString("AccumulateBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Action.
         /// </summary>
         public static string Action {

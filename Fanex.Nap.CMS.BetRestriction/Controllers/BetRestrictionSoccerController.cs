@@ -73,6 +73,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
@@ -94,6 +95,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
@@ -118,6 +120,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             IP = CurrentContext.IP
         }));
 
@@ -138,6 +141,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             IP = CurrentContext.IP
         }));
 
@@ -158,6 +162,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             Type = request.Type,
             IP = CurrentContext.IP,
             UserId = CurrentSession.UserId
@@ -171,6 +176,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             CurrentType = request.Type,
             NewType = request.NewType,
             IP = CurrentContext.IP,

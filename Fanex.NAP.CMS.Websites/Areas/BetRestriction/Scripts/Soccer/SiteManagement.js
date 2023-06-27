@@ -32,21 +32,33 @@ Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
         CachedDOMElements.selPopupSiteLiveBetAccept = $('#selPopupSiteLiveBetAccept');
         CachedDOMElements.selPopupSiteSeizeBetTicket = $('#selPopupSiteSeizeBetTicket');
         CachedDOMElements.txtPopupSite8RMAccount = $('#txtPopupSite8RMAccount');
+        CachedDOMElements.ckbSiteAccumulateBalance = $('#ckbSiteAccumulateBalance');
         CachedDOMElements.btnSiteSave = $('#btnSiteSave');
         CachedDOMElements.btnSiteCancel = $('#btnSiteCancel');
     };
 
     var bindingEvents = function () {
         CachedDOMElements.btnSiteCancel.click(function () { CMS.closePopup(); });
+        CachedDOMElements.ckbSiteAccumulateBalance.change(update8RMAccountStatus);
         CachedDOMElements.selPopupSiteSeizeBetTicket.change(function () {
-            if ($(this).val() == '0') {
-                CachedDOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(CachedDOMElements.txtPopupSite8RMAccount);
+            if ($(this).val() === '0' || $(this).val() === '') {
+                CachedDOMElements.ckbSiteAccumulateBalance.attr('disabled', 'disabled');
             }
-            else
-                CachedDOMElements.txtPopupSite8RMAccount.removeAttr('disabled');
+            else {
+                CachedDOMElements.ckbSiteAccumulateBalance.removeAttr('disabled');
+                update8RMAccountStatus();
+            }
         });
 
+    };
+
+    var update8RMAccountStatus = function () {
+        if (CachedDOMElements.selPopupSiteSeizeBetTicket.val() === '0' || CachedDOMElements.selPopupSiteSeizeBetTicket.val() === '' || CachedDOMElements.ckbSiteAccumulateBalance.is(":checked")) {
+            CachedDOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
+            CMS.clearTipsyError(CachedDOMElements.txtPopupSite8RMAccount);
+        } else {
+            CachedDOMElements.txtPopupSite8RMAccount.removeAttr('disabled');
+        }
     };
 
     var validateForm = function (isEdit) {
@@ -60,7 +72,7 @@ Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
             return false;
         }
 
-        if (CachedDOMElements.selPopupSiteSeizeBetTicket.val() == '0') {
+        if (CachedDOMElements.selPopupSiteSeizeBetTicket.val() == '0' || CachedDOMElements.ckbSiteAccumulateBalance.is(":checked")) {
             CachedDOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
         }
         else if (CachedDOMElements.txtPopupSite8RMAccount.val().length <= 0) {
@@ -82,7 +94,8 @@ Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
             SiteId: isEdit ? CachedDOMElements.hidSiteId.val() : CachedDOMElements.ddlPopupSite.val(),
             LiveBetAccept: CachedDOMElements.selPopupSiteLiveBetAccept.val(),
             SeizeBetTicket: CachedDOMElements.selPopupSiteSeizeBetTicket.val(),
-            FollowAccount: CachedDOMElements.txtPopupSite8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupSite8RMAccount.val()
+            FollowAccount: CachedDOMElements.txtPopupSite8RMAccount.attr('disabled') ? '' : CachedDOMElements.txtPopupSite8RMAccount.val(),
+            AccumulateBalance: CachedDOMElements.ckbSiteAccumulateBalance.attr('disabled') || !CachedDOMElements.ckbSiteAccumulateBalance.is(":checked") ? 0 : 1
         };
 
         CMS.callAjax(
@@ -113,8 +126,9 @@ Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
                 CachedDOMElements.hidSiteId.val(result.SiteId);
                 CachedDOMElements.txtPopupSite.val(result.Site);
                 CachedDOMElements.selPopupSiteLiveBetAccept.val(result.LiveBetAccept);
-                CachedDOMElements.selPopupSiteSeizeBetTicket.val(result.SeizeBetTicket).change();
                 CachedDOMElements.txtPopupSite8RMAccount.val(result.FollowAccount);
+                CachedDOMElements.ckbSiteAccumulateBalance.prop('checked', result.AccumulateBalance);
+                CachedDOMElements.selPopupSiteSeizeBetTicket.val(result.SeizeBetTicket).change();
             }
         );
     };

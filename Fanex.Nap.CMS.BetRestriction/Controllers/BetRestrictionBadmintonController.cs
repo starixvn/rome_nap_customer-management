@@ -62,6 +62,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
@@ -79,6 +80,7 @@
             LiveBetAccept = request.LiveBetAccept,
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP

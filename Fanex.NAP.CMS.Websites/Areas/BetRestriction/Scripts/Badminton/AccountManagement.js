@@ -34,6 +34,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         DOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
         DOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
         DOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
+        DOMElements.ckbAccumulateBalance = $('#ckbAccumulateBalance');
         DOMElements.btnSave = $('#btnAccSave');
         DOMElements.btnCancel = $('#btnAccCancel');
     };
@@ -42,12 +43,26 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         DOMElements.btnCancel.click(function () {
             CMS.closePopup();
         });
-        DOMElements.selPopupAccSeizeBetTicket.change(function () {
-            if ($(this).val() == '0' || $(this).val() == 'FollowUpperLevel') {
-                DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
-                CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
-            } else DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+        DOMElements.ckbAccumulateBalance.change(function () {
+            update8RMAccountStatus();
         });
+        DOMElements.selPopupAccSeizeBetTicket.change(function () {
+            if (DOMElements.selPopupAccSeizeBetTicket.val() === '0' || DOMElements.selPopupAccSeizeBetTicket.val() === 'FollowUpperLevel') {
+                DOMElements.ckbAccumulateBalance.attr('disabled', 'disabled');
+            } else {
+                DOMElements.ckbAccumulateBalance.removeAttr('disabled');
+                update8RMAccountStatus();
+            }
+        });
+    };
+
+    var update8RMAccountStatus = function () {
+        if (DOMElements.selPopupAccSeizeBetTicket.val() === '0' || DOMElements.selPopupAccSeizeBetTicket.val() === 'FollowUpperLevel' || DOMElements.ckbAccumulateBalance.is(":checked")) {
+            DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+            CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
+        } else {
+            DOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+        }
     };
 
     var validateForm = function () {
@@ -91,7 +106,8 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
         if (
             DOMElements.selPopupAccSeizeBetTicket.val() == '' ||
             DOMElements.selPopupAccSeizeBetTicket.val() == 'FollowUpperLevel' ||
-            DOMElements.selPopupAccSeizeBetTicket.val() == '0'
+            DOMElements.selPopupAccSeizeBetTicket.val() == '0' ||
+            DOMElements.ckbAccumulateBalance.is(":checked")
         ) {
             DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
         } else if (DOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
@@ -108,6 +124,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
                 FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled')
                     ? ''
                     : DOMElements.txtPopupAcc8RMAccount.val(),
+                AccumulateBalance: DOMElements.ckbAccumulateBalance.attr('disabled') || !DOMElements.ckbAccumulateBalance.is(":checked") ? 0 : 1
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -170,7 +187,8 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
             SeizeBetTicket: DOMElements.selPopupAccSeizeBetTicket.val(),
             FollowAccount: DOMElements.txtPopupAcc8RMAccount.attr('disabled')
                 ? ''
-                : DOMElements.txtPopupAcc8RMAccount.val()
+                : DOMElements.txtPopupAcc8RMAccount.val(),
+            AccumulateBalance: DOMElements.ckbAccumulateBalance.attr('disabled') || !DOMElements.ckbAccumulateBalance.is(":checked") ? 0 : 1
         };
 
         if (isEdit) {
@@ -222,6 +240,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
                 SeizeBetTicket:
                     result.SeizeBetTicket == null ? 'FollowUpperLevel' : result.SeizeBetTicket + '',
                 FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
+                AccumulateBalance: result.AccumulateBalance
             };
 
             DOMElements.txtPopupAccUsername.val(result.Account);
@@ -229,7 +248,7 @@ Fanex.CMS.BetRestrictionBadminton.AccountManagement = function () {
             DOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh');
             DOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh');
             DOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
-
+            DOMElements.ckbAccumulateBalance.prop('checked', result.AccumulateBalance);
             DOMElements.selPopupAccSeizeBetTicket.trigger('change');
         });
     };

@@ -170,7 +170,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 3 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 4 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Bet Limit Control', Name: 'MaxBet', MergeColNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
@@ -188,6 +188,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                 { HeaderText: 'Seize Bet Ticket (%)', Width: 85, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'League Group', Width: 150, Name: 'LeagueGroup', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: '8RM Account', Width: 100, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'Accumulate Balance', Width: 80, Name: 'AccumulateBalance', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Currency', Width: 60, Name: 'Currency', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Max Bet', Width: 100, Name: 'MaxBet', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
                 { HeaderText: 'Max Per Match', Width: 100, Name: 'MaxPerMatch', HeaderAlign: 'center', CellAlign: 'right', FormatNumber: "0,0.00" },
@@ -225,6 +226,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
                     { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
@@ -264,6 +266,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                 { HeaderText: 'Live Bet Accept (Secs)', Width: 100, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Seize Bet Ticket (%)', Width: 100, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: '8RM Account', Width: 100, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'Accumulate Balance', Width: 80, Name: 'AccumulateBalance', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Action', Width: 100, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
@@ -293,6 +296,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
                     { Name: 'Action', Value: '<span class="ico-edit edit-site" data-site-id="' + viewModel.DataList[i].SiteId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-site" data-site-id="' + viewModel.DataList[i].SiteId + '" data-site-name="' + viewModel.DataList[i].Site + '"></span>' }
                 ]
             };
@@ -331,6 +335,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                 { HeaderText: 'Live Bet Accept (Secs)', Width: 100, Name: 'LiveBetAccept', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Seize Bet Ticket (%)', Width: 100, Name: 'SeizeBetTicket', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: '8RM Account', Width: 100, Name: 'FollowAccount', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+                { HeaderText: 'Accumulate Balance', Width: 80, Name: 'AccumulateBalance', HeaderAlign: 'center', CellAlign: 'center' },
                 { HeaderText: 'Action', Width: 100, Name: 'Action', HeaderAlign: 'center', CellAlign: 'center' }
             ],
             showTitle: true,
@@ -361,6 +366,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
                     { Name: 'Action', Value: '<span class="ico-edit edit-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-type="' + viewModel.DataList[i].Type + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-currency-name="' + viewModel.DataList[i].Currency + '" data-type="' + viewModel.DataList[i].Type + '"></span>' }
                 ]
             };

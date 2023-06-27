@@ -27,6 +27,7 @@ const ruleManagementAddOrEdit = (function ($) {
         txtMaxPerMatch = null,
         txtRepeatedBets = null,
         txtSeizeBet = null,
+        chkSeizeBetAccumulateBal = null,
         chkEnableParlay = null,
         //txtPeakHourSpread = null,
         reloadRuleGrid = null;
@@ -97,6 +98,7 @@ const ruleManagementAddOrEdit = (function ($) {
         disableSeizeBetTextbox(rule.SportType);
         txtSeizeBet.val(rule.SeizeBet);
 
+        chkSeizeBetAccumulateBal = $("#chkSeizeBetAccumulateBal").prop("checked", rule.SeizeBetAccumulateBal);
         chkEnableParlay = $("#chkEnableParlay").prop("checked", rule.EnableParlay);
         //txtPeakHourSpread = $("#txtPeakHourSpread").val(ruleManagementHelper.formatInteger(rule.PeakHourSpread));
     }
@@ -212,7 +214,8 @@ const ruleManagementAddOrEdit = (function ($) {
                 maxPerMatch: textToNumber(minBetMaxBetMaxPerMatch.maxPerMatch),
                 repeatedBets: textToNumber(repeatedBets),
                 seizeBet: textToNumber(seizeBet),
-                enableParlay: chkEnableParlay.is(":checked"),
+                seizeBetAccumulateBal: chkSeizeBetAccumulateBal.is(":checked"),
+                enableParlay: chkEnableParlay.is(":checked")
                 //peakHourSpread: textToNumber(peakHourSpread)
             };
         }

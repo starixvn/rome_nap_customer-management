@@ -474,4 +474,7 @@
   <data name="EditStatusSpreadSuccessfully" xml:space="preserve">
     <value>Edit Status Spread Successfully</value>
   </data>
+  <data name="SeizeBetAccumulateBal" xml:space="preserve">
+    <value>Seize Bet Accumulate Bal</value>
+  </data>
 </root>

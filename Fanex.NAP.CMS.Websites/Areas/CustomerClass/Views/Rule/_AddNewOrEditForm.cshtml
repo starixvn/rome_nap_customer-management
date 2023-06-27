@@ -130,20 +130,26 @@
                 <input type="text" class="text" id="txtSeizeBet" autocomplete="off" maxlength="3" data-val-range="0;100" /> %
             </div>
             <div class="lbl-field">
+                <label class="label" for="chkSeizeBetAccumulateBal">@Labels.SeizeBetAccumulateBal</label>
+            </div>
+            <div class="edit-field">
+                <input type="checkbox" class="chk-input" id="chkSeizeBetAccumulateBal" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
                 <label class="label" for="chkEnableParlay">@Labels.EnableParlay</label>
             </div>
             <div class="edit-field">
-                <input type="checkbox" id="chkEnableParlay" />
+                <input type="checkbox" class="chk-input" id="chkEnableParlay" />
             </div>
+            @*<div class="lbl-field">
+        <label class="label" for="txtPeakHourSpread">@Labels.PeakHourSpread</label>
         </div>
-        @*<div class="form-row">
-            <div class="lbl-field">
-                <label class="label" for="txtPeakHourSpread">@Labels.PeakHourSpread</label>
-            </div>
-            <div class="edit-field">
-                <input type="text" class="text" id="txtPeakHourSpread" autocomplete="off" maxlength="6" data-val-range="0;@maxValueShort" />
-            </div>
+        <div class="edit-field">
+            <input type="text" class="text" id="txtPeakHourSpread" autocomplete="off" maxlength="6" data-val-range="0;@maxValueShort" />
         </div>*@
+        </div>
     </fieldset>
     <div class="margin-top align-right">
         <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>

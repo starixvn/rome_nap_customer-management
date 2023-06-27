@@ -21,6 +21,7 @@
             int? maxPerMatch,
             byte? repeatedBets,
             byte? seizeBet,
+            bool seizeBetAccumulateBal,
             bool enableParlay,
             short? peakHourSpread,
             bool? enable,
@@ -46,6 +47,7 @@
             MaxPerMatch = maxPerMatch;
             RepeatedBets = repeatedBets;
             SeizeBet = seizeBet;
+            SeizeBetAccumulateBal = seizeBetAccumulateBal;
             EnableParlay = enableParlay;
             PeakHourSpread = peakHourSpread;
             Enable = enable;
@@ -91,6 +93,8 @@
         public byte? RepeatedBets { get; }
 
         public byte? SeizeBet { get; }
+
+        public bool SeizeBetAccumulateBal { get; }
 
         public bool EnableParlay { get; }
 

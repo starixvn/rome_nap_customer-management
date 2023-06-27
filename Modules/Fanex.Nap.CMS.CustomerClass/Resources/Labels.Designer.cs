@@ -943,6 +943,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seize Bet Accumulate Bal.
+        /// </summary>
+        public static string SeizeBetAccumulateBal {
+            get {
+                return ResourceManager.GetString("SeizeBetAccumulateBal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select All follow filter.
         /// </summary>
         public static string SelectAllFollowFilter {

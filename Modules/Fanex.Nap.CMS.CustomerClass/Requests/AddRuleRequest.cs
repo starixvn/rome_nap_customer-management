@@ -32,6 +32,8 @@
 
         public int? SeizeBet { get; set; }
 
+        public bool SeizeBetAccumulateBal { get; set; }
+
         public bool EnableParlay { get; set; }
 
         public int? PeakHourSpread { get; set; }

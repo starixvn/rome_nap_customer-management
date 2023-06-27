@@ -79,6 +79,8 @@ const policyManagementHelper = (function () {
             html.push(renderRuleSetting(resources.seizeBet, rule.SeizeBet + "%"));
         }
 
+        html.push(renderRuleSetting(resources.seizeBetAccumulateBal, showEnableValue(rule.SeizeBetAccumulateBal)));
+
         html.push(renderRuleSetting(resources.enableParlay, showEnableValue(rule.EnableParlay)));
 
         return `<div>${html.join(", ")}</div>`;

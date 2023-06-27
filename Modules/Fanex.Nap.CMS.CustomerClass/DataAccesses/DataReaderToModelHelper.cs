@@ -58,6 +58,7 @@
                 GetInt(reader["MaxPerMatch"]),
                 GetByte(reader["RepeatedBets"]),
                 GetByte(reader["SeizeBetTicket"]),
+                Convert.ToBoolean(reader["SeizeBetAccumulateBal"]),
                 Convert.ToBoolean(reader["EnableParlay"]),
                 GetShort(reader["PeakHourSpreadAdjustment"]),
                 enable,

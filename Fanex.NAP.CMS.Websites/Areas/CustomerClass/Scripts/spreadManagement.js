@@ -10,8 +10,7 @@
         ddlCurrencies = null,
         filterSpread = null,
         freeGrid = $("#freegrid"),
-        cachedDomAddNewRule = null,
-        errorDiv = $("#errorDiv"),
+        cachedAddNewRule = null,
         hasHostPermisson = null;
 
     const platforms = [{ Id: 1, Name: "Desktop" }, { Id: 2, Name: "Mobile" }, { Id: 3, Name: "APP" }, { Id: 4, Name: "Oddsfeed" }, { Id: 5, Name: "DirectAPI" }];
@@ -34,7 +33,7 @@
                 currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
                 spread: filterSpread.get()
             };
-
+            cachedAddNewRule = null;
             cachedFilter = formData;
             search();
         }).trigger("submit");
@@ -133,12 +132,14 @@
     }
 
     function renderGrid(data) {
-        cachedDomAddNewRule = null;
         cachedGridOptions = cachedGridOptions || defaultGridOptions();
 
         const dataJson = typeof data === "string" ? JSON.parse(data) : data;
         cachedGridOptions.bodyRows = buildBodyRows(dataJson);
         freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+        if (cachedAddNewRule !== null) {
+            enableRowForAdding();
+        }
     }
     
     function defaultGridOptions() {
@@ -185,7 +186,7 @@
             { Name: "colEnable", Value: renderEnableCell(rule.PolicyID, rule.PolicyTitle, rule.Enable) }
         ];
 
-        hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index) });
+        hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue != null) });
 
         return { Columns: columns, CustomAttr: `style="z-index: ${zindex}"`, CssClass: "position-relative" };
     }
@@ -194,12 +195,12 @@
         return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
     }
 
-    function renderActionCell(policyId, index) {
+    function renderActionCell(policyId, index, isEditting) {
         return [
-            `<span class="ico-edit mid-margin-right view-item" title="Edit" data-policyId="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-edit ${ isEditting ? "is-editting" : "" } mid-margin-right view-item" title="Edit" data-policyId="${policyId}" data-index="${index}" ></span>`,
             `<span class="ico-trash view-item" title="Delete" data-policyId="${policyId}"></span>`,
             `<span class="ico-save-16 mid-margin-right edit-item hidden" title="Save" data-policyId="${policyId}" data-index="${index}" ></span>`,
-            `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyId="${policyId}"></span>`
+            `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyId="${policyId}" data-index="${index}"></span>`
         ].join("");
     }
 
@@ -291,26 +292,38 @@
         freeGrid.find(".checkbox-enable")
             .off("click")
             .click(showEnableDisablePopup);
+        freeGrid.find(".is-editting").trigger('click');
     }
 
     function enableRowForAdding() {
-        if (!cachedGridOptions || $("#addNewTitle").length > 0 || cachedDomAddNewRule) {
+        if (!cachedGridOptions || $("#addNewTitle").length > 0) {
             return;
         }
+
+        if (cachedAddNewRule === null) {
+            cachedAddNewRule = {
+                PolicyTitle: "",
+                Spread: "",
+                CustomerClass: "",
+                Currencies: "",
+                Sites: "",
+                Platforms: "",
+                Enable: false
+            };
+        }
+
         cachedGridOptions.bodyRows.unshift(renderAddingRow(cachedGridOptions.bodyRows.length + 1));
         freeGrid.fanexGrid(cachedGridOptions);
-        cachedDomAddNewRule = {
-            title: $("#addNewTitle"),
-            customerClass: renderAddEditCustomerClass("ddlAddNewCustomerClass", ""),
-            site: renderAddEditSite("ddlAddNewSite", ""),
-            currency: renderAddEditCurrency("ddlAddNewCurrency", ""),
-            platform: renderAddEditPlatform("ddlAddNewPlatform", ""),
-            spread: new AutoNumeric("#addNewSpread", {
-                minimumValue: 0,
-                maximumValue: 20,
-                decimalPlaces: 1}),
-            enable: $("#addNewEnable")
-        };
+
+        $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
+        renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
+        renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
+        renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies);
+        renderAddEditPlatform("ddlAddNewPlatform", cachedAddNewRule.Platforms);
+        $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = $(`#addNewSpread`).val(); });
+        $(`#addNewEnable`).change(function () { cachedAddNewRule.Enable = $(`#addNewEnable`).is(":checked"); });
+        
+
         $("#btn-cancel-add").click(cancelAddNew);
         $("#btn-submit-add").click(submitAddNew);
         bindEventsAfterRenderGridSuccessfully();
@@ -333,7 +346,7 @@
         };
     }
 
-    function renderAddEditCustomerClass(divId, selectedValue) {
+    function renderAddEditCustomerClass(divId, selectedValue, index) {
         let optionList = [];
         let selectedValueList = selectedValue.split(",");
         customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: selectedValueList.includes(item.toString()), enable: true })
@@ -344,24 +357,38 @@
             {
                 minWidth: 248,
                 listData: optionList,
-                isCheckAll: false
+                isCheckAll: false,
+                onCheck: function () {
+                    if (index) {
+                        cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    } else {
+                        cachedAddNewRule.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    }
+                }
             }
         );
     }
 
-    function renderAddEditSite(divId, selectedValue) {
+    function renderAddEditSite(divId, selectedValue, index) {
         var listData = buildGroupSiteList(selectedValue.includes("AllCredit"), selectedValue.includes("AllDeposit"), selectedValue);
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
                 minWidth: 178,
                 listData: listData,
-                isCheckAll: false
+                isCheckAll: false,
+                onCheck: function () {
+                    if (index) {
+                        cachedData[index].edittingValue.Sites = getSelectedSites(divId);
+                    } else {
+                        cachedAddNewRule.Sites = getSelectedSites(divId);
+                    }
+                }
             }
         );
     }
 
-    function renderAddEditCurrency(divId, selectedValue) {
+    function renderAddEditCurrency(divId, selectedValue, index) {
         let optionList = [];
         let selectedValueList = selectedValue.split(",");
         currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: selectedValueList.includes(item.Id.toString()), enable: true })
@@ -372,12 +399,19 @@
             {
                 minWidth: 148,
                 listData: optionList,
-                isCheckAll: false
+                isCheckAll: false,
+                onCheck: function () {
+                    if (index) {
+                        cachedData[index].edittingValue.Currencies = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    } else {
+                        cachedAddNewRule.Currencies = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    }
+                }
             }
         );
     }
 
-    function renderAddEditPlatform(divId, selectedValue) {
+    function renderAddEditPlatform(divId, selectedValue, index) {
         let optionList = [];
         let selectedValueList = selectedValue.split(",");
         platforms.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: selectedValueList.includes(item.Id.toString()), enable: true })
@@ -388,7 +422,14 @@
             {
                 minWidth: 248,
                 listData: optionList,
-                isCheckAll: false
+                isCheckAll: false,
+                onCheck: function () {
+                    if (index) {
+                        cachedData[index].edittingValue.Platforms = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    } else {
+                        cachedAddNewRule.Platforms = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                    }
+                }
             }
         );
     }
@@ -404,38 +445,27 @@
         if (!cachedGridOptions || cachedGridOptions.bodyRows.length <= 0) {
             return;
         }
-        cachedDomAddNewRule = null;
-        cachedGridOptions.bodyRows.shift();
-        freeGrid.fanexGrid(cachedGridOptions);
+        cachedAddNewRule = null;
+        renderGrid(cachedData);
         bindEventsAfterRenderGridSuccessfully();
     }
 
     function submitAddNew() {
-        if (!cachedDomAddNewRule) {
+        if (!cachedAddNewRule) {
             return;
         }
-
-        var newRule = {
-            PolicyTitle: cachedDomAddNewRule.title.val(),
-            Spread: cachedDomAddNewRule.spread.get(),
-            CustomerClass: cachedDomAddNewRule.customerClass.fanexMultiSelect("getItems", true).join(),
-            Currencies: cachedDomAddNewRule.currency.fanexMultiSelect("getItems", true).join(),
-            Sites: getSelectedSites("ddlAddNewSite"),
-            Platforms: cachedDomAddNewRule.platform.fanexMultiSelect("getItems", true).join(),
-            Enable: cachedDomAddNewRule.enable.is(":checked")
-        };
 
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Spread/Add`),
-            newRule,
+            cachedAddNewRule,
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
-                    newRule.PolicyID = result.PolicyID;
+                    cachedAddNewRule.PolicyID = result.PolicyID;
                     CMS.showSuccessMessage(resultJson.Message);
-                    showAddedItem(newRule);
+                    showAddedItem();
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
                 }
@@ -462,15 +492,17 @@
         return selectedSites.join();
     }
 
-    function showAddedItem(newRule) {
-        cachedDomAddNewRule = null;
-        cachedGridOptions.bodyRows.shift();
-        cachedGridOptions.bodyRows.unshift(renderRuleCell(newRule));
-        freeGrid.fanexGrid(cachedGridOptions);
+    function showAddedItem() {
+        cachedData.unshift(cachedAddNewRule);
+        cachedAddNewRule = null;
+        renderGrid(cachedData);
+        bindEventsAfterRenderGridSuccessfully();
     }
 
     function cancelEditItem() {
         var rowEdit = $(this).closest('tr');
+        var index = $(this).data("index");
+        cachedData[index].edittingValue = null;
         rowEdit.find("div[class*=view-item]").removeClass("hidden");
         rowEdit.find("div[class*=edit-item]").addClass("hidden");
         rowEdit.find("input[class*=edit-item]").addClass("hidden");
@@ -486,22 +518,27 @@
         var rowEdit = $(this).closest('tr');
         var policyId = $(this).data("policyid");
         var index = $(this).data("index");
-        var editPolicy = cachedData[index];
-        $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle);
+        var editPolicy = cachedData[index].edittingValue || cachedData[index];
+        cachedData[index].edittingValue = { ...cachedData[index] };
+        $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
         rowEdit.find("div[class*=view-item]").addClass("hidden");
         rowEdit.find("div[class*=edit-item]").removeClass("hidden");
         rowEdit.find("input[class*=edit-item]").removeClass("hidden");
         rowEdit.find("span[class*=view-item]").addClass("hidden");
         rowEdit.find("span[class*=edit-item]").removeClass("hidden");
-        renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass);
-        renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites);
-        renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies);
-        renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms);
+        renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, index);
+        renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, index);
+        renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, index);
+        renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, index);
         new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
             maximumValue: 20,
             decimalPlaces: 1
         }).set(editPolicy.Spread);
+        
+        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
+        $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
+
 
         rowEdit.find("span[class*=ico-save-16]")
             .off("click")

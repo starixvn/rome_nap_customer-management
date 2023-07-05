@@ -38,7 +38,7 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchSpreadRuleRequest request)
-            => JsonData(spreadService.GetSpreadRules(request));
+            => JsonData(spreadService.GetSpreadRules(request), JsonRequestBehavior.AllowGet);
 
         [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddEditSpreadRuleRequest request)

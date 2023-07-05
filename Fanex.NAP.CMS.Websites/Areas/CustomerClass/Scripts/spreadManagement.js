@@ -22,7 +22,8 @@
         filterSpread = new AutoNumeric("#filterSpread", {
             minimumValue: 0,
             maximumValue: 20,
-            decimalPlaces: 1
+            decimalPlaces: 1,
+            onInvalidPaste: 'ignore'
         });
         $("#formSearch").submit(function (e) {
             e.preventDefault();
@@ -54,7 +55,7 @@
             creditOrLicensee.push({
                 value: item.Name,
                 text: item.Name,
-                checked: isChecked || selectedValueList.includes(item.Id.toString()),
+                checked: isChecked || selectedValueList.includes(item.Name.toString()),
                 enable: true
             });
         });
@@ -177,13 +178,13 @@
 
     function renderRuleCell(rule, index, zindex) {
         const columns = [
-            { Name: "colTitle", Value: `<div class="view-item">${rule.PolicyTitle}</div><input type="text" class="inputTitle edit-item hidden" id="editTitle-${rule.PolicyID}" />` },
+            { Name: "colTitle", Value: `<div class="view-item">${CMS.htmlEncode(rule.PolicyTitle) }</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" /></div>` },
             { Name: "colCustomerClass", Value: `<div class="view-item cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colSite", Value: `<div class="view-item">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colCurrency", Value: `<div class="view-item">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colPlatform", Value: `<div class="view-item">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colSpread", Value: `<div class="view-item">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" />` },
-            { Name: "colEnable", Value: renderEnableCell(rule.PolicyID, rule.PolicyTitle, rule.Enable) }
+            { Name: "colEnable", Value: renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable) }
         ];
 
         hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue != null) });
@@ -192,7 +193,7 @@
     }
 
     function renderEnableCell(policyId, policyTitle, enable) {
-        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
+        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle.replaceAll('"', '&#34;')}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
     }
 
     function renderActionCell(policyId, index, isEditting) {
@@ -296,6 +297,7 @@
     }
 
     function enableRowForAdding() {
+        clearAllTipsyErrors();
         if (!cachedGridOptions || $("#addNewTitle").length > 0) {
             return;
         }
@@ -315,7 +317,7 @@
         cachedGridOptions.bodyRows.unshift(renderAddingRow(cachedGridOptions.bodyRows.length + 1));
         freeGrid.fanexGrid(cachedGridOptions);
 
-        $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
+        $(`#addNewTitle`).val(CMS.htmlEncode(cachedAddNewRule.PolicyTitle)).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
         renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
         renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies);
@@ -442,6 +444,7 @@
     }
 
     function cancelAddNew() {
+        clearAllTipsyErrors();
         if (!cachedGridOptions || cachedGridOptions.bodyRows.length <= 0) {
             return;
         }
@@ -455,6 +458,7 @@
             return;
         }
 
+        clearAllTipsyErrors();
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -500,6 +504,7 @@
     }
 
     function cancelEditItem() {
+        clearAllTipsyErrors();
         var rowEdit = $(this).closest('tr');
         var index = $(this).data("index");
         cachedData[index].edittingValue = null;
@@ -515,12 +520,13 @@
     }
 
     function showEditItem() {
+        clearAllTipsyErrors();
         var rowEdit = $(this).closest('tr');
         var policyId = $(this).data("policyid");
         var index = $(this).data("index");
         var editPolicy = cachedData[index].edittingValue || cachedData[index];
         cachedData[index].edittingValue = { ...cachedData[index] };
-        $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
+        $(`#editTitle-${policyId}`).val(CMS.htmlEncode(editPolicy.PolicyTitle)).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
         rowEdit.find("div[class*=view-item]").addClass("hidden");
         rowEdit.find("div[class*=edit-item]").removeClass("hidden");
         rowEdit.find("input[class*=edit-item]").removeClass("hidden");
@@ -533,7 +539,8 @@
         new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
             maximumValue: 20,
-            decimalPlaces: 1
+            decimalPlaces: 1,
+            onInvalidPaste: 'ignore'
         }).set(editPolicy.Spread);
         
         $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
@@ -553,15 +560,20 @@
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
         var updateRule = {
             PolicyID: policyId,
-            PolicyTitle: $(`#editTitle-${policyId}`).val(),
-            Spread: $(`#editSpread-${policyId}`).val(),
-            CustomerClass: $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join(),
-            Currencies: $(`#ddlEditCurrency-${policyId}`).fanexMultiSelect("getItems", true).join(),
-            Sites: getSelectedSites(`ddlEditSite-${policyId}`),
-            Platforms: $(`#ddlEditPlatform-${policyId}`).fanexMultiSelect("getItems", true).join(),
+            PolicyTitle: validateRequiredField($(`#editTitle-${policyId}`), $(`#editTitle-${policyId}`).val()),
+            Spread: validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
+            CustomerClass: validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Currencies: validateRequiredField($(`#ddlEditCurrency-${policyId}`), $(`#ddlEditCurrency-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Sites: validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
+            Platforms: validateRequiredField($(`#ddlEditPlatform-${policyId}`), $(`#ddlEditPlatform-${policyId}`).fanexMultiSelect("getItems", true).join()),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked")
         };
 
+        if (!isValidRule(updateRule)) {
+            return;
+        }
+
+        clearAllTipsyErrors();
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -581,9 +593,10 @@
     }
 
     function showDeleteConfirmPopup() {
+        clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
-        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${cachedData[index].PolicyTitle}"?`, function () { callDelete(policyId, index); });
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${CMS.htmlEncode(cachedData[index].PolicyTitle)}"?`, function () { callDelete(policyId, index); });
     }
 
     function callDelete(policyID, index) {
@@ -607,12 +620,13 @@
 
     function showEnableDisablePopup() {
         event.preventDefault();
+        clearAllTipsyErrors();
         var checkbox = $(this);
         var policyId = checkbox.data("policyid");
         var isEnable = checkbox.is(":checked");
         var action = isEnable ? "ENABLE" : "DISABLE";
         var policyTitle = checkbox.data("policytitle");
-        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${policyTitle}"?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)} "?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
     }
 
     function callEnableDisable(policyID, isEnable, checkbox) {
@@ -630,6 +644,34 @@
                     CMS.showErrorMessage(resultJson.Message);
                 }
             });
+    }
+
+    function isEmptyValue(value) {
+        return typeof value === "undefined" || value === null || value === ""; 
+    }
+
+    function validateRequiredField(div, value) {
+        if (isEmptyValue(value)) {
+            CMS.showTipsyError(div, resources.requiredField, "ne");
+            return;
+        }
+
+        return value;
+    }
+
+    function isValidRule(rule) {
+        return !isEmptyValue(rule.PolicyTitle)
+            && !isEmptyValue(rule.CustomerClass)
+            && !isEmptyValue(rule.Currencies)
+            && !isEmptyValue(rule.Sites)
+            && !isEmptyValue(rule.Platforms)
+            && !isEmptyValue(rule.Spread);
+    }
+
+    function clearAllTipsyErrors() {
+        $("[original-title]").each(function () {
+            CMS.clearTipsyError($(this));
+        });
     }
 
     $(function () {

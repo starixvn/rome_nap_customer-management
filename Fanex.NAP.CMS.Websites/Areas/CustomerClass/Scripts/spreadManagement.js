@@ -30,7 +30,7 @@
 
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
-                site: ddlSites.fanexMultiSelect("getItems", true).join(),
+                site: getSelectedSites("ddlSites"),
                 currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
                 spread: filterSpread.get()
             };
@@ -145,13 +145,13 @@
     
     function defaultGridOptions() {
         const columns = [
-            { HeaderText: resources.title, Width: 150, Name: "colTitle", HeaderAlign: "center", CellAlign: "left" },
-            { HeaderText: resources.customerClass, Width: 250, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.site, Width: 180, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.currency, Width: 150, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.platform, Width: 250, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.spread, Width: 60, Name: "colSpread", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
+            { HeaderText: resources.title, Width: 150, Name: "colTitle", HeaderAlign: "center", CellAlign: "left", TdClass: "rule-cell" },
+            { HeaderText: resources.customerClass, Width: 250, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
+            { HeaderText: resources.site, Width: 180, Name: "colSite", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
+            { HeaderText: resources.currency, Width: 150, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
+            { HeaderText: resources.platform, Width: 250, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
+            { HeaderText: resources.spread, Width: 60, Name: "colSpread", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
+            { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" }
         ];
         hasHostPermisson && columns.push({ HeaderText: resources.action, Width: 60, Name: "colAction", HeaderAlign: "center", CellAlign: "center" });
 
@@ -178,7 +178,7 @@
 
     function renderRuleCell(rule, index, zindex) {
         const columns = [
-            { Name: "colTitle", Value: `<div class="view-item">${CMS.htmlEncode(rule.PolicyTitle) }</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" /></div>` },
+            { Name: "colTitle", Value: `<div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div>` },
             { Name: "colCustomerClass", Value: `<div class="view-item cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colSite", Value: `<div class="view-item">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div>` },
             { Name: "colCurrency", Value: `<div class="view-item">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div>` },
@@ -187,7 +187,7 @@
             { Name: "colEnable", Value: renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable) }
         ];
 
-        hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue != null) });
+        hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null) });
 
         return { Columns: columns, CustomAttr: `style="z-index: ${zindex}"`, CssClass: "position-relative" };
     }
@@ -310,7 +310,7 @@
                 Currencies: "",
                 Sites: "",
                 Platforms: "",
-                Enable: false
+                Enable: true
             };
         }
 
@@ -322,7 +322,13 @@
         renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
         renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies);
         renderAddEditPlatform("ddlAddNewPlatform", cachedAddNewRule.Platforms);
-        $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = $(`#addNewSpread`).val(); });
+        var newSpread = new AutoNumeric("#addNewSpread", {
+            minimumValue: 0,
+            maximumValue: 20,
+            decimalPlaces: 1,
+            onInvalidPaste: "ignore"
+        });
+        $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = newSpread.get(); });
         $(`#addNewEnable`).change(function () { cachedAddNewRule.Enable = $(`#addNewEnable`).is(":checked"); });
         
 
@@ -334,13 +340,13 @@
     function renderAddingRow(zindex){
         return {
             Columns: [
-                { Name: "colTitle", Value: '<input type="text" class="inputTitle" id="addNewTitle" />' },
+                { Name: "colTitle", Value: '<div class="dropdown-cell"><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div>' },
                 { Name: "colCustomerClass", Value: '<div class="dropdown-cell"><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div>' },
                 { Name: "colSite", Value: '<div class="dropdown-cell"><div id="ddlAddNewSite" class="select-customer-class"></div></div>' },
                 { Name: "colCurrency", Value: '<div class="dropdown-cell"><div id="ddlAddNewCurrency" class="select-customer-class"></div></div>' },
                 { Name: "colPlatform", Value: '<div class="dropdown-cell"><div id="ddlAddNewPlatform" class="select-customer-class"></div></div>' },
-                { Name: "colSpread", Value: '<input type="text" class="inputSpread" id="addNewSpread" />' },
-                { Name: "colEnable", Value: '<input type="checkbox" class="ckbEnable" id="addNewEnable" />' },
+                { Name: "colSpread", Value: '<div class="dropdown-cell"><input type="text" class="inputSpread" id="addNewSpread" /></div>' },
+                { Name: "colEnable", Value: '<input type="checkbox" class="ckbEnable" id="addNewEnable" checked />' },
                 { Name: "colAction", Value: renderAddActionCell() }
             ],
             CssClass: "position-relative",
@@ -458,6 +464,16 @@
             return;
         }
 
+        validateRequiredField($(`#addNewTitle`), cachedAddNewRule.PolicyTitle);
+        validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
+        validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
+        validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
+        validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
+        validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
+        if (!isValidRule(cachedAddNewRule)) {
+            return;
+        }
+
         clearAllTipsyErrors();
         CMS.disableInput();
         CMS.callAjax(
@@ -467,9 +483,12 @@
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
-                    cachedAddNewRule.PolicyID = result.PolicyID;
+                    cachedAddNewRule.PolicyID = resultJson.PolicyID;
+                    cachedData.unshift(cachedAddNewRule);
+                    cachedAddNewRule = null;
                     CMS.showSuccessMessage(resultJson.Message);
-                    showAddedItem();
+                    renderGrid(cachedData);
+                    bindEventsAfterRenderGridSuccessfully();
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
                 }
@@ -494,13 +513,6 @@
         }
 
         return selectedSites.join();
-    }
-
-    function showAddedItem() {
-        cachedData.unshift(cachedAddNewRule);
-        cachedAddNewRule = null;
-        renderGrid(cachedData);
-        bindEventsAfterRenderGridSuccessfully();
     }
 
     function cancelEditItem() {

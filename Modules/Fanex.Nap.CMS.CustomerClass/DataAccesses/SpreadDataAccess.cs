@@ -23,11 +23,12 @@
                 var outputParams = db.GetOuputParams();
 
                 var code = Converter.ToInt(outputParams["errcode"]);
+                var policyID = Converter.ToInt(outputParams["policyid"]);
                 var message = code == 0
                     ? Labels.AddSpreadSuccessfully ?? Converter.ToString2(outputParams["errmsg"])
                     : Converter.ToString2(outputParams["errmsg"]);
 
-                return new AddSpreadRuleResponse(criteria.PolicyID, code, message);
+                return new AddSpreadRuleResponse(policyID, code, message);
             }
         }
     }

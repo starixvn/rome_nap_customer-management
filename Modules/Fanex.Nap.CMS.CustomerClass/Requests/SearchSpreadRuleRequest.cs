@@ -8,6 +8,6 @@
 
         public string Currency { get; set; }
 
-        public float Spread { get; set; }
+        public string Spread { get; set; }
     }
 }

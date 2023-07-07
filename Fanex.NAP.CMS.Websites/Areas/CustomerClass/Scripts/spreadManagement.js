@@ -88,7 +88,8 @@
             "#ddlCustomerClasses",
             {
                 minWidth: 140,
-                listData: optionList
+                listData: optionList,
+                showFilter: true
             }
         );
     }
@@ -101,7 +102,8 @@
             {
                 minWidth: 180,
                 listData: listData,
-                isCheckAll: true
+                isCheckAll: true,
+                showFilter: true
             }
         );
     }
@@ -116,27 +118,32 @@
             "#ddlCurrencies",
             {
                 minWidth: 140,
-                listData: optionList
+                listData: optionList,
+                showFilter: true
             }
         );
     }
 
     function search() {
+        cachedData = [];
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Spread/Search`),
             cachedFilter,
             function (result) {
-                renderGrid(result);
+                cachedData = typeof result === "string" ? JSON.parse(result) : result;
+            },
+            null,
+            function () {
+                renderGrid(cachedData);
                 bindEventsAfterRenderGridSuccessfully();
             });
     }
 
     function renderGrid(data) {
         cachedGridOptions = cachedGridOptions || defaultGridOptions();
-
-        const dataJson = typeof data === "string" ? JSON.parse(data) : data;
-        cachedGridOptions.bodyRows = buildBodyRows(dataJson);
+        
+        cachedGridOptions.bodyRows = buildBodyRows(data);
         freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
         if (cachedAddNewRule !== null) {
             enableRowForAdding();
@@ -335,6 +342,7 @@
         $("#btn-cancel-add").click(cancelAddNew);
         $("#btn-submit-add").click(submitAddNew);
         bindEventsAfterRenderGridSuccessfully();
+        $(`#addNewTitle`).focus();
     }
 
     function renderAddingRow(zindex){
@@ -366,6 +374,7 @@
                 minWidth: 248,
                 listData: optionList,
                 isCheckAll: false,
+                showFilter: true,
                 onCheck: function () {
                     if (index) {
                         cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
@@ -385,6 +394,7 @@
                 minWidth: 178,
                 listData: listData,
                 isCheckAll: false,
+                showFilter: true,
                 onCheck: function () {
                     if (index) {
                         cachedData[index].edittingValue.Sites = getSelectedSites(divId);
@@ -408,6 +418,7 @@
                 minWidth: 148,
                 listData: optionList,
                 isCheckAll: false,
+                showFilter: true,
                 onCheck: function () {
                     if (index) {
                         cachedData[index].edittingValue.Currencies = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
@@ -431,6 +442,7 @@
                 minWidth: 248,
                 listData: optionList,
                 isCheckAll: false,
+                showFilter: true,
                 onCheck: function () {
                     if (index) {
                         cachedData[index].edittingValue.Platforms = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
@@ -565,6 +577,7 @@
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
             .click(cancelEditItem);
+        $(`#editTitle-${policyId}`).focus();
     }
 
     function saveEditItem() {
@@ -638,7 +651,7 @@
         var isEnable = checkbox.is(":checked");
         var action = isEnable ? "ENABLE" : "DISABLE";
         var policyTitle = checkbox.data("policytitle");
-        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)} "?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)}"?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
     }
 
     function callEnableDisable(policyID, isEnable, checkbox) {

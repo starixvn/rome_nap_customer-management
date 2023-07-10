@@ -88,6 +88,7 @@
             "#ddlCustomerClasses",
             {
                 minWidth: 140,
+                maxHeight: 300,
                 listData: optionList,
                 showFilter: true
             }
@@ -101,6 +102,7 @@
             "#ddlSites",
             {
                 minWidth: 180,
+                maxHeight: 300,
                 listData: listData,
                 isCheckAll: true,
                 showFilter: true
@@ -118,6 +120,7 @@
             "#ddlCurrencies",
             {
                 minWidth: 140,
+                maxHeight: 300,
                 listData: optionList,
                 showFilter: true
             }
@@ -167,7 +170,7 @@
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
-            showHighlightRow: true,
+            showHighlightRow: false,
             headerColumnHeight: 55,
             bodyRowHeight: 26,
             gridExpandHeight: 160,
@@ -177,10 +180,31 @@
     }
 
     function buildBodyRows(data) {
-        cachedData = data;
+        cachedData = [...data];
+        if (data.length > 0) {
+            while (data.length < 10) {
+                data.push({ IsCloneCell: true });
+            }
+        }
         return data.map(function (item, index) {
-           return renderRuleCell(item, index, data.length - index);
+            return item.IsCloneCell ? renderEmptyCell(data.length - index) : renderRuleCell(item, index, data.length - index);
         });
+    }
+
+    function renderEmptyCell(zindex) {
+        const columns = [
+            { Name: "colTitle", Value: "" },
+            { Name: "colCustomerClass", Value: "" },
+            {Name: "colSite", Value: "" },
+            { Name: "colCurrency", Value: "" },
+            { Name: "colPlatform", Value: "" },
+            { Name: "colSpread", Value: "" },
+            { Name: "colEnable", Value: "" }
+        ];
+
+        hasHostPermisson && columns.push({ Name: "colAction",  Value: "" });
+
+        return { Columns: columns, CustomAttr: `style="z-index: ${zindex}"`, CssClass: "no-border-cell" };
     }
 
     function renderRuleCell(rule, index, zindex) {
@@ -321,6 +345,10 @@
             };
         }
 
+        while (cachedGridOptions.bodyRows.length < 10) {
+            cachedGridOptions.bodyRows.unshift(renderEmptyCell(cachedGridOptions.bodyRows.length + 1));
+        }
+
         cachedGridOptions.bodyRows.unshift(renderAddingRow(cachedGridOptions.bodyRows.length + 1));
         freeGrid.fanexGrid(cachedGridOptions);
 
@@ -372,6 +400,7 @@
             "#" + divId,
             {
                 minWidth: 248,
+                maxHeight: 230,
                 listData: optionList,
                 isCheckAll: false,
                 showFilter: true,
@@ -392,6 +421,7 @@
             "#" + divId,
             {
                 minWidth: 178,
+                maxHeight: 230,
                 listData: listData,
                 isCheckAll: false,
                 showFilter: true,
@@ -416,6 +446,7 @@
             "#" + divId,
             {
                 minWidth: 148,
+                maxHeight: 230,
                 listData: optionList,
                 isCheckAll: false,
                 showFilter: true,
@@ -440,6 +471,7 @@
             "#" + divId,
             {
                 minWidth: 248,
+                maxHeight: 230,
                 listData: optionList,
                 isCheckAll: false,
                 showFilter: true,

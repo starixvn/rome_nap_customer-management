@@ -32,7 +32,7 @@
 
         public int? SeizeBet { get; set; }
 
-        public bool EnableParlay { get; set; }
+        public bool DisableParlay { get; set; }
 
         public int? PeakHourSpread { get; set; }
 

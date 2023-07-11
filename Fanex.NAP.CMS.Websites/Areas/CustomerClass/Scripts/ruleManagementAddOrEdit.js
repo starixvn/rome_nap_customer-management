@@ -27,7 +27,7 @@ const ruleManagementAddOrEdit = (function ($) {
         txtMaxPerMatch = null,
         txtRepeatedBets = null,
         txtSeizeBet = null,
-        chkEnableParlay = null,
+        chkDisableParlay = null,
         //txtPeakHourSpread = null,
         reloadRuleGrid = null;
 
@@ -97,7 +97,7 @@ const ruleManagementAddOrEdit = (function ($) {
         disableSeizeBetTextbox(rule.SportType);
         txtSeizeBet.val(rule.SeizeBet);
 
-        chkEnableParlay = $("#chkEnableParlay").prop("checked", rule.EnableParlay);
+        chkDisableParlay = $("#chkDisableParlay").prop("checked", rule.DisableParlay);
         //txtPeakHourSpread = $("#txtPeakHourSpread").val(ruleManagementHelper.formatInteger(rule.PeakHourSpread));
     }
 
@@ -212,7 +212,7 @@ const ruleManagementAddOrEdit = (function ($) {
                 maxPerMatch: textToNumber(minBetMaxBetMaxPerMatch.maxPerMatch),
                 repeatedBets: textToNumber(repeatedBets),
                 seizeBet: textToNumber(seizeBet),
-                enableParlay: chkEnableParlay.is(":checked"),
+                disableParlay: chkDisableParlay.is(":checked"),
                 //peakHourSpread: textToNumber(peakHourSpread)
             };
         }
@@ -434,9 +434,10 @@ const ruleManagementAddOrEdit = (function ($) {
         return customerClassHelper.renderMultiSelect(
             "#ddlPopupLeagueGroup",
             {
-                minWidth: 148,
+                minWidth: 248,
                 maxHeight: 250,
                 showTooltip: false,
+                showFilter: true,
                 isCheckAll: isCheckAll,
                 listData: leagueGroups,
                 onCheck: function () {

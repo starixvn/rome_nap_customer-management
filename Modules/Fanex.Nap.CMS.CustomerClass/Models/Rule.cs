@@ -21,7 +21,7 @@
             int? maxPerMatch,
             byte? repeatedBets,
             byte? seizeBet,
-            bool enableParlay,
+            bool disableParlay,
             short? peakHourSpread,
             bool? enable,
             string site,
@@ -46,7 +46,7 @@
             MaxPerMatch = maxPerMatch;
             RepeatedBets = repeatedBets;
             SeizeBet = seizeBet;
-            EnableParlay = enableParlay;
+            DisableParlay = disableParlay;
             PeakHourSpread = peakHourSpread;
             Enable = enable;
             Site = site;
@@ -92,7 +92,7 @@
 
         public byte? SeizeBet { get; }
 
-        public bool EnableParlay { get; }
+        public bool DisableParlay { get; }
 
         public short? PeakHourSpread { get; }
 

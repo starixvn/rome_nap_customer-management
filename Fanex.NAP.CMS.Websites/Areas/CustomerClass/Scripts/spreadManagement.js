@@ -237,7 +237,7 @@
     }
 
     function renderCurrencyCell(rule) {
-        if (rule.Currencies === "All" ) {
+        if (rule.Currencies === "All" || rule.Currencies === "0") {
             return `<a href="javascript:;" class="link-currency" data-currencies="${currencyList.map(cur => cur.Name).join()}">All</a>`;
         }
 
@@ -275,6 +275,11 @@
     }
 
     function renderPlatformCell(rule) {
+
+        if (rule.Platforms === "All" || rule.Platforms === "0") {
+            return platforms.map(plf => plf.Name).join(', ');
+        }
+
         const platformList = rule.Platforms.split(",");
 
         return platforms.filter(plf => platformList.includes(plf.Id.toString())).map(plf => plf.Name).join(', ');
@@ -416,14 +421,15 @@
     }
 
     function renderAddEditSite(divId, selectedValue, index) {
-        var listData = buildGroupSiteList(selectedValue.includes("AllCredit"), selectedValue.includes("AllDeposit"), selectedValue);
+        var isCheckAll = selectedValue === "All";
+        var listData = buildGroupSiteList(isCheckAll || selectedValue.includes("AllCredit"), isCheckAll || selectedValue.includes("AllDeposit"), selectedValue);
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
                 minWidth: 178,
                 maxHeight: 230,
                 listData: listData,
-                isCheckAll: false,
+                isCheckAll: isCheckAll,
                 showFilter: true,
                 onCheck: function () {
                     if (index) {
@@ -438,8 +444,9 @@
 
     function renderAddEditCurrency(divId, selectedValue, index) {
         let optionList = [];
+        let isCheckAll = selectedValue === "All" || selectedValue === "0";
         let selectedValueList = selectedValue.split(",");
-        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: selectedValueList.includes(item.Id.toString()), enable: true })
+        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
         );
 
         return customerClassHelper.renderMultiSelect(
@@ -448,13 +455,13 @@
                 minWidth: 148,
                 maxHeight: 230,
                 listData: optionList,
-                isCheckAll: false,
+                isCheckAll: isCheckAll,
                 showFilter: true,
                 onCheck: function () {
                     if (index) {
-                        cachedData[index].edittingValue.Currencies = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                        cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0");
                     } else {
-                        cachedAddNewRule.Currencies = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                        cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0");
                     }
                 }
             }
@@ -463,8 +470,9 @@
 
     function renderAddEditPlatform(divId, selectedValue, index) {
         let optionList = [];
+        let isCheckAll = selectedValue === "All" || selectedValue === "0";
         let selectedValueList = selectedValue.split(",");
-        platforms.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: selectedValueList.includes(item.Id.toString()), enable: true })
+        platforms.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
         );
 
         return customerClassHelper.renderMultiSelect(
@@ -473,13 +481,13 @@
                 minWidth: 248,
                 maxHeight: 230,
                 listData: optionList,
-                isCheckAll: false,
+                isCheckAll: isCheckAll,
                 showFilter: true,
                 onCheck: function () {
                     if (index) {
-                        cachedData[index].edittingValue.Platforms = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                        cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0");
                     } else {
-                        cachedAddNewRule.Platforms = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+                        cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0");
                     }
                 }
             }
@@ -559,6 +567,14 @@
         return selectedSites.join();
     }
 
+    function getSelectedReplaceAllValue(divId, allvalue) {
+        if ($(`#${divId}`).fanexMultiSelect("isCheckAll")) {
+            return allvalue;
+        }
+
+        return $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+    }
+
     function cancelEditItem() {
         clearAllTipsyErrors();
         var rowEdit = $(this).closest('tr');
@@ -620,9 +636,9 @@
             PolicyTitle: validateRequiredField($(`#editTitle-${policyId}`), $(`#editTitle-${policyId}`).val()),
             Spread: validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
             CustomerClass: validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
-            Currencies: validateRequiredField($(`#ddlEditCurrency-${policyId}`), $(`#ddlEditCurrency-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Currencies: validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0")),
             Sites: validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
-            Platforms: validateRequiredField($(`#ddlEditPlatform-${policyId}`), $(`#ddlEditPlatform-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Platforms: validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0")),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked")
         };
 

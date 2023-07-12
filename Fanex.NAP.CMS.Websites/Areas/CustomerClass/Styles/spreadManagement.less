@@ -1,11 +1,27 @@
 ﻿@import "_common.less";
+.width-60 {
+    width: 60px;
+}
 
-.inputSpread {
-    width: 50px;
+.width-150 {
+    width: 150px;
+}
+
+.width-180 {
+    width: 180px;
+}
+
+.width-250 {
+    width: 250px;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .inputTitle {
-    width: 140px;
+    width: 120px;
+    text-align: left !important;
 }
 
 .dropdown-cell {
@@ -54,6 +70,36 @@
     }
 }
 
+#freegrid {
+    overflow: auto;
+
+    .tbl-freegrid {
+        thead {
+            position: sticky;
+            top: -1px;
+            height: 48px;
+        }
+
+        td {
+            padding: 1px;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+    }
+}
+
+.inputSpread {
+    width: 56px;
+}
+
+.content-grid {
+    border: 1px solid #ccc;
+    border-left: 0;
+    min-width: 0;
+}
+
 .tbl-freegrid-box {
     max-height: 200px;
     overflow-y: auto;
@@ -79,4 +125,8 @@
             }
         }
     }
+}
+
+.edit-item {
+    text-align: center;
 }

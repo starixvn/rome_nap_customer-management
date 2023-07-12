@@ -1,7 +1,6 @@
 ﻿
 (function ($) {
-    let cachedGridOptions = null,
-        cachedData = null,
+    let cachedData = null,
         cachedLicenseeSites = [],
         cachedCreditSites = [],
         cachedFilter = null,
@@ -144,83 +143,63 @@
     }
 
     function renderGrid(data) {
-        cachedGridOptions = cachedGridOptions || defaultGridOptions();
-        
-        cachedGridOptions.bodyRows = buildBodyRows(data);
-        freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+
+        let html = [
+            `<table class="tbl-freegrid"><thead style="z-index: ${data.length + 2}"><tr>`,
+            `<th class="width-150">${resources.title}</th>`,
+            `<th class="width-250">${resources.customerClass}</th>`,
+            `<th class="width-180">${resources.site}</th>`,
+            `<th class="width-150">${resources.currency}</th>`,
+            `<th class="width-250">${resources.platform}</th>`,
+            `<th class="width-60">${resources.spread}</th>`,
+            `<th class="width-60">${resources.enable}</th>`,
+            hasHostPermisson ? `<th class="width-60">${resources.action}</th>` : '',
+            '</tr></thead > ',
+            '<tbody>'
+        ];
+
         if (cachedAddNewRule !== null) {
-            enableRowForAdding();
+            html.push(buildAddRow(data.length + 1));
         }
-    }
-    
-    function defaultGridOptions() {
-        const columns = [
-            { HeaderText: resources.title, Width: 150, Name: "colTitle", HeaderAlign: "center", CellAlign: "left", TdClass: "rule-cell" },
-            { HeaderText: resources.customerClass, Width: 250, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
-            { HeaderText: resources.site, Width: 180, Name: "colSite", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
-            { HeaderText: resources.currency, Width: 150, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
-            { HeaderText: resources.platform, Width: 250, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
-            { HeaderText: resources.spread, Width: 60, Name: "colSpread", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" },
-            { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center", TdClass: "rule-cell" }
-        ];
-        hasHostPermisson && columns.push({ HeaderText: resources.action, Width: 60, Name: "colAction", HeaderAlign: "center", CellAlign: "center" });
 
-        return {
-            showTitle: false,
-            fullWidth: true,
-            fullHeight: true,
-            showDistinctRow: false,
-            showHighlightRow: false,
-            headerColumnHeight: 55,
-            bodyRowHeight: 26,
-            gridExpandHeight: 160,
-            columns: columns,
-            showPager: false
-        };
-    }
-
-    function buildBodyRows(data) {
-        cachedData = [...data];
-        if (data.length > 0) {
-            while (data.length < 10) {
-                data.push({ IsCloneCell: true });
-            }
-        }
-        return data.map(function (item, index) {
-            return item.IsCloneCell ? renderEmptyCell(data.length - index) : renderRuleCell(item, index, data.length - index);
+        data.forEach(function (item, index) {
+            html.push(buildRowItem(item, index, data.length - index));
         });
+        html.push('</tbody></table>');
+
+        freeGrid.removeClass("display-none").html(html.join(""));
     }
 
-    function renderEmptyCell(zindex) {
-        const columns = [
-            { Name: "colTitle", Value: "" },
-            { Name: "colCustomerClass", Value: "" },
-            {Name: "colSite", Value: "" },
-            { Name: "colCurrency", Value: "" },
-            { Name: "colPlatform", Value: "" },
-            { Name: "colSpread", Value: "" },
-            { Name: "colEnable", Value: "" }
+    function buildRowItem(rule, index, zindex) {
+        let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
+            `<td class="rule-cell width-150"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
+            `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-180"><div class="view-item text-center">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-250"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
+            `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable)}</td>`,
+            hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
+            `</tr>`
         ];
 
-        hasHostPermisson && columns.push({ Name: "colAction",  Value: "" });
-
-        return { Columns: columns, CustomAttr: `style="z-index: ${zindex}"`, CssClass: "no-border-cell" };
+        return rowHtml.join("");
     }
 
-    function renderRuleCell(rule, index, zindex) {
-        const columns = [
-            { Name: "colTitle", Value: `<div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div>` },
-            { Name: "colCustomerClass", Value: `<div class="view-item cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div>` },
-            { Name: "colSite", Value: `<div class="view-item">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div>` },
-            { Name: "colCurrency", Value: `<div class="view-item">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div>` },
-            { Name: "colPlatform", Value: `<div class="view-item">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div>` },
-            { Name: "colSpread", Value: `<div class="view-item">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" />` },
-            { Name: "colEnable", Value: renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable) }
+    function buildAddRow(zindex) {
+        let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
+        `<td class="rule-cell width-150"><div class="dropdown-cell"><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
+        `<td class="rule-cell width-250"><div class="dropdown-cell"><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
+        `<td class="rule-cell width-180"><div class="dropdown-cell"><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-150"><div class="dropdown-cell"><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-250"><div class="dropdown-cell"><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-60"><div class="dropdown-cell"><input type="text" class="inputSpread" id="addNewSpread" /></div></td>`,
+        `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
+        hasHostPermisson ? `<td class="width-60 text-center">${renderAddActionCell()}</td>` : '',
+        `</tr>`
         ];
 
-        hasHostPermisson && columns.push({ Name: "colAction", Value: renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null) });
-
-        return { Columns: columns, CustomAttr: `style="z-index: ${zindex}"`, CssClass: "position-relative" };
+        return rowHtml.join("");
     }
 
     function renderEnableCell(policyId, policyTitle, enable) {
@@ -334,7 +313,7 @@
 
     function enableRowForAdding() {
         clearAllTipsyErrors();
-        if (!cachedGridOptions || $("#addNewTitle").length > 0) {
+        if ($("#addNewTitle").length > 0) {
             return;
         }
 
@@ -350,12 +329,7 @@
             };
         }
 
-        while (cachedGridOptions.bodyRows.length < 10) {
-            cachedGridOptions.bodyRows.unshift(renderEmptyCell(cachedGridOptions.bodyRows.length + 1));
-        }
-
-        cachedGridOptions.bodyRows.unshift(renderAddingRow(cachedGridOptions.bodyRows.length + 1));
-        freeGrid.fanexGrid(cachedGridOptions);
+        renderGrid(cachedData);
 
         $(`#addNewTitle`).val(CMS.htmlEncode(cachedAddNewRule.PolicyTitle)).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
@@ -378,23 +352,6 @@
         $(`#addNewTitle`).focus();
     }
 
-    function renderAddingRow(zindex){
-        return {
-            Columns: [
-                { Name: "colTitle", Value: '<div class="dropdown-cell"><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div>' },
-                { Name: "colCustomerClass", Value: '<div class="dropdown-cell"><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div>' },
-                { Name: "colSite", Value: '<div class="dropdown-cell"><div id="ddlAddNewSite" class="select-customer-class"></div></div>' },
-                { Name: "colCurrency", Value: '<div class="dropdown-cell"><div id="ddlAddNewCurrency" class="select-customer-class"></div></div>' },
-                { Name: "colPlatform", Value: '<div class="dropdown-cell"><div id="ddlAddNewPlatform" class="select-customer-class"></div></div>' },
-                { Name: "colSpread", Value: '<div class="dropdown-cell"><input type="text" class="inputSpread" id="addNewSpread" /></div>' },
-                { Name: "colEnable", Value: '<input type="checkbox" class="ckbEnable" id="addNewEnable" checked />' },
-                { Name: "colAction", Value: renderAddActionCell() }
-            ],
-            CssClass: "position-relative",
-            CustomAttr: `style="z-index: ${zindex}"`
-        };
-    }
-
     function renderAddEditCustomerClass(divId, selectedValue, index) {
         let optionList = [];
         let selectedValueList = selectedValue.split(",");
@@ -404,7 +361,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 248,
+                minWidth: 230,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: false,
@@ -426,7 +383,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 178,
+                minWidth: 170,
                 maxHeight: 230,
                 listData: listData,
                 isCheckAll: isCheckAll,
@@ -452,7 +409,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 148,
+                minWidth: 140,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: isCheckAll,
@@ -478,7 +435,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 248,
+                minWidth: 240,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: isCheckAll,
@@ -503,7 +460,7 @@
 
     function cancelAddNew() {
         clearAllTipsyErrors();
-        if (!cachedGridOptions || cachedGridOptions.bodyRows.length <= 0) {
+        if ($("#addNewTitle").length <= 0) {
             return;
         }
         cachedAddNewRule = null;
@@ -516,13 +473,13 @@
             return;
         }
 
-        validateRequiredField($(`#addNewTitle`), cachedAddNewRule.PolicyTitle);
-        validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
-        validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
-        validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
-        validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
-        validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
-        if (!isValidRule(cachedAddNewRule)) {
+        spreadManagementHelper.validateRequiredField($(`#addNewTitle`), cachedAddNewRule.PolicyTitle);
+        spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
+        if (!spreadManagementHelper.isValidRule(cachedAddNewRule)) {
             return;
         }
 
@@ -633,16 +590,16 @@
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
         var updateRule = {
             PolicyID: policyId,
-            PolicyTitle: validateRequiredField($(`#editTitle-${policyId}`), $(`#editTitle-${policyId}`).val()),
-            Spread: validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
-            CustomerClass: validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
-            Currencies: validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0")),
-            Sites: validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
-            Platforms: validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0")),
+            PolicyTitle: spreadManagementHelper.validateRequiredField($(`#editTitle-${policyId}`), $(`#editTitle-${policyId}`).val()),
+            Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
+            CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0")),
+            Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
+            Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0")),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked")
         };
 
-        if (!isValidRule(updateRule)) {
+        if (!spreadManagementHelper.isValidRule(updateRule)) {
             return;
         }
 
@@ -717,28 +674,6 @@
                     CMS.showErrorMessage(resultJson.Message);
                 }
             });
-    }
-
-    function isEmptyValue(value) {
-        return typeof value === "undefined" || value === null || value === ""; 
-    }
-
-    function validateRequiredField(div, value) {
-        if (isEmptyValue(value)) {
-            CMS.showTipsyError(div, resources.requiredField, "ne");
-            return;
-        }
-
-        return value;
-    }
-
-    function isValidRule(rule) {
-        return !isEmptyValue(rule.PolicyTitle)
-            && !isEmptyValue(rule.CustomerClass)
-            && !isEmptyValue(rule.Currencies)
-            && !isEmptyValue(rule.Sites)
-            && !isEmptyValue(rule.Platforms)
-            && !isEmptyValue(rule.Spread);
     }
 
     function clearAllTipsyErrors() {

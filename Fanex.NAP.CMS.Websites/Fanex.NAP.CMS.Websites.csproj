@@ -418,6 +418,7 @@
     <Content Include="Areas\CustomerClass\Scripts\siteManagementAssignSiteSetting.js" />
     <Content Include="Areas\CustomerClass\Scripts\siteManagementUpload.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagement.js" />
+    <Content Include="Areas\CustomerClass\Scripts\spreadManagementHelper.js" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\limitDailyPTUpdate.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />

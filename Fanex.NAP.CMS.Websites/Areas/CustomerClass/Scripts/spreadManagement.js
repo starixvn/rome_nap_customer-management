@@ -150,7 +150,7 @@
             `<th class="width-250">${resources.customerClass}</th>`,
             `<th class="width-180">${resources.site}</th>`,
             `<th class="width-150">${resources.currency}</th>`,
-            `<th class="width-250">${resources.platform}</th>`,
+            `<th class="width-200">${resources.platform}</th>`,
             `<th class="width-60">${resources.spread}</th>`,
             `<th class="width-60">${resources.enable}</th>`,
             hasHostPermisson ? `<th class="width-60">${resources.action}</th>` : '',
@@ -168,6 +168,8 @@
         html.push('</tbody></table>');
 
         freeGrid.removeClass("display-none").html(html.join(""));
+
+        cachedAddNewRule !== null && bindingEventForAddRow();
     }
 
     function buildRowItem(rule, index, zindex) {
@@ -176,7 +178,7 @@
             `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-180"><div class="view-item text-center">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-250"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
             `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable)}</td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
@@ -188,12 +190,12 @@
 
     function buildAddRow(zindex) {
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
-        `<td class="rule-cell width-150"><div class="dropdown-cell"><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
-        `<td class="rule-cell width-250"><div class="dropdown-cell"><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
-        `<td class="rule-cell width-180"><div class="dropdown-cell"><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-150"><div class="dropdown-cell"><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-250"><div class="dropdown-cell"><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-60"><div class="dropdown-cell"><input type="text" class="inputSpread" id="addNewSpread" /></div></td>`,
+        `<td class="rule-cell width-150 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
+        `<td class="rule-cell width-250 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
+        `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-60 add-cell"><div><input type="text" class="inputSpread" id="addNewSpread" /></div></td>`,
         `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
         hasHostPermisson ? `<td class="width-60 text-center">${renderAddActionCell()}</td>` : '',
         `</tr>`
@@ -330,7 +332,11 @@
         }
 
         renderGrid(cachedData);
+        bindEventsAfterRenderGridSuccessfully();
+        $(`#addNewTitle`).focus();
+    }
 
+    function bindingEventForAddRow() {
         $(`#addNewTitle`).val(CMS.htmlEncode(cachedAddNewRule.PolicyTitle)).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
         renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
@@ -344,12 +350,10 @@
         });
         $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = newSpread.get(); });
         $(`#addNewEnable`).change(function () { cachedAddNewRule.Enable = $(`#addNewEnable`).is(":checked"); });
-        
+
 
         $("#btn-cancel-add").click(cancelAddNew);
         $("#btn-submit-add").click(submitAddNew);
-        bindEventsAfterRenderGridSuccessfully();
-        $(`#addNewTitle`).focus();
     }
 
     function renderAddEditCustomerClass(divId, selectedValue, index) {
@@ -361,7 +365,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 230,
+                minWidth: 246,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: false,
@@ -383,7 +387,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 170,
+                minWidth: 176,
                 maxHeight: 230,
                 listData: listData,
                 isCheckAll: isCheckAll,
@@ -409,7 +413,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 140,
+                minWidth: 146,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: isCheckAll,
@@ -435,7 +439,7 @@
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 240,
+                minWidth: 198,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: isCheckAll,

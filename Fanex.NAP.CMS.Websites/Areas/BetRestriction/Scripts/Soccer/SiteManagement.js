@@ -42,6 +42,8 @@ Fanex.CMS.BetRestrictionSoccer.SiteManagement = function () {
         CachedDOMElements.ckbSiteAccumulateBalance.change(update8RMAccountStatus);
         CachedDOMElements.selPopupSiteSeizeBetTicket.change(function () {
             if ($(this).val() === '0' || $(this).val() === '') {
+                CachedDOMElements.txtPopupSite8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupSite8RMAccount);
                 CachedDOMElements.ckbSiteAccumulateBalance.attr('disabled', 'disabled');
             }
             else {

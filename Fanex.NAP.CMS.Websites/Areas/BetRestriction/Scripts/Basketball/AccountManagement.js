@@ -68,6 +68,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
                 CMS.clearTipsyError(CachedDOMElements.multiSelPopupLeagueGroup);
                 CachedDOMElements.ckbAccumulateBalance.attr('disabled', 'disabled');
+                CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
             } else {
                 CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("enable");
                 CachedDOMElements.ckbAccumulateBalance.removeAttr('disabled');

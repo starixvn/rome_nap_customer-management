@@ -49,6 +49,8 @@ Fanex.CMS.BetRestrictionTennis.AccountManagement = function () {
         DOMElements.selPopupAccSeizeBetTicket.change(function () {
             if (DOMElements.selPopupAccSeizeBetTicket.val() === '0' || DOMElements.selPopupAccSeizeBetTicket.val() === 'FollowUpperLevel') {
                 DOMElements.ckbAccumulateBalance.attr('disabled', 'disabled');
+                DOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(DOMElements.txtPopupAcc8RMAccount);
             } else {
                 DOMElements.ckbAccumulateBalance.removeAttr('disabled');
                 update8RMAccountStatus();

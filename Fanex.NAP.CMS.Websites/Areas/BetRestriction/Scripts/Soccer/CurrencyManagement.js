@@ -48,6 +48,8 @@ Fanex.CMS.BetRestrictionSoccer.CurrencyManagement = function () {
         CachedDOMElements.ckbCurrencyAccumulateBalance.change(update8RMAccountStatus);
         CachedDOMElements.selPopupCurrencySeizeBetTicket.change(function () {
             if ($(this).val() === '0' || $(this).val() === '') {
+                CachedDOMElements.txtPopupCurrency8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupCurrency8RMAccount);
                 CachedDOMElements.ckbCurrencyAccumulateBalance.attr('disabled', 'disabled');
             }
             else {

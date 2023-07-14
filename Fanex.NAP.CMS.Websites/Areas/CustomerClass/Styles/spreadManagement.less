@@ -59,12 +59,6 @@
     font-weight: bold;
 }
 
-.no-border-cell {
-    td {
-        border: none !important;
-    }
-}
-
 #viewCurrenciesForm {
     max-height: 600px;
     overflow-y: auto;
@@ -76,7 +70,11 @@
 }
 
 #freegrid {
-    overflow: auto;
+
+    table {
+        overflow: auto;
+        display:block;
+    }
 
     .tbl-freegrid {
         thead {
@@ -88,10 +86,6 @@
         td {
             padding: 1px;
         }
-
-        tbody tr:last-child td {
-            border-bottom: 0;
-        }
     }
 }
 
@@ -100,8 +94,6 @@
 }
 
 .content-grid {
-    border: 1px solid #ccc;
-    border-left: 0;
     min-width: 0;
 }
 

@@ -145,7 +145,7 @@
     function renderGrid(data) {
 
         let html = [
-            `<table class="tbl-freegrid"><thead style="z-index: ${data.length + 2}"><tr>`,
+            `<table class="tbl-freegrid" style="height: calc(100vh - 150px);"><thead style="z-index: ${data.length + 2}"><tr>`,
             `<th class="width-150">${resources.title}</th>`,
             `<th class="width-250">${resources.customerClass}</th>`,
             `<th class="width-180">${resources.site}</th>`,

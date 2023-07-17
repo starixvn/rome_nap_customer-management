@@ -5,13 +5,29 @@ const spreadManagementHelper = (function () {
         return typeof value === "undefined" || value === null || value === "";
     }
 
+
     function validateRequiredField(div, value) {
         if (isEmptyValue(value)) {
-            CMS.showTipsyError(div, resources.requiredField, "ne");
+            CMS.showTipsyError(div, resources.requiredField, "n");
             return;
         }
 
         return value;
+    }
+
+    function validateTitle(inputElement, gravity) {
+        const textValue = $.trim(inputElement.val());
+        if (!textValue.length) {
+            CMS.showTipsyError(inputElement, resources.requiredField, "nw");
+            return;
+        }
+
+        if (!customerClassHelper.isASCII(textValue)) {
+            CMS.showTipsyError(inputElement, `Title cannot contain symbols.`, "nw");
+            return;
+        }
+
+        return textValue;
     }
 
     function isValidRule(rule) {
@@ -26,6 +42,7 @@ const spreadManagementHelper = (function () {
     return {
         isEmptyValue: isEmptyValue,
         validateRequiredField: validateRequiredField,
+        validateTitle: validateTitle,
         isValidRule: isValidRule
     };
 })();

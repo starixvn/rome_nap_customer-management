@@ -337,7 +337,7 @@
     }
 
     function bindingEventForAddRow() {
-        $(`#addNewTitle`).val(CMS.htmlEncode(cachedAddNewRule.PolicyTitle)).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
+        $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
         renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
         renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies);
@@ -476,8 +476,8 @@
         if (!cachedAddNewRule) {
             return;
         }
-
-        spreadManagementHelper.validateRequiredField($(`#addNewTitle`), cachedAddNewRule.PolicyTitle);
+        
+        spreadManagementHelper.validateTitle($(`#addNewTitle`));
         spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
@@ -559,7 +559,7 @@
         var index = $(this).data("index");
         var editPolicy = cachedData[index].edittingValue || cachedData[index];
         cachedData[index].edittingValue = { ...cachedData[index] };
-        $(`#editTitle-${policyId}`).val(CMS.htmlEncode(editPolicy.PolicyTitle)).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
+        $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
         rowEdit.find("div[class*=view-item]").addClass("hidden");
         rowEdit.find("div[class*=edit-item]").removeClass("hidden");
         rowEdit.find("input[class*=edit-item]").removeClass("hidden");
@@ -594,7 +594,7 @@
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
         var updateRule = {
             PolicyID: policyId,
-            PolicyTitle: spreadManagementHelper.validateRequiredField($(`#editTitle-${policyId}`), $(`#editTitle-${policyId}`).val()),
+            PolicyTitle: spreadManagementHelper.validateTitle($(`#editTitle-${policyId}`)),
             Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
             CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
             Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0")),

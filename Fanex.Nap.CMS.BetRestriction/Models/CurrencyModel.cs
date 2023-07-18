@@ -33,5 +33,7 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
         public byte? SeizeBetTicket { get; set; }
 
         public string FollowAccount { get; set; }
+
+        public byte AccumulateBalance { get; set; }
     }
 }

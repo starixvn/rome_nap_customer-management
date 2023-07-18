@@ -18,6 +18,8 @@
 
         public string FollowAccount { get; set; }
 
+        public byte AccumulateBalance { get; set; }
+
         public string IP { get; set; }
 
         public override string GetSettingKey()

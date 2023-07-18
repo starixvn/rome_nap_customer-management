@@ -17,5 +17,7 @@
         public decimal? MaxPerMatch { get; set; }
 
         public string FollowAccount { get; set; }
+
+        public byte AccumulateBalance { get; set; }
     }
 }

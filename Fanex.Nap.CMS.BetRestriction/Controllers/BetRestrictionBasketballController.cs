@@ -64,6 +64,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP
@@ -82,6 +83,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
             LeagueGroupId = request.LeagueGroupId,
+            AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
             IP = CurrentContext.IP

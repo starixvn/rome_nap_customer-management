@@ -38,6 +38,7 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         CachedDOMElements.txtPopupAccMaxBet = $('#txtPopupAccMaxBet');
         CachedDOMElements.txtPopupAccMaxPerMatch = $('#txtPopupAccMaxPerMatch');
         CachedDOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
+        CachedDOMElements.ckbAccumulateBalance = $('#ckbAccumulateBalance');
         CachedDOMElements.noteInfoMessage = $('#noteInfoMessage');
         CachedDOMElements.btnSave = $('#btnAccSave');
         CachedDOMElements.btnCancel = $('#btnAccCancel');
@@ -67,19 +68,31 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         });
         CachedDOMElements.btnCancel.click(function () { CMS.closePopup(); });
         CachedDOMElements.noteInfoMessage.click(function () { CMS.showInfoMessage(messages.NoteInfoMaxBet); });
+        CachedDOMElements.ckbAccumulateBalance.change(update8RMAccountStatus);
         CachedDOMElements.selPopupAccSeizeBetTicket.change(function () {
             if ($(this).val() == '0' || $(this).val() == '') {
-                CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
                 CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("disable");
-                CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
                 CMS.clearTipsyError(CachedDOMElements.multiSelPopupLeagueGroup);
+                CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+                CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
+                CachedDOMElements.ckbAccumulateBalance.attr('disabled', 'disabled');
             }
             else {
-                CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
                 CachedDOMElements.multiSelPopupLeagueGroup.multiSelect("enable");
+                CachedDOMElements.ckbAccumulateBalance.removeAttr('disabled');
+                update8RMAccountStatus();
             }
         });
 
+    };
+
+    var update8RMAccountStatus = function () {
+        if (CachedDOMElements.ckbAccumulateBalance.is(":checked")) {
+            CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
+            CMS.clearTipsyError(CachedDOMElements.txtPopupAcc8RMAccount);
+        } else {
+            CachedDOMElements.txtPopupAcc8RMAccount.removeAttr('disabled');
+        }
     };
 
     var validateForm = function () {
@@ -98,6 +111,9 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
         else if (CachedDOMElements.multiSelPopupLeagueGroup.multiSelect('getCheckedItems').length === 0) {
             CMS.showTipsyError(CachedDOMElements.multiSelPopupLeagueGroup, messages.RequiredFieldError);
             return false;
+        }
+        else if (CachedDOMElements.ckbAccumulateBalance.is(":checked")) {
+            CachedDOMElements.txtPopupAcc8RMAccount.attr('disabled', 'disabled');
         }
         else if (CachedDOMElements.txtPopupAcc8RMAccount.val().length <= 0) {
             CMS.showTipsyError(CachedDOMElements.txtPopupAcc8RMAccount, messages.RequiredFieldError);
@@ -120,7 +136,8 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                 LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
                 MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
                 MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
-                FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
+                FollowAccount: HasSeizeBetTicket() && !CachedDOMElements.ckbAccumulateBalance.is(":checked") ? CachedDOMElements.txtPopupAcc8RMAccount.val() : '',
+                AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
             };
 
             if (CMS.isValueEqual(oldData, newData)) {
@@ -147,7 +164,8 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
             LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
             MaxBet: CachedDOMElements.txtPopupAccMaxBet.val(),
             MaxPerMatch: CachedDOMElements.txtPopupAccMaxPerMatch.val(),
-            FollowAccount: HasSeizeBetTicket() ? CachedDOMElements.txtPopupAcc8RMAccount.val() : ''
+            FollowAccount: HasSeizeBetTicket() && !CachedDOMElements.ckbAccumulateBalance.is(":checked") ? CachedDOMElements.txtPopupAcc8RMAccount.val() : '',
+            AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
         if (isEdit) {
@@ -208,16 +226,18 @@ Fanex.CMS.BetRestrictionSoccer.AccountManagement = function () {
                     MaxBet: result.MaxBet == null ? '' : result.MaxBet + '',
                     MaxPerMatch: result.MaxPerMatch == null ? '' : result.MaxPerMatch + '',
                     FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
+                    AccumulateBalance: result.AccumulateBalance
                 };
 
                 updateLeagueGroupItems(result.LeagueGroupId);
                 CachedDOMElements.txtPopupAccUsername.val(result.Account);
                 CachedDOMElements.hidCustId.val(result.CustId);
                 CachedDOMElements.selPopupAccLiveBetAccept.val(result.LiveBetAccept);
-                CachedDOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
                 CachedDOMElements.txtPopupAccMaxBet.val(result.MaxBet);
                 CachedDOMElements.txtPopupAccMaxPerMatch.val(result.MaxPerMatch);
                 CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+                CachedDOMElements.ckbAccumulateBalance.prop('checked', result.AccumulateBalance);
+                CachedDOMElements.selPopupAccSeizeBetTicket.val(result.SeizeBetTicket).change();
             }
         );
     };

@@ -1082,18 +1082,6 @@
     <Content Include="Areas\MangeChatbots\Styles\NotificationList\NotificationList.less" />
     <Content Include="Areas\MangeChatbots\Views\NotificationList\Index.cshtml" />
     <Content Include="Areas\Customers\Views\ManageFollowBetAccount\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Tennis\AccountManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Tennis\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Badminton\AccountManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Badminton\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Basketball\AccountManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Basketball\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\BetRestrictionManagement\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Soccer\AccountManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Soccer\CurrencyManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Soccer\Index.cshtml" />
-    <Content Include="Areas\BetRestriction\Views\Soccer\SiteManagement.cshtml" />
-    <Content Include="Areas\BetRestriction\Styles\BetRestrictionManagement\Index.less" />
     <Content Include="Areas\CustomerClass\Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

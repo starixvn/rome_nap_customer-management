@@ -888,4 +888,7 @@
   <data name="BetRestrictionBadminton" xml:space="preserve">
     <value>Bet Restriction - Badminton</value>
   </data>
+  <data name="AccumulateBalance" xml:space="preserve">
+    <value>Accumulate Balance</value>
+  </data>
 </root>

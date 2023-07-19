@@ -6,7 +6,7 @@
 
         public int CustID { get; set; }
 
-        public byte SiteID { get; set; }
+        public int SiteID { get; set; }
 
         public byte Currency { get; set; }
 

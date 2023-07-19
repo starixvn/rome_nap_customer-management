@@ -12,7 +12,8 @@
             string productId,
             byte type,
             int pageIndex,
-            int pageSize)
+            int pageSize,
+            byte isLimitUpdPT)
         {
             CustName = custName;
             MutilSite = multiSite;
@@ -21,6 +22,7 @@
             Type = type;
             PageIndex = pageIndex;
             PageSize = pageSize;
+            IsLimitUpdPT = isLimitUpdPT;
         }
 
         public string CustName { get; }
@@ -36,6 +38,7 @@
         public int PageIndex { get; }
 
         public int PageSize { get; }
+        public byte IsLimitUpdPT { get; }
 
         public int TotalItems { get; set; }
 

@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
+﻿using Fanex.Nap.CMS.Infrastructure.Models;
+
+namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 {
     using Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline;
@@ -36,13 +38,14 @@
                     viewModel.ProductId ?? string.Empty,
                     viewModel.TypeId,
                     viewModel.PageIndex,
-                    viewModel.PageSize);
+                    viewModel.PageSize, 
+                    viewModel.LimitUpdatePT);
             var limitDailyPTUpdateList = repository.GetLimitDailyPTUpdateList(criteria);
 
             return new LimitDailyPTUpdateReport(limitDailyPTUpdateList, criteria.TotalItems);
         }
 
-        public AddNewOrRemoveLimitResult AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel)
+        public Result AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel)
         {
             var result = repository.ExecuteNonQuery(
                 new AddNewLimitDailyPTUpdateCriteria(
@@ -52,7 +55,8 @@
                     viewModel.Site,
                     viewModel.Type,
                     viewModel.UserId,
-                    viewModel.IP
+                    viewModel.IP,
+                    viewModel.LimitNewAccUpdPT
                 ));
 
             if (result.IsSuccess)
@@ -63,7 +67,7 @@
             return result;
         }
 
-        public AddNewOrRemoveLimitResult RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel)
+        public Result RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel)
         {
             var result = repository.ExecuteNonQuery(
                new RemoveLimitDailyPTUpdateCriteria(
@@ -79,6 +83,28 @@
             if (result.IsSuccess)
             {
                 result.Message = LimitDailyPTUpdateResource.RemoveLimitSuccessfully;
+            }
+
+            return result;
+        }
+
+        public Result UpdateLimit(UpdateLimitPTUpdateNewAccountViewModel viewModel)
+        {
+            var result = repository.ExecuteNonQuery(
+                           new UpdateLimitPTUpdateNewAccountCriteria(
+                               viewModel.ProductID,
+                               viewModel.CustID,
+                               viewModel.SiteID,
+                               viewModel.Currency,
+                               viewModel.Type,
+                               viewModel.UserId,
+                               viewModel.IP,
+                               viewModel.LimitNewAccUpdPT
+                           ));
+
+            if (result.IsSuccess)
+            {
+                result.Message = LimitDailyPTUpdateResource.UpdateLimitSuccessfully;
             }
 
             return result;

@@ -4,7 +4,7 @@
 
     public class RemoveLimitDailyPTUpdateCriteria : CriteriaBase
     {
-        public RemoveLimitDailyPTUpdateCriteria(byte productID, int custID, byte siteID, byte currency, byte type, int userId, string ip)
+        public RemoveLimitDailyPTUpdateCriteria(byte productID, int custID, int siteID, byte currency, byte type, int userId, string ip)
         {
             ProductID = productID;
             CustID = custID;
@@ -19,7 +19,7 @@
 
         public int CustID { get; }
 
-        public byte SiteID { get; }
+        public int SiteID { get; }
 
         public byte Currency { get; }
 

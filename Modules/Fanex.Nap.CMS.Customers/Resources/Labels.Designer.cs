@@ -421,6 +421,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Limit New Account Update PT.
+        /// </summary>
+        public static string LimitUpdatePT {
+            get {
+                return ResourceManager.GetString("LimitUpdatePT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage Follow Bet Account {0}.
         /// </summary>
         public static string ManageFollowBetAccountExcel {
@@ -507,6 +516,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string NoSite {
             get {
                 return ResourceManager.GetString("NoSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         

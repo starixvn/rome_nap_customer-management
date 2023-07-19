@@ -133,6 +133,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The function can only support up to {0} accounts per request..
         /// </summary>
         public static string OverSMAsLimitationError {
@@ -219,6 +228,33 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string SMAUsernameIsRequired {
             get {
                 return ResourceManager.GetString("SMAUsernameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to update Limit New Account Update PT of the selected rule?.
+        /// </summary>
+        public static string UpdateLimitConfirmationMessage {
+            get {
+                return ResourceManager.GetString("UpdateLimitConfirmationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated rule successfully.
+        /// </summary>
+        public static string UpdateLimitSuccessfully {
+            get {
+                return ResourceManager.GetString("UpdateLimitSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

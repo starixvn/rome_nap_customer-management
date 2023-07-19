@@ -21,6 +21,12 @@
         public IEnumerable<SelectListItem> Products { get; }
 
         public IEnumerable<SelectListItem> Currencies { get; }
+        public IEnumerable<SelectListItem> LitmitNewAccountUpdatePT => new[]
+        {
+            BuildSelectListItem(nameof(TypeConst.All), 2, true),
+            BuildSelectListItem(LimitDailyPTUpdateResource.Yes, 1),
+            BuildSelectListItem(LimitDailyPTUpdateResource.No, 0)
+        };
 
         public IEnumerable<SelectListItem> Types()
             => new[]

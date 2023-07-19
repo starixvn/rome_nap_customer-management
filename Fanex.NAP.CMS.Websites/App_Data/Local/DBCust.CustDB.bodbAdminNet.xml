@@ -106,6 +106,7 @@
     <Setting Key="NAP_LimitPTDaily_Sel" SpName="NAP_LimitPTDaily_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LimitPTDaily_Ins" SpName="NAP_LimitPTDaily_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LimitPTDaily_Del" SpName="NAP_LimitPTDaily_Del" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LimitPT_Upd" SpName="NAP_LimitPT_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Limit number of new created account">

@@ -1,4 +1,6 @@
-﻿namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
+﻿using Fanex.Nap.CMS.Infrastructure.Models;
+
+namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 {
     using Fanex.Data;
     using Fanex.Data.Repository;
@@ -76,14 +78,14 @@
             }
         }
 
-        public AddNewOrRemoveLimitResult ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(ICriteria criteria)
         {
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria.GetSpParams());
                 var outputParams = db.GetOuputParams();
 
-                return new AddNewOrRemoveLimitResult(
+                return new Result(
                     Convert.ToInt32(outputParams["errcode"]),
                     outputParams["errmsg"].ToString());
             }

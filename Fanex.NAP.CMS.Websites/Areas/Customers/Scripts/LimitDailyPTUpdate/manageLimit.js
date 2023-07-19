@@ -7,6 +7,7 @@ function ManageLimit(div, postUrl, reloadData) {
         ddlPopupSite = null,
         ddlPopupCurrency = null,
         ddlPopupProduct = null,
+        chkboxPopupLimitUpdatePT,
         spanPopupSite = null,
         spanPopupCurrency = null,
         fieldPopupType = null,
@@ -23,6 +24,7 @@ function ManageLimit(div, postUrl, reloadData) {
         divInlineMessage = div.find("#inline-message");
 
         ddlPopupType = div.find("#ddlPopup-type");
+        chkboxPopupLimitUpdatePT = div.find("#chkboxPopup-limit-update-pt");
         txtSMA = div.find("#txt-sma");
         ddlPopupSite = div.find("#ddlPopup-site");
         ddlPopupCurrency = div.find("#ddlPopup-currency");
@@ -96,6 +98,7 @@ function ManageLimit(div, postUrl, reloadData) {
             var formData = {};
 
             formData.type = ddlPopupType.val();
+            formData.limitNewAccUpdPT = chkboxPopupLimitUpdatePT.is(":checked");
 
             switch (formData.type) {
                 case '1':
@@ -292,6 +295,20 @@ function ManageLimit(div, postUrl, reloadData) {
     this.RemoveLimit = function (data) {
         CMS.showConfirmMessage(resources.removeLimitConfirmationMessage, function () {
             CMS.callAjax(this, 'Remove', data, function (result) {
+                var jsonData = $.parseJSON(result);
+                if (jsonData.Code === 0) {
+                    CMS.showSuccessMessage(jsonData.Message);
+                    reloadData();
+                } else {
+                    CMS.showErrorMessage(jsonData.Message);
+                }
+            });
+        });
+    }
+
+    this.UpdateLimit = function (data) {
+        CMS.showConfirmMessage(resources.updateLimitConfirmationMessage, function () {
+            CMS.callAjax(this, 'Update', data, function (result) {
                 var jsonData = $.parseJSON(result);
                 if (jsonData.Code === 0) {
                     CMS.showSuccessMessage(jsonData.Message);

@@ -6,6 +6,7 @@
         ddlCurrency = $("#ddl-currency"),
         ddlProduct = $("#ddl-product"),
         ddlType = $("#ddl-type"),
+        ddlLimitUpdatePT = $("#ddl-limit-update-PT"),
         formSearch = $("#formSearch"),
         freegrid = $("#freegrid"),
         divAddNew = $("#addNew"),
@@ -123,7 +124,8 @@
             + "&productId=" + productIds
             + "&typeId=" + ddlType.val()
             + "&pageIndex=" + (pageIndex + 1)
-            + "&pageSize=" + pageSize;
+            + "&pageSize=" + pageSize
+            + "&limitUpdatePT=" + ddlLimitUpdatePT.val();
 
         CMS.getJson(url, function (data) {
             var jsonData = $.parseJSON(data);
@@ -150,6 +152,7 @@
             { HeaderText: resources.currency, Width: 150, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.product, Width: 150, Name: "colProduct", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.type, Width: 150, Name: "colType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.limitUpdatePT, Width: 135, Name: "colLimitUpdatePT", HeaderAlign: "center", CellAlign: "center" },
         ];
         hasHostPermission && columns.push(
             { HeaderText: resources.delete, Width: 80, Name: "colDel", HeaderAlign: "center", CellAlign: "center" });
@@ -187,6 +190,7 @@
                 { Name: "colCurrency", Value: value.CurrencyName },
                 { Name: "colProduct", Value: value.ProductName },
                 { Name: "colType", Value: value.TypeName },
+                { Name: "colLimitUpdatePT", Value: renderUpdateCell(value) },
             ];
             hasHostPermission && columns.push({ Name: "colDel", Value: renderDeleteCell(value) });
 
@@ -194,6 +198,17 @@
         });
 
         return bodyRows;
+    }
+
+    function renderUpdateCell(data) {
+        return `<input class="combobox-autocomplete update-limit"
+                data-cust-id=${data.CustID}
+                data-product-id=${data.ProductID}
+                data-site-id=${data.SiteID}
+                data-currency=${data.Currency}
+                data-type=${data.Type}
+                data-limit-update-pt=${data.LimitNewAccUpdPT}
+                type="checkbox" ${data.LimitNewAccUpdPT ? "checked":""}>`;
     }
 
     function renderDeleteCell(data) {
@@ -221,6 +236,24 @@
                 CMS.resolveRootUrl("LimitDailyPTUpdate/Remove"),
                 function () { formSearch.submit(); });
             manageLimit.RemoveLimit({ custID, productID, siteID, type, currency });
+        });
+
+        $(".update-limit").off().click(function () {
+            var currentCheck = $(this).is(":checked");
+            $(this).prop('checked', !currentCheck);
+
+            var custID = $(this).attr("data-cust-id");
+            var productID = $(this).attr("data-product-id");
+            var siteID = $(this).attr("data-site-id");
+            var currency = $(this).attr("data-currency");
+            var type = $(this).attr("data-type");
+            var limitNewAccUpdPT = $(this).attr("data-limit-update-pt");
+
+            var manageLimit = new ManageLimit(
+                null,
+                CMS.resolveRootUrl("LimitDailyPTUpdate/Update"),
+                function () { formSearch.submit(); });
+            manageLimit.UpdateLimit({ custID, productID, siteID, type, currency, limitNewAccUpdPT});
         });
     }
 

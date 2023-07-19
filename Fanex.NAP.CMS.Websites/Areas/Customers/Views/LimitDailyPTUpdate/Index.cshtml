@@ -16,6 +16,7 @@
             currency: "@Labels.Currency",
             product: "@LimitDailyPTUpdateResource.Product",
             type: "@Labels.Type",
+            limitUpdatePT: "@Labels.LimitUpdatePT",
             delete: "@LimitDailyPTUpdateResource.Delete",
             overSMAsLimitationError: "@LimitDailyPTUpdateResource.OverSMAsLimitationError",
             alreadyExistsError: "@LimitDailyPTUpdateResource.AlreadyExistsError",
@@ -24,6 +25,7 @@
             currencyIsRequired: "@LimitDailyPTUpdateResource.CurrencyIsRequired",
             productIsRequired: "@LimitDailyPTUpdateResource.ProductIsRequired",
             removeLimitConfirmationMessage: "@LimitDailyPTUpdateResource.RemoveLimitConfirmationMessage",
+            updateLimitConfirmationMessage: "@LimitDailyPTUpdateResource.UpdateLimitConfirmationMessage",
             inputInvalidSMAsError: "@LimitDailyPTUpdateResource.InputInvalidSMAsError",
             duplicatedAccountsError:  "@LimitDailyPTUpdateResource.DuplicatedAccountsError"
         };
@@ -52,10 +54,10 @@
                 <label>@Labels.Site</label>
             </div>
             <div class="edit-field col_7">
-               @Html.DropDownList(
-               "ddlSite",
-               Model.Sites,
-               new { @id = "ddl-site"})
+                @Html.DropDownList(
+                "ddlSite",
+                Model.Sites,
+                new { @id = "ddl-site"})
             </div>
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
@@ -81,6 +83,12 @@
             <div class="edit-field col_6">
                 @Html.DropDownList("type", Model.Types(), new { id = "ddl-type", @class = "combobox-autocomplete width-90" })
             </div>
+            <div class="lbl-field col_6 limit-update-pt">
+                <label>@Labels.LimitUpdatePT</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("type", Model.LitmitNewAccountUpdatePT, new { id = "ddl-limit-update-PT", @class = "combobox-autocomplete width-90" })
+            </div>
             <div class="submit width-auto col_4">
                 <button type="submit" class="submit btn-search">@Labels.Search</button>
             </div>
@@ -103,7 +111,7 @@
     <div id="note-info-content">
         <div class="message">
             <p>- Downlines of the rules added into this function can only be updated up to once per month by each upline. (e.g. a member can have up to 3 times of PT update, 1 by agent, 1 by master and 1 by super).</p>
-            <p>- When creating new account by Search & Copy or Full mode will also count a update.</p>
+            <p>- When creating new account  will follow Limit New Account Update PT  for counting  as a update.</p>
             <p>- The restriction is applied on Alpha Site only. Updates done via NAP Site or External NAP Site does not count in the monthly count.</p>
             <p>- Currently the restriction is applied for RNG Slot product only.</p>
         </div>
@@ -116,8 +124,15 @@
                 <div class="lbl-field">
                     <label>@Labels.Type</label>
                 </div>
-                <div class="edit-field">
+                <div class="edit-field edit-type">
                     @Html.DropDownList("type", Model.Types().Where(t => t.Value != "0").ToArray(), new { id = "ddlPopup-type", @class = "combobox-autocomplete" })
+                </div>
+
+                <div class="lbl-field lbl-limit-update-pt">
+                    <label>@Labels.LimitUpdatePT</label>
+                </div>
+                <div class="edit-field edit-limit-update-pt">
+                    @Html.CheckBox("limit-update-pt", false, new { id = "chkboxPopup-limit-update-pt", @class = "" })
                 </div>
             </div>
             <div class="form-row field-sma">
@@ -133,20 +148,20 @@
                 <div class="lbl-field"><label>Site<span class="text-red">&nbsp;*</span></label></div>
                 <div class="edit-field">
                     @Html.DropDownList(
-                   "site",
-                   (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
-                   }).Union(Model.Sites),
-                   new { id = "ddlPopup-site", @class = "combobox-autocomplete" })
+                        "site",
+                        (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
+                        }).Union(Model.Sites),
+                        new { id = "ddlPopup-site", @class = "combobox-autocomplete" })
                 </div>
             </div>
             <div class="form-row">
                 <div class="lbl-field"><label>Currency<span class="text-red">&nbsp;*</span></label></div>
                 <div class="edit-field">
                     @Html.DropDownList(
-                   "currency",
-                   (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
-                   }).Union(Model.Currencies),
-                   new { id = "ddlPopup-currency", @class = "combobox-autocomplete" })
+                        "currency",
+                        (new List<SelectListItem> { new SelectListItem { Text = "Please select", Value = "0", Selected = true }
+                        }).Union(Model.Currencies),
+                        new { id = "ddlPopup-currency", @class = "combobox-autocomplete" })
                 </div>
             </div>
             <div class="form-row">

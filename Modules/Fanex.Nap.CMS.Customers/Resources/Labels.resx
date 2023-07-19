@@ -345,4 +345,10 @@
   <data name="ManageFollowBetAccountExcel" xml:space="preserve">
     <value>Manage Follow Bet Account {0}</value>
   </data>
+  <data name="LimitUpdatePT" xml:space="preserve">
+    <value>Limit New Account Update PT</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
 </root>

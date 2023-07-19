@@ -473,21 +473,21 @@
     }
 
     function submitAddNew() {
+        clearAllTipsyErrors();
         if (!cachedAddNewRule) {
             return;
         }
         
-        spreadManagementHelper.validateTitle($(`#addNewTitle`));
+        var newRuleTitle = spreadManagementHelper.validateTitle($(`#addNewTitle`));
         spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
-        if (!spreadManagementHelper.isValidRule(cachedAddNewRule)) {
+        if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
             return;
         }
-
-        clearAllTipsyErrors();
+        
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -599,6 +599,7 @@
     }
 
     function saveEditItem() {
+        clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
         var updateRule = {
@@ -616,7 +617,6 @@
             return;
         }
 
-        clearAllTipsyErrors();
         CMS.disableInput();
         CMS.callAjax(
             this,

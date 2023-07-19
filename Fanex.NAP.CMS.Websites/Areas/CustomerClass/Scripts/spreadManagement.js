@@ -29,7 +29,7 @@
 
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
-                site: getSelectedSites("ddlSites"),
+                site: getSelectedReplaceAllValue("ddlSites", "All", siteList.length),
                 currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
                 spread: filterSpread.get()
             };
@@ -420,9 +420,9 @@
                 showFilter: true,
                 onCheck: function () {
                     if (index) {
-                        cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0");
+                        cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
                     } else {
-                        cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0");
+                        cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
                     }
                 }
             }
@@ -446,9 +446,9 @@
                 showFilter: true,
                 onCheck: function () {
                     if (index) {
-                        cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0");
+                        cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
                     } else {
-                        cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0");
+                        cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
                     }
                 }
             }
@@ -509,31 +509,40 @@
     }
 
     function getSelectedSites(divId) {
-        if ($(`#${divId}`).fanexMultiSelect("isCheckAll")) {
+        var selectedSites = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedSites.length === siteList.length) {
             return "All";
         }
 
-        var selectedSites = $(`#${divId}`).fanexMultiSelect("getItems", true);
+        var selectedCreditSites = selectedSites.filter(site => cachedCreditSites.some(creditSite => creditSite.value.toString() === site.toString()));
+        var selectedDepositSites = selectedSites.filter(site => cachedLicenseeSites.some(licenseeSite => licenseeSite.value.toString() === site.toString()));
 
-        if ($(`#${divId}`).parent().find('input[data-is-group="true"][value="licensee"]').is(":checked")) {
-            selectedSites = selectedSites.filter(site => cachedLicenseeSites.filter(licenseeSite => licenseeSite.value.toString() === site.toString()).length <= 0);
-            selectedSites.unshift("AllDeposit");
+        selectedSites = [];
+
+        if (selectedCreditSites.length === cachedCreditSites.length) {
+            selectedSites.push("AllCredit");
+        } else {
+            selectedSites = selectedCreditSites;
         }
 
-        if ($(`#${divId}`).parent().find('input[data-is-group="true"][value="credit"]').is(":checked")) {
-            selectedSites = selectedSites.filter(site => cachedCreditSites.filter(creditSite => creditSite.value.toString() === site.toString()).length <= 0);
-            selectedSites.unshift("AllCredit");
+        if (selectedDepositSites.length === cachedLicenseeSites.length) {
+            selectedSites.push("AllDeposit");
+        } else {
+            selectedSites.push(...selectedDepositSites);
         }
 
         return selectedSites.join();
     }
 
-    function getSelectedReplaceAllValue(divId, allvalue) {
-        if ($(`#${divId}`).fanexMultiSelect("isCheckAll")) {
+    function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
             return allvalue;
         }
 
-        return $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        return selectedItems.join();
     }
 
     function cancelEditItem() {
@@ -597,9 +606,9 @@
             PolicyTitle: spreadManagementHelper.validateTitle($(`#editTitle-${policyId}`)),
             Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
             CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
-            Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0")),
+            Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
             Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
-            Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0")),
+            Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0", platforms.length)),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked")
         };
 

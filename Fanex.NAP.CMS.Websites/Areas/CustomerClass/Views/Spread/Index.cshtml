@@ -78,6 +78,7 @@
         const customerClassList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.CustomerClasses, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');
+        const platforms = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Platforms, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.SpreadScripts)
 }

@@ -12,8 +12,6 @@
         cachedAddNewRule = null,
         hasHostPermisson = null;
 
-    const platforms = [{ Id: 1, Name: "Desktop" }, { Id: 2, Name: "Mobile" }, { Id: 3, Name: "APP" }, { Id: 4, Name: "Oddsfeed" }, { Id: 5, Name: "DirectAPI" }];
-
     function init() {
         renderCustomerClass();
         renderSites();

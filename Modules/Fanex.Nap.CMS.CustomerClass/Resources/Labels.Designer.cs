@@ -70,6 +70,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add More.
         /// </summary>
         public static string AddMore {
@@ -129,6 +138,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string AddRuleSuccessfully {
             get {
                 return ResourceManager.GetString("AddRuleSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Spread Successfully.
+        /// </summary>
+        public static string AddSpreadSuccessfully {
+            get {
+                return ResourceManager.GetString("AddSpreadSuccessfully", resourceCulture);
             }
         }
         
@@ -322,6 +340,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Spread Successfully.
+        /// </summary>
+        public static string DeleteSpreadSuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteSpreadSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop.
         /// </summary>
         public static string Desktop {
@@ -399,6 +426,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string EditRuleSuccessfully {
             get {
                 return ResourceManager.GetString("EditRuleSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Spread Successfully.
+        /// </summary>
+        public static string EditSpreadSuccessfully {
+            get {
+                return ResourceManager.GetString("EditSpreadSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Status Spread Successfully.
+        /// </summary>
+        public static string EditStatusSpreadSuccessfully {
+            get {
+                return ResourceManager.GetString("EditStatusSpreadSuccessfully", resourceCulture);
             }
         }
         
@@ -979,6 +1024,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spread.
+        /// </summary>
+        public static string Spread {
+            get {
+                return ResourceManager.GetString("Spread", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spread Management.
+        /// </summary>
+        public static string SpreadManagement {
+            get {
+                return ResourceManager.GetString("SpreadManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Super Bet Interval Sec.
         /// </summary>
         public static string SuperBetIntervalSec {
@@ -993,6 +1056,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string TargetRuleTitle {
             get {
                 return ResourceManager.GetString("TargetRuleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

@@ -417,6 +417,8 @@
     <Content Include="Areas\CustomerClass\Scripts\siteManagement.js" />
     <Content Include="Areas\CustomerClass\Scripts\siteManagementAssignSiteSetting.js" />
     <Content Include="Areas\CustomerClass\Scripts\siteManagementUpload.js" />
+    <Content Include="Areas\CustomerClass\Scripts\spreadManagement.js" />
+    <Content Include="Areas\CustomerClass\Scripts\spreadManagementHelper.js" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\limitDailyPTUpdate.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />
@@ -595,6 +597,8 @@
     <Content Include="Content\Themes\img\bg_header.png" />
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
+    <Content Include="Content\Themes\img\icon-save-16.png" />
+    <Content Include="Content\Themes\img\icon-close.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
     <Content Include="Content\Themes\img\countdownCheck.png" />
     <Content Include="Content\Themes\img\expand-icon.png" />
@@ -608,6 +612,7 @@
     <Content Include="Content\Themes\img\icon-no.png" />
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
+    <Content Include="Content\Themes\img\icon-trash.png" />
     <Content Include="Content\Themes\img\icon-yes.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\light-information-icon2.png" />
@@ -1119,6 +1124,8 @@
     <Content Include="Areas\BetRestriction\Views\Soccer\Index.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Soccer\SiteManagement.cshtml" />
     <Content Include="Areas\BetRestriction\Styles\BetRestrictionManagement\Index.less" />
+    <Content Include="Areas\CustomerClass\Views\Spread\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\spreadManagement.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

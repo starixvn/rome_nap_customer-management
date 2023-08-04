@@ -11,7 +11,7 @@
     {
         IEnumerable<short> GetCustomerClasses();
 
-        IEnumerable<LeagueGroup> GetLeagueGroups();
+        IEnumerable<LeagueGroup> GetLeagueGroups(int sportType = 0);
     }
 
     internal class FilterService : SettingService, IFilterService
@@ -24,7 +24,7 @@
         public IEnumerable<short> GetCustomerClasses()
             => dataAccess.GetCustomerClasses(new GetCustomerClassCriteria());
 
-        public IEnumerable<LeagueGroup> GetLeagueGroups()
-            => dataAccess.GetLeagueGroups(new GetLeagueGroupCriteria());
+        public IEnumerable<LeagueGroup> GetLeagueGroups(int sportType = 0)
+            => dataAccess.GetLeagueGroups(new GetLeagueGroupCriteria(sportType));
     }
 }

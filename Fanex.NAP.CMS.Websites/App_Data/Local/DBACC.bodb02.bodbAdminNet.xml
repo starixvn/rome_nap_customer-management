@@ -77,5 +77,6 @@
   </Function>
   <Function Name="Customer Class Management">
     <Setting Key="Nap_LM_CustomerClassSel" SpName="Nap_LM_CustomerClassSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

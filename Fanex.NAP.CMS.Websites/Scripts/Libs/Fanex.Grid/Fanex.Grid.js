@@ -514,7 +514,7 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                     if (options.titleInfo.showCollapseExpandButton === true) {
                         titleHtml.push('<input class="btExpand expanded" id="btnCollapseExpand' +
                                         me.gridId +
-                                        '" type="button" value="" title="Collapse/Expand" />');
+                                        '" type="button" value="" title="Click to Collapse All" />');
                     }
                     if (options.titleInfo.showExcelButton === true) {
                         titleHtml.push('<input type="button" id="btnExport' + me.gridId + '" class="btnExcel" title="Export to Excel" />');
@@ -1452,9 +1452,11 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                             me.$grid.find('.child-row').hide();
                             me.$grid.find('.grid-collapse-expand').removeClass('grid-expand').addClass('grid-collapse');
                             $this.removeClass('expanded').addClass('collapsed');
+                            $this.prop("title", "Click to Expand All");
                         }
                         else {
                             $this.removeClass('collapsed').addClass('expanded');
+                            $this.prop("title", "Click to Collapse All");
                             me.$grid.find('.grid-collapse-expand').removeClass('grid-collapse').addClass('grid-expand');
                             me.$grid.find('.child-row').show();
                         }

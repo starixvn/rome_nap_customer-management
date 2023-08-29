@@ -16,7 +16,9 @@
             const site = ddlSite.val();
             const customerClass = ddlCustomerClass.val();
             const sportType = ddlSportType.val();
-            if (site === "All" && customerClass === "0" && sportType === "0") {
+            if ((site === "All" && customerClass === "0")
+                || (site === "All" && sportType === "0")
+                || (customerClass === "0" && sportType === "0")) {
                 CMS.showErrorBox($("#note-info-message").text());
                 return;
             }

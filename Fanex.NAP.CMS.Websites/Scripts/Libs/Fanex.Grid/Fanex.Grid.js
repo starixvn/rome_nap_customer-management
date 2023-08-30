@@ -1494,6 +1494,14 @@ var fanexGridCurrentLanguage = fanexGridCurrentLanguage || {};
                         me.gridOptions.isResetScroller = false;
                         $(me.$grid).gridScroller(me.gridOptions);
                     }
+
+                    if (me.$grid.find(".parent-row > td.tr-grid-collapse-expand > div > span.grid-expand").length === 0) {
+                        me.$grid.parent().find("#btnCollapseExpand" + me.gridId).removeClass('expanded').addClass('collapsed');
+                        me.$grid.parent().find("#btnCollapseExpand" + me.gridId).prop("title", "Click to Expand All");
+                    } else if (me.$grid.find(".parent-row > td.tr-grid-collapse-expand > div > span.grid-collapse").length === 0) {
+                        me.$grid.parent().find("#btnCollapseExpand" + me.gridId).removeClass('collapsed').addClass('expanded');
+                        me.$grid.parent().find("#btnCollapseExpand" + me.gridId).prop("title", "Click to Collapse All");
+                    }
                 });
             }
         },

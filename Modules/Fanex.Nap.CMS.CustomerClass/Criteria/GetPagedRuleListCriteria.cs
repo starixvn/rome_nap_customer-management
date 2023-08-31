@@ -3,6 +3,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using System.Collections.Generic;
+    using System.Net;
     using System.Text;
 
     internal class GetPagedRuleListCriteria : QueryCriteriaBase
@@ -42,7 +43,7 @@
             {
                 xmlBuilder
                 .Append("<r GroupID=\"").Append(lg.Id).Append("\"")
-                .Append(" GroupName=\"").Append(lg.Name).Append("\"")
+                .Append(" GroupName=\"").Append(WebUtility.HtmlEncode(lg.Name)).Append("\"")
                 .Append(" SportType=\"").Append(lg.SportType).Append("\"/>");
             }
 

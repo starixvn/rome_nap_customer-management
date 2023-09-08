@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Labels.CustomerClassSetting;
     var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
+    const int BasketBallSportType = 2;
 }
 
 @section Head {
@@ -69,7 +70,7 @@
                 <label>@Labels.SportType</label>
             </div>
             <div class="edit-field col_7">
-                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem().SetDefaultValue("2"), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
+                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem().SetDefaultValue(BasketBallSportType.ToString()), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
             </div>
             <div class="submit width-auto">
                 <button type="submit" class="submit">@Labels.Search</button>

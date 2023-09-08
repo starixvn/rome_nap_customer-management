@@ -41,12 +41,14 @@
 
         public PagedRule GetRules(SearchCustomerClassSettingRequest request)
         {
+            var leagueGroups = filterService.GetLeagueGroups(request.SportType);
+
             if (request.Site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
                 request.Site = null;
             }
 
-            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request));
+            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups));
 
             return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));
         }

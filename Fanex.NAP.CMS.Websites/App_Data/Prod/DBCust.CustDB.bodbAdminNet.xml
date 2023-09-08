@@ -133,7 +133,6 @@
   </Function>
   <Function Name="Customer Class Management">
     <!--Rule-->
-    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel" DbName="DBCust.CustDB.bodbAdminNet" />

@@ -8,7 +8,7 @@ const policyManagementHelper = (function () {
             renderDiffBalanceRatioBetDelay(rule),
             renderSeparateRuleSettings(resources.nextSuperSiteBetIntervalSec, rule.NextBetInterval, rule.SuperBetInterval, rule.SiteBetInterval),
             renderSeparateRuleSettings(resources.minMaxBetMPM, rule.MinBet, rule.MaxBet, rule.MaxPerMatch),
-            renderRepeatedBetsSeizeBetEnableParlay(rule),
+            renderRepeatedBetsSeizeBetDisableParlay(rule),
             //renderPeakHourSpread(rule)
         ].join("");
     }
@@ -69,7 +69,7 @@ const policyManagementHelper = (function () {
         return `<strong class="${className}">${typeof value !== "undefined" ? formatInteger(value) : "--"}</strong>`;
     }
 
-    function renderRepeatedBetsSeizeBetEnableParlay(rule) {
+    function renderRepeatedBetsSeizeBetDisableParlay(rule) {
         let html = [];
         if (typeof rule.RepeatedBets !== "undefined") {
             html.push(renderRuleSetting(resources.repeatedBets, rule.RepeatedBets));
@@ -79,7 +79,7 @@ const policyManagementHelper = (function () {
             html.push(renderRuleSetting(resources.seizeBet, rule.SeizeBet + "%"));
         }
 
-        html.push(renderRuleSetting(resources.enableParlay, showEnableValue(rule.EnableParlay)));
+        html.push(renderRuleSetting(resources.disableParlay, showEnableValue(rule.DisableParlay)));
 
         return `<div>${html.join(", ")}</div>`;
     }

@@ -82,7 +82,7 @@
             { HeaderText: resources.minMaxBetMPM, Width: 160, Name: "colMinMaxBetMPM", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.repeatedBets, Width: 60, Name: "colRepeatedBets", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.seizeBet, Width: 60, Name: "colSeizeBet", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.enableParlay, Width: 60, Name: "colEnableParlay", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.disableParlay, Width: 60, Name: "colDisableParlay", HeaderAlign: "center", CellAlign: "center" },
             //{ HeaderText: resources.peakHourSpread, Width: 60, Name: "colPeakHourSpread", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
         ];
@@ -115,7 +115,7 @@
                 { Name: "colMinMaxBetMPM", Value: ruleManagementHelper.renderSeparateCell(rule.MinBet, rule.MaxBet, rule.MaxPerMatch) },
                 { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                 { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
-                { Name: "colEnableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.EnableParlay) },
+                { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) },
                 //{ Name: "colPeakHourSpread", Value: ruleManagementHelper.formatInteger(rule.PeakHourSpread) }
             ];
 

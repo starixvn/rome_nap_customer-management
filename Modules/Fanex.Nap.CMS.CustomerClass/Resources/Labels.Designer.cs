@@ -385,6 +385,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable Parlay.
+        /// </summary>
+        public static string DisableParlay {
+            get {
+                return ResourceManager.GetString("DisableParlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Template.
         /// </summary>
         public static string DownloadTemplate {

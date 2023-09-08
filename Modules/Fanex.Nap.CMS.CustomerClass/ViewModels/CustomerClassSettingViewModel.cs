@@ -15,8 +15,9 @@
             IEnumerable<short> customerClasses,
             IEnumerable<LeagueGroup> leagueGroups) : base(false)
         {
+            var defaultSite = sites.FirstOrDefault()?.Name;
             Sites = new[] { new SelectListItem { Text = Labels.All, Value = Labels.All } }
-                .Concat(sites.Select(s => new SelectListItem { Text = s.Name, Value = s.Name }));
+                .Concat(sites.Select(s => new SelectListItem { Text = s.Name, Value = s.Name, Selected = s.Name == defaultSite}));
             CustomerClasses = customerClasses.Select(c => ToSelectListItem(c)).InsertAllItem();
             LeagueGroups = leagueGroups;
         }

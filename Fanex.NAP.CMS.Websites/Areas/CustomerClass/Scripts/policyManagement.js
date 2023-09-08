@@ -38,7 +38,7 @@
         ];
 
         return {
-            showTitle: false,
+            showTitle: true,
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
@@ -46,6 +46,10 @@
             headerColumnHeight: 25,
             gridExpandHeight: 130,
             columns: columns,
+            titleInfo:
+            {
+                showCollapseExpandButton: true
+            },
             showPager: false,
             showTree: true
         };

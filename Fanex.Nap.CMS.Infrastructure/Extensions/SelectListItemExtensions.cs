@@ -14,6 +14,16 @@
 
         public static IEnumerable<SelectListItem> InsertNoneItem(this IEnumerable<SelectListItem> collection)
             => collection.InsertItem(Labels.None);
+        
+        public static IEnumerable<SelectListItem> SetDefaultValue(this IEnumerable<SelectListItem> collection, string selectedValue)
+        {
+            foreach (var item in collection)
+            {
+                item.Selected = item.Value == selectedValue;
+
+                yield return item;
+            }
+        }
 
         private static IEnumerable<SelectListItem> InsertItem(
             this IEnumerable<SelectListItem> collection,

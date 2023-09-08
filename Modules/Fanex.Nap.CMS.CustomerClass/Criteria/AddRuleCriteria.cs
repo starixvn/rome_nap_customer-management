@@ -44,7 +44,7 @@
                     .Append(" MaxPerMatch=\"").Append(request.MaxPerMatch).Append("\"")
                     .Append(" RepeatedBets=\"").Append(request.RepeatedBets).Append("\"")
                     .Append(" SeizeBetTicket=\"").Append(request.SeizeBet).Append("\"")
-                    .Append(" EnableParlay=\"").Append(Convert.ToByte(request.EnableParlay)).Append("\"")
+                    .Append(" DisableParlay=\"").Append(Convert.ToByte(request.DisableParlay)).Append("\"")
                     .Append(" PeakHourSpreadAdjustment=\"").Append(request.PeakHourSpread).Append("\"/>");
             }
 

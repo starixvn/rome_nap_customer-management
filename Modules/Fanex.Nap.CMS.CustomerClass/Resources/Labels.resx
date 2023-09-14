@@ -483,4 +483,7 @@
   <data name="DeleteSiteSettingSuccessfully" xml:space="preserve">
     <value>Delete Site Settings Successfully</value>
   </data>
+  <data name="CCUtilityOffering" xml:space="preserve">
+    <value>CC Utility Offering</value>
+  </data>
 </root>

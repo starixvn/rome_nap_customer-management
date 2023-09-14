@@ -7,7 +7,7 @@
 }
 
 @section Head {
-    @Styles.Render(CustomerClassBundlesConfig.SpreadStyles)
+    @Styles.Render(CustomerClassBundlesConfig.OfferingStyles)
 }
 
 @section Headline {
@@ -26,12 +26,6 @@
             </div>
             <div class="edit-field col_6">
                 <div id="ddlCustomerClasses"></div>
-            </div>
-            <div class="lbl-field col_3">
-                <label>@Labels.Spread</label>
-            </div>
-            <div class="edit-field col_4">
-                <input id="filterSpread" type="text" />
             </div>
             <div class="lbl-field col_3">
                 <label>@Labels.Site</label>
@@ -66,8 +60,7 @@
             customerClass: "@Labels.CustomerClass",
             site: "@Labels.Site",
             currency: "@Labels.Currency",
-            platform: "@Labels.Platform",
-            spread: "@Labels.Spread",
+            ccutilityoffering: "@Labels.CCUtilityOffering",
             enable: "@Labels.Enable",
             action: "@Labels.Action",
             all: "@Labels.All",
@@ -79,7 +72,6 @@
         const customerClassList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.CustomerClasses, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');
-        const platforms = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Platforms, jsonSettings))');
     </script>
-    @Scripts.Render(CustomerClassBundlesConfig.SpreadScripts)
+    @Scripts.Render(CustomerClassBundlesConfig.OfferingScripts)
 }

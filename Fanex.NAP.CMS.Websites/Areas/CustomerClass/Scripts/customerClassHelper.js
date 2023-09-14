@@ -38,9 +38,60 @@ const customerClassHelper = (function ($) {
         return true;
     }
 
+    function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
+    function buildGroupSiteList(isAllCredit, isAllLicensee, selectedValue, cachedCreditSites, cachedLicenseeSites) {
+        let creditOptions = [];
+        let licenseeOptions = [];
+        let selectedValueList = selectedValue.split(",");
+        cachedCreditSites.forEach(function (item) {
+            creditOptions.push({
+                value: item.value,
+                text: item.text,
+                checked: selectedValue === "All" || isAllCredit || selectedValueList.includes(item.value),
+                enable: true
+            });
+        });
+        cachedLicenseeSites.forEach(function (item) {
+            licenseeOptions.push({
+                value: item.value,
+                text: item.text,
+                checked: selectedValue === "All" || isAllLicensee || selectedValueList.includes(item.value),
+                enable: true
+            });
+        });
+
+        return [
+            {
+                value: "credit",
+                text: "Credit",
+                checked: isAllCredit,
+                enable: true,
+                items: creditOptions
+            },
+            {
+                value: "licensee",
+                text: "Licensee",
+                checked: isAllLicensee,
+                enable: true,
+                items: licenseeOptions
+            }
+        ];
+    }
+
     return {
         renderMultiSelect: renderMultiSelect,
         showInlineMessageAndClosePopup: showInlineMessageAndClosePopup,
-        isASCII: isASCII
+        isASCII: isASCII,
+        getSelectedReplaceAllValue: getSelectedReplaceAllValue,
+        buildGroupSiteList: buildGroupSiteList
     };
 })(jQuery);

@@ -136,6 +136,7 @@
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
+    <Compile Include="Controllers\UtilityOfferingController.cs" />
     <Compile Include="Criteria\AddPolicyCriteria.cs" />
     <Compile Include="Criteria\AddRuleCriteria.cs" />
     <Compile Include="Criteria\AddSpreadRuleCriteria.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\SiteSetting.cs" />
     <Compile Include="Models\SiteSettingExcel.cs" />
     <Compile Include="Models\SpreadRule.cs" />
+    <Compile Include="Models\UtilityOfferingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddPolicyRequest.cs" />
     <Compile Include="Requests\AddRuleRequest.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
     <Compile Include="Requests\SearchCustomerClassSettingRequest.cs" />
     <Compile Include="Requests\SearchSpreadRuleRequest.cs" />
+    <Compile Include="Requests\SearchUtilityOfferingRequest.cs" />
     <Compile Include="Requests\SiteCurrencyRequest.cs" />
     <Compile Include="Requests\CustomerClassRuleTitleRequest.cs" />
     <Compile Include="Requests\EnableRuleRequest.cs" />
@@ -201,12 +204,14 @@
     <Compile Include="Services\SiteService.cs" />
     <Compile Include="Services\SiteUploadService.cs" />
     <Compile Include="Services\SpreadService.cs" />
+    <Compile Include="Services\UtilityOfferingSerivce.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerClassSettingViewModel.cs" />
     <Compile Include="ViewModels\PolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="ViewModels\SiteViewModel.cs" />
     <Compile Include="ViewModels\SpreadViewModel.cs" />
+    <Compile Include="ViewModels\UtilityOfferingViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

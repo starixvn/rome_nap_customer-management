@@ -407,6 +407,8 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\editingGridHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\offering.js" />
     <Content Include="Areas\CustomerClass\Scripts\ruleManagementHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassSetting.js" />
     <Content Include="Areas\CustomerClass\Scripts\policyManagement.js" />
@@ -1127,6 +1129,9 @@
     <Content Include="Areas\BetRestriction\Styles\BetRestrictionManagement\Index.less" />
     <Content Include="Areas\CustomerClass\Views\Spread\Index.cshtml" />
     <Content Include="Areas\CustomerClass\Styles\spreadManagement.less" />
+    <Content Include="Areas\CustomerClass\Views\UtilityOffering\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\offering.less" />
+    <Content Include="Areas\CustomerClass\Styles\editingGrid.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

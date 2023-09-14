@@ -232,6 +232,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CC Utility Offering.
+        /// </summary>
+        public static string CCUtilityOffering {
+            get {
+                return ResourceManager.GetString("CCUtilityOffering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clone.
         /// </summary>
         public static string Clone {

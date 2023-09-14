@@ -1,0 +1,126 @@
+﻿@import "_common.less";
+
+.width-60 {
+    width: 60px;
+}
+
+.width-150 {
+    width: 150px;
+}
+
+.width-180 {
+    width: 180px;
+}
+
+.width-250 {
+    width: 250px;
+}
+
+.width-200 {
+    width: 200px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.inputTitle {
+    width: 140px;
+    text-align: left !important;
+}
+
+.add-cell {
+    text-align: center !important;
+}
+
+.rule-cell {
+    overflow: visible !important;
+    word-break: break-word;
+    background-clip: padding-box;
+}
+
+.green-button {
+    text-align: center !important;
+}
+
+.add-row {
+    position: relative;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+.color-red {
+    color: red;
+    font-weight: bold;
+}
+
+#viewCurrenciesForm {
+    max-height: 600px;
+    overflow-y: auto;
+    width: 300px;
+
+    .tbl-freegrid tbody td {
+        padding: 0 5px;
+    }
+}
+
+#freegrid {
+
+    table {
+        overflow: auto;
+        display: block;
+    }
+
+    .tbl-freegrid {
+        thead {
+            position: sticky;
+            top: -1px;
+            height: 48px;
+        }
+
+        td {
+            padding: 1px;
+        }
+    }
+}
+
+.content-grid {
+    min-width: 0;
+}
+
+.tbl-freegrid-box {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        td.column-rule-title {
+            padding-left: 10px;
+            position: relative;
+
+            .text {
+                border: 1px solid @border-color;
+                font-size: 0.9em;
+                height: 20px;
+                padding: 2px;
+                width: 520px;
+            }
+        }
+    }
+}
+
+.edit-item {
+    text-align: center;
+}

@@ -153,6 +153,11 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string PolicyManagement = "PolicyManagement";
         public const string SiteManagement = "SiteManagement";
         public const string SpreadManagement = "SpreadManagement";
+        
+        
+        //Manage Product Setting
+        public const string ManageProductSetting = "ManageProductSetting";
+        
         public const string CCUtilityOffering = "CCUtilityOffering";
 
         // Admin

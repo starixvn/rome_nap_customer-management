@@ -1,0 +1,74 @@
+﻿@using Fanex.NAP.CMS.Core.Resources
+@using Fanex.Nap.CMS.ManageProductSetting.AppStart
+@model Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting.CompanyBetLimitSetting
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingStyles)
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">Company Bet Limit Setting</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    <div class="tabs-area">
+        <div id="tab-1" class="tab first">Tab 1 </div>
+        <div id="tab-2" class="tab">Tab 2</div>
+    </div>
+    <div class="form-area">
+        <div id="form-tab-1" class="form-tab first filter-form ">
+            <div class="filter-row">
+                <div class="lbl-field col_1 radio-button">
+                    @Html.RadioButton("Restriction", "Credit", true, new { id = "lblCredit" })
+                </div>
+                <div class="lbl-field col_1">
+                    @Html.Label("lblCredit", @ViewLang.Credit)
+                </div>
+                <div class="lbl-field col_2 radio-button">
+                    @Html.RadioButton("Restriction", "Deposit", false, new { id = "lblDeposit" })
+                </div>
+                <div class="lbl-field col_2">
+                    @Html.Label("lblDeposit", ViewLang.Deposit)
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="lbl-field col_3">
+                    <label>@ViewLang.Product</label>
+                </div>
+                <div id="credit-products" class="edit-field col_8">
+                    @Html.DropDownList("ddlCurrency", Model.CreditProducts, new { @id = "ddl-credit-products" })
+                </div>
+                <div id="deposit-products" class="edit-field col_8">
+                    @Html.DropDownList("ddlCurrency", Model.DepositProducts, new { @id = "ddl-deposit-products" })
+                </div>
+                <div class="lbl-field col_3">
+                    <label>@ViewLang.Currency</label>
+                </div>
+                <div id="deposit-currencies" class="edit-field col_8">
+                    @Html.DropDownList("ddlCurrency", Model.CreditCurrencies, new { @id = "ddl-credit-currencies" })
+                </div>
+                <div id="credit-currencies" class="edit-field col_8">
+                    @Html.DropDownList("ddlCurrency", Model.DepositCurrencies, new { @id = "ddl-deposit-currencies" })
+                </div>
+                <div class="submit width-auto">
+                    <button type="submit" class="submit">@ViewLang.Search</button>
+                </div>
+            </div>
+        </div>
+        <div id="form-tab-2" class="form-tab display-none">form Tab 2</div>
+    </div>
+</div>
+
+@section Foot
+{
+    @Scripts.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingScripts)
+}

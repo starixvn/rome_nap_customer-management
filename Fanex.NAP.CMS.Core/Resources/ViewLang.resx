@@ -891,4 +891,10 @@
   <data name="AccumulateBalance" xml:space="preserve">
     <value>Accumulate Balance</value>
   </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
 </root>

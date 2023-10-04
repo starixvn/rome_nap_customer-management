@@ -2,12 +2,14 @@
 (function ($) {
     const domElements = {
         tabs: null,
-        forms: null
+        forms: null,
+        formsResult: null
     };
 
     const cacheDOM = function () {
         domElements.tabs = $('.filter-bar .tabs-area .tab');
-        domElements.forms = $('.filter-bar .form-area .form-tab');
+        domElements.forms = $('.filter-bar .form-area .form-search');
+        domElements.formsResult = $('.result-area .form-result');
     };
 
     // Initialize fields and handle events.
@@ -30,12 +32,13 @@
 
         // Get the form that corresponds to the selected tab.
         const form = document.querySelector('#form-' + tab.id);
-
-        // Hide all form tabs.
         domElements.forms.addClass('display-none');
-
-        // Show the form that corresponds to the selected tab.
         form.classList.remove('display-none');
+
+        // Get the form-result that corresponds to the selected tab.
+        const formResult = document.querySelector('#form-result-' + tab.id);
+        domElements.formsResult.addClass('display-none');
+        formResult.classList.remove('display-none');
     };
 
     const init = function () {

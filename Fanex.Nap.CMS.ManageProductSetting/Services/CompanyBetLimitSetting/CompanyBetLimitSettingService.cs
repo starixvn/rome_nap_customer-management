@@ -7,12 +7,13 @@
     using Fanex.Nap.CMS.Infrastructure.Web;
     using System.Linq;
     using Fanex.Nap.CMS.ManageProductSetting.Criteria.CompanyBetLimitSetting;
+    using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
 
     public interface ICompanyBetLimitSettingService
     {
         IEnumerable<IdNameModel> GetCurrencies(bool isCredit);
         IEnumerable<IdNameModel> GetProducts(bool isCredit);
-        IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit);
+        IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit, string productIds, string currencies);
     }
 
     public class CompanyBetLimitSettingService : ICompanyBetLimitSettingService
@@ -39,7 +40,7 @@
             currencies = _repository
                 .GetCurrencies(new GetCurrenciesCriteria { IsCredit = isCredit })
                 .ToList();
-            
+
             CacheManager.Set(cacheKey, currencies, new TimeSpan(0, 0, 5, 0));
 
             return currencies;
@@ -55,15 +56,23 @@
             products = _repository
                 .GetProducts(new GetProductsCriteria { IsCredit = isCredit })
                 .ToList();
-            
+
             CacheManager.Set(cacheKey, products, new TimeSpan(0, 0, 5, 0));
 
             return products;
         }
 
-        public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit)
+        public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit, string productIds, string currencies)
         {
-            throw new NotImplementedException();
+            var result = _repository.GetBetLimitSettings(new GetBetLimitSettingCriteria
+            {
+                IsCredit = isCredit,
+                PMutilProductID = productIds,
+                PMutilCurrency = currencies
+            });
+            
+           
+            return result;
         }
     }
 }

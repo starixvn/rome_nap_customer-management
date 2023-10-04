@@ -5,7 +5,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using System.Linq;
 
-    public class CompanyBetLimitSetting
+    public class FilterAreaModel
     {
         public IEnumerable<SelectListItem> CreditCurrencies { get; }
 
@@ -15,7 +15,7 @@
 
         public IEnumerable<SelectListItem> CreditProducts { get; }
 
-        public CompanyBetLimitSetting(
+        public FilterAreaModel(
             IEnumerable<IdNameModel> creditProducts,
             IEnumerable<IdNameModel> depositProducts,
             IEnumerable<IdNameModel> creditCurrencies,

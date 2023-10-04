@@ -10,6 +10,6 @@
         public string PMutilCurrency { get; set; }
         
         public override string GetSettingKey()
-            => "NAP_GlobalStakeLevelGroup_CurrencySel";
+            => "NAP_GlobalStakeLevelGroup_Sel";
     }
 }

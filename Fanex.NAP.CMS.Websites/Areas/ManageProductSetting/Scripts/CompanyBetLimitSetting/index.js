@@ -1,160 +1,119 @@
 "use strict";
 (function ($) {
     let elements = {
-
-        //old code
-        resultMessageDiv: $("#div-result-message"),
-        table: $("#chatBots-list"),
-        formChatBotConfig: $("#formChatBotConfig"),
-        chatIDTextbox: $("#txt-chatID"),
-        userNameSubAccountTextbox: $("#txt-userNameSubAccount"),
-        statusDropdown: $("#ddl-status"),
-        levelDropdown: $("#ddl-level"),
-        linkStatusDropdown: $("#ddl-linkingStatus"),
-        subAccountOnly: $("#currencies-deposit"),
         //new code
-
+        isCredit: true,
         rdbRestriction: $("[name=Restriction]"),
-        
-    };
-    let filterParams = {};
-    let gridOptions = null;
-    // var cachePopupElements = function () {
-    //     // popupElements.divErrorSuccessMsg = $('#divErrorSuccessMsg', mainDOMElements.divPopup);
-    //     // popupElements.divForm = $('#divRequestForm', mainDOMElements.divPopup);
-    //     // popupElements.hdnRequestId = $('#hdnRequestId', mainDOMElements.divPopup);
-    //     // popupElements.hdnCustId = $('#hdnCustId', mainDOMElements.divPopup);
-    //     // popupElements.hdnExpiredDate = $('#hdnExpiredDate', mainDOMElements.divPopup);
-    //     // popupElements.txtUsername = $('#txtUsername', mainDOMElements.divPopup);
-    //     // popupElements.rdbRestriction = $('[name=Restriction]', mainDOMElements.divPopup);
-    //     // popupElements.ddlCountry = $('#ddlCountry', mainDOMElements.divPopup);
-    //     // popupElements.txtIP = $('#txtIP', mainDOMElements.divPopup);
-    //     // popupElements.dpkExpiredDate = $('#dpkExpiredDate', mainDOMElements.divPopup);
-    //     // popupElements.chkUnlimited = $('#chkUnlimited', mainDOMElements.divPopup);
-    //     // popupElements.txtRemark = $('#txtRemark', mainDOMElements.divPopup);
-    //     // popupElements.btnSave = $('#btnSave', mainDOMElements.divPopup);
-    //     // popupElements.btnCancel = $('#btnCancel', mainDOMElements.divPopup);
-    // };
 
-    const getFilterParams = () => {
-        filterParams.Username = $.trim(elements.userNameSubAccountTextbox.val());
-        filterParams.ChatID = $.trim(elements.chatIDTextbox.val());
-        filterParams.IsSubAccOnly = elements.subAccountOnly.prop('checked');
-        filterParams.Level = elements.levelDropdown.val();
-        filterParams.AccStatus = elements.statusDropdown.val();
-        filterParams.LinkStatus = elements.linkStatusDropdown.val();
-        filterParams.Currency = currencyDdl.multiSelect("getCheckedItems").join(",");
-        filterParams.Site = siteDdl.multiSelect("getCheckedItemsByText").join(",");
-        filterParams.BotIDs = chatBotNamesDdl.multiSelect("getCheckedItems").join(",");
-        filterParams.PageIndex = 0;
-        filterParams.PageSize = 1000;
-        filterParams.Cache = false;
+    };
+
+    let gridOptions = null;
+
+    const getFilterParams = (isCredit) => {
+        const filterParams = {};
+
+        filterParams.IsCredit = isCredit;
+
+        if (isCredit) {
+            const creditProductsDdl = $("#ddl-credit-products");
+            const creditCurrenciesDdl = $("#ddl-deposit-currencies");
+            filterParams.ProductIds = creditProductsDdl.multiSelect("getCheckedItems").join(",")
+            filterParams.Currencies = creditCurrenciesDdl.multiSelect("getCheckedItems").join(",")
+        } else {
+            const depositProductsDdl = $("#ddl-deposit-products");
+            const depositCurrenciesDdl = $("#ddl-credit-currencies");
+            filterParams.ProductIds = depositProductsDdl.multiSelect("getCheckedItems").join(",")
+            filterParams.Currencies = depositCurrenciesDdl.multiSelect("getCheckedItems").join(",")
+        }
         return filterParams;
     };
 
-    const getGridOptions = () => {
+    const getGridOptions = (isCredit) => {
         const headerColumns = [
+            {HeaderText: "Sport Type ID", Name: "SportType", CellAlign: "center", Width: 80, HeaderAlign: "center",},
             {
-                HeaderText: viewResources.Symbol_No,
-                Width: 50,
-                Name: "ColNo",
-                HeaderAlign: "center",
-                CellAlign: "center",
-            },
-            {
-                HeaderText: viewResources.ChatBotName,
+                HeaderText: "Sport Type Name",
+                Name: "SportName",
                 Width: 140,
-                Name: "ChatBotName",
                 HeaderAlign: "center",
                 CellAlign: "left",
-                Sort: true,
                 AllowTruncate: true,
             },
             {
-                HeaderText: viewResources.ChatID,
-                Width: 90,
-                Name: "ChatID",
-                HeaderAlign: "center",
-                CellAlign: "center",
-            },
-            {
-                HeaderText: viewResources.Site,
-                Width: 120,
-                Name: "SiteName",
-                HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                AllowTruncate: true,
-            },
-            {
-                HeaderText: viewResources.UserName,
-                Width: 180,
-                Name: "UserName",
-                HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                AllowTruncate: true,
-            },
-            {
-                HeaderText: viewResources.SubAccount,
-                Width: 180,
-                Name: "SubAccount",
-                HeaderAlign: "center",
-                CellAlign: "left",
-                Sort: true,
-                AllowTruncate: true,
-            }, {
-                HeaderText: viewResources.LinkingStatus,
-                Width: 100,
-                Name: "LinkingStatus",
-                HeaderAlign: "center",
-                CellAlign: "center",
-                Sort: true,
-            }, {
-                HeaderText: viewResources.Language,
-                Width: 120,
-                Name: "Language",
-                HeaderAlign: "center",
-                CellAlign: "center",
-                Sort: true,
-            }, {
-                HeaderText: viewResources.Level,
-                Width: 80,
-                Name: "Level",
-                HeaderAlign: "center",
-                CellAlign: "center",
-            }, {
-                HeaderText: viewResources.Currency,
-                Width: 70,
+                HeaderText: isCredit ? "Credit Currency" : "Deposit Currency",
                 Name: "Currency",
+                Width: 90,
                 HeaderAlign: "center",
                 CellAlign: "center",
+            },
+            {
+                HeaderText: "Game Group",
+                Name: "GameGroups",
+                Width: 120,
+                HeaderAlign: "center",
+                CellAlign: "left",
+                AllowTruncate: true,
+            },
+            {
+                HeaderText: "Min Bet",
+                Width: 180,
+                Name: "MinBet",
+                HeaderAlign: "center",
+                CellAlign: "left",
+                AllowTruncate: true,
+            },
+            {
+                HeaderText: "Max Bet",
+                Width: 180,
+                Name: "MaxBet",
+                HeaderAlign: "center",
+                CellAlign: "left",
+                AllowTruncate: true,
+            },
+            {
+                HeaderText: "Remark",
+                Width: 180,
+                Name: "Remark",
+                HeaderAlign: "center",
+                CellAlign: "left",
+                AllowTruncate: true,
+            },
+            {
+                HeaderText: "Edit",
+                Name: "Edit",
+                Width: 180,
+                HeaderAlign: "center",
+                CellAlign: "left",
+                AllowTruncate: true,
             }, {
-                HeaderText: viewResources.AccStatus,
-                Width: 80,
-                Name: "Status",
+                HeaderText: "Remove",
+                Name: "Remove",
+                Width: 100,
                 HeaderAlign: "center",
                 CellAlign: "center",
             },
-            {
-                HeaderText: viewResources.DateGMT4,
-                Width: 150,
-                Name: "DateGMT4",
-                HeaderAlign: "center",
-                Sort: true,
-                CellAlign: "center",
-            },
-            {
-                HeaderText: viewResources.Config,
-                Width: 60,
-                Name: "Config",
-                HeaderAlign: "center",
-                CellAlign: "center",
-            }
         ];
 
         return {
             columns: headerColumns,
+            customizeHeader: true,
+            groupHeaderRows: [
+                {
+                    Columns: [
+                        {HeaderText: "Sport Type ID", Name: "SportType", MergeRowNumber: 2},
+                        {HeaderText: "Sport Type Name", Name: "SportName", MergeRowNumber: 2},
+                        {
+                            HeaderText: isCredit ? "Credit Currency" : "Deposit Currency",
+                            Name: "Currency",
+                            MergeRowNumber: 2
+                        },
+                        {HeaderText: "Game Group", Name: "GameGroups", MergeRowNumber: 2},
+                        {HeaderText: "Group Header 1", Name: "MinBet", MergeColNumber: 3},
+                        {HeaderText: "Edit", Name: "Edit", MergeRowNumber: 2},
+                        {HeaderText: "Remove", Name: "Remove", MergeRowNumber: 2},
+                    ]
+                }
+            ],
             showTitle: false,
             titleInfo: {
                 showExcelButton: false
@@ -164,10 +123,10 @@
             fullWidth: true,
             fullHeight: true,
             gridHeight: 0,
-            showDistinctRow: true,
+            showDistinctRow: false,
             headerColumnHeight: 29,
             bodyRowHeight: 25,
-            showPager: true,
+            showPager: false,
             customPager: true,
             pagerOption: {
                 itemsPerPageArray: [100, 200, 500, 1000, 2000],
@@ -179,7 +138,7 @@
                     getChatBot();
                 }
             },
-            showNumberColumn: true,
+            showNumberColumn: false,
             gridExpandHeight: 180,
         };
     }
@@ -199,82 +158,86 @@
         ].join("");
     }
 
-    const renderGridChatBots = (data) => {
+    const renderGridBody = (data) => {
         const bodyData = [];
-        let columns;
-        for (var i = 0, max = data.length; i < max; i++) {
-            const {
-                ChatBotName,
-                ChatID,
-                LinkStatus,
-                UserName,
-                SubAccount,
-                Language,
-                Level,
-                Currency,
-                AccStatus,
-                CusID,
-                BotID,
-                SubAccID,
-                UserID,
-                UpdatedTimeStr,
-                SiteName
-            } = data[i];
-            const linkStatusFormatted = `<span class="high-light ${LinkStatus}" >${LinkStatus}</span>`
-            columns = [
-                {Name: "ColNo", Value: ""},
-                {Name: "ChatBotName", Value: ChatBotName},
-                {Name: "ChatID", Value: ChatID},
-                {Name: "SiteName", Value: SiteName},
-                {Name: "UserName", Value: UserName},
-                {Name: "SubAccount", Value: SubAccount},
-                {Name: "LinkingStatus", Value: linkStatusFormatted},
-                {Name: "Language", Value: Language},
-                {Name: "Level", Value: Level},
-                {Name: "Currency", Value: Currency},
-                {Name: "Status", Value: AccStatus},
-                {Name: "DateGMT4", Value: UpdatedTimeStr},
-                {Name: "Config", Value: renderConfigCell(LinkStatus, CusID, BotID, SubAccID, UserID)}
-            ];
-            bodyData.push({Columns: columns});
-        }
+        let row;
+        let currentRow = 0;
+        let currentAgentRow;
+        let currentMasterRow;
+        let masterChildren;
+        let downlineList;
+        let highlightClass;
 
+        if (data.length > 0) {
+
+            $.each(data, function (masterIndex, sport) {
+                masterChildren = 0;
+                currentMasterRow = currentRow;
+                $.each(sport.CurrencyGroups, function (agentIndex, agent) {
+                    masterChildren += agent.GameGroups.length;
+                    currentAgentRow = currentRow;
+                    $.each(agent.GameGroups, function (index, item) {
+                        row = {
+                            Columns: [
+                                {Name: 'GameGroups', Value: item.GameGroup,},
+                                {Name: 'MinBet', Value: item.Entries[0]?.MinBet,},
+                                {Name: 'MaxBet', Value: item.Entries[0]?.MaxBet,},
+                                {Name: 'Remark', Value: item.Entries[0]?.Remark,},
+                                {Name: 'Edit', Value: '',},
+                                {Name: 'Remove', Value: '',},
+                            ]
+                        };
+
+                        bodyData.push(row);
+                        currentRow++;
+                    });
+                    row = bodyData[currentAgentRow];
+                    row.Columns.splice(0, 0, {
+                        Name: 'Currency',
+                        Value: agent.Currency,
+                        MergeRowNumber: agent.GameGroups.length,
+                        // CssClass: 'chk-column'
+                    });
+                });
+                row = bodyData[currentMasterRow];
+                row.Columns.splice(0, 0, ...[
+                    {
+                        Name: 'SportType',
+                        Value: sport.SportType,
+                        MergeRowNumber: masterChildren,
+                        // CssClass: 'chk-column'
+                    },
+                    {
+                        Name: 'SportName',
+                        Value: sport.SportName,
+                        MergeRowNumber: masterChildren,
+                        // CssClass: 'chk-column'
+                    }
+                ]);
+            });
+        }
         return bodyData;
     }
 
     const getData = (params) => {
-        // const resetSortDirection = () => {
-        //     $.each(gridOptions.columns, function (index, value) {
-        //         value.SortDirection = value.Name !== filterParams.SortField
-        //             ? ""
-        //             : filterParams.SortDirection;
-        //     });
-        // }
-        //
-        // CMS.getJson(CMS.resolveRootUrl("ChatbotMapping/SearchChatBots?" + $.param(filterParams)), function (data) {
-        //     let jsonData = $.parseJSON(data);
-        //     gridOptions = gridOptions || getGridOptions();
-        //     gridOptions.bodyRows = renderGridChatBots(jsonData.ChatBots);
-        //
-        //     gridOptions.pagerOption.currentPage = filterParams.PageIndex;
-        //     gridOptions.pagerOption.itemsPerPage = filterParams.PageSize;
-        //     gridOptions.pagerOption.totalItem = jsonData.TotalItems;
-        //
-        //     if (!filterParams.Cache) {
-        //         resetSortDirection();
-        //     }
-        //
-        //     elements.table.removeClass("display-none").fanexGrid(gridOptions);
-        // });
+       
+        CMS.getJson(CMS.resolveRootUrl("CompanyBetLimitSetting/Search?" + $.param(params)), function (data) {
+            let jsonData = $.parseJSON(data);
+            console.log(jsonData)
+            gridOptions = getGridOptions(params.IsCredit);
+            gridOptions.bodyRows = renderGridBody(jsonData);
+           
+            $("#grid-table").removeClass("display-none").fanexGrid(gridOptions);
+        });
     }
 
     const renderMultiChoiceDDL = () => {
         // Get the HTML elements for the two drop-down lists.
         const creditProducts = $("#ddl-credit-products");
-        const creditCurrencies = $("#ddl-deposit-currencies");
+        const creditCurrencies = $("#ddl-credit-currencies");
 
         const depositProducts = $("#ddl-deposit-products");
-        const depositCurrencies = $("#ddl-credit-currencies");
+        const depositCurrencies = $("#ddl-deposit-currencies");
 
         // Generate the list data for the drop-down lists.
         const listDataGenerator = (ddl) => {
@@ -288,6 +251,7 @@
                 };
             });
         };
+        
         creditProducts.multiSelect({
             minWidth: 180,
             checkAllText: "All",
@@ -335,30 +299,32 @@
 
     $(function () {
 
-        $("#formChatbotMapping").submit(function (event) {
+        $("#formCompanyBetLimitSetting").submit(function (event) {
             event.preventDefault();
-            const params = getFilterParams();
+            const params = getFilterParams(elements.isCredit);
             getData(params);
         });
 
         elements.rdbRestriction.change(function () {
             const selectedValue = $(this).val();
             const creditProducts = $("#credit-products");
-            const creditCurrencies = $("#deposit-currencies");
+            const creditCurrencies = $("#credit-currencies");
             const depositProducts = $("#deposit-products");
-            const depositCurrencies = $("#credit-currencies");
+            const depositCurrencies = $("#deposit-currencies");
             if (selectedValue === 'Credit') {
-                creditCurrencies.removeClass("display-none");
                 creditProducts.removeClass("display-none");
+                creditCurrencies.removeClass("display-none");
 
-                depositCurrencies.addClass("display-none");
                 depositProducts.addClass("display-none");
+                depositCurrencies.addClass("display-none");
+                elements.isCredit = true;
             } else {
-                depositCurrencies.removeClass("display-none");
                 depositProducts.removeClass("display-none");
+                depositCurrencies.removeClass("display-none");
 
-                creditCurrencies.addClass("display-none");
                 creditProducts.addClass("display-none");
+                creditCurrencies.addClass("display-none");
+                elements.isCredit = false;
             }
         });
 

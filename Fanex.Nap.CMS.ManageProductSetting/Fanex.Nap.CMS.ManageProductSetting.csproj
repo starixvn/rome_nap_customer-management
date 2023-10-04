@@ -136,9 +136,9 @@
     <Compile Include="Models\CompanyBetLimitSetting\CompanyBetLimitSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CompanyBetLimitSetting\CompanyBetLimitRepository.cs" />
-    <Compile Include="Repositories\CompanyBetLimitSetting\ICompanyBetLimitRepository.cs" />
     <Compile Include="Services\CompanyBetLimitSetting\CompanyBetLimitSettingService.cs" />
-    <Compile Include="ViewModels\CompanyBetLimitSetting\CompanyBetLimitSetting.cs" />
+    <Compile Include="ViewModels\CompanyBetLimitSetting\FilterAreaModel.cs" />
+    <Compile Include="ViewModels\CompanyBetLimitSetting\GetCompanyBetLimitSettingViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

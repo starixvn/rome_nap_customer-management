@@ -16,12 +16,12 @@
 
         if (isCredit) {
             const creditProductsDdl = $("#ddl-credit-products");
-            const creditCurrenciesDdl = $("#ddl-deposit-currencies");
+            const creditCurrenciesDdl = $("#ddl-credit-currencies");
             filterParams.ProductIds = creditProductsDdl.multiSelect("getCheckedItems").join(",")
             filterParams.Currencies = creditCurrenciesDdl.multiSelect("getCheckedItems").join(",")
         } else {
             const depositProductsDdl = $("#ddl-deposit-products");
-            const depositCurrenciesDdl = $("#ddl-credit-currencies");
+            const depositCurrenciesDdl = $("#ddl-deposit-currencies");
             filterParams.ProductIds = depositProductsDdl.multiSelect("getCheckedItems").join(",")
             filterParams.Currencies = depositCurrenciesDdl.multiSelect("getCheckedItems").join(",")
         }
@@ -34,15 +34,15 @@
             {
                 HeaderText: "Sport Type Name",
                 Name: "SportName",
-                Width: 140,
+                Width: 160,
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             },
             {
                 HeaderText: isCredit ? "Credit Currency" : "Deposit Currency",
                 Name: "Currency",
-                Width: 90,
+                Width: 160,
                 HeaderAlign: "center",
                 CellAlign: "center",
             },
@@ -51,44 +51,44 @@
                 Name: "GameGroups",
                 Width: 120,
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             },
             {
                 HeaderText: "Min Bet",
-                Width: 180,
+                Width: 90,
                 Name: "MinBet",
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             },
             {
                 HeaderText: "Max Bet",
-                Width: 180,
+                Width: 90,
                 Name: "MaxBet",
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             },
             {
                 HeaderText: "Remark",
-                Width: 180,
+                Width: 160,
                 Name: "Remark",
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             },
             {
                 HeaderText: "Edit",
                 Name: "Edit",
-                Width: 180,
+                Width: 40,
                 HeaderAlign: "center",
-                CellAlign: "left",
+                CellAlign: "center",
                 AllowTruncate: true,
             }, {
                 HeaderText: "Remove",
                 Name: "Remove",
-                Width: 100,
+                Width: 40,
                 HeaderAlign: "center",
                 CellAlign: "center",
             },
@@ -108,7 +108,7 @@
                             MergeRowNumber: 2
                         },
                         {HeaderText: "Game Group", Name: "GameGroups", MergeRowNumber: 2},
-                        {HeaderText: "Group Header 1", Name: "MinBet", MergeColNumber: 3},
+                        {HeaderText: "Bet Limit", Name: "MinBet", MergeColNumber: 3},
                         {HeaderText: "Edit", Name: "Edit", MergeRowNumber: 2},
                         {HeaderText: "Remove", Name: "Remove", MergeRowNumber: 2},
                     ]
@@ -116,7 +116,11 @@
             ],
             showTitle: false,
             titleInfo: {
-                showExcelButton: false
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    CMS.downloadFile(CMS.resolveRootUrl("CompanyBetLimitSetting/Export"), getFilterParams(elements.isCredit));
+                }
             },
             bodyRows: [],
             numberOfFrozenColumn: 0,
@@ -127,17 +131,6 @@
             headerColumnHeight: 29,
             bodyRowHeight: 25,
             showPager: false,
-            customPager: true,
-            pagerOption: {
-                itemsPerPageArray: [100, 200, 500, 1000, 2000],
-                totalItem: 0,
-                pagerSelectCallBack: function (index, pageSize) {
-                    filterParams.PageIndex = index;
-                    filterParams.PageSize = pageSize;
-                    filterParams.Cache = true;
-                    getChatBot();
-                }
-            },
             showNumberColumn: false,
             gridExpandHeight: 180,
         };
@@ -179,7 +172,7 @@
                     $.each(agent.GameGroups, function (index, item) {
                         row = {
                             Columns: [
-                                {Name: 'GameGroups', Value: item.GameGroup,},
+                                {Name: 'GameGroups', Value: item.GameGroupName,},
                                 {Name: 'MinBet', Value: item.Entries[0]?.MinBet,},
                                 {Name: 'MaxBet', Value: item.Entries[0]?.MaxBet,},
                                 {Name: 'Remark', Value: item.Entries[0]?.Remark,},
@@ -220,7 +213,6 @@
     }
 
     const getData = (params) => {
-       
         CMS.getJson(CMS.resolveRootUrl("CompanyBetLimitSetting/Search?" + $.param(params)), function (data) {
             let jsonData = $.parseJSON(data);
             console.log(jsonData)
@@ -297,14 +289,7 @@
         });
     };
 
-    $(function () {
-
-        $("#formCompanyBetLimitSetting").submit(function (event) {
-            event.preventDefault();
-            const params = getFilterParams(elements.isCredit);
-            getData(params);
-        });
-
+    const registerRadiobuttonHandler=()=>{
         elements.rdbRestriction.change(function () {
             const selectedValue = $(this).val();
             const creditProducts = $("#credit-products");
@@ -327,7 +312,17 @@
                 elements.isCredit = false;
             }
         });
+    }
+    
+    $(function () {
 
+        $("#formCompanyBetLimitSetting").submit(function (event) {
+            event.preventDefault();
+            const params = getFilterParams(elements.isCredit);
+            getData(params);
+        });
+        
+        registerRadiobuttonHandler();
         renderMultiChoiceDDL();
     });
 })(jQuery);

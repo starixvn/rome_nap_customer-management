@@ -83,7 +83,23 @@
             
             if (data.Any())
             {
-                
+                var sportGroupChildren = 0;
+                var currentRow = 0;
+                var currentSportGroupRow=0;
+                foreach (var companyBetLimitSettingGroups in data)
+                {
+                    sportGroupChildren = 0;
+                    currentSportGroupRow = currentRow;
+                    foreach (var currencyGroup in companyBetLimitSettingGroups.CurrencyGroups)
+                    {
+                        sportGroupChildren += currencyGroup.GameGroups.Count();
+                    }
+
+                    ExportExcel.CurrentColumn = 0;
+                    ExportExcel.RenderRow(companyBetLimitSettingGroups.SportType,ExcelStyleTemplate.HeaderTextStyle);
+                    //ExportExcel.RenderCell(ExportExcel.CurrentRow,ExportExcel.CurrentRow+sportGroupChildren,ExportExcel.CurrentColumn,companyBetLimitSettingGroups.SportType,ExcelStyleTemplate.HeaderTextStyle);
+                 //   ExportExcel.RenderCell(ExportExcel.CurrentRow +sportGroupChildren, ExportExcel.CurrentColumn, companyBetLimitSettingGroups.SportType, ExcelStyleTemplate.HeaderTextStyle);
+                }
             }
             else
             {

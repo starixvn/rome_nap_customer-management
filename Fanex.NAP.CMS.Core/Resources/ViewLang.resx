@@ -897,4 +897,10 @@
   <data name="Deposit" xml:space="preserve">
     <value>Deposit</value>
   </data>
+  <data name="CreditCurrency" xml:space="preserve">
+    <value>Credit Currency</value>
+  </data>
+  <data name="DepositCurrency" xml:space="preserve">
+    <value>Deposit Currency</value>
+  </data>
 </root>

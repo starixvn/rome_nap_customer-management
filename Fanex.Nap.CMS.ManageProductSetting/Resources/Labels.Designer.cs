@@ -21,7 +21,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Labels {
+    public class Labels {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -35,7 +35,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.Nap.CMS.ManageProductSetting.Resources.Labels", typeof(Labels).Assembly);
@@ -50,7 +50,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -60,9 +60,108 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bet Limit.
+        /// </summary>
+        public static string lblBetLimit {
+            get {
+                return ResourceManager.GetString("lblBetLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit Currency.
+        /// </summary>
+        public static string lblCreditCurrency {
+            get {
+                return ResourceManager.GetString("lblCreditCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit Currency.
+        /// </summary>
+        public static string lblDepositCurrency {
+            get {
+                return ResourceManager.GetString("lblDepositCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string lblEdit {
+            get {
+                return ResourceManager.GetString("lblEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Group.
+        /// </summary>
+        public static string lblGameGroup {
+            get {
+                return ResourceManager.GetString("lblGameGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Bet.
+        /// </summary>
+        public static string lblMaxBet {
+            get {
+                return ResourceManager.GetString("lblMaxBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min Bet.
+        /// </summary>
+        public static string lblMinBet {
+            get {
+                return ResourceManager.GetString("lblMinBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remark.
+        /// </summary>
+        public static string lblRemark {
+            get {
+                return ResourceManager.GetString("lblRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string lblRemove {
+            get {
+                return ResourceManager.GetString("lblRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Type ID.
+        /// </summary>
+        public static string lblSportTypeID {
+            get {
+                return ResourceManager.GetString("lblSportTypeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport Type Name.
+        /// </summary>
+        public static string lblSportTypeName {
+            get {
+                return ResourceManager.GetString("lblSportTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Non-Sport Company Bet Limit Setting_{0}.
         /// </summary>
-        internal static string NonSportCompanyBetLimitSetting {
+        public static string NonSportCompanyBetLimitSetting {
             get {
                 return ResourceManager.GetString("NonSportCompanyBetLimitSetting", resourceCulture);
             }
@@ -71,7 +170,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Company Bet Limit.
         /// </summary>
-        internal static string NonSportCompanyBetLimitSetting_sheetName {
+        public static string NonSportCompanyBetLimitSetting_sheetName {
             get {
                 return ResourceManager.GetString("NonSportCompanyBetLimitSetting_sheetName", resourceCulture);
             }
@@ -80,7 +179,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Non-Sport Company Bet Limit Setting.
         /// </summary>
-        internal static string NonSportCompanyBetLimitSetting_title {
+        public static string NonSportCompanyBetLimitSetting_title {
             get {
                 return ResourceManager.GetString("NonSportCompanyBetLimitSetting_title", resourceCulture);
             }

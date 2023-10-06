@@ -27,4 +27,37 @@
     <data name="NonSportCompanyBetLimitSetting_title" xml:space="preserve">
         <value>Non-Sport Company Bet Limit Setting</value>
     </data>
+    <data name="lblSportTypeID" xml:space="preserve">
+        <value>Sport Type ID</value>
+    </data>
+    <data name="lblSportTypeName" xml:space="preserve">
+        <value>Sport Type Name</value>
+    </data>
+    <data name="lblCreditCurrency" xml:space="preserve">
+        <value>Credit Currency</value>
+    </data>
+    <data name="lblDepositCurrency" xml:space="preserve">
+        <value>Deposit Currency</value>
+    </data>
+    <data name="lblBetLimit" xml:space="preserve">
+        <value>Bet Limit</value>
+    </data>
+    <data name="lblGameGroup" xml:space="preserve">
+        <value>Game Group</value>
+    </data>
+    <data name="lblMinBet" xml:space="preserve">
+        <value>Min Bet</value>
+    </data>
+    <data name="lblMaxBet" xml:space="preserve">
+        <value>Max Bet</value>
+    </data>
+    <data name="lblEdit" xml:space="preserve">
+        <value>Edit</value>
+    </data>
+    <data name="lblRemove" xml:space="preserve">
+        <value>Remove</value>
+    </data>
+    <data name="lblRemark" xml:space="preserve">
+        <value>Remark</value>
+    </data>
 </root>

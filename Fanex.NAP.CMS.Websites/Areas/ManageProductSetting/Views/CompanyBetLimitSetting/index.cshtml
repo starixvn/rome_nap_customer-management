@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="filter-row">
-                    <div class="lbl-field col_3">
+                    <div class="lbl-field col_2">
                         <label>@ViewLang.Product</label>
                     </div>
                     <div id="credit-products" class="edit-field col_8">
@@ -52,8 +52,8 @@
                     <div id="deposit-products" class="edit-field col_8 display-none">
                         @Html.DropDownList("ddlCurrency", Model.DepositProducts, new { @id = "ddl-deposit-products" })
                     </div>
-                    <div class="lbl-field col_3">
-                        <label>@ViewLang.Currency</label>
+                    <div class="lbl-field col_4">
+                        <label id="lbl-currency">@Labels.lblCreditCurrency</label>
                     </div>
                     <div id="credit-currencies" class="edit-field col_8">
                         @Html.DropDownList("ddlCurrency", Model.CreditCurrencies, new { @id = "ddl-credit-currencies" })
@@ -79,5 +79,20 @@
 
 @section Foot
 {
+     <script type="text/javascript">
+          var viewResources = {
+               lblSportTypeID: '@Labels.lblSportTypeID',
+               lblSportTypeName: '@Labels.lblSportTypeName',
+               lblCreditCurrency: '@Labels.lblCreditCurrency',
+               lblDepositCurrency: '@Labels.lblDepositCurrency',
+               lblGameGroup: '@Labels.lblGameGroup',
+               lblBetLimit: '@Labels.lblBetLimit',
+               lblMaxBet: '@Labels.lblMaxBet',
+               lblMinBet: '@Labels.lblMinBet',
+               lblRemark: '@Labels.lblRemark',
+               lblEdit: '@Labels.lblEdit',
+               lblRemove: '@Labels.lblRemove',
+          };
+        </script>
     @Scripts.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingScripts)
 }

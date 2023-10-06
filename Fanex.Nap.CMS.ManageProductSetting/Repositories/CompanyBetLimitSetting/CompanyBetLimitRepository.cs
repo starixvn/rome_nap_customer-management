@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.Framework.Data;
-    using System.Collections.Generic;
-    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Data;
     using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
 

@@ -1,15 +1,9 @@
-﻿using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
-
-namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
+﻿namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure.Controllers;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
-    using Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting;
-    using Fanex.Nap.CMS.ManageProductSetting.Services.CompanyBetLimitSetting;
+    using ViewModels.CompanyBetLimitSetting;
+    using Services.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     public class CompanyBetLimitSettingController : BaseController
     {

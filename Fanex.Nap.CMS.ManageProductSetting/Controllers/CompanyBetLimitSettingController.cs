@@ -1,10 +1,13 @@
-﻿namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
+﻿using System.Linq;
+
+namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using System.Web.Mvc;
     using ViewModels.CompanyBetLimitSetting;
     using Services.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+
     public class CompanyBetLimitSettingController : BaseController
     {
         // GET: CompanyBetLimitSetting
@@ -36,12 +39,18 @@
             var result = _service.GetBetLimitSetting(
                 searchParams.IsCredit,
                 searchParams.ProductIds,
-                searchParams.Currencies
+                searchParams.Currencies,
+                searchParams.PageIndex,
+                searchParams.PageSize
             );
 
-            var groupedData = _service.GetBetLimitSettingGroups(result);
-         
-            return JsonData(groupedData);
+            var groupedData = _service.GetBetLimitSettingGroups(result.Entries);
+
+            return JsonData(new
+            {
+                Data = groupedData,
+                result.TotalRows
+            });
         }
 
         public void Export(GetCompanyBetLimitSettingViewModels searchParams)
@@ -49,10 +58,12 @@
             var result = _service.GetBetLimitSetting(
                 searchParams.IsCredit,
                 searchParams.ProductIds,
-                searchParams.Currencies
+                searchParams.Currencies,
+                searchParams.PageIndex,
+                searchParams.PageSize
             );
 
-            var groupedData = _service.GetBetLimitSettingGroups(result);
+            var groupedData = _service.GetBetLimitSettingGroups(result.Entries);
             IExcelExporter exporter = new CompanyBetLimitSettingExporter(groupedData);
 
             exporter.ResponseStream();

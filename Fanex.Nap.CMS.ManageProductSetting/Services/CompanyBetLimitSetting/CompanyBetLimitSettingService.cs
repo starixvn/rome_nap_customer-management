@@ -13,7 +13,9 @@
     {
         IEnumerable<IdNameModel> GetCurrencies(bool isCredit);
         IEnumerable<IdNameModel> GetProducts(bool isCredit);
-        IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit, string productIds, string currencies);
+
+        CompanyBetLimitSettingQueryResult GetBetLimitSetting(bool isCredit, string productIds,
+            string currencies, int pageIndex, int pageSize);
         IEnumerable<CompanyBetLimitSettingGroups> GetBetLimitSettingGroups(IEnumerable<CompanyBetLimitSetting> betLimitSetting);
     }
 
@@ -58,19 +60,21 @@
             return products;
         }
 
-        public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(bool isCredit, string productIds,
-            string currencies)
+        public CompanyBetLimitSettingQueryResult GetBetLimitSetting(bool isCredit, string productIds,
+            string currencies, int pageIndex, int pageSize)
         {
             if (string.IsNullOrWhiteSpace(productIds) || string.IsNullOrWhiteSpace(currencies))
             {
-                return new List<CompanyBetLimitSetting> { };
+                return new CompanyBetLimitSettingQueryResult { Entries = new List<CompanyBetLimitSetting>(), TotalRows = 0 };
             }
 
             var result = _repository.GetBetLimitSettings(new GetBetLimitSettingCriteria
             {
                 IsCredit = isCredit,
                 PMutilProductID = productIds,
-                PMutilCurrency = currencies
+                PMutilCurrency = currencies,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
             });
             
             return result;

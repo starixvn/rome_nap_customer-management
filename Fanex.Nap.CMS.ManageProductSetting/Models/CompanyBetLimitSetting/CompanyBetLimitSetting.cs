@@ -2,6 +2,12 @@
 {
     using System.Collections.Generic;
 
+    public class CompanyBetLimitSettingQueryResult
+    {
+        public IEnumerable<CompanyBetLimitSetting> Entries { get; set; }
+        public int TotalRows { get; set; }
+    }
+    
     public class CompanyBetLimitSetting
     {
         public int SportType { get; set; }

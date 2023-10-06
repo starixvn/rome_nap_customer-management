@@ -9,6 +9,12 @@
         
         public string PMutilCurrency { get; set; }
         
+        public int PageIndex { get;  set; }
+
+        public int PageSize { get;  set; }
+
+        public int TotalRows { get; set; }
+        
         public override string GetSettingKey()
             => "NAP_GlobalStakeLevelGroup_Sel";
     }

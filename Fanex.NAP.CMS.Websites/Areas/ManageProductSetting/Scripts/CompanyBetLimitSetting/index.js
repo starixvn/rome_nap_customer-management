@@ -4,18 +4,21 @@
         isCredit: true,
         rdbRestriction: $("[name=Restriction]"),
     };
-    const getCurrencyLabel = (isCredit) =>  isCredit ? viewResources.lblCreditCurrency : viewResources.lblDepositCurrency;
+    const filterParams = {
+        IsCredit: true,
+        ProductIds: "",
+        Currencies: "",
+        PageIndex: 0,
+        PageSize: 100,
+    };
+    const getCurrencyLabel = (isCredit) => isCredit ? viewResources.lblCreditCurrency : viewResources.lblDepositCurrency;
 
     const getFilterParams = (isCredit) => {
-        const filterParams = {
-            IsCredit: isCredit,
-            ProductIds: "",
-            Currencies: ""
-        };
         const productsDdl = isCredit ? $("#ddl-credit-products") : $("#ddl-deposit-products");
         const currenciesDdl = isCredit ? $("#ddl-credit-currencies") : $("#ddl-deposit-currencies");
         filterParams.ProductIds = productsDdl.multiSelect("getCheckedItems").join(",");
         filterParams.Currencies = currenciesDdl.multiSelect("getCheckedItems").join(",");
+        filterParams.IsCredit = isCredit;
 
         return filterParams;
     };
@@ -23,6 +26,13 @@
     const getGridOptions = (isCredit) => {
         const currencyLabel = getCurrencyLabel(isCredit);
         const headerColumns = [
+            {
+                HeaderText: viewResources.lblSymbol_No,
+                Name: "ColNo",
+                Width: 50,
+                HeaderAlign: "center",
+                CellAlign: "center",
+            },
             {
                 HeaderText: viewResources.lblSportTypeID,
                 Name: "SportType",
@@ -108,6 +118,7 @@
             groupHeaderRows: [
                 {
                     Columns: [
+                        {HeaderText: viewResources.lblSymbol_No, Name: "ColNo", MergeRowNumber: 2},
                         {HeaderText: viewResources.lblSportTypeID, Name: "SportType", MergeRowNumber: 2},
                         {HeaderText: "Sport Type Name", Name: "SportName", MergeRowNumber: 2},
                         {HeaderText: currencyLabel, Name: "Currency", MergeRowNumber: 2},
@@ -128,29 +139,25 @@
             showDistinctRow: false,
             headerColumnHeight: 29,
             bodyRowHeight: 25,
-            showPager: false,
-            showNumberColumn: false,
+            showNumberColumn: true,
             gridExpandHeight: 180,
-            showHighlightRow: false
+            showHighlightRow: false,
+            showPager: true,
+            customPager: true,
+            pagerOption: {
+                itemsPerPageArray: [50, 100, 200, 300, 500],
+                totalItem:0,
+                pagerSelectCallBack: function (index, pageSize) {
+                    filterParams.PageIndex = index;
+                    filterParams.PageSize = pageSize;
+                    const params = getFilterParams(elements.isCredit);
+                    getData(params);
+                }
+            },
         };
     }
 
-    const renderConfigCell = (linkStatus, custId, botId, subAccId, userId) => {
-        if (linkStatus === "Unlinked") return "";
-        return [
-            '<span class="ui-icon ico-config" href="javascript:;" data-custId="',
-            custId,
-            '" data-botId="',
-            botId,
-            '" data-userId="',
-            userId,
-            '" data-subAccId="',
-            subAccId,
-            '"></span>'
-        ].join("");
-    }
-    const formatTwoDecimalNumber = (data)=>
-    {
+    const formatTwoDecimalNumber = (data) => {
         return data.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     const renderGridBody = (data) => {
@@ -175,6 +182,7 @@
                     $.each(currencyGroup.GameGroups, function (index, gameGroup) {
                         row = {
                             Columns: [
+                                {Name: 'ColNo', Value: ""},
                                 {Name: 'GameGroups', Value: gameGroup.GameGroupName},
                                 {Name: 'MinBet', Value: gameGroup.Entries[0]?.MinBet},
                                 {Name: 'MaxBet', Value: gameGroup.Entries[0]?.MaxBet},
@@ -186,7 +194,7 @@
                         currentRow++;
                     });
                     row = bodyData[currentCurrencyGroupRow];
-                    row.Columns.splice(0, 0, {
+                    row.Columns.splice(1, 0, {
                         Name: 'Currency',
                         Value: currencyGroup.Currency,
                         MergeRowNumber: currencyGroup.GameGroups.length,
@@ -205,7 +213,7 @@
                     // )
                 });
                 row = bodyData[currentSportGroupRow];
-                row.Columns.splice(0, 0, ...[
+                row.Columns.splice(1, 0, ...[
                     {
                         Name: 'SportType',
                         Value: sportGroup.SportType,
@@ -229,8 +237,10 @@
             let jsonData = $.parseJSON(data);
             console.log(jsonData)
             const gridOptions = getGridOptions(params.IsCredit);
-            gridOptions.bodyRows = renderGridBody(jsonData);
-
+            gridOptions.bodyRows = renderGridBody(jsonData.Data);
+            gridOptions.pagerOption.currentPage = params.PageIndex;
+            gridOptions.pagerOption.itemsPerPage = params.PageSize;
+            gridOptions.pagerOption.totalItem = jsonData.TotalRows;
             $("#grid-table").removeClass("display-none").fanexGrid(gridOptions);
         });
     }
@@ -285,7 +295,6 @@
         });
     };
 
-    
 
     const registerRadiobuttonHandler = () => {
         elements.rdbRestriction.change(function () {

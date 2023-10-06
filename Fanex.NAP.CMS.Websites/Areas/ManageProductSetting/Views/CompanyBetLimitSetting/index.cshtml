@@ -53,7 +53,7 @@
                         @Html.DropDownList("ddlCurrency", Model.DepositProducts, new { @id = "ddl-deposit-products" })
                     </div>
                     <div class="lbl-field col_5">
-                        <label id="lbl-currency">@Labels.lblCreditCurrency</label>
+                        <label id="lbl-currency">@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblCreditCurrency</label>
                     </div>
                     <div id="credit-currencies" class="edit-field col_8">
                         @Html.DropDownList("ddlCurrency", Model.CreditCurrencies, new { @id = "ddl-credit-currencies" })
@@ -81,17 +81,18 @@
 {
      <script type="text/javascript">
           var viewResources = {
-               lblSportTypeID: '@Labels.lblSportTypeID',
-               lblSportTypeName: '@Labels.lblSportTypeName',
-               lblCreditCurrency: '@Labels.lblCreditCurrency',
-               lblDepositCurrency: '@Labels.lblDepositCurrency',
-               lblGameGroup: '@Labels.lblGameGroup',
-               lblBetLimit: '@Labels.lblBetLimit',
-               lblMaxBet: '@Labels.lblMaxBet',
-               lblMinBet: '@Labels.lblMinBet',
-               lblRemark: '@Labels.lblRemark',
-               lblEdit: '@Labels.lblEdit',
-               lblRemove: '@Labels.lblRemove',
+               lblSymbol_No: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Symbol_No',
+               lblSportTypeID: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblSportTypeID',
+               lblSportTypeName: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblSportTypeName',
+               lblCreditCurrency: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblCreditCurrency',
+               lblDepositCurrency: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblDepositCurrency',
+               lblGameGroup: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblGameGroup',
+               lblBetLimit: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblBetLimit',
+               lblMaxBet: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblMaxBet',
+               lblMinBet: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblMinBet',
+               lblRemark: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblRemark',
+               lblEdit: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblEdit',
+               lblRemove: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblRemove',
           };
         </script>
     @Scripts.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingScripts)

@@ -39,5 +39,17 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CCUtilityOffering, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchUtilityOfferingRequest request)
             => JsonData(offeringSerivce.GetOfferings(request), JsonRequestBehavior.AllowGet);
+        
+        [NapAuth(FunctionKey = CMSFunctionKeys.CCUtilityOffering, Policy = Constant.Policy.Host)]
+        public ActionResult Add(AddEditUtilityOfferRequest request)
+            => JsonData(offeringSerivce.AddOffer(request, CurrentSession.UserId, CurrentContext.IP));
+        
+        [NapAuth(FunctionKey = CMSFunctionKeys.CCUtilityOffering, Policy = Constant.Policy.Host)]
+        public ActionResult Update(AddEditUtilityOfferRequest request)
+            => JsonData(offeringSerivce.UpdateOffer(request, CurrentSession.UserId, CurrentContext.IP));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.CCUtilityOffering, Policy = Constant.Policy.Host)]
+        public ActionResult Delete(int policyId)
+            => JsonData(offeringSerivce.DeleteOffer(policyId, CurrentSession.UserId, CurrentContext.IP));
     }
 }

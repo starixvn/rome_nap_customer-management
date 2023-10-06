@@ -1,34 +1,49 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Services
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.CustomerClass.Criteria.UtilityOffer;
+    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
-    using System;
+    using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.NAP.Framework.Data;
     using System.Collections.Generic;
 
     internal interface IUtilityOfferingSerivce
     {
         IEnumerable<UtilityOfferingModel> GetOfferings(SearchUtilityOfferingRequest request);
-    }
-    public class UtilityOfferingSerivce : IUtilityOfferingSerivce
-    {
-        private readonly IDynamicRepository dynamicRepository;
 
-        public UtilityOfferingSerivce() : this(new DynamicRepository())
+        AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP);
+
+        Result UpdateOffer(AddEditUtilityOfferRequest request, int userId, string iP);
+
+        Result DeleteOffer(int policyID, int userId, string iP);
+    }
+    internal class UtilityOfferingSerivce : IUtilityOfferingSerivce
+    {
+        private readonly IOfferingDataAccess offeringDataAccess;
+        private readonly IDynamicRepository dynamicRepository;
+        public UtilityOfferingSerivce() : this(new DynamicRepository(), new OfferingDataAccess())
         {
         }
 
-        public UtilityOfferingSerivce(IDynamicRepository dynamicRepository)
+        public UtilityOfferingSerivce(IDynamicRepository dynamicRepository, IOfferingDataAccess offeringDataAccess)
         {
             this.dynamicRepository = dynamicRepository;
+            this.offeringDataAccess = offeringDataAccess ?? new OfferingDataAccess();
         }
 
         public IEnumerable<UtilityOfferingModel> GetOfferings(SearchUtilityOfferingRequest request)
-        {
-            return new List<UtilityOfferingModel>() {
-                new UtilityOfferingModel(1, "Heavy", "200, 300, 301", "All", "AllCredit", "Parlay Boost", 2, DateTime.Today),
-                new UtilityOfferingModel(2, "Bad Performance", "2000", "56", "All", "Parlay Boost", 2, DateTime.Today)
-            };
-        }
+            => dynamicRepository.Fetch<UtilityOfferingModel>(new GetUtilityOfferCriteria(request));
+
+        public AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP)
+            => offeringDataAccess.AddOffer(new AddUtilityOfferCriteria(request, userId, iP));
+
+        public Result UpdateOffer(AddEditUtilityOfferRequest request, int userId, string iP)
+            => offeringDataAccess.DoAction(new EditUtilityOfferCriteria(request, userId, iP), Labels.EditUtilityOfferSuccessfully);
+
+        public Result DeleteOffer(int policyID, int userId, string iP)
+            => offeringDataAccess.DoAction(new DeleteUtilityOfferCriteria(policyID, userId, iP), Labels.DeleteSpreadSuccessfully);
     }
 }

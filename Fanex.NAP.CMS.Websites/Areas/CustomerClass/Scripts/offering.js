@@ -21,7 +21,7 @@
 
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
-                site: customerClassHelper.getSelectedReplaceAllValue("ddlSites", "All", siteList.length),
+                site: customerClassHelper.getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
                 currency: ddlCurrencies.fanexMultiSelect("getItems", true).join()
             };
 
@@ -58,7 +58,7 @@
         siteList.forEach(function (item) {
             creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
             creditOrLicensee.push({
-                value: item.Name,
+                value: item.Id,
                 text: item.Name,
                 checked: false,
                 enable: true
@@ -146,13 +146,18 @@
             '<tbody>'
         ];
 
-        if (cachedAddNewRule !== null) {
-            html.push(buildAddRow(data.length + 1));
-        }
+        if (cachedAddNewRule === null && data.length === 0) {
+            let colspan = hasHostPermisson ? 6 : 5;
+            html.push(editingGridHelper.buildRowNoData(colspan, resources.noData));
+        } else {
+            if (cachedAddNewRule !== null) {
+                html.push(buildAddRow(data.length + 1));
+            }
 
-        data.forEach(function (item, index) {
-            html.push(buildRowItem(item, index, data.length - index));
-        });
+            data.forEach(function (item, index) {
+                html.push(buildRowItem(item, index, data.length - index));
+            });
+        }
         html.push('</tbody></table>');
 
         freeGrid.removeClass("display-none").html(html.join(""));
@@ -164,9 +169,9 @@
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
             `<td class="rule-cell width-150"><div class="view-item">${CMS.htmlEncode(policy.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${policy.PolicyId}" maxlength="500" /></div></td>`,
             `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCell(policy.CustomerClass)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(policy.Sites, siteList, cachedCreditSites, cachedLicenseeSites)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(policy.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2")}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150"><div class="view-item text-center">${editingGridHelper.renderCurrencyCell(policy.Currencies, currencyList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-200"><div class="view-item text-center">Parlay Boost</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditUtility-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200"><div class="view-item text-center">Parlay Boost</div><div class="dropdown-cell edit-item hidden"><select id="ddlEditUtility-${policy.PolicyId}" class="select-customer-class"></select></div></td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(policy.PolicyId, index, policy.edittingValue && policy.edittingValue !== null)}</td>` : '',
             `</tr>`
         ];
@@ -174,12 +179,12 @@
         return rowHtml.join("");
     }
 
-    function renderActionCell(policiId, index, isEditting) {
+    function renderActionCell(policyId, index, isEditting) {
         return [
-            `<span class="ico-edit ${isEditting ? "is-editting" : ""} mid-margin-right view-item" title="Edit" data-policyid="${policiId}" data-index="${index}" ></span>`,
-            `<span class="ico-trash view-item" title="Delete" data-policyid="${policiId}"></span>`,
-            `<span class="ico-save-16 mid-margin-right edit-item hidden" title="Save" data-policyid="${policiId}" data-index="${index}" ></span>`,
-            `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyid="${policiId}" data-index="${index}"></span>`
+            `<span class="ico-edit ${isEditting ? "is-editting" : ""} mid-margin-right view-item" title="Edit" data-policyid="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-trash view-item" title="Delete" data-policyid="${policyId}"></span>`,
+            `<span class="ico-save-16 mid-margin-right edit-item hidden" title="Save" data-policyid="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyid="${policyId}" data-index="${index}"></span>`
         ].join("");
     }
 
@@ -189,7 +194,7 @@
             `<td class="rule-cell width-250 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
             `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewUtility" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200 add-cell"><div><select id="ddlAddNewUtility" class="select-customer-class"></select></div></td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderAddActionCell()}</td>` : '',
             `</tr>`
         ];
@@ -207,7 +212,7 @@
     function bindingEventForAddRow() {
         $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         editingGridHelper.renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass, function () { onCustomerClassChange("ddlAddNewCustomerClass"); });
-        editingGridHelper.renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites, cachedCreditSites, cachedLicenseeSites, function () { onSiteChange("ddlAddNewSite"); });
+        editingGridHelper.renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites, cachedCreditSites, cachedLicenseeSites, cachedAddNewRule.Sites === "0", cachedAddNewRule.Sites.includes("-1"), cachedAddNewRule.Sites.includes("-2"), function () { onSiteChange("ddlAddNewSite"); });
         editingGridHelper.renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies, function () { onCurrencyChange("ddlAddNewCurrency"); });
         editingGridHelper.renderAddEditUtility("ddlAddNewUtility", function () { onUtilityChange("ddlAddNewUtility"); });
 
@@ -223,11 +228,12 @@
 
         if (cachedAddNewRule === null) {
             cachedAddNewRule = {
+                PolicyId: 0,
                 PolicyTitle: "",
                 CustomerClass: "",
                 Currencies: "",
                 Sites: "",
-                UtilityOffering: ""
+                UtilityOffering: "1"
             };
         }
 
@@ -250,7 +256,7 @@
         rowEdit.find("span[class*=view-item]").addClass("hidden");
         rowEdit.find("span[class*=edit-item]").removeClass("hidden");
         editingGridHelper.renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, function () { onCustomerClassChange(`ddlEditCustomerClass-${policyId}`, index); });
-        editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
+        editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
         editingGridHelper.renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, function () { onCurrencyChange(`ddlEditCurrency-${policyId}`, index); });
         editingGridHelper.renderAddEditUtility(`ddlEditUtility-${policyId}`, "Parlay Boost", null, function () { onUtilityChange(`ddlEditUtility-${policyId}`, index); });
 
@@ -266,13 +272,14 @@
     function saveEditItem() {
         editingGridHelper.clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
-        var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
+        var index = cachedData.findIndex(policy => policyId === policy.PolicyId);
         var updatePolicy = {
-            PolicyID: policyId,
+            PolicyId: policyId,
             PolicyTitle: editingGridHelper.validateTitle($(`#editTitle-${policyId}`)),
             CustomerClass: editingGridHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
             Currencies: editingGridHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), customerClassHelper.getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
-            Sites: editingGridHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, cachedCreditSites, cachedLicenseeSites))
+            Sites: editingGridHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),
+            UtilityOffering: editingGridHelper.validateRequiredField($(`#ddlEditUtility-${policyId}`), $(`#ddlEditUtility-${policyId}`).val())
         };
 
         if (!editingGridHelper.isValidUtilityOffer(updatePolicy)) {
@@ -345,7 +352,7 @@
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
-                    cachedAddNewRule.PolicyID = resultJson.PolicyID;
+                    cachedAddNewRule.PolicyId = resultJson.PolicyId;
                     cachedData.unshift(cachedAddNewRule);
                     cachedAddNewRule = null;
                     CMS.showSuccessMessage(resultJson.Message);
@@ -364,11 +371,11 @@
         CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${CMS.htmlEncode(cachedData[index].PolicyTitle)}"?`, function () { callDelete(policyId, index); });
     }
 
-    function callDelete(policyID, index) {
+    function callDelete(policyId, index) {
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`UtilityOffering/Delete?policyID=${policyID}`),
+            CMS.resolveRootUrl(`UtilityOffering/Delete?policyId=${policyId}`),
             null,
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
@@ -393,9 +400,9 @@
 
     function onSiteChange(divId, index) {
         if (index) {
-            cachedData[index].edittingValue.Sites = editingGridHelper.getSelectedSites(divId, siteList, cachedCreditSites, cachedLicenseeSites);
+            cachedData[index].edittingValue.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
         } else {
-            cachedAddNewRule.Sites = editingGridHelper.getSelectedSites(divId, siteList, cachedCreditSites, cachedLicenseeSites);
+            cachedAddNewRule.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0",cachedCreditSites, "-1", cachedLicenseeSites, "-2");
         }
     }
 

@@ -4,14 +4,15 @@
 
     public class UtilityOfferingModel
     {
-        public UtilityOfferingModel(int policyId, string policyTitle, string customerClass, string currencies, string sites, string utilityOffering, int lastModifiedUser, DateTime lastModifiedTime)
+        public UtilityOfferingModel(int policyID, string policyTitle, string utilityOffering, string customerClass, string currencies, string sites, byte isTest, int lastModifiedUser, DateTime lastModifiedTime)
         {
-            PolicyId = policyId;
+            PolicyId = policyID;
             PolicyTitle = policyTitle;
+            UtilityOffering = utilityOffering;
             CustomerClass = customerClass;
             Currencies = currencies;
             Sites = sites;
-            UtilityOffering = utilityOffering;
+            IsTest = isTest;
             LastModifiedUser = lastModifiedUser;
             LastModifiedTime = lastModifiedTime;
         }
@@ -22,6 +23,7 @@
         public string Currencies { get; }
         public string Sites { get; }
         public string UtilityOffering { get; }
+        public byte IsTest { get; }
         public int LastModifiedUser { get; }
         public DateTime LastModifiedTime { get; }
     }

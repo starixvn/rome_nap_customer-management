@@ -1,6 +1,12 @@
 ﻿"use strict";
 
 const editingGridHelper = (function ($) {
+
+
+    function buildRowNoData(colspan, textNoData) {
+        return `<tr><td colspan="${colspan}" class="text-red align-center">${textNoData}</td></tr>`;
+    }
+
     function renderAddEditCustomerClass(divId, selectedValue, fnOnCheck) {
         let optionList = [];
         let selectedValueList = selectedValue.split(",");
@@ -20,9 +26,8 @@ const editingGridHelper = (function ($) {
         );
     }
 
-    function renderAddEditSite(divId, selectedValue, cachedCreditSites, cachedLicenseeSites, fnOnCheck) {
-        var isCheckAll = selectedValue === "All";
-        var listData = customerClassHelper.buildGroupSiteList(isCheckAll || selectedValue.includes("AllCredit"), isCheckAll || selectedValue.includes("AllDeposit"), selectedValue, cachedCreditSites, cachedLicenseeSites)
+    function renderAddEditSite(divId, selectedValue, cachedCreditSites, cachedLicenseeSites, isCheckAll, isAllCredit, isAllDeposit, fnOnCheck) {
+        var listData = customerClassHelper.buildGroupSiteList(isAllCredit, isAllDeposit, selectedValue, cachedCreditSites, cachedLicenseeSites);
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
@@ -77,21 +82,16 @@ const editingGridHelper = (function ($) {
     }
 
     function renderAddEditUtility(divId, selectedValue, utilityList, fnOnCheck) {
-        let optionList = [];
+        let selectDiv = $(`#${divId}`);
+        selectDiv.empty();
+        selectDiv.append($('<option>', {
+            value: "1",
+            text: 'Parlay Boost'
+        }));
 
-        optionList.push({ value: "Parlay Boost", text: "Parlay Boost", checked: true, enable: true });
+        selectDiv.combobox();
 
-        return customerClassHelper.renderMultiSelect(
-            "#" + divId,
-            {
-                minWidth: 198,
-                maxHeight: 230,
-                listData: optionList,
-                isCheckAll: false,
-                showFilter: true,
-                onCheck: fnOnCheck
-            }
-        );
+        return selectDiv;
     }
 
 
@@ -112,22 +112,30 @@ const editingGridHelper = (function ($) {
         return customerClassList.join(", ");
     }
 
-    function renderSiteCell(selectedSites, siteList, cachedCreditSites, cachedLicenseeSites) {
-        if (selectedSites === "All") {
+    function renderSiteCell(selectedSites, siteList, cachedCreditSites, cachedLicenseeSites, allValue, allCreditValue, allDepositValue) {
+        if (selectedSites === allValue) {
             return `<a href="javascript:;" class="link-site" data-sites="${siteList.map(st => st.Name).join()}">All</a>`;
         }
         let detailSelectedSites = selectedSites;
 
-        if (selectedSites.includes("AllCredit")) {
-            detailSelectedSites = detailSelectedSites.replace("AllCredit", cachedCreditSites.map(st => st.value).join());
+        if (selectedSites.includes(allCreditValue)) {
+            detailSelectedSites = detailSelectedSites.replace(allCreditValue, cachedCreditSites.map(st => st.value).join());
         }
 
-        if (selectedSites.includes("AllDeposit")) {
-            detailSelectedSites = detailSelectedSites.replace("AllDeposit", cachedLicenseeSites.map(st => st.value).join());
+        if (selectedSites.includes(allDepositValue)) {
+            detailSelectedSites = detailSelectedSites.replace(allDepositValue, cachedLicenseeSites.map(st => st.value).join());
         }
 
         const sitesNameList = detailSelectedSites.split(",");
-        var displayName = selectedSites !== 'AllCredit' && selectedSites !== 'AllDeposit' ? sitesNameList.length : selectedSites;
+        var displayName = sitesNameList.length;
+        if (selectedSites === allCreditValue) {
+            displayName = 'All Credit';
+        }
+
+        if (selectedSites === allDepositValue) {
+            displayName = 'All Deposit';
+        }
+
         return sitesNameList.length <= 1
             ? detailSelectedSites
             : `<a href="javascript:;" class="link-site" data-sites="${sitesNameList.join()}">${displayName}</a>`;
@@ -201,11 +209,11 @@ const editingGridHelper = (function ($) {
     }
 
 
-    function getSelectedSites(divId, siteList, cachedCreditSites, cachedLicenseeSites) {
+    function getSelectedSites(divId, siteList, allValue, cachedCreditSites, allCreditSitesValue, cachedLicenseeSites, allLicenseeSitesValue) {
         var selectedSites = $(`#${divId}`).fanexMultiSelect("getItems", true);
 
         if (selectedSites.length === siteList.length) {
-            return "All";
+            return allValue;
         }
 
         var selectedCreditSites = selectedSites.filter(site => cachedCreditSites.some(creditSite => creditSite.value.toString() === site.toString()));
@@ -214,13 +222,13 @@ const editingGridHelper = (function ($) {
         selectedSites = [];
 
         if (selectedCreditSites.length === cachedCreditSites.length) {
-            selectedSites.push("AllCredit");
+            selectedSites.push(allCreditSitesValue);
         } else {
             selectedSites = selectedCreditSites;
         }
 
         if (selectedDepositSites.length === cachedLicenseeSites.length) {
-            selectedSites.push("AllDeposit");
+            selectedSites.push(allLicenseeSitesValue);
         } else {
             selectedSites.push(...selectedDepositSites);
         }
@@ -229,6 +237,7 @@ const editingGridHelper = (function ($) {
     }
 
     return {
+        buildRowNoData: buildRowNoData,
         renderAddEditCustomerClass: renderAddEditCustomerClass,
         renderAddEditSite: renderAddEditSite,
         renderAddEditCurrency: renderAddEditCurrency,

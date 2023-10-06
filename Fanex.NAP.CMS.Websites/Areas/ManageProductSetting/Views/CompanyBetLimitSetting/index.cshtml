@@ -22,7 +22,7 @@
 <div class="filter-bar">
     <div class="tabs-area">
         <div id="tab-1" class="tab first">Company Bet Limit Setting</div>
-        <div id="tab-2" class="tab">Import Data</div>
+        @* <div id="tab-2" class="tab">Import Data</div> *@
     </div>
     <div class="form-area">
         <div id="form-tab-1" class="form-search first ">
@@ -52,7 +52,7 @@
                     <div id="deposit-products" class="edit-field col_8 display-none">
                         @Html.DropDownList("ddlCurrency", Model.DepositProducts, new { @id = "ddl-deposit-products" })
                     </div>
-                    <div class="lbl-field col_4">
+                    <div class="lbl-field col_5">
                         <label id="lbl-currency">@Labels.lblCreditCurrency</label>
                     </div>
                     <div id="credit-currencies" class="edit-field col_8">

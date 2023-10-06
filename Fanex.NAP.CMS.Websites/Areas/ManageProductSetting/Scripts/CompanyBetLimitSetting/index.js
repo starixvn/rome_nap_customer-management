@@ -60,6 +60,7 @@
                 HeaderAlign: "center",
                 CellAlign: "center",
                 AllowTruncate: true,
+                FormatNumber: CMS.formats.DecimalFormat
             },
             {
                 HeaderText: viewResources.lblMaxBet,
@@ -68,6 +69,7 @@
                 HeaderAlign: "center",
                 CellAlign: "center",
                 AllowTruncate: true,
+                FormatNumber: CMS.formats.IntegerFormat
             },
             {
                 HeaderText: viewResources.lblRemark,
@@ -147,7 +149,10 @@
             '"></span>'
         ].join("");
     }
-
+    const formatTwoDecimalNumber = (data)=>
+    {
+        return data.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     const renderGridBody = (data) => {
         const bodyData = [];
         let row;

@@ -24,6 +24,7 @@
 
         private static SiteSetting ToSiteSetting(IDataReader reader)
             => new SiteSetting(
+                int.Parse(reader["PolicyId"].ToString()),
                 reader["PolicyTitle"].ToString(),
                 reader["Site"].ToString(),
                 reader["CurrencyName"].ToString(),

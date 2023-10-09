@@ -121,6 +121,15 @@
                 freeGrid.find(".link-currency")
                     .off("click")
                     .click(handleViewCurrencies);
+                freeGrid.find("#chk-select-delete-all")
+                    .off("click")
+                    .click(handleCheckDelAll);
+                freeGrid.find("#btn-delete-selected")
+                    .off("click")
+                    .click(handleDelSelected);
+                freeGrid.find(".chk-select-delete")
+                    .off("click")
+                    .click(handleSingleCheckDel);
             });
     }
 
@@ -139,7 +148,8 @@
             { HeaderText: resources.policyTitle, Width: 300, Name: "colPolicyTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
             { HeaderText: resources.site, Width: 200, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.currency, Width: 260, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.platform, Width: 260, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" }
+            { HeaderText: resources.platform, Width: 260, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" }
         ];
 
         return {
@@ -166,7 +176,8 @@
                     { Name: "colPolicyTitle", Value: datum.PolicyTitle },
                     { Name: "colSite", Value: datum.Site },
                     { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
-                    { Name: "colPlatform", Value: datum.PlatformNames }
+                    { Name: "colPlatform", Value: datum.PlatformNames },
+                    { Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site) }
                 ]
             };
         });
@@ -205,6 +216,60 @@
                     my: "center top",
                     at: "center top",
                     of: "#headline"
+                }
+            });
+    }
+
+    function renderDeleteCell(id, site) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-site="${site}">`;
+    }
+
+    function handleCheckDelAll() {
+        let checked = $(this).prop("checked");
+        $(".chk-select-delete").each(function () {
+            $(this).prop("checked", checked);
+        });
+    }
+
+    function handleSingleCheckDel() {
+        let isCheckAll = true;
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") !== true) {
+                isCheckAll = false;
+
+                return false;
+            }
+        });
+
+        $("#chk-select-delete-all").prop("checked", isCheckAll);
+    }
+
+    function handleDelSelected() {
+        var settings = [];
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") === true) {
+                settings.push({
+                    PolicyId: $(this).data("id"),
+                    Site: $(this).data("site").toString()
+                });
+            }
+        });
+        CMS.showConfirmMessage(`Are you sure you want to delete the selected setting row(s)?`, function () { callDelete(settings); });
+    }
+
+    function callDelete(siteSettings) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Site/Delete`),
+            {SiteSettings: siteSettings},
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    search(0, getPageSize());
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
                 }
             });
     }

@@ -3,16 +3,19 @@
     internal class SiteSetting
     {
         public SiteSetting(
+            int policyId,
             string policyTitle,
             string site,
             string currencies,
             string platforms)
         {
+            PolicyId = policyId;
             PolicyTitle = policyTitle;
             Site = site;
             Currencies = currencies;
             Platforms = platforms;
         }
+        public int PolicyId { get; }
 
         public string PolicyTitle { get; }
 

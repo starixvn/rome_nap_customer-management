@@ -21,6 +21,8 @@
         Result AssignSiteSetting(AssignSiteSettingRequest request);
 
         Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, int userId, string ip);
+
+        Result Delete(DeleteSiteSettingRequest request, int userId, string ip);
     }
 
     internal class SiteService : ISiteService
@@ -74,5 +76,8 @@
             => siteDataAccess.DoAction(
                 new AssignSiteSettingCriteria(siteSettingExcels, userId, ip),
                 Labels.UploadExcelSuccessfully);
+
+        public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
+            => siteDataAccess.DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
     }
 }

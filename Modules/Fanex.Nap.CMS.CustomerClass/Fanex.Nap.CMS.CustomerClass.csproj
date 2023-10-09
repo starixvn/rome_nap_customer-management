@@ -141,6 +141,7 @@
     <Compile Include="Criteria\AddSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\AssignSiteSettingCriteria.cs" />
     <Compile Include="Criteria\CommandCriteriaBase.cs" />
+    <Compile Include="Criteria\DeleteSiteCriteria.cs" />
     <Compile Include="Criteria\DeleteSpreadCriteria.cs" />
     <Compile Include="Criteria\EditSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\EnableSpreadCriteria.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Requests\AddRuleRequest.cs" />
     <Compile Include="Requests\AddEditSpreadRuleRequest.cs" />
     <Compile Include="Requests\AssignSiteSettingRequest.cs" />
+    <Compile Include="Requests\DeleteSiteSettingRequest.cs" />
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
     <Compile Include="Requests\SearchCustomerClassSettingRequest.cs" />
     <Compile Include="Requests\SearchSpreadRuleRequest.cs" />

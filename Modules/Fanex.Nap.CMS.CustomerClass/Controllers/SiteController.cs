@@ -121,5 +121,27 @@
                 siteService.Upload(siteSettingExcels, userId, ip),
                 JsonRequestBehavior.DenyGet);
         }
+
+
+        [HttpPost]
+        public ActionResult Delete(DeleteSiteSettingRequest request)
+        {
+            var userId = CurrentSession.UserId;
+            var ip = CurrentContext.IP;
+
+            if (!HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host) || userId == 0)
+            {
+                return Forbidden();
+            }
+
+            if (request.SiteSettings == null || !request.SiteSettings.Any())
+            {
+                return BadRequest();
+            }
+
+            return JsonData(
+                siteService.Delete(request, userId, ip),
+                JsonRequestBehavior.DenyGet);
+        }
     }
 }

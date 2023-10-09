@@ -477,4 +477,10 @@
   <data name="DisableParlay" xml:space="preserve">
     <value>Disable Parlay</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteSiteSettingSuccessfully" xml:space="preserve">
+    <value>Delete Site Settings Successfully</value>
+  </data>
 </root>

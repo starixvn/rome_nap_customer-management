@@ -612,6 +612,7 @@
     <Content Include="Content\Themes\img\icon-no.png" />
     <Content Include="Content\Themes\img\icon-question.png" />
     <Content Include="Content\Themes\img\icon-success-message.png" />
+    <Content Include="Content\Themes\img\icon-trash-white.png" />
     <Content Include="Content\Themes\img\icon-trash.png" />
     <Content Include="Content\Themes\img\icon-yes.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />

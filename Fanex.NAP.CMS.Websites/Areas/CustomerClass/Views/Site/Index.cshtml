@@ -23,7 +23,8 @@
             requiredField: "@Labels.RequiredField",
             uploadSiteSetting: "@Labels.UploadSiteSetting",
             notExcelFileError: "@Labels.NotExcelFileError",
-            totalErrors: "@Labels.TotalErrors"
+            totalErrors: "@Labels.TotalErrors",
+            delete: "@Labels.Delete"
         };
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');

@@ -141,7 +141,7 @@
             bodyRowHeight: 25,
             showNumberColumn: true,
             gridExpandHeight: 180,
-            showHighlightRow: false,
+            showHighlightRow: true,
             showPager: true,
             customPager: true,
             pagerOption: {
@@ -180,13 +180,14 @@
                     sportGroupChildren += currencyGroup.GameGroups.length;
                     currentCurrencyGroupRow = currentRow;
                     $.each(currencyGroup.GameGroups, function (index, gameGroup) {
+                        highlightClass = 'hover-column';
                         row = {
                             Columns: [
                                 {Name: 'ColNo', Value: ""},
-                                {Name: 'GameGroups', Value: gameGroup.GameGroupName},
-                                {Name: 'MinBet', Value: gameGroup.Entries[0]?.MinBet},
-                                {Name: 'MaxBet', Value: gameGroup.Entries[0]?.MaxBet},
-                                {Name: 'Remark', Value: gameGroup.Entries[0]?.Remark},
+                                {Name: 'GameGroups', Value: gameGroup.GameGroupName, TdClass: highlightClass},
+                                {Name: 'MinBet', Value: gameGroup.Entries[0]?.MinBet, TdClass: highlightClass},
+                                {Name: 'MaxBet', Value: gameGroup.Entries[0]?.MaxBet, TdClass: highlightClass},
+                                {Name: 'Remark', Value: gameGroup.Entries[0]?.Remark, TdClass: highlightClass},
                             ]
                         };
 
@@ -218,13 +219,13 @@
                         Name: 'SportType',
                         Value: sportGroup.SportType,
                         MergeRowNumber: sportGroupChildren,
-                        // CssClass: 'chk-column'
+                         CssClass: 'chk-column'
                     },
                     {
                         Name: 'SportName',
                         Value: sportGroup.SportName,
                         MergeRowNumber: sportGroupChildren,
-                        // CssClass: 'chk-column'
+                         CssClass: 'chk-column'
                     }
                 ]);
             });

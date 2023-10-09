@@ -11,7 +11,7 @@
     using NPOI.HSSF.Util;
     using NPOI.SS.UserModel;
     using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
-
+    
     public class CompanyBetLimitSettingExporter : BaseExcelExporter, IExcelExporter
     {
         private readonly IEnumerable<CompanyBetLimitSettingGroups> data;
@@ -78,7 +78,7 @@
                 ExcelStyleTemplate.HeaderTextStyle);
             ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, "Game Group",
                 ExcelStyleTemplate.HeaderTextStyle);
-            // + 3 - 1 => calculate index of "remark colum" 
+            // + 3 - 1 => calculate index of "remark colum" , +3: group 3 col MinBet,MaxBet, Remark
             ExportExcel.RenderCellBySpanning(2, ExportExcel.CurrentColumn + 3 - 1, "Bet Limit",
                 ExcelStyleTemplate.HeaderTextStyle);
 
@@ -116,7 +116,8 @@
                         foreach (var gameGroup in currencyGroup.GameGroups)
                         {
                             ExportExcel.CurrentColumn = 0;
-                            ExportExcel.RenderCell(currencyGroupChildren, currencyGroupChildren, 0, row, ExcelStyleTemplate.HeaderTextStyle);
+                            ExportExcel.RenderCell(currencyGroupChildren, currencyGroupChildren, 0, row,
+                                ExcelStyleTemplate.HeaderTextStyle);
                             ExportExcel.CurrentColumn = 4;
                             ExportExcel.RenderCell(currencyGroupChildren, currencyGroupChildren,
                                 ExportExcel.CurrentColumn, gameGroup.GameGroupName, ExcelStyleTemplate.HeaderTextStyle);

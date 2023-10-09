@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
+﻿namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using System.Web.Mvc;
@@ -10,7 +8,6 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 
     public class CompanyBetLimitSettingController : BaseController
     {
-        // GET: CompanyBetLimitSetting
         private readonly ICompanyBetLimitSettingService _service;
 
         public CompanyBetLimitSettingController() : this(null)
@@ -21,8 +18,7 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
         {
             this._service = service ?? new CompanyBetLimitSettingService();
         }
-
-
+        
         public ActionResult Index()
         {
             var viewModel = new FilterAreaModel(

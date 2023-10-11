@@ -114,15 +114,6 @@
             //     CellAlign: "center",
             // },
         ];
-        const titleInfo = {
-            text: "",
-            showExcelButton: true,
-            exportExcelFunction: function () {
-                const url = CMS.resolveRootUrl("CompanyBetLimitSetting/Export");
-                const isCredit = getFilterParams(elements.isCredit);
-                CMS.downloadFile(url, isCredit);
-            }
-        };
         return {
             columns: headerColumns,
             customizeHeader: true,
@@ -142,7 +133,15 @@
                 }
             ],
             showTitle: false,
-            titleInfo,
+            titleInfo:{
+                text: "",
+                showExcelButton: true,
+                exportExcelFunction: function () {
+                    const url = CMS.resolveRootUrl("CompanyBetLimitSetting/Export");
+                    const isCredit = getFilterParams(elements.isCredit);
+                    CMS.downloadFile(url, isCredit);
+                }
+            },
             bodyRows: [],
             numberOfFrozenColumn: 0,
             fullWidth: true,
@@ -258,11 +257,8 @@
     }
 
     const renderMultiChoiceDDL = () => {
-        const ddlSelectors = [
-            $("#ddl-credit-products"), $("#ddl-credit-currencies"),
-            $("#ddl-credit-sites"), $("#ddl-deposit-products"),
-            $("#ddl-deposit-currencies"), $("#ddl-deposit-sites")
-        ];
+        const depositSelectors = [$("#ddl-deposit-products"), $("#ddl-deposit-currencies"), $("#ddl-deposit-sites")];
+        const creditSelectors = [$("#ddl-credit-products"), $("#ddl-credit-currencies"), $("#ddl-credit-sites")];
         const multiSelectOptions = {
             minWidth: 180,
             checkAllText: "All",
@@ -272,11 +268,11 @@
             showTooltip: false,
             shadow: true,
         };
-        const generateListData = (ddl) => {
+        const generateListData = (ddl, prefixId="credit") => {
             return ddl.find("option").map(function () {
                 const {text, value} = this;
                 return {
-                    Id: `${text}-${value}`,
+                    Id: `${prefixId}-${text}-${value}`,
                     Value: value,
                     Text: text,
                     Checked: true,
@@ -284,7 +280,8 @@
                 };
             });
         };
-        ddlSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e)}));
+        depositSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e)}));
+        creditSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e,'deposit')}));
     };
 
 

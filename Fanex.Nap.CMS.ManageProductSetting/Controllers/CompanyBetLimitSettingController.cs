@@ -53,10 +53,9 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
         public void Export(GetCompanyBetLimitSettingViewModels searchParams)
         {
             var result = _service.GetBetLimitSetting(searchParams);
-
             var groupedData = _service.GetBetLimitSettingGroups(result);
-            IExcelExporter exporter = new CompanyBetLimitSettingExporter(groupedData);
-
+            
+            IExcelExporter exporter = new CompanyBetLimitSettingExporter(groupedData,searchParams.IsCredit);
             exporter.ResponseStream();
         }
     }

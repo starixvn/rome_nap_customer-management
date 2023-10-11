@@ -60,4 +60,22 @@
     <data name="lblRemark" xml:space="preserve">
         <value>Remark</value>
     </data>
+    <data name="lblSearch" xml:space="preserve">
+        <value>Search</value>
+    </data>
+    <data name="lblCreditSite" xml:space="preserve">
+        <value>Credit Site</value>
+    </data>
+    <data name="lblDepositSite" xml:space="preserve">
+        <value>Deposit Site</value>
+    </data>
+    <data name="lblCredit" xml:space="preserve">
+        <value>Credit</value>
+    </data>
+    <data name="lblDeposit" xml:space="preserve">
+        <value>Deposit</value>
+    </data>
+    <data name="lblProduct" xml:space="preserve">
+        <value>Product</value>
+    </data>
 </root>

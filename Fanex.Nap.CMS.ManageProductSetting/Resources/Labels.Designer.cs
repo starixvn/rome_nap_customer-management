@@ -69,6 +69,15 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        public static string lblCredit {
+            get {
+                return ResourceManager.GetString("lblCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit Currency.
         /// </summary>
         public static string lblCreditCurrency {
@@ -78,11 +87,38 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit Site.
+        /// </summary>
+        public static string lblCreditSite {
+            get {
+                return ResourceManager.GetString("lblCreditSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit.
+        /// </summary>
+        public static string lblDeposit {
+            get {
+                return ResourceManager.GetString("lblDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deposit Currency.
         /// </summary>
         public static string lblDepositCurrency {
             get {
                 return ResourceManager.GetString("lblDepositCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit Site.
+        /// </summary>
+        public static string lblDepositSite {
+            get {
+                return ResourceManager.GetString("lblDepositSite", resourceCulture);
             }
         }
         
@@ -123,6 +159,15 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string lblProduct {
+            get {
+                return ResourceManager.GetString("lblProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remark.
         /// </summary>
         public static string lblRemark {
@@ -137,6 +182,15 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         public static string lblRemove {
             get {
                 return ResourceManager.GetString("lblRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string lblSearch {
+            get {
+                return ResourceManager.GetString("lblSearch", resourceCulture);
             }
         }
         

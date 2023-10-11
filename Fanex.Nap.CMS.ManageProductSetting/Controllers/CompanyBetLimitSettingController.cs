@@ -1,11 +1,17 @@
-﻿namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
+﻿
+
+
+
+namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using System.Web.Mvc;
     using ViewModels.CompanyBetLimitSetting;
     using Services.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-
+    using Fanex.Nap.CMS.Infrastructure;
+    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Core.Web.Attribute;
     public class CompanyBetLimitSettingController : BaseController
     {
         private readonly ICompanyBetLimitSettingService _service;
@@ -19,6 +25,7 @@
             this._service = service ?? new CompanyBetLimitSettingService();
         }
         
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new FilterAreaModel(
@@ -32,6 +39,7 @@
             return View("~/Areas/ManageProductSetting/Views/CompanyBetLimitSetting/Index.cshtml", viewModel);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetCompanyBetLimitSettingViewModels searchParams)
         {
             var result = _service.GetBetLimitSetting(searchParams);
@@ -41,6 +49,7 @@
             return JsonData(groupedData);
         }
 
+        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
         public void Export(GetCompanyBetLimitSettingViewModels searchParams)
         {
             var result = _service.GetBetLimitSetting(searchParams);

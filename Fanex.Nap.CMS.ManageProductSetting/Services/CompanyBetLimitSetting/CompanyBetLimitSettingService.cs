@@ -66,7 +66,8 @@
         public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(GetCompanyBetLimitSettingViewModels searchParams)
         {
             if (string.IsNullOrWhiteSpace(searchParams.ProductIds) ||
-                string.IsNullOrWhiteSpace(searchParams.Currencies))
+                string.IsNullOrWhiteSpace(searchParams.Currencies)||
+                string.IsNullOrWhiteSpace(searchParams.Sites))
             {
                 return new List<CompanyBetLimitSetting>();
             }

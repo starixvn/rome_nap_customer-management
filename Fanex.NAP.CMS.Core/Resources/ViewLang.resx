@@ -903,4 +903,10 @@
   <data name="DepositCurrency" xml:space="preserve">
     <value>Deposit Currency</value>
   </data>
+  <data name="DepositSite" xml:space="preserve">
+    <value>Deposit Site</value>
+  </data>
+  <data name="CreditSite" xml:space="preserve">
+    <value>Credit Site</value>
+  </data>
 </root>

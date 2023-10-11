@@ -7,5 +7,6 @@
 
         public IEnumerable<CompanyBetLimitSetting> Entries { get; set; }
         
-    }
+    }   
+
 }

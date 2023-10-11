@@ -8,14 +8,18 @@
     using System.Linq;
     using Fanex.Nap.CMS.ManageProductSetting.Criteria.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
+    using Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting;
 
     public interface ICompanyBetLimitSettingService
     {
         IEnumerable<IdNameModel> GetCurrencies(bool isCredit);
+        
         IEnumerable<IdNameModel> GetProducts(bool isCredit);
+        
+        IEnumerable<IdNameModel> GetSites(bool isCredit);
 
-        CompanyBetLimitSettingQueryResult GetBetLimitSetting(bool isCredit, string productIds,
-            string currencies, int pageIndex, int pageSize);
+        IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(GetCompanyBetLimitSettingViewModels searchParams);
+
         IEnumerable<CompanyBetLimitSettingGroups> GetBetLimitSettingGroups(IEnumerable<CompanyBetLimitSetting> betLimitSetting);
     }
 
@@ -27,6 +31,9 @@
         private const string ProductCacheKey =
             "Fanex.Nap.CMS.ManageProductSetting.Services.CompanyBetLimitSetting.Product";
 
+        private const string SiteCacheKey =
+            "Fanex.Nap.CMS.ManageProductSetting.Services.CompanyBetLimitSetting.Site";
+
         private readonly ICompanyBetLimitRepository _repository;
 
         public CompanyBetLimitSettingService(ICompanyBetLimitRepository repository = null)
@@ -34,49 +41,44 @@
             _repository = repository ?? new CompanyBetLimitRepository();
         }
 
-        public IEnumerable<IdNameModel> GetCurrencies(bool isCredit)
+        public IEnumerable<IdNameModel> GetCachedData(string cacheKey, Func<IEnumerable<IdNameModel>> getRepositoryData)
         {
-            var cacheKey = CurrencyCacheKey + isCredit;
-            var currencies = CacheManager.Get<List<IdNameModel>>(cacheKey);
+            var data = CacheManager.Get<List<IdNameModel>>(cacheKey);
 
-            if (currencies != null) return currencies;
-            currencies = _repository.GetCurrencies(new GetCurrenciesCriteria { IsCredit = isCredit }).ToList();
+            if (data != null) return data;
+            data = getRepositoryData().ToList();
 
-            CacheManager.Set(cacheKey, currencies, new TimeSpan(0, 0, 5, 0));
+            CacheManager.Set(cacheKey, data, new TimeSpan(0, 0, 0, 5));
 
-            return currencies;
-        }
-        
-        public IEnumerable<IdNameModel> GetProducts(bool isCredit)
-        {
-            var cacheKey = ProductCacheKey + isCredit;
-            var products = CacheManager.Get<List<IdNameModel>>(cacheKey);
-
-            if (products != null) return products;
-            products = _repository.GetProducts(new GetProductsCriteria { IsCredit = isCredit }).ToList();
-
-            CacheManager.Set(cacheKey, products, new TimeSpan(0, 0, 5, 0));
-
-            return products;
+            return data;
         }
 
-        public CompanyBetLimitSettingQueryResult GetBetLimitSetting(bool isCredit, string productIds,
-            string currencies, int pageIndex, int pageSize)
+        public IEnumerable<IdNameModel> GetCurrencies(bool isCredit) =>
+            GetCachedData(CurrencyCacheKey + isCredit,
+                () => _repository.GetCurrencies(new GetCurrenciesCriteria { IsCredit = isCredit }));
+
+        public IEnumerable<IdNameModel> GetProducts(bool isCredit) => GetCachedData(
+            ProductCacheKey + isCredit, () => _repository.GetProducts(new GetProductsCriteria { IsCredit = isCredit }));
+
+        public IEnumerable<IdNameModel> GetSites(bool isCredit) => GetCachedData(SiteCacheKey + isCredit,
+            () => _repository.GetSites(new GetSiteCriteria { IsCredit = isCredit }));
+
+        public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(GetCompanyBetLimitSettingViewModels searchParams)
         {
-            if (string.IsNullOrWhiteSpace(productIds) || string.IsNullOrWhiteSpace(currencies))
+            if (string.IsNullOrWhiteSpace(searchParams.ProductIds) ||
+                string.IsNullOrWhiteSpace(searchParams.Currencies))
             {
-                return new CompanyBetLimitSettingQueryResult { Entries = new List<CompanyBetLimitSetting>(), TotalRows = 0 };
+                return new List<CompanyBetLimitSetting>();
             }
 
             var result = _repository.GetBetLimitSettings(new GetBetLimitSettingCriteria
             {
-                IsCredit = isCredit,
-                PMutilProductID = productIds,
-                PMutilCurrency = currencies,
-                PageIndex = pageIndex,
-                PageSize = pageSize,
+                IsCredit = searchParams.IsCredit,
+                PMutilProductID = searchParams.ProductIds,
+                PMutilCurrency = searchParams.Currencies,
+                PMutilSite = searchParams.Sites,
             });
-            
+
             return result;
         }
 
@@ -95,13 +97,17 @@
                         {
                             CurrencyGroupID = group2.Key,
                             Currency = string.Join(", ", group2.Select(e => e.Currency).Distinct()),
-                            GameGroups = group2.GroupBy(entry3 => entry3.GameGroup)
-                                .Select(group3 => new GameGroup
+                            SiteGroups = group2.GroupBy(entry3 => entry3.Site)
+                                .Select(group3 => new Models.CompanyBetLimitSetting.SiteGroup
                                 {
-                                    GameGroupName = group3.Key,
-                                    Entries = group3.ToList()
-                                })
-                                .ToList()
+                                    SiteGroupName = group3.Key,
+                                    GameGroups = group3.GroupBy(entry4 => entry4.GameGroup)
+                                        .Select(group4 => new GameGroup
+                                        {
+                                            GameGroupName = group4.Key,
+                                            Entries = group3.ToList()
+                                        }).ToList()
+                                }).ToList()
                         })
                         .ToList()
                 })

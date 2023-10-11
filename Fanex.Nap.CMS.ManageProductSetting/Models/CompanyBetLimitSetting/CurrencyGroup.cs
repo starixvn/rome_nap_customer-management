@@ -8,7 +8,7 @@
         
         public int CurrencyGroupID { get; set; }
 
-        public IEnumerable<GameGroup> GameGroups { get; set; }
+        public IEnumerable<SiteGroup> SiteGroups { get; set; }
         
     }
 }

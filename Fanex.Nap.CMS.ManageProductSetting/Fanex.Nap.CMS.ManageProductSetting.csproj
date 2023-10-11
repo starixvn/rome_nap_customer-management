@@ -205,12 +205,13 @@
     <Compile Include="Criteria\CompanyBetLimitSetting\GetBetLimitSettingCriteria.cs" />
     <Compile Include="Criteria\CompanyBetLimitSetting\GetCurrenciesCriteria.cs" />
     <Compile Include="Criteria\CompanyBetLimitSetting\GetProductsCriteria.cs" />
+    <Compile Include="Criteria\CompanyBetLimitSetting\GetSiteCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\CompanyBetLimitSetting\CompanyBetLimitSetting.cs" />
     <Compile Include="Models\CompanyBetLimitSetting\CompanyBetLimitSettingGroups.cs" />
-    <Compile Include="Models\CompanyBetLimitSetting\CompanyBetLimitSettingQueryResult.cs" />
     <Compile Include="Models\CompanyBetLimitSetting\CurrencyGroup.cs" />
     <Compile Include="Models\CompanyBetLimitSetting\GameGroup.cs" />
+    <Compile Include="Models\CompanyBetLimitSetting\SiteGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CompanyBetLimitSetting\CompanyBetLimitRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">

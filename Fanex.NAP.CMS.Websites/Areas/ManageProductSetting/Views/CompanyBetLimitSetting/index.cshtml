@@ -61,6 +61,15 @@
                     <div id="deposit-currencies" class="edit-field col_8 display-none">
                         @Html.DropDownList("ddlCurrency", Model.DepositCurrencies, new { @id = "ddl-deposit-currencies" })
                     </div>
+                    <div class="lbl-field col_5">
+                        <label id="lbl-site">@ViewLang.CreditSite</label>
+                    </div>
+                    <div id="credit-sites" class="edit-field col_8">
+                        @Html.DropDownList("ddlSite", Model.CreditSites, new { @id = "ddl-credit-sites" })
+                    </div>
+                    <div id="deposit-sites" class="edit-field col_8 display-none">
+                        @Html.DropDownList("ddlSite", Model.DepositSites, new { @id = "ddl-deposit-sites" })
+                    </div>
                     <div class="submit width-auto">
                         <button type="submit" class="submit">@ViewLang.Search</button>
                     </div>
@@ -79,13 +88,15 @@
 
 @section Foot
 {
-     <script type="text/javascript">
+    <script type="text/javascript">
           var viewResources = {
                lblSymbol_No: '@Fanex.Nap.CMS.Infrastructure.Resources.Labels.Symbol_No',
                lblSportTypeID: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblSportTypeID',
                lblSportTypeName: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblSportTypeName',
                lblCreditCurrency: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblCreditCurrency',
                lblDepositCurrency: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblDepositCurrency',
+               lblCreditSite: '@ViewLang.CreditSite',
+               lblDepositSite: '@ViewLang.DepositSite',
                lblGameGroup: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblGameGroup',
                lblBetLimit: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblBetLimit',
                lblMaxBet: '@Fanex.Nap.CMS.ManageProductSetting.Resources.Labels.lblMaxBet',

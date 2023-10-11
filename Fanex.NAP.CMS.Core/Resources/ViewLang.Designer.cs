@@ -753,6 +753,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credit Site.
+        /// </summary>
+        public static string CreditSite {
+            get {
+                return ResourceManager.GetString("CreditSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>
         public static string Currency {
@@ -857,6 +866,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         public static string DepositCurrency {
             get {
                 return ResourceManager.GetString("DepositCurrency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit Site.
+        /// </summary>
+        public static string DepositSite {
+            get {
+                return ResourceManager.GetString("DepositSite", resourceCulture);
             }
         }
         

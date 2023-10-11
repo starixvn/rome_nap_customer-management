@@ -83,6 +83,7 @@
   <Function Name="Manage Product Setting">
     <Setting Key="NAP_GlobalStakeLevelGroup_ProductSel" SpName="NAP_GlobalStakeLevelGroup_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_GlobalStakeLevelGroup_CurrencySel" SpName="NAP_GlobalStakeLevelGroup_CurrencySel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_GlobalStakeLevelGroup_SiteSel" SpName="NAP_GlobalStakeLevelGroup_SiteSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_GlobalStakeLevelGroup_Sel" SpName="NAP_GlobalStakeLevelGroup_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
 </Functions>

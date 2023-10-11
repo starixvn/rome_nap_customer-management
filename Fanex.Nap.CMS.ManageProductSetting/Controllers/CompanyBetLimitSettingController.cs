@@ -25,41 +25,27 @@
                 _service.GetProducts(true),
                 _service.GetProducts(false),
                 _service.GetCurrencies(true),
-                _service.GetCurrencies(false)
+                _service.GetCurrencies(false),
+                _service.GetSites(true),
+                _service.GetSites(false)
             );
             return View("~/Areas/ManageProductSetting/Views/CompanyBetLimitSetting/Index.cshtml", viewModel);
         }
 
         public ActionResult Search(GetCompanyBetLimitSettingViewModels searchParams)
         {
-            var result = _service.GetBetLimitSetting(
-                searchParams.IsCredit,
-                searchParams.ProductIds,
-                searchParams.Currencies,
-                searchParams.PageIndex,
-                searchParams.PageSize
-            );
+            var result = _service.GetBetLimitSetting(searchParams);
 
-            var groupedData = _service.GetBetLimitSettingGroups(result.Entries);
+            var groupedData = _service.GetBetLimitSettingGroups(result);
 
-            return JsonData(new
-            {
-                Data = groupedData,
-                result.TotalRows
-            });
+            return JsonData(groupedData);
         }
 
         public void Export(GetCompanyBetLimitSettingViewModels searchParams)
         {
-            var result = _service.GetBetLimitSetting(
-                searchParams.IsCredit,
-                searchParams.ProductIds,
-                searchParams.Currencies,
-                searchParams.PageIndex,
-                searchParams.PageSize
-            );
+            var result = _service.GetBetLimitSetting(searchParams);
 
-            var groupedData = _service.GetBetLimitSettingGroups(result.Entries);
+            var groupedData = _service.GetBetLimitSettingGroups(result);
             IExcelExporter exporter = new CompanyBetLimitSettingExporter(groupedData);
 
             exporter.ResponseStream();

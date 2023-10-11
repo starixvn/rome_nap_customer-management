@@ -14,12 +14,16 @@
         public IEnumerable<SelectListItem> DepositProducts { get; }
 
         public IEnumerable<SelectListItem> CreditProducts { get; }
+        public IEnumerable<SelectListItem> CreditSites { get; }
+        public IEnumerable<SelectListItem> DepositSites { get; }
 
         public FilterAreaModel(
             IEnumerable<IdNameModel> creditProducts,
             IEnumerable<IdNameModel> depositProducts,
             IEnumerable<IdNameModel> creditCurrencies,
-            IEnumerable<IdNameModel> depositCurrencies)
+            IEnumerable<IdNameModel> depositCurrencies,
+            IEnumerable<IdNameModel> creditSites,
+            IEnumerable<IdNameModel> depositSites)
         {
             CreditCurrencies = creditCurrencies.ToList()
                 .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
@@ -28,6 +32,10 @@
             CreditProducts = creditProducts.ToList()
                 .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
             DepositProducts = depositProducts.ToList()
+                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+            CreditSites = creditSites.ToList()
+                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+            DepositSites = depositSites.ToList()
                 .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
         }
     }

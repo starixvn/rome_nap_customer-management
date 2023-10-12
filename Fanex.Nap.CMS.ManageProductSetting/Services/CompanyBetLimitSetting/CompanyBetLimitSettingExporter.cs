@@ -26,10 +26,8 @@
             this.isCredit = isCredit;
             decimalStyle = NpoiExcelExtensions.DecimalStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false);
             decimalStyle.Alignment = HorizontalAlignment.Center;
-            intNumberStyle = NpoiExcelExtensions.IntStyle(ExportExcel.ExcelFile,
-                ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center);
-            textStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex,
-                false, Alignment.Center);
+            intNumberStyle = NpoiExcelExtensions.IntStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center);
+            textStyle = NpoiExcelExtensions.TextStyle(ExportExcel.ExcelFile, ExcelStyleTemplate.BodyColorIndex, false, Alignment.Center);
         }
 
         public override string FileNameWithoutExtension
@@ -45,7 +43,7 @@
         public override string SheetName => Labels.NonSportCompanyBetLimitSetting_sheetName;
 
         public override string Title => Labels.NonSportCompanyBetLimitSetting_title;
-        
+
         private string CurrencyText => isCredit ? Labels.lblCreditCurrency : Labels.lblDepositCurrency;
         private string SiteText => isCredit ? Labels.lblCreditSite : Labels.lblDepositSite;
 
@@ -70,7 +68,7 @@
             }
         }
 
-        public void RenderHeader()
+        private void RenderHeaders()
         {
             ExcelStyleTemplate.HeaderTextStyle.Alignment = HorizontalAlignment.Center;
             ExportExcel.CurrentColumn = 0;
@@ -93,10 +91,10 @@
 
         protected override void ExportBody()
         {
-        RenderHeader();
+            RenderHeaders();
             if (data.Any())
             {
-                RenderRow();
+                RenderRows();
             }
             else
             {
@@ -104,54 +102,60 @@
             }
         }
 
-        private void RenderRow()
+        private void RenderRows()
         {
             ExportExcel.CurrentRow = 4;
             var sportTypeRow = ExportExcel.CurrentRow;
             var currencyRow = ExportExcel.CurrentRow;
             var siteRow = ExportExcel.CurrentRow;
             var gameGroupRow = ExportExcel.CurrentRow;
+            // rowCount use for column "#"
             var rowCount = 1;
+            
             foreach (var sportGroup in data)
             {
-                var sportGroupChildren = 0;
-                foreach (var currencyGroup in sportGroup.CurrencyGroups)
-                {
-                    var currencyGroupChildren = 0;
-                    foreach (var siteGroup in currencyGroup.SiteGroups)
-                    {
-                        sportGroupChildren += siteGroup.GameGroups.Count();
-                        currencyGroupChildren += siteGroup.GameGroups.Count();
-                        var siteGroupChildren = 0;
-                        foreach (var gameGroup in siteGroup.GameGroups)
-                        {
-                            ExportExcel.CurrentColumn = 0;
-                            ExportExcel.RenderCell(gameGroupRow, gameGroupRow, 0, rowCount, intNumberStyle);
-                            ExportExcel.CurrentColumn = 5;
-                            ExportExcel.RenderCell(gameGroupRow, gameGroupRow, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
-                            ExportExcel.RenderCell(gameGroupRow, gameGroupRow, ExportExcel.CurrentColumn, gameGroup.Entries.First().MinBet, decimalStyle);
-                            ExportExcel.RenderCell(gameGroupRow, gameGroupRow, ExportExcel.CurrentColumn, gameGroup.Entries.First().MaxBet, intNumberStyle);
-                            ExportExcel.RenderCell(gameGroupRow, gameGroupRow, ExportExcel.CurrentColumn, gameGroup.Entries.First().Remark, textStyle);
-                            gameGroupRow++;
-                            siteGroupChildren++;
-                            rowCount++;
-                        }
+                ExportExcel.CurrentColumn = 1;
+                var startRow = sportTypeRow;
+                var endRow = sportTypeRow + sportGroup.NumberRow - 1;
+                ExportExcel.RenderCell(startRow, endRow, ExportExcel.CurrentColumn, sportGroup.SportType, textStyle);
+                ExportExcel.RenderCell(startRow, endRow, ExportExcel.CurrentColumn, sportGroup.SportName, textStyle);
+                sportTypeRow += sportGroup.NumberRow;
+                RenderCurrencyGroup(sportGroup.CurrencyGroups, ref currencyRow, ref siteRow, ref gameGroupRow, ref rowCount);
+            }
+        }
 
-                        ExportExcel.CurrentColumn = 4;
-                        ExportExcel.RenderCell(siteRow, siteRow + siteGroupChildren - 1, ExportExcel.CurrentColumn,
-                            siteGroup.SiteGroupName, textStyle);
-                        siteRow += siteGroupChildren;
+        private void RenderCurrencyGroup(IEnumerable<CurrencyGroup> currencyGroups, ref int currencyRow,
+            ref int siteRow, ref int gameGroupRow, ref int rowCount)
+        {
+            foreach (var currencyGroup in currencyGroups)
+            {
+                ExportExcel.CurrentColumn = 3;
+                var currencyRowStart = currencyRow;
+                var currencyRowEnd = currencyRow + currencyGroup.NumberRow - 1;
+                ExportExcel.RenderCell(currencyRowStart, currencyRowEnd, ExportExcel.CurrentColumn, currencyGroup.Currency, textStyle);
+                currencyRow += currencyGroup.NumberRow;
+                foreach (var siteGroup in currencyGroup.SiteGroups)
+                {
+                    foreach (var gameGroup in siteGroup.GameGroups)
+                    {
+                        ExportExcel.CurrentColumn = 0;
+                        var gameGroupRowStart = gameGroupRow;
+                        var gameGroupRowEnd = gameGroupRow + gameGroup.NumberRow - 1;
+                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, 0, rowCount, intNumberStyle);
+                        rowCount++;
+
+                        ExportExcel.CurrentColumn = 5;
+                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
+                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MinBet, decimalStyle);
+                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MaxBet, intNumberStyle);
+                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().Remark, textStyle);
+                        gameGroupRow += gameGroup.NumberRow;
                     }
 
-                    ExportExcel.CurrentColumn = 3;
-                    ExportExcel.RenderCell(currencyRow, currencyRow + currencyGroupChildren - 1, ExportExcel.CurrentColumn, currencyGroup.Currency, textStyle);
-                    currencyRow += currencyGroupChildren;
+                    ExportExcel.CurrentColumn = 4;
+                    ExportExcel.RenderCell(siteRow, siteRow + siteGroup.NumberRow - 1, ExportExcel.CurrentColumn, siteGroup.SiteGroupName, textStyle);
+                    siteRow += siteGroup.NumberRow;
                 }
-
-                ExportExcel.CurrentColumn = 1;
-                ExportExcel.RenderCell(sportTypeRow, sportTypeRow + sportGroupChildren - 1, ExportExcel.CurrentColumn, sportGroup.SportType, textStyle);
-                ExportExcel.RenderCell(sportTypeRow, sportTypeRow + sportGroupChildren - 1, ExportExcel.CurrentColumn, sportGroup.SportName, textStyle);
-                sportTypeRow += sportGroupChildren;
             }
         }
     }

@@ -1,8 +1,4 @@
-﻿
-
-
-
-namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
+﻿namespace Fanex.Nap.CMS.ManageProductSetting.Controllers
 {
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using System.Web.Mvc;

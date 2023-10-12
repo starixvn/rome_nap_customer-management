@@ -132,7 +132,7 @@
                     ]
                 }
             ],
-            showTitle: false,
+            showTitle: true,
             titleInfo:{
                 text: "",
                 showExcelButton: true,

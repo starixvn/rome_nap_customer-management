@@ -112,7 +112,7 @@ const editingGridHelper = (function ($) {
         return customerClassList.join(", ");
     }
 
-    function renderSiteCell(selectedSites, siteList, cachedCreditSites, cachedLicenseeSites, allValue, allCreditValue, allDepositValue) {
+    function renderSiteCell(selectedSites, siteList, cachedCreditSites, cachedLicenseeSites, allValue, allCreditValue, allDepositValue, isIdSelection) {
         if (selectedSites === allValue) {
             return `<a href="javascript:;" class="link-site" data-sites="${siteList.map(st => st.Name).join()}">All</a>`;
         }
@@ -126,8 +126,16 @@ const editingGridHelper = (function ($) {
             detailSelectedSites = detailSelectedSites.replace(allDepositValue, cachedLicenseeSites.map(st => st.value).join());
         }
 
-        const sitesNameList = detailSelectedSites.split(",");
+        var sitesNameList = detailSelectedSites.split(",");
         var displayName = sitesNameList.length;
+        if (isIdSelection) {
+            sitesNameList.forEach(function (siteName, pos) {
+                var matchSite = siteList.find(st => st.Id.toString() === siteName);
+                if (matchSite) {
+                    sitesNameList[pos] = matchSite.Name;
+                }
+            });
+        }
         if (selectedSites === allCreditValue) {
             displayName = 'All Credit';
         }
@@ -137,7 +145,7 @@ const editingGridHelper = (function ($) {
         }
 
         return sitesNameList.length <= 1
-            ? detailSelectedSites
+            ? sitesNameList
             : `<a href="javascript:;" class="link-site" data-sites="${sitesNameList.join()}">${displayName}</a>`;
     }
 

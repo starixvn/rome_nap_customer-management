@@ -22,7 +22,7 @@
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
                 site: customerClassHelper.getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
-                currency: ddlCurrencies.fanexMultiSelect("getItems", true).join()
+                currency: customerClassHelper.getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length)
             };
 
             cachedFilter = formData;
@@ -99,6 +99,7 @@
 
     function search() {
         cachedData = [];
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`UtilityOffering/Search`),
@@ -108,6 +109,7 @@
             },
             null,
             function () {
+                CMS.enableInput();
                 renderGrid(cachedData);
                 bindEventsAfterRenderGridSuccessfully();
             });
@@ -169,7 +171,7 @@
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
             `<td class="rule-cell width-150"><div class="view-item">${CMS.htmlEncode(policy.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${policy.PolicyId}" maxlength="500" /></div></td>`,
             `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCell(policy.CustomerClass)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(policy.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2")}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(policy.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150"><div class="view-item text-center">${editingGridHelper.renderCurrencyCell(policy.Currencies, currencyList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-200"><div class="view-item text-center">Parlay Boost</div><div class="dropdown-cell edit-item hidden"><select id="ddlEditUtility-${policy.PolicyId}" class="select-customer-class"></select></div></td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(policy.PolicyId, index, policy.edittingValue && policy.edittingValue !== null)}</td>` : '',
@@ -410,7 +412,7 @@
         if (index) {
             cachedData[index].edittingValue.Currencies = customerClassHelper.getSelectedReplaceAllValue(divId, "0", currencyList.length);
         } else {
-            cachedAddNewRule.Currencies = customerClassHelper.getSelectedReplaceAllValue(divId, "0", 99);
+            cachedAddNewRule.Currencies = customerClassHelper.getSelectedReplaceAllValue(divId, "0", currencyList.length);
         }
     }
 

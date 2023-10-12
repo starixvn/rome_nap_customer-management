@@ -56,7 +56,7 @@ const customerClassHelper = (function ($) {
             creditOptions.push({
                 value: item.value,
                 text: item.text,
-                checked: selectedValue === "All" || isAllCredit || selectedValueList.includes(item.value),
+                checked: selectedValue === "All" || isAllCredit || selectedValueList.includes(item.value.toString()),
                 enable: true
             });
         });
@@ -64,7 +64,7 @@ const customerClassHelper = (function ($) {
             licenseeOptions.push({
                 value: item.value,
                 text: item.text,
-                checked: selectedValue === "All" || isAllLicensee || selectedValueList.includes(item.value),
+                checked: selectedValue === "All" || isAllLicensee || selectedValueList.includes(item.value.toString()),
                 enable: true
             });
         });

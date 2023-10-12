@@ -19,6 +19,8 @@
         private readonly ICellStyle decimalStyle;
         private readonly ICellStyle intNumberStyle;
         private readonly ICellStyle textStyle;
+        
+        private readonly int BetLimitCols = 3;
 
         public CompanyBetLimitSettingExporter(IEnumerable<CompanyBetLimitSettingGroups> data, bool isCredit)
         {
@@ -34,7 +36,7 @@
         {
             get
             {
-                string today = DateTime.Today.ToShortFormatedDateWithSlash();
+                var today = DateTime.Today.ToShortFormatedDateWithSlash();
 
                 return string.Format(Labels.NonSportCompanyBetLimitSetting, today);
             }
@@ -51,17 +53,17 @@
         {
             get
             {
-                var result = new ExcelColumn[6 + 3];
-                result[0] = new ExcelColumn("#", 50);
+                var result = new ExcelColumn[6 + BetLimitCols];
+                result[0] = new ExcelColumn(BaseLabels.Symbol_No, 50);
                 result[1] = new ExcelColumn(Labels.lblSportTypeID, 100);
                 result[2] = new ExcelColumn(Labels.lblSportTypeName, 160);
                 result[3] = new ExcelColumn(CurrencyText, 160);
                 result[4] = new ExcelColumn(SiteText, 160);
-                result[5] = new ExcelColumn("Game Group", 120);
-
-                for (var i = 0; i < 3; i++)
+                result[5] = new ExcelColumn(Labels.lblGameGroup, 120);
+                
+                for (var i = 0; i < BetLimitCols; i++)
                 {
-                    result[6 + i] = new ExcelColumn("Bet Limit", 120);
+                    result[6 + i] = new ExcelColumn("", 120);
                 }
 
                 return result;
@@ -73,20 +75,20 @@
             ExcelStyleTemplate.HeaderTextStyle.Alignment = HorizontalAlignment.Center;
             ExportExcel.CurrentColumn = 0;
             ExportExcel.CurrentRow = 2;
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, BaseLabels.Symbol_No, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblSportTypeID, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblSportTypeName, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, CurrencyText, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, SiteText, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblGameGroup, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3,ExportExcel.CurrentColumn, BaseLabels.Symbol_No, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblSportTypeID, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblSportTypeName, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, CurrencyText, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, SiteText, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblGameGroup, ExcelStyleTemplate.HeaderTextStyle);
             // + 3 - 1 => calculate index of "remark colum" , +3: group 3 col MinBet,MaxBet, Remark
-            ExportExcel.RenderCellBySpanning(2, ExportExcel.CurrentColumn + 3 - 1, Labels.lblBetLimit, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 2,ExportExcel.CurrentColumn + BetLimitCols - 1, Labels.lblBetLimit, ExcelStyleTemplate.HeaderTextStyle);
 
             ExportExcel.CurrentRow = 3;
             ExportExcel.CurrentColumn = 6;
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblMinBet, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblMaxBet, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCellBySpanning(3, ExportExcel.CurrentColumn, Labels.lblRemark, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblMinBet, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblMaxBet, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblRemark, ExcelStyleTemplate.HeaderTextStyle);
         }
 
         protected override void ExportBody()

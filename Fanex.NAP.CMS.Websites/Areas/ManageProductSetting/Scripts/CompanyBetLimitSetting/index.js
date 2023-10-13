@@ -156,11 +156,8 @@
             showPager: false,
         };
     }
-
-    const formatTwoDecimalNumber = (data) => {
-        return data.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    const renderGridBody = (data) => {
+    
+    const renderGrid = (data) => {
         const bodyData = [];
         let row;
         let currentRow = 0;
@@ -248,10 +245,11 @@
     }
 
     const getData = (params) => {
-        CMS.getJson(CMS.resolveRootUrl("CompanyBetLimitSetting/Search?" + $.param(params)), function (data) {
+        const apiUrl = CMS.resolveRootUrl("CompanyBetLimitSetting/Search?" + $.param(params));
+        CMS.getJson(apiUrl, (data) => {
             const jsonData = $.parseJSON(data);
             const gridOptions = getGridOptions(params.IsCredit);
-            gridOptions.bodyRows = renderGridBody(jsonData);
+            gridOptions.bodyRows = renderGrid(jsonData);
             $("#grid-table").removeClass("display-none").fanexGrid(gridOptions);
         });
     }
@@ -268,7 +266,7 @@
             showTooltip: false,
             shadow: true,
         };
-        const generateListData = (ddl, prefixId="credit") => {
+        const generateListData = (ddl, prefixId) => {
             return ddl.find("option").map(function () {
                 const {text, value} = this;
                 return {
@@ -280,27 +278,21 @@
                 };
             });
         };
-        depositSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e)}));
+        depositSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e,"credit")}));
         creditSelectors.forEach(e => e.multiSelect({...multiSelectOptions, listData: generateListData(e,'deposit')}));
     };
-
-
+    
     const registerRadiobuttonHandler = () => {
         elements.rdbRestriction.change(function () {
             const selectedValue = $(this).val();
             const creditSelectors = [$("#credit-products"), $("#credit-currencies"), $("#credit-sites")];
             const depositSelectors = [$("#deposit-products"), $("#deposit-currencies"), $("#deposit-sites")];
-       
-            const lblCurrency = $("#lbl-currency");
-            const lblSite = $("#lbl-site");
+            
             const isCredit = selectedValue === 'Credit';
-            lblCurrency.text(getCurrencyLabel(isCredit));
-            lblSite.text(getSiteLabel(isCredit));
-
+            elements.isCredit = isCredit;
+            
             creditSelectors.forEach(e => e.toggleClass("display-none", !isCredit));
             depositSelectors.forEach(e => e.toggleClass("display-none", isCredit));
-
-            elements.isCredit = isCredit;
         });
         if ($(elements.rdbRestriction[1]).is(':checked')) {
             $(elements.rdbRestriction[1]).change();

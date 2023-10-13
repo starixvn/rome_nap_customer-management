@@ -19,8 +19,8 @@
         private readonly ICellStyle decimalStyle;
         private readonly ICellStyle intNumberStyle;
         private readonly ICellStyle textStyle;
-        
-        private readonly int BetLimitCols = 3;
+
+        private const int BetLimitCols = 3;
 
         public CompanyBetLimitSettingExporter(IEnumerable<CompanyBetLimitSettingGroups> data, bool isCredit)
         {
@@ -60,7 +60,7 @@
                 result[3] = new ExcelColumn(CurrencyText, 160);
                 result[4] = new ExcelColumn(SiteText, 160);
                 result[5] = new ExcelColumn(Labels.lblGameGroup, 120);
-                
+
                 for (var i = 0; i < BetLimitCols; i++)
                 {
                     result[6 + i] = new ExcelColumn("", 120);
@@ -75,20 +75,20 @@
             ExcelStyleTemplate.HeaderTextStyle.Alignment = HorizontalAlignment.Center;
             ExportExcel.CurrentColumn = 0;
             ExportExcel.CurrentRow = 2;
-            ExportExcel.RenderCell(2, 3,ExportExcel.CurrentColumn, BaseLabels.Symbol_No, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblSportTypeID, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblSportTypeName, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, CurrencyText, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, SiteText, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(2,3, ExportExcel.CurrentColumn, Labels.lblGameGroup, ExcelStyleTemplate.HeaderTextStyle);
-            // + 3 - 1 => calculate index of "remark colum" , +3: group 3 col MinBet,MaxBet, Remark
-            ExportExcel.RenderCell(2, 2,ExportExcel.CurrentColumn + BetLimitCols - 1, Labels.lblBetLimit, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, BaseLabels.Symbol_No, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, Labels.lblSportTypeID, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, Labels.lblSportTypeName, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, CurrencyText, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, SiteText, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(2, 3, ExportExcel.CurrentColumn, Labels.lblGameGroup, ExcelStyleTemplate.HeaderTextStyle);
+         
+            ExportExcel.RenderCell(2, 2, ExportExcel.CurrentColumn + BetLimitCols - 1, Labels.lblBetLimit, ExcelStyleTemplate.HeaderTextStyle);
 
             ExportExcel.CurrentRow = 3;
             ExportExcel.CurrentColumn = 6;
-            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblMinBet, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblMaxBet, ExcelStyleTemplate.HeaderTextStyle);
-            ExportExcel.RenderCell(3,3, ExportExcel.CurrentColumn, Labels.lblRemark, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3, 3, ExportExcel.CurrentColumn, Labels.lblMinBet, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3, 3, ExportExcel.CurrentColumn, Labels.lblMaxBet, ExcelStyleTemplate.HeaderTextStyle);
+            ExportExcel.RenderCell(3, 3, ExportExcel.CurrentColumn, Labels.lblRemark, ExcelStyleTemplate.HeaderTextStyle);
         }
 
         protected override void ExportBody()
@@ -113,8 +113,13 @@
             var gameGroupRow = ExportExcel.CurrentRow;
             // rowCount use for column "#"
             var rowCount = 1;
-            
-            foreach (var sportGroup in data)
+
+            RenderSportGroup(ref sportTypeRow, ref currencyRow, ref siteRow, ref gameGroupRow, ref rowCount, data);
+        }
+
+        private void RenderSportGroup(ref int sportTypeRow, ref int currencyRow, ref int siteRow, ref int gameGroupRow, ref int rowCount, IEnumerable<CompanyBetLimitSettingGroups> sportGroups)
+        {
+            foreach (var sportGroup in sportGroups)
             {
                 ExportExcel.CurrentColumn = 1;
                 var startRow = sportTypeRow;
@@ -122,42 +127,53 @@
                 ExportExcel.RenderCell(startRow, endRow, ExportExcel.CurrentColumn, sportGroup.SportType, textStyle);
                 ExportExcel.RenderCell(startRow, endRow, ExportExcel.CurrentColumn, sportGroup.SportName, textStyle);
                 sportTypeRow += sportGroup.NumberRow;
-                RenderCurrencyGroup(sportGroup.CurrencyGroups, ref currencyRow, ref siteRow, ref gameGroupRow, ref rowCount);
+
+                RenderCurrencyGroup(ref currencyRow, ref siteRow, ref gameGroupRow, ref rowCount, sportGroup);
             }
         }
 
-        private void RenderCurrencyGroup(IEnumerable<CurrencyGroup> currencyGroups, ref int currencyRow,
-            ref int siteRow, ref int gameGroupRow, ref int rowCount)
+        private void RenderCurrencyGroup(ref int currencyRow, ref int siteRow, ref int gameGroupRow, ref int rowCount, CompanyBetLimitSettingGroups currencyGroups)
         {
-            foreach (var currencyGroup in currencyGroups)
+            foreach (var currencyGroup in currencyGroups.CurrencyGroups)
             {
                 ExportExcel.CurrentColumn = 3;
                 var currencyRowStart = currencyRow;
                 var currencyRowEnd = currencyRow + currencyGroup.NumberRow - 1;
                 ExportExcel.RenderCell(currencyRowStart, currencyRowEnd, ExportExcel.CurrentColumn, currencyGroup.Currency, textStyle);
                 currencyRow += currencyGroup.NumberRow;
-                foreach (var siteGroup in currencyGroup.SiteGroups)
-                {
-                    foreach (var gameGroup in siteGroup.GameGroups)
-                    {
-                        ExportExcel.CurrentColumn = 0;
-                        var gameGroupRowStart = gameGroupRow;
-                        var gameGroupRowEnd = gameGroupRow + gameGroup.NumberRow - 1;
-                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, 0, rowCount, intNumberStyle);
-                        rowCount++;
 
-                        ExportExcel.CurrentColumn = 5;
-                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
-                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MinBet, decimalStyle);
-                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MaxBet, intNumberStyle);
-                        ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().Remark, textStyle);
-                        gameGroupRow += gameGroup.NumberRow;
-                    }
+                RenderSiteGroup(ref siteRow, ref gameGroupRow, ref rowCount, currencyGroup);
+            }
+        }
 
-                    ExportExcel.CurrentColumn = 4;
-                    ExportExcel.RenderCell(siteRow, siteRow + siteGroup.NumberRow - 1, ExportExcel.CurrentColumn, siteGroup.SiteGroupName, textStyle);
-                    siteRow += siteGroup.NumberRow;
-                }
+        private void RenderSiteGroup(ref int siteRow, ref int gameGroupRow, ref int rowCount, CurrencyGroup siteGroups)
+        {
+            foreach (var siteGroup in siteGroups.SiteGroups)
+            {
+                ExportExcel.CurrentColumn = 4;
+                ExportExcel.RenderCell(siteRow, siteRow + siteGroup.NumberRow - 1, ExportExcel.CurrentColumn, siteGroup.SiteGroupName, textStyle);
+                siteRow += siteGroup.NumberRow;
+
+                RenderGameGroup(ref gameGroupRow, ref rowCount, siteGroup);
+            }
+        }
+
+        private void RenderGameGroup(ref int gameGroupRow, ref int rowCount, Models.CompanyBetLimitSetting.SiteGroup siteGroup)
+        {
+            foreach (var gameGroup in siteGroup.GameGroups)
+            {
+                ExportExcel.CurrentColumn = 0;
+                var gameGroupRowStart = gameGroupRow;
+                var gameGroupRowEnd = gameGroupRow + gameGroup.NumberRow - 1;
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, 0, rowCount, intNumberStyle);
+                rowCount++;
+
+                ExportExcel.CurrentColumn = 5;
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MinBet, decimalStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MaxBet, intNumberStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().Remark, textStyle);
+                gameGroupRow += gameGroup.NumberRow;
             }
         }
     }

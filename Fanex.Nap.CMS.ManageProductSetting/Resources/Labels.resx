@@ -78,4 +78,10 @@
     <data name="lblProduct" xml:space="preserve">
         <value>Product</value>
     </data>
+    <data name="lblSite" xml:space="preserve">
+        <value>Site</value>
+    </data>
+    <data name="lblCurrency" xml:space="preserve">
+        <value>Currency</value>
+    </data>
 </root>

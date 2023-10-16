@@ -9,8 +9,9 @@ const editingGridHelper = (function ($) {
 
     function renderAddEditCustomerClass(divId, selectedValue, fnOnCheck) {
         let optionList = [];
+        let isCheckAll = selectedValue === "All" || selectedValue === "0";
         let selectedValueList = selectedValue.split(",");
-        customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: selectedValueList.includes(item.toString()), enable: true })
+        customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: isCheckAll || selectedValueList.includes(item.toString()), enable: true })
         );
 
         return customerClassHelper.renderMultiSelect(
@@ -19,7 +20,7 @@ const editingGridHelper = (function ($) {
                 minWidth: 246,
                 maxHeight: 230,
                 listData: optionList,
-                isCheckAll: false,
+                isCheckAll: isCheckAll,
                 showFilter: true,
                 onCheck: fnOnCheck
             }
@@ -108,6 +109,10 @@ const editingGridHelper = (function ($) {
     }
 
     function renderCustomerClassCell(selectedCustomerClass) {
+        if (selectedCustomerClass === "0") {
+            return "All";
+        }
+
         const customerClassList = selectedCustomerClass.split(",");
         return customerClassList.join(", ");
     }

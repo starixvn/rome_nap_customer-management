@@ -20,7 +20,7 @@
             e.preventDefault();
 
             const formData = {
-                customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
+                customerClass: customerClassHelper.getSelectedReplaceAllValue("ddlCustomerClasses", "0", customerClassList.length),
                 site: customerClassHelper.getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
                 currency: customerClassHelper.getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length)
             };
@@ -278,7 +278,7 @@
         var updatePolicy = {
             PolicyId: policyId,
             PolicyTitle: editingGridHelper.validateTitle($(`#editTitle-${policyId}`)),
-            CustomerClass: editingGridHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            CustomerClass: editingGridHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), customerClassHelper.getSelectedReplaceAllValue(`ddlEditCustomerClass-${policyId}`, "0", customerClassList.length)),
             Currencies: editingGridHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), customerClassHelper.getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
             Sites: editingGridHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),
             UtilityOffering: editingGridHelper.validateRequiredField($(`#ddlEditUtility-${policyId}`), $(`#ddlEditUtility-${policyId}`).val())
@@ -393,15 +393,15 @@
     }
 
     function onCustomerClassChange(divId, index) {
-        if (index) {
-            cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        if (index !== undefined) {
+            cachedData[index].edittingValue.CustomerClass = customerClassHelper.getSelectedReplaceAllValue(divId, "0", customerClassList.length);
         } else {
-            cachedAddNewRule.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+            cachedAddNewRule.CustomerClass = customerClassHelper.getSelectedReplaceAllValue(divId, "0", customerClassList.length);
         }
     }
 
     function onSiteChange(divId, index) {
-        if (index) {
+        if (index !== undefined) {
             cachedData[index].edittingValue.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
         } else {
             cachedAddNewRule.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0",cachedCreditSites, "-1", cachedLicenseeSites, "-2");
@@ -409,7 +409,7 @@
     }
 
     function onCurrencyChange(divId, index) {
-        if (index) {
+        if (index !== undefined) {
             cachedData[index].edittingValue.Currencies = customerClassHelper.getSelectedReplaceAllValue(divId, "0", currencyList.length);
         } else {
             cachedAddNewRule.Currencies = customerClassHelper.getSelectedReplaceAllValue(divId, "0", currencyList.length);
@@ -417,7 +417,7 @@
     }
 
     function onUtilityChange(divId, index) {
-        if (index) {
+        if (index !== undefined) {
             cachedData[index].edittingValue.UtilityOffering = customerClassHelper.getSelectedReplaceAllValue(divId, "0", 99);
         } else {
             cachedAddNewRule.UtilityOffering = customerClassHelper.getSelectedReplaceAllValue(divId, "0", 99);

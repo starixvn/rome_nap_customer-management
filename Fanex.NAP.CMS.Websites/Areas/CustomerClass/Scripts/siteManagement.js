@@ -254,6 +254,10 @@
                 });
             }
         });
+        if (settings.length === 0) {
+            return;
+        }
+
         CMS.showConfirmMessage(`Are you sure you want to delete the selected setting row(s)?`, function () { callDelete(settings); });
     }
 

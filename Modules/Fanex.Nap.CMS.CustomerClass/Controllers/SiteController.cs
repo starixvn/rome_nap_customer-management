@@ -33,23 +33,23 @@
             this.siteService = siteService;
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new SiteViewModel(
-                HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host),
+                HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host),
                 filterService.GetAllSites(),
                 policyService.GetPolicyTitles(),
                 filterService.GetAllCurrencies());
             return View("~/Areas/CustomerClass/Views/Site/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetSiteSettingRequest request)
             => JsonData(siteService.GetPagedSiteSetting(request));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Assign(AssignSiteSettingRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
@@ -74,7 +74,7 @@
 
         public ActionResult DownloadTemplate()
         {
-            if (!HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host))
+            if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host))
             {
                 return new EmptyResult();
             }
@@ -94,7 +94,7 @@
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
 
-            if (!HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host) || userId == 0)
+            if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host) || userId == 0)
             {
                 return Forbidden();
             }
@@ -129,7 +129,7 @@
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
 
-            if (!HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host) || userId == 0)
+            if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host) || userId == 0)
             {
                 return Forbidden();
             }

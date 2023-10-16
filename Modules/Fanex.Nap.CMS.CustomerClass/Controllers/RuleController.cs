@@ -24,30 +24,30 @@
             this.ruleService = ruleService;
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new RuleViewModel(
-                HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host),
+                HasRight(CMSFunctionKeys.RuleManagement, Constant.Policy.Host),
                 filterService.GetCustomerClasses(),
                 filterService.GetLeagueGroups());
             return View("~/Areas/CustomerClass/Views/Rule/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchRuleRequest request)
             => JsonData(ruleService.GetRules(request));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetRules(short sportType)
             => JsonData(ruleService.GetRules(sportType));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Get(int ruleId)
             => JsonData(ruleService.GetRule(ruleId));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddRuleRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
@@ -58,7 +58,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int ruleId, AddRuleRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
@@ -69,7 +69,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(EnableRuleRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);

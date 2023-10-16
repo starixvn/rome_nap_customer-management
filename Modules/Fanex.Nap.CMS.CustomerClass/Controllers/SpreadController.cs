@@ -24,11 +24,11 @@
             this.spreadService = spreadService;
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new SpreadViewModel(
-                   HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host),
+                   HasRight(CMSFunctionKeys.SpreadManagement, Constant.Policy.Host),
                    filterService.GetCustomerClasses(),
                    filterService.GetAllSites(),
                    filterService.GetAllCurrencies());
@@ -36,25 +36,25 @@
             return View("~/Areas/CustomerClass/Views/Spread/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchSpreadRuleRequest request)
             => JsonData(spreadService.GetSpreadRules(request), JsonRequestBehavior.AllowGet);
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddEditSpreadRuleRequest request)
             => JsonData(spreadService.AddRule(request, CurrentSession.UserId, CurrentContext.IP));
 
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Update(AddEditSpreadRuleRequest request)
             => JsonData(spreadService.UpdateRule(request, CurrentSession.UserId, CurrentContext.IP));
 
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int policyID)
             => JsonData(spreadService.DeleteRule(policyID, CurrentSession.UserId, CurrentContext.IP));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(int policyID, bool enable)
             => JsonData(spreadService.EnableRule(policyID, enable, CurrentSession.UserId, CurrentContext.IP));
     }

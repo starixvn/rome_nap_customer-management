@@ -247,8 +247,11 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Criteria\GetAllSiteCriteria.cs" />
     <Compile Include="Criteria\GetBalanceUpDayCriteria.cs" />
+    <Compile Include="Criteria\GetCountriesCriteria.cs" />
     <Compile Include="Criteria\GetCreditSiteCriteria.cs" />
     <Compile Include="Criteria\GetCurrencyCriteria.cs" />
+    <Compile Include="Criteria\GetNAPAccPolicyCriteria.cs" />
+    <Compile Include="Criteria\GetSiteMarketCodeCriteria.cs" />
     <Compile Include="Criteria\PagingCriteria.cs" />
     <Compile Include="Extensions\BundleExtensions.cs" />
     <Compile Include="Extensions\CMSConverter.cs" />
@@ -266,10 +269,12 @@
     <Compile Include="LogEngines\SentryLogEngine.cs" />
     <Compile Include="Models\Alignment.cs" />
     <Compile Include="Models\BalanceUpDayInfo.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\ExcelColumn.cs" />
     <Compile Include="Models\ExportExcelInfoByNPOI.cs" />
     <Compile Include="Models\IdNameModel.cs" />
     <Compile Include="Models\MatchInfo.cs" />
+    <Compile Include="Models\NAPAccPolicy.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SiteGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -283,9 +288,11 @@
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Implementations\BaseExcelExporter.cs" />
+    <Compile Include="Services\Implementations\PermissionService.cs" />
     <Compile Include="Services\Implementations\ServiceBase.cs" />
     <Compile Include="Services\Implementations\SettingService.cs" />
     <Compile Include="Services\Interfaces\IExcelExporter.cs" />
+    <Compile Include="Services\Interfaces\IPermissionService.cs" />
     <Compile Include="Services\Interfaces\IServiceBase.cs" />
     <Compile Include="Services\Interfaces\ISettingService.cs" />
     <Compile Include="Web\AppSession.cs" />

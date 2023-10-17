@@ -1,0 +1,85 @@
+﻿@using CommonLabels = Fanex.Nap.CMS.Infrastructure.Resources.Labels
+@model Fanex.Nap.CMS.DomainManagement.ViewModels.DomainManagementViewModel
+<div class="form" id="addNewOrEditForm">
+    <div class="inline-message" id="popup-inlineMessage"></div>
+    <p class="display-none add-clone">@Labels.AddNewNote</p>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label class="label">@Labels.Domain</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            <input type="text" class="display-none domain edit" id="popup-domain" />
+            <textarea rows="5" class="display-none domain add-clone" id="popup-domain"></textarea>
+            <div class="display-none add-clone">@Labels.MaximumDomainsNote</div>
+        </div>
+    </div>
+    <div class="form-row mid-margin-top">
+        <div class="lbl-field">
+            <label class="label">@Labels.System</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("system", Model.Systems, new { @id = "popup-system", @class = "width-162" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label class="label">@Labels.Site</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            <div id="popup-site"></div>
+        </div>
+    </div>
+    <div class="form-row status">
+        <div class="lbl-field">
+            <label class="label">@Labels.Status</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("status", Model.Status, new { @id = "popup-status", @class = "width-162" })
+        </div>
+    </div>
+    <div class="form-row warn">
+        <div class="lbl-field"></div>
+        <div class="edit-field">
+            <span class="ico-warn"></span>
+            <span class="warn-msg">@Labels.StatusChangingWarning</span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field" id="dpkExpiredDate"></div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label class="label">@Labels.RestrictedCountries</label>
+        </div>
+        <div class="edit-field">
+            <div id="popup-country"></div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label class="label">@Labels.Remark</label>
+        </div>
+        <div class="edit-field">
+            <textarea rows="5" class="domain" id="popup-remark"></textarea>
+        </div>
+    </div>
+    <div class="form-row mid-margin-top">
+        <div class="lbl-field">
+            <label class="label">@Labels.BrandName</label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("brandName", Model.BrandNames, new { @id = "popup-brandName", @class = "width-162" })
+        </div>
+    </div>
+    <div class="form-row mid-margin-top">
+        <div class="lbl-field"></div>
+        <div class="edit-field">
+            <button type="button" class="blue-button" id="popup-save">@CommonLabels.Save</button>
+            <button type="button" class="red-button" id="popup-cancel">@CommonLabels.Cancel</button>
+        </div>
+    </div>
+</div>

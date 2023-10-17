@@ -86,4 +86,9 @@
     <Setting Key="NAP_GlobalStakeLevelGroup_SiteSel" SpName="NAP_GlobalStakeLevelGroup_SiteSel" DbName="DBACC.bodb02.bodbAdminNet" />
     <Setting Key="NAP_GlobalStakeLevelGroup_Sel" SpName="NAP_GlobalStakeLevelGroup_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Domain Management">
+    <Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

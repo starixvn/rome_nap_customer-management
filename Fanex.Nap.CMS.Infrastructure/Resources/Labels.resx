@@ -279,4 +279,16 @@
   <data name="BetRestriction_WarningLeagueGroupRequired" xml:space="preserve">
     <value>League Group is only for Seize Bet</value>
   </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
 </root>

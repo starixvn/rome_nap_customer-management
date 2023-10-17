@@ -9,6 +9,18 @@
             IsLicensee = isLicensee;
         }
 
-        public bool IsLicensee { get; }
+        public SiteGroup(int id, string name, string siteLabel, string marketCode)
+        {
+            Id = id;
+            Name = name;
+            SiteLabel = siteLabel;
+            MarketCode = marketCode;
+        }
+
+        public bool IsLicensee { get; set; }
+
+        public string SiteLabel { get; set; }
+
+        public string MarketCode { get; set; }
     }
 }

@@ -163,4 +163,9 @@
     <Setting Key="NAP_LM_CustomerClassUtilityOfferUpd" SpName="NAP_LM_CustomerClassUtilityOfferUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassUtilityOfferDel" SpName="NAP_LM_CustomerClassUtilityOfferDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
+  <Function Name="Domain Management">
+    <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBCust.CustDB.bodbAdminNet" />
+  </Function>
 </Functions>

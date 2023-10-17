@@ -88,6 +88,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agent.
         /// </summary>
         public static string Agent {
@@ -228,6 +237,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         public static string BetRestriction_WarningUplineSeizeBetHigher {
             get {
                 return ResourceManager.GetString("BetRestriction_WarningUplineSeizeBetHigher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -430,11 +448,29 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seize Bet Ticket (%).
         /// </summary>
         public static string SeizeBetTicket {
             get {
                 return ResourceManager.GetString("SeizeBetTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         

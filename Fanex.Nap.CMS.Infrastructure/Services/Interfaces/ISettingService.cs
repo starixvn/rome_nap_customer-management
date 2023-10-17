@@ -12,5 +12,9 @@
         IEnumerable<SiteGroup> GetAllSites(int userId = 0);
 
         IEnumerable<IdNameModel> GetCreditSites();
+
+        IEnumerable<SiteGroup> GetSitesMarketCode();
+
+        IEnumerable<Country> GetCountries();
     }
 }

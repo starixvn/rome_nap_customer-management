@@ -124,17 +124,13 @@
 
 
         [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(DeleteSiteSettingRequest request)
         {
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
 
-            if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host) || userId == 0)
-            {
-                return Forbidden();
-            }
-
-            if (request.SiteSettings == null || !request.SiteSettings.Any())
+            if (request.SiteSettings == null || !request.SiteSettings.Any() || userId == 0)
             {
                 return BadRequest();
             }

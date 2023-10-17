@@ -3,6 +3,7 @@
 (function ($) {
     let cachedSearchUrlWithQueryString = null,
         cachedGridOptions = null,
+        hasHostPermisson = false,
         freeGrid = $("#freegrid");
 
     function init() {
@@ -30,7 +31,7 @@
         });
 
         const btnUpload = $("#btnUpload");
-        const hasHostPermisson = btnUpload.length > 0;
+        hasHostPermisson = btnUpload.length > 0;
         if (hasHostPermisson) {
             siteManagementUpload.init(function () {
                 cachedGridOptions && search(0, getPageSize());
@@ -153,8 +154,9 @@
             { HeaderText: resources.site, Width: 200, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.currency, Width: 260, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.platform, Width: 260, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" }
+            
         ];
+        hasHostPermisson && columns.push({ HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
 
         return {
             showTitle: false,
@@ -175,14 +177,16 @@
 
     function buildBodyRows(data) {
         return data.map(function (datum) {
+            const columns = [
+                { Name: "colPolicyTitle", Value: datum.PolicyTitle },
+                { Name: "colSite", Value: datum.Site },
+                { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
+                { Name: "colPlatform", Value: datum.PlatformNames }
+            ];
+            hasHostPermisson && columns.push({ Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site) });
+
             return {
-                Columns: [
-                    { Name: "colPolicyTitle", Value: datum.PolicyTitle },
-                    { Name: "colSite", Value: datum.Site },
-                    { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
-                    { Name: "colPlatform", Value: datum.PlatformNames },
-                    { Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site) }
-                ]
+                Columns: columns
             };
         });
     }

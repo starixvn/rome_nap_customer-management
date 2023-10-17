@@ -130,6 +130,10 @@
                 freeGrid.find(".chk-select-delete")
                     .off("click")
                     .click(handleSingleCheckDel);
+            },
+            function (error) {
+                assignCachedGridOptions({ TotalItems: 0, SiteSettings: [] }, 0, 100);
+                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
             });
     }
 

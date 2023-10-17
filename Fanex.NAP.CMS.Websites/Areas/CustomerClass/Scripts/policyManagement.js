@@ -28,6 +28,11 @@
 
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
                 hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+            },
+            function (error) {
+                cachedGridOptions = defaultGridOptions();
+                cachedGridOptions.bodyRows = buildBodyRows([]);
+                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
             });
     }
 

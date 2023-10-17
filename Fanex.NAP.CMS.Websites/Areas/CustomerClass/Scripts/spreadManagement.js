@@ -156,18 +156,27 @@
             '<tbody>'
         ];
 
-        if (cachedAddNewRule !== null) {
-            html.push(buildAddRow(data.length + 1));
-        }
+        if (cachedAddNewRule === null && data.length === 0) {
+            let colspan = hasHostPermisson ? 8 : 7;
+            html.push(buildRowNoData(colspan, resources.noData));
+        } else {
+            if (cachedAddNewRule !== null) {
+                html.push(buildAddRow(data.length + 1));
+            }
 
-        data.forEach(function (item, index) {
-            html.push(buildRowItem(item, index, data.length - index));
-        });
+            data.forEach(function (item, index) {
+                html.push(buildRowItem(item, index, data.length - index));
+            });
+        }
         html.push('</tbody></table>');
 
         freeGrid.removeClass("display-none").html(html.join(""));
 
         cachedAddNewRule !== null && bindingEventForAddRow();
+    }
+
+    function buildRowNoData(colspan, textNoData) {
+        return `<tr><td colspan="${colspan}" class="text-red align-center">${textNoData}</td></tr>`;
     }
 
     function buildRowItem(rule, index, zindex) {

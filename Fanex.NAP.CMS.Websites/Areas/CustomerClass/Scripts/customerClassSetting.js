@@ -36,6 +36,10 @@
                 assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
                 bindEventsAfterRenderGridSuccessfully();
+            },
+            function (error) {
+                assignCachedGridOptions({ TotalItems: 0, Rules: []}, 0, 100);
+                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
             });
     }
 

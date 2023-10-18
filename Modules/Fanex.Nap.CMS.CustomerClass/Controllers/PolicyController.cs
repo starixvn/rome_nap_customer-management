@@ -20,26 +20,26 @@
         internal PolicyController(IPolicyService policyService)
             => this.policyService = policyService;
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
             => View(
                 "~/Areas/CustomerClass/Views/Policy/Index.cshtml",
-                new PolicyViewModel(HasRight(CMSFunctionKeys.CustomerClassManagement, Constant.Policy.Host)));
+                new PolicyViewModel(HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPolicies()
             => JsonData(policyService.GetPolicies());
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPolicyTitle(short sportType)
             => JsonData(policyService.GetPolicyTitles(sportType));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult Get(int policyId)
             => JsonData(policyService.GetPolicy(policyId));
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddPolicyRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
@@ -50,7 +50,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int policyId, AddPolicyRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);

@@ -27,7 +27,7 @@
             this.ruleService = ruleService;
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new CustomerClassSettingViewModel(
@@ -38,7 +38,7 @@
             return View("~/Areas/CustomerClass/Views/CustomerClassSetting/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchCustomerClassSettingRequest request)
             => JsonData(ruleService.GetRules(request));
     }

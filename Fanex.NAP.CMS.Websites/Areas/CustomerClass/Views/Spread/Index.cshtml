@@ -73,7 +73,8 @@
             all: "@Labels.All",
             yes: "@Labels.Yes",
             no: "@Labels.No",
-            requiredField: "@Labels.RequiredField"
+            requiredField: "@Labels.RequiredField",
+            noData: "@Labels.NoData"
         };
         const customerClassList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.CustomerClasses, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');

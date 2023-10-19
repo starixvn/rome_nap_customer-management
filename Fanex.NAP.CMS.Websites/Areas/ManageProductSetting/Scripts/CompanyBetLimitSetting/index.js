@@ -137,7 +137,7 @@
                 text: "",
                 showExcelButton: true,
                 exportExcelFunction: function () {
-                    const url = CMS.resolveRootUrl("CompanyBetLimitSetting/Export");
+                    const url = CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Export");
                     const isCredit = getFilterParams(elements.isCredit);
                     CMS.downloadFile(url, isCredit);
                 }
@@ -149,11 +149,12 @@
             gridHeight: 0,
             showDistinctRow: false,
             headerColumnHeight: 29,
-            bodyRowHeight: 25,
+            bodyRowHeight: 27,
             showNumberColumn: true,
             gridExpandHeight: 180,
             showHighlightRow: true,
             showPager: false,
+            padding: 100,
         };
     }
     
@@ -245,7 +246,7 @@
     }
 
     const getData = (params) => {
-        const apiUrl = CMS.resolveRootUrl("CompanyBetLimitSetting/Search?" + $.param(params));
+        const apiUrl = CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Search?" + $.param(params));
         CMS.getJson(apiUrl, (data) => {
             const jsonData = $.parseJSON(data);
             const gridOptions = getGridOptions(params.IsCredit);

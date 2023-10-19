@@ -204,7 +204,7 @@
   <ItemGroup>
     <Compile Include="AppStart\ManageProductSettingAreaRegistration.cs" />
     <Compile Include="AppStart\ManageProductSettingBundleConfig.cs" />
-    <Compile Include="Controllers\CompanyBetLimitSettingController.cs" />
+    <Compile Include="Controllers\NonSportsCompanyBetLimitSettingController.cs" />
     <Compile Include="Criteria\CompanyBetLimitSetting\GetBetLimitSettingCriteria.cs" />
     <Compile Include="Criteria\CompanyBetLimitSetting\GetCurrenciesCriteria.cs" />
     <Compile Include="Criteria\CompanyBetLimitSetting\GetProductsCriteria.cs" />

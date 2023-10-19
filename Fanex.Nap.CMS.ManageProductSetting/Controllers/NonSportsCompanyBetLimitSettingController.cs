@@ -8,20 +8,20 @@
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    public class CompanyBetLimitSettingController : BaseController
+    public class NonSportsCompanyBetLimitSettingController : BaseController
     {
         private readonly ICompanyBetLimitSettingService _service;
 
-        public CompanyBetLimitSettingController() : this(null)
+        public NonSportsCompanyBetLimitSettingController() : this(null)
         {
         }
 
-        internal CompanyBetLimitSettingController(ICompanyBetLimitSettingService service)
+        internal NonSportsCompanyBetLimitSettingController(ICompanyBetLimitSettingService service)
         {
             this._service = service ?? new CompanyBetLimitSettingService();
         }
         
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Non_sportsCompanyBetLimitSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var viewModel = new FilterAreaModel(
@@ -35,7 +35,7 @@
             return View("~/Areas/ManageProductSetting/Views/CompanyBetLimitSetting/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Non_sportsCompanyBetLimitSetting, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetCompanyBetLimitSettingViewModels searchParams)
         {
             var result = _service.GetBetLimitSetting(searchParams);
@@ -45,7 +45,7 @@
             return JsonData(groupedData);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.ManageProductSetting, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.Non_sportsCompanyBetLimitSetting, Policy = Constant.Policy.Read)]
         public void Export(GetCompanyBetLimitSettingViewModels searchParams)
         {
             var result = _service.GetBetLimitSetting(searchParams);

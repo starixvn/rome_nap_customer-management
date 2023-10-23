@@ -44,6 +44,6 @@
             => offeringDataAccess.DoAction(new EditUtilityOfferCriteria(request, userId, iP), Labels.EditUtilityOfferSuccessfully);
 
         public Result DeleteOffer(int policyID, int userId, string iP)
-            => offeringDataAccess.DoAction(new DeleteUtilityOfferCriteria(policyID, userId, iP), Labels.DeleteSpreadSuccessfully);
+            => offeringDataAccess.DoAction(new DeleteUtilityOfferCriteria(policyID, userId, iP), Labels.DeleteUtilityOfferingSuccessfully);
     }
 }

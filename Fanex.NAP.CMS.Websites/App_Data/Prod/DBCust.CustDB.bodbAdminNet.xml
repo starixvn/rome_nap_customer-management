@@ -157,5 +157,10 @@
     <Setting Key="NAP_LM_CustomerClassSpreadUpd" SpName="NAP_LM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassSpreadDel" SpName="NAP_LM_CustomerClassSpreadDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassSpreadEnable" SpName="NAP_LM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.bodbAdminNet" />
+    <!--Utility Offering-->
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferSel" SpName="NAP_LM_CustomerClassUtilityOfferSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferIns" SpName="NAP_LM_CustomerClassUtilityOfferIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferUpd" SpName="NAP_LM_CustomerClassUtilityOfferUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferDel" SpName="NAP_LM_CustomerClassUtilityOfferDel" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

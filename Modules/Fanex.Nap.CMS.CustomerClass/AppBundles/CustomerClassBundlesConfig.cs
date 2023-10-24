@@ -17,9 +17,11 @@
         public const string SiteStyles = "~/bundles/customerclass/site-styles";
         public const string SiteScripts = "~/bundles/customerclass/site-scripts";
 
-
         public const string SpreadStyles = "~/bundles/customerclass/spread-styles";
         public const string SpreadScripts = "~/bundles/customerclass/spread-scripts";
+
+        public const string OfferingStyles = "~/bundles/customerclass/offering-styles";
+        public const string OfferingScripts = "~/bundles/customerclass/offering-scripts";
 
         private const string FanexMultiSelectStyle = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
         private const string FanexMultiSelectCustomStyle = "~/Content/MultipleSelect/fanex.multiSelect-custom.less";
@@ -31,7 +33,8 @@
             .RegisterRuleBundles()
             .RegisterPolicyBundles()
             .RegisterSiteBundles()
-            .RegisterSpreadBundles();
+            .RegisterSpreadBundles()
+            .RegisterOfferingBundles();
 
         private static BundleCollection RegisterCustomerClassSettingBundles(this BundleCollection bundles)
         {
@@ -111,6 +114,25 @@
                 "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterOfferingBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                OfferingStyles,
+                FanexMultiSelectStyle,
+                FanexMultiSelectCustomStyle,
+                "~/Areas/CustomerClass/Styles/editingGrid.less",
+                "~/Areas/CustomerClass/Styles/offering.less");
+
+            bundles.Add(new ScriptBundle(OfferingScripts).Include(
+                FanexMultiSelectScript,
+                "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
+                "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
+                "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
+                "~/Areas/CustomerClass/Scripts/offering.js"));
 
             return bundles;
         }

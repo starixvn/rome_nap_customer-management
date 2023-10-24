@@ -151,6 +151,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Utility Offering Successfully.
+        /// </summary>
+        public static string AddUtilityOfferingSuccessfully {
+            get {
+                return ResourceManager.GetString("AddUtilityOfferingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All.
         /// </summary>
         public static string All {
@@ -228,6 +237,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CC Utility Offering.
+        /// </summary>
+        public static string CCUtilityOffering {
+            get {
+                return ResourceManager.GetString("CCUtilityOffering", resourceCulture);
             }
         }
         
@@ -367,6 +385,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Utility Offering Successfully.
+        /// </summary>
+        public static string DeleteUtilityOfferingSuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteUtilityOfferingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop.
         /// </summary>
         public static string Desktop {
@@ -471,6 +498,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string EditStatusSpreadSuccessfully {
             get {
                 return ResourceManager.GetString("EditStatusSpreadSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Utility Offering Successfully.
+        /// </summary>
+        public static string EditUtilityOfferSuccessfully {
+            get {
+                return ResourceManager.GetString("EditUtilityOfferSuccessfully", resourceCulture);
             }
         }
         

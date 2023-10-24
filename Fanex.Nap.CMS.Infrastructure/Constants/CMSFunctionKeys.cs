@@ -153,8 +153,12 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string PolicyManagement = "PolicyManagement";
         public const string SiteManagement = "SiteManagement";
         public const string SpreadManagement = "SpreadManagement";
+        
         public const string CCUtilityOffering = "CCUtilityOffering";
 
+        //Manage Product Setting
+        public const string Non_sportsCompanyBetLimitSetting = "Non_sportsCompanyBetLimitSetting";
+        
         // Admin
         public const string ConcurrentUserReport = "ConcurrentUserReport";
     }

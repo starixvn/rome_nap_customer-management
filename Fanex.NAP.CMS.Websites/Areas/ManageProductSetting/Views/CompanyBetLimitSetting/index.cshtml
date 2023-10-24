@@ -1,0 +1,111 @@
+﻿@using Fanex.Nap.CMS.ManageProductSetting.AppStart
+@using BaseLabels = Fanex.Nap.CMS.Infrastructure.Resources.Labels
+@using Labels = Fanex.Nap.CMS.ManageProductSetting.Resources.Labels
+@model Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting.FilterAreaModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Head
+{
+    @Styles.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingStyles)
+}
+
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">Non-sports Company Bet Limit Setting</span>
+        </div>
+    </div>
+}
+
+<div class="filter-bar">
+    <div class="tabs-area">
+        <div id="tab-1" class="tab first">Company Bet Limit Setting</div>
+        @* <div id="tab-2" class="tab">Import Data</div> *@
+    </div>
+    <div class="form-area">
+        <div id="form-tab-1" class="form-search first ">
+            @using (Html.BeginForm("Search", "NonSportsCompanyBetLimitSetting", FormMethod.Get, new { id = "formCompanyBetLimitSetting", @class = "filter-form" }))
+            {
+                <div class="filter-row">
+                    <div class="lbl-field col_1 radio-button">
+                        @Html.RadioButton("Restriction", "Credit", true, new { id = "lblCredit" })
+                    </div>
+                    <div class="lbl-field col_1">
+                        @Html.Label("lblCredit", Labels.lblCredit)
+                    </div>
+                    <div class="lbl-field col_2 radio-button">
+                        @Html.RadioButton("Restriction", "Deposit", false, new { id = "lblDeposit" })
+                    </div>
+                    <div class="lbl-field col_2">
+                        @Html.Label("lblDeposit", Labels.lblDeposit)
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="lbl-field col_2">
+                        <label>@Labels.lblProduct</label>
+                    </div>
+                    <div id="credit-products" class="edit-field col_8">
+                        @Html.DropDownList("ddlCurrency", Model.CreditProducts, new { id = "ddl-credit-products" })
+                    </div>
+                    <div id="deposit-products" class="edit-field col_8 display-none">
+                        @Html.DropDownList("ddlCurrency", Model.DepositProducts, new { id = "ddl-deposit-products" })
+                    </div>
+                    <div class="lbl-field col_3">
+                        <label id="lbl-currency">@Labels.lblCurrency</label>
+                    </div>
+                    <div id="credit-currencies" class="edit-field col_8">
+                        @Html.DropDownList("ddlCurrency", Model.CreditCurrencies, new { id = "ddl-credit-currencies" })
+                    </div>
+                    <div id="deposit-currencies" class="edit-field col_8 display-none">
+                        @Html.DropDownList("ddlCurrency", Model.DepositCurrencies, new { id = "ddl-deposit-currencies" })
+                    </div>
+                    <div class="lbl-field col_2">
+                        <label id="lbl-site">@Labels.lblSite</label>
+                    </div>
+                    <div id="credit-sites" class="edit-field col_8">
+                        @Html.DropDownList("ddlSite", Model.CreditSites, new { id = "ddl-credit-sites" })
+                    </div>
+                    <div id="deposit-sites" class="edit-field col_8 display-none">
+                        @Html.DropDownList("ddlSite", Model.DepositSites, new { id = "ddl-deposit-sites" })
+                    </div>
+                    <div class="submit width-auto">
+                        <button type="submit" class="submit">@Labels.lblSearch</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div id="form-tab-2" class="form-search display-none">Sorry, please waiting...</div>
+    </div>
+</div>
+<div class="result-area">
+    <div id="form-result-tab-1" class="content-grid form-result">
+        <div id="grid-table" class="freegrid display-none"></div>
+    </div>
+</div>
+
+@section Foot
+{
+    <script type="text/javascript">
+          var viewResources = {
+               lblSymbol_No: '@BaseLabels.Symbol_No',
+               lblSportTypeID: '@Labels.lblSportTypeID',
+               lblSportTypeName: '@Labels.lblSportTypeName',
+               lblCreditCurrency: '@Labels.lblCreditCurrency',
+               lblDepositCurrency: '@Labels.lblDepositCurrency',
+               lblCreditSite: '@Labels.lblCreditSite',
+               lblDepositSite: '@Labels.lblDepositSite',
+               lblGameGroup: '@Labels.lblGameGroup',
+               lblBetLimit: '@Labels.lblBetLimit',
+               lblMaxBet: '@Labels.lblMaxBet',
+               lblMinBet: '@Labels.lblMinBet',
+               lblRemark: '@Labels.lblRemark',
+               lblEdit: '@Labels.lblEdit',
+               lblRemove: '@Labels.lblRemove',
+          };
+        </script>
+    @Scripts.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingScripts)
+}

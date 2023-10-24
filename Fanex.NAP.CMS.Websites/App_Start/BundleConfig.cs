@@ -14,6 +14,7 @@ namespace Fanex.NAP.CMS.Websites
     using Fanex.Nap.CMS.ManageChatbots.AppStart;
     using Fanex.Nap.CMS.NotificationSetting.AppStart;
     using Fanex.Nap.CMS.TurnoverControl.AppStart;
+    using Fanex.Nap.CMS.ManageProductSetting.AppStart;
 
     /// <summary>
     /// Bundle Configuration.
@@ -38,6 +39,7 @@ namespace Fanex.NAP.CMS.Websites
             NotificationSettingBundleConfig.RegisterAll(bundles);
             ManageChatbotsBundleConfig.RegisterAll(bundles);
             CustomerClassBundlesConfig.RegisterAll(bundles);
+            ManageProductSettingBundleConfig.RegisterAll(bundles);
         }
 
         /// <summary>

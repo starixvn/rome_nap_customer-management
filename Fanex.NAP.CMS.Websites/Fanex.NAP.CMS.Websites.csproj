@@ -471,6 +471,9 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\ManageProductSetting\Scripts\CompanyBetLimitSetting\index.js" />
+    <Content Include="Areas\ManageProductSetting\Styles\CompanyBetLimitSetting\index.less" />
+    <Content Include="Areas\ManageProductSetting\Views\CompanyBetLimitSetting\index.cshtml" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotHistory\ChatbotHistory.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\_ConfigChatbot.js" />
@@ -706,6 +709,7 @@
     <Content Include="Scripts\Sites\credit-collection-summary.js" />
     <Content Include="Scripts\Sites\TurnoverUsage.js" />
     <Content Include="Scripts\Sites\TurnoverMonitor.js" />
+    <Content Include="Scripts\Tabs.js" />
     <Content Include="Scripts\Validator.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Scripts\Libs\DatePicker\images\icon-calendar.png" />
@@ -827,6 +831,10 @@
     <ProjectReference Include="..\Fanex.Nap.CMS.ManageChatbots\Fanex.Nap.CMS.ManageChatbots.csproj">
       <Project>{3d0b2f17-7a0f-48bc-afc5-46d48747e9cd}</Project>
       <Name>Fanex.Nap.CMS.ManageChatbots</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.Nap.CMS.ManageProductSetting\Fanex.Nap.CMS.ManageProductSetting.csproj">
+      <Project>{6ea9705a-de47-415f-b97a-16fa38b3e630}</Project>
+      <Name>Fanex.Nap.CMS.ManageProductSetting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.ViewModels\Fanex.NAP.CMS.ViewModels.csproj">
       <Project>{88808f97-d8c0-45be-80d8-9c814a5cfde6}</Project>
@@ -1130,6 +1138,7 @@
     <Content Include="Areas\CustomerClass\Views\Spread\Index.cshtml" />
     <Content Include="Areas\CustomerClass\Styles\spreadManagement.less" />
     <Content Include="Areas\CustomerClass\Views\UtilityOffering\Index.cshtml" />
+    <Content Include="Areas\ManageProductSetting\Views\Web.config" />
     <Content Include="Areas\CustomerClass\Styles\offering.less" />
     <Content Include="Areas\CustomerClass\Styles\editingGrid.less" />
     <None Include="BundleTransformer.Configuration.xsd">
@@ -1202,7 +1211,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

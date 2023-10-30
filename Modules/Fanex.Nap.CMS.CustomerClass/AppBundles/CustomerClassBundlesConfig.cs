@@ -23,6 +23,9 @@
         public const string OfferingStyles = "~/bundles/customerclass/offering-styles";
         public const string OfferingScripts = "~/bundles/customerclass/offering-scripts";
 
+        public const string CCNonsportsStyles = "~/bundles/customerclass/nonsports-styles";
+        public const string CCNonsportsScripts = "~/bundles/customerclass/nonsports-scripts";
+
         private const string FanexMultiSelectStyle = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
         private const string FanexMultiSelectCustomStyle = "~/Content/MultipleSelect/fanex.multiSelect-custom.less";
         private const string FanexMultiSelectScript = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
@@ -34,7 +37,8 @@
             .RegisterPolicyBundles()
             .RegisterSiteBundles()
             .RegisterSpreadBundles()
-            .RegisterOfferingBundles();
+            .RegisterOfferingBundles()
+            .RegisterNonsports();
 
         private static BundleCollection RegisterCustomerClassSettingBundles(this BundleCollection bundles)
         {
@@ -137,6 +141,25 @@
                 "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
                 "~/Areas/CustomerClass/Scripts/offering.js"));
+
+            return bundles;
+        }
+
+        private static BundleCollection RegisterNonsports(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                CCNonsportsStyles,
+                FanexMultiSelectStyle,
+                FanexMultiSelectCustomStyle,
+                "~/Areas/CustomerClass/Styles/editingGrid.less",
+                "~/Areas/CustomerClass/Styles/nonsports.less");
+
+            bundles.Add(new ScriptBundle(CCNonsportsScripts).Include(
+                FanexMultiSelectScript,
+                "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
+                "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
+                "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
+                "~/Areas/CustomerClass/Scripts/nonsports.js"));
 
             return bundles;
         }

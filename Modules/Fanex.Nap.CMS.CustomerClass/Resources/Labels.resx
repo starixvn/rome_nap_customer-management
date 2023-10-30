@@ -510,6 +510,21 @@
   <data name="AllCredit" xml:space="preserve">
     <value>All Credit</value>
   </data>
+  <data name="CCNonsports" xml:space="preserve">
+    <value>Non-Sports Management</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="AddNonSportsSuccessfully" xml:space="preserve">
+    <value>Add Offering Successfully</value>
+  </data>
+  <data name="DeleteNonSportSuccessfully" xml:space="preserve">
+    <value>Delete Offering Successfully</value>
+  </data>
+  <data name="EditNonSportsSuccessfully" xml:space="preserve">
+    <value>Edit Offering Successfully</value>
+  </data>
   <data name="AllDeposit" xml:space="preserve">
     <value>All Deposit</value>
   </data>

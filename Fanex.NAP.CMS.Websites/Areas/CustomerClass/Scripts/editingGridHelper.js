@@ -95,6 +95,26 @@ const editingGridHelper = (function ($) {
         return selectDiv;
     }
 
+    function renderAddEditProduct(divId, selectedValue, fnOnCheck) {
+        let optionList = [];
+        let isCheckAll = selectedValue === "All" || selectedValue === "0";
+        let selectedValueList = selectedValue.split(",");
+        productList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
+        );
+
+        return customerClassHelper.renderMultiSelect(
+            "#" + divId,
+            {
+                minWidth: 146,
+                maxHeight: 230,
+                listData: optionList,
+                isCheckAll: isCheckAll,
+                showFilter: true,
+                onCheck: fnOnCheck
+            }
+        );
+    }
+
 
     function renderCurrencyCell(selectedCurrencies, currencyList) {
         if (selectedCurrencies === "All" || selectedCurrencies === "0") {
@@ -109,7 +129,7 @@ const editingGridHelper = (function ($) {
     }
 
     function renderCustomerClassCell(selectedCustomerClass) {
-        if (selectedCustomerClass === "0") {
+        if (selectedCustomerClass === "0" || selectedCustomerClass === "") {
             return "All";
         }
 
@@ -152,6 +172,26 @@ const editingGridHelper = (function ($) {
         return sitesNameList.length <= 1
             ? sitesNameList
             : `<a href="javascript:;" class="link-site" data-sites="${sitesNameList.join()}">${displayName}</a>`;
+    }
+    
+    function renderProductCell(selectedProducts, productList) {
+        if (selectedProducts === null || selectedProducts === undefined) {
+            return "";
+        }
+
+        if (selectedProducts === "All" || selectedProducts === "0" || selectedProducts === "256") {
+            return `<a href="javascript:;" class="link-product" data-products="${productList.map(pro => pro.Name).join()}">All</a>`;
+        }
+
+        const productArray = selectedProducts.split(",");
+        var productNames = productList.filter(pro => productArray.includes(pro.Id.toString())).map(pro => pro.Name);
+        return productNames.length <= 1
+            ? productNames.join()
+            : `<a href="javascript:;" class="link-product" data-products="${productNames.join()}">${productNames.length}</a>`;
+    }
+
+    function renderEnableCell(policyId, policyTitle, enable, hasHostPermisson) {
+        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle.replaceAll('"', '&#34;')}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
     }
 
     function handleViewItems(element, title, dataType) {
@@ -256,9 +296,12 @@ const editingGridHelper = (function ($) {
         renderAddEditCurrency: renderAddEditCurrency,
         renderAddEditPlatform: renderAddEditPlatform,
         renderAddEditUtility: renderAddEditUtility,
+        renderAddEditProduct: renderAddEditProduct,
         renderCurrencyCell: renderCurrencyCell,
+        renderProductCell: renderProductCell,
         renderCustomerClassCell: renderCustomerClassCell,
         renderSiteCell: renderSiteCell,
+        renderEnableCell: renderEnableCell,
         handleViewItems: handleViewItems,
         clearAllTipsyErrors: clearAllTipsyErrors,
         isEmptyValue: isEmptyValue,

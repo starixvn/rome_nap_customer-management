@@ -13,6 +13,8 @@
 
         IEnumerable<IdNameModel> GetCreditSites();
 
+        IEnumerable<IdNameModel> GetNonsportsProducts();
+        
         IEnumerable<SiteGroup> GetSitesMarketCode();
 
         IEnumerable<Country> GetCountries();

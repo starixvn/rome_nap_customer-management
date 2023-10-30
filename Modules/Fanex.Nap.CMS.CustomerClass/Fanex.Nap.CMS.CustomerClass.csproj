@@ -132,6 +132,7 @@
     <Compile Include="Constants\PlatformConst.cs" />
     <Compile Include="Constants\SportTypeConst.cs" />
     <Compile Include="Controllers\CustomerClassSettingController.cs" />
+    <Compile Include="Controllers\NonsportsController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
@@ -157,6 +158,11 @@
     <Compile Include="Criteria\GetRuleListBySportType.cs" />
     <Compile Include="Criteria\GetSiteSettingCriteria.cs" />
     <Compile Include="Criteria\GetSpreadRuleCriteria.cs" />
+    <Compile Include="Criteria\NonSports\AddNonSportsCriteria.cs" />
+    <Compile Include="Criteria\NonSports\DeleteNonSportsCriteria.cs" />
+    <Compile Include="Criteria\NonSports\EditNonSportsCriteria.cs" />
+    <Compile Include="Criteria\NonSports\EnableNonSportsCriteria.cs" />
+    <Compile Include="Criteria\NonSports\GetNonSportsCriteria.cs" />
     <Compile Include="Criteria\QueryCriteriaBase.cs" />
     <Compile Include="Criteria\EditPolicyCriteria.cs" />
     <Compile Include="Criteria\EditRuleCriteria.cs" />
@@ -171,6 +177,7 @@
     <Compile Include="Criteria\UtilityOffer\GetUtilityOfferCriteria.cs" />
     <Compile Include="DataAccesses\DataReaderToModelHelper.cs" />
     <Compile Include="DataAccesses\FilterDataAccess.cs" />
+    <Compile Include="DataAccesses\NonSportsDataAccess.cs" />
     <Compile Include="DataAccesses\OfferingDataAccess.cs" />
     <Compile Include="DataAccesses\PolicyDataAccess.cs" />
     <Compile Include="DataAccesses\RuleDataAccess.cs" />
@@ -178,6 +185,7 @@
     <Compile Include="DataAccesses\SpreadDataAccess.cs" />
     <Compile Include="Models\ExcelError.cs" />
     <Compile Include="Models\LeagueGroup.cs" />
+    <Compile Include="Models\NonsportModel.cs" />
     <Compile Include="Models\PagedSiteSetting.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyItem.cs" />
@@ -196,7 +204,10 @@
     <Compile Include="Requests\DeletePolicyRequest.cs" />
     <Compile Include="Requests\DeleteRuleRequest.cs" />
     <Compile Include="Requests\DeleteSiteSettingRequest.cs" />
+    <Compile Include="Requests\EnableOfferingRequest.cs" />
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
+    <Compile Include="Requests\Nonsports\AddEditNonsportsRequest.cs" />
+    <Compile Include="Requests\Nonsports\SearchNonsportsRequest.cs" />
     <Compile Include="Requests\SearchCustomerClassSettingRequest.cs" />
     <Compile Include="Requests\SearchSpreadRuleRequest.cs" />
     <Compile Include="Requests\SearchUtilityOfferingRequest.cs" />
@@ -214,6 +225,7 @@
     <Compile Include="Responses\CheckPolicyResponse.cs" />
     <Compile Include="Responses\CheckRuleResponse.cs" />
     <Compile Include="Services\FilterService.cs" />
+    <Compile Include="Services\NonsportsService.cs" />
     <Compile Include="Services\PolicyService.cs" />
     <Compile Include="Services\RuleService.cs" />
     <Compile Include="Services\SiteService.cs" />
@@ -222,6 +234,7 @@
     <Compile Include="Services\UtilityOfferingSerivce.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CustomerClassSettingViewModel.cs" />
+    <Compile Include="ViewModels\NonsportsViewModel.cs" />
     <Compile Include="ViewModels\PolicyViewModel.cs" />
     <Compile Include="ViewModels\RuleViewModel.cs" />
     <Compile Include="ViewModels\SiteViewModel.cs" />

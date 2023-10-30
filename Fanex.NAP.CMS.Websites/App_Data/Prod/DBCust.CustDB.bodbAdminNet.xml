@@ -166,6 +166,12 @@
     <Setting Key="NAP_LM_CustomerClassUtilityOfferIns" SpName="NAP_LM_CustomerClassUtilityOfferIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassUtilityOfferUpd" SpName="NAP_LM_CustomerClassUtilityOfferUpd" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassUtilityOfferDel" SpName="NAP_LM_CustomerClassUtilityOfferDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <!--NonSports-->
+    <Setting Key="NAP_LM_CustomerClassNonSportsSel" SpName="NAP_LM_CustomerClassNonSportsSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsUpd" SpName="NAP_LM_CustomerClassNonSportsUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsIns" SpName="NAP_LM_CustomerClassNonSportsIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsDel" SpName="NAP_LM_CustomerClassNonSportsDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
   <Function Name="Domain Management">
     <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBCust.CustDB.bodbAdminNet" />

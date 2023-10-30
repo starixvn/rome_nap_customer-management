@@ -22,4 +22,8 @@
     <Setting Key="NAP_Chatbot_CurrencySel" SpName="NAP_Chatbot_CurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
     <Setting Key="NAP_Chatbot_SiteSel" SpName="NAP_Chatbot_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
   </Function>
+  <Function Name="Customer Class Management">
+    <!--NonSports-->
+    <Setting Key="NAP_LM_CustomerClassNonSportsProduct" SpName="NAP_LM_CustomerClassNonSportsProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
+  </Function>
 </Functions>

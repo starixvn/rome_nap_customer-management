@@ -39,9 +39,11 @@
     function defaultGridOptions() {
         var columns = [
             { HeaderText: resources.ruleTitle, Width: 300, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
-            { HeaderText: resources.criteria, Width: 600, Name: "colCriteria", HeaderAlign: "center", CellAlign: "left" }
+            { HeaderText: resources.criteria, Width: 600, Name: "colCriteria", HeaderAlign: "center", CellAlign: "left" },
         ];
 
+        hasHostPermisson && columns.push({ HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
+        
         return {
             showTitle: true,
             fullWidth: true,
@@ -71,7 +73,7 @@
                 };
             });
 
-            return {
+            const row = {
                 Columns: [{
                     Name: "colRuleTitle",
                     Value: renderPolicyGroupCell(policy),
@@ -80,6 +82,13 @@
                 }],
                 SubRows: subRows
             };
+            hasHostPermisson && row.Columns.push({
+                Name: "colDelete",
+                Value: renderDeleteCell(policy.PolicyId),
+                CellAlign: "center"
+            });
+
+            return row;
         });
     }
 
@@ -92,6 +101,11 @@
         return html.join("");
     }
 
+
+    function renderDeleteCell(id) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
+    }
+
     function bindEventsAfterRenderGridSuccessfully() {
         $(".ico-edit")
             .off("click")
@@ -102,6 +116,75 @@
                     function (data) {
                         policyManagementAddOrEdit.openModal(JSON.parse(data));
                     });
+            });
+
+        freeGrid.find("#chk-select-delete-all")
+            .off("click")
+            .click(handleCheckDelAll);
+        freeGrid.find("#btn-delete-selected")
+            .off("click")
+            .click(handleDelSelected);
+        freeGrid.find(".chk-select-delete")
+            .off("click")
+            .click(handleSingleCheckDel);
+    }
+
+
+
+    function handleCheckDelAll() {
+        let checked = $(this).prop("checked");
+        $(".chk-select-delete").each(function () {
+            $(this).prop("checked", checked);
+        });
+    }
+
+    function handleSingleCheckDel() {
+        let isCheckAll = true;
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") !== true) {
+                isCheckAll = false;
+
+                return false;
+            }
+        });
+
+        $("#chk-select-delete-all").prop("checked", isCheckAll);
+    }
+
+    function handleDelSelected() {
+        var settings = [];
+        var policies = "";
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") === true) {
+                policies = policies.concat(",", $(this).data("policies"));
+                settings.push({
+                    RuleId: $(this).data("id")
+                });
+            }
+        });
+        if (settings.length === 0) {
+            return;
+        }
+
+        var message = `Are you sure you want to delete the selected setting row(s)?`;
+
+        CMS.showConfirmMessage(message, function () { callDelete(settings); });
+    }
+
+    function callDelete(siteSettings) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Rule/Delete`),
+            { SiteSettings: siteSettings },
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    search();
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
             });
     }
 

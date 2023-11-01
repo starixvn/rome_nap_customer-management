@@ -109,5 +109,7 @@
         public string PlatformNames { get; set; }
 
         public bool? IsAllPlatforms { get; set; }
+
+        public string Policies { get; set; }
     }
 }

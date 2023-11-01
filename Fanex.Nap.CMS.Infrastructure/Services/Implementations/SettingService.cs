@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
@@ -26,10 +27,10 @@
             => this.settingRepository = settingRepository;
 
         public IEnumerable<IdNameModel> GetAllCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency));
+            => settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Name);
 
         public IEnumerable<IdNameModel> GetCreditCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency));
+            => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency)).OrderBy(cur => cur.Name);
 
         /// <summary>
         /// UserId to check Special_Site permisson.
@@ -38,10 +39,10 @@
         /// <param name="userId"></param>
         /// <returns></returns>
         public IEnumerable<SiteGroup> GetAllSites(int userId = 0)
-            => settingRepository.GetAllSites(new GetAllSiteCriteria(userId));
+            => settingRepository.GetAllSites(new GetAllSiteCriteria(userId)).OrderBy(site => site.Name);
 
         public IEnumerable<IdNameModel> GetCreditSites()
-            => settingRepository.GetCreditSites(new GetCreditSiteCriteria());
+            => settingRepository.GetCreditSites(new GetCreditSiteCriteria()).OrderBy(site => site.Name);
 
         public IEnumerable<SiteGroup> GetSitesMarketCode()
         {

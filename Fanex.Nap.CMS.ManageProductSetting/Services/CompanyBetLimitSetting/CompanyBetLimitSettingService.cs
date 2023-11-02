@@ -48,7 +48,7 @@
             if (data != null) return data;
             data = getRepositoryData().ToList();
 
-            CacheManager.Set(cacheKey, data, new TimeSpan(0, 0, 0, 5));
+            CacheManager.Set(cacheKey, data, new TimeSpan(0, 0, 5, 0));
 
             return data;
         }

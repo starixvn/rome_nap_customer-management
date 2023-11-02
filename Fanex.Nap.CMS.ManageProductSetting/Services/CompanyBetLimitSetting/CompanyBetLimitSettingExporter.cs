@@ -169,10 +169,11 @@
                 rowCount++;
 
                 ExportExcel.CurrentColumn = 5;
+                var item = gameGroup.Entries.First(e => e.GameGroup == gameGroup.GameGroupName);
                 ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
-                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MinBet, decimalStyle);
-                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().MaxBet, intNumberStyle);
-                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.Entries.First().Remark, textStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.MinBet, decimalStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.MaxBet, intNumberStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.Remark, textStyle);
                 gameGroupRow += gameGroup.NumberRow;
             }
         }

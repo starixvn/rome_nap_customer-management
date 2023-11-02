@@ -185,13 +185,14 @@
                         currentSiteRow = currentRow;
                         $.each(siteGroup.GameGroups, function (index, gameGroup) {
                             highlightClass = 'hover-column';
+                            const  entry = gameGroup.Entries.find(e=>e.GameGroup===gameGroup.GameGroupName);
                             row = {
                                 Columns: [
                                     {Name: 'ColNo', Value: ""},
                                     {Name: 'GameGroups', Value: gameGroup.GameGroupName, TdClass: highlightClass},
-                                    {Name: 'MinBet', Value: gameGroup.Entries[0]?.MinBet, TdClass: highlightClass},
-                                    {Name: 'MaxBet', Value: gameGroup.Entries[0]?.MaxBet, TdClass: highlightClass},
-                                    {Name: 'Remark', Value: gameGroup.Entries[0]?.Remark, TdClass: highlightClass},
+                                    {Name: 'MinBet', Value: entry.MinBet, TdClass: highlightClass},
+                                    {Name: 'MaxBet', Value: entry.MaxBet, TdClass: highlightClass},
+                                    {Name: 'Remark', Value: entry.Remark, TdClass: highlightClass},
                                 ]
                             };
 

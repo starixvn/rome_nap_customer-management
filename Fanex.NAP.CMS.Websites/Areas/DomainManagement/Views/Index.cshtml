@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = Labels.DomainManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using CommonLabels = Fanex.Nap.CMS.Infrastructure.Resources.Labels
+@model Fanex.Nap.CMS.DomainManagement.ViewModels.DomainManagementViewModel
+@section Head {
+    @Styles.Render(DomainManagementBundleConfig.DomainManagementStyles)
+}
+@section Foot {
+    <script type="text/javascript">
+        const resources = {
+            All: '@CommonLabels.All',
+            PleaseSelect: '@CommonLabels.PleaseSelect',
+            NoItemFound: '@Labels.NoItemFound',
+            Domain: '@Labels.Domain',
+            System: '@Labels.System',
+            Site: '@Labels.Site',
+            BrandName: '@Labels.BrandName',
+            Status: '@Labels.Status',
+            RestrictedCountries: '@Labels.RestrictedCountries',
+            Remark: '@Labels.Remark',
+            ExpiredDate: '@Labels.ExpiredDate',
+            LastUpdated: '@Labels.LastUpdated',
+            Action: '@CommonLabels.Action',
+            BulkUpdate: '@Labels.BulkUpdate',
+            AddNewDomain: '@Labels.AddNewDomain',
+            EditDomain: '@Labels.EditDomain',
+            RemoveDomainConfirm: '@Html.Raw(Labels.RemoveDomainConfirm)',
+            RequiredFieldError: '@CommonLabels.RequiredFieldError',
+            InvalidDomainFormat: '@Labels.InvalidDomainFormat',
+            DuplicatedDomain: '@Labels.DuplicatedDomain',
+            DomainsOutOfRangeError: '@Labels.DomainsOutOfRangeError'
+        };
+    </script>
+    @Scripts.Render(DomainManagementBundleConfig.DomainManagementScripts)
+}
+@section Headline {
+    <div class="title">
+        <div>
+            <span class="curr">@Labels.DomainManagement</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    @using (Html.BeginForm("Search", "DomainManagement", FormMethod.Get, new { id = "formSearch", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label>@Labels.System</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("system", Model.Systems, new { @id = "ddl-system" })
+            </div>
+            <div class="lbl-field col_1">
+                <label>@Labels.Site</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("site", Model.Sites, new { @id = "ddl-site" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@Labels.Status</label>
+            </div>
+            <div class="edit-field col_6">
+                @Html.DropDownList("status", Model.Status, new { @id = "ddl-status" })
+            </div>
+            <div class="lbl-field col_2">
+                <label>@Labels.Remark</label>
+            </div>
+            <div class="edit-field col_6">
+                <input type="text" id="txt-remark" class="width-140" autocomplete="off" />
+            </div>
+            <div class="lbl-field col_5">
+                <label>@Labels.RestrictedCountries</label>
+            </div>
+            <div class="edit-field col_8">
+                @Html.DropDownList("countries", Model.Countries, new { @id = "ddl-country" })
+            </div>
+            <div class="submit width-auto margin-left">
+                <button type="submit" class="submit">@CommonLabels.Submit</button>
+                @if (Model.HasHostPermission)
+                {
+                    <button type="button" class="submit" id="btnAdd">@Labels.Add</button>
+                }
+            </div>
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div class="content-grid">
+    @if (Model.HasHostPermission)
+    {
+        <div class="mid-margin-bottom display-none" id="box-bulkUpdate">
+            <button type="button" class="blue-button" id="btn-bulkUpdate" disabled>@Labels.BulkUpdate</button>
+        </div>
+    }
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if (Model.HasHostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/DomainManagement/Views/_AddNewOrEditForm.cshtml", Model); }
+    </div>
+}

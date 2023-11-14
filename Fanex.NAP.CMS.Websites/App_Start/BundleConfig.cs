@@ -10,6 +10,7 @@ namespace Fanex.NAP.CMS.Websites
 {
     using System.Web.Optimization;
     using Fanex.Nap.CMS.CustomerClass.AppBundles;
+    using Fanex.Nap.CMS.DomainManagement;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.ManageChatbots.AppStart;
     using Fanex.Nap.CMS.NotificationSetting.AppStart;
@@ -40,6 +41,7 @@ namespace Fanex.NAP.CMS.Websites
             ManageChatbotsBundleConfig.RegisterAll(bundles);
             CustomerClassBundlesConfig.RegisterAll(bundles);
             ManageProductSettingBundleConfig.RegisterAll(bundles);
+            DomainManagementBundleConfig.RegisterBundles(bundles);
         }
 
         /// <summary>

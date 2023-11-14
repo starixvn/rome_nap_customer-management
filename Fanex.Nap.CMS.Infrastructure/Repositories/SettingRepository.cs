@@ -14,6 +14,10 @@
         IEnumerable<SiteGroup> GetAllSites(ICriteria criteria);
 
         IEnumerable<IdNameModel> GetCreditSites(ICriteria criteria);
+
+        IEnumerable<SiteGroup> GetSitesMarketCode(ICriteria criteria);
+
+        IEnumerable<Country> GetCountries(ICriteria criteria);
     }
 
     internal class SettingRepository : ISettingRepository
@@ -26,6 +30,12 @@
 
         public IEnumerable<IdNameModel> GetCreditSites(ICriteria criteria)
             => ExecuteReader(criteria, ToCreditSite);
+
+        public IEnumerable<SiteGroup> GetSitesMarketCode(ICriteria criteria)
+            => ExecuteReader(criteria, ToSiteMarketCode);
+
+        public IEnumerable<Country> GetCountries(ICriteria criteria)
+            => ExecuteReader(criteria, ToCountry);
 
         private static IEnumerable<T> ExecuteReader<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
         {
@@ -60,5 +70,15 @@
                 Id = Convert.ToInt32(reader["SiteId"]),
                 Name = reader["Site"].ToString()
             };
+
+        private static SiteGroup ToSiteMarketCode(IDataReader reader)
+            => new SiteGroup(
+                Convert.ToInt32(reader["SiteId"]),
+                reader["Site"].ToString(),
+                reader["SiteLabel"].ToString(),
+                reader["MarketCode"].ToString());
+
+        private static Country ToCountry(IDataReader reader)
+            => new Country(reader["CountryCode"].ToString(), reader["CountryName"].ToString());
     }
 }

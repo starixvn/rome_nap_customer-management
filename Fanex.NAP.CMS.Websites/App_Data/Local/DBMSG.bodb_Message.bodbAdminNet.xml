@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="102" SiteName="NAP - CM">
+  <Function Name="Domain Management">
+    <Setting Key="NAP_Domain_SetMessage" SpName="NAP_Domain_SetMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+  </Function>
+</Functions>

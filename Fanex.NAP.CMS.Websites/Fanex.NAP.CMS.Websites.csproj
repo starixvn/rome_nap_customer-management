@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -35,7 +35,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -45,7 +46,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
@@ -351,6 +353,7 @@
     <Content Include="App_Data\MNL\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\MNL\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\MNL\DBMSG.bodb_Message.bodbAdminNet.xml" />
     <Content Include="App_Data\MNL\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -374,6 +377,7 @@
     <Content Include="App_Data\Prod\DBCust.IPDB.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBDW.bodb_dwrs.bodbSPUNet.xml" />
     <Content Include="App_Data\Prod\DBLOG.bodb_CustomerLog.bodbAdminNet.xml" />
+    <Content Include="App_Data\Prod\DBMSG.bodb_Message.bodbAdminNet.xml" />
     <Content Include="App_Data\Prod\DBONUSER.bodb02.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -473,6 +477,8 @@
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
     <Content Include="Areas\ManageProductSetting\Scripts\CompanyBetLimitSetting\index.js" />
     <Content Include="Areas\ManageProductSetting\Styles\CompanyBetLimitSetting\index.less" />
+    <Content Include="Areas\DomainManagement\Scripts\domainManagement.js" />
+    <Content Include="Areas\DomainManagement\Scripts\domainManagementAddOrEdit.js" />
     <Content Include="Areas\ManageProductSetting\Views\CompanyBetLimitSetting\index.cshtml" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotHistory\ChatbotHistory.js" />
     <Content Include="Areas\MangeChatbots\Scripts\ChatbotMapping\ChatbotMapping.js" />
@@ -856,6 +862,10 @@
       <Project>{5ca24f84-6331-4a98-8124-7c40bbd3d84d}</Project>
       <Name>Fanex.Nap.CMS.Customers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.DomainManagement\Fanex.Nap.CMS.DomainManagement.csproj">
+      <Project>{88ef5e6d-cba0-45f8-bc9b-d1e8fa5c5493}</Project>
+      <Name>Fanex.Nap.CMS.DomainManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.NotificationSetting\Fanex.Nap.CMS.NotificationSetting.csproj">
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
@@ -1141,6 +1151,11 @@
     <Content Include="Areas\ManageProductSetting\Views\Web.config" />
     <Content Include="Areas\CustomerClass\Styles\offering.less" />
     <Content Include="Areas\CustomerClass\Styles\editingGrid.less" />
+    <Content Include="Areas\DomainManagement\Web.config" />
+    <Content Include="Areas\DomainManagement\Views\Index.cshtml" />
+    <Content Include="Areas\DomainManagement\Views\_AddNewOrEditForm.cshtml" />
+    <Content Include="Areas\DomainManagement\Styles\domainManagement.less" />
+    <Content Include="App_Data\Local\DBMSG.bodb_Message.bodbAdminNet.xml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

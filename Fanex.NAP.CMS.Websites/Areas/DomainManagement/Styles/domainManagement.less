@@ -1,0 +1,60 @@
+﻿@popup-width: 600px;
+
+.width-162 {
+    width: 162px;
+}
+
+.note-info-message {
+    float: none;
+}
+
+#addNewOrEditForm {
+    width: @popup-width;
+
+    &.add-new {
+        height: 520px;
+    }
+
+    &.edit {
+        height: 430px;
+    }
+
+    &.bulk-edit {
+        height: 470px;
+    }
+}
+
+#addNewOrEditForm .form-row {
+    .lbl-field {
+        text-align: right;
+        width: 125px;
+    }
+
+    .edit-field {
+        .ui_nexdatepicker_datetextbox {
+            width: 196px;
+        }
+
+        .domain {
+            width: @popup-width - 160;
+        }
+    }
+
+    &.status {
+        min-height: unset
+    }
+
+    &.warn {
+        color: #ff8c00;
+        margin-bottom: 0;
+        min-height: 26px;
+
+        .edit-field {
+            font-size: 12px;
+
+            .warn-msg {
+                margin-top: 1px;
+            }
+        }
+    }
+}

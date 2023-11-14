@@ -29,7 +29,7 @@
 
         Result AddOrEditDomain(AddOrEditDomainCommand command);
 
-        Result RemoveDomain(int domainId, int userId, string ip);
+        Result RemoveDomains(IdNameModel[] domains, int userId, string ip);
     }
 
     public class DomainManagementService : IDomainManagementService
@@ -126,25 +126,25 @@
 
         private void AddNormalAnnouncement(string domainList)
         {
-            //if (!string.IsNullOrWhiteSpace(domainList))
-            //{
-            //    Task.Run(() =>
-            //    {
-            //        try
-            //        {
-            //            domainManagementRepository.AddNormalAnnouncement(new AddNormalAnnouncementCriteria(domainList));
-            //        }
-            //        catch (Exception ex)
-            //        {
-            //            ExceptionHandler.Handle(ex);
-            //        }
-            //    });
-            //}
+            if (!string.IsNullOrWhiteSpace(domainList))
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        domainManagementRepository.AddNormalAnnouncement(new AddNormalAnnouncementCriteria(domainList));
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionHandler.Handle(ex);
+                    }
+                });
+            }
         }
 
-        public Result RemoveDomain(int domainId, int userId, string ip)
+        public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
-            var result = domainManagementRepository.ExecuteNonQuery(new RemoveDomainCriteria(domainId, userId, ip));
+            var result = domainManagementRepository.ExecuteNonQuery(new RemoveDomainCriteria(domains, userId, ip));
 
             if (result.IsSuccess)
             {

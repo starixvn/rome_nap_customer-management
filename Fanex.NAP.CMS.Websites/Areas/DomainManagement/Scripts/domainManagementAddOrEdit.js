@@ -111,6 +111,7 @@ const domainManagementAddOrEdit = (function ($) {
             listData: buildListDataWithSelected(countryListData, domain.RestrictedCountries),
             maxHeight: 135
         });
+        $('#popup-note-status').attr('title', $('#divNoteStatus').html()).tipsy({ opacity: 1, gravity: 'w', html: true });
     }
 
     function bindEvents(domain) {

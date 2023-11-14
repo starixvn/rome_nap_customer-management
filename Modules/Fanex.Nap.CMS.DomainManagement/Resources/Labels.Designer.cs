@@ -115,6 +115,24 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bulk Delete.
+        /// </summary>
+        public static string BulkRemove {
+            get {
+                return ResourceManager.GetString("BulkRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;# domains selected&lt;/b&gt;. Are you sure you want to delete them?.
+        /// </summary>
+        public static string BulkRemoveDomainConfirm {
+            get {
+                return ResourceManager.GetString("BulkRemoveDomainConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bulk Update.
         /// </summary>
         public static string BulkUpdate {
@@ -160,7 +178,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Domain.
+        ///   Looks up a localized string similar to Update Domain.
         /// </summary>
         public static string EditDomain {
             get {
@@ -169,7 +187,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Domain(s).
+        ///   Looks up a localized string similar to Update Domain(s).
         /// </summary>
         public static string EditDomains {
             get {
@@ -178,7 +196,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edited domains successfully.
+        ///   Looks up a localized string similar to Updated domains successfully.
         /// </summary>
         public static string EditedDomainsSuccessfully {
             get {
@@ -187,7 +205,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edited domain successfully.
+        ///   Looks up a localized string similar to Updated domain successfully.
         /// </summary>
         public static string EditedDomainSuccessfully {
             get {
@@ -259,7 +277,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Removed domain successfully.
+        ///   Looks up a localized string similar to Deleted domain(s) successfully.
         /// </summary>
         public static string RemovedDomainSuccessfully {
             get {
@@ -268,7 +286,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you want to remove selected domain &lt;b&gt;#&lt;/b&gt;?.
+        ///   Looks up a localized string similar to Are you sure you want to delete selected domain &lt;b&gt;#&lt;/b&gt;?.
         /// </summary>
         public static string RemoveDomainConfirm {
             get {

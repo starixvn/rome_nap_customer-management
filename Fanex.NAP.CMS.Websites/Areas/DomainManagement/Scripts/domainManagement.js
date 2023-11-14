@@ -5,6 +5,7 @@
         freeGrid = $('#freegrid'),
         boxBulkUpdate = $('#box-bulkUpdate'),
         btnBulkUpdate = $('#btn-bulkUpdate'),
+        btnBulkRemove = $('#btn-bulkRemove'),
         hasHostPermisson = null,
         siteListData = [],
         countryListData = [];
@@ -46,6 +47,17 @@
 
 
             domains.length > 1 && domainManagementAddOrEdit.openModal(domainManagementAddOrEdit.BULK_EDIT, domains);
+        });
+
+        btnBulkRemove.click(function () {
+            const domains = [];
+            $('.chk-domain:checked').each(function () {
+                const $this = $(this);
+                domains.push({ id: $this.data('domainid'), name: $this.data('domainname') });
+            });
+
+
+            domains.length > 1 && handleRemoveDomains(domains, resources.BulkRemoveDomainConfirm.replace('#', domains.length));
         });
 
         $('#formSearch').submit(function (e) {
@@ -128,7 +140,7 @@
             { HeaderText: resources.System, Width: 100, Name: 'colSystem', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.Site, Width: 100, Name: 'colSite', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.BrandName, Width: 80, Name: 'colBrandName', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: resources.Status, Width: 80, Name: 'colStatus', HeaderAlign: 'center', CellAlign: 'center' },
+            { HeaderText: resources.Status + `<span class="light-note-info-message" title="${$('#divNoteStatus').html()}"></span>`, Width: 80, Name: 'colStatus', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.RestrictedCountries, Width: 120, Name: 'colRestrictedCountries', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.Remark, Width: 200, Name: 'colRemark', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
             { HeaderText: resources.ExpiredDate, Width: 100, Name: 'colExpiredDate', HeaderAlign: 'center', CellAlign: 'center' },
@@ -199,15 +211,16 @@
 
     function renderActionCell(domainId, domainName) {
         return [
-            '<span class="ico-edit mid-margin-right" title="Edit" data-domainid="', domainId, '"></span>',
+            '<span class="ico-edit mid-margin-right" title="Update" data-domainid="', domainId, '"></span>',
             '<span class="ico-copy mid-margin-right" title="Copy" data-domainid="', domainId, '"></span>',
-            '<span class="ico-delete" title="Remove" data-domainid="', domainId, '" data-domainname="', domainName, '"></span>'
+            '<span class="ico-delete" title="Delete" data-domainid="', domainId, '" data-domainname="', domainName, '"></span>'
         ].join('');
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
         $('.note-info-message.site').tipsy({ opacity: 0.9, gravity: 'sw' });
         $('.note-info-message.country').tipsy({ opacity: 0.9, gravity: 's' });
+        $('.light-note-info-message').tipsy({ opacity: 1, gravity: 'w', html: true });
 
         if (hasHostPermisson) {
             const checkboxAll = $('#chk-checkAll');
@@ -218,8 +231,10 @@
                 checkboxDomains.prop('checked', this.checked);
                 if (checked && checkboxDomains.filter(':checked').length > 1) {
                     btnBulkUpdate.removeAttr('disabled');
+                    btnBulkRemove.removeAttr('disabled');
                 } else {
                     btnBulkUpdate.attr('disabled', 'disabled');
+                    btnBulkRemove.attr('disabled', 'disabled');
                 }
             });
 
@@ -228,8 +243,10 @@
                 checkboxAll.prop('checked', checked && checkboxDomains.not(':checked').length === 0);
                 if (checkboxDomains.filter(':checked').length > 1) {
                     btnBulkUpdate.removeAttr('disabled');
+                    btnBulkRemove.removeAttr('disabled');
                 } else {
                     btnBulkUpdate.attr('disabled', 'disabled');
+                    btnBulkRemove.attr('disabled', 'disabled');
                 }
             });
 
@@ -241,7 +258,12 @@
                 handleGetDomainById($(this).data('domainid'), domainManagementAddOrEdit.COPY);
             });
 
-            $('.ico-delete').off().click(handleRemoveDomain);
+            $('.ico-delete').off().click(function () {
+                const $this = $(this);
+                const id = $this.data('domainid');
+                const name = $this.data('domainname');
+                handleRemoveDomains([{ id, name }], resources.RemoveDomainConfirm.replace('#', name));
+            });
         }
     }
 
@@ -259,17 +281,15 @@
             });
     }
 
-    function handleRemoveDomain() {
-        const $this = $(this);
-        const domainId = $this.data('domainid');
+    function handleRemoveDomains(domains, confirmMessage) {
         CMS.showConfirmMessage(
-            resources.RemoveDomainConfirm.replace('#', $this.data('domainname')),
+            confirmMessage,
             function () {
                 CMS.disableInput();
                 CMS.callAjax(
                     this,
                     'Remove',
-                    { domainId },
+                    domains,
                     function (result) {
                         const resultJson = JSON.parse(result);
                         if (resultJson.IsSuccess) {

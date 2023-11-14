@@ -151,10 +151,10 @@
     <value>Duplicated domain: #</value>
   </data>
   <data name="EditDomain" xml:space="preserve">
-    <value>Edit Domain</value>
+    <value>Update Domain</value>
   </data>
   <data name="EditDomains" xml:space="preserve">
-    <value>Edit Domain(s)</value>
+    <value>Update Domain(s)</value>
   </data>
   <data name="ExpiredDate" xml:space="preserve">
     <value>Expired Date</value>
@@ -178,7 +178,7 @@
     <value>Remark</value>
   </data>
   <data name="RemoveDomainConfirm" xml:space="preserve">
-    <value>Are you sure you want to remove selected domain &lt;b&gt;#&lt;/b&gt;?</value>
+    <value>Are you sure you want to delete selected domain &lt;b&gt;#&lt;/b&gt;?</value>
   </data>
   <data name="RestrictedCountries" xml:space="preserve">
     <value>Restricted Countries</value>
@@ -193,15 +193,21 @@
     <value>System</value>
   </data>
   <data name="RemovedDomainSuccessfully" xml:space="preserve">
-    <value>Removed domain successfully</value>
+    <value>Deleted domain(s) successfully</value>
   </data>
   <data name="EditedDomainSuccessfully" xml:space="preserve">
-    <value>Edited domain successfully</value>
+    <value>Updated domain successfully</value>
   </data>
   <data name="EditedDomainsSuccessfully" xml:space="preserve">
-    <value>Edited domains successfully</value>
+    <value>Updated domains successfully</value>
   </data>
   <data name="StatusChangingWarning" xml:space="preserve">
     <value>Customers will be notified when changing status to "Active"</value>
+  </data>
+  <data name="BulkRemove" xml:space="preserve">
+    <value>Bulk Delete</value>
+  </data>
+  <data name="BulkRemoveDomainConfirm" xml:space="preserve">
+    <value>&lt;b&gt;# domains selected&lt;/b&gt;. Are you sure you want to delete them?</value>
   </data>
 </root>

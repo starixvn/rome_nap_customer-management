@@ -6,6 +6,7 @@
     using Fanex.Nap.CMS.DomainManagement.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.NAP.Core.Business;
@@ -63,11 +64,11 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.DomainManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Remove(int domainId)
-            => domainId == 0
+        public ActionResult Remove(IdNameModel[] domains)
+            => domains == null || domains.Length == 0
             ? BadRequest()
             : JsonData(
-                domainManagementService.RemoveDomain(domainId, CurrentSession.UserId, CurrentContext.IP),
+                domainManagementService.RemoveDomains(domains, CurrentSession.UserId, CurrentContext.IP),
                 JsonRequestBehavior.DenyGet);
 
         protected override void OnAuthorization(AuthorizationContext filterContext)

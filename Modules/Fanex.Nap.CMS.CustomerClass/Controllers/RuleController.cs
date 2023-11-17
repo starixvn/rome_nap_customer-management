@@ -78,5 +78,27 @@
                 ? JsonData(ruleService.EnableRule(request), JsonRequestBehavior.DenyGet)
                 : BadRequest();
         }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        public ActionResult CheckRules(DeleteRuleRequest request)
+        {
+            request.AssignUserIdAndIP(CurrentSession, CurrentContext);
+
+            return request.IsValid()
+                ? JsonData(ruleService.CheckRuleDel(request), JsonRequestBehavior.DenyGet)
+                : BadRequest();
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        public ActionResult DeleteRules(DeleteRuleRequest request)
+        {
+            request.AssignUserIdAndIP(CurrentSession, CurrentContext);
+
+            return request.IsValid()
+                ? JsonData(ruleService.DeleteRules(request), JsonRequestBehavior.DenyGet)
+                : BadRequest();
+        }
     }
 }

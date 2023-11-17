@@ -25,7 +25,7 @@
                 Convert.ToInt32(reader["PolicyId"]),
                 reader["PolicyTitle"].ToString(),
                 Convert.ToInt16(reader["SportType"]),
-                DataReaderToModelHelper.ToRuleList(reader));
+                DataReaderToModelHelper.ToPolicyRuleList(reader));
 
         public IEnumerable<IdNameModel> GetPolicyTitles(ICriteria criteria)
             => ExecuteReader(criteria, ToPolicyTitle);

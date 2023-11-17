@@ -246,8 +246,25 @@ const siteManagementAssignSiteSetting = (function ($) {
 
     function validateSiteMultiSelect(element) {
         const selectedValues = element.fanexMultiSelect("getSelectedTexts", true);
+        var allSitesLength = sites[0].items.length + sites[1].items.length;
+        if (selectedValues.length === allSitesLength) {
+            return "All";
+        }
         if (selectedValues.length) {
-            return selectedValues.join();
+            var selectedCreditSite = sites[0].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var selectedLicenseeSite = sites[1].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var result = [];
+            if (selectedCreditSite.length === sites[0].items.length) {
+                result.push("AllCredit");
+                result = result.concat(selectedLicenseeSite);
+            } else if (selectedLicenseeSite.length === sites[1].items.length) {
+                result = selectedCreditSite;
+                result.push("AllDeposit");
+            } else {
+                result = selectedValues;
+            }
+
+            return result.join();
         }
 
         CMS.showTipsyError(element, resources.requiredField, "ne");
@@ -255,6 +272,9 @@ const siteManagementAssignSiteSetting = (function ($) {
 
     function validateMultiSelect(element) {
         const selectedValues = element.fanexMultiSelect("getItems", true);
+        if (selectedValues.length === currencyList.length) {
+            return "0";
+        }
         if (selectedValues.length) {
             return selectedValues.join();
         }

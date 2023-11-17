@@ -495,4 +495,7 @@
   <data name="AddUtilityOfferingSuccessfully" xml:space="preserve">
     <value>Add Utility Offering Successfully</value>
   </data>
+  <data name="DeleteRuleSuccessfully" xml:space="preserve">
+    <value>Delete Rules Successfully</value>
+  </data>
 </root>

@@ -17,7 +17,7 @@
     internal class SiteDataAccess : BaseRepository, ISiteDataAccess
     {
         public Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(ICriteria criteria)
-            => ExecuteReaderPaging(criteria, ToSiteSetting);
+            => ExecuteReaderPaging(criteria, ToSitesSetting);
 
         public IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria)
             => ExecuteReader(criteria, ToSiteSetting);
@@ -27,6 +27,14 @@
                 int.Parse(reader["PolicyId"].ToString()),
                 reader["PolicyTitle"].ToString(),
                 reader["Site"].ToString(),
+                reader["CurrencyName"].ToString(),
+                reader["Platform"].ToString());
+
+        private static SiteSetting ToSitesSetting(IDataReader reader)
+            => new SiteSetting(
+                int.Parse(reader["PolicyId"].ToString()),
+                reader["PolicyTitle"].ToString(),
+                reader["Sites"].ToString(),
                 reader["CurrencyName"].ToString(),
                 reader["Platform"].ToString());
     }

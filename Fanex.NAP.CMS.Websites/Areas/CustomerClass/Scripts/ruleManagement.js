@@ -121,7 +121,7 @@
                 { Name: "colMinMaxBetMPM", Value: ruleManagementHelper.renderSeparateCell(rule.MinBet, rule.MaxBet, rule.MaxPerMatch) },
                 { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                 { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
-                { Name: "colPolicies", Value: rule.Policies },
+                { Name: "colPolicies", Value: rule.PolicyTitles },
                 { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) }
             ];
 
@@ -167,8 +167,8 @@
     }
 
 
-    function renderDeleteCell(id, policies) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-policies="${policies}">`;
+    function renderDeleteCell(id) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -299,30 +299,44 @@
 
     function handleDelSelected() {
         var settings = [];
-        var policies = "";
+        var ruleIds = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
-                policies = policies.concat(",", $(this).data("policies"));
-                settings.push({
-                    RuleId: $(this).data("id")
-                });
+                ruleIds.push($(this).data("id"));
             }
         });
-        if (settings.length === 0) {
+        if (ruleIds.length === 0) {
             return;
         }
 
-        var message = `Are you sure you want to delete the selected setting row(s)?`;
-
-        CMS.showConfirmMessage(message, function () { callDelete(settings); });
+        callCheckRuleBeforeDelete(ruleIds);
     }
 
-    function callDelete(siteSettings) {
+
+    function callCheckRuleBeforeDelete(ruleIds) {
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`Rule/Delete`),
-            { SiteSettings: siteSettings },
+            CMS.resolveRootUrl(`Rule/CheckRules`),
+            { RuleIDs: ruleIds.join() },
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    var message = `Are you sure you want to delete the selected setting row(s)?`;
+                    CMS.showConfirmMessage(message, function () { callDelete(ruleIds); });
+                } else {
+                    CMS.showConfirmMessage(resultJson.Message, function () { callDelete(ruleIds); });
+                }
+            });
+    }
+
+
+    function callDelete(ruleIds) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Rule/DeleteRules`),
+            { RuleIDs: ruleIds.join() },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
@@ -333,7 +347,6 @@
                 }
             });
     }
-
 
     $(function () {
         init();

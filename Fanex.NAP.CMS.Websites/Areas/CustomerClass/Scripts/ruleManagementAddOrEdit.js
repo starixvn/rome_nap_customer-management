@@ -98,7 +98,6 @@ const ruleManagementAddOrEdit = (function ($) {
         txtSeizeBet.val(rule.SeizeBet);
 
         chkDisableParlay = $("#chkDisableParlay").prop("checked", rule.DisableParlay);
-        //txtPeakHourSpread = $("#txtPeakHourSpread").val(ruleManagementHelper.formatInteger(rule.PeakHourSpread));
     }
 
     function bindEvents(ruleId) {

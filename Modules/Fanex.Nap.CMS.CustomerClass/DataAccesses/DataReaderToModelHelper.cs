@@ -22,12 +22,21 @@
             ? ToRule(
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
+                enable: Convert.ToBoolean(reader["Enable"]),
+                policyTitles: reader["PolicyTitles"].ToString())
+            : null;
+
+        public static Rule ToPolicyRuleList(IDataReader reader)
+            => GetInt(reader["RuleId"]).HasValue
+            ? ToRule(
+                reader,
+                leagueGroups: reader["LeagueGroupNames"].ToString(),
                 enable: Convert.ToBoolean(reader["Enable"]))
             : null;
 
         public static Rule ToRule(IDataReader reader)
             => GetInt(reader["RuleId"]).HasValue
-            ? ToRule(reader, leagueGroupIds: reader["LeagueGroupIds"].ToString())
+            ? ToRule(reader, leagueGroupIds: reader["LeagueGroupIds"].ToString(), policyTitles: reader["PolicyTitles"].ToString())
             : null;
 
 #pragma warning disable S3427
@@ -38,7 +47,8 @@
             bool? enable = false,
             string site = null,
             string currencies = null,
-            string platforms = null)
+            string platforms = null,
+            string policyTitles = null)
 #pragma warning restore S3427
             => new Rule(
                 Convert.ToInt32(reader["RuleId"]),
@@ -63,7 +73,8 @@
                 enable,
                 site,
                 currencies,
-                platforms);
+                platforms,
+                policyTitles);
 
         private static int? GetInt(object value)
             => value == null || value == DBNull.Value

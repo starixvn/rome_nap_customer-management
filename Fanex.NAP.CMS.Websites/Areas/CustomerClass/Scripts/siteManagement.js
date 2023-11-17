@@ -4,16 +4,18 @@
     let cachedSearchUrlWithQueryString = null,
         cachedGridOptions = null,
         hasHostPermisson = false,
+        cachedSites = [],
         freeGrid = $("#freegrid");
 
     function init() {
+        cachedSites = buildGroupSiteList(true);
         const ddlSite = customerClassHelper.renderMultiSelect(
             "#ddlSite",
             {
                 minWidth: 180,
                 showFilter: true,
                 showTooltip: false,
-                listData: buildGroupSiteList(true)
+                listData: cachedSites
             });
         const ddlPolicyTitle = $("#ddlPolicyTitle");
         const ddlPlatform = renderPlatform();
@@ -22,7 +24,7 @@
             e.preventDefault();
 
             const formData = {
-                sites: ddlSite.fanexMultiSelect("getSelectedTexts", true).join(),
+                sites: getFilterSites(ddlSite),
                 policyId: ddlPolicyTitle.val(),
                 platforms: ddlPlatform.fanexMultiSelect("getItems", true).join()
             };
@@ -99,6 +101,30 @@
         ];
     }
 
+    function getFilterSites(element) {
+        const selectedValues = element.fanexMultiSelect("getSelectedTexts", true);
+        var allSitesLength = cachedSites[0].items.length + cachedSites[1].items.length;
+        if (selectedValues.length === allSitesLength) {
+            return "All";
+        }
+        if (selectedValues.length) {
+            var selectedCreditSite = cachedSites[0].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var selectedLicenseeSite = cachedSites[1].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var result = [];
+            if (selectedCreditSite.length === cachedSites[0].items.length) {
+                result.push("AllCredit");
+                result = result.concat(selectedLicenseeSite);
+            } else if (selectedLicenseeSite.length === cachedSites[1].items.length) {
+                result = selectedCreditSite;
+                result.push("AllDeposit");
+            } else {
+                result = selectedValues;
+            }
+
+            return result.join();
+        }
+    }
+
     function renderPlatform() {
         const platforms = platformList.map(function (item) {
             return { value: item.Id, text: item.Name, checked: true, enable: true };
@@ -122,6 +148,9 @@
                 freeGrid.find(".link-currency")
                     .off("click")
                     .click(handleViewCurrencies);
+                freeGrid.find(".link-sites")
+                    .off("click")
+                    .click(handleViewSites);
                 freeGrid.find("#chk-select-delete-all")
                     .off("click")
                     .click(handleCheckDelAll);
@@ -179,7 +208,7 @@
         return data.map(function (datum) {
             const columns = [
                 { Name: "colPolicyTitle", Value: datum.PolicyTitle },
-                { Name: "colSite", Value: datum.Site },
+                { Name: "colSite", Value: renderSitesCell(datum.Site) },
                 { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
                 { Name: "colPlatform", Value: datum.PlatformNames }
             ];
@@ -189,6 +218,28 @@
                 Columns: columns
             };
         });
+    }
+
+    function renderSitesCell(sites) {
+        if (sites === "All" || sites.split(',').includes('All')) {
+            return `<a href="javascript:;" class="link-sites" data-sites="${siteList.map(s => s.Name).join()}">All</a>`;
+        }
+
+        if (sites.includes("AllCredit")) {
+            var creditSites = siteList.filter(s => !s.IsLicensee).map(s => s.Name);
+            sites = sites.replace("AllCredit", creditSites.join());
+        }
+
+        if (sites.includes("AllDeposit")) {
+            var depositSites = siteList.filter(s => s.IsLicensee).map(s => s.Name);
+            sites = sites.replace("AllDeposit", depositSites.join());
+        }
+
+        const sitesArray = sites.split(",");
+        const numOfSites = sitesArray.length;
+        return numOfSites <= 5
+            ? sitesArray.join(", ")
+            : `<a href="javascript:;" class="link-sites" data-sites="${sites}">${numOfSites}</a>`;
     }
 
     function renderCurrencyCell(isAllCurrencies, currencies) {
@@ -217,6 +268,31 @@
 
         CMS.modal(
             resources.currency,
+            html.join(""),
+            {
+                resizable: false,
+                position: {
+                    my: "center top",
+                    at: "center top",
+                    of: "#headline"
+                }
+            });
+    }
+
+    function handleViewSites() {
+        let html = [
+            '<div class="form" id="viewCurrenciesForm">',
+            '<table class="tbl-freegrid">',
+            '<thead><tr><th class="width-60">#</th><th>', resources.site, '</th></tr></thead>',
+            '<tbody>'
+        ];
+        $(this).data("sites").split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+        });
+        html.push('</tbody></table></div>');
+
+        CMS.modal(
+            resources.site,
             html.join(""),
             {
                 resizable: false,

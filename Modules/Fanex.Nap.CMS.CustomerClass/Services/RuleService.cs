@@ -26,6 +26,10 @@
         Result EditRule(int ruleId, AddRuleRequest request);
 
         Result EnableRule(EnableRuleRequest request);
+
+        Result CheckRuleDel(DeleteRuleRequest request);
+
+        Result DeleteRules(DeleteRuleRequest request);
     }
 
     internal class RuleService : IRuleService
@@ -107,5 +111,11 @@
 
         public Result EnableRule(EnableRuleRequest request)
             => ruleDataAccess.DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
+
+        public Result CheckRuleDel(DeleteRuleRequest request)
+            => ruleDataAccess.DoAction(new CheckRuleDelCriteria(request));
+
+        public Result DeleteRules(DeleteRuleRequest request)
+            => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
     }
 }

@@ -36,6 +36,7 @@
         <div class="lbl-field">
             <label class="label">@Labels.Status</label>
             <span class="text-red">*</span>
+            <span class="note-info-message" id="popup-note-status"></span>
         </div>
         <div class="edit-field">
             @Html.DropDownList("status", Model.Status, new { @id = "popup-status", @class = "width-162" })

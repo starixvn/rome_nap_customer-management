@@ -27,6 +27,7 @@
             AddNewDomain: '@Labels.AddNewDomain',
             EditDomain: '@Labels.EditDomain',
             RemoveDomainConfirm: '@Html.Raw(Labels.RemoveDomainConfirm)',
+            BulkRemoveDomainConfirm: '@Html.Raw(Labels.BulkRemoveDomainConfirm)',
             RequiredFieldError: '@CommonLabels.RequiredFieldError',
             InvalidDomainFormat: '@Labels.InvalidDomainFormat',
             DuplicatedDomain: '@Labels.DuplicatedDomain',
@@ -92,6 +93,7 @@
     {
         <div class="mid-margin-bottom display-none" id="box-bulkUpdate">
             <button type="button" class="blue-button" id="btn-bulkUpdate" disabled>@Labels.BulkUpdate</button>
+            <button type="button" class="red-button" id="btn-bulkRemove" disabled>@Labels.BulkRemove</button>
         </div>
     }
     <div class="freegrid display-none" id="freegrid"></div>
@@ -102,3 +104,9 @@
         @{ Html.RenderPartial("~/Areas/DomainManagement/Views/_AddNewOrEditForm.cshtml", Model); }
     </div>
 }
+<div id="divNoteStatus" class="display-none">
+    <p><b>In Stock:</b> a domain which is setup and ready to use, but has not been delivered to customers yet.</p>
+    <p><b>Available:</b> a domain which has been delivered to customers, but has not been published to Alpha and Member sites.</p>
+    <p><b>Active:</b> a domain which has been published to Alpha and Member sites.</p>
+    <p><b>Unavailable:</b> a domain is no longer in use.</p>
+</div>

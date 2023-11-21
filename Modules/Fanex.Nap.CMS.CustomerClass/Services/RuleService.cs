@@ -9,6 +9,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface IRuleService
@@ -27,7 +28,7 @@
 
         Result EnableRule(EnableRuleRequest request);
 
-        Result CheckRuleDel(DeleteRuleRequest request);
+        CheckRuleResponse CheckRuleDel(DeleteRuleRequest request);
 
         Result DeleteRules(DeleteRuleRequest request);
     }
@@ -112,8 +113,8 @@
         public Result EnableRule(EnableRuleRequest request)
             => ruleDataAccess.DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
 
-        public Result CheckRuleDel(DeleteRuleRequest request)
-            => ruleDataAccess.DoAction(new CheckRuleDelCriteria(request));
+        public CheckRuleResponse CheckRuleDel(DeleteRuleRequest request)
+            => ruleDataAccess.CheckRule(new CheckRuleDelCriteria(request));
 
         public Result DeleteRules(DeleteRuleRequest request)
             => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);

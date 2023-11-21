@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using Fanex.Common;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.Framework.Data;
     using Rule = Models.Rule;
@@ -13,6 +16,8 @@
         IEnumerable<Rule> GetRules(ICriteria criteria);
 
         Rule GetRule(ICriteria criteria);
+
+        CheckRuleResponse CheckRule(ICriteria criteria);
     }
 
     internal class RuleDataAccess : BaseRepository, IRuleDataAccess
@@ -25,5 +30,26 @@
 
         public Rule GetRule(ICriteria criteria)
             => GetSingle(criteria, DataReaderToModelHelper.ToRule);
+
+        public CheckRuleResponse CheckRule(ICriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var affectedRules = new List<string>();
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        affectedRules.Add(string.Format("Rule {0}", reader["RuleTitle"].ToString()));
+                    }
+                }
+                var outputParams = db.GetOuputParams();
+
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = Converter.ToString2(outputParams["errmsg"]);
+
+                return new CheckRuleResponse(string.Join(", ", affectedRules), code, message);
+            }
+        }
     }
 }

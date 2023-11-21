@@ -152,31 +152,47 @@
     }
 
     function handleDelSelected() {
-        var settings = [];
-        var policies = "";
+        var policyIds = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
-                policies = policies.concat(",", $(this).data("policies"));
-                settings.push({
-                    RuleId: $(this).data("id")
-                });
+                policyIds.push($(this).data("id"));
             }
         });
-        if (settings.length === 0) {
+        if (policyIds.length === 0) {
             return;
         }
-
-        var message = `Are you sure you want to delete the selected setting row(s)?`;
-
-        CMS.showConfirmMessage(message, function () { callDelete(settings); });
+        callCheckPolicyBeforeDelete(policyIds.join());
     }
 
-    function callDelete(siteSettings) {
+    function callCheckPolicyBeforeDelete(policies) {
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`Rule/Delete`),
-            { SiteSettings: siteSettings },
+            CMS.resolveRootUrl(`Policy/CheckPolicies`),
+            { Policies: policies },
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    var message = `Are you sure you want to delete the selected setting row(s)?`;
+                    CMS.showConfirmMessage(message, function () { callDelete(policies); });
+                } else {
+                    if (resultJson.Policies === "") {
+                        CMS.showErrorMessage(resultJson.Message);
+                    } else {
+                        var warningMessage = `The following policy(es) have been applied to the sites - currencies:</br>${resultJson.Policies}.</br>Are you sure you want to delete them?</br>Note: If you delete them, their assign settings with Site - Currency will also be deleted.`;
+                        CMS.showConfirmMessage(warningMessage, function () { callDelete(policies); });
+                    }
+                }
+            });
+    }
+
+
+    function callDelete(policies) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Policy/DeletePolicies`),
+            { Policies: policies },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {

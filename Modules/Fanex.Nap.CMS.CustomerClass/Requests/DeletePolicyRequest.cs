@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.CustomerClass.Requests
+﻿namespace Fanex.Nap.CMS.CustomerClass.Requests
 {
-    public class DeletePolicyRequest
+    using Fanex.Nap.CMS.Infrastructure.Requests;
+    
+    public class DeletePolicyRequest : CommandBase
     {
+        public string Policies { get; set; }
     }
 }

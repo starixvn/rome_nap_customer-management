@@ -145,6 +145,8 @@
     <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicyCheck" SpName="NAP_LM_CustomerClassPolicyCheck_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicyDel" SpName="NAP_LM_CustomerClassPolicyDel_xtest" DbName="DBCust.CustDB.bodbAdminNet" />
     <!--Site-->
     <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck_xpre" DbName="DBCust.CustDB.bodbAdminNet" />

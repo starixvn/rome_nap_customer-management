@@ -9,6 +9,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface IPolicyService
@@ -22,6 +23,10 @@
         Result AddPolicy(AddPolicyRequest request);
 
         Result EditPolicy(int policyId, AddPolicyRequest request);
+
+        CheckPolicyResponse CheckPolicies(DeletePolicyRequest request);
+
+        Result DeletePolicies(DeletePolicyRequest request);
     }
 
     internal class PolicyService : IPolicyService
@@ -104,5 +109,12 @@
 
         public Result EditPolicy(int policyId, AddPolicyRequest request)
             => policyDataAccess.DoAction(new EditPolicyCriteria(policyId, request), Labels.EditPolicySuccessfully);
+
+
+        public CheckPolicyResponse CheckPolicies(DeletePolicyRequest request)
+            => policyDataAccess.CheckPolicy(new CheckPolicyDelCriteria(request));
+
+        public Result DeletePolicies(DeletePolicyRequest request)
+            => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeleteRuleSuccessfully);
     }
 }

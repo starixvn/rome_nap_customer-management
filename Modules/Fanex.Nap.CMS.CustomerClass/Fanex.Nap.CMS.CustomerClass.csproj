@@ -144,6 +144,7 @@
     <Compile Include="Criteria\CheckPolicyDelCriteria.cs" />
     <Compile Include="Criteria\CheckRuleDelCriteria.cs" />
     <Compile Include="Criteria\CommandCriteriaBase.cs" />
+    <Compile Include="Criteria\DeletePolicyCriteria.cs" />
     <Compile Include="Criteria\DeleteRuleCriteria.cs" />
     <Compile Include="Criteria\DeleteSiteCriteria.cs" />
     <Compile Include="Criteria\DeleteSpreadCriteria.cs" />
@@ -210,6 +211,8 @@
     </Compile>
     <Compile Include="Responses\AddOfferResponse.cs" />
     <Compile Include="Responses\AddSpreadRuleResponse.cs" />
+    <Compile Include="Responses\CheckPolicyResponse.cs" />
+    <Compile Include="Responses\CheckRuleResponse.cs" />
     <Compile Include="Services\FilterService.cs" />
     <Compile Include="Services\PolicyService.cs" />
     <Compile Include="Services\RuleService.cs" />

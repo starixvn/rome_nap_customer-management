@@ -376,6 +376,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Polycies Successfully.
+        /// </summary>
+        public static string DeletePolicySuccessfully {
+            get {
+                return ResourceManager.GetString("DeletePolicySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Rules Successfully.
         /// </summary>
         public static string DeleteRuleSuccessfully {

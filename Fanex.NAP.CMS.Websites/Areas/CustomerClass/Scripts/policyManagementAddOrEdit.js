@@ -90,7 +90,7 @@ const policyManagementAddOrEdit = (function ($) {
             renderEmptyRuleGrid();
         } else {
             CMS.getJson(
-                CMS.resolveRootUrl(`Rule/GetRules?sportType=${sportType}`),
+                CMS.resolveRootUrl(`Policy/GetRules?sportType=${sportType}`),
                 function (data) {
                     const dataJson = $.parseJSON(data);
                     if (!dataJson.length) {

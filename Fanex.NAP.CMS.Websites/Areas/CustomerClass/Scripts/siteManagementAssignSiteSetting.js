@@ -72,7 +72,7 @@ const siteManagementAssignSiteSetting = (function ($) {
             renderPolicyTitleDropdownList([]);
         } else {
             CMS.getJson(
-                CMS.resolveRootUrl(`Policy/GetPolicyTitle?sportType=${sportType}`),
+                CMS.resolveRootUrl(`Site/GetPolicyTitle?sportType=${sportType}`),
                 function (data) {
                     renderPolicyTitleDropdownList($.parseJSON(data));
                 });

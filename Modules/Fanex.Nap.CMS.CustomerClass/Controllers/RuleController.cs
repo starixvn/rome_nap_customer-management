@@ -38,11 +38,7 @@
         public ActionResult Search(SearchRuleRequest request)
             => JsonData(ruleService.GetRules(request));
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetRules(short sportType)
-            => JsonData(ruleService.GetRules(sportType));
-
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int ruleId)
             => JsonData(ruleService.GetRule(ruleId));
 

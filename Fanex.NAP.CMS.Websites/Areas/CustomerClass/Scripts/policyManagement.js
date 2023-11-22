@@ -197,7 +197,7 @@
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
                     CMS.showSuccessMessage(resultJson.Message);
-                    search();
+                    getPolicies();
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
                 }

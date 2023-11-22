@@ -12,13 +12,17 @@
     public class PolicyController : BaseController
     {
         private readonly IPolicyService policyService;
+        private readonly IRuleService ruleService;
 
-        public PolicyController() : this(new PolicyService())
+        public PolicyController() : this(new PolicyService(), new RuleService())
         {
         }
 
-        internal PolicyController(IPolicyService policyService)
-            => this.policyService = policyService;
+        internal PolicyController(IPolicyService policyService, IRuleService ruleService)
+        {
+            this.policyService = policyService;
+            this.ruleService = ruleService;
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
@@ -30,13 +34,13 @@
         public ActionResult GetPolicies()
             => JsonData(policyService.GetPolicies());
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPolicyTitle(short sportType)
-            => JsonData(policyService.GetPolicyTitles(sportType));
-
-        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int policyId)
             => JsonData(policyService.GetPolicy(policyId));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
+        public ActionResult GetRules(short sportType)
+            => JsonData(ruleService.GetRules(sportType));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
@@ -61,7 +65,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult CheckPolicies(DeletePolicyRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
@@ -72,7 +76,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeletePolicies(DeletePolicyRequest request)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);

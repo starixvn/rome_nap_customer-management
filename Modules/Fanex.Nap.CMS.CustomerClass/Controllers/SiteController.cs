@@ -48,6 +48,11 @@
         public ActionResult Search(GetSiteSettingRequest request)
             => JsonData(siteService.GetPagedSiteSetting(request));
 
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
+        public ActionResult GetPolicyTitle(short sportType)
+            => JsonData(policyService.GetPolicyTitles(sportType));
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Assign(AssignSiteSettingRequest request, bool isOverwrite)

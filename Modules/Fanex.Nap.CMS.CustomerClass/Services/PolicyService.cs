@@ -115,6 +115,6 @@
             => policyDataAccess.CheckPolicy(new CheckPolicyDelCriteria(request));
 
         public Result DeletePolicies(DeletePolicyRequest request)
-            => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeleteRuleSuccessfully);
+            => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeletePolicySuccessfully);
     }
 }

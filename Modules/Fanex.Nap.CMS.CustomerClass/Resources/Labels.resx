@@ -501,4 +501,7 @@
   <data name="CCSiteOverwrite" xml:space="preserve">
     <value>Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more)</value>
   </data>
+  <data name="DeletePolicySuccessfully" xml:space="preserve">
+    <value>Delete Polycies Successfully</value>
+  </data>
 </root>

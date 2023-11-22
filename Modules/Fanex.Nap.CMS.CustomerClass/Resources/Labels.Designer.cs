@@ -241,6 +241,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more).
+        /// </summary>
+        public static string CCSiteOverwrite {
+            get {
+                return ResourceManager.GetString("CCSiteOverwrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CC Utility Offering.
         /// </summary>
         public static string CCUtilityOffering {

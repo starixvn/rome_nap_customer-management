@@ -56,7 +56,7 @@ const siteManagementUpload = (function ($) {
 
         btnUpload.click(function () {
             resetErrorGrid();
-            fileControl && handleUpload(fileControl.files[0]);
+            fileControl && handleUpload(fileControl.files[0], $("#ckbExcelOverwrite").prop("checked"));
         });
     }
 
@@ -104,14 +104,14 @@ const siteManagementUpload = (function ($) {
         tblError.addClass("display-none").find("tbody").html("");
     }
 
-    function handleUpload(file) {
+    function handleUpload(file, isOverwrite) {
         CMS.disableInput();
 
         let formData = new FormData();
         formData.append("File", file);
 
         const jqxhr = $.ajax({
-            url: CMS.resolveRootUrl("Site/Upload"),
+            url: CMS.resolveRootUrl(`Site/Upload?isOverwrite=${isOverwrite}`),
             type: "POST",
             contentType: false,
             processData: false,

@@ -8,23 +8,27 @@
 
     internal class AssignSiteSettingCriteria : GetDuplicatedSiteSettingCriteria
     {
-        public AssignSiteSettingCriteria(AssignSiteSettingRequest request)
+        public AssignSiteSettingCriteria(AssignSiteSettingRequest request, bool isOverwrite)
             : base(request)
         {
+            IsOverwrite = isOverwrite;
             UserId = request.UserId;
             IP = request.IP;
         }
 
         public AssignSiteSettingCriteria(
             IEnumerable<SiteSettingExcel> siteSettingExcels,
+            bool isOverwride,
             int userId,
             string ip)
         {
             PolicySites = ToXml(siteSettingExcels);
+            IsOverwrite = isOverwride;
             UserId = userId;
             IP = ip;
         }
 
+        public bool IsOverwrite { get; }
 
         public int UserId { get; }
 

@@ -24,7 +24,8 @@
             uploadSiteSetting: "@Labels.UploadSiteSetting",
             notExcelFileError: "@Labels.NotExcelFileError",
             totalErrors: "@Labels.TotalErrors",
-            delete: "@Labels.Delete"
+            delete: "@Labels.Delete",
+            warningOverwrite: "@Labels.CCSiteOverwrite"
         };
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');

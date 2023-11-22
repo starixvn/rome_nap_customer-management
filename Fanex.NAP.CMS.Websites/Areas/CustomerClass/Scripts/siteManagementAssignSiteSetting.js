@@ -160,20 +160,24 @@ const siteManagementAssignSiteSetting = (function ($) {
         });
     }
 
-    function handleOnSave(formData) {
+    function handleOnSave(formData, isOverwriteAssign = false) {
         formData = formData || getFormData();
         if (formData) {
             CMS.disableInput();
             CMS.callAjax(
                 this,
-                CMS.resolveRootUrl("Site/Assign"),
+                CMS.resolveRootUrl(`Site/Assign?isOverwrite=${isOverwriteAssign}`),
                 formData,
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (Array.isArray(resultJson)) {
                         CMS.showConfirmMessage(buildConfirmAssignSiteSettingMessage(resultJson), function () {
                             formData.isCheck = false;
-                            handleOnSave(formData);
+                            handleOnSave(formData, isOverwriteAssign);
+                        });
+
+                        $("#ckbAssignOverwrite").change(function () {
+                            isOverwriteAssign = $(this).prop("checked");
                         });
                     } else {
                         customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSiteGridFunc);
@@ -183,17 +187,16 @@ const siteManagementAssignSiteSetting = (function ($) {
     }
 
     function buildConfirmAssignSiteSettingMessage(siteSettings) {
-        const policyTitle = ddlPolicyTitle.next(".ui-combobox").find(".ui-combobox-input").val();
-        let html = ['<p>Setting info is already existed!!!</p>'];
+        let html = ['<p>Setting info already exists</p>'];
 
         siteSettings.forEach(function (item) {
-            html.push('<p class="existed-site-setting">', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
+            html.push('<p class="existed-site-setting">- ', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
             html.push(resources.site, ": <b>", item.Site, "</b>; ");
             html.push(resources.currency, ": <b>", item.Currencies.split(",").join(", "), "</b>; ");
             html.push(resources.platform, ": <b>", item.PlatformNames, "</b></p>");
         });
 
-        html.push(`<p class="existed-site-setting-confirm">Do you want to <span class="text-blue bold">UPDATE</span> settings to Policy: ${policyTitle}?</p>`);
+        html.push(`<div><input type="checkbox" id="ckbAssignOverwrite" /><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
 
         return html.join("");
     }

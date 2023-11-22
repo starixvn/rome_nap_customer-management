@@ -498,4 +498,7 @@
   <data name="DeleteRuleSuccessfully" xml:space="preserve">
     <value>Delete Rules Successfully</value>
   </data>
+  <data name="CCSiteOverwrite" xml:space="preserve">
+    <value>Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more)</value>
+  </data>
 </root>

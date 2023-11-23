@@ -47,7 +47,7 @@
                 grp.Key.PolicyId,
                 grp.Key.PolicyTitle,
                 grp.Key.SportType,
-                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule.Enable == true).Select(p => p.Rule)))
+                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule?.Enable == true).Select(p => p.Rule)))
             .OrderBy(plc => plc.PolicyTitle);
 
         public PolicyItem GetPolicy(int policyId)

@@ -57,7 +57,7 @@
 
             foreach (var item in siteSettings)
             {
-                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies);
+                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies) || item.Currencies.ToLowerInvariant() == "all";
                 item.PlatformNames = string.Join(", ", item.Platforms
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => platformDict[Convert.ToByte(p)]));

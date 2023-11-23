@@ -22,7 +22,8 @@ const customerClassHelper = (function ($) {
                 function () {
                     CMS.closePopup();
                     successfullyCallbackFunc();
-                });
+                },
+                2000);
         } else {
             CMS.showInlineErrorMsg(resultJson.Message, inlineMessage);
         }

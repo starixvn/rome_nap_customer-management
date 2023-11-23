@@ -169,7 +169,7 @@ var CMS = (function ($) {
             $obj.html(message);
             $obj.removeClass('success error').addClass('warn').slideDown();
         },
-        showInlineSuccessMsg: function (message, $obj, autoHide, callbackFunc) {
+        showInlineSuccessMsg: function (message, $obj, autoHide, callbackFunc, timeout = 3000) {
             autoHide = autoHide === undefined ? true : autoHide;
             $obj.html(message);
             $obj.removeClass('error').removeClass('info').addClass('success').slideDown();
@@ -177,7 +177,7 @@ var CMS = (function ($) {
             if (autoHide) {
                 setTimeout(function () {
                     CMS.hideInlineMsg($obj, callbackFunc);
-                }, 3000);
+                }, timeout);
             } else if (callbackFunc) {
                 callbackFunc();
             }

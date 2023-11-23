@@ -172,15 +172,15 @@
             { Policies: policies },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
-                if (resultJson.IsSuccess) {
-                    var message = `Are you sure you want to delete the selected setting row(s)?`;
-                    CMS.showConfirmMessage(message, function () { callDelete(policies); });
+                if (resultJson.Policies !== "") {
+                    var warningMessage = `The following policy(es) have been applied to the sites - currencies:</br>${resultJson.Policies}.</br>Are you sure you want to delete them?</br>Note: If you delete them, their assign settings with Site - Currency will also be deleted.`;
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(policies); });
                 } else {
-                    if (resultJson.Policies === "") {
-                        CMS.showErrorMessage(resultJson.Message);
+                    if (resultJson.IsSuccess) {
+                        var message = `Are you sure you want to delete the selected setting row(s)?`;
+                        CMS.showConfirmMessage(message, function () { callDelete(policies); });
                     } else {
-                        var warningMessage = `The following policy(es) have been applied to the sites - currencies:</br>${resultJson.Policies}.</br>Are you sure you want to delete them?</br>Note: If you delete them, their assign settings with Site - Currency will also be deleted.`;
-                        CMS.showConfirmMessage(warningMessage, function () { callDelete(policies); });
+                        CMS.showErrorMessage(resultJson.Message);
                     }
                 }
             });

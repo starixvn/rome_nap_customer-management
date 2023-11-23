@@ -160,7 +160,7 @@ const siteManagementAssignSiteSetting = (function ($) {
         });
     }
 
-    function handleOnSave(formData, isOverwriteAssign = false) {
+    function handleOnSave(formData, isOverwriteAssign = true) {
         formData = formData || getFormData();
         if (formData) {
             CMS.disableInput();
@@ -196,7 +196,7 @@ const siteManagementAssignSiteSetting = (function ($) {
             html.push(resources.platform, ": <b>", item.PlatformNames, "</b></p>");
         });
 
-        html.push(`<div><input type="checkbox" id="ckbAssignOverwrite" /><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
+        html.push(`<div><input type="checkbox" id="ckbAssignOverwrite" checked/><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
 
         return html.join("");
     }

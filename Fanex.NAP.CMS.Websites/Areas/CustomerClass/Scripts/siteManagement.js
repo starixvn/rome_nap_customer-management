@@ -221,7 +221,7 @@
     }
 
     function renderSitesCell(sites) {
-        if (sites === "All" || sites.split(',').includes('All')) {
+        if (sites.toLowerCase() === "all" || sites.toLowerCase().split(',').includes('all')) {
             return `<a href="javascript:;" class="link-sites" data-sites="${siteList.map(s => s.Name).join()}">All</a>`;
         }
 
@@ -244,7 +244,7 @@
 
     function renderCurrencyCell(isAllCurrencies, currencies) {
         if (isAllCurrencies) {
-            return `<a href="javascript:;" class="link-currency" data-currencies="${currencies}">All</a>`;
+            return `<a href="javascript:;" class="link-currency" data-currencies="${currencyList.map(cur => cur.Name).join()}">All</a>`;
         }
 
         const currencyArray = currencies.split(",");

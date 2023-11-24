@@ -5,10 +5,14 @@
         cachedGridOptions = null,
         hasHostPermisson = false,
         cachedSites = [],
+        creditSites = [],
+        depositSites = [],
         freeGrid = $("#freegrid");
 
     function init() {
         cachedSites = buildGroupSiteList(true);
+        creditSites = siteList.filter(s => !s.IsLicensee).map(s => s.Name);
+        depositSites = siteList.filter(s => s.IsLicensee).map(s => s.Name);
         const ddlSite = customerClassHelper.renderMultiSelect(
             "#ddlSite",
             {
@@ -221,25 +225,43 @@
     }
 
     function renderSitesCell(sites) {
-        if (sites.toLowerCase() === "all" || sites.toLowerCase().split(',').includes('all')) {
+        var arraySites = sites.split(',');
+        if (arraySites.includes('All')) {
             return `<a href="javascript:;" class="link-sites" data-sites="${siteList.map(s => s.Name).join()}">All</a>`;
         }
 
-        if (sites.includes("AllCredit")) {
-            var creditSites = siteList.filter(s => !s.IsLicensee).map(s => s.Name);
-            sites = sites.replace("AllCredit", creditSites.join());
+        if (arraySites.includes("AllCredit")) {
+            arraySites = arraySites.filter(st => !creditSites.includes(st));
         }
 
-        if (sites.includes("AllDeposit")) {
-            var depositSites = siteList.filter(s => s.IsLicensee).map(s => s.Name);
-            sites = sites.replace("AllDeposit", depositSites.join());
+        if (arraySites.includes("AllDeposit")) {
+            arraySites = arraySites.filter(st => !depositSites.includes(st));
         }
 
-        const sitesArray = sites.split(",");
-        const numOfSites = sitesArray.length;
+        var removeDublicateSites = arraySites.join();
+
+        if (removeDublicateSites === "AllCredit") {
+            return `<a href="javascript:;" class="link-sites" data-sites="${creditSites.join()}">All Credit</a>`;
+        }
+
+        if (removeDublicateSites === "AllDeposit") {
+            return `<a href="javascript:;" class="link-sites" data-sites="${depositSites.join()}">All Deposit</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllCredit", creditSites.join());
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllDeposit", depositSites.join());
+        }
+        arraySites = removeDublicateSites.split(",");
+        
+        const numOfSites = arraySites.length;
+
         return numOfSites <= 5
-            ? sitesArray.join(", ")
-            : `<a href="javascript:;" class="link-sites" data-sites="${sites}">${numOfSites}</a>`;
+            ? arraySites.join(", ")
+            : `<a href="javascript:;" class="link-sites" data-sites="${removeDublicateSites}">${numOfSites}</a>`;
     }
 
     function renderCurrencyCell(isAllCurrencies, currencies) {

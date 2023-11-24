@@ -31,8 +31,8 @@
                 new PolicyViewModel(HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPolicies()
-            => JsonData(policyService.GetPolicies());
+        public ActionResult GetPolicies(string policyTitle)
+            => JsonData(policyService.GetPolicies(policyTitle));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int policyId)

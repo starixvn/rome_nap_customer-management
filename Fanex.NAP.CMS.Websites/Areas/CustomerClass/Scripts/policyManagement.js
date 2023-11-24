@@ -15,13 +15,17 @@
                 policyManagementAddOrEdit.openModal();
             });
         }
+        $("#btnSearch").click(function () {
+            getPolicies();
+        });
 
         getPolicies();
     }
 
     function getPolicies() {
+        var policyTitle = encodeURIComponent($("#filterPolicy").val());
         CMS.getJson(
-            CMS.resolveRootUrl("Policy/GetPolicies"),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}`),
             function (data) {
                 cachedGridOptions = cachedGridOptions || defaultGridOptions();
                 cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));

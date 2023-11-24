@@ -8,6 +8,7 @@
         public static IDictionary<byte, string> Platforms
             => new Dictionary<byte, string>
             {
+                [0] = Labels.AllPlatform,
                 [1] = Labels.Desktop,
 #pragma warning disable S109
                 [2] = Labels.Mobile,

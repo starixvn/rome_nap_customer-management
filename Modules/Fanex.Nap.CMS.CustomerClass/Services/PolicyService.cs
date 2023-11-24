@@ -14,7 +14,7 @@
 
     internal interface IPolicyService
     {
-        IEnumerable<Policy> GetPolicies();
+        IEnumerable<Policy> GetPolicies(string policyTitle = null);
 
         PolicyItem GetPolicy(int policyId);
 
@@ -40,8 +40,8 @@
             this.policyDataAccess = policyDataAccess ?? new PolicyDataAccess();
         }
 
-        public IEnumerable<Policy> GetPolicies()
-            => GetPolicyList()
+        public IEnumerable<Policy> GetPolicies(string policyTitle = null)
+            => GetPolicyList(policyTitle: policyTitle)
             .GroupBy(p => new { p.PolicyId, p.PolicyTitle, p.SportType })
             .Select(grp => new Policy(
                 grp.Key.PolicyId,
@@ -60,11 +60,11 @@
                 grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<int>() : grp.Select(p => p.Rule.RuleId)))
             .FirstOrDefault();
 
-        private IEnumerable<Policy> GetPolicyList(int policyId = 0)
+        private IEnumerable<Policy> GetPolicyList(int policyId = 0, string policyTitle = null)
         {
             var sportTypes = SportTypeConst.SportTypes;
             var leagueGroupDict = ToLeagueGroupDictionary();
-            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId));
+            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle));
 
             foreach (var item in policies)
             {

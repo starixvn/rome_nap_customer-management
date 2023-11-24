@@ -169,6 +169,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desktop, Mobile, App, Oddsfeed, DirectAPI.
+        /// </summary>
+        public static string AllPlatform {
+            get {
+                return ResourceManager.GetString("AllPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App.
         /// </summary>
         public static string App {
@@ -241,7 +250,7 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more).
+        ///   Looks up a localized string similar to Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more.).
         /// </summary>
         public static string CCSiteOverwrite {
             get {

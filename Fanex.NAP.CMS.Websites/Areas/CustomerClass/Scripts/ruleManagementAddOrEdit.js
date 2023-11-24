@@ -113,7 +113,7 @@ const ruleManagementAddOrEdit = (function ($) {
             .off("change")
             .change(function () {
                 const sportType = +this.value;
-                ddlLeagueGroup = renderLeagueGroup(sportType);
+                ddlLeagueGroup = renderLeagueGroup(sportType, "-1");
                 disableSeizeBetTextbox(sportType);
             });
 

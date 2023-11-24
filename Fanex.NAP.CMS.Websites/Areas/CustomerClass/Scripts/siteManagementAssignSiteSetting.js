@@ -187,16 +187,16 @@ const siteManagementAssignSiteSetting = (function ($) {
     }
 
     function buildConfirmAssignSiteSettingMessage(siteSettings) {
-        let html = ['<p>Setting info already exists</p>'];
+        let html = ['<p>Setting info already exists</p><div class="existed-site-setting-div">'];
 
         siteSettings.forEach(function (item) {
             html.push('<p class="existed-site-setting">- ', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
-            html.push(resources.site, ": <b>", item.Site, "</b>; ");
+            html.push(resources.site, ": <b>", item.Site.replace("AllDeposit", "All Deposit").replace("AllCredit", "All Credit"), "</b>; ");
             html.push(resources.currency, ": <b>", item.Currencies.split(",").join(", "), "</b>; ");
             html.push(resources.platform, ": <b>", item.PlatformNames, "</b></p>");
         });
-
-        html.push(`<div><input type="checkbox" id="ckbAssignOverwrite" checked/><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
+        html.push('</div>');
+        html.push(`<div class="override-warning"><input type="checkbox" id="ckbAssignOverwrite" checked/><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
 
         return html.join("");
     }
@@ -229,16 +229,16 @@ const siteManagementAssignSiteSetting = (function ($) {
             const id = $this.data("randomid");
 
             const ddlSite = $this.find(`#ddlPopupSite-${id}`);
-            const sites = validateSiteMultiSelect(ddlSite);
+            const selectedSites = validateSiteMultiSelect(ddlSite);
 
             const ddlCurrency = $this.find(`#ddlCurrency-${id}`);
-            const currencies = validateMultiSelect(ddlCurrency);
+            const selectedCurrencies = validateMultiSelect(ddlCurrency, currencyList.length, "0");
 
             const ddlPlatform = $this.find(`#ddlPopupPlatform-${id}`);
-            const platforms = validateMultiSelect(ddlPlatform);
+            const selectedPlatforms = validateMultiSelect(ddlPlatform, platforms.length, "0");
 
-            if (sites && currencies && platforms) {
-                siteCurrencies.push({ sites, currencies, platforms });
+            if (selectedSites && selectedCurrencies && selectedPlatforms) {
+                siteCurrencies.push({ sites: selectedSites, currencies: selectedCurrencies, platforms: selectedPlatforms });
             } else {
                 isValid = false;
             }
@@ -273,10 +273,10 @@ const siteManagementAssignSiteSetting = (function ($) {
         CMS.showTipsyError(element, resources.requiredField, "ne");
     }
 
-    function validateMultiSelect(element) {
+    function validateMultiSelect(element, isAllItemLength, replaceAllValue) {
         const selectedValues = element.fanexMultiSelect("getItems", true);
-        if (selectedValues.length === currencyList.length) {
-            return "0";
+        if (selectedValues.length === isAllItemLength) {
+            return replaceAllValue;
         }
         if (selectedValues.length) {
             return selectedValues.join();

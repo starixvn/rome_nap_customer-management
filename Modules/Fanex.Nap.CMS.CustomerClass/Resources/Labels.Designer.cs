@@ -169,6 +169,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Credit.
+        /// </summary>
+        public static string AllCredit {
+            get {
+                return ResourceManager.GetString("AllCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Deposit.
+        /// </summary>
+        public static string AllDeposit {
+            get {
+                return ResourceManager.GetString("AllDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Desktop, Mobile, App, Oddsfeed, DirectAPI.
         /// </summary>
         public static string AllPlatform {

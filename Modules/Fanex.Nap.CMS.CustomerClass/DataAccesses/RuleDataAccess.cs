@@ -40,7 +40,7 @@
                 {
                     while (reader.Read())
                     {
-                        affectedRules.Add(string.Format("Rule {0}", reader["RuleTitle"].ToString()));
+                        affectedRules.Add(reader["RuleTitle"].ToString());
                     }
                 }
                 var outputParams = db.GetOuputParams();

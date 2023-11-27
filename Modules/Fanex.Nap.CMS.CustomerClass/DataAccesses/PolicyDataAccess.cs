@@ -51,7 +51,7 @@
                 {
                     while (reader.Read())
                     {
-                        affectedPolicies.Add(string.Format("Policy {0}", reader["PolicyTitle"].ToString()));
+                        affectedPolicies.Add(reader["PolicyTitle"].ToString());
                     }
                 }
                 var outputParams = db.GetOuputParams();

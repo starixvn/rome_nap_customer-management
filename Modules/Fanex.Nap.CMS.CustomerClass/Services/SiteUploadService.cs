@@ -279,9 +279,9 @@
             }
             else if (site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
-                return siteDict.Keys;
+                return new[] { Labels.All };
             }
-            else if (!siteDict.ContainsKey(site))
+            else if (!siteDict.ContainsKey(site) || site.Equals(Labels.AllCredit, StringComparison.OrdinalIgnoreCase) || site.Equals(Labels.AllDeposit, StringComparison.OrdinalIgnoreCase))
             {
                 excelError = new ExcelError(GetExcelCell(cellRef, rowNumber), Labels.Site, site, Labels.InvalidSite);
             }
@@ -304,7 +304,7 @@
             }
             else if (currency.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
-                return currencyDict.Values;
+                return new[] { 0 };
             }
             else if (!currencyDict.TryGetValue(currency, out currencyId))
             {
@@ -350,7 +350,7 @@
             }
             else if (platform.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
-                return platformDict.Values;
+                return new[] { (byte)0 };
             }
             else if (!platformDict.TryGetValue(platform, out platformId))
             {

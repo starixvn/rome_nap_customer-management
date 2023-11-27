@@ -35,7 +35,8 @@
             selectAllFollowFilter: "@Labels.SelectAllFollowFilter",
             noData: "@Labels.NoData",
             requiredField: "@Labels.RequiredField",
-            delete: "@Labels.Delete"
+            delete: "@Labels.Delete",
+            note: "* " + "@Labels.PolicyManagementNote"
         };
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.PolicyScripts)
@@ -49,28 +50,24 @@
     </div>
 }
     <div class="note-box filter-bar">
-        <div class="filter-form">
-            <div class="filter-policy filter-row">
-                <div class="lbl-field">
-                    <label>@Labels.PolicyTitle</label>
-                </div>
-                <div class="edit-field col_8">
-                    <input id="filterPolicy" class="width-160" type="text" />
-                </div>
-                <div class="float-right ">
-                    <button type="button" class="blue-button" id="btnSearch">@Labels.Search</button>
-                    @if (Model.HasHostPermission)
-                    {
-                        <button type="button" class="blue-button" id="btnAddNew">@Labels.AddNewPolicy</button>
-                    }
-                </div>
+        @using (Html.BeginForm("GetPolicies", "Policy", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
+        {
+        <div class="filter-policy filter-row">
+            <div class="lbl-field">
+                <label>@Labels.PolicyTitle</label>
             </div>
-            <div class="filter-row">
-                <p class="float-left">* @Labels.PolicyManagementNote</p>
+            <div class="edit-field col_8">
+                <input id="filterPolicy" class="width-160" name="policyTitle" type="text" />
             </div>
+            <button type="submit" class="blue-button search-button" id="btnSearch">@Labels.Search</button>
+            @if (Model.HasHostPermission)
+            {
+                <button type="button" class="blue-button" id="btnAddNew">@Labels.AddNewPolicy</button>
+            }
         </div>
-        
-    </div>
+        }
+
+        </div>
 <div class="content-grid">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>

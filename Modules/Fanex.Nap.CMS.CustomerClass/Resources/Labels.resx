@@ -507,4 +507,10 @@
   <data name="AllPlatform" xml:space="preserve">
     <value>Desktop, Mobile, App, Oddsfeed, DirectAPI</value>
   </data>
+  <data name="AllCredit" xml:space="preserve">
+    <value>All Credit</value>
+  </data>
+  <data name="AllDeposit" xml:space="preserve">
+    <value>All Deposit</value>
+  </data>
 </root>

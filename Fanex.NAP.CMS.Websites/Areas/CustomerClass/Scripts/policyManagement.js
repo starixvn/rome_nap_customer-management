@@ -15,11 +15,11 @@
                 policyManagementAddOrEdit.openModal();
             });
         }
-        $("#btnSearch").click(function () {
-            getPolicies();
-        });
 
-        getPolicies();
+        $("#formSearch").submit(function (e) {
+            e.preventDefault();
+            getPolicies();
+        }).trigger("submit");
     }
 
     function getPolicies() {
@@ -59,6 +59,7 @@
             columns: columns,
             titleInfo:
             {
+                text: resources.note,
                 showCollapseExpandButton: true
             },
             showPager: false,

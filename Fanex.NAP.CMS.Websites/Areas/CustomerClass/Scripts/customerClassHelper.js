@@ -49,6 +49,16 @@ const customerClassHelper = (function ($) {
         return selectedItems.join();
     }
 
+    function getSelectedTextReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getSelectedTexts", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
     function buildGroupSiteList(isAllCredit, isAllLicensee, selectedValue, cachedCreditSites, cachedLicenseeSites) {
         let creditOptions = [];
         let licenseeOptions = [];
@@ -93,6 +103,7 @@ const customerClassHelper = (function ($) {
         showInlineMessageAndClosePopup: showInlineMessageAndClosePopup,
         isASCII: isASCII,
         getSelectedReplaceAllValue: getSelectedReplaceAllValue,
+        getSelectedTextReplaceAllValue: getSelectedTextReplaceAllValue,
         buildGroupSiteList: buildGroupSiteList
     };
 })(jQuery);

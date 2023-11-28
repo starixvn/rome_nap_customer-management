@@ -1,37 +1,74 @@
 ﻿"use strict";
 
 (function ($) {
-    let cachedSearchUrlWithQueryString = null,
+    let cachedFilter = null,
         cachedGridOptions = null,
+        cachedLicenseeSites = [],
+        cachedCreditSites = [],
         freeGrid = $("#freegrid");
 
     function init() {
-        const ddlSite = $("#ddlSite");
         const ddlCustomerClass = $("#ddlCustomerClass");
         const ddlSportType = $("#ddlSportType");
+        getCreditAndLicenseeSites();
+
+        const ddlSite = customerClassHelper.renderMultiSelect(
+            "#ddlSites",
+            {
+                minWidth: 180,
+                showFilter: true,
+                showTooltip: false,
+                listData: customerClassHelper.buildGroupSiteList(true, true, "All", cachedCreditSites, cachedLicenseeSites)
+            });
 
         const searchForm = $("#formSearch").submit(function (e) {
             e.preventDefault();
 
-            const site = ddlSite.val();
+            const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
             const customerClass = ddlCustomerClass.val();
             const sportType = ddlSportType.val();
-            if ((site === "All" && customerClass === "0")
-                || (site === "All" && sportType === "0")
-                || (customerClass === "0" && sportType === "0")) {
-                CMS.showErrorBox($("#note-info-message").text());
-                return;
-            }
+            //if ((site === "All" && customerClass === "0")
+            //    || (site === "All" && sportType === "0")
+            //    || (customerClass === "0" && sportType === "0")) {
+            //    CMS.showErrorBox($("#note-info-message").text());
+            //    return;
+            //}
 
-            cachedSearchUrlWithQueryString = `${searchForm.attr("action")}?${searchForm.serialize()}`;
+            cachedFilter = {
+                Site: site,
+                CustomerClass: customerClass,
+                SportType: sportType,
+                PageIndex: 0,
+                PageSize: 100
+            };
             search(0, getPageSize());
+        });
+    }
+
+    function getCreditAndLicenseeSites() {
+        let creditOrLicensee;
+        cachedCreditSites = [];
+        cachedLicenseeSites = [];
+        siteList.forEach(function (item) {
+            creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
+            creditOrLicensee.push({
+                value: item.Id,
+                text: item.Name,
+                checked: false,
+                enable: true
+            });
         });
     }
 
     function search(pageIndex, pageSize) {
         // PageIndex of Fanex.Grid begin at 0 whereas server site begin at 1.
-        CMS.getJson(
-            `${cachedSearchUrlWithQueryString}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
+        cachedFilter.PageIndex = pageIndex + 1;
+        cachedFilter.PageSize = pageSize;
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`CustomerClassSetting/Search`),
+            cachedFilter,
             function (data) {
                 assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
@@ -40,6 +77,9 @@
             function (error) {
                 assignCachedGridOptions({ TotalItems: 0, Rules: []}, 0, 100);
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+            },
+            function () {
+                CMS.enableInput();
             });
     }
 

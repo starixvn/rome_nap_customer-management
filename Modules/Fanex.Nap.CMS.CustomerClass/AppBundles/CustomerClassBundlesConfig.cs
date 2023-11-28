@@ -40,9 +40,13 @@
         {
             bundles.AddAndInclude(
                 CustomerClassSettingStyles,
+                FanexMultiSelectStyle,
+                FanexMultiSelectCustomStyle,
                 "~/Areas/CustomerClass/Styles/customerClassSetting.less");
 
             bundles.Add(new ScriptBundle(CustomerClassSettingScripts).Include(
+                FanexMultiSelectScript,
+                "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/ruleManagementHelper.js",
                 "~/Areas/CustomerClass/Scripts/customerClassSetting.js"));
 

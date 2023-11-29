@@ -1144,7 +1144,6 @@
     <Content Include="Areas\CustomerClass\Styles\siteManagement.less" />
     <Content Include="Areas\CustomerClass\Views\Site\_AssignSiteSettingForm.cshtml" />
     <Content Include="Areas\CustomerClass\Views\Site\_UploadForm.cshtml" />
-    <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
     <Content Include="Areas\BetRestriction\Views\Tennis\AccountManagement.cshtml" />
     <Content Include="Areas\Admin\Views\ConcurrentUser\HistoryByDaily.cshtml" />
     <Content Include="Areas\BetRestriction\Views\Tennis\Index.cshtml" />
@@ -1169,6 +1168,7 @@
     <Content Include="Areas\DomainManagement\Views\_AddNewOrEditForm.cshtml" />
     <Content Include="Areas\DomainManagement\Styles\domainManagement.less" />
     <Content Include="App_Data\Local\DBMSG.bodb_Message.bodbAdminNet.xml" />
+    <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

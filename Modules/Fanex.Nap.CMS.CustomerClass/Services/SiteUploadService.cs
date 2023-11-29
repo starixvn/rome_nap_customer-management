@@ -277,11 +277,11 @@
             {
                 excelError = new ExcelError(GetExcelCell(cellRef, rowNumber), Labels.Site, site, Labels.RequiredSite);
             }
-            else if (site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
+            else if (site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase) || string.Equals(site, Labels.AllCredit, StringComparison.OrdinalIgnoreCase) || string.Equals(site, Labels.AllDeposit, StringComparison.OrdinalIgnoreCase))
             {
-                return new[] { Labels.All };
+                return new[] { site.Replace(" ", string.Empty) };
             }
-            else if (!siteDict.ContainsKey(site) || site.Equals(Labels.AllCredit, StringComparison.OrdinalIgnoreCase) || site.Equals(Labels.AllDeposit, StringComparison.OrdinalIgnoreCase))
+            else if (!siteDict.ContainsKey(site))
             {
                 excelError = new ExcelError(GetExcelCell(cellRef, rowNumber), Labels.Site, site, Labels.InvalidSite);
             }

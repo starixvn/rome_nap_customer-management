@@ -16,6 +16,7 @@
         private const string CachedSitesMarketCode = "Fanex.Nap.CMS.Infrastructure.SitesMarketCode";
         private const int CachedDefaultInMinutes = 30;
         private const string CachedCountries = "Fanex.Nap.CMS.Infrastructure.Countries";
+        private const string CachedAllCurrencies = "Fanex.Nap.CMS.Infrastructure.All.Currencies";
 
         private readonly ISettingRepository settingRepository;
 
@@ -27,7 +28,18 @@
             => this.settingRepository = settingRepository;
 
         public IEnumerable<IdNameModel> GetAllCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Name);
+        {
+            var allCurrencies = CacheManager.Get<IEnumerable<IdNameModel>>(CachedAllCurrencies);
+
+            if (allCurrencies == null)
+            {
+                allCurrencies = settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Name);
+
+                CacheManager.Set(CachedAllCurrencies, allCurrencies, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
+
+            return allCurrencies;
+        }
 
         public IEnumerable<IdNameModel> GetCreditCurrencies()
             => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency)).OrderBy(cur => cur.Name);

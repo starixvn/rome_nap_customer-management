@@ -191,8 +191,8 @@ const siteManagementAssignSiteSetting = (function ($) {
 
         siteSettings.forEach(function (item) {
             html.push('<p class="existed-site-setting">- ', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
-            html.push(resources.site, ": <b>", item.Site.replace("AllDeposit", "All Deposit").replace("AllCredit", "All Credit"), "</b>; ");
-            html.push(resources.currency, ": <b>", item.Currencies.split(",").join(", "), "</b>; ");
+            html.push(resources.site, ": <b>", item.Site.replace("ALL", "All").replace("AllDeposit", "All Deposit").replace("AllCredit", "All Credit"), "</b>; ");
+            html.push(resources.currency, ": <b>", item.Currencies.replace("ALL", "All").split(",").join(", "), "</b>; ");
             html.push(resources.platform, ": <b>", item.PlatformNames, "</b></p>");
         });
         html.push('</div>');

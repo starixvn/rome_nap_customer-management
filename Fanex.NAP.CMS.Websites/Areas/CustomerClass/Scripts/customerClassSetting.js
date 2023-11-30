@@ -4,7 +4,9 @@
     let cachedFilter = null,
         cachedGridOptions = null,
         cachedLicenseeSites = [],
+        cachedLicenseeSitesName = [],
         cachedCreditSites = [],
+        cachedCreditSitesName = [],
         freeGrid = $("#freegrid");
 
     function init() {
@@ -46,17 +48,19 @@
     }
 
     function getCreditAndLicenseeSites() {
-        let creditOrLicensee;
+        let creditOrLicensee, creditOrLicenseeName;
         cachedCreditSites = [];
         cachedLicenseeSites = [];
         siteList.forEach(function (item) {
             creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
+            creditOrLicenseeName = item.IsLicensee ? cachedLicenseeSitesName : cachedCreditSitesName;
             creditOrLicensee.push({
                 value: item.Id,
                 text: item.Name,
                 checked: false,
                 enable: true
             });
+            creditOrLicenseeName.push(item.Name);
         });
     }
 
@@ -138,7 +142,7 @@
                 Columns: [
                     { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
                     { Name: "colCustomerClass", Value: rule.CustomerClass, TdClass: "pink-cell" },
-                    { Name: "colSite", Value: rule.Site, TdClass: "pink-cell" },
+                    { Name: "colSite", Value: renderSitesCell(rule.Site), TdClass: "pink-cell" },
                     { Name: "colCurrency", Value: renderLinkWithDetailsPopup(rule.IsAllCurrencies, rule.Currencies, "link-currency"), TdClass: "pink-cell" },
                     { Name: "colPlatform", Value: renderLinkWithDetailsPopup(rule.IsAllPlatforms, rule.PlatformNames, "link-platform"), TdClass: "pink-cell" },
                     { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
@@ -151,7 +155,6 @@
                     { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                     { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
                     { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) },
-                    //{ Name: "colPeakHourSpread", Value: ruleManagementHelper.formatInteger(rule.PeakHourSpread) },
                     { Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) }
                 ]
             };
@@ -167,6 +170,47 @@
         return numOfData < 2
             ? data
             : `<a href="javascript:;" class="${className}" data-details="${data}">${numOfData}</a>`;
+    }
+
+
+    function renderSitesCell(sites) {
+        var arraySites = sites.split(',');
+        if (arraySites.includes('All')) {
+            return `<a href="javascript:;" class="link-sites" data-details="${siteList.map(s => s.Name).join()}">All</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            arraySites = arraySites.filter(st => !cachedCreditSitesName.includes(st));
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            arraySites = arraySites.filter(st => !cachedLicenseeSitesName.includes(st));
+        }
+
+        var removeDublicateSites = arraySites.join();
+
+        if (removeDublicateSites === "AllCredit") {
+            return `<a href="javascript:;" class="link-sites" data-details="${cachedCreditSitesName.join()}">All Credit</a>`;
+        }
+
+        if (removeDublicateSites === "AllDeposit") {
+            return `<a href="javascript:;" class="link-sites" data-details="${cachedLicenseeSitesName.join()}">All Deposit</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllCredit", cachedCreditSitesName.join());
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllDeposit", cachedLicenseeSitesName.join());
+        }
+        arraySites = removeDublicateSites.split(",");
+
+        const numOfSites = arraySites.length;
+
+        return numOfSites < 2
+            ? arraySites.join(", ")
+            : `<a href="javascript:;" class="link-sites" data-details="${removeDublicateSites}">${numOfSites}</a>`;
     }
 
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
@@ -190,6 +234,11 @@
             .off("click")
             .click(function () {
                 handleDetailsPopup(resources.platform, $(this));
+            });
+        freeGrid.find(".link-sites")
+            .off("click")
+            .click(function () {
+                handleDetailsPopup(resources.site, $(this));
             });
         freeGrid.find(".link-league-group")
             .off("click")

@@ -47,7 +47,6 @@
         public PagedRule GetRules(SearchCustomerClassSettingRequest request)
         {
             var leagueGroups = filterService.GetLeagueGroups(request.SportType);
-
             var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups));
 
             return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));
@@ -55,13 +54,17 @@
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
         {
-            var allCurrencyCount = filterService.GetAllCurrencies().Count();
+            var allCurrencies = string.Join(",", filterService.GetAllCurrencies().Select(x => x.Name));
             var platformDict = PlatformConst.Platforms;
             var allPlatformCount = platformDict.Count;
             var sportTypes = SportTypeConst.SportTypes;
             foreach (var item in rules)
             {
-                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies);
+                item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase);
+                if (item.IsAllCurrencies == true)
+                {
+                    item.Currencies = allCurrencies;
+                }
 
                 item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms);
                 item.PlatformNames = string.Join(", ", item.Platforms

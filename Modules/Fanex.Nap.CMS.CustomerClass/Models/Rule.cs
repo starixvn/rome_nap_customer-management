@@ -102,7 +102,7 @@
 
         public string Site { get; }
 
-        public string Currencies { get; }
+        public string Currencies { get; set; }
 
         public bool? IsAllCurrencies { get; set; }
 

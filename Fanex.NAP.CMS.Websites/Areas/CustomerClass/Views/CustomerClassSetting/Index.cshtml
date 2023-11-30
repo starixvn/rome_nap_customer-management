@@ -71,7 +71,7 @@
                 <label>@Labels.SportType</label>
             </div>
             <div class="edit-field col_7">
-                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem().SetDefaultValue(BasketBallSportType.ToString()), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
+                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
             </div>
             <div class="submit width-auto">
                 <button type="submit" class="submit">@Labels.Search</button>

@@ -12,7 +12,7 @@
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
                 enable: Convert.ToBoolean(reader["Enable"]),
-                site: reader["Site"].ToString(),
+                site: reader["Sites"].ToString(),
                 currencies: reader["CurrencyName"].ToString(),
                 platforms: reader["Platform"].ToString())
             : null;

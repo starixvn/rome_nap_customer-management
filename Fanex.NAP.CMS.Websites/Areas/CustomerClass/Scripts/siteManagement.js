@@ -216,7 +216,7 @@
                 { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
                 { Name: "colPlatform", Value: datum.PlatformNames }
             ];
-            hasHostPermisson && columns.push({ Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site) });
+            hasHostPermisson && columns.push({ Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site, datum.CurrencyID, datum.Platforms) });
 
             return {
                 Columns: columns
@@ -326,8 +326,8 @@
             });
     }
 
-    function renderDeleteCell(id, site) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-site="${site}">`;
+    function renderDeleteCell(id, site, currency, platform) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-site="${site}" data-currency="${currency}" data-platform="${platform}">`;
     }
 
     function handleCheckDelAll() {
@@ -356,7 +356,9 @@
             if ($(this).prop("checked") === true) {
                 settings.push({
                     PolicyId: $(this).data("id"),
-                    Site: $(this).data("site").toString()
+                    Site: $(this).data("site").toString(),
+                    Currency: $(this).data("currency").toString(),
+                    Platform: $(this).data("platform").toString()
                 });
             }
         });

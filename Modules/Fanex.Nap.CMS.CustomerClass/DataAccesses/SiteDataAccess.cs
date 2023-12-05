@@ -28,6 +28,7 @@
                 reader["PolicyTitle"].ToString(),
                 reader["Site"].ToString(),
                 reader["CurrencyName"].ToString(),
+                string.Empty,
                 reader["Platform"].ToString());
 
         private static SiteSetting ToSitesSetting(IDataReader reader)
@@ -36,6 +37,7 @@
                 reader["PolicyTitle"].ToString(),
                 reader["Sites"].ToString(),
                 reader["CurrencyName"].ToString(),
+                reader["CurrencyID"].ToString(),
                 reader["Platform"].ToString());
     }
 }

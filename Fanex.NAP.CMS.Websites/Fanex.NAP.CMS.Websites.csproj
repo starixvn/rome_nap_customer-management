@@ -949,9 +949,6 @@
       <DependentUpon>Web.AppSettings.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.AppSettings.mnl.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
     <Content Include="Web.AppSettings.sit.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
@@ -968,10 +965,6 @@
     </Content>
     <Content Include="Web.ConnectionString.master.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </Content>
-    <Content Include="Web.ConnectionString.mnl.config">
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.ConnectionString.sit.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
@@ -1206,9 +1199,18 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\MultipleSelect\fanex.multiSelect-custom.less" />
+    <None Include="Web.AppSettings.dr.config">
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </None>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </None>
+    <None Include="Web.ConnectionString.dr.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
+    </None>
+    <None Include="Web.dr.config">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -977,8 +977,6 @@
     <Content Include="Web.sit.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.mnl.config">
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\TurnoverControl\Views\TurnoverMonitor\Index.cshtml" />
@@ -1199,19 +1197,19 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\MultipleSelect\fanex.multiSelect-custom.less" />
-    <None Include="Web.AppSettings.dr.config">
+    <Content Include="Web.AppSettings.dr.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </None>
+    </Content>
     <None Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </None>
-    <None Include="Web.ConnectionString.dr.config">
+    <Content Include="Web.ConnectionString.dr.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </None>
-    <None Include="Web.dr.config">
+    </Content>
+    <Content Include="Web.dr.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

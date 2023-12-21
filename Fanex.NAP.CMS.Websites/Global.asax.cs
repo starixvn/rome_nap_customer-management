@@ -60,10 +60,10 @@ namespace Fanex.NAP.CMS.Websites
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //RefDataTypeContainer
-            //    .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))
-            //    .FromApplication("Fanex.NAP.CMS")
-            //    .SupportOnlyDefaultLanguage();
+            RefDataTypeContainer
+                .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))
+                .FromApplication("Fanex.NAP.CMS")
+                .SupportOnlyDefaultLanguage();
         }
 
         protected void Application_Error(object sender, EventArgs e)

@@ -259,7 +259,7 @@
         
         const numOfSites = arraySites.length;
 
-        return numOfSites <= 5
+        return numOfSites <= 1
             ? arraySites.join(", ")
             : `<a href="javascript:;" class="link-sites" data-sites="${removeDublicateSites}">${numOfSites}</a>`;
     }
@@ -271,7 +271,7 @@
 
         const currencyArray = currencies.split(",");
         const numOfCurrencies = currencyArray.length;
-        return numOfCurrencies <= 5
+        return numOfCurrencies <= 1
             ? currencyArray.join(", ")
             : `<a href="javascript:;" class="link-currency" data-currencies="${currencies}">${numOfCurrencies}</a>`;
     }

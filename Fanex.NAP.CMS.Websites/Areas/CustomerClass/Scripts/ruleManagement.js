@@ -121,7 +121,7 @@
                 { Name: "colMinMaxBetMPM", Value: ruleManagementHelper.renderSeparateCell(rule.MinBet, rule.MaxBet, rule.MaxPerMatch) },
                 { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                 { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
-                { Name: "colPolicies", Value: rule.PolicyTitles },
+                { Name: "colPolicies", Value: renderPolicyCell(rule.PolicyTitles) },
                 { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) }
             ];
 
@@ -138,13 +138,21 @@
 
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
         if (isAllLeagueGroups) {
-            return `<a href="javascript:;" class="link-league-group" data-sporttype="${sportType}">${resources.all}</a>`;
+            return `<a href="javascript:;" class="link-league-group" data-sporttype="${sportType}" data-title="${resources.leagueGroup}">${resources.all}</a>`;
         }
 
         const numOfLeagueGroups = leagueGroups.split(",").length;
         return numOfLeagueGroups < 2
             ? leagueGroups
-            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${leagueGroups}">${numOfLeagueGroups}</a>`;
+            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${leagueGroups}" data-title="${resources.leagueGroup}">${numOfLeagueGroups}</a>`;
+    }
+
+    function renderPolicyCell(policyTitles) {
+        var policies = policyTitles.split(',');
+        const numOfPolicies = policies.length;
+        return numOfPolicies < 2
+            ? policyTitles
+            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${policies}" data-title="${resources.policyTitle}">${numOfPolicies}</a>`;
     }
 
     function renderEnableCell(ruleId, ruleTitle, enable) {
@@ -204,13 +212,13 @@
     }
 
     function handleViewLeagueGroups() {
+        const $this = $(this);
         let html = [
             '<div class="form" id="viewLeagueGroupsForm">',
             '<table class="tbl-freegrid">',
-            '<thead><tr><th class="width-60">#</th><th>', resources.leagueGroup, '</th></tr></thead>',
+            '<thead><tr><th class="width-60">#</th><th>', $this.data("title"), '</th></tr></thead>',
             '<tbody>'
         ];
-        const $this = $(this);
         const sportType = $this.data("sporttype");
         if (sportType) {
             let index = 0;
@@ -228,7 +236,7 @@
         html.push('</tbody></table></div>');
 
         CMS.modal(
-            resources.leagueGroup,
+            $this.data("title"),
             html.join(""),
             {
                 resizable: false,

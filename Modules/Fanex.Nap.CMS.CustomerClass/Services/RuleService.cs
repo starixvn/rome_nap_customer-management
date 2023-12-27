@@ -54,19 +54,20 @@
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
         {
-            var allCurrencies = string.Join(",", filterService.GetAllCurrencies().Select(x => x.Name));
+            var currencies = filterService.GetAllCurrencies().Select(x => x.Name);
+            var allCurrencies = string.Join(",", currencies);
             var platformDict = PlatformConst.Platforms;
-            var allPlatformCount = platformDict.Count;
+            var allPlatformCount = platformDict.Count - 1;
             var sportTypes = SportTypeConst.SportTypes;
             foreach (var item in rules)
             {
-                item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase);
+                item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
                 if (item.IsAllCurrencies == true)
                 {
                     item.Currencies = allCurrencies;
                 }
 
-                item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms);
+                item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms) || item.Platforms == "0";
                 item.PlatformNames = string.Join(", ", item.Platforms
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => platformDict[Convert.ToByte(p)]));

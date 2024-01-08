@@ -95,9 +95,9 @@ const editingGridHelper = (function ($) {
         return selectDiv;
     }
 
-    function renderAddEditProduct(divId, selectedValue, fnOnCheck) {
+    function renderAddEditProduct(divId, selectedValue, fnOnCheck, isSelectAll = false) {
         let optionList = [];
-        let isCheckAll = selectedValue === "All" || selectedValue === "0";
+        let isCheckAll = selectedValue === "All" || selectedValue === "0" || isSelectAll;
         let selectedValueList = selectedValue.split(",");
         productList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
         );

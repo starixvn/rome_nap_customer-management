@@ -22,7 +22,7 @@
             const formData = {
                 customerClasses: customerClassHelper.getSelectedReplaceAllValue("ddlCustomerClasses", "0", customerClassList.length),
                 sites: customerClassHelper.getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
-                products: customerClassHelper.getSelectedReplaceAllValue("ddlProducts", "0", productList.length)
+                products: customerClassHelper.getSelectedReplaceAllValue("ddlProducts", "256", productList.length)
             };
 
             cachedFilter = formData;
@@ -145,7 +145,7 @@
             `<th class="width-250">${resources.customerClass}</th>`,
             `<th class="width-180">${resources.site}</th>`,
             `<th class="width-180">${resources.product}</th>`,
-            `<th class="width-60">${resources.maxBet}</th>`,
+            `<th class="width-100">${resources.maxBet}</th>`,
             `<th class="width-60">${resources.enable}</th>`,
             hasHostPermisson ? `<th class="width-60">${resources.action}</th>` : '',
             '</tr></thead > ',
@@ -177,7 +177,7 @@
         `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCell(policy.CustomerClass)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(policy.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderProductCell(policy.Products, productList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditProduct-${policy.PolicyId}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-60"><div class="view-item text-center">${policy.MaxBet}</div><div class="dropdown-cell edit-item hidden"><input type="text" id="inputMaxBet-${policy.PolicyId}" /></div></td>`,
+            `<td class="rule-cell width-100"><div class="view-item text-center">${numeral(policy.MaxBet).format(CMS.formats.IntegerFormat)}</div><div class="dropdown-cell edit-item hidden"><input type="text" id="inputMaxBet-${policy.PolicyId}" /></div></td>`,
             `<td class="rule-cell width-60 text-center">${editingGridHelper.renderEnableCell(policy.PolicyId, CMS.htmlEncode(policy.PolicyTitle), policy.IsEnable, hasHostPermisson)}</td>`,
         hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(policy.PolicyId, index, policy.edittingValue && policy.edittingValue !== null)}</td>` : '',
             `</tr>`
@@ -201,7 +201,7 @@
             `<td class="rule-cell width-250 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
             `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewProduct" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-60 add-cell"><div><input type="text" class="inputTitle" id="addNewMaxBet" /></div></td>`,
+            `<td class="rule-cell width-100 add-cell"><div><input type="text" class="inputTitle" id="addNewMaxBet" /></div></td>`,
             `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
         hasHostPermisson ? `<td class="width-60 text-center">${renderAddActionCell()}</td>` : '',
             `</tr>`
@@ -221,10 +221,10 @@
         $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
         editingGridHelper.renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass, function () { onCustomerClassChange("ddlAddNewCustomerClass"); });
         editingGridHelper.renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites, cachedCreditSites, cachedLicenseeSites, cachedAddNewRule.Sites === "0", cachedAddNewRule.Sites.includes("-1"), cachedAddNewRule.Sites.includes("-2"), function () { onSiteChange("ddlAddNewSite"); });
-        editingGridHelper.renderAddEditProduct("ddlAddNewProduct", cachedAddNewRule.Products, function () { onProductChange("ddlAddNewProduct"); });
+        editingGridHelper.renderAddEditProduct("ddlAddNewProduct", cachedAddNewRule.Products, function () { onProductChange("ddlAddNewProduct"); }, cachedAddNewRule.Products === "256");
         var maxbet = new AutoNumeric(`#addNewMaxBet`, {
             minimumValue: 0,
-            maximumValue: 32767,
+            maximumValue: 2147483647,
             decimalPlaces: 0,
             onInvalidPaste: 'ignore'
         });
@@ -265,15 +265,14 @@
         var editPolicy = cachedData[index].edittingValue || cachedData[index];
         cachedData[index].edittingValue = { ...cachedData[index] };
         $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
-        var maxbet = new AutoNumeric(`#inputMaxBet-${policyId}`, {
+       var editMaxBet = new AutoNumeric(`#inputMaxBet-${policyId}`, {
             minimumValue: 0,
-            maximumValue: 32767,
+            maximumValue: 2147483647,
             decimalPlaces: 0,
             onInvalidPaste: 'ignore'
         }).set(editPolicy.MaxBet);
-
-        $(`#inputMaxBet-${policyId}`).change(function () { cachedData[index].edittingValue.MaxBet = maxbet.get(); });
-        $(`#editMaxBet-${policyId}`).val(editPolicy.MaxBet).change(function () { cachedData[index].edittingValue.MaxBet = $(`#editMaxBet-${policyId}`).val(); });
+        $(`#inputMaxBet-${policyId}`).off("change").change(function () { cachedData[index].edittingValue.MaxBet = editMaxBet.get(); });
+        
         rowEdit.find("div[class*=view-item]").addClass("hidden");
         rowEdit.find("div[class*=edit-item]").removeClass("hidden");
         rowEdit.find("input[class*=edit-item]").removeClass("hidden");
@@ -281,15 +280,15 @@
         rowEdit.find("span[class*=edit-item]").removeClass("hidden");
         editingGridHelper.renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, function () { onCustomerClassChange(`ddlEditCustomerClass-${policyId}`, index); });
         editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
-        editingGridHelper.renderAddEditProduct(`ddlEditProduct-${policyId}`, editPolicy.Products, function () { onProductChange(`ddlEditProduct-${policyId}`, index); });
-        $(`#ckbEdit-${policyId}`).change(function () { editPolicy.IsEnable = $(`#ckbEdit-${policyId}`).is(":checked"); });
+        editingGridHelper.renderAddEditProduct(`ddlEditProduct-${policyId}`, editPolicy.Products, function () { onProductChange(`ddlEditProduct-${policyId}`, index); }, editPolicy.Products === "256");
+        $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.IsEnable = $(`#ckbEdit-${policyId}`).is(":checked"); });
 
         rowEdit.find("span[class*=ico-save-16]")
             .off("click")
             .click(saveEditItem);
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
-            .click(cancelEditItem);
+            .click(function () { cancelEditItem($(this)); editMaxBet.remove(); });
         $(`#editTitle-${policyId}`).focus();
     }
 
@@ -303,7 +302,7 @@
             CustomerClass: editingGridHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), customerClassHelper.getSelectedReplaceAllValue(`ddlEditCustomerClass-${policyId}`, "0", customerClassList.length)),
             Products: editingGridHelper.validateRequiredField($(`#ddlEditProduct-${policyId}`), customerClassHelper.getSelectedReplaceAllValue(`ddlEditProduct-${policyId}`, "256", productList.length)),
             Sites: editingGridHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),
-            MaxBet: editingGridHelper.validateRequiredField($(`#editMaxBet-${policyId}`), $(`#editMaxBet-${policyId}`).val()),
+            MaxBet: editingGridHelper.validateRequiredField($(`#inputMaxBet-${policyId}`), cachedData[index].edittingValue.MaxBet),
             IsEnable: $(`#ckbEdit-${policyId}`).is(":checked")
         };
 
@@ -329,10 +328,10 @@
             });
     }
 
-    function cancelEditItem() {
+    function cancelEditItem(cancelBtn) {
         editingGridHelper.clearAllTipsyErrors();
-        var rowEdit = $(this).closest('tr');
-        var index = $(this).data("index");
+        var rowEdit = cancelBtn.closest('tr');
+        var index = cancelBtn.data("index");
         cachedData[index].edittingValue = null;
         rowEdit.find("div[class*=view-item]").removeClass("hidden");
         rowEdit.find("div[class*=edit-item]").addClass("hidden");

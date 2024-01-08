@@ -106,7 +106,7 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Offering Successfully.
+        ///   Looks up a localized string similar to Add Rule Successfully.
         /// </summary>
         public static string AddNonSportsSuccessfully {
             get {
@@ -421,7 +421,7 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Offering Successfully.
+        ///   Looks up a localized string similar to Delete Rule Successfully.
         /// </summary>
         public static string DeleteNonSportSuccessfully {
             get {
@@ -529,7 +529,7 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Offering Successfully.
+        ///   Looks up a localized string similar to Edit Rule Successfully.
         /// </summary>
         public static string EditNonSportsSuccessfully {
             get {

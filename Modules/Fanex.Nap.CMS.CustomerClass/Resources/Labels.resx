@@ -517,13 +517,13 @@
     <value>Product</value>
   </data>
   <data name="AddNonSportsSuccessfully" xml:space="preserve">
-    <value>Add Offering Successfully</value>
+    <value>Add Rule Successfully</value>
   </data>
   <data name="DeleteNonSportSuccessfully" xml:space="preserve">
-    <value>Delete Offering Successfully</value>
+    <value>Delete Rule Successfully</value>
   </data>
   <data name="EditNonSportsSuccessfully" xml:space="preserve">
-    <value>Edit Offering Successfully</value>
+    <value>Edit Rule Successfully</value>
   </data>
   <data name="AllDeposit" xml:space="preserve">
     <value>All Deposit</value>

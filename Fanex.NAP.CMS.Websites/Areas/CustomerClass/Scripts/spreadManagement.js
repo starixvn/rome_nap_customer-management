@@ -552,10 +552,10 @@
         return selectedItems.join();
     }
 
-    function cancelEditItem() {
+    function cancelEditItem(cancelBtn) {
         clearAllTipsyErrors();
-        var rowEdit = $(this).closest('tr');
-        var index = $(this).data("index");
+        var rowEdit = cancelBtn.closest('tr');
+        var index = cancelBtn.data("index");
         cachedData[index].edittingValue = null;
         rowEdit.find("div[class*=view-item]").removeClass("hidden");
         rowEdit.find("div[class*=edit-item]").addClass("hidden");
@@ -585,13 +585,12 @@
         renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, index);
         renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, index);
         renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, index);
-        new AutoNumeric(`#editSpread-${policyId}`, {
+        var editSpread = new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
             maximumValue: 20,
             decimalPlaces: 1,
             onInvalidPaste: 'ignore'
         }).set(editPolicy.Spread);
-        
         $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
         $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
 
@@ -601,7 +600,7 @@
             .click(saveEditItem);
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
-            .click(cancelEditItem);
+            .click(function () { editSpread.remove(); cancelEditItem($(this)); });
         $(`#editTitle-${policyId}`).focus();
     }
 

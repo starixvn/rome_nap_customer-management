@@ -9,11 +9,12 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface IPolicyService
     {
-        IEnumerable<Policy> GetPolicies();
+        IEnumerable<Policy> GetPolicies(string policyTitle = null);
 
         PolicyItem GetPolicy(int policyId);
 
@@ -22,6 +23,10 @@
         Result AddPolicy(AddPolicyRequest request);
 
         Result EditPolicy(int policyId, AddPolicyRequest request);
+
+        CheckPolicyResponse CheckPolicies(DeletePolicyRequest request);
+
+        Result DeletePolicies(DeletePolicyRequest request);
     }
 
     internal class PolicyService : IPolicyService
@@ -35,14 +40,14 @@
             this.policyDataAccess = policyDataAccess ?? new PolicyDataAccess();
         }
 
-        public IEnumerable<Policy> GetPolicies()
-            => GetPolicyList()
+        public IEnumerable<Policy> GetPolicies(string policyTitle = null)
+            => GetPolicyList(policyTitle: policyTitle)
             .GroupBy(p => new { p.PolicyId, p.PolicyTitle, p.SportType })
             .Select(grp => new Policy(
                 grp.Key.PolicyId,
                 grp.Key.PolicyTitle,
                 grp.Key.SportType,
-                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule.Enable == true).Select(p => p.Rule)))
+                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule?.Enable == true).Select(p => p.Rule)))
             .OrderBy(plc => plc.PolicyTitle);
 
         public PolicyItem GetPolicy(int policyId)
@@ -55,11 +60,11 @@
                 grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<int>() : grp.Select(p => p.Rule.RuleId)))
             .FirstOrDefault();
 
-        private IEnumerable<Policy> GetPolicyList(int policyId = 0)
+        private IEnumerable<Policy> GetPolicyList(int policyId = 0, string policyTitle = null)
         {
             var sportTypes = SportTypeConst.SportTypes;
             var leagueGroupDict = ToLeagueGroupDictionary();
-            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId));
+            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle));
 
             foreach (var item in policies)
             {
@@ -104,5 +109,12 @@
 
         public Result EditPolicy(int policyId, AddPolicyRequest request)
             => policyDataAccess.DoAction(new EditPolicyCriteria(policyId, request), Labels.EditPolicySuccessfully);
+
+
+        public CheckPolicyResponse CheckPolicies(DeletePolicyRequest request)
+            => policyDataAccess.CheckPolicy(new CheckPolicyDelCriteria(request));
+
+        public Result DeletePolicies(DeletePolicyRequest request)
+            => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeletePolicySuccessfully);
     }
 }

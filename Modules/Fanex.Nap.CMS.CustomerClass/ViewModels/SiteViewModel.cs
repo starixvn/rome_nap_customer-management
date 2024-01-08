@@ -27,7 +27,7 @@
         public IEnumerable<SelectListItem> PolicyTitles { get; }
 
         public IEnumerable<IdNameModel> Platforms { get; }
-            = PlatformConst.Platforms.Select(kvp => new IdNameModel { Id = kvp.Key, Name = kvp.Value }).ToList();
+            = PlatformConst.Platforms.Where(pl => pl.Key != 0).Select(kvp => new IdNameModel { Id = kvp.Key, Name = kvp.Value }).ToList();
 
         public IEnumerable<IdNameModel> Currencies { get; }
     }

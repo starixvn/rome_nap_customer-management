@@ -22,7 +22,8 @@ const customerClassHelper = (function ($) {
                 function () {
                     CMS.closePopup();
                     successfullyCallbackFunc();
-                });
+                },
+                2000);
         } else {
             CMS.showInlineErrorMsg(resultJson.Message, inlineMessage);
         }
@@ -40,6 +41,16 @@ const customerClassHelper = (function ($) {
 
     function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
         var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
+    function getSelectedTextReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getSelectedTexts", true);
 
         if (selectedItems.length === allItemsLength) {
             return allvalue;
@@ -92,6 +103,7 @@ const customerClassHelper = (function ($) {
         showInlineMessageAndClosePopup: showInlineMessageAndClosePopup,
         isASCII: isASCII,
         getSelectedReplaceAllValue: getSelectedReplaceAllValue,
+        getSelectedTextReplaceAllValue: getSelectedTextReplaceAllValue,
         buildGroupSiteList: buildGroupSiteList
     };
 })(jQuery);

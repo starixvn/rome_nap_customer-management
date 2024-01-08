@@ -1,37 +1,78 @@
 ﻿"use strict";
 
 (function ($) {
-    let cachedSearchUrlWithQueryString = null,
+    let cachedFilter = null,
         cachedGridOptions = null,
+        cachedLicenseeSites = [],
+        cachedLicenseeSitesName = [],
+        cachedCreditSites = [],
+        cachedCreditSitesName = [],
         freeGrid = $("#freegrid");
 
     function init() {
-        const ddlSite = $("#ddlSite");
         const ddlCustomerClass = $("#ddlCustomerClass");
         const ddlSportType = $("#ddlSportType");
+        getCreditAndLicenseeSites();
+
+        const ddlSite = customerClassHelper.renderMultiSelect(
+            "#ddlSites",
+            {
+                minWidth: 180,
+                showFilter: true,
+                showTooltip: false,
+                listData: customerClassHelper.buildGroupSiteList(true, true, "All", cachedCreditSites, cachedLicenseeSites)
+            });
 
         const searchForm = $("#formSearch").submit(function (e) {
             e.preventDefault();
 
-            const site = ddlSite.val();
+            const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
             const customerClass = ddlCustomerClass.val();
             const sportType = ddlSportType.val();
-            if ((site === "All" && customerClass === "0")
-                || (site === "All" && sportType === "0")
-                || (customerClass === "0" && sportType === "0")) {
-                CMS.showErrorBox($("#note-info-message").text());
-                return;
-            }
+            //if ((site === "All" && customerClass === "0")
+            //    || (site === "All" && sportType === "0")
+            //    || (customerClass === "0" && sportType === "0")) {
+            //    CMS.showErrorBox($("#note-info-message").text());
+            //    return;
+            //}
 
-            cachedSearchUrlWithQueryString = `${searchForm.attr("action")}?${searchForm.serialize()}`;
+            cachedFilter = {
+                Site: site,
+                CustomerClass: customerClass,
+                SportType: sportType,
+                PageIndex: 0,
+                PageSize: 100
+            };
             search(0, getPageSize());
+        });
+    }
+
+    function getCreditAndLicenseeSites() {
+        let creditOrLicensee, creditOrLicenseeName;
+        cachedCreditSites = [];
+        cachedLicenseeSites = [];
+        siteList.forEach(function (item) {
+            creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
+            creditOrLicenseeName = item.IsLicensee ? cachedLicenseeSitesName : cachedCreditSitesName;
+            creditOrLicensee.push({
+                value: item.Id,
+                text: item.Name,
+                checked: false,
+                enable: true
+            });
+            creditOrLicenseeName.push(item.Name);
         });
     }
 
     function search(pageIndex, pageSize) {
         // PageIndex of Fanex.Grid begin at 0 whereas server site begin at 1.
-        CMS.getJson(
-            `${cachedSearchUrlWithQueryString}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
+        cachedFilter.PageIndex = pageIndex + 1;
+        cachedFilter.PageSize = pageSize;
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`CustomerClassSetting/Search`),
+            cachedFilter,
             function (data) {
                 assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
@@ -40,6 +81,9 @@
             function (error) {
                 assignCachedGridOptions({ TotalItems: 0, Rules: []}, 0, 100);
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+            },
+            function () {
+                CMS.enableInput();
             });
     }
 
@@ -98,7 +142,7 @@
                 Columns: [
                     { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
                     { Name: "colCustomerClass", Value: rule.CustomerClass, TdClass: "pink-cell" },
-                    { Name: "colSite", Value: rule.Site, TdClass: "pink-cell" },
+                    { Name: "colSite", Value: renderSitesCell(rule.Site), TdClass: "pink-cell" },
                     { Name: "colCurrency", Value: renderLinkWithDetailsPopup(rule.IsAllCurrencies, rule.Currencies, "link-currency"), TdClass: "pink-cell" },
                     { Name: "colPlatform", Value: renderLinkWithDetailsPopup(rule.IsAllPlatforms, rule.PlatformNames, "link-platform"), TdClass: "pink-cell" },
                     { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
@@ -111,7 +155,6 @@
                     { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                     { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
                     { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) },
-                    //{ Name: "colPeakHourSpread", Value: ruleManagementHelper.formatInteger(rule.PeakHourSpread) },
                     { Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) }
                 ]
             };
@@ -127,6 +170,47 @@
         return numOfData < 2
             ? data
             : `<a href="javascript:;" class="${className}" data-details="${data}">${numOfData}</a>`;
+    }
+
+
+    function renderSitesCell(sites) {
+        var arraySites = sites.split(',');
+        if (arraySites.includes('All')) {
+            return `<a href="javascript:;" class="link-sites" data-details="${siteList.map(s => s.Name).join()}">All</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            arraySites = arraySites.filter(st => !cachedCreditSitesName.includes(st));
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            arraySites = arraySites.filter(st => !cachedLicenseeSitesName.includes(st));
+        }
+
+        var removeDublicateSites = arraySites.join();
+
+        if (removeDublicateSites === "AllCredit") {
+            return `<a href="javascript:;" class="link-sites" data-details="${cachedCreditSitesName.join()}">All Credit</a>`;
+        }
+
+        if (removeDublicateSites === "AllDeposit") {
+            return `<a href="javascript:;" class="link-sites" data-details="${cachedLicenseeSitesName.join()}">All Deposit</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllCredit", cachedCreditSitesName.join());
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllDeposit", cachedLicenseeSitesName.join());
+        }
+        arraySites = removeDublicateSites.split(",");
+
+        const numOfSites = arraySites.length;
+
+        return numOfSites < 2
+            ? arraySites.join(", ")
+            : `<a href="javascript:;" class="link-sites" data-details="${removeDublicateSites}">${numOfSites}</a>`;
     }
 
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
@@ -150,6 +234,11 @@
             .off("click")
             .click(function () {
                 handleDetailsPopup(resources.platform, $(this));
+            });
+        freeGrid.find(".link-sites")
+            .off("click")
+            .click(function () {
+                handleDetailsPopup(resources.site, $(this));
             });
         freeGrid.find(".link-league-group")
             .off("click")

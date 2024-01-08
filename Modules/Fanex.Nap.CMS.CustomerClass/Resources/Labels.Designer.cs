@@ -169,6 +169,33 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Credit.
+        /// </summary>
+        public static string AllCredit {
+            get {
+                return ResourceManager.GetString("AllCredit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Deposit.
+        /// </summary>
+        public static string AllDeposit {
+            get {
+                return ResourceManager.GetString("AllDeposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desktop, Mobile, App, Oddsfeed, DirectAPI.
+        /// </summary>
+        public static string AllPlatform {
+            get {
+                return ResourceManager.GetString("AllPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App.
         /// </summary>
         public static string App {
@@ -237,6 +264,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more.).
+        /// </summary>
+        public static string CCSiteOverwrite {
+            get {
+                return ResourceManager.GetString("CCSiteOverwrite", resourceCulture);
             }
         }
         
@@ -363,6 +399,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Polycies Successfully.
+        /// </summary>
+        public static string DeletePolicySuccessfully {
+            get {
+                return ResourceManager.GetString("DeletePolicySuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Rules Successfully.
+        /// </summary>
+        public static string DeleteRuleSuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteRuleSuccessfully", resourceCulture);
             }
         }
         

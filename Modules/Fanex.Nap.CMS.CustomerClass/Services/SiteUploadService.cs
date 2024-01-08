@@ -277,9 +277,9 @@
             {
                 excelError = new ExcelError(GetExcelCell(cellRef, rowNumber), Labels.Site, site, Labels.RequiredSite);
             }
-            else if (site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
+            else if (site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase) || string.Equals(site, Labels.AllCredit, StringComparison.OrdinalIgnoreCase) || string.Equals(site, Labels.AllDeposit, StringComparison.OrdinalIgnoreCase))
             {
-                return siteDict.Keys;
+                return new[] { site.Replace(" ", string.Empty) };
             }
             else if (!siteDict.ContainsKey(site))
             {
@@ -304,7 +304,7 @@
             }
             else if (currency.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
-                return currencyDict.Values;
+                return new[] { 0 };
             }
             else if (!currencyDict.TryGetValue(currency, out currencyId))
             {
@@ -350,7 +350,7 @@
             }
             else if (platform.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
             {
-                return platformDict.Values;
+                return new[] { (byte)0 };
             }
             else if (!platformDict.TryGetValue(platform, out platformId))
             {

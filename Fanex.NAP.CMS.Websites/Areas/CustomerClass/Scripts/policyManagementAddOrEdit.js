@@ -90,7 +90,7 @@ const policyManagementAddOrEdit = (function ($) {
             renderEmptyRuleGrid();
         } else {
             CMS.getJson(
-                CMS.resolveRootUrl(`Rule/GetRules?sportType=${sportType}`),
+                CMS.resolveRootUrl(`Policy/GetRules?sportType=${sportType}`),
                 function (data) {
                     const dataJson = $.parseJSON(data);
                     if (!dataJson.length) {
@@ -154,7 +154,7 @@ const policyManagementAddOrEdit = (function ($) {
         if (action === "0") {
             freeGridBodyRows.each(function () {
                 const $this = $(this);
-                if ($this.data("ruletitle").toLowerCase().indexOf(ruleTitle) > -1) {
+                if ($this.data("ruletitle").toString().toLowerCase().indexOf(ruleTitle) > -1) {
                     $this.removeClass("display-none");
                 } else {
                     $this.addClass("display-none");
@@ -163,7 +163,7 @@ const policyManagementAddOrEdit = (function ($) {
         } else if (action === "1") {
             freeGridBodyRows.each(function () {
                 const $this = $(this);
-                if ($this.data("ruletitle").toLowerCase().indexOf(ruleTitle) > -1) {
+                if ($this.data("ruletitle").toString().toLowerCase().indexOf(ruleTitle) > -1) {
                     const checkbox = $this.find(`#chkAction-${$this.data("ruleid")}`);
                     if (checkbox.is(":checked")) {
                         $this.removeClass("display-none");
@@ -177,7 +177,7 @@ const policyManagementAddOrEdit = (function ($) {
         } else {
             freeGridBodyRows.each(function () {
                 const $this = $(this);
-                if ($this.data("ruletitle").toLowerCase().indexOf(ruleTitle) > -1) {
+                if ($this.data("ruletitle").toString().toLowerCase().indexOf(ruleTitle) > -1) {
                     const checkbox = $this.find(`#chkAction-${$this.data("ruleid")}`);
                     if (checkbox.is(":checked")) {
                         $this.addClass("display-none");

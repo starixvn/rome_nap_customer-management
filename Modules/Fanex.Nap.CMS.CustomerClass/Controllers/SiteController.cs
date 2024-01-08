@@ -48,9 +48,14 @@
         public ActionResult Search(GetSiteSettingRequest request)
             => JsonData(siteService.GetPagedSiteSetting(request));
 
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
+        public ActionResult GetPolicyTitle(short sportType)
+            => JsonData(policyService.GetPolicyTitles(sportType));
+
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
-        public ActionResult Assign(AssignSiteSettingRequest request)
+        public ActionResult Assign(AssignSiteSettingRequest request, bool isOverwrite)
         {
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
@@ -69,7 +74,7 @@
                 }
             }
 
-            return JsonData(siteService.AssignSiteSetting(request), JsonRequestBehavior.DenyGet);
+            return JsonData(siteService.AssignSiteSetting(request, isOverwrite), JsonRequestBehavior.DenyGet);
         }
 
         public ActionResult DownloadTemplate()
@@ -89,7 +94,7 @@
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file, bool isOverwrite)
         {
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
@@ -118,7 +123,7 @@
             }
 
             return JsonData(
-                siteService.Upload(siteSettingExcels, userId, ip),
+                siteService.Upload(siteSettingExcels, isOverwrite, userId, ip),
                 JsonRequestBehavior.DenyGet);
         }
 

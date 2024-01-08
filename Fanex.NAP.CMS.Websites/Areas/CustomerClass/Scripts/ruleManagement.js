@@ -81,17 +81,18 @@
             { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.leagueGroup, Width: 100, Name: "colLeagueGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.isLive, Width: 60, Name: "colIsLive", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.diffBalanceRatio, Width: 60, Name: "colDiffBalanceRatio", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.diffBalanceRatio, Width: 80, Name: "colDiffBalanceRatio", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.betDelay, Width: 60, Name: "colBetDelay", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.nextSuperSiteBetIntervalSec, Width: 120, Name: "colNextSuperSiteBetIntervalSec", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.minMaxBetMPM, Width: 160, Name: "colMinMaxBetMPM", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.repeatedBets, Width: 60, Name: "colRepeatedBets", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.seizeBet, Width: 60, Name: "colSeizeBet", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.policyTitle, Width: 160, Name: "colPolicies", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.disableParlay, Width: 60, Name: "colDisableParlay", HeaderAlign: "center", CellAlign: "center" },
-            //{ HeaderText: resources.peakHourSpread, Width: 60, Name: "colPeakHourSpread", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
         ];
-        hasHostPermisson && columns.push({ HeaderText: resources.action, Width: 60, Name: "colAction", HeaderAlign: "center", CellAlign: "center" });
+        hasHostPermisson && columns.push({ HeaderText: resources.action, Width: 60, Name: "colAction", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
 
         return {
             showTitle: false,
@@ -120,14 +121,15 @@
                 { Name: "colMinMaxBetMPM", Value: ruleManagementHelper.renderSeparateCell(rule.MinBet, rule.MaxBet, rule.MaxPerMatch) },
                 { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                 { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
-                { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) },
-                //{ Name: "colPeakHourSpread", Value: ruleManagementHelper.formatInteger(rule.PeakHourSpread) }
+                { Name: "colPolicies", Value: renderPolicyCell(rule.PolicyTitles) },
+                { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) }
             ];
 
             hasHostPermisson
                 ? columns.push(
                     { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.Enable) },
-                    { Name: "colAction", Value: renderActionCell(rule.RuleId) })
+                    { Name: "colAction", Value: renderActionCell(rule.RuleId) },
+                    { Name: "colDelete", Value: renderDeleteCell(rule.RuleId) })
                 : columns.push({ Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) });
 
             return { Columns: columns };
@@ -136,13 +138,21 @@
 
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
         if (isAllLeagueGroups) {
-            return `<a href="javascript:;" class="link-league-group" data-sporttype="${sportType}">${resources.all}</a>`;
+            return `<a href="javascript:;" class="link-league-group" data-sporttype="${sportType}" data-title="${resources.leagueGroup}">${resources.all}</a>`;
         }
 
         const numOfLeagueGroups = leagueGroups.split(",").length;
         return numOfLeagueGroups < 2
             ? leagueGroups
-            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${leagueGroups}">${numOfLeagueGroups}</a>`;
+            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${leagueGroups}" data-title="${resources.leagueGroup}">${numOfLeagueGroups}</a>`;
+    }
+
+    function renderPolicyCell(policyTitles) {
+        var policies = policyTitles.split(',');
+        const numOfPolicies = policies.length;
+        return numOfPolicies < 2
+            ? policyTitles
+            : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${policies}" data-title="${resources.policyTitle}">${numOfPolicies}</a>`;
     }
 
     function renderEnableCell(ruleId, ruleTitle, enable) {
@@ -162,6 +172,11 @@
             '<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="', ruleId, '"></span>',
             '<span class="ico-copy" title="Clone" data-ruleid="', ruleId, '"></span>'
         ].join("");
+    }
+
+
+    function renderDeleteCell(id) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -184,16 +199,26 @@
             .click(function () {
                 handleGetRuleById($(this).data("ruleid"), ruleManagementAddOrEdit.CLONE);
             });
+
+        freeGrid.find("#chk-select-delete-all")
+            .off("click")
+            .click(handleCheckDelAll);
+        freeGrid.find("#btn-delete-selected")
+            .off("click")
+            .click(handleDelSelected);
+        freeGrid.find(".chk-select-delete")
+            .off("click")
+            .click(handleSingleCheckDel);
     }
 
     function handleViewLeagueGroups() {
+        const $this = $(this);
         let html = [
             '<div class="form" id="viewLeagueGroupsForm">',
             '<table class="tbl-freegrid">',
-            '<thead><tr><th class="width-60">#</th><th>', resources.leagueGroup, '</th></tr></thead>',
+            '<thead><tr><th class="width-60">#</th><th>', $this.data("title"), '</th></tr></thead>',
             '<tbody>'
         ];
-        const $this = $(this);
         const sportType = $this.data("sporttype");
         if (sportType) {
             let index = 0;
@@ -211,7 +236,7 @@
         html.push('</tbody></table></div>');
 
         CMS.modal(
-            resources.leagueGroup,
+            $this.data("title"),
             html.join(""),
             {
                 resizable: false,
@@ -257,6 +282,82 @@
             CMS.resolveRootUrl(`Rule/Get?ruleId=${ruleId}`),
             function (data) {
                 ruleManagementAddOrEdit.openModal(action, JSON.parse(data));
+            });
+    }
+
+    function handleCheckDelAll() {
+        let checked = $(this).prop("checked");
+        $(".chk-select-delete").each(function () {
+            $(this).prop("checked", checked);
+        });
+    }
+
+    function handleSingleCheckDel() {
+        let isCheckAll = true;
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") !== true) {
+                isCheckAll = false;
+
+                return false;
+            }
+        });
+
+        $("#chk-select-delete-all").prop("checked", isCheckAll);
+    }
+
+    function handleDelSelected() {
+        var settings = [];
+        var ruleIds = [];
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") === true) {
+                ruleIds.push($(this).data("id"));
+            }
+        });
+        if (ruleIds.length === 0) {
+            return;
+        }
+
+        callCheckRuleBeforeDelete(ruleIds);
+    }
+
+
+    function callCheckRuleBeforeDelete(ruleIds) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Rule/CheckRules`),
+            { RuleIDs: ruleIds.join() },
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.Rules !== "") {
+                    var warningMessage = `The following rule(s) have been added to the policies:</br>${resultJson.Rules}.</br>Are you sure you want to delete them?</br>Note: If you delete them, they will also be removed from policies.`
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(ruleIds); });
+                } else {
+                    if (resultJson.IsSuccess) {
+                        var message = `Are you sure you want to delete the selected setting row(s)?`;
+                        CMS.showConfirmMessage(message, function () { callDelete(ruleIds); });
+                    } else {
+                        CMS.showErrorMessage(resultJson.Message);
+                    }
+                }
+            });
+    }
+
+
+    function callDelete(ruleIds) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Rule/DeleteRules`),
+            { RuleIDs: ruleIds.join() },
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    search();
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
             });
     }
 

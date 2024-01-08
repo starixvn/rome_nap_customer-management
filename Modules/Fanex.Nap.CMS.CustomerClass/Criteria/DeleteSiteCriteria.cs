@@ -24,7 +24,9 @@
             {
                 xmlBuilder
                     .Append("<r PolicyID=\"").Append(item.PolicyId).Append("\"")
-                    .Append(" Site=\"").Append(item.Site).Append("\"/>");
+                    .Append(" Site=\"").Append(item.Site).Append("\"")
+                    .Append(" Currency=\"").Append(item.Currency).Append("\"")
+                    .Append(" Platform=\"").Append(item.Platform).Append("\"/>");
             }
 
             xmlBuilder.Append("</ROOT>");

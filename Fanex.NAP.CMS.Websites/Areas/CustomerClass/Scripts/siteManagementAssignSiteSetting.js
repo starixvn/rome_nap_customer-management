@@ -72,7 +72,7 @@ const siteManagementAssignSiteSetting = (function ($) {
             renderPolicyTitleDropdownList([]);
         } else {
             CMS.getJson(
-                CMS.resolveRootUrl(`Policy/GetPolicyTitle?sportType=${sportType}`),
+                CMS.resolveRootUrl(`Site/GetPolicyTitle?sportType=${sportType}`),
                 function (data) {
                     renderPolicyTitleDropdownList($.parseJSON(data));
                 });
@@ -160,20 +160,24 @@ const siteManagementAssignSiteSetting = (function ($) {
         });
     }
 
-    function handleOnSave(formData) {
+    function handleOnSave(formData, isOverwriteAssign = true) {
         formData = formData || getFormData();
         if (formData) {
             CMS.disableInput();
             CMS.callAjax(
                 this,
-                CMS.resolveRootUrl("Site/Assign"),
+                CMS.resolveRootUrl(`Site/Assign?isOverwrite=${isOverwriteAssign}`),
                 formData,
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (Array.isArray(resultJson)) {
                         CMS.showConfirmMessage(buildConfirmAssignSiteSettingMessage(resultJson), function () {
                             formData.isCheck = false;
-                            handleOnSave(formData);
+                            handleOnSave(formData, isOverwriteAssign);
+                        });
+
+                        $("#ckbAssignOverwrite").change(function () {
+                            isOverwriteAssign = $(this).prop("checked");
                         });
                     } else {
                         customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSiteGridFunc);
@@ -183,17 +187,16 @@ const siteManagementAssignSiteSetting = (function ($) {
     }
 
     function buildConfirmAssignSiteSettingMessage(siteSettings) {
-        const policyTitle = ddlPolicyTitle.next(".ui-combobox").find(".ui-combobox-input").val();
-        let html = ['<p>Setting info is already existed!!!</p>'];
+        let html = ['<p>Setting info already exists</p><div class="existed-site-setting-div">'];
 
         siteSettings.forEach(function (item) {
-            html.push('<p class="existed-site-setting">', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
-            html.push(resources.site, ": <b>", item.Site, "</b>; ");
-            html.push(resources.currency, ": <b>", item.Currencies.split(",").join(", "), "</b>; ");
+            html.push('<p class="existed-site-setting">- ', resources.policyTitle, ": <b>", item.PolicyTitle, "</b>; ");
+            html.push(resources.site, ": <b>", item.Site.replace("ALL", "All").replace("AllDeposit", "All Deposit").replace("AllCredit", "All Credit"), "</b>; ");
+            html.push(resources.currency, ": <b>", item.Currencies.replace("ALL", "All").split(",").join(", "), "</b>; ");
             html.push(resources.platform, ": <b>", item.PlatformNames, "</b></p>");
         });
-
-        html.push(`<p class="existed-site-setting-confirm">Do you want to <span class="text-blue bold">UPDATE</span> settings to Policy: ${policyTitle}?</p>`);
+        html.push('</div>');
+        html.push(`<div class="override-warning"><input type="checkbox" id="ckbAssignOverwrite" checked/><label for="ckbAssignOverwrite">${resources.warningOverwrite}</label></div>`);
 
         return html.join("");
     }
@@ -226,16 +229,16 @@ const siteManagementAssignSiteSetting = (function ($) {
             const id = $this.data("randomid");
 
             const ddlSite = $this.find(`#ddlPopupSite-${id}`);
-            const sites = validateSiteMultiSelect(ddlSite);
+            const selectedSites = validateSiteMultiSelect(ddlSite);
 
             const ddlCurrency = $this.find(`#ddlCurrency-${id}`);
-            const currencies = validateMultiSelect(ddlCurrency);
+            const selectedCurrencies = validateMultiSelect(ddlCurrency, currencyList.length, "0");
 
             const ddlPlatform = $this.find(`#ddlPopupPlatform-${id}`);
-            const platforms = validateMultiSelect(ddlPlatform);
+            const selectedPlatforms = validateMultiSelect(ddlPlatform, platforms.length, "0");
 
-            if (sites && currencies && platforms) {
-                siteCurrencies.push({ sites, currencies, platforms });
+            if (selectedSites && selectedCurrencies && selectedPlatforms) {
+                siteCurrencies.push({ sites: selectedSites, currencies: selectedCurrencies, platforms: selectedPlatforms });
             } else {
                 isValid = false;
             }
@@ -246,15 +249,35 @@ const siteManagementAssignSiteSetting = (function ($) {
 
     function validateSiteMultiSelect(element) {
         const selectedValues = element.fanexMultiSelect("getSelectedTexts", true);
+        var allSitesLength = sites[0].items.length + sites[1].items.length;
+        if (selectedValues.length === allSitesLength) {
+            return "All";
+        }
         if (selectedValues.length) {
-            return selectedValues.join();
+            var selectedCreditSite = sites[0].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var selectedLicenseeSite = sites[1].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var result = [];
+            if (selectedCreditSite.length === sites[0].items.length) {
+                result.push("AllCredit");
+                result = result.concat(selectedLicenseeSite);
+            } else if (selectedLicenseeSite.length === sites[1].items.length) {
+                result = selectedCreditSite;
+                result.push("AllDeposit");
+            } else {
+                result = selectedValues;
+            }
+
+            return result.join();
         }
 
         CMS.showTipsyError(element, resources.requiredField, "ne");
     }
 
-    function validateMultiSelect(element) {
+    function validateMultiSelect(element, isAllItemLength, replaceAllValue) {
         const selectedValues = element.fanexMultiSelect("getItems", true);
+        if (selectedValues.length === isAllItemLength) {
+            return replaceAllValue;
+        }
         if (selectedValues.length) {
             return selectedValues.join();
         }

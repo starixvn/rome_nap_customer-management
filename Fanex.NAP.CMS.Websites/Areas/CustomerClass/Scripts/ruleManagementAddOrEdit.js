@@ -98,7 +98,6 @@ const ruleManagementAddOrEdit = (function ($) {
         txtSeizeBet.val(rule.SeizeBet);
 
         chkDisableParlay = $("#chkDisableParlay").prop("checked", rule.DisableParlay);
-        //txtPeakHourSpread = $("#txtPeakHourSpread").val(ruleManagementHelper.formatInteger(rule.PeakHourSpread));
     }
 
     function bindEvents(ruleId) {
@@ -114,7 +113,7 @@ const ruleManagementAddOrEdit = (function ($) {
             .off("change")
             .change(function () {
                 const sportType = +this.value;
-                ddlLeagueGroup = renderLeagueGroup(sportType);
+                ddlLeagueGroup = renderLeagueGroup(sportType, "-1");
                 disableSeizeBetTextbox(sportType);
             });
 

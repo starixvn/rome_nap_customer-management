@@ -26,7 +26,8 @@
             bool? enable,
             string site,
             string currencies,
-            string platforms)
+            string platforms,
+            string policyTitles)
 #pragma warning restore S107
         {
             RuleId = ruleId;
@@ -52,6 +53,7 @@
             Site = site;
             Currencies = currencies;
             Platforms = platforms;
+            PolicyTitles = policyTitles;
         }
 
         public int RuleId { get; }
@@ -100,7 +102,7 @@
 
         public string Site { get; }
 
-        public string Currencies { get; }
+        public string Currencies { get; set; }
 
         public bool? IsAllCurrencies { get; set; }
 
@@ -109,5 +111,7 @@
         public string PlatformNames { get; set; }
 
         public bool? IsAllPlatforms { get; set; }
+
+        public string PolicyTitles { get; set; }
     }
 }

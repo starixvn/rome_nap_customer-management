@@ -12,12 +12,20 @@
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
                 enable: Convert.ToBoolean(reader["Enable"]),
-                site: reader["Site"].ToString(),
+                site: reader["Sites"].ToString(),
                 currencies: reader["CurrencyName"].ToString(),
                 platforms: reader["Platform"].ToString())
             : null;
 
         public static Rule ToRuleList(IDataReader reader)
+            => GetInt(reader["RuleId"]).HasValue
+            ? ToRule(
+                reader,
+                leagueGroups: reader["LeagueGroupNames"].ToString(),
+                enable: Convert.ToBoolean(reader["Enable"]))
+            : null;
+
+        public static Rule ToPolicyRuleList(IDataReader reader)
             => GetInt(reader["RuleId"]).HasValue
             ? ToRule(
                 reader,
@@ -63,7 +71,8 @@
                 enable,
                 site,
                 currencies,
-                platforms);
+                platforms,
+                HasColumn(reader, "PolicyTitles") ? reader["PolicyTitles"].ToString() : string.Empty);
 
         private static int? GetInt(object value)
             => value == null || value == DBNull.Value
@@ -79,5 +88,18 @@
             => value == null || value == DBNull.Value
             ? default(byte?)
             : Convert.ToByte(value);
+
+        private static bool HasColumn(IDataRecord dataRecord, string columnName)
+        {
+            for (int i = 0; i < dataRecord.FieldCount; i++)
+            {
+                if (dataRecord.GetName(i).Equals(columnName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

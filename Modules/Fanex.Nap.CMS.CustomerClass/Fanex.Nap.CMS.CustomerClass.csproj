@@ -141,7 +141,11 @@
     <Compile Include="Criteria\AddRuleCriteria.cs" />
     <Compile Include="Criteria\AddSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\AssignSiteSettingCriteria.cs" />
+    <Compile Include="Criteria\CheckPolicyDelCriteria.cs" />
+    <Compile Include="Criteria\CheckRuleDelCriteria.cs" />
     <Compile Include="Criteria\CommandCriteriaBase.cs" />
+    <Compile Include="Criteria\DeletePolicyCriteria.cs" />
+    <Compile Include="Criteria\DeleteRuleCriteria.cs" />
     <Compile Include="Criteria\DeleteSiteCriteria.cs" />
     <Compile Include="Criteria\DeleteSpreadCriteria.cs" />
     <Compile Include="Criteria\EditSpreadRuleCriteria.cs" />
@@ -189,6 +193,8 @@
     <Compile Include="Requests\AddRuleRequest.cs" />
     <Compile Include="Requests\AddEditSpreadRuleRequest.cs" />
     <Compile Include="Requests\AssignSiteSettingRequest.cs" />
+    <Compile Include="Requests\DeletePolicyRequest.cs" />
+    <Compile Include="Requests\DeleteRuleRequest.cs" />
     <Compile Include="Requests\DeleteSiteSettingRequest.cs" />
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
     <Compile Include="Requests\SearchCustomerClassSettingRequest.cs" />
@@ -205,6 +211,8 @@
     </Compile>
     <Compile Include="Responses\AddOfferResponse.cs" />
     <Compile Include="Responses\AddSpreadRuleResponse.cs" />
+    <Compile Include="Responses\CheckPolicyResponse.cs" />
+    <Compile Include="Responses\CheckRuleResponse.cs" />
     <Compile Include="Services\FilterService.cs" />
     <Compile Include="Services\PolicyService.cs" />
     <Compile Include="Services\RuleService.cs" />

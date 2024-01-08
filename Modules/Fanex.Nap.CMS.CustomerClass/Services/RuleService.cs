@@ -9,6 +9,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface IRuleService
@@ -26,6 +27,10 @@
         Result EditRule(int ruleId, AddRuleRequest request);
 
         Result EnableRule(EnableRuleRequest request);
+
+        CheckRuleResponse CheckRuleDel(DeleteRuleRequest request);
+
+        Result DeleteRules(DeleteRuleRequest request);
     }
 
     internal class RuleService : IRuleService
@@ -42,12 +47,6 @@
         public PagedRule GetRules(SearchCustomerClassSettingRequest request)
         {
             var leagueGroups = filterService.GetLeagueGroups(request.SportType);
-
-            if (request.Site.Equals(Labels.All, StringComparison.OrdinalIgnoreCase))
-            {
-                request.Site = null;
-            }
-
             var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups));
 
             return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));
@@ -55,15 +54,20 @@
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
         {
-            var allCurrencyCount = filterService.GetAllCurrencies().Count();
+            var currencies = filterService.GetAllCurrencies().Select(x => x.Name);
+            var allCurrencies = string.Join(",", currencies);
             var platformDict = PlatformConst.Platforms;
-            var allPlatformCount = platformDict.Count;
+            var allPlatformCount = platformDict.Count - 1;
             var sportTypes = SportTypeConst.SportTypes;
             foreach (var item in rules)
             {
-                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies);
+                item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
+                if (item.IsAllCurrencies == true)
+                {
+                    item.Currencies = allCurrencies;
+                }
 
-                item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms);
+                item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms) || item.Platforms == "0";
                 item.PlatformNames = string.Join(", ", item.Platforms
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => platformDict[Convert.ToByte(p)]));
@@ -107,5 +111,11 @@
 
         public Result EnableRule(EnableRuleRequest request)
             => ruleDataAccess.DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
+
+        public CheckRuleResponse CheckRuleDel(DeleteRuleRequest request)
+            => ruleDataAccess.CheckRule(new CheckRuleDelCriteria(request));
+
+        public Result DeleteRules(DeleteRuleRequest request)
+            => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
     }
 }

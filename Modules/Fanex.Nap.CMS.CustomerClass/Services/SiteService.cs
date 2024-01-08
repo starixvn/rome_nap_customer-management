@@ -18,9 +18,9 @@
 
         IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request);
 
-        Result AssignSiteSetting(AssignSiteSettingRequest request);
+        Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite);
 
-        Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, int userId, string ip);
+        Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip);
 
         Result Delete(DeleteSiteSettingRequest request, int userId, string ip);
     }
@@ -57,7 +57,7 @@
 
             foreach (var item in siteSettings)
             {
-                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies);
+                item.IsAllCurrencies = allCurrencyCount == NumberOfItemsSeparatedByComma(item.Currencies) || item.Currencies.ToLowerInvariant() == "all";
                 item.PlatformNames = string.Join(", ", item.Platforms
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(p => platformDict[Convert.ToByte(p)]));
@@ -69,12 +69,12 @@
         private static int NumberOfItemsSeparatedByComma(string value)
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
-        public Result AssignSiteSetting(AssignSiteSettingRequest request)
-            => siteDataAccess.DoAction(new AssignSiteSettingCriteria(request), Labels.AssignSiteSettingSuccessfully);
+        public Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite)
+            => siteDataAccess.DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
 
-        public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, int userId, string ip)
+        public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
             => siteDataAccess.DoAction(
-                new AssignSiteSettingCriteria(siteSettingExcels, userId, ip),
+                new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip),
                 Labels.UploadExcelSuccessfully);
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)

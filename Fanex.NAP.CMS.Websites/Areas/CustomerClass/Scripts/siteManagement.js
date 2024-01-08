@@ -4,16 +4,22 @@
     let cachedSearchUrlWithQueryString = null,
         cachedGridOptions = null,
         hasHostPermisson = false,
+        cachedSites = [],
+        creditSites = [],
+        depositSites = [],
         freeGrid = $("#freegrid");
 
     function init() {
+        cachedSites = buildGroupSiteList(true);
+        creditSites = siteList.filter(s => !s.IsLicensee).map(s => s.Name);
+        depositSites = siteList.filter(s => s.IsLicensee).map(s => s.Name);
         const ddlSite = customerClassHelper.renderMultiSelect(
             "#ddlSite",
             {
                 minWidth: 180,
                 showFilter: true,
                 showTooltip: false,
-                listData: buildGroupSiteList(true)
+                listData: cachedSites
             });
         const ddlPolicyTitle = $("#ddlPolicyTitle");
         const ddlPlatform = renderPlatform();
@@ -22,7 +28,7 @@
             e.preventDefault();
 
             const formData = {
-                sites: ddlSite.fanexMultiSelect("getSelectedTexts", true).join(),
+                sites: getFilterSites(ddlSite),
                 policyId: ddlPolicyTitle.val(),
                 platforms: ddlPlatform.fanexMultiSelect("getItems", true).join()
             };
@@ -99,6 +105,30 @@
         ];
     }
 
+    function getFilterSites(element) {
+        const selectedValues = element.fanexMultiSelect("getSelectedTexts", true);
+        var allSitesLength = cachedSites[0].items.length + cachedSites[1].items.length;
+        if (selectedValues.length === allSitesLength) {
+            return "All";
+        }
+        if (selectedValues.length) {
+            var selectedCreditSite = cachedSites[0].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var selectedLicenseeSite = cachedSites[1].items.filter(s => selectedValues.includes(s.text)).map(s => s.text);
+            var result = [];
+            if (selectedCreditSite.length === cachedSites[0].items.length) {
+                result.push("AllCredit");
+                result = result.concat(selectedLicenseeSite);
+            } else if (selectedLicenseeSite.length === cachedSites[1].items.length) {
+                result = selectedCreditSite;
+                result.push("AllDeposit");
+            } else {
+                result = selectedValues;
+            }
+
+            return result.join();
+        }
+    }
+
     function renderPlatform() {
         const platforms = platformList.map(function (item) {
             return { value: item.Id, text: item.Name, checked: true, enable: true };
@@ -122,6 +152,9 @@
                 freeGrid.find(".link-currency")
                     .off("click")
                     .click(handleViewCurrencies);
+                freeGrid.find(".link-sites")
+                    .off("click")
+                    .click(handleViewSites);
                 freeGrid.find("#chk-select-delete-all")
                     .off("click")
                     .click(handleCheckDelAll);
@@ -179,11 +212,11 @@
         return data.map(function (datum) {
             const columns = [
                 { Name: "colPolicyTitle", Value: datum.PolicyTitle },
-                { Name: "colSite", Value: datum.Site },
+                { Name: "colSite", Value: renderSitesCell(datum.Site) },
                 { Name: "colCurrency", Value: renderCurrencyCell(datum.IsAllCurrencies, datum.Currencies) },
                 { Name: "colPlatform", Value: datum.PlatformNames }
             ];
-            hasHostPermisson && columns.push({ Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site) });
+            hasHostPermisson && columns.push({ Name: "colDelete", Value: renderDeleteCell(datum.PolicyId, datum.Site, datum.CurrencyID, datum.Platforms) });
 
             return {
                 Columns: columns
@@ -191,14 +224,54 @@
         });
     }
 
+    function renderSitesCell(sites) {
+        var arraySites = sites.split(',');
+        if (arraySites.includes('All')) {
+            return `<a href="javascript:;" class="link-sites" data-sites="${siteList.map(s => s.Name).join()}">All</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            arraySites = arraySites.filter(st => !creditSites.includes(st));
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            arraySites = arraySites.filter(st => !depositSites.includes(st));
+        }
+
+        var removeDublicateSites = arraySites.join();
+
+        if (removeDublicateSites === "AllCredit") {
+            return `<a href="javascript:;" class="link-sites" data-sites="${creditSites.join()}">All Credit</a>`;
+        }
+
+        if (removeDublicateSites === "AllDeposit") {
+            return `<a href="javascript:;" class="link-sites" data-sites="${depositSites.join()}">All Deposit</a>`;
+        }
+
+        if (arraySites.includes("AllCredit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllCredit", creditSites.join());
+        }
+
+        if (arraySites.includes("AllDeposit")) {
+            removeDublicateSites = removeDublicateSites.replace("AllDeposit", depositSites.join());
+        }
+        arraySites = removeDublicateSites.split(",");
+        
+        const numOfSites = arraySites.length;
+
+        return numOfSites <= 1
+            ? arraySites.join(", ")
+            : `<a href="javascript:;" class="link-sites" data-sites="${removeDublicateSites}">${numOfSites}</a>`;
+    }
+
     function renderCurrencyCell(isAllCurrencies, currencies) {
         if (isAllCurrencies) {
-            return `<a href="javascript:;" class="link-currency" data-currencies="${currencies}">All</a>`;
+            return `<a href="javascript:;" class="link-currency" data-currencies="${currencyList.map(cur => cur.Name).join()}">All</a>`;
         }
 
         const currencyArray = currencies.split(",");
         const numOfCurrencies = currencyArray.length;
-        return numOfCurrencies <= 5
+        return numOfCurrencies <= 1
             ? currencyArray.join(", ")
             : `<a href="javascript:;" class="link-currency" data-currencies="${currencies}">${numOfCurrencies}</a>`;
     }
@@ -228,8 +301,33 @@
             });
     }
 
-    function renderDeleteCell(id, site) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-site="${site}">`;
+    function handleViewSites() {
+        let html = [
+            '<div class="form" id="viewCurrenciesForm">',
+            '<table class="tbl-freegrid">',
+            '<thead><tr><th class="width-60">#</th><th>', resources.site, '</th></tr></thead>',
+            '<tbody>'
+        ];
+        $(this).data("sites").split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+        });
+        html.push('</tbody></table></div>');
+
+        CMS.modal(
+            resources.site,
+            html.join(""),
+            {
+                resizable: false,
+                position: {
+                    my: "center top",
+                    at: "center top",
+                    of: "#headline"
+                }
+            });
+    }
+
+    function renderDeleteCell(id, site, currency, platform) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-site="${site}" data-currency="${currency}" data-platform="${platform}">`;
     }
 
     function handleCheckDelAll() {
@@ -258,7 +356,9 @@
             if ($(this).prop("checked") === true) {
                 settings.push({
                     PolicyId: $(this).data("id"),
-                    Site: $(this).data("site").toString()
+                    Site: $(this).data("site").toString(),
+                    Currency: $(this).data("currency").toString(),
+                    Platform: $(this).data("platform").toString()
                 });
             }
         });

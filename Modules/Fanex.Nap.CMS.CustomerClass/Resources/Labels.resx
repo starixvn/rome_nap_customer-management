@@ -495,4 +495,22 @@
   <data name="AddUtilityOfferingSuccessfully" xml:space="preserve">
     <value>Add Utility Offering Successfully</value>
   </data>
+  <data name="DeleteRuleSuccessfully" xml:space="preserve">
+    <value>Delete Rules Successfully</value>
+  </data>
+  <data name="CCSiteOverwrite" xml:space="preserve">
+    <value>Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more.)</value>
+  </data>
+  <data name="DeletePolicySuccessfully" xml:space="preserve">
+    <value>Delete Polycies Successfully</value>
+  </data>
+  <data name="AllPlatform" xml:space="preserve">
+    <value>Desktop, Mobile, App, Oddsfeed, DirectAPI</value>
+  </data>
+  <data name="AllCredit" xml:space="preserve">
+    <value>All Credit</value>
+  </data>
+  <data name="AllDeposit" xml:space="preserve">
+    <value>All Deposit</value>
+  </data>
 </root>

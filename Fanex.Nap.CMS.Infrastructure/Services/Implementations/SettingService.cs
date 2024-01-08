@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
@@ -15,6 +16,7 @@
         private const string CachedSitesMarketCode = "Fanex.Nap.CMS.Infrastructure.SitesMarketCode";
         private const int CachedDefaultInMinutes = 30;
         private const string CachedCountries = "Fanex.Nap.CMS.Infrastructure.Countries";
+        private const string CachedAllCurrencies = "Fanex.Nap.CMS.Infrastructure.All.Currencies";
 
         private readonly ISettingRepository settingRepository;
 
@@ -26,10 +28,21 @@
             => this.settingRepository = settingRepository;
 
         public IEnumerable<IdNameModel> GetAllCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency));
+        {
+            var allCurrencies = CacheManager.Get<IEnumerable<IdNameModel>>(CachedAllCurrencies);
+
+            if (allCurrencies == null)
+            {
+                allCurrencies = settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Name);
+
+                CacheManager.Set(CachedAllCurrencies, allCurrencies, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
+
+            return allCurrencies;
+        }
 
         public IEnumerable<IdNameModel> GetCreditCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency));
+            => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency)).OrderBy(cur => cur.Name);
 
         /// <summary>
         /// UserId to check Special_Site permisson.
@@ -38,10 +51,10 @@
         /// <param name="userId"></param>
         /// <returns></returns>
         public IEnumerable<SiteGroup> GetAllSites(int userId = 0)
-            => settingRepository.GetAllSites(new GetAllSiteCriteria(userId));
+            => settingRepository.GetAllSites(new GetAllSiteCriteria(userId)).OrderBy(site => site.Name);
 
         public IEnumerable<IdNameModel> GetCreditSites()
-            => settingRepository.GetCreditSites(new GetCreditSiteCriteria());
+            => settingRepository.GetCreditSites(new GetCreditSiteCriteria()).OrderBy(site => site.Name);
 
         public IEnumerable<SiteGroup> GetSitesMarketCode()
         {

@@ -38,6 +38,7 @@
             no: "@Labels.No"
         };
         const leagueGroupList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups, jsonSettings))');
+        const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.CustomerClassSettingScripts)
 }
@@ -53,12 +54,12 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "CustomerClassSetting", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
     {
-        <div class="filter-row">
+        <div class="filter-row last-row">
             <div class="lbl-field col_2">
                 <label>@Labels.Site</label>
             </div>
             <div class="edit-field col_9">
-                @Html.DropDownList("site", Model.Sites, new { @class = "combobox-autocomplete width-160", id= "ddlSite" })
+                <div id="ddlSites"></div>
             </div>
             <div class="lbl-field col_4">
                 <label>@Labels.CustomerClass</label>
@@ -70,18 +71,18 @@
                 <label>@Labels.SportType</label>
             </div>
             <div class="edit-field col_7">
-                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem().SetDefaultValue(BasketBallSportType.ToString()), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
+                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
             </div>
             <div class="submit width-auto">
                 <button type="submit" class="submit">@Labels.Search</button>
             </div>
         </div>
-        <div class="filter-row last-row">
+        @*<div class="filter-row ">
             <div class="note-info-message-box">
                 <span class="note-info-message"></span>
                 <span id="note-info-message">For better performance, please select option "All" on only 1 filter condition.</span>
             </div>
-        </div>
+        </div>*@
     }
 </div>
 <div class="content-grid">

@@ -55,7 +55,7 @@
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 25,
-            gridExpandHeight: 130,
+            gridExpandHeight: 180,
             columns: columns,
             titleInfo:
             {

@@ -29,6 +29,8 @@
     {
         private readonly INonSportsDataAccess nonSportsDataAccess;
         private readonly IDynamicRepository dynamicRepository;
+        private const int AllProductId = 256;
+
         public NonsportsService() : this(new DynamicRepository(), new NonSportsDataAccess())
         {
         }
@@ -109,7 +111,7 @@
         private string GetProductIds(IEnumerable<IdNameModel> allproducts)
         {
             var ids = allproducts.Select(pro => pro.Id).ToList();
-            ids.Add(256);
+            ids.Add(AllProductId);
 
             return string.Join(",", ids);
         }

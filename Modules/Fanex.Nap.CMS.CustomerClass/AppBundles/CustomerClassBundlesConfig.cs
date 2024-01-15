@@ -151,8 +151,7 @@
                 CCNonsportsStyles,
                 FanexMultiSelectStyle,
                 FanexMultiSelectCustomStyle,
-                "~/Areas/CustomerClass/Styles/editingGrid.less",
-                "~/Areas/CustomerClass/Styles/nonsports.less");
+                "~/Areas/CustomerClass/Styles/editingGrid.less");
 
             bundles.Add(new ScriptBundle(CCNonsportsScripts).Include(
                 FanexMultiSelectScript,

@@ -1165,7 +1165,6 @@
     <Content Include="Areas\CustomerClass\Styles\offering.less" />
     <Content Include="Areas\CustomerClass\Styles\editingGrid.less" />
     <Content Include="Areas\CustomerClass\Views\Nonsports\Index.cshtml" />
-    <Content Include="Areas\CustomerClass\Styles\nonsports.less" />
     <Content Include="Areas\DomainManagement\Web.config" />
     <Content Include="Areas\DomainManagement\Views\Index.cshtml" />
     <Content Include="Areas\DomainManagement\Views\_AddNewOrEditForm.cshtml" />
@@ -1251,7 +1250,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

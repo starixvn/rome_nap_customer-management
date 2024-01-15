@@ -247,7 +247,7 @@
                 CustomerClass: "",
                 Products: "",
                 Sites: "",
-                MaxBet: "0",
+                MaxBet: "",
                 IsEnable: true
             };
         }

@@ -155,6 +155,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string SpreadManagement = "SpreadManagement";
         
         public const string CCUtilityOffering = "CCUtilityOffering";
+        public const string NonsportsCCManagement = "NonsportsCCManagement";
 
         //Manage Product Setting
         public const string Non_sportsCompanyBetLimitSetting = "Non_sportsCompanyBetLimitSetting";

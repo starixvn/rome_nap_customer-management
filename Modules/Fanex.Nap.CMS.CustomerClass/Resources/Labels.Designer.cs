@@ -106,6 +106,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Rule Successfully.
+        /// </summary>
+        public static string AddNonSportsSuccessfully {
+            get {
+                return ResourceManager.GetString("AddNonSportsSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Policy Setting.
         /// </summary>
         public static string AddPolicySetting {
@@ -268,6 +277,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Non-Sports Management.
+        /// </summary>
+        public static string CCNonsports {
+            get {
+                return ResourceManager.GetString("CCNonsports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overwrite (Check it if you want to update the existing Policy to the new Policy. Uncheck it if you want to keep the existing Policy and assign more.).
         /// </summary>
         public static string CCSiteOverwrite {
@@ -403,6 +421,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Rule Successfully.
+        /// </summary>
+        public static string DeleteNonSportSuccessfully {
+            get {
+                return ResourceManager.GetString("DeleteNonSportSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Polycies Successfully.
         /// </summary>
         public static string DeletePolicySuccessfully {
@@ -498,6 +525,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string DownloadTemplate {
             get {
                 return ResourceManager.GetString("DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Rule Successfully.
+        /// </summary>
+        public static string EditNonSportsSuccessfully {
+            get {
+                return ResourceManager.GetString("EditNonSportsSuccessfully", resourceCulture);
             }
         }
         
@@ -930,6 +966,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string PolicyTitle {
             get {
                 return ResourceManager.GetString("PolicyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
             }
         }
         

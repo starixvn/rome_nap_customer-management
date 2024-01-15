@@ -272,6 +272,7 @@
     <Compile Include="Criteria\GetCountriesCriteria.cs" />
     <Compile Include="Criteria\GetCreditSiteCriteria.cs" />
     <Compile Include="Criteria\GetCurrencyCriteria.cs" />
+    <Compile Include="Criteria\GetNonsportsProductCriteria.cs" />
     <Compile Include="Criteria\GetNAPAccPolicyCriteria.cs" />
     <Compile Include="Criteria\GetSiteMarketCodeCriteria.cs" />
     <Compile Include="Criteria\PagingCriteria.cs" />

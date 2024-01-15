@@ -15,6 +15,8 @@
 
         IEnumerable<IdNameModel> GetCreditSites(ICriteria criteria);
 
+        IEnumerable<IdNameModel> GetNonsportsProducts(ICriteria criteria);
+        
         IEnumerable<SiteGroup> GetSitesMarketCode(ICriteria criteria);
 
         IEnumerable<Country> GetCountries(ICriteria criteria);
@@ -31,6 +33,9 @@
         public IEnumerable<IdNameModel> GetCreditSites(ICriteria criteria)
             => ExecuteReader(criteria, ToCreditSite);
 
+        public IEnumerable<IdNameModel> GetNonsportsProducts(ICriteria criteria)
+            => ExecuteReader(criteria, ToProduct);
+            
         public IEnumerable<SiteGroup> GetSitesMarketCode(ICriteria criteria)
             => ExecuteReader(criteria, ToSiteMarketCode);
 
@@ -69,6 +74,13 @@
             {
                 Id = Convert.ToInt32(reader["SiteId"]),
                 Name = reader["Site"].ToString()
+            };
+
+        private static IdNameModel ToProduct(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["ProductId"]),
+                Name = reader["ProductName"].ToString()
             };
 
         private static SiteGroup ToSiteMarketCode(IDataReader reader)

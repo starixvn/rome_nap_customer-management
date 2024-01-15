@@ -434,6 +434,7 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\editingGridHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\nonsports.js" />
     <Content Include="Areas\CustomerClass\Scripts\offering.js" />
     <Content Include="Areas\CustomerClass\Scripts\ruleManagementHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassSetting.js" />
@@ -1163,6 +1164,7 @@
     <Content Include="Areas\ManageProductSetting\Views\Web.config" />
     <Content Include="Areas\CustomerClass\Styles\offering.less" />
     <Content Include="Areas\CustomerClass\Styles\editingGrid.less" />
+    <Content Include="Areas\CustomerClass\Views\Nonsports\Index.cshtml" />
     <Content Include="Areas\DomainManagement\Web.config" />
     <Content Include="Areas\DomainManagement\Views\Index.cshtml" />
     <Content Include="Areas\DomainManagement\Views\_AddNewOrEditForm.cshtml" />

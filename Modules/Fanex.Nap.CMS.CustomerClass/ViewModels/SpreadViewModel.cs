@@ -25,6 +25,6 @@
         public IEnumerable<IdNameModel> Currencies { get; }
 
         public IEnumerable<IdNameModel> Platforms { get; }
-            = PlatformConst.Platforms.Select(kvp => new IdNameModel { Id = kvp.Key, Name = kvp.Value }).ToList();
+            = PlatformConst.Platforms.Where(key => key.Key != 0).Select(kvp => new IdNameModel { Id = kvp.Key, Name = kvp.Value }).ToList();
     }
 }

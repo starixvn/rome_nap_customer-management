@@ -4,6 +4,7 @@
     {
         public int PolicyID { get; set; }
         public string PolicyTitle { get; set; }
+        public int SportType { get; set; }
         public decimal Spread { get; set; }
         public string CustomerClass { get; set; }
         public string Currencies { get; set; }

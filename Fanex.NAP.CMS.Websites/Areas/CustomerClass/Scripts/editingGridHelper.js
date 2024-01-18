@@ -115,6 +115,30 @@ const editingGridHelper = (function ($) {
         );
     }
 
+    function renderCombobox(id, dataList, selectedValue) {
+        var datum, html = [];
+        if (typeof selectedValue === "undefined") {
+            selectedValue = dataList[0].Value;
+        }
+
+        for (var i = 0, max = dataList.length; i < max; i++) {
+            datum = dataList[i];
+            html.push('<option value="');
+            html.push(datum.Value);
+            html.push('"');
+
+            if (datum.Value === selectedValue.toString()) {
+                html.push(' selected');
+            }
+
+            html.push('>');
+            html.push(datum.Text);
+            html.push('</option>');
+        }
+
+        return $("#" + id).html(html.join("")).combobox();
+    }
+
 
     function renderCurrencyCell(selectedCurrencies, currencyList) {
         if (selectedCurrencies === "All" || selectedCurrencies === "0") {
@@ -297,6 +321,7 @@ const editingGridHelper = (function ($) {
         renderAddEditPlatform: renderAddEditPlatform,
         renderAddEditUtility: renderAddEditUtility,
         renderAddEditProduct: renderAddEditProduct,
+        renderCombobox: renderCombobox,
         renderCurrencyCell: renderCurrencyCell,
         renderProductCell: renderProductCell,
         renderCustomerClassCell: renderCustomerClassCell,

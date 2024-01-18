@@ -4,10 +4,11 @@
     
     public class SpreadRule
     {
-        public SpreadRule(int policyID, string policyTitle, decimal spread, string customerClass, string currencies, string sites, string platforms, bool enable, byte isTest, int lastModifiedUser, DateTime lastModifiedTime)
+        public SpreadRule(int policyID, string policyTitle, short sportType, decimal spread, string customerClass, string currencies, string sites, string platforms, bool enable, byte isTest, int lastModifiedUser, DateTime lastModifiedTime)
         {
             PolicyID = policyID;
             PolicyTitle = policyTitle;
+            SportType = sportType;
             Spread = spread;
             CustomerClass = customerClass;
             Currencies = currencies;
@@ -22,6 +23,7 @@
         public int PolicyID { get; }
         public string PolicyTitle { get; }
         public decimal Spread { get; }
+        public int SportType { get; }
         public string CustomerClass { get; }
         public string Currencies { get; }
         public string Sites { get; }

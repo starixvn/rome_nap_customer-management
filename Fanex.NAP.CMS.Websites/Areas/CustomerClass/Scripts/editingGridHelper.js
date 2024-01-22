@@ -117,10 +117,7 @@ const editingGridHelper = (function ($) {
 
     function renderCombobox(id, dataList, selectedValue) {
         var datum, html = [];
-        if (typeof selectedValue === "undefined") {
-            selectedValue = dataList[0].Value;
-        }
-
+        html.push(`<option ${selectedValue === undefined ? "selected" : ""}>Please select</option>`);
         for (var i = 0, max = dataList.length; i < max; i++) {
             datum = dataList[i];
             html.push('<option value="');

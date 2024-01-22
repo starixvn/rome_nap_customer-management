@@ -18,8 +18,8 @@
         renderCurrencies();
         filterSpread = new AutoNumeric("#filterSpread", {
             minimumValue: 0,
-            maximumValue: 20,
-            decimalPlaces: 1,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
             onInvalidPaste: 'ignore'
         });
         $("#formSearch").submit(function (e) {
@@ -409,13 +409,16 @@
             return;
         }
         cachedAddNewRule.SportType = $(`#ddlAddNewSportType`).val();
+        if (cachedAddNewRule.SportType === "Please select") {
+            cachedAddNewRule.SportType = "";
+        }
         var newRuleTitle = spreadManagementHelper.validateTitle($(`#addNewTitle`));
         spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
-        spreadManagementHelper.validateRequiredField($(`#ddlAddNewSportType`), cachedAddNewRule.SportType);
+        spreadManagementHelper.validateRequiredField($(`span#ddlAddNewSportType`), cachedAddNewRule.SportType);
         if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
             return;
         }

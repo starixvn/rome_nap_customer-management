@@ -1,0 +1,617 @@
+﻿
+(function ($) {
+    let cachedData = null,
+        cachedLicenseeSites = [],
+        cachedCreditSites = [],
+        cachedFilter = null,
+        ddlCustomerClasses = null,
+        ddlSites = null,
+        ddlCurrencies = null,
+        filterSpread = null,
+        freeGrid = $("#freegrid"),
+        cachedAddNewRule = null,
+        hasHostPermisson = null;
+
+    function init() {
+        renderCustomerClass();
+        renderSites();
+        renderCurrencies();
+        filterSpread = new AutoNumeric("#filterSpread", {
+            minimumValue: 0,
+            maximumValue: 20,
+            decimalPlaces: 1,
+            onInvalidPaste: 'ignore'
+        });
+        $("#formSearch").submit(function (e) {
+            e.preventDefault();
+
+            const formData = {
+                customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
+                site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
+                currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
+                spread: filterSpread.get()
+            };
+            cachedAddNewRule = null;
+            cachedFilter = formData;
+            search();
+        }).trigger("submit");
+
+        hasHostPermisson = $("#btnAdd").length > 0;
+
+        hasHostPermisson && $("#btnAdd").off("click").click(enableRowForAdding);
+    }
+
+    function buildGroupSiteList(isAllCredit, isAllLicensee, selectedValue) {
+        let creditOrLicensee;
+        cachedCreditSites = [];
+        cachedLicenseeSites = [];
+        let selectedValueList = selectedValue.split(",");
+        siteList.forEach(function (item) {
+            creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
+            let isChecked = selectedValue === "All" || item.IsLicensee && isAllLicensee || !item.IsLicensee && isAllCredit;
+            creditOrLicensee.push({
+                value: item.Id,
+                text: item.Name,
+                checked: isChecked || selectedValueList.includes(item.Name.toString()),
+                enable: true
+            });
+        });
+
+        return [
+            {
+                value: "credit",
+                text: "Credit",
+                checked: isAllCredit,
+                enable: true,
+                items: cachedCreditSites
+            },
+            {
+                value: "licensee",
+                text: "Licensee",
+                checked: isAllLicensee,
+                enable: true,
+                items: cachedLicenseeSites
+            }
+        ];
+    }
+
+
+    function renderCustomerClass() {
+        let optionList = [];
+        customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: true, enable: true })
+        );
+
+        ddlCustomerClasses = customerClassHelper.renderMultiSelect(
+            "#ddlCustomerClasses",
+            {
+                minWidth: 140,
+                maxHeight: 300,
+                listData: optionList,
+                showFilter: true
+            }
+        );
+    }
+
+
+    function renderSites() {
+        var listData = buildGroupSiteList(true, true, "All");
+        ddlSites = customerClassHelper.renderMultiSelect(
+            "#ddlSites",
+            {
+                minWidth: 180,
+                maxHeight: 300,
+                listData: listData,
+                isCheckAll: true,
+                showFilter: true
+            }
+        );
+    }
+
+
+    function renderCurrencies() {
+        let optionList = [];
+        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: true, enable: true })
+        );
+
+        ddlCurrencies = customerClassHelper.renderMultiSelect(
+            "#ddlCurrencies",
+            {
+                minWidth: 140,
+                maxHeight: 300,
+                listData: optionList,
+                showFilter: true
+            }
+        );
+    }
+
+    function search() {
+        cachedData = [];
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Spread/Search`),
+            cachedFilter,
+            function (result) {
+                cachedData = typeof result === "string" ? JSON.parse(result) : result;
+            },
+            null,
+            function () {
+                renderGrid(cachedData);
+                bindEventsAfterRenderGridSuccessfully();
+            });
+    }
+
+    function renderGrid(data) {
+        var headercolumns = [
+            { HeaderText: `${resources.title}`, Width: 150, Name: "title", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: `${resources.customerClass}`, Width: 250, Name: "customerclass", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.sportType}`, Width: 150, Name: "sporttype", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.site}`, Width: 180, Name: "site", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.currency}`, Width: 150, Name: "currency", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.platform}`, Width: 200, Name: "platform", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.spread}`, Width: 60, Name: "spread", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: `${resources.enable}`, Width: 60, Name: "enable", HeaderAlign: "center", CellAlign: "center" }
+        ];
+        if (hasHostPermisson) headercolumns.push({ HeaderText: `${resources.action}`, Width: 60, Name: "action", HeaderAlign: "center", CellAlign: "center" });
+        var bodyRows = [];
+        if (cachedAddNewRule !== null) {
+            bodyRows.push(buildAddRow(data.length + 1));
+        }
+
+        data.forEach(function (item, index) {
+            bodyRows.push(buildRowItem(item, index, data.length - index));
+        });
+
+        var gridOptions = {
+            columns: headercolumns,
+            bodyRows: bodyRows,
+            fullHeight: false,
+            gridHeight: 550, hideYBackGroundScroller: true
+        };
+
+        $("#freegrid").removeClass("display-none").fanexGrid(gridOptions);  
+
+        cachedAddNewRule !== null && bindingEventForAddRow();
+    }
+
+    function buildRowNoData(colspan, textNoData) {
+        return `<tr><td colspan="${colspan}" class="text-red align-center">${textNoData}</td></tr>`;
+    }
+
+    function buildRowItem(rule, index, zindex) {
+        var columns = [
+            { Name: "title", TdClass: "rule-cell", Value: `<div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div>` },
+            { Name: "customerclass", TdClass: "rule-cell", Value: `<div class="view-item text-center cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div>` },
+            { Name: "sporttype", TdClass: "rule-cell", Value: `<div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div>` },
+            { Name: "site", TdClass: "rule-cell", Value: `<div class="view-item text-center">${editingGridHelper.renderSiteCell(rule.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div>` },
+            { Name: "currency", TdClass: "rule-cell", Value: `<div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div>` },
+            { Name: "platform", TdClass: "rule-cell", Value: `<div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div>` },
+            { Name: "spread", TdClass: "rule-cell", Value: `<div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" />` },
+            { Name: "enable", TdClass: "rule-cell", Value: `${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable)}` }
+        ];
+
+        if (hasHostPermisson) columns.push(renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null));
+
+        return {
+            Columns: columns,
+            CssClass: "position-relative",
+            CustomAttr: `style="z-index:${zindex}"`
+        };
+    }
+
+    function buildAddRow(zindex) {
+        var columns = [
+            { Name: "title", TdClass: "rule-cell", Value: '<input type="text" class="inputTitle" id="addNewTitle" maxlength="500" />'},
+            { Name: "customerclass", TdClass: "rule-cell", Value: '<div id="ddlAddNewCustomerClass" class="select-customer-class"></div>' },
+            { Name: "sporttype", TdClass: "rule-cell", Value: '<div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div>' },
+            { Name: "site", TdClass: "rule-cell", Value: '<div id="ddlAddNewSite" class="select-customer-class"></div>' },
+            { Name: "currency", TdClass: "rule-cell", Value: '<div id="ddlAddNewCurrency" class="select-customer-class"></div>' },
+            { Name: "platform", TdClass: "rule-cell", Value: '<div id="ddlAddNewPlatform" class="select-customer-class"></div>' },
+            { Name: "spread", TdClass: "rule-cell", Value: '<input type="text" class="inputSpread" id="addNewSpread" />' },
+            { Name: "enable", TdClass: "rule-cell", Value: '<input type="checkbox" class="ckbEnable" id="addNewEnable" checked />' }
+        ];
+
+        if (hasHostPermisson) columns.push(renderAddActionCell());
+
+        return {
+            Columns: columns,
+            CssClass: "position-relative",
+            CustomAttr: `style="z-index:${zindex}"`
+        };
+    }
+
+    function renderEnableCell(policyId, policyTitle, enable) {
+        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle.replaceAll('"', '&#34;')}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
+    }
+
+    function renderActionCell(policyId, index, isEditting) {
+        var actionCellEdit = [
+            `<span class="ico-edit ${isEditting ? "is-editting" : ""} mid-margin-right view-item" title="Edit" data-policyId="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-trash view-item" title="Delete" data-policyId="${policyId}"></span>`,
+            `<span class="ico-save-16 mid-margin-right edit-item hidden" title="Save" data-policyId="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyId="${policyId}" data-index="${index}"></span>`
+        ].join("");
+
+        return { Name: "action", TdClass: "rule-cell", Value: actionCellEdit };
+    }
+
+    function renderCurrencyCell(rule) {
+        if (rule.Currencies === "All" || rule.Currencies === "0") {
+            return `<a href="javascript:;" class="link-currency" data-currencies="${currencyList.map(cur => cur.Name).join()}">All</a>`;
+        }
+
+        const currencyArray = rule.Currencies.split(",");
+        var currencyNames = currencyList.filter(cur => currencyArray.includes(cur.Id.toString())).map(cur => cur.Name);
+        return currencyNames.length <= 1
+            ? currencyNames.join()
+            : `<a href="javascript:;" class="link-currency" data-currencies="${currencyNames.join()}">${currencyNames.length}</a>`;
+    }
+
+    function renderCustomerClassCell(rule) {
+        const customerClassList = rule.CustomerClass.split(",");
+        return customerClassList.join(", ");
+    }
+
+    function renderSportTypeCell(rule) {
+        var sport = sportList.find(st => st.Value === rule.SportType.toString());
+        if (sport) {
+            return sport.Text;
+        }
+    }
+
+    function renderPlatformCell(rule) {
+
+        if (rule.Platforms === "All" || rule.Platforms === "0") {
+            return platforms.map(plf => plf.Name).join(', ');
+        }
+
+        const platformList = rule.Platforms.split(",");
+
+        return platforms.filter(plf => platformList.includes(plf.Id.toString())).map(plf => plf.Name).join(', ');
+    }
+
+    function handleViewItems(element, title, dataType) {
+        let html = [
+            '<div class="form" id="viewCurrenciesForm">',
+            '<table class="tbl-freegrid">',
+            '<thead><tr><th class="width-60">#</th><th>', title, '</th></tr></thead>',
+            '<tbody>'
+        ];
+        element.data(dataType).split(",").forEach(function (item, index) {
+            html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
+        });
+        html.push('</tbody></table></div>');
+
+        CMS.modal(
+            title,
+            html.join(""),
+            {
+                resizable: false,
+                position: {
+                    my: "center top",
+                    at: "center top",
+                    of: "#headline"
+                }
+            });
+    }
+
+    function bindEventsAfterRenderGridSuccessfully() {
+        freeGrid.find(".ico-edit")
+            .off("click")
+            .click(showEditItem);
+        freeGrid.find(".ico-trash")
+            .off("click")
+            .click(showDeleteConfirmPopup);
+        freeGrid.find(".link-currency")
+            .off("click")
+            .click(function () { handleViewItems($(this), resources.currency, "currencies"); });
+        freeGrid.find(".link-customerclass")
+            .off("click")
+            .click(function () { handleViewItems($(this), resources.customerClass, "customerclasses"); });
+        freeGrid.find(".link-site")
+            .off("click")
+            .click(function () { handleViewItems($(this), resources.site, "sites"); });
+        freeGrid.find(".checkbox-enable")
+            .off("click")
+            .click(showEnableDisablePopup);
+        freeGrid.find(".is-editting").trigger('click');
+    }
+
+    function enableRowForAdding() {
+        clearAllTipsyErrors();
+        if ($("#addNewTitle").length > 0) {
+            return;
+        }
+
+        if (cachedAddNewRule === null) {
+            cachedAddNewRule = {
+                PolicyTitle: "",
+                SportType: "",
+                Spread: "",
+                CustomerClass: "",
+                Currencies: "",
+                Sites: "",
+                Platforms: "",
+                Enable: true
+            };
+        }
+
+        renderGrid(cachedData);
+        bindEventsAfterRenderGridSuccessfully();
+        $(`#addNewTitle`).focus();
+    }
+
+    function bindingEventForAddRow() {
+        $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
+        editingGridHelper.renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass, function () { onCustomerClassChange("ddlAddNewCustomerClass"); });
+        editingGridHelper.renderCombobox("ddlAddNewSportType", sportList, cachedAddNewRule.SportType);
+        editingGridHelper.renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites, cachedCreditSites, cachedLicenseeSites, cachedAddNewRule.Sites === "0", cachedAddNewRule.Sites.includes("-1"), cachedAddNewRule.Sites.includes("-2"), function () { onSiteChange("ddlAddNewSite"); });
+        editingGridHelper.renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies, function () { onCurrencyChange("ddlAddNewCurrency"); });
+        editingGridHelper.renderAddEditPlatform("ddlAddNewPlatform", cachedAddNewRule.Platforms, platforms, function () { onPlatformChange("ddlAddNewPlatform"); });
+        var newSpread = new AutoNumeric("#addNewSpread", {
+            minimumValue: 0,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
+            onInvalidPaste: "ignore"
+        });
+        $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = newSpread.get(); });
+        $(`#addNewEnable`).change(function () { cachedAddNewRule.Enable = $(`#addNewEnable`).is(":checked"); });
+
+
+        $("#btn-cancel-add").click(cancelAddNew);
+        $("#btn-submit-add").click(submitAddNew);
+    }
+
+    function onCustomerClassChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        } else {
+            cachedAddNewRule.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        }
+    }
+
+    function onSiteChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
+        } else {
+            cachedAddNewRule.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
+        }
+    }
+
+    function onCurrencyChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+        } else {
+            cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+        }
+    }
+
+    function onPlatformChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
+        } else {
+            cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
+        }
+    }
+
+    function renderAddActionCell() {
+        var actionCellNew = [
+            '<span class="ico-save-16 mid-margin-right" title="Save" id="btn-submit-add"></span>',
+            '<span class="ico-cancel" title="Cancel" id="btn-cancel-add"></span>'
+        ].join("");
+
+        return { Name: "action", TdClass: "rule-cell", Value: actionCellNew };
+    }
+
+    function cancelAddNew() {
+        clearAllTipsyErrors();
+        if ($("#addNewTitle").length <= 0) {
+            return;
+        }
+        cachedAddNewRule = null;
+        renderGrid(cachedData);
+        bindEventsAfterRenderGridSuccessfully();
+    }
+
+    function submitAddNew() {
+        clearAllTipsyErrors();
+        if (!cachedAddNewRule) {
+            return;
+        }
+        cachedAddNewRule.SportType = $(`#ddlAddNewSportType`).val();
+        var newRuleTitle = spreadManagementHelper.validateTitle($(`#addNewTitle`));
+        spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
+        spreadManagementHelper.validateRequiredField($(`#ddlAddNewSportType`), cachedAddNewRule.SportType);
+        if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
+            return;
+        }
+
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Spread/Add`),
+            cachedAddNewRule,
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    cachedAddNewRule.PolicyID = resultJson.PolicyID;
+                    cachedData.unshift(cachedAddNewRule);
+                    cachedAddNewRule = null;
+                    CMS.showSuccessMessage(resultJson.Message);
+                    renderGrid(cachedData);
+                    bindEventsAfterRenderGridSuccessfully();
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
+            });
+    }
+
+    function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
+    function cancelEditItem() {
+        clearAllTipsyErrors();
+        var rowEdit = $(this).closest('tr');
+        var index = $(this).data("index");
+        cachedData[index].edittingValue = null;
+        rowEdit.find("div[class*=view-item]").removeClass("hidden");
+        rowEdit.find("div[class*=edit-item]").addClass("hidden");
+        rowEdit.find("input[class*=edit-item]").addClass("hidden");
+        rowEdit.find("span[class*=view-item]").removeClass("hidden");
+        rowEdit.find("span[class*=edit-item]").addClass("hidden");
+        rowEdit.find("span[class*=ico-save-16]")
+            .off("click");
+        rowEdit.find("span[class*=ico-cancel]")
+            .off("click");
+    }
+
+    function showEditItem() {
+        clearAllTipsyErrors();
+        var rowEdit = $(this).closest('tr');
+        var policyId = $(this).data("policyid");
+        var index = $(this).data("index");
+        var editPolicy = cachedData[index].edittingValue || cachedData[index];
+        cachedData[index].edittingValue = { ...cachedData[index] };
+        $(`#editTitle-${policyId}`).val(editPolicy.PolicyTitle).change(function () { cachedData[index].edittingValue.PolicyTitle = $(`#editTitle-${policyId}`).val(); });
+        rowEdit.find("div[class*=view-item]").addClass("hidden");
+        rowEdit.find("div[class*=edit-item]").removeClass("hidden");
+        rowEdit.find("input[class*=edit-item]").removeClass("hidden");
+        rowEdit.find("span[class*=view-item]").addClass("hidden");
+        rowEdit.find("span[class*=edit-item]").removeClass("hidden");
+        editingGridHelper.renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, function () { onCustomerClassChange(`ddlEditCustomerClass-${policyId}`, index); });
+        editingGridHelper.renderCombobox(`ddlEditSportType-${policyId}`, sportList, editPolicy.SportType);
+        editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
+        editingGridHelper.renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, function () { onCurrencyChange(`ddlEditCurrency-${policyId}`, index); });
+        editingGridHelper.renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, platforms, function () { onPlatformChange(`ddlEditPlatform-${policyId}`, index); });
+        new AutoNumeric(`#editSpread-${policyId}`, {
+            minimumValue: 0,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
+            onInvalidPaste: 'ignore'
+        }).set(editPolicy.Spread);
+
+        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
+        $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
+
+
+        rowEdit.find("span[class*=ico-save-16]")
+            .off("click")
+            .click(saveEditItem);
+        rowEdit.find("span[class*=ico-cancel]")
+            .off("click")
+            .click(cancelEditItem);
+        $(`#editTitle-${policyId}`).focus();
+    }
+
+    function saveEditItem() {
+        clearAllTipsyErrors();
+        var policyId = $(this).data("policyid");
+        var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
+        var updateRule = {
+            PolicyID: policyId,
+            PolicyTitle: spreadManagementHelper.validateTitle($(`#editTitle-${policyId}`)),
+            Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`), $(`#editSpread-${policyId}`).val()),
+            SportType: spreadManagementHelper.validateRequiredField($(`#ddlEditSportType-${policyId}`), $(`#ddlEditSportType-${policyId}`).val()),
+            CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
+            Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
+            Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),
+            Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0", platforms.length)),
+            Enable: $(`#ckbEdit-${policyId}`).is(":checked")
+        };
+
+        if (!spreadManagementHelper.isValidRule(updateRule)) {
+            return;
+        }
+
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Spread/Update`),
+            updateRule,
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    cachedData[index] = updateRule;
+                    renderGrid(cachedData);
+                    bindEventsAfterRenderGridSuccessfully();
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
+            });
+    }
+
+    function showDeleteConfirmPopup() {
+        clearAllTipsyErrors();
+        var policyId = $(this).data("policyid");
+        var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${CMS.htmlEncode(cachedData[index].PolicyTitle)}"?`, function () { callDelete(policyId, index); });
+    }
+
+    function callDelete(policyID, index) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Spread/Delete?policyID=${policyID}`),
+            null,
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    cachedData.splice(index, 1);
+                    renderGrid(cachedData);
+                    bindEventsAfterRenderGridSuccessfully();
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
+            });
+    }
+
+    function showEnableDisablePopup() {
+        event.preventDefault();
+        clearAllTipsyErrors();
+        var checkbox = $(this);
+        var policyId = checkbox.data("policyid");
+        var isEnable = checkbox.is(":checked");
+        var action = isEnable ? "ENABLE" : "DISABLE";
+        var policyTitle = checkbox.data("policytitle");
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)}"?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
+    }
+
+    function callEnableDisable(policyID, isEnable, checkbox) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`Spread/Enable?policyID=${policyID}&enable=${isEnable}`),
+            null,
+            function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.IsSuccess) {
+                    CMS.showSuccessMessage(resultJson.Message);
+                    checkbox.prop('checked', isEnable).trigger("change");
+                } else {
+                    CMS.showErrorMessage(resultJson.Message);
+                }
+            });
+    }
+
+    function clearAllTipsyErrors() {
+        $("[original-title]").each(function () {
+            CMS.clearTipsyError($(this));
+        });
+    }
+
+    $(function () {
+        init();
+    });
+})(jQuery);

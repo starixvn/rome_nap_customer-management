@@ -99,10 +99,6 @@
     width: 56px;
 }
 
-.content-grid {
-    min-width: 0;
-}
-
 .tbl-freegrid-box {
     max-height: 200px;
     overflow-y: auto;
@@ -137,5 +133,14 @@
 .ddlSportType {
     span {
         display: inline-flex;
+        position: relative;
+    }
+}
+
+#freegrid {
+    height: max-content !important;
+
+    .grid-container {
+        height: max-content !important;
     }
 }

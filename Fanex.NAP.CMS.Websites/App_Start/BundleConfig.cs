@@ -52,6 +52,7 @@ namespace Fanex.NAP.CMS.Websites
         {
             bundles.AddAndInclude(
                 "~/styles/common",
+                "~/Scripts/Libs/bootstrap-5.3.2-dist/css/bootstrap.min.css",
                 "~/Content/Themes/jquery/jquery-ui-1.9.1.custom.min.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Grid.css",
                 "~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.css",
@@ -69,6 +70,7 @@ namespace Fanex.NAP.CMS.Websites
                 .Include("~/Scripts/Libs/jQuery/jquery-ui-1.8.24.min.js")
                 .Include("~/Scripts/Libs/jQuery/jquery.mask.min.js")
                 .Include("~/Scripts/Libs/jQuery/jquery.blockUI.1.33.min.js")
+                .Include("~/Scripts/Libs/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.css")
                 .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Grid.js")
                 .Include("~/Scripts/Libs/Fanex.Grid/Fanex.Pagination.js")
                 .Include("~/Scripts/Libs/Fanex.Grid/moment.js")

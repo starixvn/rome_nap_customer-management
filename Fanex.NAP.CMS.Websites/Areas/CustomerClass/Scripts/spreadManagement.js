@@ -126,6 +126,7 @@
 
     function search() {
         cachedData = [];
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Spread/Search`),
@@ -137,6 +138,7 @@
             function () {
                 renderGrid(cachedData);
                 bindEventsAfterRenderGridSuccessfully();
+                CMS.enableInput();
             });
     }
 
@@ -511,11 +513,15 @@
         clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
+        var sportType = $(`#ddlEditSportType-${policyId}`).val();
+        if (sportType === "Please select") {
+            sportType = "";
+        }
         var updateRule = {
             PolicyID: policyId,
             PolicyTitle: spreadManagementHelper.validateTitle($(`#editTitle-${policyId}`)),
             Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`), $(`#editSpread-${policyId}`).val()),
-            SportType: spreadManagementHelper.validateRequiredField($(`#ddlEditSportType-${policyId}`), $(`#ddlEditSportType-${policyId}`).val()),
+            SportType: spreadManagementHelper.validateRequiredField($(`span#ddlEditSportType-${policyId}`), sportType),
             CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
             Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
             Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),

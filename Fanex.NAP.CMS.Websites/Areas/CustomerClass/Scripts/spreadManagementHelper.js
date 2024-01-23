@@ -33,6 +33,7 @@ const spreadManagementHelper = (function () {
     function isValidRule(rule) {
         return !isEmptyValue(rule.PolicyTitle)
             && !isEmptyValue(rule.CustomerClass)
+            && !isEmptyValue(rule.SportType)
             && !isEmptyValue(rule.Currencies)
             && !isEmptyValue(rule.Sites)
             && !isEmptyValue(rule.Platforms)

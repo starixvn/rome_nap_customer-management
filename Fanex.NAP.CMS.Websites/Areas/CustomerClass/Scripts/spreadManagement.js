@@ -28,7 +28,7 @@
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
                 site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
-                currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
+                currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 spread: filterSpread.get()
             };
             cachedAddNewRule = null;

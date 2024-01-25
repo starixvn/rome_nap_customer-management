@@ -155,10 +155,10 @@
     <!--Customer Class Setting-->
     <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.bodbAdminNet" />
     <!--Spread-->
-    <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadUpd" SpName="NAP_LM_CustomerClassSpreadUpd_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadDel" SpName="NAP_LM_CustomerClassSpreadDel_xpre" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSpreadUpd" SpName="NAP_LM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSpreadDel" SpName="NAP_LM_CustomerClassSpreadDel" DbName="DBCust.CustDB.bodbAdminNet" />
     <Setting Key="NAP_LM_CustomerClassSpreadEnable" SpName="NAP_LM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.bodbAdminNet" />
     <!--Utility Offering-->
     <Setting Key="NAP_LM_CustomerClassUtilityOfferSel" SpName="NAP_LM_CustomerClassUtilityOfferSel" DbName="DBCust.CustDB.bodbAdminNet" />

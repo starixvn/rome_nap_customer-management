@@ -30,6 +30,7 @@
             var viewModel = new RuleViewModel(
                 HasRight(CMSFunctionKeys.RuleManagement, Constant.Policy.Host),
                 filterService.GetCustomerClasses(),
+                filterService.GetSports(),
                 filterService.GetLeagueGroups());
             return View("~/Areas/CustomerClass/Views/Rule/Index.cshtml", viewModel);
         }
@@ -41,6 +42,12 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int ruleId)
             => JsonData(ruleService.GetRule(ruleId));
+        
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        public ActionResult GetLeagueBySport(int sportType)
+        {
+            return JsonData(filterService.GetLeagueGroups(sportType));
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]

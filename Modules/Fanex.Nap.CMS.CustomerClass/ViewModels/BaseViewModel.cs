@@ -13,11 +13,6 @@
 
         public bool HasHostPermission { get; }
 
-#pragma warning disable S2325
-        public IEnumerable<SelectListItem> SportTypes
-            => SportTypeConst.SportTypes.Select(kvp => ToSelectListItem(kvp));
-#pragma warning restore S2325
-
         protected static SelectListItem ToSelectListItem(short value)
         {
             var valueString = value.ToString();

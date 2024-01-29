@@ -1,6 +1,7 @@
 ﻿"use strict";
 
 const ruleManagementHelper = (function () {
+    let leagueBySport = {};
     function renderIsLiveCell(value) {
         return !value ? "No" : value === 1 ? "Yes" : "All";
     }
@@ -31,11 +32,22 @@ const ruleManagementHelper = (function () {
         return typeof value !== "undefined" ? numeral(value).format(CMS.formats.IntegerFormat) : defaultValue || "";
     }
 
+    function getLeagueGroups(sportType, callBack) {
+        CMS.getJson(
+            CMS.resolveRootUrl(`Rule/GetLeagueBySport?sportType=${sportType}`),
+            function (data) {
+                leagueBySport[sportType] = JSON.parse(data);
+                callBack();
+            });
+    }
+
     return {
         renderIsLiveCell: renderIsLiveCell,
         renderPercentCell: renderPercentCell,
         renderSeparateCell: renderSeparateCell,
         renderBooleanCell: renderBooleanCell,
-        formatInteger: formatInteger
+        formatInteger: formatInteger,
+        getLeagueGroups: getLeagueGroups,
+        leagueBySport: leagueBySport
     };
 })();

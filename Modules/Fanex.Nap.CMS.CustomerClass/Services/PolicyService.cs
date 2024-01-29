@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
+    using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
@@ -62,9 +64,10 @@
 
         private IEnumerable<Policy> GetPolicyList(int policyId = 0, string policyTitle = null)
         {
-            var sportTypes = SportTypeConst.SportTypes;
-            var leagueGroupDict = ToLeagueGroupDictionary();
-            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle));
+            var sportTypes = filterService.GetSports();
+            var leagues = filterService.GetLeagueGroups();
+            var leagueGroupDict = ToLeagueGroupDictionary(leagues);
+            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues)));
 
             foreach (var item in policies)
             {
@@ -76,18 +79,18 @@
                     }
 
                     item.Rule.IsAllLeagueGroups = leagueCount == NumberOfItemsSeparatedByComma(item.Rule.LeagueGroups);
-                    item.Rule.SportTypeName = sportTypes[item.Rule.SportType];
+                    item.Rule.SportTypeName = sportTypes.FirstOrDefault(sp => sp.Id == item.Rule.SportType)?.Name;
                 }
 
                 yield return item;
             }
         }
 
-        private IDictionary<short, int> ToLeagueGroupDictionary()
+        private IDictionary<short, int> ToLeagueGroupDictionary(IEnumerable<LeagueGroup> leagues)
         {
             var leagueGroupDict = new Dictionary<short, int>();
 
-            var leagueGroups = filterService.GetLeagueGroups()
+            var leagueGroups = leagues
                 .GroupBy(l => l.SportType)
                 .ToDictionary(l => l.Key, l => l.Count());
             foreach (var kvp in leagueGroups)
@@ -96,6 +99,20 @@
             }
 
             return leagueGroupDict;
+        }
+        private string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagues)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var lg in leagues)
+            {
+                xmlBuilder
+                .Append("<r GroupID=\"").Append(lg.Id).Append("\"")
+                .Append(" GroupName=\"").Append(WebUtility.HtmlEncode(lg.Name)).Append("\"")
+                .Append(" SportType=\"").Append(lg.SportType).Append("\"/>");
+            }
+
+            return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
         }
 
         private static int NumberOfItemsSeparatedByComma(string value)

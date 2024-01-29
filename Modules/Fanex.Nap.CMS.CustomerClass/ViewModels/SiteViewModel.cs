@@ -15,11 +15,13 @@
             bool hasHostPermission,
             IEnumerable<IdNameModel> sites,
             IEnumerable<IdNameModel> policyTitles,
-            IEnumerable<IdNameModel> currencies) : base(hasHostPermission)
+            IEnumerable<IdNameModel> currencies,
+            IEnumerable<IdNameModel> sportTypes) : base(hasHostPermission)
         {
             Sites = sites;
             PolicyTitles = policyTitles.Select(p => ToSelectListItem(p)).InsertAllItem();
             Currencies = currencies;
+            SportTypes = sportTypes.Select(c => ToSelectListItem(c));
         }
 
         public IEnumerable<IdNameModel> Sites { get; }
@@ -30,5 +32,7 @@
             = PlatformConst.Platforms.Where(pl => pl.Key != 0).Select(kvp => new IdNameModel { Id = kvp.Key, Name = kvp.Value }).ToList();
 
         public IEnumerable<IdNameModel> Currencies { get; }
+
+        public IEnumerable<SelectListItem> SportTypes { get; }
     }
 }

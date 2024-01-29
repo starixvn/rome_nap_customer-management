@@ -80,7 +80,7 @@ const ruleManagementAddOrEdit = (function ($) {
         ddlSportType = $("#ddlPopupSportType").val(rule.SportType).combobox();
         spanSportType = ddlSportType.next("#ddlPopupSportType");
         ddlLeagueGroupBox = $("#ddlPopupLeagueGroupBox");
-        ddlLeagueGroup = renderLeagueGroup(rule.SportType, rule.LeagueGroupIds);
+        renderLeagueGroup(rule.SportType, rule.LeagueGroupIds);
         ddlIndicator = $("#ddlPopupIndicator").val(rule.IsLive).combobox();
 
         txtDiffBalanceRatio = $("#txtDiffBalanceRatio").val(ruleManagementHelper.formatInteger(rule.DiffBalanceRatio));
@@ -113,8 +113,15 @@ const ruleManagementAddOrEdit = (function ($) {
             .off("change")
             .change(function () {
                 const sportType = +this.value;
-                ddlLeagueGroup = renderLeagueGroup(sportType, "-1");
-                disableSeizeBetTextbox(sportType);
+                if (!ruleManagementHelper.leagueBySport[sportType]) {
+                    ruleManagementHelper.getLeagueGroups(sportType, function () {
+                        renderLeagueGroup(sportType, "-1");
+                        disableSeizeBetTextbox(sportType);
+                    });
+                } else {
+                    renderLeagueGroup(sportType, "-1");
+                    disableSeizeBetTextbox(sportType);
+                }
             });
 
         txtCustomerClass.off().on("keypress", CMS.forceNumberInput);
@@ -404,6 +411,32 @@ const ruleManagementAddOrEdit = (function ($) {
     }
 
     function renderLeagueGroup(sportType, selectedLeagueGroups) {
+        if (!sportType) {
+            ddlLeagueGroupBox.html('<div id="ddlPopupLeagueGroup"></div>');
+
+            ddlLeagueGroup = customerClassHelper.renderMultiSelect(
+                "#ddlPopupLeagueGroup",
+                {
+                    minWidth: 248,
+                    maxHeight: 250,
+                    showTooltip: false,
+                    showFilter: true,
+                    isCheckAll: false,
+                    listData: [],
+                    onCheck: function () {
+                        this.checked && CMS.clearTipsyError(ddlLeagueGroup);
+                    }
+                });
+            return;
+        }
+        if (ruleManagementHelper.leagueBySport[sportType]) {
+            renderLeagueDropdown(sportType, selectedLeagueGroups);
+        } else {
+            ruleManagementHelper.getLeagueGroups(sportType, function () { renderLeagueDropdown(sportType, selectedLeagueGroups); });
+        }
+    }
+
+    function renderLeagueDropdown(sportType, selectedLeagueGroups) {
         let isAllLeagueGroups = false;
         let isCheckAll = false;
         let selectedObject = {};
@@ -414,23 +447,20 @@ const ruleManagementAddOrEdit = (function ($) {
                 selectedObject[item] = true;
             });
         }
-
         let leagueGroups = [];
-        leagueGroupList.forEach(function (item) {
-            if (sportType && (item.SportType === sportType || item.SportType === 0)) {
-                const checked = isAllLeagueGroups || selectedObject.hasOwnProperty(item.Id);
-                isCheckAll = isCheckAll && checked;
-                leagueGroups.push({
-                    value: item.Id,
-                    text: item.Name,
-                    checked: checked,
-                    enable: true
-                });
-            }
+        ruleManagementHelper.leagueBySport[sportType].forEach(function (item) {
+            const checked = isAllLeagueGroups || selectedObject.hasOwnProperty(item.Id);
+            isCheckAll = isCheckAll && checked;
+            leagueGroups.push({
+                value: item.Id,
+                text: item.Name,
+                checked: checked,
+                enable: true
+            });
         });
 
         ddlLeagueGroupBox.html('<div id="ddlPopupLeagueGroup"></div>');
-        return customerClassHelper.renderMultiSelect(
+        ddlLeagueGroup = customerClassHelper.renderMultiSelect(
             "#ddlPopupLeagueGroup",
             {
                 minWidth: 248,
@@ -444,6 +474,7 @@ const ruleManagementAddOrEdit = (function ($) {
                 }
             });
     }
+    
 
     function clearAllTipsyErrors() {
         $("[original-title]").each(function () {

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
+    using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
@@ -58,7 +60,7 @@
             var allCurrencies = string.Join(",", currencies);
             var platformDict = PlatformConst.Platforms;
             var allPlatformCount = platformDict.Count - 1;
-            var sportTypes = SportTypeConst.SportTypes;
+            var sportTypes = filterService.GetSports();
             foreach (var item in rules)
             {
                 item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
@@ -73,7 +75,7 @@
                     .Select(p => platformDict[Convert.ToByte(p)]));
 
                 item.IsAllLeagueGroups = item.LeagueGroups.Equals(Labels.All, StringComparison.OrdinalIgnoreCase);
-                item.SportTypeName = sportTypes[item.SportType];
+                item.SportTypeName = sportTypes.FirstOrDefault(sp => sp.Id == item.SportType)?.Name;
                 yield return item;
             }
         }
@@ -82,20 +84,28 @@
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public IEnumerable<Rule> GetRules(SearchRuleRequest request)
-            => GetRules(new GetRuleListCriteria(request));
+        {
+            var leagueGroups = filterService.GetLeagueGroups(request.SportType);
+
+            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups)));
+        }
 
         public IEnumerable<Rule> GetRules(short sportType)
-            => GetRules(new GetRuleListBySportType(sportType));
+        {
+            var leagues = filterService.GetLeagueGroups(sportType);
+
+            return GetRules(new GetRuleListBySportType(sportType, BuildLeageGroupXML(leagues)));
+        }
 
         private IEnumerable<Rule> GetRules(QueryCriteriaBase criteria)
         {
-            var sportTypes = SportTypeConst.SportTypes;
+            var sportTypes = filterService.GetSports();
             var rules = ruleDataAccess.GetRules(criteria);
 
             foreach (var item in rules)
             {
                 item.IsAllLeagueGroups = item.LeagueGroups.Equals(Labels.All, StringComparison.OrdinalIgnoreCase);
-                item.SportTypeName = sportTypes[item.SportType];
+                item.SportTypeName = sportTypes.FirstOrDefault(sp => sp.Id == item.SportType)?.Name;
                 yield return item;
             }
         }
@@ -117,5 +127,20 @@
 
         public Result DeleteRules(DeleteRuleRequest request)
             => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
+        
+        protected string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagueGroups)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var lg in leagueGroups)
+            {
+                xmlBuilder
+                .Append("<r GroupID=\"").Append(lg.Id).Append("\"")
+                .Append(" GroupName=\"").Append(WebUtility.HtmlEncode(lg.Name)).Append("\"")
+                .Append(" SportType=\"").Append(lg.SportType).Append("\"/>");
+            }
+
+            return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
+        }
     }
 }

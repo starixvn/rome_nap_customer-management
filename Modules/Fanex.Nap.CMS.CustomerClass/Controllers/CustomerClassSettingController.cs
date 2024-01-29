@@ -33,6 +33,7 @@
             var viewModel = new CustomerClassSettingViewModel(
                 filterService.GetAllSites(),
                 filterService.GetCustomerClasses(),
+                filterService.GetSports(),
                 filterService.GetLeagueGroups());
 
             return View("~/Areas/CustomerClass/Views/CustomerClassSetting/Index.cshtml", viewModel);

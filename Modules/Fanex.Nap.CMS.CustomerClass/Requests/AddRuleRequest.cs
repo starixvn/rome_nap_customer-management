@@ -6,7 +6,7 @@
     {
         public CustomerClassRuleTitleRequest[] CCRuleTitles { get; set; }
 
-        public byte SportType { get; set; }
+        public short SportType { get; set; }
 
         public string LeagueGroups { get; set; }
 

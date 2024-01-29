@@ -11,15 +11,17 @@
 
     public class PolicyController : BaseController
     {
+        private readonly IFilterService filterService;
         private readonly IPolicyService policyService;
         private readonly IRuleService ruleService;
 
-        public PolicyController() : this(new PolicyService(), new RuleService())
+        public PolicyController() : this(new FilterService(), new PolicyService(), new RuleService())
         {
         }
 
-        internal PolicyController(IPolicyService policyService, IRuleService ruleService)
+        internal PolicyController(IFilterService filterService, IPolicyService policyService, IRuleService ruleService)
         {
+            this.filterService = filterService;
             this.policyService = policyService;
             this.ruleService = ruleService;
         }
@@ -28,7 +30,7 @@
         public ActionResult Index()
             => View(
                 "~/Areas/CustomerClass/Views/Policy/Index.cshtml",
-                new PolicyViewModel(HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
+                new PolicyViewModel(filterService.GetSports(), HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPolicies(string policyTitle)

@@ -18,8 +18,8 @@
         renderCurrencies();
         filterSpread = new AutoNumeric("#filterSpread", {
             minimumValue: 0,
-            maximumValue: 20,
-            decimalPlaces: 1,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
             onInvalidPaste: 'ignore'
         });
         $("#formSearch").submit(function (e) {
@@ -27,8 +27,8 @@
 
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
-                site: getSelectedReplaceAllValue("ddlSites", "All", siteList.length),
-                currency: ddlCurrencies.fanexMultiSelect("getItems", true).join(),
+                site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
+                currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 spread: filterSpread.get()
             };
             cachedAddNewRule = null;
@@ -50,7 +50,7 @@
             creditOrLicensee = item.IsLicensee ? cachedLicenseeSites : cachedCreditSites;
             let isChecked = selectedValue === "All" || item.IsLicensee && isAllLicensee || !item.IsLicensee && isAllCredit;
             creditOrLicensee.push({
-                value: item.Name,
+                value: item.Id,
                 text: item.Name,
                 checked: isChecked || selectedValueList.includes(item.Name.toString()),
                 enable: true
@@ -126,6 +126,7 @@
 
     function search() {
         cachedData = [];
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Spread/Search`),
@@ -137,6 +138,7 @@
             function () {
                 renderGrid(cachedData);
                 bindEventsAfterRenderGridSuccessfully();
+                CMS.enableInput();
             });
     }
 
@@ -146,6 +148,7 @@
             `<table class="tbl-freegrid" style="height: calc(100vh - 150px);"><thead style="z-index: ${data.length + 2}"><tr>`,
             `<th class="width-150">${resources.title}</th>`,
             `<th class="width-250">${resources.customerClass}</th>`,
+            `<th class="width-150">${resources.sportType}</th>`,
             `<th class="width-180">${resources.site}</th>`,
             `<th class="width-150">${resources.currency}</th>`,
             `<th class="width-200">${resources.platform}</th>`,
@@ -157,7 +160,7 @@
         ];
 
         if (cachedAddNewRule === null && data.length === 0) {
-            let colspan = hasHostPermisson ? 8 : 7;
+            let colspan = hasHostPermisson ? 9 : 8;
             html.push(buildRowNoData(colspan, resources.noData));
         } else {
             if (cachedAddNewRule !== null) {
@@ -183,7 +186,8 @@
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
             `<td class="rule-cell width-150"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
             `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-180"><div class="view-item text-center">${renderSiteCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-150"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
+            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(rule.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-200"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
@@ -199,6 +203,7 @@
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
         `<td class="rule-cell width-150 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
         `<td class="rule-cell width-250 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
+        `<td class="rule-cell width-150 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
         `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
         `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
         `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
@@ -241,25 +246,11 @@
         return customerClassList.join(", ");
     }
 
-    function renderSiteCell(rule) {
-        if (rule.Sites === "All") {
-            return `<a href="javascript:;" class="link-site" data-sites="${siteList.map(st=> st.Name).join()}">All</a>`;
+    function renderSportTypeCell(rule) {
+        var sport = sportList.find(st => st.Value === rule.SportType.toString());
+        if (sport) {
+            return sport.Text;
         }
-
-        let sites = rule.Sites;
-        if (rule.Sites.includes("AllCredit")) {
-            sites = sites.replace("AllCredit", cachedCreditSites.map(st => st.value).join());
-        }
-
-        if (rule.Sites.includes("AllDeposit")) {
-            sites = sites.replace("AllDeposit", cachedLicenseeSites.map(st => st.value).join());
-        }
-
-        const sitesNameList = sites.split(",");
-        var displayName = rule.Sites !== 'AllCredit' && rule.Sites !== 'AllDeposit' ? sitesNameList.length : rule.Sites;
-        return sitesNameList.length <= 1
-            ? sites
-            : `<a href="javascript:;" class="link-site" data-sites="${sitesNameList.join()}">${displayName}</a>`;
     }
 
     function renderPlatformCell(rule) {
@@ -329,6 +320,7 @@
         if (cachedAddNewRule === null) {
             cachedAddNewRule = {
                 PolicyTitle: "",
+                SportType: "",
                 Spread: "",
                 CustomerClass: "",
                 Currencies: "",
@@ -345,14 +337,15 @@
 
     function bindingEventForAddRow() {
         $(`#addNewTitle`).val(cachedAddNewRule.PolicyTitle).change(function () { cachedAddNewRule.PolicyTitle = $(`#addNewTitle`).val(); });
-        renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass);
-        renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites);
-        renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies);
-        renderAddEditPlatform("ddlAddNewPlatform", cachedAddNewRule.Platforms);
+        editingGridHelper.renderAddEditCustomerClass("ddlAddNewCustomerClass", cachedAddNewRule.CustomerClass, function () { onCustomerClassChange("ddlAddNewCustomerClass"); });
+        editingGridHelper.renderCombobox("ddlAddNewSportType", sportList, cachedAddNewRule.SportType);
+        editingGridHelper.renderAddEditSite("ddlAddNewSite", cachedAddNewRule.Sites, cachedCreditSites, cachedLicenseeSites, cachedAddNewRule.Sites === "0", cachedAddNewRule.Sites.includes("-1"), cachedAddNewRule.Sites.includes("-2"), function () { onSiteChange("ddlAddNewSite"); });
+        editingGridHelper.renderAddEditCurrency("ddlAddNewCurrency", cachedAddNewRule.Currencies, function () { onCurrencyChange("ddlAddNewCurrency"); });
+        editingGridHelper.renderAddEditPlatform("ddlAddNewPlatform", cachedAddNewRule.Platforms, platforms, function () { onPlatformChange("ddlAddNewPlatform"); });
         var newSpread = new AutoNumeric("#addNewSpread", {
             minimumValue: 0,
-            maximumValue: 20,
-            decimalPlaces: 1,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
             onInvalidPaste: "ignore"
         });
         $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = newSpread.get(); });
@@ -363,103 +356,36 @@
         $("#btn-submit-add").click(submitAddNew);
     }
 
-    function renderAddEditCustomerClass(divId, selectedValue, index) {
-        let optionList = [];
-        let selectedValueList = selectedValue.split(",");
-        customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: selectedValueList.includes(item.toString()), enable: true })
-        );
-
-        return customerClassHelper.renderMultiSelect(
-            "#" + divId,
-            {
-                minWidth: 246,
-                maxHeight: 230,
-                listData: optionList,
-                isCheckAll: false,
-                showFilter: true,
-                onCheck: function () {
-                    if (index) {
-                        cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
-                    } else {
-                        cachedAddNewRule.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
-                    }
-                }
-            }
-        );
+    function onCustomerClassChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        } else {
+            cachedAddNewRule.CustomerClass = $(`#${divId}`).fanexMultiSelect("getItems", true).join();
+        }
     }
 
-    function renderAddEditSite(divId, selectedValue, index) {
-        var isCheckAll = selectedValue === "All";
-        var listData = buildGroupSiteList(isCheckAll || selectedValue.includes("AllCredit"), isCheckAll || selectedValue.includes("AllDeposit"), selectedValue);
-        return customerClassHelper.renderMultiSelect(
-            "#" + divId,
-            {
-                minWidth: 176,
-                maxHeight: 230,
-                listData: listData,
-                isCheckAll: isCheckAll,
-                showFilter: true,
-                onCheck: function () {
-                    if (index) {
-                        cachedData[index].edittingValue.Sites = getSelectedSites(divId);
-                    } else {
-                        cachedAddNewRule.Sites = getSelectedSites(divId);
-                    }
-                }
-            }
-        );
+    function onSiteChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
+        } else {
+            cachedAddNewRule.Sites = editingGridHelper.getSelectedSites(divId, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2");
+        }
     }
 
-    function renderAddEditCurrency(divId, selectedValue, index) {
-        let optionList = [];
-        let isCheckAll = selectedValue === "All" || selectedValue === "0";
-        let selectedValueList = selectedValue.split(",");
-        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
-        );
-
-        return customerClassHelper.renderMultiSelect(
-            "#" + divId,
-            {
-                minWidth: 146,
-                maxHeight: 230,
-                listData: optionList,
-                isCheckAll: isCheckAll,
-                showFilter: true,
-                onCheck: function () {
-                    if (index) {
-                        cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
-                    } else {
-                        cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
-                    }
-                }
-            }
-        );
+    function onCurrencyChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+        } else {
+            cachedAddNewRule.Currencies = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+        }
     }
 
-    function renderAddEditPlatform(divId, selectedValue, index) {
-        let optionList = [];
-        let isCheckAll = selectedValue === "All" || selectedValue === "0";
-        let selectedValueList = selectedValue.split(",");
-        platforms.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
-        );
-
-        return customerClassHelper.renderMultiSelect(
-            "#" + divId,
-            {
-                minWidth: 198,
-                maxHeight: 230,
-                listData: optionList,
-                isCheckAll: isCheckAll,
-                showFilter: true,
-                onCheck: function () {
-                    if (index) {
-                        cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
-                    } else {
-                        cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
-                    }
-                }
-            }
-        );
+    function onPlatformChange(divId, index) {
+        if (index !== undefined) {
+            cachedData[index].edittingValue.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
+        } else {
+            cachedAddNewRule.Platforms = getSelectedReplaceAllValue(divId, "0", platforms.length);
+        }
     }
 
     function renderAddActionCell(ruleId) {
@@ -484,13 +410,17 @@
         if (!cachedAddNewRule) {
             return;
         }
-        
+        cachedAddNewRule.SportType = $(`#ddlAddNewSportType`).val();
+        if (cachedAddNewRule.SportType === "Please select") {
+            cachedAddNewRule.SportType = "";
+        }
         var newRuleTitle = spreadManagementHelper.validateTitle($(`#addNewTitle`));
         spreadManagementHelper.validateRequiredField($(`#addNewSpread`), cachedAddNewRule.Spread);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCustomerClass`), cachedAddNewRule.CustomerClass);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewCurrency`), cachedAddNewRule.Currencies);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewSite`), cachedAddNewRule.Sites);
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewPlatform`), cachedAddNewRule.Platforms);
+        spreadManagementHelper.validateRequiredField($(`span#ddlAddNewSportType`), cachedAddNewRule.SportType);
         if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
             return;
         }
@@ -513,33 +443,6 @@
                     CMS.showErrorMessage(resultJson.Message);
                 }
             });
-    }
-
-    function getSelectedSites(divId) {
-        var selectedSites = $(`#${divId}`).fanexMultiSelect("getItems", true);
-
-        if (selectedSites.length === siteList.length) {
-            return "All";
-        }
-
-        var selectedCreditSites = selectedSites.filter(site => cachedCreditSites.some(creditSite => creditSite.value.toString() === site.toString()));
-        var selectedDepositSites = selectedSites.filter(site => cachedLicenseeSites.some(licenseeSite => licenseeSite.value.toString() === site.toString()));
-
-        selectedSites = [];
-
-        if (selectedCreditSites.length === cachedCreditSites.length) {
-            selectedSites.push("AllCredit");
-        } else {
-            selectedSites = selectedCreditSites;
-        }
-
-        if (selectedDepositSites.length === cachedLicenseeSites.length) {
-            selectedSites.push("AllDeposit");
-        } else {
-            selectedSites.push(...selectedDepositSites);
-        }
-
-        return selectedSites.join();
     }
 
     function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
@@ -581,14 +484,15 @@
         rowEdit.find("input[class*=edit-item]").removeClass("hidden");
         rowEdit.find("span[class*=view-item]").addClass("hidden");
         rowEdit.find("span[class*=edit-item]").removeClass("hidden");
-        renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, index);
-        renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, index);
-        renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, index);
-        renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, index);
+        editingGridHelper.renderAddEditCustomerClass(`ddlEditCustomerClass-${policyId}`, editPolicy.CustomerClass, function () { onCustomerClassChange(`ddlEditCustomerClass-${policyId}`, index); });
+        editingGridHelper.renderCombobox(`ddlEditSportType-${policyId}`, sportList, editPolicy.SportType);
+        editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
+        editingGridHelper.renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, function () { onCurrencyChange(`ddlEditCurrency-${policyId}`, index); });
+        editingGridHelper.renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, platforms, function () { onPlatformChange(`ddlEditPlatform-${policyId}`, index); });
         new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
-            maximumValue: 20,
-            decimalPlaces: 1,
+            maximumValue: 0.5,
+            decimalPlaces: 2,
             onInvalidPaste: 'ignore'
         }).set(editPolicy.Spread);
         
@@ -609,13 +513,18 @@
         clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
+        var sportType = $(`#ddlEditSportType-${policyId}`).val();
+        if (sportType === "Please select") {
+            sportType = "";
+        }
         var updateRule = {
             PolicyID: policyId,
             PolicyTitle: spreadManagementHelper.validateTitle($(`#editTitle-${policyId}`)),
-            Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`),$(`#editSpread-${policyId}`).val()),
+            Spread: spreadManagementHelper.validateRequiredField($(`#editSpread-${policyId}`), $(`#editSpread-${policyId}`).val()),
+            SportType: spreadManagementHelper.validateRequiredField($(`span#ddlEditSportType-${policyId}`), sportType),
             CustomerClass: spreadManagementHelper.validateRequiredField($(`#ddlEditCustomerClass-${policyId}`), $(`#ddlEditCustomerClass-${policyId}`).fanexMultiSelect("getItems", true).join()),
             Currencies: spreadManagementHelper.validateRequiredField($(`#ddlEditCurrency-${policyId}`), getSelectedReplaceAllValue(`ddlEditCurrency-${policyId}`, "0", currencyList.length)),
-            Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), getSelectedSites(`ddlEditSite-${policyId}`)),
+            Sites: spreadManagementHelper.validateRequiredField($(`#ddlEditSite-${policyId}`), editingGridHelper.getSelectedSites(`ddlEditSite-${policyId}`, siteList, "0", cachedCreditSites, "-1", cachedLicenseeSites, "-2")),
             Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0", platforms.length)),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked")
         };

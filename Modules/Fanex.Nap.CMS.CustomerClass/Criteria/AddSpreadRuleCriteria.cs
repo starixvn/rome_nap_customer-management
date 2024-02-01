@@ -8,6 +8,7 @@
         {
             PolicyID = request.PolicyID;
             PolicyTitle = request.PolicyTitle;
+            SportType = request.SportType;
             Spread = request.Spread;
             CustomerClasses = request.CustomerClass;
             Currencies = request.Currencies;
@@ -18,6 +19,7 @@
 
         public int PolicyID { get; }
         public string PolicyTitle { get; }
+        public int SportType { get; }
         public decimal Spread { get; }
         public string CustomerClasses { get; }
         public string Currencies { get; }

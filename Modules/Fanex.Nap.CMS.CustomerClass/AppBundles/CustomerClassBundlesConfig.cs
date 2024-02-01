@@ -121,6 +121,7 @@
                 "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
                 "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
+                "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
 
             return bundles;

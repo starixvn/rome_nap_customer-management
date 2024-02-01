@@ -23,7 +23,7 @@
         public int PolicyID { get; }
         public string PolicyTitle { get; }
         public decimal Spread { get; }
-        public int SportType { get; }
+        public short SportType { get; }
         public string CustomerClass { get; }
         public string Currencies { get; }
         public string Sites { get; }

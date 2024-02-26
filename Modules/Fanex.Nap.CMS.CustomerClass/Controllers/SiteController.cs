@@ -96,6 +96,7 @@
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, bool isOverwrite)
         {
+            HttpContext.Server.ScriptTimeout = 40 * 60;
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
 

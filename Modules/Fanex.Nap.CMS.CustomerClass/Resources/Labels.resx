@@ -528,4 +528,7 @@
   <data name="AllDeposit" xml:space="preserve">
     <value>All Deposit</value>
   </data>
+  <data name="UploadSiteWarning" xml:space="preserve">
+    <value>The upload process is still in progress, please do not upload more data for a while.</value>
+  </data>
 </root>

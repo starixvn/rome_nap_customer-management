@@ -3,7 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Common;
+    using Fanex.Data;
     using Fanex.Nap.CMS.CustomerClass.Models;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.Framework.Data;
 
@@ -12,6 +15,8 @@
         Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(ICriteria criteria);
 
         IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria);
+
+        Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null);
     }
 
     internal class SiteDataAccess : BaseRepository, ISiteDataAccess
@@ -21,6 +26,23 @@
 
         public IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria)
             => ExecuteReader(criteria, ToSiteSetting);
+
+        public Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null)
+        {
+            const int commandTimeoutInMinutes = 40 * 60;
+
+            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = code == 0
+                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
+                    : Converter.ToString2(outputParams["errmsg"]);
+
+                return new Result { Code = code, Message = message };
+            }
+        }
 
         private static SiteSetting ToSiteSetting(IDataReader reader)
             => new SiteSetting(

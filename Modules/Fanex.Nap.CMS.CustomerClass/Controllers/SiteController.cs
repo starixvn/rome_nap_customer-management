@@ -1,9 +1,11 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
@@ -96,7 +98,6 @@
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, bool isOverwrite)
         {
-            HttpContext.Server.ScriptTimeout = 40 * 60;
             var userId = CurrentSession.UserId;
             var ip = CurrentContext.IP;
 

@@ -83,6 +83,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
             {
                 using (var db = new ObjectDb(criteria.GetSettingKey()))
                 {
+                    
                     db.AssignParamValues(criteria.GetSpParams());
                     db.ExecuteNonQuery();
                     var outputParams = db.GetOuputParams();

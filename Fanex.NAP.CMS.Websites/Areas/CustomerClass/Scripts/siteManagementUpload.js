@@ -122,7 +122,7 @@ const siteManagementUpload = (function ($) {
                     btnUpload.prop("disabled", true);
                     renderErrorGrid(resultJson);
                 } else {
-                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSiteGridFunc);
+                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSiteGridFunc, 5000);
                 }
             },
             error: CMS.handleAjaxError
@@ -130,7 +130,7 @@ const siteManagementUpload = (function ($) {
 
         jqxhr.always(CMS.enableInput);
     }
-
+    
     function renderErrorGrid(errors) {
         const html = errors.map(function (item, index) {
             return [

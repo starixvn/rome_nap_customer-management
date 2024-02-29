@@ -1276,6 +1276,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The upload process is still in progress, please do not upload more data for a while..
+        /// </summary>
+        public static string UploadSiteWarning {
+            get {
+                return ResourceManager.GetString("UploadSiteWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string Value {

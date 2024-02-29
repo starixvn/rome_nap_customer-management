@@ -12,9 +12,12 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Net;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Logging.Extensions.Web;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.NAP.Framework.Data;
 
     public class BaseRepository : IBaseRepository
@@ -76,19 +79,30 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
 
         public Result DoAction(ICriteria criteria, string successfullyMessage = null)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            try
             {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputParams = db.GetOuputParams();
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    
+                    db.AssignParamValues(criteria.GetSpParams());
+                    db.ExecuteNonQuery();
+                    var outputParams = db.GetOuputParams();
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = code == 0
-                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
-                    : Converter.ToString2(outputParams["errmsg"]);
+                    var code = Converter.ToInt(outputParams["errcode"]);
+                    var message = code == 0
+                        ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
+                        : Converter.ToString2(outputParams["errmsg"]);
 
-                return new Result { Code = code, Message = message };
+                    return new Result { Code = code, Message = message };
+                }
             }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+
+                return new Result((int)HttpStatusCode.BadRequest, Labels.BadRequest);
+            }
+            
         }
     }
 }

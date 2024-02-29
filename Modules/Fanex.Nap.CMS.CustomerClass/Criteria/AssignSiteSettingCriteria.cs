@@ -35,7 +35,7 @@
         public string IP { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicySiteIns";
+            => "NAP_LM_CustomerClassPolicySiteIns_Loop";
 
         private static string ToXml(IEnumerable<SiteSettingExcel> siteSettingExcels)
         {

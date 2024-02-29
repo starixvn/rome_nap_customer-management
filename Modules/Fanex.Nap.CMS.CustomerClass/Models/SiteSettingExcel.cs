@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
 
-    internal class SiteSettingExcel
+    public class SiteSettingExcel
     {
+        public SiteSettingExcel() { }
         public SiteSettingExcel(
             int policyId,
             IEnumerable<string> sites,
@@ -16,7 +17,7 @@
             Platforms.AddRange(platforms);
         }
 
-        public int PolicyId { get; }
+        public int PolicyId { get; set; }
 
         public List<string> Sites { get; } = new List<string>();
 

@@ -12,7 +12,7 @@ const customerClassHelper = (function ($) {
         }, options));
     }
 
-    function showInlineMessageAndClosePopup(result, inlineMessage, successfullyCallbackFunc) {
+    function showInlineMessageAndClosePopup(result, inlineMessage, successfullyCallbackFunc, duration = 2000) {
         const resultJson = typeof result === "string" ? JSON.parse(result) : result;
         if (resultJson.IsSuccess) {
             CMS.showInlineSuccessMsg(
@@ -23,7 +23,7 @@ const customerClassHelper = (function ($) {
                     CMS.closePopup();
                     successfullyCallbackFunc();
                 },
-                2000);
+                duration);
         } else {
             CMS.showInlineErrorMsg(resultJson.Message, inlineMessage);
         }

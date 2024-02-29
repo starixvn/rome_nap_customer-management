@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
@@ -10,7 +11,6 @@
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
 
     internal interface ISiteService
     {
@@ -73,11 +73,22 @@
             => siteDataAccess.DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
-            => siteDataAccess.DoAction(
-                new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip),
-                Labels.UploadExcelSuccessfully);
+        {
+            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip);
+
+            UploadRuleAsync(criteria).ConfigureAwait(false);
+
+            return new Result(0, Labels.UploadSiteWarning);
+        }
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
             => siteDataAccess.DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
+
+        private async Task UploadRuleAsync(AssignSiteSettingCriteria criteria)
+        {
+            var taskToRunSynchronously = Task.Run(() => siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadExcelSuccessfully));
+
+            await taskToRunSynchronously.ConfigureAwait(true);
+        }
     }
 }

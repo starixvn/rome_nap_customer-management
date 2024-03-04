@@ -43,16 +43,16 @@
 
     function renderLeagueGroup() {
         const sportType = +this.value;
-        if (ruleManagementHelper.leagueBySport[sportType]) {
+        if (customerClassHelper.leagueBySport[sportType]) {
             BuildDropDownLeague(sportType);
         } else {
-            ruleManagementHelper.getLeagueGroups(sportType, function () { BuildDropDownLeague(sportType); });
+            customerClassHelper.getLeagueGroups(sportType, function () { BuildDropDownLeague(sportType); });
         }
     }
 
     function BuildDropDownLeague(sportType) {
         let leagueGroups = [];
-        ruleManagementHelper.leagueBySport[sportType].forEach(function (item) {
+        customerClassHelper.leagueBySport[sportType].forEach(function (item) {
             leagueGroups.push({
                 value: item.Id,
                 text: item.Name,
@@ -241,7 +241,7 @@
         const sportType = $this.data("sporttype");
         if (sportType) {
             let index = 0;
-            ruleManagementHelper.leagueBySport[sportType].forEach(function (item) {
+            customerClassHelper.leagueBySport[sportType].forEach(function (item) {
                 html.push('<tr><td class="align-center">', ++index, '</td><td>', item.Name, '</td></tr>');
             });
         } else {

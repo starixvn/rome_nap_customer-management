@@ -113,8 +113,8 @@ const ruleManagementAddOrEdit = (function ($) {
             .off("change")
             .change(function () {
                 const sportType = +this.value;
-                if (!ruleManagementHelper.leagueBySport[sportType]) {
-                    ruleManagementHelper.getLeagueGroups(sportType, function () {
+                if (!customerClassHelper.leagueBySport[sportType]) {
+                    customerClassHelper.getLeagueGroups(sportType, function () {
                         renderLeagueGroup(sportType, "-1");
                         disableSeizeBetTextbox(sportType);
                     });
@@ -429,10 +429,10 @@ const ruleManagementAddOrEdit = (function ($) {
                 });
             return;
         }
-        if (ruleManagementHelper.leagueBySport[sportType]) {
+        if (customerClassHelper.leagueBySport[sportType]) {
             renderLeagueDropdown(sportType, selectedLeagueGroups);
         } else {
-            ruleManagementHelper.getLeagueGroups(sportType, function () { renderLeagueDropdown(sportType, selectedLeagueGroups); });
+            customerClassHelper.getLeagueGroups(sportType, function () { renderLeagueDropdown(sportType, selectedLeagueGroups); });
         }
     }
 
@@ -448,7 +448,7 @@ const ruleManagementAddOrEdit = (function ($) {
             });
         }
         let leagueGroups = [];
-        ruleManagementHelper.leagueBySport[sportType].forEach(function (item) {
+        customerClassHelper.leagueBySport[sportType].forEach(function (item) {
             const checked = isAllLeagueGroups || selectedObject.hasOwnProperty(item.Id);
             isCheckAll = isCheckAll && checked;
             leagueGroups.push({

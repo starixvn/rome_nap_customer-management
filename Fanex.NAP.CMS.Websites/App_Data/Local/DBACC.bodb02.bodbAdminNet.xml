@@ -77,8 +77,8 @@
   </Function>
   <Function Name="Customer Class Management">
     <Setting Key="Nap_LM_CustomerClassSel" SpName="Nap_LM_CustomerClassSel" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
-    <Setting Key="Nap_LM_SportTypeSel" SpName="Nap_LM_SportTypeSel_xtest" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBACC.bodb02.bodbAdminNet" />
+    <Setting Key="Nap_LM_SportTypeSel" SpName="Nap_LM_SportTypeSel" DbName="DBACC.bodb02.bodbAdminNet" />
   </Function>
   <Function Name="Manage Product Setting">
     <Setting Key="NAP_GlobalStakeLevelGroup_ProductSel" SpName="NAP_GlobalStakeLevelGroup_ProductSel" DbName="DBACC.bodb02.bodbAdminNet" />

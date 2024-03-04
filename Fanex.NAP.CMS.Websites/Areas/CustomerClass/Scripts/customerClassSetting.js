@@ -29,12 +29,6 @@
             const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
             const customerClass = ddlCustomerClass.val();
             const sportType = ddlSportType.val();
-            //if ((site === "All" && customerClass === "0")
-            //    || (site === "All" && sportType === "0")
-            //    || (customerClass === "0" && sportType === "0")) {
-            //    CMS.showErrorBox($("#note-info-message").text());
-            //    return;
-            //}
 
             cachedFilter = {
                 Site: site,
@@ -114,7 +108,6 @@
             { HeaderText: resources.repeatedBets, Width: 60, Name: "colRepeatedBets", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.seizeBet, Width: 60, Name: "colSeizeBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.disableParlay, Width: 60, Name: "colDisableParlay", HeaderAlign: "center", CellAlign: "center" },
-            //{ HeaderText: resources.peakHourSpread, Width: 60, Name: "colPeakHourSpread", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
         ];
 
@@ -215,6 +208,7 @@
 
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
         if (isAllLeagueGroups) {
+
             return `<a href="javascript:;" class="link-league-group" data-sporttype="${sportType}">${resources.all}</a>`;
         }
 
@@ -271,23 +265,33 @@
     }
 
     function handleViewLeagueGroups() {
+        const $this = $(this);
+        const sportType = $this.data("sporttype");
+
+        if (sportType && !customerClassHelper.leagueBySport[sportType]) {
+            customerClassHelper.getLeagueGroups(sportType, function () { OpenPopUpLeague(sportType) });
+            return;
+        }
+
+        OpenPopUpLeague(sportType, $this.data("leaguegroups"));
+        
+    }
+
+    function OpenPopUpLeague(sportType, itemleagues) {
         let html = [
             '<div class="form" id="viewDetailsForm">',
             '<table class="tbl-freegrid">',
             '<thead><tr><th class="width-60">#</th><th>', resources.leagueGroup, '</th></tr></thead>',
             '<tbody>'
         ];
-        const $this = $(this);
-        const sportType = $this.data("sporttype");
+
         if (sportType) {
             let index = 0;
-            leagueGroupList.forEach(function (item) {
-                if (item.SportType === sportType || item.SportType === 0) {
-                    html.push('<tr><td class="align-center">', ++index, '</td><td>', item.Name, '</td></tr>');
-                }
+            customerClassHelper.leagueBySport[sportType].forEach(function (item) {
+                html.push('<tr><td class="align-center">', ++index, '</td><td>', item.Name, '</td></tr>');
             });
         } else {
-            $this.data("leaguegroups").split(",").forEach(function (item, index) {
+            itemleagues.split(",").forEach(function (item, index) {
                 html.push('<tr><td class="align-center">', index + 1, '</td><td>', item, '</td></tr>');
             });
         }

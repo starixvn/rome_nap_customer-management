@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Win Limit Control">
-    <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="NAP_WinLimit_GameHistorySel" SpName="NAP_WinLimit_GameHistorySel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="Virtual Setting Control">
-    <Setting Key="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="NAP_Report_CustMngt_GetVrAdjustmentLog" SpName="NAP_Report_CustMngt_GetVrAdjustmentLog" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryByDate" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" SpName="NAP_Report_CustMngt_GetCustomerMarginHistoryDate" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="ManageSmartPunters">
-    <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" SpName="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
-    <Setting Key="Acc_VR_ViewLog_AutoSuspendThreshold" SpName="Acc_VR_ViewLog_AutoSuspendThreshold" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" SpName="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+    <Setting Key="Acc_VR_ViewLog_AutoSuspendThreshold" SpName="Acc_VR_ViewLog_AutoSuspendThreshold" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
 </Functions>

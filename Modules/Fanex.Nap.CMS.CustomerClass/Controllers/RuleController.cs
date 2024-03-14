@@ -1,15 +1,15 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
-    public class RuleController : BaseController
+    public class RuleController : SportbookBaseController
     {
         private readonly IFilterService filterService;
         private readonly IRuleService ruleService;
@@ -27,17 +27,30 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+
             var viewModel = new RuleViewModel(
                 HasRight(CMSFunctionKeys.RuleManagement, Constant.Policy.Host),
                 filterService.GetCustomerClasses(),
-                filterService.GetSports(),
+                havePermissionPortTypes,
                 filterService.GetLeagueGroups());
             return View("~/Areas/CustomerClass/Views/Rule/Index.cshtml", viewModel);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchRuleRequest request)
-            => JsonData(ruleService.GetRules(request));
+        {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
+            return JsonData(ruleService.GetRules(request));
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int ruleId)
@@ -53,6 +66,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddRuleRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -64,6 +82,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int ruleId, AddRuleRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -75,6 +98,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(EnableRuleRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -86,6 +114,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult CheckRules(DeleteRuleRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -97,6 +130,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeleteRules(DeleteRuleRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()

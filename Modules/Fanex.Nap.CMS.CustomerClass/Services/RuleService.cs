@@ -63,20 +63,24 @@
             var sportTypes = filterService.GetSports();
             foreach (var item in rules)
             {
-                item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
-                if (item.IsAllCurrencies == true)
+                var sportType = sportTypes.FirstOrDefault(sp => sp.Id == item.SportType);
+                if (sportType != null)
                 {
-                    item.Currencies = allCurrencies;
+                    item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
+                    if (item.IsAllCurrencies == true)
+                    {
+                        item.Currencies = allCurrencies;
+                    }
+
+                    item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms) || item.Platforms == "0";
+                    item.PlatformNames = string.Join(", ", item.Platforms
+                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Select(p => platformDict[Convert.ToByte(p)]));
+
+                    item.IsAllLeagueGroups = item.LeagueGroups.Equals(Labels.All, StringComparison.OrdinalIgnoreCase);
+                    item.SportTypeName = sportType.Name;
+                    yield return item;
                 }
-
-                item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms) || item.Platforms == "0";
-                item.PlatformNames = string.Join(", ", item.Platforms
-                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(p => platformDict[Convert.ToByte(p)]));
-
-                item.IsAllLeagueGroups = item.LeagueGroups.Equals(Labels.All, StringComparison.OrdinalIgnoreCase);
-                item.SportTypeName = sportTypes.FirstOrDefault(sp => sp.Id == item.SportType)?.Name;
-                yield return item;
             }
         }
 

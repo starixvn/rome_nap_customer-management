@@ -1,15 +1,15 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
-    public class CustomerClassSettingController : BaseController
+    public class CustomerClassSettingController : SportbookBaseController
     {
         private readonly IFilterService filterService;
         private readonly IRuleService ruleService;
@@ -30,10 +30,16 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if(!havePermissionPortTypes.Any())
+            {
+                return View("~/Views/Error/AccessDenied.cshtml");
+            }
+
             var viewModel = new CustomerClassSettingViewModel(
                 filterService.GetAllSites(),
                 filterService.GetCustomerClasses(),
-                filterService.GetSports(),
+                havePermissionPortTypes,
                 filterService.GetLeagueGroups());
 
             return View("~/Areas/CustomerClass/Views/CustomerClassSetting/Index.cshtml", viewModel);

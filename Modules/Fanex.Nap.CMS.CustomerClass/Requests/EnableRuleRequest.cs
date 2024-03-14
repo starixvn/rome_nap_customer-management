@@ -6,6 +6,8 @@
     {
         public int RuleId { get; set; }
 
+        public short SportType { get; set; }
+
         public bool Enable { get; set; }
 
         public override bool IsValid()

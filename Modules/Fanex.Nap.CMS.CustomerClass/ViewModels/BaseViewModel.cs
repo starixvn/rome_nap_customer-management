@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     public class BaseViewModel

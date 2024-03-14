@@ -89,7 +89,7 @@
             };
             hasHostPermisson && row.Columns.push({
                 Name: "colDelete",
-                Value: renderDeleteCell(policy.PolicyId),
+                Value: renderDeleteCell(policy.PolicyId, policy.SportType),
                 CellAlign: "center"
             });
 
@@ -107,8 +107,8 @@
     }
 
 
-    function renderDeleteCell(id) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
+    function renderDeleteCell(id, sportType) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sportType="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -158,32 +158,39 @@
 
     function handleDelSelected() {
         var policyIds = [];
+        var sportTypes = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 policyIds.push($(this).data("id"));
+                if (!sportTypes.includes($(this).data("sportType"))) {
+                    sportTypes.push($(this).data("sportType"));
+                }
             }
         });
         if (policyIds.length === 0) {
             return;
         }
-        callCheckPolicyBeforeDelete(policyIds.join());
+        callCheckPolicyBeforeDelete(policyIds.join(), sportTypes);
     }
 
-    function callCheckPolicyBeforeDelete(policies) {
+    function callCheckPolicyBeforeDelete(policies, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Policy/CheckPolicies`),
-            { Policies: policies },
+            {
+                Policies: policies,
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.Policies !== "") {
                     var warningMessage = `The following policy(es) have been applied to the sites - currencies:</br>${resultJson.Policies}.</br>Are you sure you want to delete them?</br>Note: If you delete them, their assign settings with Site - Currency will also be deleted.`;
-                    CMS.showConfirmMessage(warningMessage, function () { callDelete(policies); });
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(policies, sportTypes); });
                 } else {
                     if (resultJson.IsSuccess) {
                         var message = `Are you sure you want to delete the selected setting row(s)?`;
-                        CMS.showConfirmMessage(message, function () { callDelete(policies); });
+                        CMS.showConfirmMessage(message, function () { callDelete(policies, sportTypes); });
                     } else {
                         CMS.showErrorMessage(resultJson.Message);
                     }
@@ -192,12 +199,15 @@
     }
 
 
-    function callDelete(policies) {
+    function callDelete(policies, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Policy/DeletePolicies`),
-            { Policies: policies },
+            {
+                Policies: policies,
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {

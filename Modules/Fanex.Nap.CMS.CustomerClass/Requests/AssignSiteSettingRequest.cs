@@ -6,6 +6,8 @@
     {
         public int PolicyId { get; set; }
 
+        public short SportType { get; set; }
+
         public SiteCurrencyRequest[] SiteCurrencies { get; set; }
 
         public bool IsCheck { get; set; } = true;

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Services;
@@ -9,7 +10,7 @@
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
-    public class PolicyController : BaseController
+    public class PolicyController : SportbookBaseController
     {
         private readonly IFilterService filterService;
         private readonly IPolicyService policyService;
@@ -28,9 +29,17 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
-            => View(
+        {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+
+            return View(
                 "~/Areas/CustomerClass/Views/Policy/Index.cshtml",
-                new PolicyViewModel(filterService.GetSports(), HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
+                new PolicyViewModel(havePermissionPortTypes, HasRight(CMSFunctionKeys.PolicyManagement, Constant.Policy.Host)));
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPolicies(string policyTitle)
@@ -48,6 +57,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddPolicyRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -59,6 +73,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int policyId, AddPolicyRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return policyId > 0 && request.IsValid()
@@ -70,6 +89,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult CheckPolicies(DeletePolicyRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()
@@ -81,6 +105,11 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeletePolicies(DeletePolicyRequest request)
         {
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             return request.IsValid()

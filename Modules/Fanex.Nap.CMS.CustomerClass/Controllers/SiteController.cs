@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Web;
@@ -8,11 +9,11 @@
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
-    public class SiteController : BaseController
+    public class SiteController : SportbookBaseController
     {
         private readonly IFilterService filterService;
         private readonly IPolicyService policyService;
@@ -36,12 +37,18 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+
             var viewModel = new SiteViewModel(
                 HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host),
                 filterService.GetAllSites(),
                 policyService.GetPolicyTitles(),
                 filterService.GetAllCurrencies(),
-                filterService.GetSports());
+                havePermissionPortTypes);
             return View("~/Areas/CustomerClass/Views/Site/Index.cshtml", viewModel);
         }
 
@@ -52,12 +59,24 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult GetPolicyTitle(short sportType)
-            => JsonData(policyService.GetPolicyTitles(sportType));
+        {
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
+            return JsonData(policyService.GetPolicyTitles(sportType));
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Assign(AssignSiteSettingRequest request, bool isOverwrite)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             if (!request.IsValid())
@@ -108,6 +127,18 @@
             if (file == null)
             {
                 return BadRequest();
+            }
+
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+            var policyTitles = new List<IdNameModel>();
+
+            foreach (var sportType in havePermissionPortTypes)
+            {
+                policyTitles.AddRange(policyService.GetPolicyTitles((short)sportType.Id));
             }
 
             ISiteUploadService siteUploadService = new SiteUploadService();

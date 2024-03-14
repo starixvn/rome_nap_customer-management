@@ -191,7 +191,7 @@
             `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-200"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
-            `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.Enable)}</td>`,
+            `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.SportType, rule.Enable)}</td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
             `</tr>`
         ];
@@ -216,8 +216,8 @@
         return rowHtml.join("");
     }
 
-    function renderEnableCell(policyId, policyTitle, enable) {
-        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-policyTitle="${policyTitle.replaceAll('"', '&#34;')}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
+    function renderEnableCell(policyId, policyTitle, sportType, enable) {
+        return `<input id="ckbEdit-${policyId}" type="checkbox" class="checkbox-enable" data-policyId="${policyId}" data-sportType="${sportType}" data-policyTitle="${policyTitle.replaceAll('"', '&#34;')}" ${enable ? "checked" : ""} ${hasHostPermisson ? "" : "disabled"} />`;
     }
 
     function renderActionCell(policyId, index, isEditting) {
@@ -555,14 +555,14 @@
         clearAllTipsyErrors();
         var policyId = $(this).data("policyid");
         var index = cachedData.findIndex(policy => policyId === policy.PolicyID);
-        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${CMS.htmlEncode(cachedData[index].PolicyTitle)}"?`, function () { callDelete(policyId, index); });
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this title "${CMS.htmlEncode(cachedData[index].PolicyTitle)}"?`, function () { callDelete(policyId, cachedData[index].SportType, index); });
     }
 
-    function callDelete(policyID, index) {
+    function callDelete(policyID, sportType, index) {
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`Spread/Delete?policyID=${policyID}`),
+            CMS.resolveRootUrl(`Spread/Delete?policyID=${policyID}&sportType=${sportType}`),
             null,
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
@@ -585,14 +585,15 @@
         var isEnable = checkbox.is(":checked");
         var action = isEnable ? "ENABLE" : "DISABLE";
         var policyTitle = checkbox.data("policytitle");
-        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)}"?`, function () { callEnableDisable(policyId, isEnable, checkbox); });
+        var sportType = checkbox.data("sportType");
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)}"?`, function () { callEnableDisable(policyId, sportType, isEnable, checkbox); });
     }
 
-    function callEnableDisable(policyID, isEnable, checkbox) {
+    function callEnableDisable(policyID, sportType, isEnable, checkbox) {
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`Spread/Enable?policyID=${policyID}&enable=${isEnable}`),
+            CMS.resolveRootUrl(`Spread/Enable?policyID=${policyID}&sportType=${sportType}&enable=${isEnable}`),
             null,
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;

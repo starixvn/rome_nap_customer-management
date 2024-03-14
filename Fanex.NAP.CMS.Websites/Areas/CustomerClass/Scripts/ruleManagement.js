@@ -146,9 +146,9 @@
 
             hasHostPermisson
                 ? columns.push(
-                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.Enable) },
-                    { Name: "colAction", Value: renderActionCell(rule.RuleId) },
-                    { Name: "colDelete", Value: renderDeleteCell(rule.RuleId) })
+                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.SportType, rule.Enable) },
+                    { Name: "colAction", Value: renderActionCell(rule.RuleId, rule.SportType) },
+                    { Name: "colDelete", Value: renderDeleteCell(rule.RuleId, rule.SportType) })
                 : columns.push({ Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) });
 
             return { Columns: columns };
@@ -174,28 +174,20 @@
             : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${policies}" data-title="${resources.policyTitle}">${numOfPolicies}</a>`;
     }
 
-    function renderEnableCell(ruleId, ruleTitle, enable) {
-        return [
-            '<input type="checkbox" class="checkbox-enable" data-ruleid="',
-            ruleId,
-            '" data-ruletitle="',
-            ruleTitle,
-            '" ',
-            enable ? "checked" : "",
-            '/>'
-        ].join("");
+    function renderEnableCell(ruleId, ruleTitle, sportType, enable) {
+        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sportType="${sportType}" ${enable ? "checked" : ""}>`;
     }
 
-    function renderActionCell(ruleId) {
+    function renderActionCell(ruleId, sportType) {
         return [
-            '<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="', ruleId, '"></span>',
+            `<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="${ruleId}" data-sportType="${sportType}"></span>`,
             '<span class="ico-copy" title="Clone" data-ruleid="', ruleId, '"></span>'
         ].join("");
     }
 
 
-    function renderDeleteCell(id) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
+    function renderDeleteCell(id, sportType) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sportType="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -282,7 +274,7 @@
             CMS.callAjax(
                 this,
                 CMS.resolveRootUrl("Rule/Enable"),
-                { ruleId: $this.data("ruleid"), enable: isChecked },
+                { ruleId: $this.data("ruleid"), enable: isChecked, sportType: $this.data("sportType")},
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (resultJson.IsSuccess) {
@@ -323,27 +315,33 @@
     }
 
     function handleDelSelected() {
-        var settings = [];
         var ruleIds = [];
+        var sportTypes = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 ruleIds.push($(this).data("id"));
+                if (!sportTypes.includes($(this).data("sportType"))) {
+                    sportTypes.push($(this).data("sportType"));
+                }
             }
         });
         if (ruleIds.length === 0) {
             return;
         }
 
-        callCheckRuleBeforeDelete(ruleIds);
+        callCheckRuleBeforeDelete(ruleIds, sportTypes);
     }
 
 
-    function callCheckRuleBeforeDelete(ruleIds) {
+    function callCheckRuleBeforeDelete(ruleIds, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Rule/CheckRules`),
-            { RuleIDs: ruleIds.join() },
+            {
+                RuleIDs: ruleIds.join(),
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.Rules !== "") {
@@ -366,7 +364,10 @@
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Rule/DeleteRules`),
-            { RuleIDs: ruleIds.join() },
+            {
+                RuleIDs: ruleIds.join(),
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {

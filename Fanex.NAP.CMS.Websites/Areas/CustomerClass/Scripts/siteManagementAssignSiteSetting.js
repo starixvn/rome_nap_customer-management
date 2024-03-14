@@ -204,9 +204,10 @@ const siteManagementAssignSiteSetting = (function ($) {
     function getFormData() {
         const policyId = validatePolicyTitle();
         const siteCurrencies = validateDynamicSiteCurrencies();
+        const sportType = $("#ddlSportType").val();
 
         if (policyId && siteCurrencies.length) {
-            return { policyId, siteCurrencies };
+            return { policyId, siteCurrencies, sportType };
         }
     }
 

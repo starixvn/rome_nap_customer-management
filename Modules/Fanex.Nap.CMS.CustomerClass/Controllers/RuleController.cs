@@ -30,7 +30,7 @@
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return View("~/Views/Error/AccessDenied.cshtml");
             }
 
             var viewModel = new RuleViewModel(
@@ -44,12 +44,12 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
 
-            return JsonData(ruleService.GetRules(request));
+            return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
@@ -59,14 +59,14 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult GetLeagueBySport(int sportType)
         {
-            return JsonData(filterService.GetLeagueGroups(sportType));
+            return JsonData(filterService.GetLeagueGroups(sportType), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -82,7 +82,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int ruleId, AddRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -98,7 +98,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(EnableRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }

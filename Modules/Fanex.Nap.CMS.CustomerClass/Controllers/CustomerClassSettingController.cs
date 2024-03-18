@@ -47,6 +47,19 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchCustomerClassSettingRequest request)
-            => JsonData(ruleService.GetRules(request));
+        {
+            if(request.SportType == 0)
+            {
+                var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+                if (!havePermissionPortTypes.Any())
+                {
+                    return View("~/Views/Error/AccessDenied.cshtml");
+                }
+
+                return JsonData(ruleService.GetRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);
+        }
     }
 }

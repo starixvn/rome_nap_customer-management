@@ -16,7 +16,7 @@
 
     internal interface IRuleService
     {
-        PagedRule GetRules(SearchCustomerClassSettingRequest request);
+        PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null);
 
         IEnumerable<Rule> GetRules(SearchRuleRequest request);
 
@@ -46,9 +46,22 @@
             this.ruleDataAccess = ruleDataAccess ?? new RuleDataAccess();
         }
 
-        public PagedRule GetRules(SearchCustomerClassSettingRequest request)
+        public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
-            var leagueGroups = filterService.GetLeagueGroups(request.SportType);
+            List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
+
+            if (sportTypes == null)
+            {
+                leagueGroups.AddRange(filterService.GetLeagueGroups(request.SportType));
+            }
+            else
+            {
+                foreach (var sportType in sportTypes)
+                {
+                    leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
+                }
+            }
+
             var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups));
 
             return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));

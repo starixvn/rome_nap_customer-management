@@ -33,7 +33,7 @@
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return View("~/Views/Error/AccessDenied.cshtml");
             }
 
             return View(
@@ -57,7 +57,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddPolicyRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -73,7 +73,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Edit(int policyId, AddPolicyRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }

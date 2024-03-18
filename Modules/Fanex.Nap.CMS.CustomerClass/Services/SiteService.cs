@@ -14,7 +14,7 @@
 
     internal interface ISiteService
     {
-        PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request);
+        PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request, string sportTypes);
 
         IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request);
 
@@ -36,9 +36,9 @@
             this.siteDataAccess = siteDataAccess ?? new SiteDataAccess();
         }
 
-        public PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request)
+        public PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request, string sportTypes)
         {
-            var resultSet = siteDataAccess.GetPagedSiteSetting(new GetSiteSettingCriteria(request));
+            var resultSet = siteDataAccess.GetPagedSiteSetting(new GetSiteSettingCriteria(request, sportTypes));
 
             return new PagedSiteSetting(resultSet.Item1, BuildSiteSettings(resultSet.Item2));
         }

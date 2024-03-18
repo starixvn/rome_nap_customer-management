@@ -40,7 +40,7 @@
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return View("~/Views/Error/AccessDenied.cshtml");
             }
 
             var viewModel = new SiteViewModel(
@@ -54,25 +54,34 @@
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetSiteSettingRequest request)
-            => JsonData(siteService.GetPagedSiteSetting(request));
+        {
+
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+
+            return JsonData(siteService.GetPagedSiteSetting(request, string.Join(",", havePermissionPortTypes.Select(sp => sp.Id))), JsonRequestBehavior.AllowGet);
+        }
 
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult GetPolicyTitle(short sportType)
         {
-            if (!HavePermissionOnSportType(sportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
 
-            return JsonData(policyService.GetPolicyTitles(sportType));
+            return JsonData(policyService.GetPolicyTitles(sportType), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Assign(AssignSiteSettingRequest request, bool isOverwrite)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }

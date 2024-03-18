@@ -30,7 +30,7 @@
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return View("~/Views/Error/AccessDenied.cshtml");
             }
 
             var viewModel = new SpreadViewModel(
@@ -58,7 +58,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddEditSpreadRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -71,35 +71,35 @@
         public ActionResult Update(AddEditSpreadRuleRequest request)
         {
 
-            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
 
-            return JsonData(spreadService.UpdateRule(request, CurrentSession.UserId, CurrentContext.IP));
+            return JsonData(spreadService.UpdateRule(request, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int policyID, short sportType)
         {
-            if (!HavePermissionOnSportType(sportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
 
-            return JsonData(spreadService.DeleteRule(policyID, CurrentSession.UserId, CurrentContext.IP));
+            return JsonData(spreadService.DeleteRule(policyID, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(int policyID, short sportType, bool enable)
         {
-            if (!HavePermissionOnSportType(sportType, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
             {
                 return Forbidden();
             }
 
-            return JsonData(spreadService.EnableRule(policyID, enable, CurrentSession.UserId, CurrentContext.IP));
+            return JsonData(spreadService.EnableRule(policyID, enable, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
     }
 }

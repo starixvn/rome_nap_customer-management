@@ -16,7 +16,9 @@ const policyManagementAddOrEdit = (function ($) {
             "1": "SC - ",
             "2": "BK - ",
             "99": "OS - ",
-            "43": "ES - "
+            "43": "ES - ",
+            "9901": "SSC - ",
+            "9902": "SBK - "
         };
 
     function init(reloadGridFunc) {

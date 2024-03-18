@@ -6,7 +6,9 @@
         ddlLeagueGroup = null,
         cachedGridOptions = null,
         freeGrid = $("#freegrid"),
-        hasHostPermisson = null;
+        hasHostPermisson = null,
+        isFirstLoad = true;
+    
 
     function init() {
         const ddlCustomerClass = $("#ddlCustomerClass");
@@ -26,7 +28,7 @@
             };
             cachedSearchUrlWithQueryString = `${this.action}?${$.param(formData)}`;
             search();
-        }).trigger("submit");
+        });
 
         const btnAddNewRule = $("#btnAddNewRule");
         hasHostPermisson = btnAddNewRule.length > 0;
@@ -41,11 +43,23 @@
 
     function renderLeagueGroup() {
         const sportType = +this.value;
+        if (customerClassHelper.leagueBySport[sportType]) {
+            BuildDropDownLeague(sportType);
+        } else {
+            customerClassHelper.getLeagueGroups(sportType, function () { BuildDropDownLeague(sportType); });
+        }
+    }
+
+    function BuildDropDownLeague(sportType) {
         let leagueGroups = [];
-        leagueGroupList.forEach(item =>
-            (item.SportType === sportType || item.SportType === 0)
-            && leagueGroups.push({ value: item.Id, text: item.Name, checked: true, enable: true })
-        );
+        customerClassHelper.leagueBySport[sportType].forEach(function (item) {
+            leagueGroups.push({
+                value: item.Id,
+                text: item.Name,
+                checked: true,
+                enable: true
+            });
+        });
 
         ddlLeagueGroupBox.html('<div id="ddlLeagueGroup"></div>');
         ddlLeagueGroup = customerClassHelper.renderMultiSelect(
@@ -55,6 +69,11 @@
                 listData: leagueGroups
             }
         );
+
+        if (isFirstLoad) {
+            $("#formSearch").trigger("submit");
+            isFirstLoad = false;
+        }
     }
 
     function search() {
@@ -222,10 +241,8 @@
         const sportType = $this.data("sporttype");
         if (sportType) {
             let index = 0;
-            leagueGroupList.forEach(function (item) {
-                if (item.SportType === sportType || item.SportType === 0) {
-                    html.push('<tr><td class="align-center">', ++index, '</td><td>', item.Name, '</td></tr>');
-                }
+            customerClassHelper.leagueBySport[sportType].forEach(function (item) {
+                html.push('<tr><td class="align-center">', ++index, '</td><td>', item.Name, '</td></tr>');
             });
         } else {
             $this.data("leaguegroups").split(",").forEach(function (item, index) {

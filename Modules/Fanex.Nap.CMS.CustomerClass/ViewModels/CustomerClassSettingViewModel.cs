@@ -12,16 +12,20 @@
         public CustomerClassSettingViewModel(
             IEnumerable<IdNameModel> sites,
             IEnumerable<short> customerClasses,
+            IEnumerable<IdNameModel> sportTypes,
             IEnumerable<LeagueGroup> leagueGroups) : base(false)
         {
             Sites = sites;
             CustomerClasses = customerClasses.Select(c => ToSelectListItem(c)).InsertAllItem();
+            SportTypes = sportTypes.Select(c => ToSelectListItem(c));
             LeagueGroups = leagueGroups;
         }
 
         public IEnumerable<IdNameModel> Sites { get; }
 
         public IEnumerable<SelectListItem> CustomerClasses { get; }
+
+        public IEnumerable<SelectListItem> SportTypes { get; }
 
         public IEnumerable<LeagueGroup> LeagueGroups { get; }
     }

@@ -157,6 +157,7 @@
     <Compile Include="Criteria\GetPolicyTitleCriteria.cs" />
     <Compile Include="Criteria\GetRuleListBySportType.cs" />
     <Compile Include="Criteria\GetSiteSettingCriteria.cs" />
+    <Compile Include="Criteria\GetSportsCriteria.cs" />
     <Compile Include="Criteria\GetSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\NonSports\AddNonSportsCriteria.cs" />
     <Compile Include="Criteria\NonSports\DeleteNonSportsCriteria.cs" />

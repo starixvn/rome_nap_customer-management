@@ -40,7 +40,8 @@
                 HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host),
                 filterService.GetAllSites(),
                 policyService.GetPolicyTitles(),
-                filterService.GetAllCurrencies());
+                filterService.GetAllCurrencies(),
+                filterService.GetSports());
             return View("~/Areas/CustomerClass/Views/Site/Index.cshtml", viewModel);
         }
 

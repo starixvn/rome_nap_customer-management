@@ -1,6 +1,8 @@
 ﻿"use strict";
 
 const customerClassHelper = (function ($) {
+    let leagueBySport = {};
+
     function renderMultiSelect(selectElementId, options) {
         return $(selectElementId).fanexMultiSelect($.extend({
             checkAllText: "All",
@@ -98,12 +100,23 @@ const customerClassHelper = (function ($) {
         ];
     }
 
+    function getLeagueGroups(sportType, callBack) {
+        CMS.getJson(
+            CMS.resolveRootUrl(`Rule/GetLeagueBySport?sportType=${sportType}`),
+            function (data) {
+                leagueBySport[sportType] = JSON.parse(data);
+                callBack();
+            });
+    }
+
     return {
         renderMultiSelect: renderMultiSelect,
         showInlineMessageAndClosePopup: showInlineMessageAndClosePopup,
         isASCII: isASCII,
         getSelectedReplaceAllValue: getSelectedReplaceAllValue,
         getSelectedTextReplaceAllValue: getSelectedTextReplaceAllValue,
-        buildGroupSiteList: buildGroupSiteList
+        buildGroupSiteList: buildGroupSiteList,
+        getLeagueGroups: getLeagueGroups,
+        leagueBySport: leagueBySport
     };
 })(jQuery);

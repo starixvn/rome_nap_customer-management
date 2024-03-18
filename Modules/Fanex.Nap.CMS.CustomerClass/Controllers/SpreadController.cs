@@ -31,7 +31,8 @@
                    HasRight(CMSFunctionKeys.SpreadManagement, Constant.Policy.Host),
                    filterService.GetCustomerClasses(),
                    filterService.GetAllSites(),
-                   filterService.GetAllCurrencies());
+                   filterService.GetAllCurrencies(),
+                   filterService.GetSports());
 
             return View("~/Areas/CustomerClass/Views/Spread/Index.cshtml", viewModel);
         }

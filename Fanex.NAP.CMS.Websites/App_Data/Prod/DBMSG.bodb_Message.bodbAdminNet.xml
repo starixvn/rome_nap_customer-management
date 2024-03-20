@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions>
   <Function Name="Domain Management">
-    <Setting Key="NAP_Domain_SetMessage" SpName="NAP_Domain_SetMessage" DbName="DBMSG.bodb_Message.bodbAdminNet" />
+    <Setting Key="NAP_Domain_SetMessage" SpName="NAP_Domain_SetMessage" DbName="DBMSG.bodb_Message.wsv_nap" />
   </Function>
 </Functions>

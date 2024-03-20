@@ -1,182 +1,182 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="Win Limit Control">
-    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_GreaterWinLimitPlayerSel" SpName="NAP_WinLimit_GreaterWinLimitPlayerSel" DbName="DBCust.CustDB.wsv_nap"></Setting>
 
-    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
-    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.bodbAdminNet"></Setting>
+    <Setting Key="NAP_WinLimit_CustSuggestionSel" SpName="NAP_WinLimit_CustSuggestionSel" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingSel" SpName="NAP_WinLimit_CustSettingSel" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustNotConfigProductSel" SpName="NAP_WinLimit_CustNotConfigProductSel" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingIns" SpName="NAP_WinLimit_CustSettingIns" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingUpd" SpName="NAP_WinLimit_CustSettingUpd" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingDel" SpName="NAP_WinLimit_CustSettingDel" DbName="DBCust.CustDB.wsv_nap"></Setting>
+    <Setting Key="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" SpName="NAP_WinLimit_CustSettingRelatedToCurrencySettingUpd" DbName="DBCust.CustDB.wsv_nap"></Setting>
   </Function>
   <Function Name="Colossus Bets Bet List - Get SiteId">
-    <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustomerSelSiteByCustId" SpName="Acc_CustomerSelSiteByCustId" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="TurnoverControl-TurnoverMonitor">
-    <Setting Key="NAP_TOControl_MatchTurnoverSelect" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_MatchTurnoverUpdate" SpName="NAP_TOControl_MatchTurnoverUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_MatchTurnoverUpdateMultiple" SpName="NAP_TOControl_MatchTurnoverUpdateMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_MatchTurnoverLockTOLimit_Update" SpName="NAP_TOControl_MatchTurnoverLockTOLimit_Update" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_MatchTurnoverSelect" SpName="NAP_TOControl_MatchTurnoverSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_MatchTurnoverUpdate" SpName="NAP_TOControl_MatchTurnoverUpdate" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_MatchTurnoverUpdateMultiple" SpName="NAP_TOControl_MatchTurnoverUpdateMultiple" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_MatchTurnoverLockTOLimit_Update" SpName="NAP_TOControl_MatchTurnoverLockTOLimit_Update" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="TurnoverControl-GlobalSetting">
-    <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingUpdate" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingInsert" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingDelete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingLockTOLimit_Update" SpName="NAP_TOControl_GlobalSettingLockTOLimit_Update" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingUpdate" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingInsert" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingDelete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingLockTOLimit_Update" SpName="NAP_TOControl_GlobalSettingLockTOLimit_Update" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Turnover Control - Import Global Setting">
-    <Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_ManualUpdAcc_Sel" SpName="Acc_VR_ManualUpdAcc_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_ManualUpdAcc_Remove" SpName="Acc_VR_ManualUpdAcc_Remove" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_VR_BettypeVirtualRateMapping_Sel" SpName="Acc_VR_BettypeVirtualRateMapping_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_ManualUpdAcc_Sel" SpName="Acc_VR_ManualUpdAcc_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_ManualUpdAcc_Remove" SpName="Acc_VR_ManualUpdAcc_Remove" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_VR_BettypeVirtualRateMapping_Sel" SpName="Acc_VR_BettypeVirtualRateMapping_Sel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts">
-    <Setting Key="CS_ProblemAccount_AddCustomer" SpName="CS_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ProblemAccount_RemoveCustomer" SpName="CS_ProblemAccount_RemoveCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ProblemAccount_ReduceBetLimit" SpName="CS_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ProblemAccount_InactiveAccount" SpName="CS_ProblemAccount_InactiveAccount" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_ProblemAccount_InformStatusUpd" SpName="CS_ProblemAccount_InformStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_AddCustomer" SpName="CS_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_ProblemAccount_RemoveCustomer" SpName="CS_ProblemAccount_RemoveCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_ProblemAccount_ReduceBetLimit" SpName="CS_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_ProblemAccount_InactiveAccount" SpName="CS_ProblemAccount_InactiveAccount" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_ProblemAccount_RemoveReduceBetLimit" SpName="CS_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_ProblemAccount_InformStatusUpd" SpName="CS_ProblemAccount_InformStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts - Credit Sites">
-    <Setting Key="Nap_ProblemAccount_AddCustomer" SpName="Nap_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_UpdateCustomer" SpName="NAP_ProblemAccount_UpdateCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_RemoveCustomer" SpName="NAP_ProblemAccount_RemoveCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_ReduceBetLimit" SpName="NAP_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_ClosedAccount" SpName="NAP_ProblemAccount_ClosedAccount" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_RemoveReduceBetLimit" SpName="NAP_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Nap_ProblemAccount_AddCustomer" SpName="Nap_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_UpdateCustomer" SpName="NAP_ProblemAccount_UpdateCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_RemoveCustomer" SpName="NAP_ProblemAccount_RemoveCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_ReduceBetLimit" SpName="NAP_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_ClosedAccount" SpName="NAP_ProblemAccount_ClosedAccount" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_RemoveReduceBetLimit" SpName="NAP_ProblemAccount_RemoveReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts - Licensee Sites">
-    <Setting Key="NAP_ProblemAccount_LicenseeAddCustomer" SpName="NAP_ProblemAccount_LicenseeAddCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeAccountReasonUpd" SpName="NAP_ProblemAccount_LicenseeAccountReasonUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeRemoveCustomer" SpName="NAP_ProblemAccount_LicenseeRemoveCustomer" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_ProblemAccount_LicenseeInformStatusUpd" SpName="NAP_ProblemAccount_LicenseeInformStatusUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_LicenseeAddCustomer" SpName="NAP_ProblemAccount_LicenseeAddCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_LicenseeAccountReasonUpd" SpName="NAP_ProblemAccount_LicenseeAccountReasonUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_LicenseeRemoveCustomer" SpName="NAP_ProblemAccount_LicenseeRemoveCustomer" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_LicenseeReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit" SpName="NAP_ProblemAccount_LicenseeRemoveReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_ProblemAccount_LicenseeInformStatusUpd" SpName="NAP_ProblemAccount_LicenseeInformStatusUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Bet Restriction">
-    <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CustomerIns" SpName="NAP_BetRestriction_CustomerIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CurrencyDel" SpName="NAP_BetRestriction_CurrencyDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CustomerUpd" SpName="NAP_BetRestriction_CustomerUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_SiteUpd" SpName="NAP_BetRestriction_SiteUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CustomerDel" SpName="NAP_BetRestriction_CustomerDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_CurrencyIns" SpName="NAP_BetRestriction_CurrencyIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BetRestriction_SiteIns" SpName="NAP_BetRestriction_SiteIns" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_SiteDel" SpName="NAP_BetRestriction_SiteDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CurrencyUpd" SpName="NAP_BetRestriction_CurrencyUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CustomerIns" SpName="NAP_BetRestriction_CustomerIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CurrencyDel" SpName="NAP_BetRestriction_CurrencyDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CustomerUpd" SpName="NAP_BetRestriction_CustomerUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_SiteUpd" SpName="NAP_BetRestriction_SiteUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CustomerDel" SpName="NAP_BetRestriction_CustomerDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_CurrencyIns" SpName="NAP_BetRestriction_CurrencyIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BetRestriction_SiteIns" SpName="NAP_BetRestriction_SiteIns" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Bet Restriction Management">
-    <Setting Key="NAP_BetRestriction_SettingUpd" SpName="NAP_BetRestriction_SettingUpd" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BetRestriction_SettingUpd" SpName="NAP_BetRestriction_SettingUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Possess Statistics">
-    <Setting Key="CS_Customer_PossessStatistics_Sel" SpName="CS_Customer_PossessStatistics_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="CS_Customer_MonitorPT_Upd" SpName="CS_Customer_MonitorPT_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="CS_Customer_PossessStatistics_Sel" SpName="CS_Customer_PossessStatistics_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="CS_Customer_MonitorPT_Upd" SpName="CS_Customer_MonitorPT_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Bet Limit Control">
-    <Setting Key="NAP_BLControl_TypeSelect" SpName="NAP_BLControl_TypeSelect" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Sel" SpName="NAP_BLControl_DefaultSetting_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Ins" SpName="NAP_BLControl_DefaultSetting_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_BLControl_TypeSelect" SpName="NAP_BLControl_TypeSelect" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Sel" SpName="NAP_BLControl_DefaultSetting_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Ins" SpName="NAP_BLControl_DefaultSetting_Ins" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Limit Daily PT Update">
-    <Setting Key="NAP_LimitPTDaily_ProductList" SpName="NAP_LimitPTDaily_ProductList" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LimitPTDaily_Sel" SpName="NAP_LimitPTDaily_Sel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LimitPTDaily_Ins" SpName="NAP_LimitPTDaily_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LimitPTDaily_Del" SpName="NAP_LimitPTDaily_Del" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LimitPT_Upd" SpName="NAP_LimitPT_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LimitPTDaily_ProductList" SpName="NAP_LimitPTDaily_ProductList" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LimitPTDaily_Sel" SpName="NAP_LimitPTDaily_Sel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LimitPTDaily_Ins" SpName="NAP_LimitPTDaily_Ins" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LimitPTDaily_Del" SpName="NAP_LimitPTDaily_Del" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LimitPT_Upd" SpName="NAP_LimitPT_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Limit number of new created account">
-    <Setting Key="Nap_ProblemAccountLimitDownlineSel" SpName="Nap_ProblemAccountLimitDownlineSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Nap_ProblemAccountLimitDownlineIns" SpName="Nap_ProblemAccountLimitDownlineIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Nap_ProblemAccountLimitDownlineSel" SpName="Nap_ProblemAccountLimitDownlineSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Nap_ProblemAccountLimitDownlineIns" SpName="Nap_ProblemAccountLimitDownlineIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Whitelist Big Credit Members">
-    <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Virtual Rate Engine">
-    <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Manage Follow Bet Account">
-    <Setting Key="NAP_Customer_FollowBetAccountDummyAgentSel" SpName="NAP_Customer_FollowBetAccountDummyAgentSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Customer_FollowBetAccountListSel" SpName="NAP_Customer_FollowBetAccountListSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Customer_FollowBetAccountIns" SpName="NAP_Customer_FollowBetAccountIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Customer_FollowBetAccountDel" SpName="NAP_Customer_FollowBetAccountDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Customer_FollowBetAccountUpd" SpName="NAP_Customer_FollowBetAccountUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Customer_FollowBetAccountUpdFollowStatus" SpName="NAP_Customer_FollowBetAccountUpdFollowStatus" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Customer_FollowBetAccountDummyAgentSel" SpName="NAP_Customer_FollowBetAccountDummyAgentSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Customer_FollowBetAccountListSel" SpName="NAP_Customer_FollowBetAccountListSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Customer_FollowBetAccountIns" SpName="NAP_Customer_FollowBetAccountIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Customer_FollowBetAccountDel" SpName="NAP_Customer_FollowBetAccountDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Customer_FollowBetAccountUpd" SpName="NAP_Customer_FollowBetAccountUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Customer_FollowBetAccountUpdFollowStatus" SpName="NAP_Customer_FollowBetAccountUpdFollowStatus" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Customer Class Management">
     <!--Rule-->
-    <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleIns" SpName="NAP_LM_CustomerClassRuleIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleEnable" SpName="NAP_LM_CustomerClassRuleEnable" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleCheck" SpName="NAP_LM_CustomerClassRuleCheck" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassRuleDel" SpName="NAP_LM_CustomerClassRuleDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleIns" SpName="NAP_LM_CustomerClassRuleIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleEnable" SpName="NAP_LM_CustomerClassRuleEnable" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleCheck" SpName="NAP_LM_CustomerClassRuleCheck" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleDel" SpName="NAP_LM_CustomerClassRuleDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Policy-->
-    <Setting Key="NAP_LM_CustomerClassPolicySel" SpName="NAP_LM_CustomerClassPolicySel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicyCheck" SpName="NAP_LM_CustomerClassPolicyCheck" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicyDel" SpName="NAP_LM_CustomerClassPolicyDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicySel" SpName="NAP_LM_CustomerClassPolicySel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyCheck" SpName="NAP_LM_CustomerClassPolicyCheck" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyDel" SpName="NAP_LM_CustomerClassPolicyDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Site-->
-    <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicySiteIns" SpName="NAP_LM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassPolicySiteDel" SpName="NAP_LM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteIns" SpName="NAP_LM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteDel" SpName="NAP_LM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Customer Class Setting-->
-    <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->
-    <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadUpd" SpName="NAP_LM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadDel" SpName="NAP_LM_CustomerClassSpreadDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassSpreadEnable" SpName="NAP_LM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSpreadUpd" SpName="NAP_LM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSpreadDel" SpName="NAP_LM_CustomerClassSpreadDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSpreadEnable" SpName="NAP_LM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.wsv_nap" />
     <!--Utility Offering-->
-    <Setting Key="NAP_LM_CustomerClassUtilityOfferSel" SpName="NAP_LM_CustomerClassUtilityOfferSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassUtilityOfferIns" SpName="NAP_LM_CustomerClassUtilityOfferIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassUtilityOfferUpd" SpName="NAP_LM_CustomerClassUtilityOfferUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassUtilityOfferDel" SpName="NAP_LM_CustomerClassUtilityOfferDel" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferSel" SpName="NAP_LM_CustomerClassUtilityOfferSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferIns" SpName="NAP_LM_CustomerClassUtilityOfferIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferUpd" SpName="NAP_LM_CustomerClassUtilityOfferUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassUtilityOfferDel" SpName="NAP_LM_CustomerClassUtilityOfferDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--NonSports-->
-    <Setting Key="NAP_LM_CustomerClassNonSportsSel" SpName="NAP_LM_CustomerClassNonSportsSel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassNonSportsUpd" SpName="NAP_LM_CustomerClassNonSportsUpd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassNonSportsIns" SpName="NAP_LM_CustomerClassNonSportsIns" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassNonSportsDel" SpName="NAP_LM_CustomerClassNonSportsDel" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsSel" SpName="NAP_LM_CustomerClassNonSportsSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsUpd" SpName="NAP_LM_CustomerClassNonSportsUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsIns" SpName="NAP_LM_CustomerClassNonSportsIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsDel" SpName="NAP_LM_CustomerClassNonSportsDel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Domain Management">
-    <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBCust.CustDB.bodbAdminNet" />
-    <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBCust.CustDB.bodbAdminNet" />
+    <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
 </Functions>

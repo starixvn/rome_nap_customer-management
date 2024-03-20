@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Common">
-    <Setting Key="Acc_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteSel" SpName="Acc_SiteSel" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="TurnoverControl-TurnoverMonitor">
-    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="NAP_TOControl_SportTypeSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="NAP_TOControl_LeagueSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_HouseTOByBettypeSelect" SpName="NAP_TOControl_HouseTOByBettypeSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_TOControl_MatchSelect" SpName="NAP_TOControl_MatchSelect" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_SportList" SpName="NAP_TOControl_SportTypeSelect" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="TurnoverControl_TurnoverMonitor_LeagueList" SpName="NAP_TOControl_LeagueSelect" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="NAP_TOControl_HouseTOByBettypeSelect" SpName="NAP_TOControl_HouseTOByBettypeSelect" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="NAP_TOControl_MatchSelect" SpName="NAP_TOControl_MatchSelect" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts">
-    <Setting Key="CS_ProblemAccount_TotalSportsbookTickets" SpName="CS_ProblemAccount_TotalSportsbookTickets" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="CS_ProblemAccount_TotalSportsbookTickets" SpName="CS_ProblemAccount_TotalSportsbookTickets" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts - Credit/Deposit Sites">
-    <Setting Key="NAP_ProblemAccount_TotalSportsbookTickets" SpName="NAP_ProblemAccount_TotalSportsbookTickets" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_ProblemAccount_TotalSportsbookTickets" SpName="NAP_ProblemAccount_TotalSportsbookTickets" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Limit number of new created account - Get sites">
-    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="Acc_SiteSel_Credit" SpName="Acc_SiteSel_Credit" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="ManageChatBot">
-    <Setting Key="NAP_Chatbot_CurrencySel" SpName="NAP_Chatbot_CurrencySel" DbName="DBAGE.bodb02.bodbAdminNet" />
-    <Setting Key="NAP_Chatbot_SiteSel" SpName="NAP_Chatbot_SiteSel" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_Chatbot_CurrencySel" SpName="NAP_Chatbot_CurrencySel" DbName="DBAGE.bodb02.wsv_nap" />
+    <Setting Key="NAP_Chatbot_SiteSel" SpName="NAP_Chatbot_SiteSel" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer Class Management">
     <!--NonSports-->
-    <Setting Key="NAP_LM_CustomerClassNonSportsProduct" SpName="NAP_LM_CustomerClassNonSportsProduct" DbName="DBAGE.bodb02.bodbAdminNet" />
+    <Setting Key="NAP_LM_CustomerClassNonSportsProduct" SpName="NAP_LM_CustomerClassNonSportsProduct" DbName="DBAGE.bodb02.wsv_nap" />
   </Function>
 </Functions>

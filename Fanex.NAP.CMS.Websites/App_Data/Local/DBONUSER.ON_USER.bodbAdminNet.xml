@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Manage Robots 2">
-    <Setting Key="NAP_Customer_RobotAccountNew_Sel" SpName="NAP_Customer_RobotAccountNew_Sel" DbName="DBONUSER.ON_USER.bodbAdminNet" />
-    <Setting Key="NAP_Customer_RobotAccountNew_Del" SpName="NAP_Customer_RobotAccountNew_Del" DbName="DBONUSER.ON_USER.bodbAdminNet" />
-    <Setting Key="NAP_Customer_RobotAccountNew_Ins" SpName="NAP_Customer_RobotAccountNew_Ins" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="NAP_Customer_RobotAccountNew_Sel" SpName="NAP_Customer_RobotAccountNew_Sel" DbName="DBONUSER.ON_USER.wsv_nap" />
+    <Setting Key="NAP_Customer_RobotAccountNew_Del" SpName="NAP_Customer_RobotAccountNew_Del" DbName="DBONUSER.ON_USER.wsv_nap" />
+    <Setting Key="NAP_Customer_RobotAccountNew_Ins" SpName="NAP_Customer_RobotAccountNew_Ins" DbName="DBONUSER.ON_USER.wsv_nap" />
   </Function>
   <Function Name="Concurrent User">
-    <Setting Key="Age_rpt_ConcurrentOnlineUser" SpName="Age_rpt_ConcurrentOnlineUser" DbName="DBONUSER.ON_USER.bodbAdminNet" />
+    <Setting Key="Age_rpt_ConcurrentOnlineUser" SpName="Age_rpt_ConcurrentOnlineUser" DbName="DBONUSER.ON_USER.wsv_nap" />
   </Function>
 </Functions>

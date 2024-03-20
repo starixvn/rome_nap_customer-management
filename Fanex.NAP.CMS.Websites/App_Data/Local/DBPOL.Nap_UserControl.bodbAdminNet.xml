@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="User">
-    <Setting Key="NAP_User_GetById" SpName="NAP_User_GetById" DbName="DBPOL.Nap_UserControl.bodbAdminNet">
+    <Setting Key="NAP_User_GetById" SpName="NAP_User_GetById" DbName="DBPOL.Nap_UserControl.wsv_nap">
       <Mapping DataField="UserId" ObjectProperty="Id" />
       <Mapping DataField="userpwd" ObjectProperty="Password" />
       <Mapping DataField="GroupId" ObjectProperty="Id" />
@@ -11,6 +11,6 @@
       <Mapping DataField="ModifierId" ObjectProperty="Id" />
       <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
     </Setting>
-    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.Nap_UserControl.bodbAdminNet"/>
+    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.Nap_UserControl.wsv_nap"/>
   </Function>
 </Functions>

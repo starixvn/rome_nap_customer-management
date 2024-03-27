@@ -8,11 +8,11 @@
 
     internal class GetPagedRuleListCriteria : QueryCriteriaBase
     {
-        public GetPagedRuleListCriteria(SearchCustomerClassSettingRequest request, IEnumerable<LeagueGroup> leagueGroups)
+        public GetPagedRuleListCriteria(SearchCustomerClassSettingRequest request, IEnumerable<LeagueGroup> leagueGroups, string sportTypes)
         {
             Site = request.Site;
             CustomerClass = request.CustomerClass;
-            SportType = request.SportType;
+            SportTypes = sportTypes;
             PageIndex = request.PageIndex;
             PageSize = request.PageSize;
             LeagueGroups = BuildLeageGroupXML(leagueGroups);
@@ -22,7 +22,7 @@
 
         public short CustomerClass { get; }
 
-        public short SportType { get; }
+        public string SportTypes { get; }
 
         public string LeagueGroups { get; }
 

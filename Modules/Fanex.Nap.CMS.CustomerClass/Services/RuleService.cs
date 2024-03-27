@@ -18,7 +18,7 @@
     {
         PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null);
 
-        IEnumerable<Rule> GetRules(SearchRuleRequest request);
+        IEnumerable<Rule> GetRules(SearchRuleRequest request, IEnumerable<IdNameModel> sportTypes = null);
 
         IEnumerable<Rule> GetRules(short sportType);
 
@@ -49,6 +49,7 @@
         public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
             List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
+            var sportTypeIds = request.SportType.ToString();
 
             if (sportTypes == null)
             {
@@ -60,9 +61,10 @@
                 {
                     leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
                 }
+                sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             }
 
-            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups));
+            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds));
 
             return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));
         }
@@ -100,11 +102,25 @@
         private static int NumberOfItemsSeparatedByComma(string value)
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
-        public IEnumerable<Rule> GetRules(SearchRuleRequest request)
+        public IEnumerable<Rule> GetRules(SearchRuleRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
-            var leagueGroups = filterService.GetLeagueGroups(request.SportType);
+            List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
+            var sportTypeIds = request.SportType.ToString();
 
-            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups)));
+            if (sportTypes == null)
+            {
+                leagueGroups.AddRange(filterService.GetLeagueGroups(request.SportType));
+            }
+            else
+            {
+                foreach (var sportType in sportTypes)
+                {
+                    leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
+                }
+                sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
+            }
+
+            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds));
         }
 
         public IEnumerable<Rule> GetRules(short sportType)

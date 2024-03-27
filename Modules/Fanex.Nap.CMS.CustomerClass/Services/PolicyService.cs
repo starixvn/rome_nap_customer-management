@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Net;
     using System.Text;
-    using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
@@ -16,11 +15,11 @@
 
     internal interface IPolicyService
     {
-        IEnumerable<Policy> GetPolicies(string policyTitle = null);
+        IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string policyTitle = null);
 
-        PolicyItem GetPolicy(int policyId);
+        PolicyItem GetPolicy(IEnumerable<IdNameModel> sportTypes, int policyId);
 
-        IEnumerable<IdNameModel> GetPolicyTitles(short sportType = 0);
+        IEnumerable<IdNameModel> GetPolicyTitles(string sportTypes);
 
         Result AddPolicy(AddPolicyRequest request);
 
@@ -42,8 +41,8 @@
             this.policyDataAccess = policyDataAccess ?? new PolicyDataAccess();
         }
 
-        public IEnumerable<Policy> GetPolicies(string policyTitle = null)
-            => GetPolicyList(policyTitle: policyTitle)
+        public IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string policyTitle = null)
+            => GetPolicyList(sportTypes, policyTitle: policyTitle)
             .GroupBy(p => new { p.PolicyId, p.PolicyTitle, p.SportType })
             .Select(grp => new Policy(
                 grp.Key.PolicyId,
@@ -52,8 +51,8 @@
                 grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule?.Enable == true).Select(p => p.Rule)))
             .OrderBy(plc => plc.PolicyTitle);
 
-        public PolicyItem GetPolicy(int policyId)
-            => GetPolicyList(policyId)
+        public PolicyItem GetPolicy(IEnumerable<IdNameModel> sportTypes, int policyId)
+            => GetPolicyList(sportTypes, policyId)
             .GroupBy(p => new { p.PolicyId, p.PolicyTitle, p.SportType })
             .Select(grp => new PolicyItem(
                 grp.Key.PolicyId,
@@ -62,12 +61,12 @@
                 grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<int>() : grp.Select(p => p.Rule.RuleId)))
             .FirstOrDefault();
 
-        private IEnumerable<Policy> GetPolicyList(int policyId = 0, string policyTitle = null)
+        private IEnumerable<Policy> GetPolicyList(IEnumerable<IdNameModel> sportTypes, int policyId = 0, string policyTitle = null)
         {
-            var sportTypes = filterService.GetSports();
             var leagues = filterService.GetLeagueGroups();
             var leagueGroupDict = ToLeagueGroupDictionary(leagues);
-            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues)));
+            var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
+            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues), sportTypeIds));
 
             foreach (var item in policies)
             {
@@ -118,8 +117,8 @@
         private static int NumberOfItemsSeparatedByComma(string value)
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
-        public IEnumerable<IdNameModel> GetPolicyTitles(short sportType = 0)
-            => policyDataAccess.GetPolicyTitles(new GetPolicyTitleCriteria(sportType));
+        public IEnumerable<IdNameModel> GetPolicyTitles(string sportTypes)
+            => policyDataAccess.GetPolicyTitles(new GetPolicyTitleCriteria(sportTypes));
 
         public Result AddPolicy(AddPolicyRequest request)
             => policyDataAccess.DoAction(new AddPolicyCriteria(request), Labels.AddPolicySuccessfully);

@@ -22,6 +22,7 @@
                 listData: cachedSites
             });
         const ddlPolicyTitle = $("#ddlPolicyTitle");
+        const ddlSportType = $("#ddlSportType");
         const ddlPlatform = renderPlatform();
 
         $("#formSearch").submit(function (e) {
@@ -30,6 +31,7 @@
             const formData = {
                 sites: getFilterSites(ddlSite),
                 policyId: ddlPolicyTitle.val(),
+                sportType: ddlSportType.val(),
                 platforms: ddlPlatform.fanexMultiSelect("getItems", true).join()
             };
             cachedSearchUrlWithQueryString = `${this.action}?${$.param(formData)}`;
@@ -137,7 +139,7 @@
         return customerClassHelper.renderMultiSelect(
             "#ddlPlatform",
             {
-                minWidth: 150,
+                minWidth: 180,
                 listData: platforms
             });
     }

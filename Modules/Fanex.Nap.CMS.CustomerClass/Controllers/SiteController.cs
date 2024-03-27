@@ -46,7 +46,7 @@
             var viewModel = new SiteViewModel(
                 HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host),
                 filterService.GetAllSites(),
-                policyService.GetPolicyTitles(),
+                policyService.GetPolicyTitles(string.Join(",", havePermissionPortTypes.Select(sp => sp.Id))),
                 filterService.GetAllCurrencies(),
                 havePermissionPortTypes);
             return View("~/Areas/CustomerClass/Views/Site/Index.cshtml", viewModel);
@@ -55,11 +55,10 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetSiteSettingRequest request)
         {
-
-            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sp.Id == request.SportType || request.SportType == 0);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
             return JsonData(siteService.GetPagedSiteSetting(request, string.Join(",", havePermissionPortTypes.Select(sp => sp.Id))), JsonRequestBehavior.AllowGet);
@@ -71,10 +70,10 @@
         {
             if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
             {
-                return Forbidden();
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
-            return JsonData(policyService.GetPolicyTitles(sportType), JsonRequestBehavior.AllowGet);
+            return JsonData(policyService.GetPolicyTitles(sportType.ToString()), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -143,12 +142,8 @@
             {
                 return Forbidden();
             }
-            var policyTitles = new List<IdNameModel>();
 
-            foreach (var sportType in havePermissionPortTypes)
-            {
-                policyTitles.AddRange(policyService.GetPolicyTitles((short)sportType.Id));
-            }
+            var policyTitles = policyService.GetPolicyTitles(string.Join(",", havePermissionPortTypes.Select(sp => sp.Id)));
 
             ISiteUploadService siteUploadService = new SiteUploadService();
             var siteSettingExcels = siteUploadService.ValidateExcelFile(
@@ -156,7 +151,7 @@
                 System.IO.Path.GetExtension(file.FileName),
                 filterService.GetAllSites(),
                 filterService.GetAllCurrencies(),
-                policyService.GetPolicyTitles());
+                policyTitles);
 
             if (siteUploadService.HasExcelErrors)
             {

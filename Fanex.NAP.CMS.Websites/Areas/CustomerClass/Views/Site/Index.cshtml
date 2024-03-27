@@ -42,39 +42,47 @@
     </div>
 }
 
-<div class="filter-bar">
-    @using (Html.BeginForm("Search", "Site", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
-    {
-        <div class="filter-row last-row">
-            <div class="lbl-field col_2">
-                <label>@Labels.Site</label>
+    <div class="filter-bar">
+        @using (Html.BeginForm("Search", "Site", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
+        {
+            <div class="filter-row last-row">
+                <div class="lbl-field col_3">
+                    <label>@Labels.SportType</label>
+                </div>
+                <div class="edit-field col_12">
+                    @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-250", id = "ddlSportType" })
+                </div>
+                <div class="lbl-field col_3">
+                    <label>@Labels.Site</label>
+                </div>
+                <div class="edit-field col_8">
+                    <div id="ddlSite"></div>
+                </div>
             </div>
-            <div class="edit-field col_8">
-                <div id="ddlSite"></div>
+            <div class="filter-row last-row">
+                <div class="lbl-field col_3">
+                    <label>@Labels.PolicyTitle</label>
+                </div>
+                <div class="edit-field col_12">
+                    @Html.DropDownList("policyTitle", Model.PolicyTitles, new { @class = "combobox-autocomplete width-250", id = "ddlPolicyTitle" })
+                </div>
+                <div class="lbl-field col_3">
+                    <label>@Labels.Platform</label>
+                </div>
+                <div class="edit-field col_8">
+                    <div id="ddlPlatform"></div>
+                </div>
+                <div class="submit width-auto">
+                    <button type="submit" class="submit">@Labels.Search</button>
+                    @if (Model.HasHostPermission)
+                    {
+                        <button type="button" class="green-button" id="btnUpload">@Labels.Upload</button>
+                        <button type="button" class="submit width-140" id="btnAssignSiteSetting">@Labels.AssignSiteSetting</button>
+                    }
+                </div>
             </div>
-            <div class="lbl-field col_3">
-                <label>@Labels.PolicyTitle</label>
-            </div>
-            <div class="edit-field col_12">
-                @Html.DropDownList("policyTitle", Model.PolicyTitles, new { @class = "combobox-autocomplete width-250", id = "ddlPolicyTitle" })
-            </div>
-            <div class="lbl-field col_3">
-                <label>@Labels.Platform</label>
-            </div>
-            <div class="edit-field col_7">
-                <div id="ddlPlatform"></div>
-            </div>
-            <div class="submit width-auto">
-                <button type="submit" class="submit">@Labels.Search</button>
-                @if (Model.HasHostPermission)
-                {
-                    <button type="button" class="green-button" id="btnUpload">@Labels.Upload</button>
-                    <button type="button" class="submit width-140" id="btnAssignSiteSetting">@Labels.AssignSiteSetting</button>
-                }
-            </div>
-        </div>
-    }
-</div>
+        }
+    </div>
 <div class="content-grid">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>

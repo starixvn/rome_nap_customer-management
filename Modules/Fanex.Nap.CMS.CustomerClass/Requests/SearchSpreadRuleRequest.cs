@@ -6,6 +6,8 @@
 
         public string Site { get; set; }
 
+        public short SportType { get; set; }
+
         public string Currency { get; set; }
 
         public string Spread { get; set; }

@@ -24,8 +24,9 @@
 
     function getPolicies() {
         var policyTitle = encodeURIComponent($("#filterPolicy").val());
+        var sportType = $("#ddlSportTypeFilter").val();
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportType=${sportType}`),
             function (data) {
                 cachedGridOptions = cachedGridOptions || defaultGridOptions();
                 cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));

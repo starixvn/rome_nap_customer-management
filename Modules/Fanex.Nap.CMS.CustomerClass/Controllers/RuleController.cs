@@ -56,7 +56,7 @@
         public ActionResult Get(int ruleId)
             => JsonData(ruleService.GetRule(ruleId));
         
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueBySport(int sportType)
         {
             return JsonData(filterService.GetLeagueGroups(sportType), JsonRequestBehavior.AllowGet);
@@ -114,7 +114,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult CheckRules(DeleteRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -130,7 +130,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeleteRules(DeleteRuleRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Read))
             {
                 return Forbidden();
             }

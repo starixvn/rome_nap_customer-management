@@ -28,6 +28,7 @@
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
                 site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
+                sportType: $("#ddlSportType").val(),
                 currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 spread: filterSpread.get()
             };
@@ -84,7 +85,7 @@
         ddlCustomerClasses = customerClassHelper.renderMultiSelect(
             "#ddlCustomerClasses",
             {
-                minWidth: 140,
+                minWidth: 180,
                 maxHeight: 300,
                 listData: optionList,
                 showFilter: true
@@ -116,7 +117,7 @@
         ddlCurrencies = customerClassHelper.renderMultiSelect(
             "#ddlCurrencies",
             {
-                minWidth: 140,
+                minWidth: 160,
                 maxHeight: 300,
                 listData: optionList,
                 showFilter: true
@@ -133,11 +134,15 @@
             cachedFilter,
             function (result) {
                 cachedData = typeof result === "string" ? JSON.parse(result) : result;
+                if (cachedData.Message) {
+                    CMS.showErrorMessage(cachedData.Message);
+                } else {
+                    renderGrid(cachedData);
+                    bindEventsAfterRenderGridSuccessfully();
+                }
             },
             null,
             function () {
-                renderGrid(cachedData);
-                bindEventsAfterRenderGridSuccessfully();
                 CMS.enableInput();
             });
     }

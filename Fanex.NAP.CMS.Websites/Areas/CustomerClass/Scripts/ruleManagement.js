@@ -84,6 +84,9 @@
                 cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));
 
                 freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                freeGrid.find(".link-league-group")
+                    .off("click")
+                    .click(handleViewLeagueGroups);
                 hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
             },
             function (error) {
@@ -191,10 +194,6 @@
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
-        freeGrid.find(".link-league-group")
-            .off("click")
-            .click(handleViewLeagueGroups);
-
         freeGrid.find(".checkbox-enable")
             .off("change")
             .change(handleEnableRule);
@@ -344,22 +343,23 @@
             },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
-                if (resultJson.Rules !== "") {
+                if (resultJson.Rules && resultJson.Rules !== "") {
                     var warningMessage = `The following rule(s) have been added to the policies:</br>${resultJson.Rules}.</br>Are you sure you want to delete them?</br>Note: If you delete them, they will also be removed from policies.`
-                    CMS.showConfirmMessage(warningMessage, function () { callDelete(ruleIds); });
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(ruleIds, sportTypes); });
                 } else {
                     if (resultJson.IsSuccess) {
                         var message = `Are you sure you want to delete the selected setting row(s)?`;
-                        CMS.showConfirmMessage(message, function () { callDelete(ruleIds); });
+                        CMS.showConfirmMessage(message, function () { callDelete(ruleIds, sportTypes); });
                     } else {
                         CMS.showErrorMessage(resultJson.Message);
+                        CMS.enableInput();
                     }
                 }
             });
     }
 
 
-    function callDelete(ruleIds) {
+    function callDelete(ruleIds, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -375,6 +375,7 @@
                     search();
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
+                    CMS.enableInput();
                 }
             });
     }

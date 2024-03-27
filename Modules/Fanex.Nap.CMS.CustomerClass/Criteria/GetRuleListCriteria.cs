@@ -4,10 +4,10 @@
 
     internal class GetRuleListCriteria : QueryCriteriaBase
     {
-        public GetRuleListCriteria(SearchRuleRequest request, string leagueGroups)
+        public GetRuleListCriteria(SearchRuleRequest request, string leagueGroups, string sportTypes)
         {
             CustomerClass = request.CustomerClass;
-            SportType = request.SportType;
+            SportTypes = sportTypes;
             LeagueGroup = request.LeagueGroups ?? string.Empty;
             IsLive = request.IsLive;
             LeagueGroups = leagueGroups;
@@ -15,7 +15,7 @@
 
         public short CustomerClass { get; }
 
-        public short SportType { get; }
+        public string SportTypes { get; }
 
         public string LeagueGroup { get; }
 

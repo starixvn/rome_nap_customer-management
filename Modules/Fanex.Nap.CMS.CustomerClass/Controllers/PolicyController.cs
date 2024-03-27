@@ -6,7 +6,6 @@
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
@@ -42,16 +41,41 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPolicies(string policyTitle)
-            => JsonData(policyService.GetPolicies(policyTitle));
+        public ActionResult GetPolicies(string policyTitle, short sportType)
+        {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sportType == 0 || sp.Id == sportType);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(policyService.GetPolicies(havePermissionPortTypes, policyTitle), JsonRequestBehavior.AllowGet);
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult Get(int policyId)
-            => JsonData(policyService.GetPolicy(policyId));
+        {
+
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(policyService.GetPolicy(havePermissionPortTypes, policyId), JsonRequestBehavior.AllowGet);
+        }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetRules(short sportType)
-            => JsonData(ruleService.GetRules(sportType));
+        {
+
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+            
+            return JsonData(ruleService.GetRules(sportType), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
@@ -89,7 +113,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult CheckPolicies(DeletePolicyRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Read))
             {
                 return Forbidden();
             }
@@ -105,7 +129,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeletePolicies(DeletePolicyRequest request)
         {
-            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Host))
+            if (!HavePermissionOnSportType(request.SportTypes, Constant.Policy.Read))
             {
                 return Forbidden();
             }

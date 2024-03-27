@@ -2,10 +2,10 @@
 {
     internal class GetPolicyTitleCriteria : QueryCriteriaBase
     {
-        public GetPolicyTitleCriteria(short sportType)
-            => SportType = sportType;
+        public GetPolicyTitleCriteria(string sportTypes)
+            => SportTypes = sportTypes;
 
-        public short SportType { get; }
+        public string SportTypes { get; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicyGet";

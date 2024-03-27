@@ -46,15 +46,16 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchSpreadRuleRequest request)
         {
-            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sp.Id == request.SportType || request.SportType == 0);
             if (!havePermissionPortTypes.Any())
             {
-                return Forbidden();
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
             return JsonData(spreadService.GetSpreadRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddEditSpreadRuleRequest request)
         {
@@ -67,6 +68,7 @@
         }
 
 
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Update(AddEditSpreadRuleRequest request)
         {
@@ -80,6 +82,7 @@
         }
 
 
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int policyID, short sportType)
         {
@@ -91,6 +94,7 @@
             return JsonData(spreadService.DeleteRule(policyID, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(int policyID, short sportType, bool enable)
         {

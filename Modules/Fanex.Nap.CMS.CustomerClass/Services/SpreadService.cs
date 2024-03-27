@@ -44,7 +44,7 @@
 
         public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
         {
-            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request)).Where(rule => sportTypes.Any(spt => spt.Id == rule.SportType));
+            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
         }
 
         public Result UpdateRule(AddEditSpreadRuleRequest request, int userId, string iP)

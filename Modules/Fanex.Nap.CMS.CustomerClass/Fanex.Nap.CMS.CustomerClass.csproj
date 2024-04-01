@@ -158,6 +158,7 @@
     <Compile Include="Criteria\GetPolicyTitleCriteria.cs" />
     <Compile Include="Criteria\GetRuleListBySportType.cs" />
     <Compile Include="Criteria\GetSiteSettingCriteria.cs" />
+    <Compile Include="Criteria\GetSiteUploadProgressCriteria.cs" />
     <Compile Include="Criteria\GetSportsCriteria.cs" />
     <Compile Include="Criteria\GetSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\NonSports\AddNonSportsCriteria.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Responses\AddSpreadRuleResponse.cs" />
     <Compile Include="Responses\CheckPolicyResponse.cs" />
     <Compile Include="Responses\CheckRuleResponse.cs" />
+    <Compile Include="Responses\ProgressResponse.cs" />
     <Compile Include="Services\FilterService.cs" />
     <Compile Include="Services\NonsportsService.cs" />
     <Compile Include="Services\PolicyService.cs" />

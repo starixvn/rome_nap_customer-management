@@ -5,7 +5,9 @@
     using System.Data;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.Framework.Data;
@@ -17,6 +19,8 @@
         IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null);
+
+        ProgressResponse GetUploadProgress(GetSiteUploadProgressCriteria criteria);
     }
 
     internal class SiteDataAccess : BaseRepository, ISiteDataAccess
@@ -61,5 +65,18 @@
                 reader["CurrencyName"].ToString(),
                 reader["CurrencyID"].ToString(),
                 reader["Platform"].ToString());
+
+        public ProgressResponse GetUploadProgress(GetSiteUploadProgressCriteria criteria)
+        {
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                var countBatch = Converter.ToInt(outputParams["countbatch"]);
+                var initialBatch = Converter.ToInt(outputParams["initialbatch"]);
+
+                return new ProgressResponse(countBatch, initialBatch, 0, string.Empty);
+            }
+        }
     }
 }

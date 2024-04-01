@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface ISiteService
@@ -23,6 +24,8 @@
         Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip);
 
         Result Delete(DeleteSiteSettingRequest request, int userId, string ip);
+
+        ProgressResponse  GetUploadProgress(int userId);
     }
 
     internal class SiteService : ISiteService
@@ -90,5 +93,8 @@
 
             await taskToRunSynchronously.ConfigureAwait(true);
         }
+
+        public ProgressResponse GetUploadProgress(int userId)
+            => siteDataAccess.GetUploadProgress(new GetSiteUploadProgressCriteria() { UserID = userId });
     }
 }

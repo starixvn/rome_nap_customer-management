@@ -46,7 +46,7 @@
         {
             if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
             {
-                return Forbidden();
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
             return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);

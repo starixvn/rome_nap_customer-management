@@ -74,7 +74,12 @@ const siteManagementAssignSiteSetting = (function ($) {
             CMS.getJson(
                 CMS.resolveRootUrl(`Site/GetPolicyTitle?sportType=${sportType}`),
                 function (data) {
-                    renderPolicyTitleDropdownList($.parseJSON(data));
+                    var result = typeof data === "string" ? JSON.parse(data) : data;
+                    if (result.Message) {
+                        CMS.showErrorMessage(result.Message);
+                    } else {
+                        renderPolicyTitleDropdownList(result);
+                    }
                 });
         }
     }

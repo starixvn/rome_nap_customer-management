@@ -80,14 +80,22 @@
         CMS.getJson(
             cachedSearchUrlWithQueryString,
             function (data) {
-                cachedGridOptions = cachedGridOptions || defaultGridOptions();
-                cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    cachedGridOptions = defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows([]);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    cachedGridOptions = cachedGridOptions || defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows(result);
 
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                freeGrid.find(".link-league-group")
-                    .off("click")
-                    .click(handleViewLeagueGroups);
-                hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    freeGrid.find(".link-league-group")
+                        .off("click")
+                        .click(handleViewLeagueGroups);
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                }
             },
             function (error) {
                 cachedGridOptions = defaultGridOptions();
@@ -178,19 +186,19 @@
     }
 
     function renderEnableCell(ruleId, ruleTitle, sportType, enable) {
-        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sportType="${sportType}" ${enable ? "checked" : ""}>`;
+        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sporttype="${sportType}" ${enable ? "checked" : ""}>`;
     }
 
     function renderActionCell(ruleId, sportType) {
         return [
-            `<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="${ruleId}" data-sportType="${sportType}"></span>`,
+            `<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="${ruleId}" data-sporttype="${sportType}"></span>`,
             '<span class="ico-copy" title="Clone" data-ruleid="', ruleId, '"></span>'
         ].join("");
     }
 
 
     function renderDeleteCell(id, sportType) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sportType="${sportType}">`;
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sporttype="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -273,7 +281,7 @@
             CMS.callAjax(
                 this,
                 CMS.resolveRootUrl("Rule/Enable"),
-                { ruleId: $this.data("ruleid"), enable: isChecked, sportType: $this.data("sportType")},
+                { ruleId: $this.data("ruleid"), enable: isChecked, sportType: $this.data("sporttype")},
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (resultJson.IsSuccess) {
@@ -319,8 +327,8 @@
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 ruleIds.push($(this).data("id"));
-                if (!sportTypes.includes($(this).data("sportType"))) {
-                    sportTypes.push($(this).data("sportType"));
+                if (!sportTypes.includes($(this).data("sporttype"))) {
+                    sportTypes.push($(this).data("sporttype"));
                 }
             }
         });

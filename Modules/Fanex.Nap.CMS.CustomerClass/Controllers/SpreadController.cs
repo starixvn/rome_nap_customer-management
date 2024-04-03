@@ -30,7 +30,7 @@
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
             if (!havePermissionPortTypes.Any())
             {
-                return View("~/Views/Error/AccessDenied.cshtml");
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
             var viewModel = new SpreadViewModel(

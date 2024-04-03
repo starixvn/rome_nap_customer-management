@@ -28,11 +28,19 @@
         CMS.getJson(
             CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportType=${sportType}`),
             function (data) {
-                cachedGridOptions = cachedGridOptions || defaultGridOptions();
-                cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    cachedGridOptions = defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows([]);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    cachedGridOptions = cachedGridOptions || defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows(result);
 
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                }
             },
             function (error) {
                 cachedGridOptions = defaultGridOptions();
@@ -109,7 +117,7 @@
 
 
     function renderDeleteCell(id, sportType) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sportType="${sportType}">`;
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sporttype="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -163,8 +171,8 @@
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 policyIds.push($(this).data("id"));
-                if (!sportTypes.includes($(this).data("sportType"))) {
-                    sportTypes.push($(this).data("sportType"));
+                if (!sportTypes.includes($(this).data("sporttype"))) {
+                    sportTypes.push($(this).data("sporttype"));
                 }
             }
         });

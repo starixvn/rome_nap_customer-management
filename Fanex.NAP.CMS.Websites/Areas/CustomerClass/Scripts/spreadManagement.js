@@ -136,6 +136,8 @@
                 cachedData = typeof result === "string" ? JSON.parse(result) : result;
                 if (cachedData.Message) {
                     CMS.showErrorMessage(cachedData.Message);
+                    cachedAddNewRule = null;
+                    renderGrid(new Array());
                 } else {
                     renderGrid(cachedData);
                     bindEventsAfterRenderGridSuccessfully();
@@ -590,7 +592,7 @@
         var isEnable = checkbox.is(":checked");
         var action = isEnable ? "ENABLE" : "DISABLE";
         var policyTitle = checkbox.data("policytitle");
-        var sportType = checkbox.data("sportType");
+        var sportType = checkbox.data("sporttype");
         CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">${action}</span> this title "${CMS.htmlEncode(policyTitle)}"?`, function () { callEnableDisable(policyId, sportType, isEnable, checkbox); });
     }
 

@@ -53,13 +53,19 @@
                 var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
                 if (!havePermissionPortTypes.Any())
                 {
-                    return View("~/Views/Error/AccessDenied.cshtml");
+                    return Forbidden(behavior: JsonRequestBehavior.AllowGet);
                 }
 
                 return JsonData(ruleService.GetRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
-            }
+            } else
+            {
+                if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
+                {
+                    return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+                }
 
-            return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);
+                return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

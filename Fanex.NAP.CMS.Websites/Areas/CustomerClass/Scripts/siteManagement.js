@@ -22,7 +22,7 @@
                 listData: cachedSites
             });
         const ddlPolicyTitle = $("#ddlPolicyTitle");
-        const ddlSportType = $("#ddlSportType");
+        const ddlSportType = $("#ddlSportTypeFilter");
         const ddlPlatform = renderPlatform();
 
         $("#formSearch").submit(function (e) {
@@ -149,23 +149,30 @@
         CMS.getJson(
             `${cachedSearchUrlWithQueryString}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
             function (data) {
-                assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                freeGrid.find(".link-currency")
-                    .off("click")
-                    .click(handleViewCurrencies);
-                freeGrid.find(".link-sites")
-                    .off("click")
-                    .click(handleViewSites);
-                freeGrid.find("#chk-select-delete-all")
-                    .off("click")
-                    .click(handleCheckDelAll);
-                freeGrid.find("#btn-delete-selected")
-                    .off("click")
-                    .click(handleDelSelected);
-                freeGrid.find(".chk-select-delete")
-                    .off("click")
-                    .click(handleSingleCheckDel);
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    assignCachedGridOptions({ TotalItems: 0, SiteSettings: [] }, 0, 100);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    assignCachedGridOptions(result, pageIndex, pageSize);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    freeGrid.find(".link-currency")
+                        .off("click")
+                        .click(handleViewCurrencies);
+                    freeGrid.find(".link-sites")
+                        .off("click")
+                        .click(handleViewSites);
+                    freeGrid.find("#chk-select-delete-all")
+                        .off("click")
+                        .click(handleCheckDelAll);
+                    freeGrid.find("#btn-delete-selected")
+                        .off("click")
+                        .click(handleDelSelected);
+                    freeGrid.find(".chk-select-delete")
+                        .off("click")
+                        .click(handleSingleCheckDel);
+                }
             },
             function (error) {
                 assignCachedGridOptions({ TotalItems: 0, SiteSettings: [] }, 0, 100);

@@ -4,7 +4,7 @@
     {
         public string Sites { get; set; }
 
-        public short SportType { get; set; }
+        public string SportTypes { get; set; }
 
         public int PolicyId { get; set; }
 

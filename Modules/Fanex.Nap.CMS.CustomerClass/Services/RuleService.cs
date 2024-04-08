@@ -49,20 +49,12 @@
         public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
             List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
-            var sportTypeIds = request.SportType.ToString();
 
-            if (sportTypes == null)
+            foreach (var sportType in sportTypes)
             {
-                leagueGroups.AddRange(filterService.GetLeagueGroups(request.SportType));
+                leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
             }
-            else
-            {
-                foreach (var sportType in sportTypes)
-                {
-                    leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
-                }
-                sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
-            }
+            var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
 
             var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds));
 

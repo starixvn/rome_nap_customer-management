@@ -6,7 +6,7 @@
 
         public short CustomerClass { get; set; }
 
-        public short SportType { get; set; }
+        public string SportTypes { get; set; }
 
         public int PageIndex { get; set; }
 

@@ -28,12 +28,15 @@
 
             const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
             const customerClass = ddlCustomerClass.val();
-            const sportType = ddlSportType.val();
+            var sportTypes = ddlSportType.val();
+            if (sportTypes === "0") {
+                sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
 
             cachedFilter = {
                 Site: site,
                 CustomerClass: customerClass,
-                SportType: sportType,
+                SportTypes: sportTypes,
                 PageIndex: 0,
                 PageSize: 100
             };

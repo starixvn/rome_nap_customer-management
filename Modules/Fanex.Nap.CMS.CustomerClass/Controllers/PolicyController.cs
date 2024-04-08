@@ -41,9 +41,9 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPolicies(string policyTitle, short sportType)
+        public ActionResult GetPolicies(string policyTitle, string sportTypes)
         {
-            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sportType == 0 || sp.Id == sportType);
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sportTypes == "0" || sportTypes.Split(',').Contains(sp.Id.ToString()));
             if (!havePermissionPortTypes.Any())
             {
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);

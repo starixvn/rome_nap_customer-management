@@ -25,8 +25,11 @@
     function getPolicies() {
         var policyTitle = encodeURIComponent($("#filterPolicy").val());
         var sportType = $("#ddlSportTypeFilter").val();
+        if (sportType === "0") {
+            sportType = sportList.map(sp => sp.Value).join(',');
+        }
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportType=${sportType}`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}`),
             function (data) {
                 var result = typeof data === "string" ? JSON.parse(data) : data;
                 if (result.Message) {

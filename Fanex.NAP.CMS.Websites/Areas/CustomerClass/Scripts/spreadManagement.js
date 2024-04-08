@@ -28,10 +28,13 @@
             const formData = {
                 customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
                 site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
-                sportType: $("#ddlSportType").val(),
+                sportTypes: $("#ddlSportType").val(),
                 currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 spread: filterSpread.get()
             };
+            if (formData.sportTypes === "0") {
+                formData.sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
             cachedAddNewRule = null;
             cachedFilter = formData;
             search();
@@ -152,7 +155,7 @@
     function renderGrid(data) {
 
         let html = [
-            `<table class="tbl-freegrid" style="height: calc(100vh - 150px);"><thead style="z-index: ${data.length + 2}"><tr>`,
+            `<table class="tbl-freegrid" style="height: calc(100vh - 200px);"><thead style="z-index: ${data.length + 2}"><tr>`,
             `<th class="width-150">${resources.title}</th>`,
             `<th class="width-250">${resources.customerClass}</th>`,
             `<th class="width-150">${resources.sportType}</th>`,

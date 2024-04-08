@@ -31,9 +31,13 @@
             const formData = {
                 sites: getFilterSites(ddlSite),
                 policyId: ddlPolicyTitle.val(),
-                sportType: ddlSportType.val(),
+                sportTypes: ddlSportType.val(),
                 platforms: ddlPlatform.fanexMultiSelect("getItems", true).join()
             };
+
+            if (formData.sportTypes === "0") {
+                formData.sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
             cachedSearchUrlWithQueryString = `${this.action}?${$.param(formData)}`;
             search(0, getPageSize());
         });

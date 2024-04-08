@@ -48,24 +48,13 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchCustomerClassSettingRequest request)
         {
-            if(request.SportType == 0)
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => request.SportTypes.Split(',').Contains(sp.Id.ToString()));
+            if (!havePermissionPortTypes.Any())
             {
-                var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
-                if (!havePermissionPortTypes.Any())
-                {
-                    return Forbidden(behavior: JsonRequestBehavior.AllowGet);
-                }
-
-                return JsonData(ruleService.GetRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
-            } else
-            {
-                if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
-                {
-                    return Forbidden(behavior: JsonRequestBehavior.AllowGet);
-                }
-
-                return JsonData(ruleService.GetRules(request), JsonRequestBehavior.AllowGet);
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
+
+            return JsonData(ruleService.GetRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
         }
     }
 }

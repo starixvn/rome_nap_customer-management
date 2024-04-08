@@ -30,6 +30,7 @@
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');
         const platformList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Platforms, jsonSettings))');
+        const sportList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SportTypes, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.SiteScripts)
 }

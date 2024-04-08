@@ -55,7 +55,7 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetSiteSettingRequest request)
         {
-            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sp.Id == request.SportType || request.SportType == 0);
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => request.SportTypes.Split(',').Contains(sp.Id.ToString()) || request.SportTypes == "0");
             if (!havePermissionPortTypes.Any())
             {
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);

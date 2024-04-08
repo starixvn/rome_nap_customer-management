@@ -287,11 +287,12 @@ const ruleManagementAddOrEdit = (function ($) {
     }
 
     function validateLeagueGroups() {
-        if (ddlLeagueGroup.fanexMultiSelect("isCheckAll")) {
+        const uncheckLeagues = ddlLeagueGroup.fanexMultiSelect("getItems", false);
+        const leagueGroups = ddlLeagueGroup.fanexMultiSelect("getItems", true);
+        if (uncheckLeagues.length === 0 && leagueGroups.length > 0) {
             return "-1";
         }
 
-        const leagueGroups = ddlLeagueGroup.fanexMultiSelect("getItems", true);
         if (!leagueGroups.length) {
             CMS.showTipsyError($("#ddlPopupLeagueGroup"), resources.requiredField, "ne");
             return;

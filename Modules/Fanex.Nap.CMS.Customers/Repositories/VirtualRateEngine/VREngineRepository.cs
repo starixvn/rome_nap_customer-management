@@ -35,6 +35,9 @@
                     reader.NextResult();
                     var leagueGroups = GetIdNameModels(reader, ToLeagueGroup);
 
+                    reader.NextResult();
+                    var currencies = GetIdNameModels(reader, ToCurrency);
+
                     return new VREngineMatrix(
                         sites.Item1,
                         sites.Item2,
@@ -42,7 +45,8 @@
                         betfromList,
                         sports,
                         betTypes,
-                        leagueGroups);
+                        leagueGroups,
+                        currencies);
                 }
             }
         }
@@ -144,6 +148,13 @@
                 Name = reader["leaguename"].ToString()
             };
 
+        private static IdNameModel ToCurrency(IDataReader reader)
+            => new IdNameModel
+            {
+                Id = Convert.ToInt32(reader["currencyid"]),
+                Name = reader["currencyname"].ToString()
+            };
+
         private static IEnumerable<IdNameModel> GetIdNameModels(
             IDataReader reader,
             Func<IDataReader, IdNameModel> parser)
@@ -217,8 +228,11 @@
                 reader["dateofweeklist_notapply"].ToString(),
                 reader["begintime"].ToString(),
                 reader["endtime"].ToString(),
+                reader["currencyidlist"].ToString(),
+                reader["currencyidlist_notapply"].ToString(),
                 Convert.ToByte(reader["adjustmenttype"]),
                 Convert.ToDecimal(reader["adjustmentvalue"]),
+                Convert.ToByte(reader["accumulatedbalance"]),
                 Convert.ToByte(reader["status"]),
                 Convert.ToDateTime(reader["createddts"]),
                 reader["createdby"].ToString(),

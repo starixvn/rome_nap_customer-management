@@ -56,9 +56,16 @@
         public string BeginTime { get; set; }
         public string EndTime { get; set; }
 
+        // [13]
+        public string CurrencyIDList { get; set; }
+
+        public string CurrencyIDNotIn { get; set; }
+
         public byte AdjustmentType { get; set; }
 
         public decimal AdjustmentValue { get; set; }
+
+        public byte AccumulatedBalance { get; set; }
 
         public byte Active { get; set; }
 
@@ -102,6 +109,11 @@
                 if (!string.IsNullOrWhiteSpace(DayOfWeekNotIn))
                 {
                     criteriaRows.AppendFormat("<Row Criteria=\"DateOfWeekList\" Value=\"{0}\"/>", DayOfWeekNotIn);
+                }
+
+                if (!string.IsNullOrWhiteSpace(CurrencyIDNotIn))
+                {
+                    criteriaRows.AppendFormat("<Row Criteria=\"CurrencyIDList\" Value=\"{0}\"/>", CurrencyIDNotIn);
                 }
 
                 criteriaRows.Append("</Root>");

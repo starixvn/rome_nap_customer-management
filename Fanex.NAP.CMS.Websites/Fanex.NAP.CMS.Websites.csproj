@@ -343,7 +343,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Local\DBPOL.Nap_UserControl.bodbAdminNet.xml" />
-    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml" />
+    <Content Include="App_Data\Local\DBACC.bodb02.bodbAdminNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Data\Local\DBCust.CustDB.bodbAdminNet.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -481,6 +483,7 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\siteTypeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\stakeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketCurrencyCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketDoWCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketTimeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\virtualRateEngine.js" />

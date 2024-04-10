@@ -126,8 +126,8 @@
         rule.EnabledBetType
             && pushMultipleSelectionCriteria("6. Bet Type: ", rule.BetTypeNameList, rule.BetTypeNameListNotIn);
 
-        rule.EnabledEvent
-            && html.push("7. Event: " + rule.LiveIndicatorName);
+        rule.EnabledCur
+            && pushMultipleSelectionCriteria("6. Bet Type: ", rule.BetTypeNameList, rule.BetTypeNameListNotIn);
 
         if (rule.EnabledLeagueGroup) {
             pushMultipleSelectionCriteria("8. League Group: ", rule.LeagueGroupNameList, rule.LeagueGroupNameListNotIn);
@@ -145,6 +145,9 @@
 
         rule.EnabledTicketTime
             && html.push("12. Ticket Time (GMT+8): From " + VREngineHelper.extractHourMinute(rule.BeginTime) + " To " + VREngineHelper.extractHourMinute(rule.EndTime));
+
+        rule.EnabledTicketCur
+            && pushMultipleSelectionCriteria("13. Currency: ", rule.CurrencyNameList, rule.CurrencyNameListNotIn);
 
         return html.join("<br/>");
     }

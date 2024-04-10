@@ -136,6 +136,7 @@
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
+    <Compile Include="Controllers\SportbookBaseController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\UtilityOfferingController.cs" />
     <Compile Include="Criteria\AddPolicyCriteria.cs" />

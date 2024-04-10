@@ -22,6 +22,7 @@
                 listData: cachedSites
             });
         const ddlPolicyTitle = $("#ddlPolicyTitle");
+        const ddlSportType = $("#ddlSportTypeFilter");
         const ddlPlatform = renderPlatform();
 
         $("#formSearch").submit(function (e) {
@@ -30,8 +31,13 @@
             const formData = {
                 sites: getFilterSites(ddlSite),
                 policyId: ddlPolicyTitle.val(),
+                sportTypes: ddlSportType.val(),
                 platforms: ddlPlatform.fanexMultiSelect("getItems", true).join()
             };
+
+            if (formData.sportTypes === "0") {
+                formData.sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
             cachedSearchUrlWithQueryString = `${this.action}?${$.param(formData)}`;
             search(0, getPageSize());
         });
@@ -137,7 +143,7 @@
         return customerClassHelper.renderMultiSelect(
             "#ddlPlatform",
             {
-                minWidth: 150,
+                minWidth: 180,
                 listData: platforms
             });
     }
@@ -147,23 +153,30 @@
         CMS.getJson(
             `${cachedSearchUrlWithQueryString}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
             function (data) {
-                assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                freeGrid.find(".link-currency")
-                    .off("click")
-                    .click(handleViewCurrencies);
-                freeGrid.find(".link-sites")
-                    .off("click")
-                    .click(handleViewSites);
-                freeGrid.find("#chk-select-delete-all")
-                    .off("click")
-                    .click(handleCheckDelAll);
-                freeGrid.find("#btn-delete-selected")
-                    .off("click")
-                    .click(handleDelSelected);
-                freeGrid.find(".chk-select-delete")
-                    .off("click")
-                    .click(handleSingleCheckDel);
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    assignCachedGridOptions({ TotalItems: 0, SiteSettings: [] }, 0, 100);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    assignCachedGridOptions(result, pageIndex, pageSize);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    freeGrid.find(".link-currency")
+                        .off("click")
+                        .click(handleViewCurrencies);
+                    freeGrid.find(".link-sites")
+                        .off("click")
+                        .click(handleViewSites);
+                    freeGrid.find("#chk-select-delete-all")
+                        .off("click")
+                        .click(handleCheckDelAll);
+                    freeGrid.find("#btn-delete-selected")
+                        .off("click")
+                        .click(handleDelSelected);
+                    freeGrid.find(".chk-select-delete")
+                        .off("click")
+                        .click(handleSingleCheckDel);
+                }
             },
             function (error) {
                 assignCachedGridOptions({ TotalItems: 0, SiteSettings: [] }, 0, 100);

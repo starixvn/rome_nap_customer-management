@@ -24,14 +24,26 @@
 
     function getPolicies() {
         var policyTitle = encodeURIComponent($("#filterPolicy").val());
+        var sportType = $("#ddlSportTypeFilter").val();
+        if (sportType === "0") {
+            sportType = sportList.map(sp => sp.Value).join(',');
+        }
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}`),
             function (data) {
-                cachedGridOptions = cachedGridOptions || defaultGridOptions();
-                cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    cachedGridOptions = defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows([]);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    cachedGridOptions = cachedGridOptions || defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows(result);
 
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                }
             },
             function (error) {
                 cachedGridOptions = defaultGridOptions();
@@ -89,7 +101,7 @@
             };
             hasHostPermisson && row.Columns.push({
                 Name: "colDelete",
-                Value: renderDeleteCell(policy.PolicyId),
+                Value: renderDeleteCell(policy.PolicyId, policy.SportType),
                 CellAlign: "center"
             });
 
@@ -107,8 +119,8 @@
     }
 
 
-    function renderDeleteCell(id) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
+    function renderDeleteCell(id, sportType) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sporttype="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
@@ -158,32 +170,39 @@
 
     function handleDelSelected() {
         var policyIds = [];
+        var sportTypes = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 policyIds.push($(this).data("id"));
+                if (!sportTypes.includes($(this).data("sporttype"))) {
+                    sportTypes.push($(this).data("sporttype"));
+                }
             }
         });
         if (policyIds.length === 0) {
             return;
         }
-        callCheckPolicyBeforeDelete(policyIds.join());
+        callCheckPolicyBeforeDelete(policyIds.join(), sportTypes);
     }
 
-    function callCheckPolicyBeforeDelete(policies) {
+    function callCheckPolicyBeforeDelete(policies, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Policy/CheckPolicies`),
-            { Policies: policies },
+            {
+                Policies: policies,
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.Policies !== "") {
                     var warningMessage = `The following policy(es) have been applied to the sites - currencies:</br>${resultJson.Policies}.</br>Are you sure you want to delete them?</br>Note: If you delete them, their assign settings with Site - Currency will also be deleted.`;
-                    CMS.showConfirmMessage(warningMessage, function () { callDelete(policies); });
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(policies, sportTypes); });
                 } else {
                     if (resultJson.IsSuccess) {
                         var message = `Are you sure you want to delete the selected setting row(s)?`;
-                        CMS.showConfirmMessage(message, function () { callDelete(policies); });
+                        CMS.showConfirmMessage(message, function () { callDelete(policies, sportTypes); });
                     } else {
                         CMS.showErrorMessage(resultJson.Message);
                     }
@@ -192,12 +211,15 @@
     }
 
 
-    function callDelete(policies) {
+    function callDelete(policies, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Policy/DeletePolicies`),
-            { Policies: policies },
+            {
+                Policies: policies,
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {

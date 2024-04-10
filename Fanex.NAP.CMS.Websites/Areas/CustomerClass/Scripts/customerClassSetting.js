@@ -28,12 +28,15 @@
 
             const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
             const customerClass = ddlCustomerClass.val();
-            const sportType = ddlSportType.val();
+            var sportTypes = ddlSportType.val();
+            if (sportTypes === "0") {
+                sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
 
             cachedFilter = {
                 Site: site,
                 CustomerClass: customerClass,
-                SportType: sportType,
+                SportTypes: sportTypes,
                 PageIndex: 0,
                 PageSize: 100
             };
@@ -68,9 +71,16 @@
             CMS.resolveRootUrl(`CustomerClassSetting/Search`),
             cachedFilter,
             function (data) {
-                assignCachedGridOptions($.parseJSON(data), pageIndex, pageSize);
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                bindEventsAfterRenderGridSuccessfully();
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    assignCachedGridOptions({ TotalItems: 0, Rules: [] }, 0, 100);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    assignCachedGridOptions(result, pageIndex, pageSize);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    bindEventsAfterRenderGridSuccessfully();
+                }
             },
             function (error) {
                 assignCachedGridOptions({ TotalItems: 0, Rules: []}, 0, 100);

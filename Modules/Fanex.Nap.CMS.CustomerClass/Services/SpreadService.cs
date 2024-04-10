@@ -9,10 +9,11 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
+    using System.Linq;
 
     internal interface ISpreadService
     {
-        IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request);
+        IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes);
 
         AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP);
 
@@ -41,9 +42,9 @@
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)
             => spreadDataAccess.InsertRule(new AddSpreadRuleCriteria(request, userId, iP));
 
-        public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request)
+        public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
         {
-            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request));
+            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
         }
 
         public Result UpdateRule(AddEditSpreadRuleRequest request, int userId, string iP)

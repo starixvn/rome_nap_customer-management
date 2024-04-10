@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Web;
@@ -8,11 +9,11 @@
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 
-    public class SiteController : BaseController
+    public class SiteController : SportbookBaseController
     {
         private readonly IFilterService filterService;
         private readonly IPolicyService policyService;
@@ -36,28 +37,54 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return View("~/Views/Error/AccessDenied.cshtml");
+            }
+
             var viewModel = new SiteViewModel(
                 HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host),
                 filterService.GetAllSites(),
-                policyService.GetPolicyTitles(),
+                policyService.GetPolicyTitles(string.Join(",", havePermissionPortTypes.Select(sp => sp.Id))),
                 filterService.GetAllCurrencies(),
-                filterService.GetSports());
+                havePermissionPortTypes);
             return View("~/Areas/CustomerClass/Views/Site/Index.cshtml", viewModel);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(GetSiteSettingRequest request)
-            => JsonData(siteService.GetPagedSiteSetting(request));
+        {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => request.SportTypes.Split(',').Contains(sp.Id.ToString()) || request.SportTypes == "0");
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(siteService.GetPagedSiteSetting(request, string.Join(",", havePermissionPortTypes.Select(sp => sp.Id))), JsonRequestBehavior.AllowGet);
+        }
 
 
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult GetPolicyTitle(short sportType)
-            => JsonData(policyService.GetPolicyTitles(sportType));
+        {
+            if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(policyService.GetPolicyTitles(sportType.ToString()), JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
         public ActionResult Assign(AssignSiteSettingRequest request, bool isOverwrite)
         {
+            if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
+            {
+                return Forbidden();
+            }
+
             request.AssignUserIdAndIP(CurrentSession, CurrentContext);
 
             if (!request.IsValid())
@@ -110,13 +137,21 @@
                 return BadRequest();
             }
 
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden();
+            }
+
+            var policyTitles = policyService.GetPolicyTitles(string.Join(",", havePermissionPortTypes.Select(sp => sp.Id)));
+
             ISiteUploadService siteUploadService = new SiteUploadService();
             var siteSettingExcels = siteUploadService.ValidateExcelFile(
                 file.InputStream,
                 System.IO.Path.GetExtension(file.FileName),
                 filterService.GetAllSites(),
                 filterService.GetAllCurrencies(),
-                policyService.GetPolicyTitles());
+                policyTitles);
 
             if (siteUploadService.HasExcelErrors)
             {

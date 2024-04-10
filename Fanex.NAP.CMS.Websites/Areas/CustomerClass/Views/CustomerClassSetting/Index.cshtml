@@ -39,6 +39,7 @@
         };
         const leagueGroupList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
+        const sportList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SportTypes, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.CustomerClassSettingScripts)
 }

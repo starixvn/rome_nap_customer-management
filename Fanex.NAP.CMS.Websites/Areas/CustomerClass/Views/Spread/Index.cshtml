@@ -1,4 +1,6 @@
 ﻿@using Newtonsoft.Json
+@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.SpreadViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,8 +26,14 @@
             <div class="lbl-field col_4">
                 <label>@Labels.CustomerClass</label>
             </div>
-            <div class="edit-field col_6">
+            <div class="edit-field col_8">
                 <div id="ddlCustomerClasses"></div>
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.SportType</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-site", id = "ddlSportType" })
             </div>
             <div class="lbl-field col_3">
                 <label>@Labels.Spread</label>
@@ -33,16 +41,18 @@
             <div class="edit-field col_4">
                 <input id="filterSpread" type="text" />
             </div>
-            <div class="lbl-field col_3">
+        </div>
+        <div class="filter-row last-row">
+            <div class="lbl-field col_4">
                 <label>@Labels.Site</label>
-            </div>  
+            </div>
             <div class="edit-field col_8">
                 <div id="ddlSites"></div>
             </div>
             <div class="lbl-field col_3">
                 <label>@Labels.Currency</label>
             </div>
-            <div class="edit-field col_6">
+            <div class="edit-field col_10">
                 <div id="ddlCurrencies"></div>
             </div>
             <div class="submit width-auto">

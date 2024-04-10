@@ -80,11 +80,22 @@
         CMS.getJson(
             cachedSearchUrlWithQueryString,
             function (data) {
-                cachedGridOptions = cachedGridOptions || defaultGridOptions();
-                cachedGridOptions.bodyRows = buildBodyRows(JSON.parse(data));
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    cachedGridOptions = defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows([]);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    cachedGridOptions = cachedGridOptions || defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows(result);
 
-                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    freeGrid.find(".link-league-group")
+                        .off("click")
+                        .click(handleViewLeagueGroups);
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                }
             },
             function (error) {
                 cachedGridOptions = defaultGridOptions();
@@ -146,9 +157,9 @@
 
             hasHostPermisson
                 ? columns.push(
-                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.Enable) },
-                    { Name: "colAction", Value: renderActionCell(rule.RuleId) },
-                    { Name: "colDelete", Value: renderDeleteCell(rule.RuleId) })
+                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.SportType, rule.Enable) },
+                    { Name: "colAction", Value: renderActionCell(rule.RuleId, rule.SportType) },
+                    { Name: "colDelete", Value: renderDeleteCell(rule.RuleId, rule.SportType) })
                 : columns.push({ Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) });
 
             return { Columns: columns };
@@ -174,35 +185,23 @@
             : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${policies}" data-title="${resources.policyTitle}">${numOfPolicies}</a>`;
     }
 
-    function renderEnableCell(ruleId, ruleTitle, enable) {
-        return [
-            '<input type="checkbox" class="checkbox-enable" data-ruleid="',
-            ruleId,
-            '" data-ruletitle="',
-            ruleTitle,
-            '" ',
-            enable ? "checked" : "",
-            '/>'
-        ].join("");
+    function renderEnableCell(ruleId, ruleTitle, sportType, enable) {
+        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sporttype="${sportType}" ${enable ? "checked" : ""}>`;
     }
 
-    function renderActionCell(ruleId) {
+    function renderActionCell(ruleId, sportType) {
         return [
-            '<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="', ruleId, '"></span>',
+            `<span class="ico-edit mid-margin-right" title="Edit" data-ruleid="${ruleId}" data-sporttype="${sportType}"></span>`,
             '<span class="ico-copy" title="Clone" data-ruleid="', ruleId, '"></span>'
         ].join("");
     }
 
 
-    function renderDeleteCell(id) {
-        return `<input type="checkbox" class="chk-select-delete" data-id="${id}">`;
+    function renderDeleteCell(id, sportType) {
+        return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sporttype="${sportType}">`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
-        freeGrid.find(".link-league-group")
-            .off("click")
-            .click(handleViewLeagueGroups);
-
         freeGrid.find(".checkbox-enable")
             .off("change")
             .change(handleEnableRule);
@@ -282,7 +281,7 @@
             CMS.callAjax(
                 this,
                 CMS.resolveRootUrl("Rule/Enable"),
-                { ruleId: $this.data("ruleid"), enable: isChecked },
+                { ruleId: $this.data("ruleid"), enable: isChecked, sportType: $this.data("sporttype")},
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (resultJson.IsSuccess) {
@@ -323,50 +322,60 @@
     }
 
     function handleDelSelected() {
-        var settings = [];
         var ruleIds = [];
+        var sportTypes = [];
         $(".chk-select-delete").each(function () {
             if ($(this).prop("checked") === true) {
                 ruleIds.push($(this).data("id"));
+                if (!sportTypes.includes($(this).data("sporttype"))) {
+                    sportTypes.push($(this).data("sporttype"));
+                }
             }
         });
         if (ruleIds.length === 0) {
             return;
         }
 
-        callCheckRuleBeforeDelete(ruleIds);
+        callCheckRuleBeforeDelete(ruleIds, sportTypes);
     }
 
 
-    function callCheckRuleBeforeDelete(ruleIds) {
+    function callCheckRuleBeforeDelete(ruleIds, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Rule/CheckRules`),
-            { RuleIDs: ruleIds.join() },
+            {
+                RuleIDs: ruleIds.join(),
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
-                if (resultJson.Rules !== "") {
+                if (resultJson.Rules && resultJson.Rules !== "") {
                     var warningMessage = `The following rule(s) have been added to the policies:</br>${resultJson.Rules}.</br>Are you sure you want to delete them?</br>Note: If you delete them, they will also be removed from policies.`
-                    CMS.showConfirmMessage(warningMessage, function () { callDelete(ruleIds); });
+                    CMS.showConfirmMessage(warningMessage, function () { callDelete(ruleIds, sportTypes); });
                 } else {
                     if (resultJson.IsSuccess) {
                         var message = `Are you sure you want to delete the selected setting row(s)?`;
-                        CMS.showConfirmMessage(message, function () { callDelete(ruleIds); });
+                        CMS.showConfirmMessage(message, function () { callDelete(ruleIds, sportTypes); });
                     } else {
                         CMS.showErrorMessage(resultJson.Message);
+                        CMS.enableInput();
                     }
                 }
             });
     }
 
 
-    function callDelete(ruleIds) {
+    function callDelete(ruleIds, sportTypes) {
         CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`Rule/DeleteRules`),
-            { RuleIDs: ruleIds.join() },
+            {
+                RuleIDs: ruleIds.join(),
+                SportTypes: sportTypes
+            },
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
@@ -374,6 +383,7 @@
                     search();
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
+                    CMS.enableInput();
                 }
             });
     }

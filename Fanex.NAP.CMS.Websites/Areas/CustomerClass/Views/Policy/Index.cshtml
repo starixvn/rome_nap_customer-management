@@ -1,8 +1,11 @@
-﻿@model Fanex.Nap.CMS.CustomerClass.ViewModels.PolicyViewModel
+﻿@using Newtonsoft.Json
+@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.CustomerClass.ViewModels.PolicyViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = Labels.PolicyManagement;
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
 
 @section Head {
@@ -38,6 +41,7 @@
             delete: "@Labels.Delete",
             note: "* " + "@Labels.PolicyManagementNote"
         };
+        const sportList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SportTypes, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.PolicyScripts)
 }
@@ -49,10 +53,16 @@
         </div>
     </div>
 }
-    <div class="note-box filter-bar">
-        @using (Html.BeginForm("GetPolicies", "Policy", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
-        {
+<div class="note-box filter-bar">
+    @using (Html.BeginForm("GetPolicies", "Policy", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
+    {
         <div class="filter-policy filter-row">
+            <div class="lbl-field col_4">
+                <label>@Labels.SportType</label>
+            </div>
+            <div class="edit-field col_7">
+                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-120", id = "ddlSportTypeFilter" })
+            </div>
             <div class="lbl-field">
                 <label>@Labels.PolicyTitle</label>
             </div>
@@ -65,9 +75,9 @@
                 <button type="button" class="blue-button" id="btnAddNew">@Labels.AddNewPolicy</button>
             }
         </div>
-        }
+    }
 
-        </div>
+</div>
 <div class="content-grid">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>

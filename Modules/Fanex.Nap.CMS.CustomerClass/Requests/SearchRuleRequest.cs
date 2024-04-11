@@ -2,7 +2,9 @@
 {
     public class SearchRuleRequest
     {
-        public short CustomerClass { get; set; }
+        public string CustomerClass { get; set; }
+
+        public string CustomerClassDetail { get; set; }
 
         public short SportType { get; set; }
 

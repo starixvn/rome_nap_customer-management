@@ -18,6 +18,8 @@
         const resources = {
             ruleTitle: "@Labels.RuleTitle",
             customerClass: "@Labels.CustomerClass",
+            generalCC: "@Labels.GeneralCC",
+            sportCC: "@Labels.SportCC",
             site: "@Labels.Site",
             currency: "@Labels.Currency",
             platform: "@Labels.Platform",
@@ -40,6 +42,7 @@
         const leagueGroupList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');
         const sportList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.SportTypes, jsonSettings))');
+        const currencyList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Currencies, jsonSettings))');
     </script>
     @Scripts.Render(CustomerClassBundlesConfig.CustomerClassSettingScripts)
 }
@@ -55,29 +58,41 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "CustomerClassSetting", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
     {
-        <div class="filter-row last-row">
-            <div class="lbl-field col_2">
-                <label>@Labels.Site</label>
-            </div>
-            <div class="edit-field col_9">
-                <div id="ddlSites"></div>
-            </div>
-            <div class="lbl-field col_4">
-                <label>@Labels.CustomerClass</label>
-            </div>
-            <div class="edit-field col_6">
-                @Html.DropDownList("customerClass", Model.CustomerClasses, new { @class = "combobox-autocomplete width-100", id= "ddlCustomerClass" })
-            </div>
-            <div class="lbl-field col_4">
-                <label>@Labels.SportType</label>
-            </div>
-            <div class="edit-field col_7">
-                @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-120", id= "ddlSportType" })
-            </div>
-            <div class="submit width-auto">
-                <button type="submit" class="submit">@Labels.Search</button>
-            </div>
+    <div class="filter-row last-row">
+        <div class="lbl-field col_2">
+            <label>@Labels.Site</label>
         </div>
+        <div class="edit-field col_7">
+            <div id="ddlSites"></div>
+        </div>
+        <div class="lbl-field col_3">
+            <label>@Labels.SportType</label>
+        </div>
+        <div class="edit-field col_5">
+            @Html.DropDownList("sportType", Model.SportTypes.InsertAllItem(), new { @class = "combobox-autocomplete width-80", id = "ddlSportType" })
+        </div>
+        <div class="lbl-field col_3">
+            <label>@Labels.GeneralCC</label>
+        </div>
+        <div class="edit-field col_4">
+            <input type="text" id="txtFilterCustomerClass" class="filter-cc" />
+        </div>
+        <div class="lbl-field col_4">
+            <label>@Labels.SportCC</label>
+        </div>
+        <div class="edit-field col_4">
+            <input type="text" id="txtFilterCustomerClassDetail" class="filter-cc" />
+        </div>
+        <div class="lbl-field col_4">
+            <label>@Labels.Currency</label>
+        </div>
+        <div class="edit-field col_5">
+            <div id="ddlCurrencies"></div>
+        </div>
+        <div class="submit width-auto">
+            <button type="submit" class="submit">@Labels.Search</button>
+        </div>
+    </div>
         @*<div class="filter-row ">
             <div class="note-info-message-box">
                 <span class="note-info-message"></span>

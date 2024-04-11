@@ -10,6 +10,7 @@ const ruleManagementAddOrEdit = (function ($) {
         formMode = null,
         inlineMessage = null,
         txtCustomerClass = null,
+        txtCustomerClassDetail = null,
         txtRuleTitle = null,
         dynamicCCRuleTitleControl = null,
         ddlSportType = null,
@@ -62,7 +63,11 @@ const ruleManagementAddOrEdit = (function ($) {
         inlineMessage = $("#inlineMessage");
         dynamicCCRuleTitleControl = $("#dynamicCCRuleTitleControl");
         txtCustomerClass = $("#txtCustomerClass");
+        txtCustomerClassDetail = $("#txtCustomerClassDetail");
         txtRuleTitle = $("#txtRuleTitle");
+
+        ddlSportType = $("#ddlPopupSportType").val(rule.SportType).combobox();
+        spanSportType = ddlSportType.next("#ddlPopupSportType");
 
         if (isAddNew()) {
             $(".clone").remove();
@@ -71,10 +76,13 @@ const ruleManagementAddOrEdit = (function ($) {
             $(".button-add-more").remove();
             $(".clone").remove();
             txtCustomerClass.val(rule.CustomerClass).attr("disabled", "disabled");
+            txtCustomerClassDetail.val(rule.CustomerClassDetail).attr("disabled", "disabled");
             txtRuleTitle.val(rule.RuleTitle);
+            ddlSportType.combobox("disable"); 
         } else if (isClone()) {
             $("#txtTargetRuleTitle").val(rule.RuleTitle);
             $("#lblCustomerClass").text(resources.destinationCC);
+            $("#lblCustomerClassDetail").text(resources.destinationCCDetail);
         }
 
         ddlSportType = $("#ddlPopupSportType").val(rule.SportType).combobox();
@@ -107,24 +115,31 @@ const ruleManagementAddOrEdit = (function ($) {
             .click(function () {
                 clearAllTipsyErrors();
                 renderDynamicCCRuleTitleControl(++index);
+                ddlSportType.trigger("change");
             });
-
-        ddlSportType
-            .off("change")
-            .change(function () {
-                const sportType = +this.value;
-                if (!customerClassHelper.leagueBySport[sportType]) {
-                    customerClassHelper.getLeagueGroups(sportType, function () {
+        ddlSportType.off("change");
+        if (isAddNew() || isClone()) {
+            ddlSportType
+                .change(function () {
+                    var selectedSportTypeName = this.selectedOptions[0].text;
+                    $(".spanSportType").each(function () {
+                        $(this).text(selectedSportTypeName);
+                    });
+                    const sportType = +this.value;
+                    if (!customerClassHelper.leagueBySport[sportType]) {
+                        customerClassHelper.getLeagueGroups(sportType, function () {
+                            renderLeagueGroup(sportType, "-1");
+                            disableSeizeBetTextbox(sportType);
+                        });
+                    } else {
                         renderLeagueGroup(sportType, "-1");
                         disableSeizeBetTextbox(sportType);
-                    });
-                } else {
-                    renderLeagueGroup(sportType, "-1");
-                    disableSeizeBetTextbox(sportType);
-                }
-            });
-
+                    }
+                });
+        }
+        
         txtCustomerClass.off().on("keypress", CMS.forceNumberInput);
+        txtCustomerClassDetail.off().on("keypress", CMS.forceNumberInput);
         [txtDiffBalanceRatio, txtBetDelay, txtNextBetIntervalSec, txtSuperBetIntervalSec, txtSiteBetIntervalSec]
             .forEach(function (item) {
                 item.off()
@@ -183,7 +198,6 @@ const ruleManagementAddOrEdit = (function ($) {
         const minBetMaxBetMaxPerMatch = validateMinBetMaxBetMaxPerMatch();
         const repeatedBets = validateRangeNumber(txtRepeatedBets, resources.pleaseInputPositiveNumber);
         const seizeBet = validateRangeNumber(txtSeizeBet, resources.pleaseInputPositiveNumber);
-        //const peakHourSpread = validateRangeNumber(txtPeakHourSpread, resources.pleaseInputPositiveNumber);
 
         const isValid = ccRuleTitles && ccRuleTitles.length > 0
             && !isUndefined(sportType)
@@ -218,8 +232,7 @@ const ruleManagementAddOrEdit = (function ($) {
                 maxPerMatch: textToNumber(minBetMaxBetMaxPerMatch.maxPerMatch),
                 repeatedBets: textToNumber(repeatedBets),
                 seizeBet: textToNumber(seizeBet),
-                disableParlay: chkDisableParlay.is(":checked"),
-                //peakHourSpread: textToNumber(peakHourSpread)
+                disableParlay: chkDisableParlay.is(":checked")
             };
         }
     }
@@ -235,14 +248,23 @@ const ruleManagementAddOrEdit = (function ($) {
 
             const txtRandomCC = id ? $this.find(`#txtCustomerClass-${id}`) : txtCustomerClass;
             const cc = validateCustomerClass(txtRandomCC);
+            const txtRandomCCDetail = id ? $this.find(`#txtCustomerClassDetail-${id}`) : txtCustomerClassDetail;
+            const ccDetail = validateCustomerClass(txtRandomCCDetail);
+
+            if (!(cc || ccDetail)) {
+                //CMS.showInlineErrorMsg("Please enter at least 1 of the 2 CC fields!", inlineMessage);
+                CMS.showTipsyError(txtRandomCC, "Please enter at least 1 of the 2 CC fields!", "ne");
+                CMS.showTipsyError(txtRandomCCDetail, "Please enter at least 1 of the 2 CC fields!", "ne");
+                isValid = false;
+            }
 
             const txtRandomRuleTitle = id ? $this.find(`#txtRuleTitle-${id}`) : txtRuleTitle;
             const ruleTitle = validateRuleTitle(txtRandomRuleTitle, "nw");
 
-            if (cc && ruleTitle) {
+            if (cc && ruleTitle || ccDetail && ruleTitle) {
                 ruleTitles.push(ruleTitle);
                 ruleTitleElements.push(txtRandomRuleTitle);
-                ccRuleTitles.push({ customerClass: cc, ruleTitle });
+                ccRuleTitles.push({ customerClass: cc, ruleTitle, customerClassDetail: ccDetail });
             } else {
                 isValid = false;
             }
@@ -272,7 +294,7 @@ const ruleManagementAddOrEdit = (function ($) {
         const ruleTitle = validateRuleTitle(txtRuleTitle, "nw");
 
         if (ruleTitle) {
-            return [{ customerClass: txtCustomerClass.val(), ruleTitle }];
+            return [{ customerClass: txtCustomerClass.val(), ruleTitle, customerClassDetail: txtCustomerClassDetail.val() }];
         }
     }
 
@@ -304,7 +326,6 @@ const ruleManagementAddOrEdit = (function ($) {
     function validateCustomerClass(inputElement) {
         const textValue = $.trim(inputElement.val());
         if (!textValue.length) {
-            CMS.showTipsyError(inputElement, resources.requiredField, "ne");
             return;
         }
 
@@ -393,21 +414,47 @@ const ruleManagementAddOrEdit = (function ($) {
         dynamicCCRuleTitleControl.append(renderCCRuleTitle(id));
 
         $(`#txtCustomerClass-${id}`).off().on("keypress", CMS.forceNumberInput);
+        $(`#txtCustomerClassDetail-${id}`).off().on("keypress", CMS.forceNumberInput);
         $(`#icoDelete-${id}`).click(function () {
             clearAllTipsyErrors();
-            $(this).closest(".row-cc-ruletitle").remove();
+            $(this).closest(`#newRuleContainer-${id}`).remove();
         });
     }
 
     function renderCCRuleTitle(id) {
         return [
-            '<div class="form-row row-cc-ruletitle" data-randomid="', id, '">',
-            '<div class="lbl-field"><label class="label" for="txtCustomerClass-', id, '">', isAddNew() ? resources.customerClass : resources.destinationCC,
-            ' <span class="text-red">*</span></label></div>',
-            '<div class="edit-field"><input type="text" class="text" id="txtCustomerClass-', id, '" autocomplete="off" maxlength="5" data-val-range="0;32767" /></div>',
-            '<div class="lbl-field"><label class="label" for="txtRuleTitle-', id, '">', resources.ruleTitle, ' <span class="text-red">*</span></label></div>',
-            '<div class="edit-field width-430"><input type="text" class="width-100percent" id="txtRuleTitle-', id, '" autocomplete="off" maxlength="500" /></div>',
-            '<div class="lbl-field width-30"><span class="ico-delete" id="icoDelete-', id, '" title="Delete"></span></div></div>'
+            `<div class="margin-top" style="display: flex;" id="newRuleContainer-${id}"><fieldset class="fieldset row-cc-ruletitle" data-randomid="${id}"><legend>${resources.conditions}</legend>`,
+            `<div class="form-row">`,
+            `<div class="lbl-field">
+                <label class="label">${resources.sportType}</label>
+                <span class="text-red">*</span>
+            </div>`,
+            `<div class="edit-field">
+                <div class="spanSportType width-110" id="spanSportType-${id}">&nbsp;</div>
+            </div>`,
+            `<div class="lbl-field">
+                <label class="label" for="txtRuleTitle-${id}" id="lblRuleTitle-${id}">${resources.ruleTitle} <span class="text-red">*</span></label>
+            </div>`,
+            `<div class="edit-field width-430">
+                <input type="text" class="width-100percent" id="txtRuleTitle-${id}" autocomplete="off" maxlength="500" />
+            </div>`,
+            "</div>",
+            `<div class="form-row">`,
+            `<div class="lbl-field">
+                <label class="label" for="txtCustomerClass-${id}" id="lblCustomerClass-${id}">${isAddNew() ? resources.generalCC : resources.destinationCC}</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtCustomerClass-${id}" maxlength="5" data-val-range="0;${maxValueShort}" />
+            </div>`,
+            `<div class="lbl-field">
+                <label class="label" for="txtCustomerClassDetail-${id}" id="lblCustomerClassDetail-${id}">${isAddNew() ? resources.sportCC : resources.destinationCCDetail}</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtCustomerClassDetail-${id}" maxlength="5" data-val-range="0;${maxValueShort}" />
+            </div>`,
+            "</div>",
+            "</fieldset>",
+            `<div class="lbl-field icon-remove"><span class="ico-delete" id="icoDelete-${id}" title="Delete"></span></div></div>`
         ].join("");
     }
 

@@ -10,9 +10,15 @@
         freeGrid = $("#freegrid");
 
     function init() {
-        const ddlCustomerClass = $("#ddlCustomerClass");
+        const txtFilterCustomerClass = $("#txtFilterCustomerClass");
+        const txtFilterCustomerClassDetail = $("#txtFilterCustomerClassDetail");
+        txtFilterCustomerClass.blur(() => txtFilterCustomerClass.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClass.val())));
+        txtFilterCustomerClassDetail.blur(() => txtFilterCustomerClassDetail.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClassDetail.val())));
+        txtFilterCustomerClass.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
+        txtFilterCustomerClassDetail.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
         const ddlSportType = $("#ddlSportType");
         getCreditAndLicenseeSites();
+        renderCurrencies();
 
         const ddlSite = customerClassHelper.renderMultiSelect(
             "#ddlSites",
@@ -27,7 +33,8 @@
             e.preventDefault();
 
             const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
-            const customerClass = ddlCustomerClass.val();
+            const customerClass = txtFilterCustomerClass.val();
+            const customerClassDetail = txtFilterCustomerClassDetail.val();
             var sportTypes = ddlSportType.val();
             if (sportTypes === "0") {
                 sportTypes = sportList.map(sp => sp.Value).join(',');
@@ -36,12 +43,40 @@
             cachedFilter = {
                 Site: site,
                 CustomerClass: customerClass,
+                CustomerClassDetail: customerClassDetail,
                 SportTypes: sportTypes,
+                currencies: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 PageIndex: 0,
                 PageSize: 100
             };
             search(0, getPageSize());
         });
+    }
+
+    function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
+    function renderCurrencies() {
+        let optionList = [];
+        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: true, enable: true })
+        );
+
+        customerClassHelper.renderMultiSelect(
+            "#ddlCurrencies",
+            {
+                minWidth: 120,
+                maxHeight: 300,
+                listData: optionList,
+                showFilter: true
+            }
+        );
     }
 
     function getCreditAndLicenseeSites() {
@@ -102,13 +137,23 @@
     }
 
     function defaultGridOptions() {
+        var groupHeaderRows = [
+            {
+                Columns: [
+                    { HeaderText: "Conditions", Name: "colRuleTitle", MergeColNumber: 7, ThClass: "header-main" },
+                    { HeaderText: "Apply To", Name: "colLeagueGroup", MergeColNumber: 2, ThClass: "header-main" },
+                    { HeaderText: "Restriction Settings", Name: "colDiffBalanceRatio", MergeColNumber: 8, ThClass: "header-main" }
+                ]
+            }
+        ];
         var columns = [
             { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-            { HeaderText: resources.customerClass, Width: 100, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.site, Width: 100, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.currency, Width: 100, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.platform, Width: 100, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.leagueGroup, Width: 100, Name: "colLeagueGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.isLive, Width: 60, Name: "colIsLive", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.diffBalanceRatio, Width: 60, Name: "colDiffBalanceRatio", HeaderAlign: "center", CellAlign: "center" },
@@ -122,6 +167,8 @@
         ];
 
         return {
+            customizeHeader: true,
+            groupHeaderRows: groupHeaderRows,
             showTitle: false,
             fullWidth: true,
             fullHeight: true,
@@ -144,11 +191,12 @@
             return {
                 Columns: [
                     { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
-                    { Name: "colCustomerClass", Value: rule.CustomerClass, TdClass: "pink-cell" },
+                    { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
+                    { Name: "colGeneralCC", Value: rule.CustomerClass, TdClass: "pink-cell" },
+                    { Name: "colSportCC", Value: rule.CustomerClassDetail, TdClass: "pink-cell" },
                     { Name: "colSite", Value: renderSitesCell(rule.Site), TdClass: "pink-cell" },
                     { Name: "colCurrency", Value: renderLinkWithDetailsPopup(rule.IsAllCurrencies, rule.Currencies, "link-currency"), TdClass: "pink-cell" },
                     { Name: "colPlatform", Value: renderLinkWithDetailsPopup(rule.IsAllPlatforms, rule.PlatformNames, "link-platform"), TdClass: "pink-cell" },
-                    { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
                     { Name: "colLeagueGroup", Value: renderLeagueGroupCell(rule.IsAllLeagueGroups, rule.LeagueGroups, rule.SportType), TdClass: "green-cell" },
                     { Name: "colIsLive", Value: ruleManagementHelper.renderIsLiveCell(rule.IsLive), TdClass: "green-cell" },
                     { Name: "colDiffBalanceRatio", Value: ruleManagementHelper.renderPercentCell(rule.DiffBalanceRatio) },

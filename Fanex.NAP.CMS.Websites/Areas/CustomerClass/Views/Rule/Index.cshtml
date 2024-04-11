@@ -17,6 +17,8 @@
         const resources = {
             ruleTitle: "@Labels.RuleTitle",
             customerClass: "@Labels.CustomerClass",
+            generalCC: "@Labels.GeneralCC",
+            sportCC: "@Labels.SportCC",
             sportType: "@Labels.SportType",
             leagueGroup: "@Labels.LeagueGroup",
             isLive: "@Labels.IsLive",
@@ -36,7 +38,8 @@
             addRuleSetting: "@Labels.AddRuleSetting",
             editRuleSetting: "@Labels.EditRuleSetting",
             cloneRuleSetting: "@Labels.CloneRuleSetting",
-            destinationCC: "@Labels.DestinationCC",
+            destinationCC: "@Labels.DestinationGeneralCC",
+            destinationCCDetail: "@Labels.DestinationSportCC",
             clone: "@Labels.Clone",
             pleaseSelect: "@Labels.PleaseSelect",
             pleaseSelectCustomerClass: "@Labels.PleaseSelectCustomerClass",
@@ -49,7 +52,8 @@
             compareMinBetWithMaxPerMatchError: "@Labels.CompareMinBetWithMaxPerMatchError",
             compareMaxBetWithMaxPerMatchError: "@Labels.CompareMaxBetWithMaxPerMatchError",
             delete: "@Labels.Delete",
-            policyTitle: "@Labels.PolicyTitle"
+            policyTitle: "@Labels.PolicyTitle",
+            conditions: "@Labels.Conditions"
         };
         const leagueGroupList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.LeagueGroups, jsonSettings))');
     </script>
@@ -64,42 +68,50 @@
     </div>
 }
 
-<div class="filter-bar">
-    @using (Html.BeginForm("Search", "Rule", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
-    {
-        <div class="filter-row last-row">
+    <div class="filter-bar">
+        @using (Html.BeginForm("Search", "Rule", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
+        {
+        <div class="filter-row first-row">
             <div class="lbl-field col_4">
-                <label>@Labels.CustomerClass</label>
-            </div>
-            <div class="edit-field col_6">
-                @Html.DropDownList("customerClass", Model.CustomerClasses.InsertAllItem(), new { @class = "combobox-autocomplete width-100", id = "ddlCustomerClass" })
-            </div>
-            <div class="lbl-field col_3">
                 <label>@Labels.SportType</label>
             </div>
             <div class="edit-field col_6">
                 @Html.DropDownList("sportType", Model.SportTypes, new { @class = "combobox-autocomplete width-100", id = "ddlSportType" })
             </div>
             <div class="lbl-field col_4">
-                <label>@Labels.LeagueGroup</label>
+                <label>@Labels.GeneralCC</label>
             </div>
-            <div class="edit-field col_10" id="ddlLeagueGroupBox"></div>
-            <div class="lbl-field col_2">
-                <label>@Labels.IsLive</label>
+            <div class="edit-field col_6">
+                <input type="text" id="txtFilterCustomerClass" class="filter-cc" />
             </div>
-            <div class="edit-field col_5">
-                @Html.DropDownList("isLive", Model.Indicators, new { @class = "combobox-autocomplete width-60", id = "ddlIndicator" })
+            <div class="lbl-field col_3">
+                <label>@Labels.SportCC</label>
             </div>
-            <div class="submit width-auto">
-                <button type="submit" class="submit">@Labels.Search</button>
-                @if (Model.HasHostPermission)
-                {
-                    <button type="button" class="submit width-100" id="btnAddNewRule">@Labels.AddNewRule</button>
-                }
+            <div class="edit-field col_6">
+                <input type="text" id="txtFilterCustomerClassDetail" class="filter-cc" />
             </div>
         </div>
-    }
-</div>
+            <div class="filter-row last-row">
+                <div class="lbl-field col_4">
+                    <label>@Labels.LeagueGroup</label>
+                </div>
+                <div class="edit-field col_16" id="ddlLeagueGroupBox"></div>
+                <div class="lbl-field col_3">
+                    <label>@Labels.IsLive</label>
+                </div>
+                <div class="edit-field col_6">
+                    @Html.DropDownList("isLive", Model.Indicators, new { @class = "combobox-autocomplete width-80", id = "ddlIndicator" })
+                </div>
+                <div class="submit width-auto">
+                    <button type="submit" class="submit">@Labels.Search</button>
+                    @if (Model.HasHostPermission)
+                    {
+                        <button type="button" class="submit width-100" id="btnAddNewRule">@Labels.AddNewRule</button>
+                    }
+                </div>
+            </div>
+        }
+    </div>
 <div class="content-grid">
     <div class="freegrid display-none" id="freegrid"></div>
 </div>

@@ -17,29 +17,9 @@
             <input type="text" class="width-100percent" id="txtTargetRuleTitle" disabled />
         </div>
     </div>
-    <div class="form-row row-cc-ruletitle">
-        <div class="lbl-field">
-            <label class="label" for="txtCustomerClass" id="lblCustomerClass">@Labels.CustomerClass</label>
-            <span class="text-red">*</span>
-        </div>
-        <div class="edit-field">
-            <input type="text" class="text" id="txtCustomerClass" maxlength="5" data-val-range="0;@maxValueShort" />
-        </div>
-        <div class="lbl-field">
-            <label class="label" for="txtRuleTitle" id="lblRuleTitle">@Labels.RuleTitle <span class="text-red">*</span></label>
-        </div>
-        <div class="edit-field width-430">
-            <input type="text" class="width-100percent" id="txtRuleTitle" autocomplete="off" maxlength="500" />
-        </div>
-    </div>
-    <div class="clear-fix"></div>
-    <div id="dynamicCCRuleTitleControl"></div>
-    <div class="button-add-more">
-        <button type="button" class="green-button" id="btnAddMore">@Labels.AddMore</button>
-    </div>
     <fieldset class="fieldset margin-top">
         <legend>@Labels.Conditions</legend>
-        <div class="form-row">
+        <div class="form-row row-cc-ruletitle">
             <div class="lbl-field">
                 <label class="label">@Labels.SportType</label>
                 <span class="text-red">*</span>
@@ -47,6 +27,36 @@
             <div class="edit-field">
                 @Html.DropDownList("sportType", Model.SportTypes.InsertPleaseSelectItem(), new { @class = "width-110", id = "ddlPopupSportType" })
             </div>
+            <div class="lbl-field">
+                <label class="label" for="txtRuleTitle" id="lblRuleTitle">@Labels.RuleTitle <span class="text-red">*</span></label>
+            </div>
+            <div class="edit-field width-430">
+                <input type="text" class="width-100percent" id="txtRuleTitle" autocomplete="off" maxlength="500" />
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="lbl-field">
+                <label class="label" for="txtCustomerClass" id="lblCustomerClass">@Labels.GeneralCC</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtCustomerClass" maxlength="5" data-val-range="0;@maxValueShort" />
+            </div>
+            <div class="lbl-field">
+                <label class="label" for="txtCustomerClass" id="lblCustomerClassDetail">@Labels.SportCC</label>
+            </div>
+            <div class="edit-field">
+                <input type="text" class="text" id="txtCustomerClassDetail" maxlength="5" data-val-range="0;@maxValueShort" />
+            </div>
+        </div>
+    </fieldset>
+    <div class="clear-fix margin-top"></div>
+    <div id="dynamicCCRuleTitleControl"></div>
+    <div class="button-add-more margin-top">
+        <button type="button" class="green-button" id="btnAddMore">@Labels.AddMore</button>
+    </div>
+    <fieldset class="fieldset margin-top">
+        <legend>@Labels.ApplyTo</legend>
+        <div class="form-row">
             <div class="lbl-field">
                 <label class="label">@Labels.LeagueGroup</label>
                 <span class="text-red">*</span>
@@ -136,17 +146,15 @@
                 <input type="checkbox" id="chkDisableParlay" />
             </div>
         </div>
-        @*<div class="form-row">
-            <div class="lbl-field">
-                <label class="label" for="txtPeakHourSpread">@Labels.PeakHourSpread</label>
-            </div>
-            <div class="edit-field">
-                <input type="text" class="text" id="txtPeakHourSpread" autocomplete="off" maxlength="6" data-val-range="0;@maxValueShort" />
-            </div>
-        </div>*@
     </fieldset>
     <div class="margin-top align-right">
         <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>
         <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
     </div>
 </div>
+<script>
+    var minValueShort = @minValueShort;
+    var maxValueShort = @maxValueShort;
+    var maxValueInt = @maxValueInt;
+    var maxValueByte = @maxValueByte;
+</script>

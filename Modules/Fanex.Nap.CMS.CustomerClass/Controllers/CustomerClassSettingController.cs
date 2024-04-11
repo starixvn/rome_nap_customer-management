@@ -39,6 +39,7 @@
             var viewModel = new CustomerClassSettingViewModel(
                 filterService.GetAllSites(),
                 filterService.GetCustomerClasses(),
+                filterService.GetAllCurrencies(),
                 havePermissionPortTypes,
                 filterService.GetLeagueGroups());
 

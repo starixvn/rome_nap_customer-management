@@ -531,4 +531,19 @@
   <data name="UploadSiteWarning" xml:space="preserve">
     <value>The upload process is still in progress, please do not upload more data for a while.</value>
   </data>
+  <data name="GeneralCC" xml:space="preserve">
+    <value>General CC</value>
+  </data>
+  <data name="SportCC" xml:space="preserve">
+    <value>Sport CC</value>
+  </data>
+  <data name="ApplyTo" xml:space="preserve">
+    <value>Apply To</value>
+  </data>
+  <data name="DestinationGeneralCC" xml:space="preserve">
+    <value>Destination General CC</value>
+  </data>
+  <data name="DestinationSportCC" xml:space="preserve">
+    <value>Destination Sport CC</value>
+  </data>
 </root>

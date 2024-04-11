@@ -4,9 +4,13 @@
     {
         public string Site { get; set; }
 
-        public short CustomerClass { get; set; }
+        public string CustomerClass { get; set; }
+
+        public string CustomerClassDetail { get; set; }
 
         public string SportTypes { get; set; }
+
+        public string Currencies { get; set; }
 
         public int PageIndex { get; set; }
 

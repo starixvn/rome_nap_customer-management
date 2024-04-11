@@ -214,6 +214,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply To.
+        /// </summary>
+        public static string ApplyTo {
+            get {
+                return ResourceManager.GetString("ApplyTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign Site Setting.
         /// </summary>
         public static string AssignSiteSetting {
@@ -493,6 +502,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination General CC.
+        /// </summary>
+        public static string DestinationGeneralCC {
+            get {
+                return ResourceManager.GetString("DestinationGeneralCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination Sport CC.
+        /// </summary>
+        public static string DestinationSportCC {
+            get {
+                return ResourceManager.GetString("DestinationSportCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diff Balance Ratio.
         /// </summary>
         public static string DiffBalanceRatio {
@@ -642,6 +669,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string ExcelFile {
             get {
                 return ResourceManager.GetString("ExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General CC.
+        /// </summary>
+        public static string GeneralCC {
+            get {
+                return ResourceManager.GetString("GeneralCC", resourceCulture);
             }
         }
         
@@ -1173,6 +1209,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string Soccer {
             get {
                 return ResourceManager.GetString("Soccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport CC.
+        /// </summary>
+        public static string SportCC {
+            get {
+                return ResourceManager.GetString("SportCC", resourceCulture);
             }
         }
         

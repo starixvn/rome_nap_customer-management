@@ -6,6 +6,7 @@
 @blue-color: #0000ff;
 @border-color: #cecccd;
 @disabled-color: #f3efee;
+@table-main-header-bgColor: #2b92d6;
 @table-header-bgColor: #3c5ea5;
 @table-body-border-color: #c5c5c5;
 @table-title-border-color: #d2b24d;
@@ -69,6 +70,15 @@
         color: @white-color;
         font-weight: normal;
         text-align: center;
+    }
+}
+
+.grid-fixed-table thead .header-main {
+    background: @table-main-header-bgColor !important;
+    background: -moz-linear-gradient(@table-main-header-bgColor, @table-main-header-bgColor) @table-main-header-bgColor !important;
+    background: -webkit-linear-gradient(@table-main-header-bgColor, @table-main-header-bgColor) @table-main-header-bgColor !important;
+    .table-cell {
+        height: 30px !important;
     }
 }
 

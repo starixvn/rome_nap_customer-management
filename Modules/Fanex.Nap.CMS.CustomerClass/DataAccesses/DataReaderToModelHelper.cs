@@ -50,7 +50,8 @@
 #pragma warning restore S3427
             => new Rule(
                 Convert.ToInt32(reader["RuleId"]),
-                Convert.ToInt16(reader["CustomerClass"]),
+                GetShort(reader["CustomerClass"]),
+                GetShort(reader["CustomerClassDetail"]),
                 reader["RuleTitle"].ToString(),
                 Convert.ToInt16(reader["SportType"]),
                 leagueGroupIds,

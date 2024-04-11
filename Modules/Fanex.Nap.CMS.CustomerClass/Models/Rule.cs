@@ -5,7 +5,8 @@
 #pragma warning disable S107
         public Rule(
             int ruleId,
-            short customerClass,
+            short? customerClass,
+            short? customerClassDetail,
             string ruleTitle,
             short sportType,
             string leagueGroupIds,
@@ -31,7 +32,8 @@
 #pragma warning restore S107
         {
             RuleId = ruleId;
-            CustomerClass = customerClass;
+            CustomerClass = customerClass == 0 ? null : customerClass;
+            CustomerClassDetail = customerClassDetail == 0 ? null : customerClassDetail;
             RuleTitle = ruleTitle;
             SportType = sportType;
             LeagueGroupIds = leagueGroupIds;
@@ -58,7 +60,9 @@
 
         public int RuleId { get; }
 
-        public short CustomerClass { get; }
+        public short? CustomerClass { get; }
+
+        public short? CustomerClassDetail { get; }
 
         public string RuleTitle { get; }
 

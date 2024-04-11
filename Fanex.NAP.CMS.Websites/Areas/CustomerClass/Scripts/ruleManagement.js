@@ -11,7 +11,12 @@
     
 
     function init() {
-        const ddlCustomerClass = $("#ddlCustomerClass");
+        const txtFilterCustomerClass = $("#txtFilterCustomerClass");
+        const txtFilterCustomerClassDetail = $("#txtFilterCustomerClassDetail");
+        txtFilterCustomerClass.blur(() => txtFilterCustomerClass.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClass.val())));
+        txtFilterCustomerClassDetail.blur(() => txtFilterCustomerClassDetail.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClassDetail.val())));
+        txtFilterCustomerClass.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
+        txtFilterCustomerClassDetail.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
         const ddlSportType = $("#ddlSportType")
             .change(renderLeagueGroup)
             .trigger("change");
@@ -20,8 +25,11 @@
         $("#formSearch").submit(function (e) {
             e.preventDefault();
 
+            const customerClass = txtFilterCustomerClass.val();
+            const customerClassDetail = txtFilterCustomerClassDetail.val();
             const formData = {
-                customerClass: ddlCustomerClass.val(),
+                CustomerClass: customerClass,
+                CustomerClassDetail: customerClassDetail,
                 sportType: ddlSportType.val(),
                 leagueGroups: ddlLeagueGroup.fanexMultiSelect("getItems", true).join(),
                 isLive: ddlIndicator.val()
@@ -65,7 +73,7 @@
         ddlLeagueGroup = customerClassHelper.renderMultiSelect(
             "#ddlLeagueGroup",
             {
-                minWidth: 240,
+                minWidth: 380,
                 listData: leagueGroups
             }
         );
@@ -105,10 +113,21 @@
     }
 
     function defaultGridOptions() {
+        var restrictionColSpan = hasHostPermisson ? 12 : 10;
+        var groupHeaderRows = [
+            {
+                Columns: [
+                    { HeaderText: "Conditions", Name: "colRuleTitle", MergeColNumber: 4, ThClass: "header-main" },
+                    { HeaderText: "Apply To", Name: "colLeagueGroup", MergeColNumber: 2, ThClass: "header-main" },
+                    { HeaderText: "Restriction Settings", Name: "colDiffBalanceRatio", MergeColNumber: restrictionColSpan, ThClass: "header-main" }
+                ]
+            }
+        ];
         const columns = [
             { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-            { HeaderText: resources.customerClass, Width: 100, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.leagueGroup, Width: 100, Name: "colLeagueGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.isLive, Width: 60, Name: "colIsLive", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.diffBalanceRatio, Width: 80, Name: "colDiffBalanceRatio", HeaderAlign: "center", CellAlign: "center" },
@@ -125,13 +144,15 @@
             { HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
 
         return {
+            customizeHeader: true,
+            groupHeaderRows: groupHeaderRows,
             showTitle: false,
             fullWidth: true,
             fullHeight: true,
             showDistinctRow: false,
             showHighlightRow: true,
             headerColumnHeight: 55,
-            gridExpandHeight: 160,
+            gridExpandHeight: 180,
             columns: columns,
             showPager: false
         };
@@ -141,8 +162,9 @@
         return data.map(function (rule) {
             const columns = [
                 { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
-                { Name: "colCustomerClass", Value: rule.CustomerClass, TdClass: "pink-cell" },
                 { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
+                { Name: "colGeneralCC", Value: rule.CustomerClass, TdClass: "pink-cell" },
+                { Name: "colSportCC", Value: rule.CustomerClassDetail, TdClass: "pink-cell" },
                 { Name: "colLeagueGroup", Value: renderLeagueGroupCell(rule.IsAllLeagueGroups, rule.LeagueGroups, rule.SportType), TdClass: "green-cell" },
                 { Name: "colIsLive", Value: ruleManagementHelper.renderIsLiveCell(rule.IsLive), TdClass: "green-cell" },
                 { Name: "colDiffBalanceRatio", Value: ruleManagementHelper.renderPercentCell(rule.DiffBalanceRatio) },

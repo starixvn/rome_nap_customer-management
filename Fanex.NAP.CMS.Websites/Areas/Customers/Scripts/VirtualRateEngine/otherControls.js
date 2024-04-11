@@ -13,6 +13,7 @@ function OtherControls(adjustmentList, activeList) {
         txtAdjustment = form.find("#txt-adjustment");
         ckbVRPlush = form.find("#ckb-vrplush");
         vRPlushField = form.find("#vrplus-field");
+        vRPlushField.hide();
 
         var selectedAdjustmentType, selectedStatus;
         if (rule) {
@@ -23,6 +24,9 @@ function OtherControls(adjustmentList, activeList) {
             selectedAdjustmentType = rule.AdjustmentType;
             selectedStatus = rule.Status;
             ckbVRPlush.prop("checked", rule.AccumulatedBalance);
+            if (selectedAdjustmentType.toString() === "1") {
+                vRPlushField.show();
+            }
         }
 
         ddlAdjustment = VREngineHelper.renderCombobox("ddl-adjustment", adjustmentList, selectedAdjustmentType);
@@ -64,7 +68,7 @@ function OtherControls(adjustmentList, activeList) {
             isValid = false;
         }
         var isApplyVRPlush = ckbVRPlush.is(":checked");
-        if (isApplyVRPlush && (ddlAdjustment.val() !== "1" || adjustmentValue < 0)) {
+        if (isApplyVRPlush && (ddlAdjustment.val() !== "1" || adjustmentValue <= 0)) {
             isApplyVRPlush = false;
         }
 

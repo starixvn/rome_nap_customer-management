@@ -12,11 +12,11 @@ function StakeCriteria() {
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
-                <div class="from-value">
+                <div class="from-value vr-text-field">
                     <input type="text" id="txt-stakeFrom" autocomplete="off" maxlength="10" />
                 </div>
                 <span class="txt">To</span>
-                <div class="to-value">
+                <div class="to-value vr-text-field">
                     <input type="text" id="txt-stakeTo" autocomplete="off" maxlength="10" />
                 </div>
             </div>

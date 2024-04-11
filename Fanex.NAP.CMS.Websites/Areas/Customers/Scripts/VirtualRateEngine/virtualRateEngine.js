@@ -126,8 +126,8 @@
         rule.EnabledBetType
             && pushMultipleSelectionCriteria("6. Bet Type: ", rule.BetTypeNameList, rule.BetTypeNameListNotIn);
 
-        rule.EnabledCur
-            && pushMultipleSelectionCriteria("6. Bet Type: ", rule.BetTypeNameList, rule.BetTypeNameListNotIn);
+        rule.EnabledEvent
+            && html.push("7. Event: " + rule.LiveIndicatorName);
 
         if (rule.EnabledLeagueGroup) {
             pushMultipleSelectionCriteria("8. League Group: ", rule.LeagueGroupNameList, rule.LeagueGroupNameListNotIn);

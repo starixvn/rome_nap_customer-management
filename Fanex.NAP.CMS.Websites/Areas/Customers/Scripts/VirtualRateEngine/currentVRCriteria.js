@@ -12,12 +12,12 @@ function CurrentVRCriteria() {
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
-                <div class="from-value">
+                <div class="from-value vr-text-field">
                     <input type="text" id="txt-currentVRFrom" autocomplete="off" maxlength="4" />
                     <span>%</span>
                 </div>
                 <span class="txt">To</span>
-                <div class="to-value">
+                <div class="to-value vr-text-field">
                     <input type="text" id="txt-currentVRTo" autocomplete="off" maxlength="4" />
                     <span>%</span>
                 </div>

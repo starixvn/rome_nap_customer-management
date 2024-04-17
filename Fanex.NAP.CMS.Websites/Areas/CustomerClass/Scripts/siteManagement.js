@@ -10,7 +10,8 @@
         freeGrid = $("#freegrid"),
         progressbar = null,
         progressLabel = null,
-        btnUpload = null;
+        btnUpload = null,
+        isUploading = false;
 
     function init() {
         cachedSites = buildGroupSiteList(true);
@@ -418,9 +419,13 @@
                     btnUpload.prop('disabled', true);
                     if (progressbar.hasClass("display-none")) {
                         showProgressBar();
+                        isUploading = true;
                     }
                     if (resultJson.InitialBatch <= 0) {
                         hideProgressBar();
+                        if (isUploading) {
+                            CMS.showSuccessMessage("Upload Site Setting successfully!");
+                        }
                     } else {
                         increaseProgressBarPercent(resultJson.InitialBatch, resultJson.CountBatch);
                         setTimeout(function () {
@@ -429,6 +434,9 @@
                     }
                 } else {
                     hideProgressBar();
+                    if (isUploading) {
+                        CMS.showSuccessMessage("Upload Site Setting successfully!");
+                    }
                 }
             });
     }

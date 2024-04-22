@@ -39,6 +39,9 @@
         public const string ManageFollowBetAccountScriptPath = "~/bundles/customers/manage-follow-bet-account-script";
         public const string ManageFollowBetAccountStylePath = "~/bundles/customers/manage-follow-bet-account-style";
 
+        public const string CreditPayoutScriptPath = "~/bundles/customers/credit-payout-script";
+        public const string CreditPayoutStylePath = "~/bundles/customers/credit-payout-style";
+
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles
@@ -55,7 +58,8 @@
                 .RegisterLimitNewDownlineBundles()
                 .RegisterWhitelistBigCreditMembersBundles()
                 .RegisterVirtualRateEngine()
-                .RegisterManageFollowBetAccountBundles();
+                .RegisterManageFollowBetAccountBundles()
+                .RegisterCreditPayout();
 
             RegisterManageRobots2(bundles);
         }
@@ -278,7 +282,7 @@
 
             return bundles;
         }
-
+        
         private static BundleCollection RegisterManageFollowBetAccountBundles(this BundleCollection bundles)
         {
             bundles.AddAndInclude(
@@ -288,6 +292,22 @@
             bundles.Add(new ScriptBundle(ManageFollowBetAccountScriptPath).Include(
                 "~/Areas/Customers/Scripts/ManageFollowBetAccount/addNewFollowBetAccount.js",
                 "~/Areas/Customers/Scripts/ManageFollowBetAccount/manageFollowBetAccount.js"
+                ));
+
+            return bundles;
+        }
+        private static BundleCollection RegisterCreditPayout(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                CreditPayoutStylePath,
+                FanexMultiSelectStylePath,
+                "~/Areas/Customers/Styles/credit-payout.less");
+
+            bundles.Add(new ScriptBundle(CreditPayoutScriptPath).Include(
+                FanexMultiSelectScriptPath,
+                "~/Areas/Customers/Scripts/CreditPayout/credit-payout.js",
+                "~/Areas/Customers/Scripts/CreditPayout/credit-payout-bulk-update.js",
+                "~/Areas/Customers/Scripts/CreditPayout/credit-payout-verify.js"
                 ));
 
             return bundles;

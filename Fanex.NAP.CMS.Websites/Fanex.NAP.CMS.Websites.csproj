@@ -451,6 +451,8 @@
     <Content Include="Areas\CustomerClass\Scripts\spreadManagement.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagementHelper.js" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
+    <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout-bulk-update.js" />
+    <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout-verify.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\limitDailyPTUpdate.js" />
     <Content Include="Areas\Customers\Scripts\LimitDailyPTUpdate\manageLimit.js" />
     <Content Include="Areas\Customers\Scripts\LimitNewDownline\addNewOrRemoveLimit.js" />
@@ -651,6 +653,8 @@
     <Content Include="Content\Themes\img\icon-success-message.png" />
     <Content Include="Content\Themes\img\icon-trash-white.png" />
     <Content Include="Content\Themes\img\icon-trash.png" />
+    <Content Include="Content\Themes\img\icon-verified.png" />
+    <Content Include="Content\Themes\img\icon-verify.png" />
     <Content Include="Content\Themes\img\icon-yes.png" />
     <Content Include="Content\Themes\img\information-icon2.png" />
     <Content Include="Content\Themes\img\light-information-icon2.png" />
@@ -1174,6 +1178,10 @@
     <Content Include="Areas\DomainManagement\Styles\domainManagement.less" />
     <Content Include="App_Data\Local\DBMSG.bodb_Message.bodbAdminNet.xml" />
     <Content Include="App_Data\ExcelTemplates\UploadSiteSettingTemplate.xlsx" />
+    <Content Include="Areas\Customers\Views\CreditPayout\Index.cshtml" />
+    <Content Include="Areas\Customers\Styles\credit-payout.less" />
+    <Content Include="Areas\Customers\Views\CreditPayout\_VerifyMember.cshtml" />
+    <Content Include="Areas\Customers\Views\CreditPayout\_BulkUpdate.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1252,6 +1260,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

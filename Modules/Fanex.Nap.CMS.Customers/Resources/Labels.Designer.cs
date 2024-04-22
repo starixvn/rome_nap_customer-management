@@ -205,6 +205,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bulk Update.
+        /// </summary>
+        public static string BulkUpdate {
+            get {
+                return ResourceManager.GetString("BulkUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -232,11 +250,38 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Date.
+        /// </summary>
+        public static string CreateDate {
+            get {
+                return ResourceManager.GetString("CreateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created Date.
+        /// </summary>
+        public static string CreatedDate {
+            get {
+                return ResourceManager.GetString("CreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credit.
         /// </summary>
         public static string Credit {
             get {
                 return ResourceManager.GetString("Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit Payout Management.
+        /// </summary>
+        public static string CreditPayoutManagement {
+            get {
+                return ResourceManager.GetString("CreditPayoutManagement", resourceCulture);
             }
         }
         
@@ -331,6 +376,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expired.
+        /// </summary>
+        public static string Expired {
+            get {
+                return ResourceManager.GetString("Expired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expired Date.
+        /// </summary>
+        public static string ExpiredDate {
+            get {
+                return ResourceManager.GetString("ExpiredDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Export.
         /// </summary>
         public static string Export {
@@ -358,11 +421,38 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please input the Verification Code received to Verify:.
+        /// </summary>
+        public static string HintVerifyMember {
+            get {
+                return ResourceManager.GetString("HintVerifyMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please input the Verification Code and Username received to Verify:.
+        /// </summary>
+        public static string HintVerifySearch {
+            get {
+                return ResourceManager.GetString("HintVerifySearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to deactivate the selected account?.
         /// </summary>
         public static string InactiveAccountConfirmation {
             get {
                 return ResourceManager.GetString("InactiveAccountConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include Test.
+        /// </summary>
+        public static string IncludeTest {
+            get {
+                return ResourceManager.GetString("IncludeTest", resourceCulture);
             }
         }
         
@@ -399,6 +489,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string LastChangeTime {
             get {
                 return ResourceManager.GetString("LastChangeTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Updated.
+        /// </summary>
+        public static string LastUpdated {
+            get {
+                return ResourceManager.GetString("LastUpdated", resourceCulture);
             }
         }
         
@@ -453,6 +552,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string Master {
             get {
                 return ResourceManager.GetString("Master", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match.
+        /// </summary>
+        public static string Match {
+            get {
+                return ResourceManager.GetString("Match", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match ID.
+        /// </summary>
+        public static string MatchId {
+            get {
+                return ResourceManager.GetString("MatchId", resourceCulture);
             }
         }
         
@@ -520,6 +637,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #.
+        /// </summary>
+        public static string Numero {
+            get {
+                return ResourceManager.GetString("Numero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         public static string OK {
@@ -538,6 +664,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment Date.
+        /// </summary>
+        public static string PaymentDate {
+            get {
+                return ResourceManager.GetString("PaymentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select.
         /// </summary>
         public static string PleaseSelect {
@@ -552,6 +687,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string ProcceedConfirm {
             get {
                 return ResourceManager.GetString("ProcceedConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotion.
+        /// </summary>
+        public static string Promotion {
+            get {
+                return ResourceManager.GetString("Promotion", resourceCulture);
             }
         }
         
@@ -610,6 +754,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required Field.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Required field!.
         /// </summary>
         public static string RequiredFieldError {
@@ -664,6 +817,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
         public static string Submit {
@@ -709,11 +871,29 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updated By.
+        /// </summary>
+        public static string UpdatedBy {
+            get {
+                return ResourceManager.GetString("UpdatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Updated successfully..
         /// </summary>
         public static string UpdatedSuccessfully {
             get {
                 return ResourceManager.GetString("UpdatedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Payout(s).
+        /// </summary>
+        public static string UpdatePayouts {
+            get {
+                return ResourceManager.GetString("UpdatePayouts", resourceCulture);
             }
         }
         
@@ -759,6 +939,24 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string UsernamesIsRequired {
             get {
                 return ResourceManager.GetString("UsernamesIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verification Code.
+        /// </summary>
+        public static string VerificationCode {
+            get {
+                return ResourceManager.GetString("VerificationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
             }
         }
     }

@@ -351,4 +351,70 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="CreditPayoutManagement" xml:space="preserve">
+    <value>Credit Payout Management</value>
+  </data>
+  <data name="Promotion" xml:space="preserve">
+    <value>Promotion</value>
+  </data>
+  <data name="Match" xml:space="preserve">
+    <value>Match</value>
+  </data>
+  <data name="IncludeTest" xml:space="preserve">
+    <value>Include Test</value>
+  </data>
+  <data name="VerificationCode" xml:space="preserve">
+    <value>Verification Code</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Expired" xml:space="preserve">
+    <value>Expired</value>
+  </data>
+  <data name="Verify" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Create Date</value>
+  </data>
+  <data name="ExpiredDate" xml:space="preserve">
+    <value>Expired Date</value>
+  </data>
+  <data name="PaymentDate" xml:space="preserve">
+    <value>Payment Date</value>
+  </data>
+  <data name="UpdatedBy" xml:space="preserve">
+    <value>Updated By</value>
+  </data>
+  <data name="BulkUpdate" xml:space="preserve">
+    <value>Bulk Update</value>
+  </data>
+  <data name="Numero" xml:space="preserve">
+    <value>#</value>
+  </data>
+  <data name="CreatedDate" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="HintVerifySearch" xml:space="preserve">
+    <value>Please input the Verification Code and Username received to Verify:</value>
+  </data>
+  <data name="HintVerifyMember" xml:space="preserve">
+    <value>Please input the Verification Code received to Verify:</value>
+  </data>
+  <data name="UpdatePayouts" xml:space="preserve">
+    <value>Update Payout(s)</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required Field</value>
+  </data>
+  <data name="LastUpdated" xml:space="preserve">
+    <value>Last Updated</value>
+  </data>
+  <data name="MatchId" xml:space="preserve">
+    <value>Match ID</value>
+  </data>
 </root>

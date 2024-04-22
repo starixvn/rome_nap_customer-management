@@ -1,0 +1,116 @@
+﻿@using Fanex.Nap.CMS.Customers.AppStart
+@model Fanex.Nap.CMS.Customers.ViewModels.CreditPayout.CreditPaypoutViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Labels.CreditPayoutManagement;
+}
+@section Head
+{
+    @Styles.Render(CustomersBundlesConfig.CreditPayoutStylePath)
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var resources = {
+            no: '@Labels.Numero',
+            action: '@Labels.Action',
+            username: '@Labels.Username',
+            site: '@Labels.Site',
+            ammount: '@Labels.Amount',
+            currency: '@Labels.Currency',
+            match: '@Labels.Match',
+            status: '@Labels.Status',
+            createdDate: '@Labels.CreatedDate',
+            expiredDate: '@Labels.ExpiredDate',
+            paymentDate: '@Labels.PaymentDate',
+            paymentDate: '@Labels.PaymentDate',
+            lastUpdatedDate: '@Labels.LastUpdated',
+            updatedBy: '@Labels.UpdatedBy',
+            remark: '@Labels.Remark',
+            verifyMember: '@Labels.Verify @Labels.Member',
+            updatePayouts: '@Labels.UpdatePayouts',
+            requiredField: '@Labels.RequiredField',
+            matchId: '@Labels.MatchId'
+        };
+        var currrentDate = '@Model.CurrentDate';
+        var hasHostPermission = @Json.Encode(Model.HasHostPermission);
+    </script>
+    @Scripts.Render(CustomersBundlesConfig.CreditPayoutScriptPath)
+}
+@section Headline
+{
+    <div class="title">
+        <div><span class="curr">@ViewBag.Title</span></div>
+    </div>
+}
+
+<div class="filter-bar">
+    <div class="filter-form" id="form-search">
+        <div class="filter-row first-row">
+            <div class="lbl-field col_5">
+                <label>@Labels.Promotion</label>
+            </div>
+            <div class="edit-field col_9" id="ddlPromotionBox">
+                @Html.DropDownList("promotion", Model.Promotions, new { @class = "combobox-autocomplete width-180", id = "ddlPromotion" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Match</label>
+            </div>
+            <div class="edit-field col_15" id="ddlMatchBox">
+                <div id="ddlMatch"></div>
+            </div>
+            <div class="edit-field col_4">
+                <input type="checkbox" id="ckbIsTest" />
+                <label for="ckbIsTest">@Labels.IncludeTest</label>
+            </div>
+        </div>
+        <div class="filter-row last-row">
+            <div class="lbl-field col_5">
+                <label>@Labels.VerificationCode</label>
+            </div>
+            <div class="edit-field col_9">
+                <input id="txtFilterCode" type="text" maxlength="50" />
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Username</label>
+            </div>
+            <div class="edit-field col_6">
+                <input id="txtFilterUsername" type="text" maxlength="30" />
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Status</label>
+            </div>
+            <div class="edit-field col_6" id="ddlStatusBox">
+                @Html.DropDownList("status", Model.Status, new { @class = "combobox-autocomplete width-100", id = "ddlStatus" })
+            </div>
+            <div class="edit-field col_4">
+                <input type="checkbox" id="ckbIsExpired" />
+                <label for="ckbIsExpired">@Labels.Expired</label>
+            </div>
+            <div class="submit width-auto">
+                <button type="submit" class="submit" id="btnFilterSubmit">@Labels.Search</button>
+                @if (Model.HasHostPermission)
+                {
+                    <button type="submit" class="submit green-button" id="btnFilterVerify">@Labels.Verify</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-grid">
+    <div id="errMsg" class="inline-message"></div>
+    @if (Model.HasHostPermission)
+    {
+        <div><button id="btnBulkUpdate" disabled class="submit">@Labels.BulkUpdate</button></div>
+    }
+    <div class="freegrid display-none" id="freegrid"></div>
+</div>
+@if (Model.HasHostPermission)
+{
+    <div id="divMainPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/Customers/Views/CreditPayout/_BulkUpdate.cshtml", Model); }
+    </div>
+    <div id="divPopupContent" class="display-none">
+        @{ Html.RenderPartial("~/Areas/Customers/Views/CreditPayout/_VerifyMember.cshtml"); }
+    </div>
+}

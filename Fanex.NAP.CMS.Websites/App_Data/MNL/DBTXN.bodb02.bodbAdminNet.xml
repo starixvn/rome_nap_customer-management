@@ -23,4 +23,10 @@
 	<Function Name="Colossus Bets Bonus Ticket">
 		<Setting Key="NAP_ColossusBets_BonusTicket_InsUpd" SpName="NAP_ColossusBets_BonusTicket_InsUpd" DbName="DBTXN.bodb02.wsv_nap"></Setting>
 	</Function>
+  <Function Name="Credit Payout Management">
+    <Setting Key="NAP_PayoutPromotion_MatchSel" SpName="NAP_PayoutPromotion_MatchSel" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="NAP_PayoutPromotion_Sel" SpName="NAP_PayoutPromotion_Sel" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="NAP_PayoutPromotion_VerifySel" SpName="NAP_PayoutPromotion_VerifySel" DbName="DBTXN.bodb02.wsv_nap" />
+    <Setting Key="NAP_PayoutPromotion_Upd" SpName="NAP_PayoutPromotion_Upd" DbName="DBTXN.bodb02.wsv_nap" />
+  </Function>
 </Functions>

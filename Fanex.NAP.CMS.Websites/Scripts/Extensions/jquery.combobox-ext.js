@@ -22,12 +22,13 @@
                     delay: 0,
                     minLength: 0,
                     source: function (request, response) {
-                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), 'i');
+                        var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term.replaceAll('-', '')), 'i');
 
                         response(select.children('option').map(function () {
                             var text = $(this).text();
+                            var textSearch = text.replaceAll('-', '');
 
-                            if (this.value && (!request.term || matcher.test(text))) {
+                            if (this.value && (!request.term || matcher.test(textSearch))) {
                                 return {
                                     label: text,
                                     value: text,
@@ -47,12 +48,12 @@
                         if (!ui.item) {
                             var txt = $(this),
                                 value = txt.val(),
-                                matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value) + '$', 'i'),
+                                matcher = new RegExp('^' + $.ui.autocomplete.escapeRegex(value.replaceAll('-', '')) + '$', 'i'),
                                 valid = false;
 
                             Validator.clearError(wrapper);
                             select.children('option').each(function () {
-                                if ($(this).text().match(matcher)) {
+                                if ($(this).text().replaceAll('-', '').match(matcher)) {
                                     this.selected = valid = true;
                                     self._trigger('selected', event, {
                                         item: this
@@ -80,10 +81,9 @@
                 .focus(function () {
                     $(this).select();
                 })
-                .on('paste', function () {
+                .on('paste', function ($event) {
                     var txt = $(this);
-
-                    txt.autocomplete('search');
+                    txt.autocomplete('search', $event.originalEvent.clipboardData.getData('text/plain'));
                 })
                 .addClass('ui-widget ui-widget-content');
 

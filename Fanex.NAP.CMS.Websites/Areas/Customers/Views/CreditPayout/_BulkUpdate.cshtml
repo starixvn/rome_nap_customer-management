@@ -1,0 +1,39 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions
+@model Fanex.Nap.CMS.Customers.ViewModels.CreditPayout.CreditPaypoutViewModel
+
+<div class="form" id="bulkUpdateForm">
+    <div id="inlineBulkMessage" class="inline-message"></div>
+    <div class="form-row">
+        <div class="bulk-username">
+            <span class="label" id="lblUsernames"></span>&nbsp;&nbsp;<b><span class="label" id="txtUsernames"></span></b>
+        </div>
+    </div>
+    <div class="form-row margin-top">
+        <div class="lbl-field">
+            <label class="label" for="ddlEditStatus">@Labels.Status:</label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("status", Model.StatusEdit, new { @class = "combobox-autocomplete width-100", id = "ddlEditStatus" })
+        </div>
+    </div>
+    <div class="form-row row-payment" style="display: none;">
+        <div class="">
+            <div id="dpkPaymentDate"></div>
+            <span class="span-timezone">&nbsp<b>(GMT-4)</b></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label class="label" for="txtRemark">@Labels.Remark:</label>
+        </div>
+        <div class="edit-field">
+            <textarea id="txtRemark" maxlength="1000" cols="50" rows="5" autocomplete="off"></textarea>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+
+    <div class="margin-top align-right">
+        <button type="button" class="blue-button" id="btnSave">@Labels.Save</button>
+        <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
+    </div>
+</div>

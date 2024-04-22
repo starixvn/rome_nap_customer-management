@@ -411,9 +411,12 @@
     }
 
     function getUploadProgress() {
-        CMS.getJson(
-            CMS.resolveRootUrl(`Site/GetUploadProgress`),
-            function (result) {
+        $.ajax({
+            type: 'GET',
+            url: CMS.resolveRootUrl(`Site/GetUploadProgress`),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.CountBatch && resultJson.InitialBatch) {
                     btnUpload.prop('disabled', true);
@@ -438,7 +441,11 @@
                         CMS.showSuccessMessage("Upload Site Setting successfully!");
                     }
                 }
-            });
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            }
+        });
     }
 
     function showProgressBar() {
@@ -450,12 +457,20 @@
         });
 
         progressbar.removeClass("display-none");
+        if (cachedGridOptions) {
+            cachedGridOptions.gridExpandHeight = 220;
+            freeGrid.fanexGrid(cachedGridOptions);
+        }
     }
 
     function hideProgressBar() {
         btnUpload.prop('disabled', false);
         progressbar.addClass("display-none");
-        progressLabel.text("0%");
+        progressLabel.text("Uploading progress: 0%");
+        if (cachedGridOptions) {
+            cachedGridOptions.gridExpandHeight = 160;
+            freeGrid.fanexGrid(cachedGridOptions);
+        }
     }
 
     function increaseProgressBarPercent(remainRows, totalRows) {

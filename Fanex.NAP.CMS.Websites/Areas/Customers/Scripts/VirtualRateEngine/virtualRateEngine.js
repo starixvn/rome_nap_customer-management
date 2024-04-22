@@ -146,6 +146,9 @@
         rule.EnabledTicketTime
             && html.push("12. Ticket Time (GMT+8): From " + VREngineHelper.extractHourMinute(rule.BeginTime) + " To " + VREngineHelper.extractHourMinute(rule.EndTime));
 
+        rule.EnabledTicketCur
+            && pushMultipleSelectionCriteria("13. Currency: ", rule.CurrencyNameList, rule.CurrencyNameListNotIn);
+
         return html.join("<br/>");
     }
 

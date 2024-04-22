@@ -21,8 +21,28 @@
 #dialog-popup {
     width: calc(~"100% - 24px") !important;
 
-    @media screen and (max-height: 768px) {
+    @media screen and (max-height: 870px) and (min-height: 768px) {
+        max-height: 720px;
+        width: calc(~"100% - 16px") !important;
+    }
+
+    @media screen and (max-height: 767px) and (min-height: 650px) {
         max-height: 600px;
+        width: calc(~"100% - 16px") !important;
+    }
+
+    @media screen and (max-height: 649px) and (min-height: 600px) {
+        max-height: 500px;
+        width: calc(~"100% - 16px") !important;
+    }
+
+    @media screen and (max-height: 599px) and (min-height: 550px) {
+        max-height: 450px;
+        width: calc(~"100% - 16px") !important;
+    }
+
+    @media screen and (max-height: 549px) {
+        max-height: 400px;
         width: calc(~"100% - 16px") !important;
     }
 
@@ -105,7 +125,7 @@
             z-index: 9990;
             margin-left: 109px;
 
-            @media screen and (max-height: 768px) {
+            @media screen and (max-height: 870px) {
                 position: relative;
                 margin-left: 0;
             }
@@ -144,6 +164,10 @@
 
             &.ticket-box {
                 z-index: 9992;
+            }
+
+            &.cur-box {
+                z-index: 9991;
             }
         }
 
@@ -187,6 +211,10 @@
             color: #ccc;
         }
     }
+
+    .vr-text-field {
+        position: relative;
+    }
 }
 
 .button-row {
@@ -220,6 +248,14 @@
             font-size: 12px;
             margin-bottom: 8px;
         }
+    }
+}
+#vrplus-field {
+    input {
+        margin-left: 10px;
+    }
+    span {
+        margin-left: 5px;
     }
 }
 /********************** customize multiselect  ***********************/

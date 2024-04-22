@@ -12,6 +12,7 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
     var betfromCriteria = new BetfromCriteria(matrix.BetfromList);
     var stakeCriteria = new StakeCriteria();
     var ticketDoWCriteria = new TicketDoWCriteria(matrix.Conditions, matrix.DayOfWeeks);
+    var ticketCurCriteria = new TicketCurrencyCriteria(matrix.Conditions, matrix.Currencies);
     var ticketTimeCriteria = new TicketTimeCriteria();
 
     function init(form, rule) {
@@ -77,6 +78,9 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
 
         var enabledTicketTime = isShowAllCriteria || rule.EnabledTicketTime;
         enabledTicketTime && enabledCriteria.push(ticketTimeCriteria);
+
+        var enabledTicketCur = isShowAllCriteria || rule.EnabledTicketCur;
+        enabledTicketCur && enabledCriteria.push(ticketCurCriteria);
 
         return enabledCriteria;
     }

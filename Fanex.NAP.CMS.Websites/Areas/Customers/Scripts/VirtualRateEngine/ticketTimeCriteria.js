@@ -12,11 +12,11 @@ function TicketTimeCriteria() {
             </div>
             <div class="detail-rule value-range">
                 <span class="txt">From</span>
-                <div class="from-value">
+                <div class="from-value vr-text-field">
                     <input type="text" id="txt-ticketTimeFrom" autocomplete="off" maxlength="5" placeholder="hh:mm" />
                 </div>
                 <span class="txt">To</span>
-                <div class="to-value">
+                <div class="to-value vr-text-field">
                     <input type="text" id="txt-ticketTimeTo" autocomplete="off" maxlength="5" placeholder="hh:mm" />
                 </div>
             </div>

@@ -12,7 +12,8 @@
             IEnumerable<VREngineBetfrom> betfromList,
             IEnumerable<IdNameModel> sports,
             IEnumerable<IdNameModel> betTypes,
-            IEnumerable<IdNameModel> leagueGroups)
+            IEnumerable<IdNameModel> leagueGroups,
+            IEnumerable<IdNameModel> currencies)
         {
             CreditSites = creditSites;
             LicenseeSites = licenseeSites;
@@ -21,6 +22,7 @@
             Sports = sports;
             BetTypes = betTypes;
             LeagueGroups = leagueGroups;
+            Currencies = currencies;
         }
 
         public IEnumerable<IdNameModel> CreditSites { get; }
@@ -36,5 +38,7 @@
         public IEnumerable<IdNameModel> BetTypes { get; }
 
         public IEnumerable<IdNameModel> LeagueGroups { get; }
+
+        public IEnumerable<IdNameModel> Currencies { get; }
     }
 }

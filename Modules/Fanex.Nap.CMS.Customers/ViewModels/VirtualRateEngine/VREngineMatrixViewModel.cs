@@ -20,7 +20,7 @@
             matrix.BetfromList,
             matrix.Sports.Select(s => BuildIdNameModel(s.Id, $"[{s.Id}] {s.Name}")),
             matrix.BetTypes.Select(b => BuildIdNameModel(b.Id, $"[{b.Id}] {b.Name}")),
-            matrix.LeagueGroups)
+            matrix.LeagueGroups, matrix.Currencies)
         {
         }
 

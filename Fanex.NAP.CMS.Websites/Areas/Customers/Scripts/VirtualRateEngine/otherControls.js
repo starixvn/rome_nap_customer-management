@@ -4,11 +4,16 @@ function OtherControls(adjustmentList, activeList) {
     var txtPriorityOrder;
     var ddlAdjustment, txtAdjustment;
     var ddlActive;
+    var ckbVRPlush;
+    var vRPlushField;
 
     function cacheElements(form, rule) {
         txtRuleTitle = form.find("#txt-ruleTitle");
         txtPriorityOrder = form.find("#txt-priorityOrder");
         txtAdjustment = form.find("#txt-adjustment");
+        ckbVRPlush = form.find("#ckb-vrplush");
+        vRPlushField = form.find("#vrplus-field");
+        vRPlushField.hide();
 
         var selectedAdjustmentType, selectedStatus;
         if (rule) {
@@ -18,6 +23,10 @@ function OtherControls(adjustmentList, activeList) {
 
             selectedAdjustmentType = rule.AdjustmentType;
             selectedStatus = rule.Status;
+            ckbVRPlush.prop("checked", rule.AccumulatedBalance);
+            if (selectedAdjustmentType.toString() === "1") {
+                vRPlushField.show();
+            }
         }
 
         ddlAdjustment = VREngineHelper.renderCombobox("ddl-adjustment", adjustmentList, selectedAdjustmentType);
@@ -33,6 +42,12 @@ function OtherControls(adjustmentList, activeList) {
             .off("change")
             .on("change", function () {
                 txtAdjustment.val("");
+                ckbVRPlush.prop("checked", false);
+                if (ddlAdjustment.val() === "1") {
+                    vRPlushField.show();
+                } else {
+                    vRPlushField.hide();
+                }
             });
 
         txtAdjustment
@@ -52,6 +67,10 @@ function OtherControls(adjustmentList, activeList) {
         if (typeof adjustmentValue === "undefined") {
             isValid = false;
         }
+        var isApplyVRPlush = ckbVRPlush.is(":checked");
+        if (isApplyVRPlush && (ddlAdjustment.val() !== "1" || adjustmentValue <= 0)) {
+            isApplyVRPlush = false;
+        }
 
         return isValid
             ? {
@@ -59,7 +78,8 @@ function OtherControls(adjustmentList, activeList) {
                 priorityOrder: priorityOrder,
                 adjustmentType: ddlAdjustment.val(),
                 adjustmentValue: adjustmentValue,
-                active: ddlActive.val()
+                active: ddlActive.val(),
+                accumulatedBalance: isApplyVRPlush
             }
             : { isInvalid: true };
     }

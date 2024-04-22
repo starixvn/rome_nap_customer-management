@@ -32,8 +32,11 @@
             string dateOfWeekListNotIn,
             string beginTime,
             string endTime,
+            string currencyIDList,
+            string currencyIDListNotIn,
             byte adjustmentType,
             decimal adjustmentValue,
+            byte accumulatedBalance,
             byte status,
             DateTime createdDTS,
             string createdBy,
@@ -79,8 +82,12 @@
             BeginTime = beginTime;
             EndTime = endTime;
 
+            CurrencyIDList = currencyIDList;
+            CurrencyIDListNotIn = currencyIDListNotIn;
+
             AdjustmentType = adjustmentType;
             AdjustmentValue = adjustmentValue;
+            AccumulatedBalance = accumulatedBalance;
 
             Status = status;
 
@@ -156,8 +163,15 @@
         public string EndTime { get; }
         public bool EnabledTicketTime { get; set; }
 
+        public string CurrencyIDList { get; }
+        public string CurrencyIDListNotIn { get; }
+        public string CurrencyNameList { get; set; }
+        public string CurrencyNameListNotIn { get; set; }
+        public bool EnabledTicketCur { get; set; }
+
         public byte AdjustmentType { get; }
         public decimal AdjustmentValue { get; }
+        public byte AccumulatedBalance { get; }
         public string AdjustmentCell { get; set; }
 
         public byte Status { get; }

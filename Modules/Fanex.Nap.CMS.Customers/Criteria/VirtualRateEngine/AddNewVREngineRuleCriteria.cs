@@ -27,9 +27,11 @@
             DateOfWeekList = vm.DayOfWeek;
             BeginTime = vm.BeginTime;
             EndTime = vm.EndTime;
+            CurrencyIDList = vm.CurrencyIDList;
 
             Adjustmenttype = vm.AdjustmentType;
             AdjustmentValue = vm.AdjustmentValue;
+            AccumulatedBalance = vm.AccumulatedBalance;
             Status = vm.Active;
 
             Criteria_NotApply = vm.CriteriaNotApply;
@@ -74,9 +76,13 @@
 
         public string EndTime { get; }
 
+        public string CurrencyIDList { get; set; }
+
         public byte Adjustmenttype { get; }
 
         public decimal AdjustmentValue { get; }
+
+        public byte AccumulatedBalance { get; }
 
         public byte Status { get; }
 

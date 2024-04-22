@@ -28,6 +28,7 @@
         private const string Stake = "StakeRM";
         private const string TicketDoW = "DateOfWeek";
         private const string TicketTime = "TicketTime";
+        private const string Currency = "Currency";
         private readonly IVREngineRepository repository;
 
         public VREngineService(IVREngineRepository repository = null)
@@ -99,6 +100,7 @@
             rule.EnabledStake = enabledCriteria.ContainsKey(Stake);
             rule.EnabledTicketDoW = enabledCriteria.ContainsKey(TicketDoW);
             rule.EnabledTicketTime = enabledCriteria.ContainsKey(TicketTime);
+            rule.EnabledTicketCur = enabledCriteria.ContainsKey(Currency);
         }
 
         #region Build Criteria methods
@@ -120,6 +122,8 @@
             BuildBetfromCriteria(rule, matrix.BetfromList);
 
             BuildTicketDoWCriteria(rule);
+
+            BuildTicketCurrencyCriteria(rule, matrix.Currencies);
         }
 
         private static void BuildSiteTypeCriteria(
@@ -252,6 +256,19 @@
                 rule.DoWNameListNotIn = nameTuple.Item2;
             }
         }
+        private static void BuildTicketCurrencyCriteria(VREngineRule rule, IEnumerable<IdNameModel> currencies)
+        {
+            if (rule.EnabledTicketCur)
+            {
+                var nameTuple = BuildMultipleSelectionCriteria(
+                    rule.CurrencyIDList,
+                    rule.CurrencyIDListNotIn,
+                    currencies);
+
+                rule.CurrencyNameList = nameTuple.Item1;
+                rule.CurrencyNameListNotIn = nameTuple.Item2;
+            }
+        }
 
         private static Tuple<string, string> BuildMultipleSelectionCriteria(
             string idList,
@@ -283,8 +300,13 @@
             var adjustment = rule.AdjustmentValue.ToString("N0");
 
             return rule.AdjustmentType == AdjustmentConst.FixedValue
-                ? $"{adjustment}%"
+                ? $"{adjustment}%{BuildAccumulatedBalance(rule)}"
                 : $"Member VR {adjustment}%";
+        }
+
+        private static string BuildAccumulatedBalance(VREngineRule rule)
+        {
+            return rule.AccumulatedBalance == 1 ? "</br>Apply VR+" : "";
         }
 
         #endregion

@@ -306,7 +306,7 @@
 
         private static string BuildAccumulatedBalance(VREngineRule rule)
         {
-            return rule.AccumulatedBalance == 1 ? "</br>Apply VR+" : "";
+            return rule.AccumulatedBalance == 1 ? $"</br>Apply {VREngineResource.VRAccumulatedBalance}" : "";
         }
 
         #endregion

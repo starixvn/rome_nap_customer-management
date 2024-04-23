@@ -286,6 +286,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VR Accumulated Balance.
+        /// </summary>
+        public static string VRAccumulatedBalance {
+            get {
+                return ResourceManager.GetString("VRAccumulatedBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Virtual Rate From must be less than or equal to Virtual Rate To.
         /// </summary>
         public static string VRFromGreaterThanVRToError {

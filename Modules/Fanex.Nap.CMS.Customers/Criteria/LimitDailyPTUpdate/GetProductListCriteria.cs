@@ -1,15 +1,11 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
 
     public class GetProductListCriteria : CriteriaBase
     {
-        public GetProductListCriteria(int settingStatus)
-        {
-            SettingStatus = settingStatus;
-        }
-
-        public int SettingStatus { get; }
+        public byte SettingStatus => AppSettings.SettingStatus;
 
         public override string GetSettingKey()
             => "NAP_LimitPTDaily_ProductList";

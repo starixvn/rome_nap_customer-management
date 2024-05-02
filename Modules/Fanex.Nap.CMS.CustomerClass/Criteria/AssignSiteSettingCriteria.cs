@@ -34,6 +34,9 @@
 
         public string IP { get; }
 
+        public byte ActionID { get; set; }
+        
+
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicySiteIns_Loop";
 

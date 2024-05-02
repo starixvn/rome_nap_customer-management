@@ -151,8 +151,8 @@
     <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteIns" SpName="NAP_LM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop_xtest" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport_xtest" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteDel" SpName="NAP_LM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Customer Class Setting-->
     <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap" />

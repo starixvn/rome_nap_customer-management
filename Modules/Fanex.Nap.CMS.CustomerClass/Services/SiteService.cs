@@ -77,7 +77,7 @@
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
-            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip);
+            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip) { ActionID = 1 };
 
             return siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadSiteWarning);
         }

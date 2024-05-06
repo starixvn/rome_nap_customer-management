@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Linq;
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
@@ -21,9 +22,6 @@
                     var sites = GetSites(reader);
 
                     reader.NextResult();
-                    var customerClasses = GetIdNameModels(reader, ToCustomerClass);
-
-                    reader.NextResult();
                     var betfromList = GetBetfromList(reader);
 
                     reader.NextResult();
@@ -33,15 +31,18 @@
                     var betTypes = GetIdNameModels(reader, ToBetType);
 
                     reader.NextResult();
-                    var leagueGroups = GetIdNameModels(reader, ToLeagueGroup);
+                    var leagueGroups = GetIdNameModels(reader, ToLeagueGroup).OrderBy(lg => lg.Name);
 
                     reader.NextResult();
                     var currencies = GetIdNameModels(reader, ToCurrency);
 
+                    reader.NextResult();
+                    var sportCCDetail = GetIdNameModels(reader, ToSportDetail);
+
                     return new VREngineMatrix(
                         sites.Item1,
                         sites.Item2,
-                        customerClasses,
+                        sportCCDetail,
                         betfromList,
                         sports,
                         betTypes,
@@ -93,12 +94,12 @@
 
             return betfromList;
         }
-
-        private static IdNameModel ToCustomerClass(IDataReader reader)
+        
+        private static IdNameModel ToSportDetail(IDataReader reader)
             => new IdNameModel
             {
-                Id = Convert.ToInt32(reader["customerclass"]),
-                Name = reader["name"].ToString()
+                Id = Convert.ToInt32(reader["sporttype"]),
+                Name = reader["sportname"].ToString()
             };
 
         private static IdNameModel ToSport(IDataReader reader)
@@ -209,6 +210,10 @@
                 reader["siteidlist_notapply"].ToString(),
                 reader["customerclasslist"].ToString(),
                 reader["customerclasslist_notapply"].ToString(),
+                reader["customerclassdetaillist"].ToString(),
+                reader["customerclassdetaillist_notapply"].ToString(),
+                reader["ccsporttypelist"].ToString(),
+                reader["ccsporttypelist_notapply"].ToString(),
                 Convert.ToDecimal(reader["vr_from"]),
                 Convert.ToDecimal(reader["vr_to"]),
                 Convert.ToByte(reader["vrstatus"]),

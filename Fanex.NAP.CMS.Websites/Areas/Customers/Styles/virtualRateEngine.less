@@ -97,6 +97,11 @@
         align-items: flex-start;
     }
 
+    &.cc-group {
+        grid-template-rows: 55px;
+        align-items: flex-start;
+    }
+
     .lbl-field {
         display: grid;
         grid-template-columns: 33px 1fr;
@@ -191,7 +196,20 @@
                 padding-right: 8px;
             }
         }
+
+        .sport-cc {
+            display: flex;
+
+            textarea {
+                border: 1px solid #c4c4c4;
+                resize: none;
+            }
+        }
     }
+}
+#txtcustomerClass {
+    border: 1px solid #c4c4c4;
+    resize: none;
 }
 
 #txt-league {

@@ -51,7 +51,20 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
         }
 
         ddlLeagueGroupCondition = VREngineHelper.renderCombobox("ddl-leagueGroupCondition", conditionList, conditionLeagueGroup);
-        ddlLeagueGroup = VREngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList, selectedLeagueGroup, 220);
+        let sabaLeagueIds = [42,74,108,113,122,151];
+        var sabaLeagues = leagueGroupList.filter(league => sabaLeagueIds.includes(league.Id));
+        var otherLeagues = leagueGroupList.filter(league => !sabaLeagueIds.includes(league.Id));
+        var options = [
+            {
+                Name: "Saba Sports",
+                Items: sabaLeagues
+            },
+            {
+                Name: "Others",
+                Items: otherLeagues
+            }];
+
+        ddlLeagueGroup = VREngineHelper.renderGroupMultiSelect("ddl-leagueGroup", options, selectedLeagueGroup, 220);
         ddlLeagueCondition = VREngineHelper.renderCombobox("ddl-leagueCondition", conditionList, conditionLeague);
 
         initLeagueAutoSuggestion();

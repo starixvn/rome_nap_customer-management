@@ -13,10 +13,7 @@
         public VREngineMatrixViewModel(VREngineMatrix matrix) : base(
             matrix.CreditSites,
             matrix.LicenseeSites,
-            matrix.CustomerClasses
-                .Select(c => c.Id)
-                .Distinct()
-                .Select(c => BuildIdNameModel(c, c.ToString())),
+            matrix.DetailSports.Select(s => BuildIdNameModel(s.Id, $"[{s.Id}] {s.Name}")),
             matrix.BetfromList,
             matrix.Sports.Select(s => BuildIdNameModel(s.Id, $"[{s.Id}] {s.Name}")),
             matrix.BetTypes.Select(b => BuildIdNameModel(b.Id, $"[{b.Id}] {b.Name}")),

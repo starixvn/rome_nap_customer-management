@@ -198,4 +198,7 @@
   <data name="VRAccumulatedBalance" xml:space="preserve">
     <value>VR Accumulated Balance</value>
   </data>
+  <data name="NoneSelectedCCError" xml:space="preserve">
+    <value>Please input at least one CC</value>
+  </data>
 </root>

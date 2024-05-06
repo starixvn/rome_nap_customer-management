@@ -13,6 +13,10 @@
             string siteIdListNotIn,
             string customerClassList,
             string customerClassListNotIn,
+            string customerClassDetailList,
+            string customerClassDetailListNotIn,
+            string sportTypeCCList,
+            string sportTypeCCListNotIn,
             decimal vrFrom,
             decimal vrto,
             byte vrStatus,
@@ -52,6 +56,11 @@
 
             CustomerClassList = customerClassList;
             CustomerClassListNotIn = customerClassListNotIn;
+
+            CustomerClassDetailList = customerClassDetailList;
+            CustomerClassDetailListNotIn = customerClassDetailListNotIn;
+            SportTypeCCList = sportTypeCCList;
+            SportTypeCCListNotIn = sportTypeCCListNotIn;
 
             VRFrom = vrFrom;
             VRTo = vrto;
@@ -112,6 +121,14 @@
         public string CustomerClassList { get; }
         public string CustomerClassListNotIn { get; }
         public bool EnabledCustomerClass { get; set; }
+
+        public string CustomerClassDetailList { get; }
+        public string CustomerClassDetailListNotIn { get; }
+        public string SportTypeCCList { get; }
+        public string SportTypeCCListNotIn { get; }
+        public string SportTypeCCNameList { get; set; }
+        public string SportTypeCCNameListNotIn { get; set; }
+        public bool EnabledCustomerClassDetail { get; set; }
 
         public decimal VRFrom { get; }
         public decimal VRTo { get; }

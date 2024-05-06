@@ -112,13 +112,15 @@
         }
 
         rule.EnabledCustomerClass
-            && pushMultipleSelectionCriteria("2. Customer Class: ", rule.CustomerClassList, rule.CustomerClassListNotIn);
+            && pushMultipleSelectionCriteria("2. General Customer Class: ", rule.CustomerClassList, rule.CustomerClassListNotIn);
+
+        if (rule.EnabledCustomerClassDetail) {
+            html.push("3. Sport (CC): " + (rule.SportTypeCCNameListNotIn ? rule.SportTypeCCNameListNotIn : rule.SportTypeCCNameList));
+            pushMultipleSelectionCriteria("&nbsp;&nbsp;&nbsp;&nbsp;Sport Customer Class: ", rule.CustomerClassDetailList, rule.CustomerClassDetailListNotIn);
+        }
 
         rule.EnabledCurrentVR
-            && html.push("3. Current Virtual Rate: From " + rule.VRFrom + "% To " + rule.VRTo + "%");
-
-        rule.EnabledCurrentVRStatus
-            && html.push("4. Current Virtual Rate Status: " + rule.VRStatusName);
+            && html.push("4. Current Virtual Rate: From " + rule.VRFrom + "% To " + rule.VRTo + "%");
 
         rule.EnabledSport
             && pushMultipleSelectionCriteria("5. Sport: ", rule.SportTypeNameList, rule.SportTypeNameListNotIn);

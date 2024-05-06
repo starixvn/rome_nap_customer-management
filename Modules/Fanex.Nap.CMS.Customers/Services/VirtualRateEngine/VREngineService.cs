@@ -18,6 +18,7 @@
     {
         private const string SiteType = "Site";
         private const string CustomerClass = "CustomerClass";
+        private const string CustomerClassDetail = "CustomerClassDetail";
         private const string CurrentVR = "VRValue";
         private const string CurrentVRStatus = "VRStatus";
         private const string Sport = "Sporttype";
@@ -90,6 +91,7 @@
             var enabledCriteria = rule.EnabledCriteria.ToArray().ToDictionary(kvp => kvp, kvp => true);
             rule.EnabledSiteType = enabledCriteria.ContainsKey(SiteType);
             rule.EnabledCustomerClass = enabledCriteria.ContainsKey(CustomerClass);
+            rule.EnabledCustomerClassDetail = enabledCriteria.ContainsKey(CustomerClassDetail);
             rule.EnabledCurrentVR = enabledCriteria.ContainsKey(CurrentVR);
             rule.EnabledCurrentVRStatus = enabledCriteria.ContainsKey(CurrentVRStatus);
             rule.EnabledSport = enabledCriteria.ContainsKey(Sport);
@@ -108,6 +110,8 @@
         private static void BuildCriteriaCell(VREngineRule rule, VREngineMatrix matrix)
         {
             BuildSiteTypeCriteria(rule, matrix.CreditSites, matrix.LicenseeSites);
+
+            BuildSportDetailCriteria(rule, matrix.Sports);
 
             BuildCurrentVRStatusCriteria(rule);
 
@@ -179,6 +183,19 @@
                 rule.VRStatusName = rule.VRStatus == CurrentVRStatusConst.Enable
                     ? VREngineResource.Enabled
                     : VREngineResource.Disabled;
+            }
+        }
+        private static void BuildSportDetailCriteria(VREngineRule rule, IEnumerable<IdNameModel> sports)
+        {
+            if (rule.EnabledCustomerClassDetail)
+            {
+                var nameTuple = BuildMultipleSelectionCriteria(
+                    rule.SportTypeCCList,
+                    rule.SportTypeCCListNotIn,
+                    sports);
+
+                rule.SportTypeCCNameList = nameTuple.Item1;
+                rule.SportTypeCCNameListNotIn = nameTuple.Item2;
             }
         }
 

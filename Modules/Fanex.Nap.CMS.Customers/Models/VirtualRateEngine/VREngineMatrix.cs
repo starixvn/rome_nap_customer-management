@@ -8,7 +8,7 @@
         public VREngineMatrix(
             IEnumerable<IdNameModel> creditSites,
             IEnumerable<IdNameModel> licenseeSites,
-            IEnumerable<IdNameModel> customerClasses,
+            IEnumerable<IdNameModel> detailSports,
             IEnumerable<VREngineBetfrom> betfromList,
             IEnumerable<IdNameModel> sports,
             IEnumerable<IdNameModel> betTypes,
@@ -17,7 +17,7 @@
         {
             CreditSites = creditSites;
             LicenseeSites = licenseeSites;
-            CustomerClasses = customerClasses;
+            DetailSports = detailSports;
             BetfromList = betfromList;
             Sports = sports;
             BetTypes = betTypes;
@@ -29,7 +29,7 @@
 
         public IEnumerable<IdNameModel> LicenseeSites { get; }
 
-        public IEnumerable<IdNameModel> CustomerClasses { get; }
+        public IEnumerable<IdNameModel> DetailSports { get; }
 
         public IEnumerable<VREngineBetfrom> BetfromList { get; }
 

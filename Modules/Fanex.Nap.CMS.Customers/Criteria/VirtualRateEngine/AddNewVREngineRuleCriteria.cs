@@ -13,9 +13,11 @@
             SiteType = vm.SiteType;
             SiteIDList = vm.Site;
             CustomerClassList = vm.CustomerClass;
+            CustomerClassDetailList = vm.CustomerClassDetail;
+            CCSportTypeList = vm.CCSportType;
             VR_From = vm.VRFrom;
             VR_To = vm.VRTo;
-            VRStatus = vm.VRStatus;
+            VRStatus = 1;
             SporttypeList = vm.SportType;
             BettypeList = vm.BetType;
             LiveIndicator = vm.LiveIndicator;
@@ -47,6 +49,10 @@
         public string SiteIDList { get; }
 
         public string CustomerClassList { get; }
+
+        public string CustomerClassDetailList { get; }
+
+        public string CCSportTypeList { get; }
 
         public decimal? VR_From { get; }
 

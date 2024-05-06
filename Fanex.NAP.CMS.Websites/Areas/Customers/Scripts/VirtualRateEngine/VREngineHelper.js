@@ -50,6 +50,54 @@
         return $(selector);
     }
 
+    function renderGroupMultiSelect(id, dataList, selectedList, maxHeight) {
+        var datum,
+            selectedObject,
+            data = [],
+            max = dataList.length;
+        var isCheckAll = typeof selectedList === "undefined" || selectedList === "0" || selectedList === "-1";
+
+        if (!isCheckAll) {
+            selectedObject = toObject(selectedList.split(","));
+        }
+
+        for (var i = 0; i < max; i++) {
+            datum = dataList[i];
+            var option = {
+                Id: datum.Name,
+                Value: datum.Name,
+                Text: datum.Name,
+                Enable: true,
+                Items: buildChildSelection(id, datum.Items, isCheckAll, selectedObject)
+            };
+            var hasUncheckItem = option.Items.findIndex(x => x.Checked === false);
+            if (hasUncheckItem < 0) {
+                option.Checked = true;
+            }
+
+            data.push(option);
+        }
+
+        var selector = "#" + id;
+        $(selector).multiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
+        return $(selector);
+    }
+
+    function buildChildSelection(id, items, isCheckAll, selectedObject) {
+        var options = [];
+        for (const datum of items) {
+            options.push({
+                Id: id + "-" + datum.Id,
+                Value: datum.Id,
+                Text: datum.Name,
+                Enable: true,
+                Checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id)
+            });
+        }
+
+        return options;
+    }
+
     function updateMultiSelect($ddl, dataList) {
         var datum,
             data = [],
@@ -113,11 +161,42 @@
         return time.substring(0, 5);
     }
 
+    function validateCCValue(txtArea) {
+        var txtCC = $(txtArea);
+        var replacedValue = txtCC.val()
+            .replace(/[^0-9,\s]/g, '');
+
+        txtCC.val(replacedValue);
+    }
+
+    function replaceCharCCValue(txtArea) {
+        var txtCC = $(txtArea);
+        var replacedValue = txtCC.val()
+            .replace(/\s\s/g, ' ')
+            .replace(/\s/g, ',')
+            .replace(/\t/g, ',')
+            .replace(/;/g, ',')
+            .replace(/\\n|\\r\\n|\\r/g, ',')
+            .replace(/,{2,}/g, ',');
+        if (replacedValue.startsWith(',')) {
+            replacedValue = replacedValue.substr(1);
+        }
+
+        if (replacedValue.endsWith(',')) {
+            replacedValue = replacedValue.substr(0, replacedValue.length - 1);
+        }
+
+        txtCC.val(replacedValue);
+    }
+
     return {
         renderCombobox: renderCombobox,
         renderMultiSelect: renderMultiSelect,
+        renderGroupMultiSelect: renderGroupMultiSelect,
         updateMultiSelect: updateMultiSelect,
         validateNumber: validateNumber,
-        extractHourMinute: extractHourMinute
+        extractHourMinute: extractHourMinute,
+        validateCCValue: validateCCValue,
+        replaceCharCCValue: replaceCharCCValue
     };
 })(jQuery);

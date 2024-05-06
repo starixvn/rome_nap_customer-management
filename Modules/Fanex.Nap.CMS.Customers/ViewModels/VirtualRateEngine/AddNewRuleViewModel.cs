@@ -18,11 +18,14 @@
         public string CustomerClassNotIn { get; set; }
 
         // [3]
-        public decimal? VRFrom { get; set; }
-        public decimal? VRTo { get; set; }
+        public string CustomerClassDetail { get; set; }
+        public string CustomerClassDetailNotIn { get; set; }
+        public string CCSportType { get; set; }
+        public string CCSportTypeNotIn { get; set; }
 
         // [4]
-        public byte? VRStatus { get; set; }
+        public decimal? VRFrom { get; set; }
+        public decimal? VRTo { get; set; }
 
         // [5]
         public string SportType { get; set; }
@@ -84,6 +87,12 @@
                 if (!string.IsNullOrWhiteSpace(CustomerClassNotIn))
                 {
                     criteriaRows.AppendFormat("<Row Criteria=\"CustomerClassList\" Value=\"{0}\"/>", CustomerClassNotIn);
+                }
+
+                if (!string.IsNullOrWhiteSpace(CustomerClassDetailNotIn))
+                {
+                    criteriaRows.AppendFormat("<Row Criteria=\"CCSporttypeList\" Value=\"{0}\"/>", CCSportTypeNotIn);
+                    criteriaRows.AppendFormat("<Row Criteria=\"CustomerClassDetailList\" Value=\"{0}\"/>", CustomerClassDetailNotIn);
                 }
 
                 if (!string.IsNullOrWhiteSpace(SportTypeNotIn))

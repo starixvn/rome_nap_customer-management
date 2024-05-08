@@ -163,6 +163,17 @@
                 JsonRequestBehavior.DenyGet);
         }
 
+        [HttpGet]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]
+        public ActionResult GetUploadProgress()
+        {
+            var userId = CurrentSession.UserId;
+            
+            return JsonData(
+                siteService.GetUploadProgress(userId),
+                JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.SiteManagement, Policy = Constant.Policy.Host)]

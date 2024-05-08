@@ -5,9 +5,12 @@
     using System.Data;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
+    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.Framework.Data;
 
     internal interface ISiteDataAccess : IBaseRepository
@@ -17,10 +20,14 @@
         IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null);
+
+        ProgressResponse GetUploadProgress(GetSiteUploadProgressCriteria criteria);
     }
 
     internal class SiteDataAccess : BaseRepository, ISiteDataAccess
     {
+        private const string LastUpdatedTime = "Fanex.CMS.CCM.Site.LastUpdatedTime-{0}";
+
         public Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(ICriteria criteria)
             => ExecuteReaderPaging(criteria, ToSitesSetting);
 
@@ -61,5 +68,31 @@
                 reader["CurrencyName"].ToString(),
                 reader["CurrencyID"].ToString(),
                 reader["Platform"].ToString());
+
+        public ProgressResponse GetUploadProgress(GetSiteUploadProgressCriteria criteria)
+        {
+            var lastUpdatedTimeKey = string.Format(LastUpdatedTime, criteria.UserID);
+            criteria.LastModifiedTime = CacheManager.Get<DateTime?>(lastUpdatedTimeKey);
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria.GetSpParams());
+                var outputParams = db.GetOuputParams();
+                var countBatch = Converter.ToInt(outputParams["countbatch"]);
+                var initialBatch = Converter.ToInt(outputParams["initialbatch"]);
+                if (countBatch > 0 && initialBatch > 0)
+                {
+                    if(criteria.LastModifiedTime == null)
+                    {
+                        var lastUpdatedTime = Converter.ToDateTime(outputParams["lastmodifiedtime"]);
+                        CacheManager.Set(lastUpdatedTimeKey, lastUpdatedTime, new TimeSpan(1, 0, 0, 0));
+                    }
+                } else
+                {
+                    CacheManager.Remove(lastUpdatedTimeKey);
+                }
+
+                return new ProgressResponse(countBatch, initialBatch, 0, string.Empty);
+            }
+        }
     }
 }

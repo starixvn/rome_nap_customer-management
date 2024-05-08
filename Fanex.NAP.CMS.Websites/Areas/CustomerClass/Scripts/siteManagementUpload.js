@@ -8,11 +8,13 @@ const siteManagementUpload = (function ($) {
         btnUpload = null,
         tblErrorTitle = null,
         tblError = null,
-        reloadSiteGridFunc = null;
+        reloadSiteGridFunc = null,
+        showUploadProgress = null;
 
-    function init(reloadSiteGrid) {
+    function init(reloadSiteGrid, getUploadProgress) {
         uploadForm = $("#uploadForm");
         reloadSiteGridFunc = reloadSiteGrid;
+        showUploadProgress = getUploadProgress;
     }
 
     function openModal() {
@@ -123,6 +125,7 @@ const siteManagementUpload = (function ($) {
                     renderErrorGrid(resultJson);
                 } else {
                     customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSiteGridFunc, 5000);
+                    showUploadProgress();
                 }
             },
             error: CMS.handleAjaxError

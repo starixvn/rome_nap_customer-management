@@ -7,7 +7,11 @@
         cachedSites = [],
         creditSites = [],
         depositSites = [],
-        freeGrid = $("#freegrid");
+        freeGrid = $("#freegrid"),
+        progressbar = null,
+        progressLabel = null,
+        btnUpload = null,
+        isUploading = false;
 
     function init() {
         cachedSites = buildGroupSiteList(true);
@@ -24,6 +28,9 @@
         const ddlPolicyTitle = $("#ddlPolicyTitle");
         const ddlSportType = $("#ddlSportTypeFilter");
         const ddlPlatform = renderPlatform();
+        progressbar = $("#progressbar");
+        progressLabel = $("#progressLabel");
+        getUploadProgress();
 
         $("#formSearch").submit(function (e) {
             e.preventDefault();
@@ -42,12 +49,12 @@
             search(0, getPageSize());
         });
 
-        const btnUpload = $("#btnUpload");
+        btnUpload = $("#btnUpload");
         hasHostPermisson = btnUpload.length > 0;
         if (hasHostPermisson) {
             siteManagementUpload.init(function () {
                 cachedGridOptions && search(0, getPageSize());
-            });
+            }, getUploadProgress);
 
             const mapToMultiSelectItem = function (item) {
                 return {
@@ -401,6 +408,79 @@
 
     function getPageSize() {
         return cachedGridOptions ? cachedGridOptions.pagerOption.itemsPerPage : 100;
+    }
+
+    function getUploadProgress() {
+        $.ajax({
+            type: 'GET',
+            url: CMS.resolveRootUrl(`Site/GetUploadProgress`),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (result) {
+                const resultJson = typeof result === "string" ? JSON.parse(result) : result;
+                if (resultJson.CountBatch && resultJson.InitialBatch) {
+                    btnUpload.prop('disabled', true);
+                    if (progressbar.hasClass("display-none")) {
+                        showProgressBar();
+                        isUploading = true;
+                    }
+                    if (resultJson.InitialBatch <= 0) {
+                        hideProgressBar();
+                        if (isUploading) {
+                            CMS.showSuccessMessage("Upload Site Setting successfully!");
+                        }
+                    } else {
+                        increaseProgressBarPercent(resultJson.InitialBatch, resultJson.CountBatch);
+                        setTimeout(function () {
+                            getUploadProgress();
+                        }, 5000);
+                    }
+                } else {
+                    hideProgressBar();
+                    if (isUploading) {
+                        CMS.showSuccessMessage("Upload Site Setting successfully!");
+                    }
+                }
+            },
+            error: function (xhr) {
+                CMS.handleAjaxError(xhr);
+            }
+        });
+    }
+
+    function showProgressBar() {
+        progressbar.progressbar({
+            value: 0,
+            change: function () {
+                progressLabel.text("Uploading progress: " +  progressbar.progressbar("value") + "%");
+            }
+        });
+
+        progressbar.removeClass("display-none");
+        if (cachedGridOptions) {
+            cachedGridOptions.gridExpandHeight = 220;
+            freeGrid.fanexGrid(cachedGridOptions);
+        }
+    }
+
+    function hideProgressBar() {
+        btnUpload.prop('disabled', false);
+        progressbar.addClass("display-none");
+        progressLabel.text("Uploading progress: 0%");
+        if (cachedGridOptions) {
+            cachedGridOptions.gridExpandHeight = 160;
+            freeGrid.fanexGrid(cachedGridOptions);
+        }
+    }
+
+    function increaseProgressBarPercent(remainRows, totalRows) {
+        var donePercentage = Math.ceil(100 * (totalRows - remainRows) / totalRows);
+
+        if (donePercentage < 100) {
+            progressbar.progressbar("value", donePercentage);
+        } else {
+            progressbar.progressbar("value", 99);
+        }
     }
 
     $(function () {

@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
+    using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     internal interface ISiteService
@@ -23,6 +24,8 @@
         Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip);
 
         Result Delete(DeleteSiteSettingRequest request, int userId, string ip);
+
+        ProgressResponse  GetUploadProgress(int userId);
     }
 
     internal class SiteService : ISiteService
@@ -74,21 +77,15 @@
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
-            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip);
+            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip) { ActionID = 1 };
 
-            UploadRuleAsync(criteria).ConfigureAwait(false);
-
-            return new Result(0, Labels.UploadSiteWarning);
+            return siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadSiteWarning);
         }
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
             => siteDataAccess.DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
 
-        private async Task UploadRuleAsync(AssignSiteSettingCriteria criteria)
-        {
-            var taskToRunSynchronously = Task.Run(() => siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadExcelSuccessfully));
-
-            await taskToRunSynchronously.ConfigureAwait(true);
-        }
+        public ProgressResponse GetUploadProgress(int userId)
+            => siteDataAccess.GetUploadProgress(new GetSiteUploadProgressCriteria() { UserID = userId });
     }
 }

@@ -91,7 +91,7 @@
                     CacheManager.Remove(lastUpdatedTimeKey);
                 }
 
-                return new ProgressResponse(countBatch, initialBatch, 0, string.Empty);
+                return new ProgressResponse(countBatch, initialBatch);
             }
         }
     }

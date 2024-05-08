@@ -1,10 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Responses
 {
-    using Fanex.Nap.CMS.Infrastructure.Models;
-
-    internal class ProgressResponse : Result
+    internal class ProgressResponse
     {
-        public ProgressResponse(int countBatch, int initialBatch, int code, string message) : base(code, message)
+        public ProgressResponse(int countBatch, int initialBatch)
         {
             CountBatch = countBatch;
             InitialBatch = initialBatch;

@@ -65,6 +65,7 @@
         {
             var leagues = filterService.GetLeagueGroups();
             var leagueGroupDict = ToLeagueGroupDictionary(leagues);
+            var sportListDict = ToSportListDictionary(sportTypes);
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues), sportTypeIds));
 
@@ -78,7 +79,10 @@
                     }
 
                     item.Rule.IsAllLeagueGroups = leagueCount == NumberOfItemsSeparatedByComma(item.Rule.LeagueGroups);
-                    item.Rule.SportTypeName = sportTypes.FirstOrDefault(sp => sp.Id == item.Rule.SportType)?.Name;
+                    if (sportListDict.TryGetValue(item.Rule.SportType, out var sportName))
+                    {
+                        item.Rule.SportTypeName = sportName;
+                    }
                 }
 
                 yield return item;
@@ -99,6 +103,19 @@
 
             return leagueGroupDict;
         }
+
+        private IDictionary<int, string> ToSportListDictionary(IEnumerable<IdNameModel> sportList)
+        {
+            var sportListDict = new Dictionary<int, string>();
+
+            foreach (var kvp in sportList)
+            {
+                sportListDict[kvp.Id] = kvp.Name;
+            }
+
+            return sportListDict;
+        }
+
         private string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagues)
         {
             var xmlBuilder = new StringBuilder();

@@ -92,7 +92,7 @@
                         {
                             DrawID = Convert.ToInt32(reader["DrawID"]),
                             CustID = Convert.ToInt32(reader["CustID"]),
-                            Amount = Convert.ToDouble(reader["Amount"]).ToString("0,0.##", nfi),
+                            Amount = Convert.ToDouble(reader["Amount"]).ToString("0,0", nfi),
                             Site = reader["Site"].ToString(),
                             Username = reader["Username"].ToString(),
                             Currency = reader["Currency"].ToString(),

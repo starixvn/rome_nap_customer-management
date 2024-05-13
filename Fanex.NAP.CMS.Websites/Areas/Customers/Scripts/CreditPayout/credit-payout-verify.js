@@ -47,18 +47,20 @@ const creditPayoutVerify = (function ($) {
         inlineMessage = $("#inlineMessage");
         typePromotion = type;
         if (isVerifySearch()) {
+            $("#row-ExpiredDate").show();
             $(".row-verify-member").remove();
             txtVerifyCode = $("#txtVerifyCode");
             txtUsername = $("#txtVerifyUsername");
         } else {
+            $("#row-ExpiredDate").hide();
             txtVerifyCode = $("#txtVerifyCodeMember");
             $(".row-verify-search").remove();
             $("#row-username").show();
             $("#txtVerifyUsername").html(`<b>${payment.Username}</b>`);
         }
-
+        
         txtVerifyPromotionType = $("#txtVerifyPromotionType").html("<b>N/A</b>");
-        txtVerifyMatch = $("#txtVerifyMatch").html("<b>N/A</b>");        
+        txtVerifyMatch = $("#txtVerifyMatch").html("<b>N/A</b>");
         txtVerifyExpiredDate = $("#txtVerifyExpiredDate").html("<b>N/A</b>");
         txtVerifyExpiredDate.removeClass("expired");
         txtVerifySite = $("#txtVerifySite").html("<b>N/A</b>");
@@ -70,7 +72,7 @@ const creditPayoutVerify = (function ($) {
                 txtVerifyExpiredDate.addClass("expired");
             } else {
                 txtVerifyExpiredDate.removeClass("expired");
-            }            
+            }
             txtVerifyExpiredDate.html(`<b>${payment.ExpiredDate}</b>`);
             txtVerifySite.html(`<b>${payment.Site}</b>`);
             txtVerifyAmount.html(`<b class="amount-cell">${payment.Amount} (${payment.Currency})</b>`);
@@ -136,6 +138,7 @@ const creditPayoutVerify = (function ($) {
         cachedPayment = data;
         txtVerifyPromotionType.html(`<b>${typePromotion}</b>`);
         txtVerifyMatch.html(`<b>${cachedPayment.Match}</b>`);
+        $("#row-ExpiredDate").show();
         txtVerifyExpiredDate.html(`<b>${cachedPayment.ExpiredDate}</b>`);
         if (cachedPayment.IsExpired) {
             txtVerifyExpiredDate.addClass("expired");

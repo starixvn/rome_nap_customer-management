@@ -120,7 +120,7 @@
         cachedGridOptions.pagerOption.itemsPerPage = pageSize;
         cachedGridOptions.pagerOption.totalItem = data.TotalItems;
 
-        cachedGridOptions.bodyRows = buildBodyRows(data.Payouts);
+        cachedGridOptions.bodyRows = buildBodyRows(data.Payouts, pageSize * pageIndex);
     }
 
     function defaultGridOptions() {
@@ -172,11 +172,11 @@
         return `<input type="checkbox" id="ckbGridSelectedAll"/>`;
     }
 
-    function buildBodyRows(data) {
+    function buildBodyRows(data, startIndex) {
         cachedPayouts = data;
         return data.map(function (payout, index) {
             let columns = [
-                { Name: "colNo", Value: index + 1 }
+                { Name: "colNo", Value: startIndex + index + 1 }
             ];
 
             if (hasHostPermission) {

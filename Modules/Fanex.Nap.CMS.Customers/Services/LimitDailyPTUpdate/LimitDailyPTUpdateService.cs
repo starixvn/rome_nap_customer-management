@@ -24,7 +24,7 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
             => repository.GetSites(new GetCreditSiteCriteria(0));
 
         public IEnumerable<SelectListItem> GetProducts()
-           => repository.GetProducts(new GetProductListCriteria(0));
+           => repository.GetProducts(new GetProductListCriteria());
 
         public IEnumerable<SelectListItem> GetCurrencies()
            => repository.GetCurrencies(new GetCurrencyListCriteria());

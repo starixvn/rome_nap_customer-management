@@ -96,7 +96,9 @@
                             Site = reader["Site"].ToString(),
                             Username = reader["Username"].ToString(),
                             Currency = reader["Currency"].ToString(),
-                            Match = string.Format(MatchPattern, reader["Home"], reader["Away"])
+                            Match = string.Format(MatchPattern, reader["Home"], reader["Away"]),
+                            IsExpired = IsExpired(reader["ExpiredDate"]),
+                            ExpiredDate = ExtractDateTimeFromDB(reader["ExpiredDate"], FormatDate)
                         };
                     }
 

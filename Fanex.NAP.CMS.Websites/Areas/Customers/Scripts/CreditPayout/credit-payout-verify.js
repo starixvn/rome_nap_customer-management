@@ -10,6 +10,7 @@ const creditPayoutVerify = (function ($) {
         txtVerifyCode = null,
         txtVerifyPromotionType = null,
         txtVerifyMatch = null,
+        txtVerifyExpiredDate = null,
         txtVerifySite = null,
         txtVerifyAmount = null,
         inlineMessage = null,
@@ -57,12 +58,20 @@ const creditPayoutVerify = (function ($) {
         }
 
         txtVerifyPromotionType = $("#txtVerifyPromotionType").html("<b>N/A</b>");
-        txtVerifyMatch = $("#txtVerifyMatch").html("<b>N/A</b>");
+        txtVerifyMatch = $("#txtVerifyMatch").html("<b>N/A</b>");        
+        txtVerifyExpiredDate = $("#txtVerifyExpiredDate").html("<b>N/A</b>");
+        txtVerifyExpiredDate.removeClass("expired");
         txtVerifySite = $("#txtVerifySite").html("<b>N/A</b>");
         txtVerifyAmount = $("#txtVerifyAmount").html("<b>N/A</b>");
         if (payment.DrawID) {
             txtVerifyPromotionType.html(`<b>${type}</b>`);
             txtVerifyMatch.html(`<b>${payment.Match}</b>`);
+            if (payment.IsExpired) {
+                txtVerifyExpiredDate.addClass("expired");
+            } else {
+                txtVerifyExpiredDate.removeClass("expired");
+            }            
+            txtVerifyExpiredDate.html(`<b>${payment.ExpiredDate}</b>`);
             txtVerifySite.html(`<b>${payment.Site}</b>`);
             txtVerifyAmount.html(`<b class="amount-cell">${payment.Amount} (${payment.Currency})</b>`);
         }
@@ -127,6 +136,13 @@ const creditPayoutVerify = (function ($) {
         cachedPayment = data;
         txtVerifyPromotionType.html(`<b>${typePromotion}</b>`);
         txtVerifyMatch.html(`<b>${cachedPayment.Match}</b>`);
+        txtVerifyExpiredDate.html(`<b>${cachedPayment.ExpiredDate}</b>`);
+        if (cachedPayment.IsExpired) {
+            txtVerifyExpiredDate.addClass("expired");
+        } else {
+            txtVerifyExpiredDate.removeClass("expired");
+        }
+
         txtVerifySite.html(`<b>${cachedPayment.Site}</b>`);
         txtVerifyAmount.html(`<b class="amount-cell">${cachedPayment.Amount} (${cachedPayment.Currency})</b>`);
         $("#btnSave").prop("disabled", false)

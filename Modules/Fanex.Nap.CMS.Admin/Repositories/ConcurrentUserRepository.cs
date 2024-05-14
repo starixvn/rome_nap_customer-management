@@ -46,7 +46,7 @@ namespace Fanex.Nap.CMS.Admin.Repositories
                 {
                     DataBySiteLabel = bySiteLabel,
                     DataBySiteName = bySiteName,
-                    Summary = summary.FirstOrDefault()
+                    Summary = summary.FirstOrDefault() ?? new SMANumberModel()
                 };
             }
         }

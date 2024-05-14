@@ -163,5 +163,9 @@ namespace Fanex.Nap.CMS.Infrastructure
         // Admin
         public const string ConcurrentUserReport = "ConcurrentUserReport";
         public const string DomainManagement = "DomainManagement";
+
+        //Credit Payout Managment
+        public const string CreditPayoutManagement = "CreditPayoutManagement";
+
     }
 }

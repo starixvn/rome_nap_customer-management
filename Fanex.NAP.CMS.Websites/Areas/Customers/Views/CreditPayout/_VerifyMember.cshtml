@@ -1,0 +1,79 @@
+﻿@using Fanex.Nap.CMS.Infrastructure.Extensions
+
+<div class="form" id="verifyMemberForm">
+    <div id="inlineMessage" class="inline-message"></div>
+    <div class="form-row row-verify-search">
+        <div class="">
+            <label class="label">@Labels.HintVerifySearch</label>
+        </div>
+    </div>
+    <div class="form-row row-verify-search">
+        <div class="lbl-field">
+            <label class="label" for="txtVerifyUsername">@Labels.Username:</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" class="text" id="txtVerifyUsername" maxlength="30" autocomplete="off" />
+        </div>
+    </div>
+    <div class="form-row row-verify-search">
+        <div class="lbl-field">
+            <label class="label" for="txtVerifyCode">@Labels.VerificationCode:</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" class="text" id="txtVerifyCode" maxlength="50" autocomplete="off" />
+        </div>
+    </div>
+    <div class="form-row row-verify-search">
+        <div class="lbl-field">
+        </div>
+        <div class="edit-field">
+            <button type="button" class="blue-button" id="btnSearchVerify">@Labels.Search</button>
+        </div>
+    </div>
+    <div class="form-row" id="row-promotion">
+        <div class="">
+            <label class="label">@Labels.Promotion:&nbsp;&nbsp;<span id="txtVerifyPromotionType"></span></label>
+        </div>
+    </div>
+    <div class="form-row" id="row-match">
+        <div class="lblMatch">
+            <label class="label">@Labels.Match:&nbsp;&nbsp;<span id="txtVerifyMatch"></span></label>
+        </div>
+    </div>
+    <div class="form-row" id="row-username" style="display: none;">
+        <div class="">
+            <label class="label">@Labels.Username:&nbsp;&nbsp;<span id="txtVerifyUsername"></span></label>
+        </div>
+    </div>
+    <div class="form-row" id="row-site">
+        <div class="">
+            <label class="label">@Labels.Site:&nbsp;&nbsp;<span id="txtVerifySite"></span></label>
+        </div>
+    </div>
+    <div class="form-row" id="row-amount">
+        <div class="">
+            <label class="label">@Labels.Amount:&nbsp;&nbsp;<span id="txtVerifyAmount"></span></label>
+        </div>
+    </div>
+    <div class="form-row" id="row-ExpiredDate">
+        <div class="lblExpiredDate">
+            <label class="label">@Labels.ExpiredDate:&nbsp;&nbsp;<span id="txtVerifyExpiredDate"></span></label>
+        </div>
+    </div>
+    <div class="form-row row-verify-member">
+        <div class="">
+            <label class="label">@Labels.HintVerifyMember</label>
+        </div>
+    </div>
+    <div class="form-row row-verify-member">
+        <div class="edit-field">
+            <input type="text" class="text" id="txtVerifyCodeMember" maxlength="50" autocomplete="off" />
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+
+    <div class="margin-top align-right">
+        <button type="button" class="green-button" id="btnSave">@Labels.Verify</button>
+        <button type="button" class="red-button" id="btnCancel">@Labels.Cancel</button>
+    </div>
+</div>

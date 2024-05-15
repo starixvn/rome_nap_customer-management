@@ -14,6 +14,8 @@
         private readonly ICreditPayoutDAO payoutDAO;
         private readonly byte StatusVerified = 1;
         private readonly string ErrorFormat = "{0}: {1}";
+        private const string FilterMatchPattern = "[{2}] {0} -vs- {1}";
+        private const string MatchPattern = "{0} -vs- {1}";
 
         public CreditPayoutService() : this(null)
         {
@@ -26,12 +28,22 @@
 
         public IEnumerable<SelectListItem> GetMatches(int typeId)
         {
-            return payoutDAO.GetMatches(new GetMatchCiretia { TypeId = typeId });
+            return payoutDAO.GetMatches(new GetMatchCiretia { TypeId = typeId })
+                .Select(match => new SelectListItem { Text = string.Format(FilterMatchPattern, match.Home, match.Away, match.MatchID), Value = match.MatchID.ToString() });
         }
 
         public SearchPayoutResponse SearchPayout(SelPayoutPromotionCriteria request)
         {
             var payouts = payoutDAO.SearchPayout(request);
+            var matches = payoutDAO.GetMatches(new GetMatchCiretia { TypeId = request.TypeId }).ToDictionary(match => match.MatchID);
+            foreach (var payout in payouts)
+            {
+                if(matches.TryGetValue(payout.MatchID, out var match))
+                {
+                    payout.Match = string.Format(MatchPattern, match.Home, match.Away);
+                }
+            }
+
             return new SearchPayoutResponse
             {
                 Payouts = payouts,
@@ -54,7 +66,17 @@
 
         public PayoutPromotion ValidateVerifyCode(VerifySelPayoutPromotionCriteria request)
         {
-            return payoutDAO.ValidateVerifyCode(request);
+            var payout = payoutDAO.ValidateVerifyCode(request);
+            if(payout != null)
+            {
+                var match = payoutDAO.GetMatches(new GetMatchCiretia { TypeId = request.TypeID }).FirstOrDefault(m => m.MatchID == payout.MatchID);
+                if(match != null)
+                {
+                    payout.Match = string.Format(MatchPattern, match.Home, match.Away);
+                }
+            }
+
+            return payout;
         }
 
         public Result VerifyPayoutPromotion(UpdPayoutPromotionCriteria request)

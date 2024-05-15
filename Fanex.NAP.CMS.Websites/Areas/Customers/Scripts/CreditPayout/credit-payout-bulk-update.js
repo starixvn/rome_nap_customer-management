@@ -109,7 +109,8 @@ const creditPayoutBulkUpdate = (function ($) {
             CustIDList: custIDList,
             Status: ddlEditStatus.val(),
             PaymentDate: $("#popup-paymentDate").val(),
-            Remark: $("#txtRemark").val()
+            Remark: $("#txtRemark").val(),
+            typeID: 1
         };
 
         if (params.Status === "PleaseSelect") {

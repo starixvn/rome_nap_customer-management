@@ -9,6 +9,7 @@
         public List<IdUsername> UsernameList { get; set; }
         public string CustIDList { get; set; }
         public byte Status { get; set; }
+        public byte TypeID { get; set; }
         public string VerificationCode { get; set; }
         public string PaymentDate { get; set; }
         public string Remark { get; set; }

@@ -293,6 +293,7 @@
     <Compile Include="Criteria\WhitelistBigCreditMembers\AddMemberCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BetList\AbnormalBetTicket.cs" />
+    <Compile Include="Models\CreditPayout\Match.cs" />
     <Compile Include="Models\CreditPayout\PayoutPromotion.cs" />
     <Compile Include="Models\CreditPayout\SearchPayoutResponse.cs" />
     <Compile Include="Models\CurrencyModel.cs" />
@@ -395,6 +396,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>WhitelistBigCreditMembersResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CreditPayout\CreditPayoutHelper.cs" />
     <Compile Include="Services\CreditPayout\CreditPayoutService.cs" />
     <Compile Include="Services\CreditPayout\ICreditPayoutService.cs" />
     <Compile Include="Services\LimitDailyPTUpdate\ILimitDailyPTUpdateService.cs" />

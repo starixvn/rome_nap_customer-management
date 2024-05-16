@@ -105,7 +105,8 @@ const creditPayoutVerify = (function ($) {
 
         var params = {
             username: txtUsername.val(),
-            verificationCode: txtVerifyCode.val()
+            verificationCode: txtVerifyCode.val(),
+            typeID: 1
         };
 
         if (params.username === "") {
@@ -162,7 +163,8 @@ const creditPayoutVerify = (function ($) {
         var params = {
             UsernameList: usernameList,
             CustIDList: BuildCustIdList(),
-            VerificationCode: txtVerifyCode.val()
+            VerificationCode: txtVerifyCode.val(),
+            typeID: 1
         };
 
         if (params.VerificationCode === "") {

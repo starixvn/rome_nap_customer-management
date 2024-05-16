@@ -4,6 +4,7 @@
 
     public class VerifySelPayoutPromotionCriteria : CriteriaBase
     {
+        public byte TypeID { get; set; }
         public int DrawID { get; set; }
         public string Username { get; set; }
         public string VerificationCode { get; set; }

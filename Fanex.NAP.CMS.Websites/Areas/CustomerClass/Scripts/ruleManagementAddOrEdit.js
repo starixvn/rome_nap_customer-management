@@ -115,7 +115,6 @@ const ruleManagementAddOrEdit = (function ($) {
             .click(function () {
                 clearAllTipsyErrors();
                 renderDynamicCCRuleTitleControl(++index);
-                ddlSportType.trigger("change");
             });
         ddlSportType.off("change");
         if (isAddNew() || isClone()) {
@@ -419,6 +418,7 @@ const ruleManagementAddOrEdit = (function ($) {
             clearAllTipsyErrors();
             $(this).closest(`#newRuleContainer-${id}`).remove();
         });
+        $(`#spanSportType-${id}`).text(ddlSportType[0].selectedOptions[0].text);
     }
 
     function renderCCRuleTitle(id) {

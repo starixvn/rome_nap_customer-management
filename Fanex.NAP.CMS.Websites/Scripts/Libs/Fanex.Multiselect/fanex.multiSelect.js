@@ -62,6 +62,12 @@
                 }
                 var $headerCheckbox = $me.next().find("#" + $me.attr('id') + "HeaderCheckBox");
                 return $headerCheckbox.is(':checked');
+            },
+            disable: function () {
+                $(this).addClass("fanex-multiselect-state-disabled");
+            },
+            enable: function () {
+                $(this).removeClass("fanex-multiselect-state-disabled");
             }
         };
 

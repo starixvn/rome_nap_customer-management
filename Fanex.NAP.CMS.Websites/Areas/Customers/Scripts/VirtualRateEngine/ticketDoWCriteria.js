@@ -53,7 +53,7 @@ function TicketDoWCriteria(conditionList, dowList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlTicketDoWCondition.combobox(action);
-        ddlTicketDoW.multiSelect(action);
+        ddlTicketDoW.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -61,9 +61,9 @@ function TicketDoWCriteria(conditionList, dowList) {
     }
 
     function validateFromData() {
-        var dow = ddlTicketDoW.multiSelect("isCheckedAllItems")
+        var dow = ddlTicketDoW.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlTicketDoW.multiSelect("getCheckedItems").join(",");
+            : ddlTicketDoW.fanexMultiSelect("getItems", true).join(",");
 
         if (!dow.length) {
             CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError, "nw");

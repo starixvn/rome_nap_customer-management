@@ -88,7 +88,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
         var action = isEnabled ? "enable" : "disable";
         ddlSiteType.combobox(action);
         ddlSiteCondition.combobox(action);
-        ddlSite.multiSelect(action);
+        ddlSite.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -96,9 +96,9 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
     }
 
     function validateFromData() {
-        var site = ddlSite.multiSelect("isCheckedAllItems")
+        var site = ddlSite.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlSite.multiSelect("getCheckedItems").join(",");
+            : ddlSite.fanexMultiSelect("getItems", true).join(",");
         if (!site.length) {
             CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };

@@ -111,7 +111,7 @@
         {
             BuildSiteTypeCriteria(rule, matrix.CreditSites, matrix.LicenseeSites);
 
-            BuildSportDetailCriteria(rule, matrix.Sports);
+            BuildSportDetailCriteria(rule, matrix.DetailSports);
 
             BuildCurrentVRStatusCriteria(rule);
 

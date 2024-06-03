@@ -46,7 +46,7 @@ function TicketCurrencyCriteria(conditionList, curList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlTicketCurCondition.combobox(action);
-        ddlTicketCur.multiSelect(action);
+        ddlTicketCur.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -54,9 +54,9 @@ function TicketCurrencyCriteria(conditionList, curList) {
     }
 
     function validateFromData() {
-        var cur = ddlTicketCur.multiSelect("isCheckedAllItems")
+        var cur = ddlTicketCur.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlTicketCur.multiSelect("getCheckedItems").join(",");
+            : ddlTicketCur.fanexMultiSelect("getItems", true).join(",");
 
         if (!cur.length) {
             CMS.showTipsyError(ddlTicketCur, resources.noneSelectedOptionError, "nw");

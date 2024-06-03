@@ -31,6 +31,7 @@
 
         private const string FanexMultiSelectScriptPath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.js";
         private const string FanexMultiSelectStylePath = "~/Scripts/Libs/Fanex.Multiselect/fanex.multiSelect.css";
+        private const string FanexMultiSelectCustomStyle = "~/Content/MultipleSelect/fanex.multiSelect-custom.less";
 
         public const string VirtualRateEngineScriptPath = "~/bundles/customers/virtual-rate-engine-script";
         public const string VirtualRateEngineStylePath = "~/bundles/customers/virtual-rate-engine-style";
@@ -254,11 +255,12 @@
         {
             bundles.AddAndInclude(
                 VirtualRateEngineStylePath,
-                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.css",
+                FanexMultiSelectStylePath,
+                FanexMultiSelectCustomStyle,
                 "~/Areas/Customers/Styles/virtualRateEngine.less");
 
             bundles.Add(new ScriptBundle(VirtualRateEngineScriptPath).Include(
-                "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
+                FanexMultiSelectScriptPath,
                 "~/Areas/Customers/Scripts/VirtualRateEngine/VREngineHelper.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/siteTypeCriteria.js",
                 "~/Areas/Customers/Scripts/VirtualRateEngine/customerClassCriteria.js",

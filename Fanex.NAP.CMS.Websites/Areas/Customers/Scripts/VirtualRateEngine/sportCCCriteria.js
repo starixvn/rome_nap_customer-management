@@ -34,7 +34,7 @@ function SportCCCriteria(conditionList, customerClassDetailList, sportTypeList, 
         var selectedSportCC, condition, selectedSportType;
         var isEnabled = rule && rule.EnabledCustomerClassDetail;
         if (isEnabled) {
-            condition = rule.CustomerClassListNotIn ? 1 : 0; 
+            condition = rule.SportTypeCCListNotIn ? 1 : 0; 
             selectedSportType = rule.SportTypeCCListNotIn || rule.SportTypeCCList;
             selectedSportCC = rule.CustomerClassDetailListNotIn || rule.CustomerClassDetailList;
         }

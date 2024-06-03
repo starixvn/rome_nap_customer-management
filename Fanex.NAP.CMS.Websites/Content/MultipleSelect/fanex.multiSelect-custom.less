@@ -1,5 +1,6 @@
 ﻿@border-color: #c4c4c4;
 @text-color: #000;
+@disabled-color: #F3EFEE;
 
 .filter-bar .filter-row .edit-field input[type="text"]&.fanex-multiselect-state-default {
 	&:hover, &:focus, &:active {
@@ -9,6 +10,10 @@
 
 .fanex-multiselect-state-default {
     border-color: @border-color;
+}
+
+.fanex-multiselect-state-disabled {
+    background-color: @disabled-color;
 }
 
 .fanex-multiselect-treeview {

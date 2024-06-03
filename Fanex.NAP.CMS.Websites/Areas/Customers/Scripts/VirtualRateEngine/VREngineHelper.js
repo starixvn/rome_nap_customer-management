@@ -37,16 +37,16 @@
         for (var i = 0; i < max; i++) {
             datum = dataList[i];
             data.push({
-                Id: id + "-" + datum.Id,
-                Value: datum.Id,
-                Text: datum.Name,
-                Checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id),
-                Enable: true
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id),
+                enable: true
             });
         }
 
         var selector = "#" + id;
-        $(selector).multiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
+        $(selector).fanexMultiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
         return $(selector);
     }
 
@@ -64,22 +64,21 @@
         for (var i = 0; i < max; i++) {
             datum = dataList[i];
             var option = {
-                Id: datum.Name,
-                Value: datum.Name,
-                Text: datum.Name,
-                Enable: true,
-                Items: buildChildSelection(id, datum.Items, isCheckAll, selectedObject)
+                value: datum.Name,
+                text: datum.Name,
+                enable: true,
+                items: buildChildSelection(id, datum.Items, isCheckAll, selectedObject)
             };
-            var hasUncheckItem = option.Items.findIndex(x => x.Checked === false);
+            var hasUncheckItem = option.items.findIndex(x => x.checked === false);
             if (hasUncheckItem < 0) {
-                option.Checked = true;
+                option.checked = true;
             }
 
             data.push(option);
         }
 
         var selector = "#" + id;
-        $(selector).multiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
+        $(selector).fanexMultiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
         return $(selector);
     }
 
@@ -87,11 +86,11 @@
         var options = [];
         for (const datum of items) {
             options.push({
-                Id: id + "-" + datum.Id,
-                Value: datum.Id,
-                Text: datum.Name,
-                Enable: true,
-                Checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id)
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                enable: true,
+                checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id)
             });
         }
 
@@ -105,15 +104,15 @@
         for (var i = 0, max = dataList.length; i < max; i++) {
             datum = dataList[i];
             data.push({
-                Id: id + "-" + datum.Id,
-                Value: datum.Id,
-                Text: datum.Name,
-                Checked: true,
-                Enable: true
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                checked: true,
+                enable: true
             });
         }
 
-        $ddl.multiSelect("updateItems", getMultiSelectOptions(true, data));
+        $ddl.fanexMultiSelect("createfanexMultiSelect", getMultiSelectOptions(true, data));
         return $("#" + id);
     }
 
@@ -122,12 +121,16 @@
             showTooltip: false,
             shadow: true,
             maxHeight: maxHeight || 350,
+            minWidth: 235,
             isCheckAll: isCheckAll,
             showFooter: false,
             showFilter: true,
             checkAllText: "All",
             tooltipNoItem: "Please select at least one option",
-            listData: listData
+            listData: listData,
+            onLeave: function () {
+                $(this).parent().find("#filter-delete-button").trigger("click.multipleselect");
+            }
         };
     }
 

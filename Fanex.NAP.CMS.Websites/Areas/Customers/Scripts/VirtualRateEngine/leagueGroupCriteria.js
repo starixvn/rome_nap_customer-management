@@ -91,7 +91,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 var getLeagueFormData = {
                     leagues: $.trim(extractLast(request.term))
                 };
-                getLeagueFormData[ddlLeagueGroupCondition.val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = ddlLeagueGroup.multiSelect("getCheckedItems").join(",");
+                getLeagueFormData[ddlLeagueGroupCondition.val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = ddlLeagueGroup.fanexMultiSelect("getItems", true).join(",");
 
                 $.getJSON(CMS.resolveRootUrl("Customers/VirtualRateEngine/GetLeagues"),
                     getLeagueFormData,
@@ -149,7 +149,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlLeagueGroupCondition.combobox(action);
-        ddlLeagueGroup.multiSelect(action);
+        ddlLeagueGroup.fanexMultiSelect(action);
         ddlLeagueCondition.combobox(action);
         txtLeague.autocomplete(action);
         txtLeague.prop("disabled", !isEnabled);
@@ -179,9 +179,9 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
     }
 
     function validateLeagueGroup() {
-        var leagueGroup = ddlLeagueGroup.multiSelect("isCheckedAllItems")
+        var leagueGroup = ddlLeagueGroup.fanexMultiSelect("isCheckAll")
             ? "-1"
-            : ddlLeagueGroup.multiSelect("getCheckedItems").join(",");
+            : ddlLeagueGroup.fanexMultiSelect("getItems", true).join(",");
 
         if (!leagueGroup.length) {
             CMS.showTipsyError(ddlLeagueGroup, resources.noneSelectedOptionError, "nw");

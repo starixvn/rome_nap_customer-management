@@ -112,11 +112,11 @@
         }
 
         rule.EnabledCustomerClass
-            && pushMultipleSelectionCriteria("2. General Customer Class: ", rule.CustomerClassList, rule.CustomerClassListNotIn);
+            && pushMultipleSelectionCriteria("2. General Customer Class: ", rule.CustomerClassList.split(",").join(", "), rule.CustomerClassListNotIn.split(",").join(", "));
 
         if (rule.EnabledCustomerClassDetail) {
             html.push("3. Sport (CC): " + (rule.SportTypeCCNameListNotIn ? rule.SportTypeCCNameListNotIn : rule.SportTypeCCNameList));
-            pushMultipleSelectionCriteria("&nbsp;&nbsp;&nbsp;&nbsp;Sport Customer Class: ", rule.CustomerClassDetailList, rule.CustomerClassDetailListNotIn);
+            pushMultipleSelectionCriteria("&nbsp;&nbsp;&nbsp;&nbsp;Sport Customer Class: ", rule.CustomerClassDetailList.split(",").join(", "), rule.CustomerClassDetailListNotIn.split(",").join(", "));
         }
 
         rule.EnabledCurrentVR

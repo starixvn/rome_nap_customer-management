@@ -156,9 +156,9 @@
 
         let html = [
             `<table class="tbl-freegrid" style="height: calc(100vh - 200px);"><thead style="z-index: ${data.length + 2}"><tr>`,
-            `<th class="width-150">${resources.title}</th>`,
-            `<th class="width-250">${resources.customerClass}</th>`,
-            `<th class="width-150">${resources.sportType}</th>`,
+            `<th class="width-180">${resources.title}</th>`,
+            `<th class="width-150">${resources.customerClass}</th>`,
+            `<th class="width-200">${resources.sportType}</th>`,
             `<th class="width-180">${resources.site}</th>`,
             `<th class="width-150">${resources.currency}</th>`,
             `<th class="width-200">${resources.platform}</th>`,
@@ -194,12 +194,12 @@
 
     function buildRowItem(rule, index, zindex) {
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
-            `<td class="rule-cell width-150"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
-            `<td class="rule-cell width-250"><div class="view-item text-center cell-customer-class">${renderCustomerClassCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-150"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
+            `<td class="rule-cell width-180"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
+            `<td class="rule-cell width-150"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCellWithLink(rule.CustomerClass, customerClassList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
             `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(rule.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-200"><div class="view-item text-center">${renderPlatformCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200"><div class="view-item text-center">${editingGridHelper.renderPlatformCell(rule.Platforms, platforms)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
             `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.SportType, rule.Enable)}</td>`,
             hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
@@ -211,9 +211,9 @@
 
     function buildAddRow(zindex) {
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
-        `<td class="rule-cell width-150 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
-        `<td class="rule-cell width-250 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
-        `<td class="rule-cell width-150 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
+        `<td class="rule-cell width-180 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
+        `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
+        `<td class="rule-cell width-200 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
         `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
         `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
         `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
@@ -251,27 +251,11 @@
             : `<a href="javascript:;" class="link-currency" data-currencies="${currencyNames.join()}">${currencyNames.length}</a>`;
     }
 
-    function renderCustomerClassCell(rule) {
-        const customerClassList = rule.CustomerClass.split(",");
-        return customerClassList.join(", ");
-    }
-
     function renderSportTypeCell(rule) {
         var sport = sportList.find(st => st.Value === rule.SportType.toString());
         if (sport) {
             return sport.Text;
         }
-    }
-
-    function renderPlatformCell(rule) {
-
-        if (rule.Platforms === "All" || rule.Platforms === "0") {
-            return platforms.map(plf => plf.Name).join(', ');
-        }
-
-        const platformList = rule.Platforms.split(",");
-
-        return platforms.filter(plf => platformList.includes(plf.Id.toString())).map(plf => plf.Name).join(', ');
     }
 
     function handleViewItems(element, title, dataType) {
@@ -311,10 +295,13 @@
             .click(function () { handleViewItems($(this), resources.currency, "currencies"); });
         freeGrid.find(".link-customerclass")
             .off("click")
-            .click(function () { handleViewItems($(this), resources.customerClass, "customerclasses"); });
+            .click(function () { handleViewItems($(this), resources.customerClass, "customerclass"); });
         freeGrid.find(".link-site")
             .off("click")
             .click(function () { handleViewItems($(this), resources.site, "sites"); });
+        freeGrid.find(".link-platform")
+            .off("click")
+            .click(function () { handleViewItems($(this), resources.platform, "platform"); });
         freeGrid.find(".checkbox-enable")
             .off("click")
             .click(showEnableDisablePopup);

@@ -17,7 +17,7 @@ const editingGridHelper = (function ($) {
         return customerClassHelper.renderMultiSelect(
             "#" + divId,
             {
-                minWidth: 246,
+                minWidth: 146,
                 maxHeight: 230,
                 listData: optionList,
                 isCheckAll: isCheckAll,
@@ -156,6 +156,31 @@ const editingGridHelper = (function ($) {
 
         const customerClassList = selectedCustomerClass.split(",");
         return customerClassList.join(", ");
+    }
+
+    function renderCustomerClassCellWithLink(selectedCustomerClass, allCustomerClasses) {
+        const data = selectedCustomerClass.split(",");
+        var isAll = selectedCustomerClass === "0" || selectedCustomerClass === "" || data.length === allCustomerClasses.length;
+
+        return renderCellWithLink(data, "customerclass", isAll);
+    }
+
+    function renderPlatformCell(selectedPlatform, platforms) {
+        const platformNames = platforms.map(plf => plf.Name).join();
+        const data = platforms.filter(plf => selectedPlatform.split(",").includes(plf.Id.toString())).map(plf => plf.Name);
+        var isAll = selectedPlatform === "All" || selectedPlatform === "0" || data.length === platformNames.length;
+
+        return renderCellWithLink(data, "platform", isAll);
+    }
+
+    function renderCellWithLink(data, type, isAll) {
+        if (isAll) {
+            return `<a href="javascript:;" class="link-${type}" data-${type}="${data.join()}">All</a>`;
+        }
+
+        return data.length <= 1
+            ? data.join()
+            : `<a href="javascript:;" class="link-${type}" data-${type}="${data.join()}">${data.length}</a>`;
     }
 
     function renderSiteCell(selectedSites, siteList, cachedCreditSites, cachedLicenseeSites, allValue, allCreditValue, allDepositValue, isIdSelection) {
@@ -322,6 +347,8 @@ const editingGridHelper = (function ($) {
         renderCurrencyCell: renderCurrencyCell,
         renderProductCell: renderProductCell,
         renderCustomerClassCell: renderCustomerClassCell,
+        renderPlatformCell: renderPlatformCell,
+        renderCustomerClassCellWithLink: renderCustomerClassCellWithLink,
         renderSiteCell: renderSiteCell,
         renderEnableCell: renderEnableCell,
         handleViewItems: handleViewItems,

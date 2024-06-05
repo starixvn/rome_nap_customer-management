@@ -9,7 +9,7 @@ function TicketCurrencyCriteria(conditionList, curList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableTicketCurCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-ticketCurCondition"></select>
                 </div>

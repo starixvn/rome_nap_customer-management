@@ -1,5 +1,5 @@
 ﻿var VREngineHelper = (function ($) {
-    function renderCombobox(id, dataList, selectedValue) {
+    function renderCombobox(id, dataList, selectedValue, errPos) {
         var datum, html = [];
         if (typeof selectedValue === "undefined") {
             selectedValue = dataList[0].Id;
@@ -20,7 +20,12 @@
             html.push('</option>');
         }
 
-        return $("#" + id).html(html.join("")).combobox();
+        var comboboxElement = $("#" + id).html(html.join("")).combobox();
+        if (errPos) {
+            comboboxElement.combobox('updateValidatePosition', errPos);
+        }
+
+        return comboboxElement;
     }
 
     function renderMultiSelect(id, dataList, selectedList, maxHeight) {

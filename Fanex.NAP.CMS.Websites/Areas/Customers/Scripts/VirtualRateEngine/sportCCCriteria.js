@@ -19,7 +19,7 @@ function SportCCCriteria(conditionList, customerClassDetailList, sportTypeList, 
                 <span class="txt-name">&nbsp;</span>
             </div>
             <div class="enable-criteria-container"></div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-sportCustomerClassCondition"></select>
                 </div>
@@ -40,7 +40,7 @@ function SportCCCriteria(conditionList, customerClassDetailList, sportTypeList, 
         }
 
         ddlSportCCCondition = VREngineHelper.renderCombobox("ddl-sportCustomerClassCondition", conditionList, condition);
-        ddlSportTypeCC = VREngineHelper.renderCombobox("ddl-sportTypeCC", sportTypeList, +selectedSportType);
+        ddlSportTypeCC = VREngineHelper.renderCombobox("ddl-sportTypeCC", sportTypeList, +selectedSportType, 'sw');
         txtSportCC = $("#txtSportCC").val(selectedSportCC);
 
         chkEnableSportCCCriteria = $("#chk-enableSportCCCriteria").prop("checked", isEnabled);

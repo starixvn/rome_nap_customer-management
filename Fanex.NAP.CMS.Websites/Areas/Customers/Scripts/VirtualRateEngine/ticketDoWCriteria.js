@@ -10,7 +10,7 @@ function TicketDoWCriteria(conditionList, dowList) {
                 <input type="checkbox" id="chk-enableTicketDoWCriteria" />
                 <span class="note-info-message" id="span-noteTicketDoWCriteria" title="<p>Ticket Day of Week:</p><p>- Select days to apply the virtual rate rule.</p><p>- You can select from Monday to Sunday.</p>"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-ticketDoWCondition"></select>
                 </div>

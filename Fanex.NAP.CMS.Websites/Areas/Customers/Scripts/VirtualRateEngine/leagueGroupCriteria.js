@@ -10,7 +10,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 <input type="checkbox" id="chk-enableLeagueGroupCriteria" />
                 <span class="note-info-message" id="span-noteLeagueGroupCriteria" title="<p>League Group:</p><p>- Apply for one or more league groups.</p><p>League:</p><p>- Load all leagues follow selected league group.</p><p>- You can leave this field blank to apply all leagues of selected league group(s).</p>"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueGroupCondition"></select>
                 </div>
@@ -24,7 +24,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 <span class="txt-name">League</span>
             </div>
             <div class="enable-criteria-container"></div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueCondition"></select>
                 </div>

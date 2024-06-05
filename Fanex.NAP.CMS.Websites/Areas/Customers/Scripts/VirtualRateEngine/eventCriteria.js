@@ -1,7 +1,7 @@
 ﻿"use strict";
 function EventCriteria(eventList) {
     var htmlTemplate =
-        `<div class="form-row-sub">
+        `<div class="form-row-sub event-row">
             <div class="lbl-field">
                 <span class="lbl-field-criteria-no">7.</span>
                 <span class="txt-name">Event</span>
@@ -9,7 +9,7 @@ function EventCriteria(eventList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableEventCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <select class="combobox-autocomplete width-60" id="ddl-event"></select>
             </div>
         </div>`;

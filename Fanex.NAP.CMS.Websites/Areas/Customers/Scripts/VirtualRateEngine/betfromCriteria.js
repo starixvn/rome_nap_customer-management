@@ -9,7 +9,7 @@ function BetfromCriteria(betfromList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableBetfromCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <select class="combobox-autocomplete" id="ddl-betfrom"></select>
             </div>
         </div>`;
@@ -22,7 +22,7 @@ function BetfromCriteria(betfromList) {
             selectedBetfrom = rule.Betfrom;
         }
 
-        ddlBetfrom = VREngineHelper.renderCombobox("ddl-betfrom", betfromList, selectedBetfrom);
+        ddlBetfrom = VREngineHelper.renderCombobox("ddl-betfrom", betfromList, selectedBetfrom, "sw");
         chkEnableBetfromCriteria = $("#chk-enableBetfromCriteria").prop("checked", isEnabled);
         isHideEnabledCheckbox && chkEnableBetfromCriteria.css("visibility", "hidden");
     }
@@ -31,7 +31,7 @@ function BetfromCriteria(betfromList) {
         chkEnableBetfromCriteria
             .off("change")
             .on("change", function () {
-                enableCriteria(this.checked)
+                enableCriteria(this.checked);
             });
     }
 
@@ -56,7 +56,7 @@ function BetfromCriteria(betfromList) {
         if (isEnableCriteria()) {
             return {
                 name: "BetFrom",
-                betfrom: ddlBetfrom.val(),
+                betfrom: ddlBetfrom.val()
             };
         }
     };

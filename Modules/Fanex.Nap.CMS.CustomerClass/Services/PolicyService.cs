@@ -15,7 +15,7 @@
 
     internal interface IPolicyService
     {
-        IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string policyTitle = null);
+        IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string sortOrder, string fieldSort, string policyTitle = null);
 
         PolicyItem GetPolicy(IEnumerable<IdNameModel> sportTypes, int policyId);
 
@@ -35,20 +35,23 @@
         private readonly IFilterService filterService;
         private readonly IPolicyDataAccess policyDataAccess;
 
+        private const string ASC = "asc";
+        private const string RuleTitle = "RuleTitle";
+
         public PolicyService(IFilterService filterService = null, IPolicyDataAccess policyDataAccess = null)
         {
             this.filterService = filterService ?? new FilterService();
             this.policyDataAccess = policyDataAccess ?? new PolicyDataAccess();
         }
 
-        public IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string policyTitle = null)
+        public IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string sortOrder, string fieldSort, string policyTitle = null)
             => GetPolicyList(sportTypes, policyTitle: policyTitle)
             .GroupBy(p => new { p.PolicyId, p.PolicyTitle, p.SportType })
             .Select(grp => new Policy(
                 grp.Key.PolicyId,
                 grp.Key.PolicyTitle,
                 grp.Key.SportType,
-                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : grp.Where(p => p.Rule?.Enable == true).Select(p => p.Rule)))
+                grp.FirstOrDefault()?.Rule == null ? Enumerable.Empty<Rule>() : SortRule(grp.Where(p => p.Rule?.Enable == true).Select(p => p.Rule), sortOrder, fieldSort)))
             .OrderBy(plc => plc.PolicyTitle);
 
         public PolicyItem GetPolicy(IEnumerable<IdNameModel> sportTypes, int policyId)
@@ -149,5 +152,34 @@
 
         public Result DeletePolicies(DeletePolicyRequest request)
             => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeletePolicySuccessfully);
+
+        private IEnumerable<Rule> SortRule(IEnumerable<Rule> rules , string sortOrder, string fieldSort)
+        {
+            if(fieldSort == RuleTitle)
+            {
+                return SortRuleTitle(rules, sortOrder);
+            }
+
+            return SortCustomerClass(rules, sortOrder);
+        }
+
+        private IEnumerable<Rule> SortRuleTitle(IEnumerable<Rule> rules, string sortOrder)
+        {
+            if(sortOrder == ASC)
+            {
+                return rules.OrderBy(rule => rule.RuleTitle);
+            }
+
+            return rules.OrderByDescending(rule => rule.RuleTitle);
+        }
+        private IEnumerable<Rule> SortCustomerClass(IEnumerable<Rule> rules, string sortOrder)
+        {
+            if (sortOrder == ASC)
+            {
+                return rules.OrderBy(rule => rule.CustomerClass);
+            }
+
+            return rules.OrderByDescending(rule => rule.CustomerClass);
+        }
     }
 }

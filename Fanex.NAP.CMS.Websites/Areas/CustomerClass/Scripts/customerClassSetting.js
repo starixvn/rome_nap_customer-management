@@ -147,10 +147,10 @@
             }
         ];
         var columns = [
-            { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
+            { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true, Sort: true, SortDirection: 'asc' },
             { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center", Sort: true },
             { HeaderText: resources.site, Width: 100, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.currency, Width: 100, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.platform, Width: 100, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },

@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Nap.CMS.CustomerClass.Criteria;
+    using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.Framework.Data;
@@ -18,6 +20,8 @@
         Rule GetRule(ICriteria criteria);
 
         CheckRuleResponse CheckRule(ICriteria criteria);
+
+        IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailCriteria criteria);
     }
 
     internal class RuleDataAccess : BaseRepository, IRuleDataAccess
@@ -51,5 +55,8 @@
                 return new CheckRuleResponse(string.Join(", ", affectedRules), code, message);
             }
         }
+
+        public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailCriteria criteria)
+            => ExecuteReader(criteria, DataReaderToModelHelper.ToRuleDetail);
     }
 }

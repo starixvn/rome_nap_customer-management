@@ -205,6 +205,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Platforms.
+        /// </summary>
+        public static string AllPlatformDetail {
+            get {
+                return ResourceManager.GetString("AllPlatformDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App.
         /// </summary>
         public static string App {

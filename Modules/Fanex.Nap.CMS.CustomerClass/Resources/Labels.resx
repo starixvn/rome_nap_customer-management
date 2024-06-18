@@ -546,4 +546,7 @@
   <data name="DestinationSportCC" xml:space="preserve">
     <value>Destination Sport CC</value>
   </data>
+  <data name="AllPlatformDetail" xml:space="preserve">
+    <value>All Platforms</value>
+  </data>
 </root>

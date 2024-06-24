@@ -7,6 +7,7 @@
         cachedLicenseeSitesName = [],
         cachedCreditSites = [],
         cachedCreditSitesName = [],
+        isMultiSite = 0,
         freeGrid = $("#freegrid");
 
     function init() {
@@ -149,8 +150,8 @@
         var columns = [
             { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true, Sort: true, SortDirection: 'asc' },
             { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center", Sort: true },
-            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center", Sort: true },
+            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center", Sort: true, SortType: 'string' },
+            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center", Sort: true, SortType: 'string' },
             { HeaderText: `${resources.site} - ${resources.currency} - ${resources.platform}`, Width: 150, Name: "colSiteCurPlat", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.leagueGroup, Width: 100, Name: "colLeagueGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.isLive, Width: 60, Name: "colIsLive", HeaderAlign: "center", CellAlign: "center" },
@@ -196,8 +197,8 @@
                 Columns: [
                     { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
                     { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
-                    { Name: "colGeneralCC", Value: rule.CustomerClass, TdClass: "pink-cell" },
-                    { Name: "colSportCC", Value: rule.CustomerClassDetail, TdClass: "pink-cell" },
+                    { Name: "colGeneralCC", Value: rule.CustomerClass ? rule.CustomerClass.toString() : "", TdClass: "pink-cell" },
+                    { Name: "colSportCC", Value: rule.CustomerClassDetail ? rule.CustomerClassDetail.toString() : "", TdClass: "pink-cell" },
                     { Name: "colSiteCurPlat", Value: renderLinkWithDetailsPopup(rule), TdClass: "pink-cell" },
                     { Name: "colLeagueGroup", Value: renderLeagueGroupCell(rule.IsAllLeagueGroups, rule.LeagueGroups, rule.SportType), TdClass: "green-cell" },
                     { Name: "colIsLive", Value: ruleManagementHelper.renderIsLiveCell(rule.IsLive), TdClass: "green-cell" },
@@ -320,9 +321,14 @@
         const request = {
             ruleId,
             sportTypes,
-            currencies
+            currencies,
+            isMultiSite
         };
 
+        CallGetDetailRule(ruleTitle, request);
+    }
+
+    function CallGetDetailRule(ruleTitle, request) {
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -334,26 +340,36 @@
                     CMS.showErrorMessage(result.Message);
                 } else {
                     OpenPopupRuleDetail(ruleTitle, result);
+                    RegisterSwitchView(ruleTitle, request);
                 }
             },
             null,
             function () {
                 CMS.enableInput();
             });
+    }
 
+    function RegisterSwitchView(ruleTitle, request) {
+        $("#btn-switch-detail")
+            .off("click")
+            .click(function () {
+                isMultiSite = isMultiSite ? 0 : 1;
+                request.isMultiSite = isMultiSite;
+                CallGetDetailRule(ruleTitle, request);
+            });
     }
 
     function OpenPopupRuleDetail(ruleTitle, ruleDetail) {
-
         let html = [
             '<div class="form" id="viewRuleDetailsForm">',
             `<div><b>Rule Title: </b>${ruleTitle}</div>`,
+            `<div class="divSwitch"><button id="btn-switch-detail" class="btn-switch"><span class="icon-switch"></span>${isMultiSite ? "Group by Site" : "Normal View"}</button></div>`,
             '<table class="tbl-freegrid">',
             '<thead><tr>',
             '<th class="width-20" >No.</th >',
             '<th class="width-250">Sites</th>',
-            '<th class="width-60">Number Of Sites</th>',
-            '<th class="width-250">Currency Name</th>',
+            isMultiSite ? '<th class="width-60">Number Of Sites</th>' : '',
+            isMultiSite ? '<th class="width-250">Currency Name</th>' : '<th class="width-310">Currency Name</th>',
             '<th class="width-60">Number Of Currencies</th>',
             '<th class="width-200">Platform</th>',
             '<th class="width-60">Number Of Platforms</th>',
@@ -361,9 +377,9 @@
         ];
         ruleDetail.forEach(function (item, index) {
             html.push(`<tr><td class="align-center width-20">${index + 1}</td>
-                        <td class="width-250">${item.Sites}</td>
-                        <td class="width-60 detail-count">${item.NumberOfSites}</td>
-                        <td class="width-250">${item.CurrencyName}</td>
+                        <td class="width-250">${item.Sites.replace("AllCredit", "All Credit").replace("AllDeposit", "All Deposit")}</td>
+                        ${isMultiSite ? '<td class="width-60 detail-count">' + item.NumberOfSites + '</td>': ''}
+                        <td class="width-${isMultiSite ? '250' : '310'}">${item.CurrencyName}</td>
                         <td class="width-60 detail-count">${item.NumberOfCurrencies}</td>
                         <td class="width-200">${item.PlatformNames}</td>
                         <td class="width-60 detail-count">${item.NumberOfPlatform}</td></tr>`);

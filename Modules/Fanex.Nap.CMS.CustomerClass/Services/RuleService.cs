@@ -166,7 +166,7 @@
         public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
-            var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies));
+            var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite));
             
             foreach (var item in ruleDetails)
             {

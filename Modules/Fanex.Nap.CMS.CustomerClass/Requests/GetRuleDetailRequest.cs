@@ -6,5 +6,7 @@
         public string SportTypes { get; set; }
 
         public string Currencies { get; set; }
+
+        public byte IsMultiSite { get; set; }
     }
 }

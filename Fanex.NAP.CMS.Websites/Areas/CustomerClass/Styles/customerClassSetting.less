@@ -23,8 +23,46 @@
     overflow-y: auto;
     width: 85vw;
 
+    .divSwitch {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .btn-switch {
+        float: right;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        -moz-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        -webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        background: #5a7dc1;
+        background: linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -ms-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -moz-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -webkit-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        border: solid 1px #3c5b9b;
+        color: #ffffff;
+        text-decoration: none !important;
+        height: 25px;
+        min-width: 80px;
+        text-align: center;
+    }
+
+    .icon-switch {
+        background: url(images/switch.png) no-repeat -3px -37px;
+        height: 15px;
+        width: 15px;
+        display: inline-block;
+        cursor: pointer;
+        vertical-align: middle;
+        padding-right: 5px;
+    }
+
     .tbl-freegrid {
         margin-top: 10px;
+        clear: both;
 
         tbody td {
             padding: 0 5px;
@@ -34,5 +72,9 @@
                 text-align: center;
             }
         }
+    }
+
+    .width-310 {
+        width: 310px !important;
     }
 }

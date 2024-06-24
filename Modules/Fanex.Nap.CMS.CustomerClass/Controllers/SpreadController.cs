@@ -13,8 +13,9 @@
     {
         private readonly IFilterService filterService;
         private readonly ISpreadService spreadService;
+        private const byte SpreadType = 1;
 
-        public SpreadController() : this(new FilterService(), new SpreadService())
+        public SpreadController() : this(new FilterService(), new SpreadService(SpreadType))
         {
         }
 

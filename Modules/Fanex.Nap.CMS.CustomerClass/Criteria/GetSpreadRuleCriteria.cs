@@ -7,6 +7,7 @@
         public string Sites { get; set; }
         public string Currencies { get; set; }
         public float? Spread { get; set; }
+        public byte Type { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadSel";

@@ -115,6 +115,26 @@ const editingGridHelper = (function ($) {
         );
     }
 
+    function renderAddEditLeagueGroup(divId, selectedValue, sportType, fnOnCheck, isSelectAll = false) {
+        let optionList = [];
+        let isCheckAll = selectedValue === "All" || selectedValue === "0" || isSelectAll;
+        let selectedValueList = selectedValue !== undefined ? selectedValue.split(",") : [];
+        customerClassHelper.leagueBySport[sportType] && customerClassHelper.leagueBySport[sportType].forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
+        );
+
+        return customerClassHelper.renderMultiSelect(
+            "#" + divId,
+            {
+                minWidth: 196,
+                maxHeight: 230,
+                listData: optionList,
+                isCheckAll: isCheckAll,
+                showFilter: true,
+                onCheck: fnOnCheck
+            }
+        );
+    }
+
     function renderCombobox(id, dataList, selectedValue) {
         var datum, html = [];
         html.push(`<option ${selectedValue === undefined ? "selected" : ""}>Please select</option>`);
@@ -124,7 +144,7 @@ const editingGridHelper = (function ($) {
             html.push(datum.Value);
             html.push('"');
 
-            if (datum.Value === selectedValue.toString()) {
+            if (datum.Value.toString() === selectedValue.toString()) {
                 html.push(' selected');
             }
 
@@ -166,11 +186,35 @@ const editingGridHelper = (function ($) {
     }
 
     function renderPlatformCell(selectedPlatform, platforms) {
-        const platformNames = platforms.map(plf => plf.Name).join();
-        const data = platforms.filter(plf => selectedPlatform.split(",").includes(plf.Id.toString())).map(plf => plf.Name);
+        const platformNames = platforms.map(plf => plf.Name);
+        let data = platforms.filter(plf => selectedPlatform.split(",").includes(plf.Id.toString())).map(plf => plf.Name);
         var isAll = selectedPlatform === "All" || selectedPlatform === "0" || data.length === platformNames.length;
 
+        if (isAll) {
+            data = platformNames;
+        }
+
         return renderCellWithLink(data, "platform", isAll);
+    }
+
+    function renderLeagueGroupCell(selectedLeagueGroup, leagueGroups) {
+        const leagueGroupNames = leagueGroups.map(lg => lg.Name).join();
+        const data = leagueGroups.filter(lg => selectedLeagueGroup.split(",").includes(lg.Id.toString())).map(lg => lg.Name);
+        var isAll = selectedLeagueGroup === "All" || selectedLeagueGroup === "0" || data.length === leagueGroupNames.length;
+
+        return renderCellWithLink(data, "league-group", isAll);
+    }
+
+    function renderLiveCell(selectedIsLive) {
+        if (+selectedIsLive === 0) {
+            return "All";
+        }
+        if (+selectedIsLive === 1) {
+            return "Yes";
+        }
+        if (+selectedIsLive === 2) {
+            return "No";
+        }
     }
 
     function renderCellWithLink(data, type, isAll) {
@@ -343,6 +387,7 @@ const editingGridHelper = (function ($) {
         renderAddEditPlatform: renderAddEditPlatform,
         renderAddEditUtility: renderAddEditUtility,
         renderAddEditProduct: renderAddEditProduct,
+        renderAddEditLeagueGroup: renderAddEditLeagueGroup,
         renderCombobox: renderCombobox,
         renderCurrencyCell: renderCurrencyCell,
         renderProductCell: renderProductCell,
@@ -350,6 +395,8 @@ const editingGridHelper = (function ($) {
         renderPlatformCell: renderPlatformCell,
         renderCustomerClassCellWithLink: renderCustomerClassCellWithLink,
         renderSiteCell: renderSiteCell,
+        renderLeagueGroupCell: renderLeagueGroupCell,
+        renderLiveCell: renderLiveCell,
         renderEnableCell: renderEnableCell,
         handleViewItems: handleViewItems,
         clearAllTipsyErrors: clearAllTipsyErrors,

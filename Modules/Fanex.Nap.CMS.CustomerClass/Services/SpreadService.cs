@@ -27,6 +27,7 @@
     {
         public SpreadService() : base()
         {
+            SpreadType = spreadType;
         }
         
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)

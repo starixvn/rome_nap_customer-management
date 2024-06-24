@@ -10,6 +10,8 @@
 
         public string Currency { get; set; }
 
+        public string LeagueGroups { get; set; }
+
         public string Spread { get; set; }
     }
 }

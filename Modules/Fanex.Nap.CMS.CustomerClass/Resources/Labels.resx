@@ -552,4 +552,16 @@
   <data name="TopPriority" xml:space="preserve">
     <value>Top Priority</value>
   </data>
+  <data name="PeakHourManagement" xml:space="preserve">
+    <value>Peak Hour Management</value>
+  </data>
+  <data name="AdjustPeakHourRange" xml:space="preserve">
+    <value>Adjust Peak Hour Range</value>
+  </data>
+  <data name="DeletePeakHourSuccessfully" xml:space="preserve">
+    <value>Delete Peak Hour Range Successfully</value>
+  </data>
+  <data name="AddPeakHourSuccessfully" xml:space="preserve">
+    <value>Add Peak Hour Range Sucessfully</value>
+  </data>
 </root>

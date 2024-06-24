@@ -257,6 +257,11 @@
 		<Setting Key="NAP_LM_CustomerClassNonSportsIns" SpName="NAP_LM_CustomerClassNonSportsIns" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassNonSportsDel" SpName="NAP_LM_CustomerClassNonSportsDel" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.wsv_nap" />
+		<!--PeakHour-->
+		<Setting Key="NAP_LM_CCPeakHourRangerDel" SpName="NAP_LM_CCPeakHourRangerDel" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_LM_CCPeakHourRangerIns" SpName="NAP_LM_CCPeakHourRangerIns" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_LM_CCPeakHourRangerSel" SpName="NAP_LM_CCPeakHourRangerSel" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_LM_CCPeakHourRangerUpd" SpName="NAP_LM_CCPeakHourRangerUpd" DbName="DBCust.CustDB.wsv_nap" />
 	</Function>
 	<Function Name="Domain Management">
 		<Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />

@@ -2,12 +2,14 @@
 {
     internal class DeleteSpreadCriteria : CommandCriteriaBase
     {
-        internal DeleteSpreadCriteria(int policyID, int userId, string ip) : base(userId, ip)
+        internal DeleteSpreadCriteria(int policyID, int userId, string ip, byte type) : base(userId, ip)
         {
             PolicyID = policyID;
+            Type = type;
         }
 
         public int PolicyID { get; }
+        public byte Type { get; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadDel";

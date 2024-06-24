@@ -115,6 +115,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Peak Hour Range Sucessfully.
+        /// </summary>
+        public static string AddPeakHourSuccessfully {
+            get {
+                return ResourceManager.GetString("AddPeakHourSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Policy Setting.
         /// </summary>
         public static string AddPolicySetting {
@@ -165,6 +174,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string AddUtilityOfferingSuccessfully {
             get {
                 return ResourceManager.GetString("AddUtilityOfferingSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjust Peak Hour Range.
+        /// </summary>
+        public static string AdjustPeakHourRange {
+            get {
+                return ResourceManager.GetString("AdjustPeakHourRange", resourceCulture);
             }
         }
         
@@ -444,6 +462,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string DeleteNonSportSuccessfully {
             get {
                 return ResourceManager.GetString("DeleteNonSportSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Peak Hour Range Successfully.
+        /// </summary>
+        public static string DeletePeakHourSuccessfully {
+            get {
+                return ResourceManager.GetString("DeletePeakHourSuccessfully", resourceCulture);
             }
         }
         
@@ -912,6 +939,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string OtherSports {
             get {
                 return ResourceManager.GetString("OtherSports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peak Hour Management.
+        /// </summary>
+        public static string PeakHourManagement {
+            get {
+                return ResourceManager.GetString("PeakHourManagement", resourceCulture);
             }
         }
         

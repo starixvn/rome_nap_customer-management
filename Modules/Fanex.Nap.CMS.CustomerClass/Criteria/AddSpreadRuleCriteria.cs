@@ -4,7 +4,7 @@
 
     internal class AddSpreadRuleCriteria : CommandCriteriaBase
     {
-        internal AddSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip) : base(userId, ip)
+        internal AddSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip, byte type) : base(userId, ip)
         {
             PolicyID = request.PolicyID;
             PolicyTitle = request.PolicyTitle;
@@ -15,6 +15,9 @@
             Sites = request.Sites;
             Platforms = request.Platforms;
             Enable = request.Enable;
+            LeagueGroups = request.LeagueGroups;
+            IsLive = request.IsLive;
+            Type = type;
         }
 
         public int PolicyID { get; }
@@ -26,6 +29,9 @@
         public string Sites { get; }
         public string Platforms { get; }
         public bool Enable { get; }
+        public string LeagueGroups { get; }
+        public byte IsLive { get; }
+        public byte Type { get; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadIns";

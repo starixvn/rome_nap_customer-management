@@ -152,8 +152,9 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string RuleManagement = "RuleManagement";
         public const string PolicyManagement = "PolicyManagement";
         public const string SiteManagement = "SiteManagement";
-        public const string SpreadManagement = "SpreadManagement";
-        
+        public const string SpreadManagement = "SpreadManagement"; 
+        public const string PeakHourManagement = "PeakHourManagement";
+
         public const string CCUtilityOffering = "CCUtilityOffering";
         public const string NonsportsCCManagement = "NonsportsCCManagement";
 

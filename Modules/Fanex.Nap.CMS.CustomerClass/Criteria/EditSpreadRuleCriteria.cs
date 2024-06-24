@@ -4,7 +4,7 @@ namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
     internal class EditSpreadRuleCriteria : AddSpreadRuleCriteria
     {
-        internal EditSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip) : base(request, userId, ip)
+        internal EditSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip, byte type) : base(request, userId, ip, type)
         {
         }
 

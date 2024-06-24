@@ -1,0 +1,150 @@
+﻿.filter-form {
+    .text-left {
+        text-align: left !important;
+    }
+
+    .adjust {
+        float: none !important;
+        width: 155px !important;
+        margin-left: 0px !important;
+    }
+}
+
+.ico-adjust-add {
+    color: #5a7dc1;
+}
+#adjustPeakHour {
+    display: grid;
+
+    .date-group {
+        display: inline-flex;
+        background-color: #F4F3F1;
+        border: 1px solid #CECCCD;
+        padding: 2px;
+        margin-bottom: 10px;
+
+        .date-name {
+            margin: auto;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .date-peak-hour {
+            display: inline-grid;
+
+            .peak-hour-selection {
+                display: inline-flex;
+
+                .add-btn {
+                    width: 20px;
+                    height: 20px;
+                    align-items: center;
+                    display: flex;
+                    border: 1px solid #CECCCD;
+
+                    .ico-add-borderless {
+                        margin: auto;
+                        cursor: pointer;
+                    }
+                }
+
+                .delete-btn {
+                    width: 13px;
+                    height: 13px;
+                    align-items: center;
+                    display: flex;
+                    border: 1px solid #5A7DC1;
+                    margin: auto 2px;
+
+                    .ico-delete-borderless {
+                        margin: auto;
+                        cursor: pointer;
+                    }
+                }
+
+                .peak-hour-container {
+                    max-width: 620px;
+                }
+
+                .peak-hour-item {
+                    color: #5A7DC1;
+                    font-weight: bold;
+                    border: 1px solid #5A7DC1;
+                    margin-left: 5px;
+                    display: inline-flex;
+                    line-height: 20px;
+                    padding: 0 2px;
+                    margin-bottom: 5px;
+                }
+            }
+
+            .hour-by-date {
+                display: inline-flex;
+                border: 1px solid #CECCCD;
+                margin-top: 2px;
+
+                .hour-item {
+                    padding: 3px 2px;
+                    color: #616161;
+                    width: 24px;
+                    margin: auto;
+                    text-align: center;
+                    cursor: default;
+                }
+
+                .hour-selected {
+                    background-color: #CFD8E4;
+                }
+            }
+        }
+    }
+}
+
+#addPeakByWeekDayForm {
+    display: inline-grid;
+
+    .row {
+        display: inline-flex;
+        margin-bottom: 10px;
+    }
+
+    .label-add {
+        padding-left: 20px;
+        text-align: right;
+        width: 30px;
+        font-weight: bold;
+    }
+
+    .add-time {
+        padding-right: 20px;
+        padding-left: 10px;
+
+        input {
+            width: 70px;
+        }
+    }
+
+    .submit {
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        -moz-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        -webkit-box-shadow: inset 0px 1px 1px rgba(255, 255, 255, 0.25);
+        background: #5a7dc1;
+        background: linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -ms-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -moz-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        background: -webkit-linear-gradient(#486cb8, #5a7dc1) #5a7dc1;
+        border: solid 1px #3c5b9b;
+        color: #ffffff;
+        text-decoration: none !important;
+        height: 25px;
+        min-width: 80px;
+        text-align: center;
+        float: right;
+        margin-top: 10px;
+    }
+}
+

@@ -29,8 +29,11 @@
         private readonly ISpreadDataAccess spreadDataAccess;
         private readonly IDynamicRepository dynamicRepository;
 
-        public SpreadService() : this(new SpreadDataAccess(), new DynamicRepository())
+        private byte SpreadType { get; }
+
+        public SpreadService(byte spreadType) : this(new SpreadDataAccess(), new DynamicRepository())
         {
+            SpreadType = spreadType;
         }
 
         public SpreadService(ISpreadDataAccess spreadDataAccess, IDynamicRepository dynamicRepository)
@@ -40,20 +43,20 @@
         }
         
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)
-            => spreadDataAccess.InsertRule(new AddSpreadRuleCriteria(request, userId, iP));
+            => spreadDataAccess.InsertRule(new AddSpreadRuleCriteria(request, userId, iP, SpreadType));
 
         public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
         {
-            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
+            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id)), SpreadType));
         }
 
         public Result UpdateRule(AddEditSpreadRuleRequest request, int userId, string iP)
-            => spreadDataAccess.DoAction(new EditSpreadRuleCriteria(request, userId, iP), Labels.EditSpreadSuccessfully);
+            => spreadDataAccess.DoAction(new EditSpreadRuleCriteria(request, userId, iP, SpreadType), Labels.EditSpreadSuccessfully);
 
         public Result DeleteRule(int policyID, int userId, string iP)
-            => spreadDataAccess.DoAction(new DeleteSpreadCriteria(policyID, userId, iP), Labels.DeleteSpreadSuccessfully);
+            => spreadDataAccess.DoAction(new DeleteSpreadCriteria(policyID, userId, iP, SpreadType), Labels.DeleteSpreadSuccessfully);
 
         public Result EnableRule(int policyID, bool enable, int userId, string iP)
-            => spreadDataAccess.DoAction(new EnableSpreadCriteria(policyID, enable, userId, iP), Labels.EditStatusSpreadSuccessfully);
+            => spreadDataAccess.DoAction(new EnableSpreadCriteria(policyID, enable, userId, iP, SpreadType), Labels.EditStatusSpreadSuccessfully);
     }
 }

@@ -148,7 +148,7 @@
             { HeaderText: resources.paymentDate, Width: 100, Name: "colPaymentDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.lastUpdatedDate, Width: 160, Name: "colLastUpdatedDate", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.updatedBy, Width: 60, Name: "colUpdatedBy", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.remark, Width: 100, Name: "colRemark", HeaderAlign: "center", CellAlign: "center" }
+            { HeaderText: resources.remark, Width: 250, Name: "colRemark", HeaderAlign: "center", CellAlign: "center" }
         ]);
 
         return {

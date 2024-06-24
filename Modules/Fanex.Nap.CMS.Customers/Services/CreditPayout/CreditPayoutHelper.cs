@@ -17,7 +17,7 @@
 
             var timeNow = DateTime.Now.AddHours(OffsetGMT8GMTMinus4);
 
-            return Convert.ToDateTime(expiredDate).Date <= timeNow.Date;
+            return Convert.ToDateTime(expiredDate).Date < timeNow.Date;
         }
 
         internal static string ExtractDateFromDB(object column)

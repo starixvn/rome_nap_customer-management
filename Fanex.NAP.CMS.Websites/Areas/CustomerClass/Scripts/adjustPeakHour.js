@@ -53,7 +53,9 @@ const adjustPeakHour = (function ($) {
     function renderPeakHourGrid(peakHours) {
         $(".peak-hour-container").html('');
         peakHours.forEach(function (peak) {
-            $(`#peak-hour-${peak.WeekDay}`).append(`<div class="peak-hour-item">${peak.StartRange.substring(0, peak.StartRange.length - 3)} - ${peak.EndRange.substring(0, peak.EndRange.length - 3)}<div class="delete-range delete-btn" data-id="${peak.RangeID}"><span class="ico-delete-borderless"></span></div></div>`);
+            var fromTime = peak.StartRange.substring(0, peak.StartRange.length - 3);
+            var toTime = peak.EndRange.substring(0, peak.EndRange.length - 3);
+            $(`#peak-hour-${peak.WeekDay}`).append(`<div class="peak-hour-item" data-id="${peak.RangeID}" data-weekday="${peak.WeekDay}" data-from="${fromTime}" data-to="${toTime}" >${fromTime} - ${toTime}<div class="delete-range delete-btn" data-id="${peak.RangeID}"><span class="ico-delete-borderless"></span></div></div>`);
             var startHour = +peak.StartRange.substring(0, 2);
             var endHour = +peak.EndRange.substring(0, 2);
             for (var i = startHour; i <= endHour; i++) {
@@ -67,12 +69,18 @@ const adjustPeakHour = (function ($) {
     }
 
     function bindingEvent() {
-        $(".delete-range").off("click").on('click', handleDeletePeakHour);
-        $(".add-peak").off("click").on('click', openAddPeakPopUp);
+        $(".delete-range").off("click").on('click', showDeleteConfirmPopup);
+        $(".add-peak").off("click").on('click', openAddEditPeakPopUp);
+        $(".peak-hour-item").off("click").on('click', openAddEditPeakPopUp);
     }
 
-    function handleDeletePeakHour() {
+
+    function showDeleteConfirmPopup() {
         var rangeID = $(this).data('id');
+        CMS.showConfirmMessage(`Are you sure you want to <span class="color-red">delete</span> this range?`, function () { handleDeletePeakHour(rangeID); });
+    }
+
+    function handleDeletePeakHour(rangeID) {
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -89,14 +97,17 @@ const adjustPeakHour = (function ($) {
             });
     }
 
-    function openAddPeakPopUp() {
+    function openAddEditPeakPopUp() {
         var weekDay = +$(this).data("weekday");
+        var rangeId = $(this).data("id");
+        var fromTime = $(this).data("from") || "&nbsp;";
+        var toTime = $(this).data("to") || "&nbsp;";
         let html = [
-            '<div class="form" id="addPeakByWeekDayForm">',
+            '<div class="form" id="addPeakByWeekDayForm">'
         ];
         
-        html.push(`<div class="row"><div class="label-add"><label for="txtFromTimeAdd">From</label></div><div class="add-time"><input type="text" id="txtFromTimeAdd" maxlength="5" class="input-time" autocomplete="off"/></div></div>`);
-        html.push(`<div class="row"><div class="label-add"><label for="txtToTimeAdd">To</label></div><div class="add-time"><input type="text" id="txtToTimeAdd" maxlength="5" class="input-time" autocomplete="off"/></div></div>`);
+        html.push(`<div class="row"><div class="label-add"><label for="txtFromTimeAdd">From</label></div><div class="add-time"><input type="text" value=${fromTime} id="txtFromTimeAdd" maxlength="5" class="input-time" autocomplete="off"/></div></div>`);
+        html.push(`<div class="row"><div class="label-add"><label for="txtToTimeAdd">To</label></div><div class="add-time"><input type="text" id="txtToTimeAdd" value=${toTime} maxlength="5" class="input-time" autocomplete="off"/></div></div>`);
         html.push(`<div><button type="button" class="submit" id="btnAddPeakHour">OK</button><div>`);
         html.push('</div>');
 
@@ -111,8 +122,8 @@ const adjustPeakHour = (function ($) {
                     of: "#headline"
                 },
                 close: function () {
+                    $(this).remove();
                     openModal();
-
                 }
 
             });
@@ -131,42 +142,55 @@ const adjustPeakHour = (function ($) {
         $('#txtFromTimeAdd').timepicker(timePickerOptions);
         $('#txtToTimeAdd').timepicker(timePickerOptions);
 
-        $("#btnAddPeakHour").off("click").on("click", function () { processAdd(weekDay, $addDialog); });
+        $("#btnAddPeakHour").off("click").on("click", function () { processAddEdit(weekDay, rangeId, $addDialog); });
     }
 
-    function processAdd(weekDay, $addDialog) {
+    function processAddEdit(weekDay, rangeId, $addDialog) {
         var startRange = $.trim($('#txtFromTimeAdd').val());
         var endRange = $.trim($('#txtToTimeAdd').val());
         var timeRegex = /^([0-9][0-9]):[0-9][0-9]$/;
         if (!timeRegex.test(startRange)) {
-            CMS.showTipsyError($('#txtFromTimeAdd'), 'Invalid time format');
+            CMS.showErrorMessage('Invalid From Time format');
             return;
         }
 
         if (!timeRegex.test(endRange)) {
-            CMS.showTipsyError($('#txtToTimeAdd'), 'Invalid time format');
+            CMS.showErrorMessage('Invalid To Time format');
             return;
         }
 
         startRange = startRange + ":00";
-        endRange = endRange + ":00";
+        endRange = endRange + ":59";
+
+        var startRangeTimes = startRange.split(":");
+        var endRangeTimes = endRange.split(":");
+
+        var startDate = (new Date()).setHours(startRangeTimes[0], startRangeTimes[1], startRangeTimes[2]);
+        var endDate = (new Date()).setHours(endRangeTimes[0], endRangeTimes[1], endRangeTimes[2]);
+        if (endDate <= startDate) {
+            CMS.showErrorMessage('The To Time must come after the From Time');
+            return;
+        }
 
         var request = {
+            rangeId,
             weekDay,
             startRange,
             endRange
         };
 
+        var url = rangeId ? CMS.resolveRootUrl(`PeakHour/EditPeakHour`) : CMS.resolveRootUrl(`PeakHour/AddPeakHour`);
+
         CMS.disableInput();
         CMS.callAjax(
             this,
-            CMS.resolveRootUrl(`PeakHour/AddPeakHour`),
+            url,
             request,
             function (result) {
                 const resultJson = typeof result === "string" ? JSON.parse(result) : result;
                 if (resultJson.IsSuccess) {
                     CMS.showSuccessMessage(resultJson.Message);
-                    openModal();
+                    $addDialog.dialog("close");
                 } else {
                     CMS.showErrorMessage(resultJson.Message);
                 }

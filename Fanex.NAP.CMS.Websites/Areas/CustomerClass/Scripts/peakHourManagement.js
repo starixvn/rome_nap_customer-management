@@ -1,6 +1,7 @@
 ﻿
 (function ($) {
     let cachedData = null,
+        cachedPeakNote = null,
         cachedLicenseeSites = [],
         cachedCreditSites = [],
         cachedFilter = null,
@@ -31,7 +32,7 @@
                 site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
                 sportTypes: ddlSportType.val(),
                 currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
-                leagueGroups: ddlLeagueGroup.fanexMultiSelect("getItems", true).join()
+                leagueGroups: ddlLeagueGroup.fanexMultiSelect("getItems", false).length === 0 ? "-1" : ddlLeagueGroup.fanexMultiSelect("getItems", true).join()
             };
             if (formData.sportTypes === "0") {
                 formData.sportTypes = sportList.map(sp => sp.Value).join(',');
@@ -178,12 +179,16 @@
             CMS.resolveRootUrl(`PeakHour/Search`),
             cachedFilter,
             function (result) {
-                cachedData = typeof result === "string" ? JSON.parse(result) : result;
-                if (cachedData.Message) {
-                    CMS.showErrorMessage(cachedData.Message);
+                var parsedResult = typeof result === "string" ? JSON.parse(result) : result;
+                if (parsedResult.Message) {
+                    CMS.showErrorMessage(parsedResult.Message);
                     cachedAddNewRule = null;
                     renderGrid(new Array());
+                    cachedData = [];
+                    cachedPeakNote = "";
                 } else {
+                    cachedData = parsedResult.SpreadRules;
+                    cachedPeakNote = parsedResult.PeakNoteInfo;
                     renderGrid(cachedData);
                 }
             },
@@ -194,7 +199,6 @@
     }
 
     function renderGrid(data) {
-
         let html = [
             `<table class="tbl-freegrid" style="height: calc(100vh - 200px);"><thead style="z-index: ${data.length + 2}"><tr>`,
             `<th class="width-180">${resources.title}</th>`,
@@ -205,7 +209,7 @@
             `<th class="width-200">${resources.sportType}</th>`,
             `<th class="width-200">${resources.leagueGroup}</th>`,
             `<th class="width-80">${resources.isLive}</th>`,
-            `<th class="width-120">${resources.peakHourSpread}</th>`,
+            `<th class="width-150">${resources.peakHourSpread}<span class="light-note-info-message small-margin-left" original-title="${cachedPeakNote}"></span></th>`,
             `<th class="width-60">${resources.enable}</th>`,
             hasHostPermisson ? `<th class="width-60">${resources.action}</th>` : '',
             '</tr></thead > ',
@@ -258,8 +262,8 @@
         `<td class="rule-cell width-200"><div class="view-item text-center">${editingGridHelper.renderPlatformCell(rule.Platforms, platforms)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
         `<td class="rule-cell width-200"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
         `<td class="rule-cell width-200"><div class="view-item text-center">${renderLeagueGroupCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditLeagueGroup-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-80"><div class="view-item text-center">${editingGridHelper.renderLiveCell(rule.IsLive)}</div><div class="dropdown-cell edit-item hidden"><select id="ddlEditIsLive-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
-        `<td class="rule-cell width-120 action spread"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
+            `<td class="rule-cell width-80"><div class="view-item text-center">${editingGridHelper.renderLiveCell(rule.IsLive)}</div><div class="dropdown-cell edit-item ddlIsLive hidden"><select id="ddlEditIsLive-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
+        `<td class="rule-cell width-150 action spread"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
         `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.SportType, rule.Enable)}</td>`,
         hasHostPermisson ? `<td class="width-60 text-center action">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
             `</tr>`
@@ -277,8 +281,8 @@
             `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
             `<td class="rule-cell width-200 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
             `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewLeagueGroup" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-80 add-cell"><div><select id="ddlAddNewIsLive" class="select-customer-class"></select></div></td>`,
-            `<td class="rule-cell width-120 action spread"><input type="text" class="inputSpread" id="addNewSpread" /></td>`,
+            `<td class="rule-cell width-80 add-cell"><div class="ddlIsLive"><select id="ddlAddNewIsLive" class="select-customer-class"></select></div></td>`,
+            `<td class="rule-cell width-150 action spread"><input type="text" class="inputSpread" id="addNewSpread" /></td>`,
             `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
         hasHostPermisson ? `<td class="width-60 text-center action">${renderAddActionCell()}</td>` : '',
             `</tr>`
@@ -385,6 +389,12 @@
             .off("click")
             .click(showEnableDisablePopup);
         freeGrid.find(".is-editting").trigger('click');
+        $('.light-note-info-message').tipsy({
+            className: 'custom-grid-colheader-note',
+            html: true,
+            opacity: 0.9,
+            gravity: 'n'
+        });
     }
 
     function enableRowForAdding() {
@@ -423,6 +433,7 @@
         
         $("#ddlAddNewSportType").on("change", function () {
             var sportType = +$(this).val();
+            cachedAddNewRule.SportType = sportType;
             if (isNaN(sportType)) {
                 editingGridHelper.renderAddEditLeagueGroup("ddlAddNewLeagueGroup", cachedAddNewRule.LeagueGroups, "", function () { onLeagueGroupChange("ddlAddNewLeagueGroup"); });
                 return;
@@ -435,13 +446,14 @@
             }
         });
         $("#ddlAddNewSportType").trigger("change");
+        $("#addNewSpread").off("change");
         var newSpread = new AutoNumeric("#addNewSpread", {
             minimumValue: 0,
             maximumValue: 0.5,
             decimalPlaces: 2,
             onInvalidPaste: "ignore"
         });
-        editingGridHelper.renderCombobox("ddlAddNewIsLive", IsLiveOptions, cachedAddNewRule.IsLive);
+        editingGridHelper.renderCombobox("ddlAddNewIsLive", IsLiveOptions, cachedAddNewRule.IsLive, false);
         $(`#ddlAddNewIsLive > input.ui-autocomplete-input`).css('width', '38px');
         $(`#addNewSpread`).change(function () { cachedAddNewRule.Spread = newSpread.get(); });
         $(`#addNewEnable`).change(function () { cachedAddNewRule.Enable = $(`#addNewEnable`).is(":checked"); });
@@ -477,9 +489,9 @@
 
     function onLeagueGroupChange(divId, index) {
         if (index !== undefined) {
-            cachedData[index].edittingValue.LeagueGroups = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+            cachedData[index].edittingValue.LeagueGroups = getSelectedReplaceAllValue(divId, "-1", customerClassHelper.leagueBySport[cachedData[index].edittingValue.SportType].length);
         } else {
-            cachedAddNewRule.LeagueGroups = getSelectedReplaceAllValue(divId, "0", currencyList.length);
+            cachedAddNewRule.LeagueGroups = getSelectedReplaceAllValue(divId, "-1", customerClassHelper.leagueBySport[cachedAddNewRule.SportType].length);
         }
     }
 
@@ -532,7 +544,7 @@
         spreadManagementHelper.validateRequiredField($(`#ddlAddNewLeagueGroup`), cachedAddNewRule.LeagueGroups);
         spreadManagementHelper.validateRequiredField($(`span#ddlAddNewSportType`), cachedAddNewRule.SportType);
         spreadManagementHelper.validateRequiredField($(`span#ddlAddNewIsLive`), cachedAddNewRule.IsLive);
-        if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
+        if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule) || spreadManagementHelper.isEmptyValue(cachedAddNewRule.LeagueGroups)) {
             return;
         }
 
@@ -566,10 +578,10 @@
         return selectedItems.join();
     }
 
-    function cancelEditItem() {
+    function cancelEditItem(div) {
         clearAllTipsyErrors();
-        var rowEdit = $(this).closest('tr');
-        var index = $(this).data("index");
+        var rowEdit = div.closest('tr');
+        var index = div.data("index");
         cachedData[index].edittingValue = null;
         rowEdit.find("div[class*=view-item]").removeClass("hidden");
         rowEdit.find("div[class*=edit-item]").addClass("hidden");
@@ -602,7 +614,9 @@
         editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
         editingGridHelper.renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, function () { onCurrencyChange(`ddlEditCurrency-${policyId}`, index); });
         editingGridHelper.renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, platforms, function () { onPlatformChange(`ddlEditPlatform-${policyId}`, index); });
-        new AutoNumeric(`#editSpread-${policyId}`, {
+
+        $(`#editSpread-${policyId}`).off("change");
+        var spreadInput = new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
             maximumValue: 0.5,
             decimalPlaces: 2,
@@ -610,6 +624,7 @@
         }).set(editPolicy.Spread);
         $(`#ddlEditSportType-${policyId}`).on("change", function () {
             var sportType = +$(this).val();
+            cachedData[index].edittingValue.SportType = sportType;
             if (isNaN(sportType)) return;
             if (customerClassHelper.leagueBySport[sportType]) {
                 editingGridHelper.renderAddEditLeagueGroup(`ddlEditLeagueGroup-${policyId}`, editPolicy.LeagueGroups, sportType, function () { onLeagueGroupChange(`ddlEditLeagueGroup-${policyId}`, index); });
@@ -621,11 +636,11 @@
                 });
             }
         });
-        editingGridHelper.renderCombobox(`ddlEditIsLive-${policyId}`, IsLiveOptions, editPolicy.IsLive);
+        editingGridHelper.renderCombobox(`ddlEditIsLive-${policyId}`, IsLiveOptions, editPolicy.IsLive, false);
         $(`#ddlEditIsLive-${policyId} > input.ui-autocomplete-input`).css('width', '38px');
         $(`#ddlEditSportType-${policyId}`).trigger("change");
         $(`#ddlEditIsLive-${policyId}`).trigger("change");
-        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
+        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = spreadInput.get(); });
         $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
 
 
@@ -634,7 +649,7 @@
             .click(saveEditItem);
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
-            .click(cancelEditItem);
+            .click(function () { spreadInput.remove(); cancelEditItem($(this)); });
         $(`#editTitle-${policyId}`).focus();
     }
 
@@ -661,7 +676,7 @@
             LeagueGroups: spreadManagementHelper.validateRequiredField($(`#ddlEditLeagueGroup-${policyId}`), getSelectedReplaceAllValue(`ddlEditLeagueGroup-${policyId}`, "0", customerClassHelper.leagueBySport[+sportType].length))
         };
 
-        if (!spreadManagementHelper.isValidRule(updateRule)) {
+        if (!spreadManagementHelper.isValidRule(updateRule) || spreadManagementHelper.isEmptyValue(updateRule.LeagueGroups)) {
             return;
         }
 

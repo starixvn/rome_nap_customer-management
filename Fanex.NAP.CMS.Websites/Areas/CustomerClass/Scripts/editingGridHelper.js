@@ -135,9 +135,9 @@ const editingGridHelper = (function ($) {
         );
     }
 
-    function renderCombobox(id, dataList, selectedValue) {
+    function renderCombobox(id, dataList, selectedValue, isShowLeaseSelect = true) {
         var datum, html = [];
-        html.push(`<option ${selectedValue === undefined ? "selected" : ""}>Please select</option>`);
+        isShowLeaseSelect && html.push(`<option ${selectedValue === undefined ? "selected" : ""}>Please select</option>`);
         for (var i = 0, max = dataList.length; i < max; i++) {
             datum = dataList[i];
             html.push('<option value="');
@@ -198,9 +198,13 @@ const editingGridHelper = (function ($) {
     }
 
     function renderLeagueGroupCell(selectedLeagueGroup, leagueGroups) {
-        const leagueGroupNames = leagueGroups.map(lg => lg.Name).join();
-        const data = leagueGroups.filter(lg => selectedLeagueGroup.split(",").includes(lg.Id.toString())).map(lg => lg.Name);
-        var isAll = selectedLeagueGroup === "All" || selectedLeagueGroup === "0" || data.length === leagueGroupNames.length;
+        const leagueGroupNames = leagueGroups.map(lg => lg.Name);
+        let data = leagueGroups.filter(lg => selectedLeagueGroup.split(",").includes(lg.Id.toString())).map(lg => lg.Name);
+        var isAll = selectedLeagueGroup === "All" || selectedLeagueGroup === "-1" || data.length === leagueGroupNames.length;
+
+        if (isAll) {
+            data = leagueGroupNames;
+        }
 
         return renderCellWithLink(data, "league-group", isAll);
     }

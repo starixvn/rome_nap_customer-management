@@ -58,7 +58,7 @@
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
-            return JsonData(spreadService.GetSpreadRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
+            return JsonData(peakHourService.GetSpreadRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -121,9 +121,16 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
-        public ActionResult AddPeakHour(AddPeakHourRequest request)
+        public ActionResult AddPeakHour(AddEditPeakHourRequest request)
         {
             return JsonData(peakHourService.AddPeakHour(request, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
+        public ActionResult EditPeakHour(AddEditPeakHourRequest request)
+        {
+            return JsonData(peakHourService.UpdatePeakHour(request, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]

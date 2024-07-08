@@ -452,10 +452,10 @@
         return selectedItems.join();
     }
 
-    function cancelEditItem() {
+    function cancelEditItem(div) {
         clearAllTipsyErrors();
-        var rowEdit = $(this).closest('tr');
-        var index = $(this).data("index");
+        var rowEdit = div.closest('tr');
+        var index = div.data("index");
         cachedData[index].edittingValue = null;
         rowEdit.find("div[class*=view-item]").removeClass("hidden");
         rowEdit.find("div[class*=edit-item]").addClass("hidden");
@@ -486,14 +486,14 @@
         editingGridHelper.renderAddEditSite(`ddlEditSite-${policyId}`, editPolicy.Sites, cachedCreditSites, cachedLicenseeSites, editPolicy.Sites === "0", editPolicy.Sites.includes("-1"), editPolicy.Sites.includes("-2"), function () { onSiteChange(`ddlEditSite-${policyId}`, index); });
         editingGridHelper.renderAddEditCurrency(`ddlEditCurrency-${policyId}`, editPolicy.Currencies, function () { onCurrencyChange(`ddlEditCurrency-${policyId}`, index); });
         editingGridHelper.renderAddEditPlatform(`ddlEditPlatform-${policyId}`, editPolicy.Platforms, platforms, function () { onPlatformChange(`ddlEditPlatform-${policyId}`, index); });
-        new AutoNumeric(`#editSpread-${policyId}`, {
+        var spreadInput = new AutoNumeric(`#editSpread-${policyId}`, {
             minimumValue: 0,
             maximumValue: 0.5,
             decimalPlaces: 2,
             onInvalidPaste: 'ignore'
         }).set(editPolicy.Spread);
         
-        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = $(`#editSpread-${policyId}`).val(); });
+        $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = spreadInput.get(); });
         $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
 
 
@@ -502,7 +502,7 @@
             .click(saveEditItem);
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
-            .click(cancelEditItem);
+            .click(function () { spreadInput.remove(); cancelEditItem($(this))});
         $(`#editTitle-${policyId}`).focus();
     }
 

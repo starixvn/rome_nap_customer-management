@@ -601,6 +601,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Peak Hour Range Successfully.
+        /// </summary>
+        public static string EditPeakHourSuccessfully {
+            get {
+                return ResourceManager.GetString("EditPeakHourSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Policy Setting.
         /// </summary>
         public static string EditPolicySetting {

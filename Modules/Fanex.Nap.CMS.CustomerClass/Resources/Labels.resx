@@ -564,4 +564,7 @@
   <data name="AddPeakHourSuccessfully" xml:space="preserve">
     <value>Add Peak Hour Range Sucessfully</value>
   </data>
+  <data name="EditPeakHourSuccessfully" xml:space="preserve">
+    <value>Edit Peak Hour Range Successfully</value>
+  </data>
 </root>

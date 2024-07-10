@@ -16,5 +16,15 @@
         }
 
         public short SportType { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return ((LeagueGroup)obj).Id == Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }

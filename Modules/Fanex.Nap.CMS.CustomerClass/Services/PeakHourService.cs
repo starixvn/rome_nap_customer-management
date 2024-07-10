@@ -11,11 +11,12 @@
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Text;
 
     internal interface IPeakHourService
     {
-        SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes);
+        SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes, IEnumerable<LeagueGroup> leagueGroups);
         IEnumerable<PeakHourModel> GetPeakHours();
         Result AddPeakHour(AddEditPeakHourRequest request, int userId, string iP);
         Result UpdatePeakHour(AddEditPeakHourRequest request, int userId, string iP);
@@ -64,7 +65,7 @@
             return DynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
         }
 
-        public SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
+        public SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes, IEnumerable<LeagueGroup> leagueGroups)
         {
             var hasSpread = float.TryParse(request.Spread, out var spread);
             var criteria = new GetSpreadRuleCriteria
@@ -73,7 +74,7 @@
                 Sites = request.Site,
                 Currencies = request.Currency,
                 LeagueCheck = request.LeagueGroups,
-                //LeagueGroups = BuildLeageGroupXML(leagueGroups),
+                LeagueGroups = BuildLeageGroupXML(leagueGroups),
                 Spread = hasSpread ? spread : (float?)null,
                 SportTypes = string.Join(",", sportTypes.Select(sp => sp.Id)),
                 Type = SpreadType
@@ -129,6 +130,21 @@
             }
 
             return peakString.ToString().Remove(0, 2);
+        }
+
+        private string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagueGroups)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var lg in leagueGroups)
+            {
+                xmlBuilder
+                .Append("<r GroupID=\"").Append(lg.Id).Append("\"")
+                .Append(" GroupName=\"").Append(WebUtility.HtmlEncode(lg.Name)).Append("\"")
+                .Append(" SportType=\"").Append(lg.SportType).Append("\"/>");
+            }
+
+            return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
         }
     }
 }

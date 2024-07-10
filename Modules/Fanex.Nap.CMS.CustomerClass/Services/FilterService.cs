@@ -17,6 +17,8 @@
 
         IEnumerable<LeagueGroup> GetLeagueGroups(int sportType = 0);
 
+        IEnumerable<LeagueGroup> GetLeagueGroups(IEnumerable<int> sportTypes);
+
         IEnumerable<IdNameModel> GetSports();
     }
 
@@ -50,6 +52,17 @@
             }
 
             return leagues;
+        }
+
+        public IEnumerable<LeagueGroup> GetLeagueGroups(IEnumerable<int> sportTypes)
+        {
+            var leagueGroups = new List<LeagueGroup>();
+            foreach (var sportType in sportTypes)
+            {
+                leagueGroups.AddRange(GetLeagueGroups(sportType));
+            }
+
+            return leagueGroups.Distinct();
         }
 
         public IEnumerable<IdNameModel> GetSports()

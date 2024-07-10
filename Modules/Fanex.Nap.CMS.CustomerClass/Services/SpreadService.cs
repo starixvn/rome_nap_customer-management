@@ -68,7 +68,7 @@
                 Sites = request.Site,
                 Currencies = request.Currency,
                 LeagueCheck = request.LeagueGroups,
-                LeagueGroups = string.Join(",", sportTypes.Select(sp => sp.Id)),
+                LeagueGroups = string.Empty,
                 Spread = hasSpread ? spread : (float?)null,
                 SportTypes = string.Join(",", sportTypes.Select(sp => sp.Id)),
                 Type = SpreadType

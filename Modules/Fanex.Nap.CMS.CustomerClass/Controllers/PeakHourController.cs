@@ -44,7 +44,7 @@
                    filterService.GetAllSites(),
                    filterService.GetAllCurrencies(), 
                    havePermissionPortTypes,
-                   filterService.GetLeagueGroups());
+                   filterService.GetLeagueGroups(havePermissionPortTypes.Select(sp => sp.Id)));
 
             return View("~/Areas/CustomerClass/Views/PeakHour/Index.cshtml", viewModel);
         }
@@ -57,8 +57,9 @@
             {
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
+            var leagueGroups = filterService.GetLeagueGroups(havePermissionPortTypes.Select(sp => sp.Id));
 
-            return JsonData(peakHourService.GetSpreadRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
+            return JsonData(peakHourService.GetSpreadRules(request, havePermissionPortTypes, leagueGroups), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

@@ -64,14 +64,25 @@
 
     function BuildDropDownLeague(sportType) {
         let leagueGroups = [];
-        customerClassHelper.leagueBySport[sportType].forEach(function (item) {
-            leagueGroups.push({
-                value: item.Id,
-                text: item.Name,
-                checked: true,
-                enable: true
+        if (sportType === 0) {
+            leagueGroupList.forEach(function (item) {
+                leagueGroups.push({
+                    value: item.Id,
+                    text: item.Name,
+                    checked: true,
+                    enable: true
+                });
             });
-        });
+        } else {
+            customerClassHelper.leagueBySport[sportType].forEach(function (item) {
+                leagueGroups.push({
+                    value: item.Id,
+                    text: item.Name,
+                    checked: true,
+                    enable: true
+                });
+            });
+        }
 
         ddlLeagueGroupBox.html('<div id="ddlLeagueGroup"></div>');
         ddlLeagueGroup = customerClassHelper.renderMultiSelect(

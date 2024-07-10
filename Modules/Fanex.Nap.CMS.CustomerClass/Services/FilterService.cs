@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
@@ -15,6 +16,8 @@
         IEnumerable<short> GetCustomerClasses();
 
         IEnumerable<LeagueGroup> GetLeagueGroups(int sportType = 0);
+
+        IEnumerable<LeagueGroup> GetLeagueGroups(IEnumerable<int> sportTypes);
 
         IEnumerable<IdNameModel> GetSports();
     }
@@ -45,6 +48,17 @@
             }
 
             return leagues;
+        }
+
+        public IEnumerable<LeagueGroup> GetLeagueGroups(IEnumerable<int> sportTypes)
+        {
+            var leagueGroups = new List<LeagueGroup>();
+            foreach (var sportType in sportTypes)
+            {
+                leagueGroups.AddRange(GetLeagueGroups(sportType));
+            }
+
+            return leagueGroups.Distinct();
         }
 
         public IEnumerable<IdNameModel> GetSports()

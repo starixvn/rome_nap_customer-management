@@ -45,7 +45,7 @@
         hasHostPermisson = $("#btnAdd").length > 0;
         if (hasHostPermisson) {
             $("#btnAdd").off("click").click(enableRowForAdding);
-            adjustPeakHour.init();
+            adjustPeakHour.init(function () { $("#formSearch").trigger("submit"); });
             $("#btnEditPeakHour").off("click").click(function () {
                 adjustPeakHour.openModal();
             });
@@ -89,7 +89,8 @@
             "#ddlLeagueGroup",
             {
                 minWidth: 220,
-                listData: leagueGroups
+                listData: leagueGroups,
+                showFilter: true
             }
         );
 
@@ -220,7 +221,7 @@
             `<th class="width-200">${resources.sportType}</th>`,
             `<th class="width-200">${resources.leagueGroup}</th>`,
             `<th class="width-80">${resources.isLive}</th>`,
-            `<th class="width-150">${resources.peakHourSpread}<span class="light-note-info-message small-margin-left" original-title="${cachedPeakNote}"></span></th>`,
+            `<th class="width-150">${resources.peakHourSpread}<span class="peak-tipsy light-note-info-message small-margin-left" original-title="${cachedPeakNote}"></span></th>`,
             `<th class="width-60">${resources.enable}</th>`,
             hasHostPermisson ? `<th class="width-60">${resources.action}</th>` : '',
             '</tr></thead > ',
@@ -684,7 +685,7 @@
             Platforms: spreadManagementHelper.validateRequiredField($(`#ddlEditPlatform-${policyId}`), getSelectedReplaceAllValue(`ddlEditPlatform-${policyId}`, "0", platforms.length)),
             Enable: $(`#ckbEdit-${policyId}`).is(":checked"),
             IsLive: spreadManagementHelper.validateRequiredField($(`span#ddlEditIsLive-${policyId}`), isLive),
-            LeagueGroups: spreadManagementHelper.validateRequiredField($(`#ddlEditLeagueGroup-${policyId}`), getSelectedReplaceAllValue(`ddlEditLeagueGroup-${policyId}`, "0", customerClassHelper.leagueBySport[+sportType].length))
+            LeagueGroups: spreadManagementHelper.validateRequiredField($(`#ddlEditLeagueGroup-${policyId}`), getSelectedReplaceAllValue(`ddlEditLeagueGroup-${policyId}`, "-1", customerClassHelper.leagueBySport[+sportType].length))
         };
 
         if (!spreadManagementHelper.isValidRule(updateRule) || spreadManagementHelper.isEmptyValue(updateRule.LeagueGroups)) {
@@ -766,7 +767,9 @@
 
     function clearAllTipsyErrors() {
         $("[original-title]").each(function () {
-            CMS.clearTipsyError($(this));
+            if (!$(this).hasClass('peak-tipsy')) {
+                CMS.clearTipsyError($(this));
+            }
         });
     }
 

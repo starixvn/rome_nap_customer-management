@@ -3,12 +3,14 @@
 const adjustPeakHour = (function ($) {
     let addNewOrEditForm = null,
         weekDate = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        cachedPeakHour = [];
+        cachedPeakHour = [],
+        search = null;
     function init(reloadGridFunc) {
         addNewOrEditForm = $("#adjustPeakHour");
         // Empty the #divPopupContent since it's children was cached.
         // It also helps to prevent the 'for' attributes do not work correctly in the popup.
         $("#adjustPeakHour").remove();
+        search = reloadGridFunc;
     }
 
     function openModal() {
@@ -22,7 +24,9 @@ const adjustPeakHour = (function ($) {
                     at: "center top",
                     of: "#headline"
                 },
-                close: null
+                close: function () {
+                    search();
+                }
             });
         getPeakHour();
     }

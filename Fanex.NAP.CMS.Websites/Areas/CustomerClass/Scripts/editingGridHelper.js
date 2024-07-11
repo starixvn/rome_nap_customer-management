@@ -117,7 +117,7 @@ const editingGridHelper = (function ($) {
 
     function renderAddEditLeagueGroup(divId, selectedValue, sportType, fnOnCheck, isSelectAll = false) {
         let optionList = [];
-        let isCheckAll = selectedValue === "All" || selectedValue === "0" || isSelectAll;
+        let isCheckAll = selectedValue === "All" || selectedValue === "-1" || isSelectAll;
         let selectedValueList = selectedValue !== undefined ? selectedValue.split(",") : [];
         customerClassHelper.leagueBySport[sportType] && customerClassHelper.leagueBySport[sportType].forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: isCheckAll || selectedValueList.includes(item.Id.toString()), enable: true })
         );

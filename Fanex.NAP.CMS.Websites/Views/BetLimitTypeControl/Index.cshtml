@@ -1,7 +1,10 @@
 ﻿@using Fanex.Nap.CMS.Customers.AppStart
+@using Newtonsoft.Json
+@model Fanex.NAP.CMS.BetLimitTypeControl.Models.BetLimitTypeViewModel
 @{
     ViewBag.Title = ViewLang.BetLimitTypeControl;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.None, NullValueHandling = NullValueHandling.Ignore };
 }
 @section Head
 {
@@ -10,6 +13,9 @@
 @section Foot
 {
     @Scripts.Render(CustomersBundlesConfig.BetLimitTypeControlScriptPath)
+    <script>
+        const viewModel = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model, jsonSettings))');
+    </script>
 }
 @section Headline
 {

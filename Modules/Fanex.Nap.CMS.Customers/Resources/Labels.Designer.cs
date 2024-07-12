@@ -439,6 +439,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to in.
+        /// </summary>
+        public static string In {
+            get {
+                return ResourceManager.GetString("In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to deactivate the selected account?.
         /// </summary>
         public static string InactiveAccountConfirmation {
@@ -633,6 +642,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string NoSite {
             get {
                 return ResourceManager.GetString("NoSite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to not in.
+        /// </summary>
+        public static string NotIn {
+            get {
+                return ResourceManager.GetString("NotIn", resourceCulture);
             }
         }
         

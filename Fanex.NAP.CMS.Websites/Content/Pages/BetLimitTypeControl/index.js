@@ -237,18 +237,16 @@ Fanex.CMS.BetLimitTypeControl = function () {
         sportTypeCheckedList = null;
         betTypeCheckedList = null;
 
-        var $ddlLeagueGroupAdd = null;
-
+        $("#ddlLeagueGroupInNotIn").combobox();
         if (isAdd) {
             $('#selectLiveIndicatorAdd').prop('selectedIndex', 0);
-            $ddlLeagueGroupAdd = renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", "");
+            renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", "", true);
         } else {
             $('#selectLiveIndicatorAdd').val(betLimitTypeData.LiveIndicator);
             var leagueGroupResult = getLeagueGroupList(betLimitTypeData.LeagueGroupList, betLimitTypeData.ExcludedLeagueGroupList);
-            $ddlLeagueGroupAdd = renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", leagueGroupResult.leagueGroupList);
-            $("#ddlLeagueGroupInNotIn").val(leagueGroupResult.isExcludedLeagueGroup ? "1" : "0");
+            renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", leagueGroupResult.leagueGroupList, !leagueGroupResult.isExcludedLeagueGroup && leagueGroupResult.leagueGroupList === "");
+            $("#ddlLeagueGroupInNotIn").val(leagueGroupResult.isExcludedLeagueGroup ? "1" : "0").combobox('refresh');
         }
-        $("#ddlLeagueGroupInNotIn").combobox();
 
         
         $('#txtTypeAdd').val(isAdd ? '' : betLimitTypeData.BetLimitType);
@@ -310,8 +308,8 @@ Fanex.CMS.BetLimitTypeControl = function () {
         });
     }
 
-    function renderDropdownListLeagueGroup(selectElementId, selectedLeagueGroup) {
-        var sabaItems = renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedLeagueGroup);
+    function renderDropdownListLeagueGroup(selectElementId, selectedLeagueGroup, isCheckAll) {
+        var sabaItems = renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedLeagueGroup, isCheckAll);
         var isCheckAllSaba = true;
         sabaItems.some(function (item) {
             if (item.checked === false) {
@@ -320,7 +318,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             }
         });
 
-        var otherItems = renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedLeagueGroup);
+        var otherItems = renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedLeagueGroup, isCheckAll);
         var isCheckAllOther = true;
         otherItems.some(function (item) {
             if (item.checked === false) {
@@ -333,16 +331,16 @@ Fanex.CMS.BetLimitTypeControl = function () {
             {
                 value: "sabasports",
                 text: "Saba Sports",
-                checked: isCheckAllSaba,
+                checked: isCheckAll || isCheckAllSaba,
                 enable: true,
-                items: renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedLeagueGroup)
+                items: sabaItems
             },
             {
                 value: "others",
                 text: "Others",
-                checked: isCheckAllOther,
+                checked: isCheckAll || isCheckAllOther,
                 enable: true,
-                items: renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedLeagueGroup)
+                items: otherItems
             }
         ];
 
@@ -355,13 +353,14 @@ Fanex.CMS.BetLimitTypeControl = function () {
             minWidth: 345,
             maxHeight: 230,
             listData: optionList,
+            isCheckAll: isCheckAll || (isCheckAllSaba && isCheckAllOther),
             showFilter: true
         });
     }
 
-    function renderOptionLeagueGroup(leagueGroups, seletecIds) {
+    function renderOptionLeagueGroup(leagueGroups, seletecIds, isCheckAll) {
         var options = [];
-        leagueGroups.forEach(lg => options.push({ value: lg.Id, text: lg.Name, checked: seletecIds.includes(lg.Id.toString()), enable: true }));
+        leagueGroups.forEach(lg => options.push({ value: lg.Id, text: lg.Name, checked: isCheckAll || seletecIds.includes(lg.Id.toString()), enable: true }));
 
         return options;
     }
@@ -480,7 +479,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             sportTypeList: sportTypeUncheckedList.length === 0 ? '0' : sportTypeCheckedList.join(','),
             betTypeList: betTypeUncheckedList.length === 0 ? '0' : betTypeCheckedList.join(','),
             liveIndicator: liveIndicator,
-            leagueGroupList: leagueGroupUncheckedList.length === 0 ? '-1' : leagueGroupCheckedList.join(","),
+            leagueGroupList: leagueGroupUncheckedList.length === 0 && $('#ddlLeagueGroupInNotIn').val() === "0" ? '' : leagueGroupCheckedList.join(","),
             isExcludedLeagueGroup: $('#ddlLeagueGroupInNotIn').val() === "1",
             leagueList: leagueList,
             beginTime: beginTime,

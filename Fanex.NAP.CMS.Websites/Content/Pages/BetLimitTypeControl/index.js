@@ -241,6 +241,8 @@ Fanex.CMS.BetLimitTypeControl = function () {
         if (isAdd) {
             $('#selectLiveIndicatorAdd').prop('selectedIndex', 0);
             renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", "", true);
+            $('#txtLeagueAdd').val('');
+            $("#ddlLeagueGroupInNotIn").val("0").combobox('refresh');
         } else {
             $('#selectLiveIndicatorAdd').val(betLimitTypeData.LiveIndicator);
             var leagueGroupResult = getLeagueGroupList(betLimitTypeData.LeagueGroupList, betLimitTypeData.ExcludedLeagueGroupList);
@@ -252,6 +254,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
         $('#txtTypeAdd').val(isAdd ? '' : betLimitTypeData.BetLimitType);
         $('#txtFromTimeAdd').val(isAdd ? '' : betLimitTypeData.BeginTime || '');
         $('#txtToTimeAdd').val(isAdd ? '' : betLimitTypeData.EndTime || '');
+        $('#txtLeagueAdd').val(isAdd ? '' : betLimitTypeData.LeagueList);
         $('#chkSpecificTime')
             .change(function () {
                 if ($(this).is(':checked')) {
@@ -278,7 +281,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 change: function () {
                     CMS.clearTipsyError($(this));
                 }
-            }
+            };
             $('#txtFromTimeAdd').timepicker(timePickerOptions);
             $('#txtToTimeAdd').timepicker(timePickerOptions);
             $('#btnCancelAdd').click(CMS.closePopup);
@@ -293,6 +296,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                     of: '#headline'
                 }
             });
+            initLeagueAutoSuggestion();
         } else {
             $addDialog.dialog('open');
             $('#ui-dialog-title-dialog-popup').text(title);
@@ -308,8 +312,68 @@ Fanex.CMS.BetLimitTypeControl = function () {
         });
     }
 
+    function initLeagueAutoSuggestion() {
+        // don't navigate away from the field on tab when selecting an item
+        $('#txtLeagueAdd').on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB
+                && $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            source: function (request, response) {
+                var getLeagueFormData = {
+                    leagues: $.trim(extractLast(request.term))
+                };
+                getLeagueFormData[$("#ddlLeagueGroupInNotIn").val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = $("#ddlLeagueGroupAdd").fanexMultiSelect("getItems", true).join(",");
+
+                $.getJSON(CMS.resolveRootUrl("BetLimitTypeControl/GetLeagues"),
+                    getLeagueFormData,
+                    function (dataString) {
+                        var data = JSON.parse(dataString);
+                        response($.map(data, function (item) {
+                            return {
+                                value: item.Id,
+                                label: item.Name
+                            };
+                        }));
+                    });
+            },
+            search: function () {
+                // custom minLength
+                var term = extractLast(this.value);
+                if ($.trim(term).length < 3) {
+                    return false;
+                }
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                // add placeholder to get the comma-and-space at the end
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    }
+
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
     function renderDropdownListLeagueGroup(selectElementId, selectedLeagueGroup, isCheckAll) {
-        var sabaItems = renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedLeagueGroup, isCheckAll);
+        let selectedIdsList = selectedLeagueGroup.split(",");
+        var sabaItems = renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedIdsList, isCheckAll);
         var isCheckAllSaba = true;
         sabaItems.some(function (item) {
             if (item.checked === false) {
@@ -318,7 +382,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
             }
         });
 
-        var otherItems = renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedLeagueGroup, isCheckAll);
+        var otherItems = renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedIdsList, isCheckAll);
         var isCheckAllOther = true;
         otherItems.some(function (item) {
             if (item.checked === false) {

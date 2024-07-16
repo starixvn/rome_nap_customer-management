@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="BetLimitTypeControlController.cs" />
     <Compile Include="Criteria\DeleteCriteria.cs" />
+    <Compile Include="Criteria\GetLeagueCriteria.cs" />
     <Compile Include="Criteria\GetLeagueGroupCriteria.cs" />
     <Compile Include="Criteria\UpdateCriteria.cs" />
     <Compile Include="Criteria\InsertCriteria.cs" />

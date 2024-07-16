@@ -26,6 +26,8 @@
         Result Delete(DeleteRequest request);
 
         IEnumerable<LeagueGroup> GetLeagueGroups();
+
+        IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues);
     }
 
     public class BetLimitTypeControlService : IBetLimitTypeControlService
@@ -145,5 +147,12 @@
 
             return leagues;
         }
+
+        public IEnumerable<IdNameModel> GetLeagues(
+            string leagueGroupIds,
+            string leagueGroupListNotIn,
+            string leagues)
+            => serviceBase.GetRepositoryData<IdNameModel>(
+                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues));
     }
 }

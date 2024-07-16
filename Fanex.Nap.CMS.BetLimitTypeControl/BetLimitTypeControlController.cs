@@ -50,5 +50,9 @@
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Host)]
         public JsonResult Delete(DeleteRequest request) => Json(service.Delete(request));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Read)]
+        public ActionResult GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues)
+            => JsonData(service.GetLeagues(leagueGroupIds, leagueGroupListNotIn, leagues));
     }
 }

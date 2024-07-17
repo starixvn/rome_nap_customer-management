@@ -107,7 +107,7 @@
                 sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             }
 
-            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds));
+            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds)).OrderBy(rule => rule.CustomerClass?.ToString());
         }
 
         public IEnumerable<Rule> GetRules(short sportType)

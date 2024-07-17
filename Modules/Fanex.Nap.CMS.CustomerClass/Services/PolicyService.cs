@@ -176,10 +176,10 @@
         {
             if (sortOrder == ASC)
             {
-                return rules.OrderBy(rule => rule.CustomerClass);
+                return rules.OrderBy(rule => rule.CustomerClass?.ToString());
             }
 
-            return rules.OrderByDescending(rule => rule.CustomerClass);
+            return rules.OrderByDescending(rule => rule.CustomerClass?.ToString());
         }
     }
 }

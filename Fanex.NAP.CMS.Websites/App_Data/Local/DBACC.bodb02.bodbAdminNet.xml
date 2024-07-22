@@ -70,10 +70,10 @@
     </Setting>
   </Function>
   <Function Name="Virtual Rate Engine">
-    <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel_xpre" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel_xpre" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel_xpre" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Customer Class Management">
     <Setting Key="Nap_LM_CustomerClassSel" SpName="Nap_LM_CustomerClassSel" DbName="DBACC.bodb02.wsv_nap" />

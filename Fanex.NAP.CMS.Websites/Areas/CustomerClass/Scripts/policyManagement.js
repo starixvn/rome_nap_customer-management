@@ -29,7 +29,7 @@
             sportType = sportList.map(sp => sp.Value).join(',');
         }
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=asc&sortField=RuleTitle`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=asc&fieldSort=RuleTitle`),
             function (data) {
                 var result = typeof data === "string" ? JSON.parse(data) : data;
                 if (result.Message) {
@@ -170,7 +170,7 @@
         var sortField = sortType === "colRuleTitle" ? "RuleTitle" : "CustomerClass";
         CMS.disableInput();
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=${nextSortOrder}&sortField=${sortField}`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=${nextSortOrder}&fieldSort=${sortField}`),
             function (data) {
                 var result = typeof data === "string" ? JSON.parse(data) : data;
                 if (result.Message) {

@@ -1211,9 +1211,6 @@
     <Content Include="Views\DefaultMemberBetLimit\Index.cshtml" />
     <Content Include="Content\Pages\DefaultMemberBetLimit\index.less" />
     <Content Include="Views\DefaultMemberBetLimit\_Update.cshtml" />
-    <Content Include="Web.AppSettings.aws.config">
-      <DependentUpon>Web.AppSettings.config</DependentUpon>
-    </Content>
     <Content Include="Web.ConnectionString.aws.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>

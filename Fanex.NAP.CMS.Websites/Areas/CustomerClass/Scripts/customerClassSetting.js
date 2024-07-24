@@ -360,6 +360,8 @@
     }
 
     function OpenPopupRuleDetail(ruleTitle, ruleDetail) {
+        var creditSiteCount = cachedCreditSites.length;
+        var depositSiteCount = cachedLicenseeSites.length;
         let html = [
             '<div class="form" id="viewRuleDetailsForm">',
             `<div><b>Rule Title: </b>${ruleTitle}</div>`,
@@ -376,6 +378,25 @@
             '</tr></thead><tbody>'
         ];
         ruleDetail.forEach(function (item, index) {
+            if (item.Sites.includes("AllCredit")) {
+                item.NumberOfSites = +item.NumberOfSites + creditSiteCount - 1;
+            }
+            if (item.Sites.includes("AllDeposit")) {
+                item.NumberOfSites = +item.NumberOfSites + depositSiteCount - 1;
+            }
+
+            if (item.Sites === "All") {
+                item.NumberOfSites = creditSiteCount + depositSiteCount;
+            }
+
+            if (item.CurrencyName === "All") {
+                item.NumberOfCurrencies = currencyList.length;
+            }
+
+            if (item.PlatformNames === "All Platforms") {
+                item.NumberOfPlatform = 5;
+            }
+            
             html.push(`<tr><td class="align-center width-20">${index + 1}</td>
                         <td class="width-250">${item.Sites.replace("AllCredit", "All Credit").replace("AllDeposit", "All Deposit")}</td>
                         ${isMultiSite ? '<td class="width-60 detail-count">' + item.NumberOfSites + '</td>': ''}

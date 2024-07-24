@@ -132,16 +132,16 @@
   </Function>
   <Function Name="Customer Class Management">
     <!--Rule-->
-    <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassRuleIns" SpName="NAP_LM_CustomerClassRuleIns_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleSearch" SpName="NAP_LM_CustomerClassRuleSearch" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSportGet" SpName="NAP_LM_CustomerClassSportGet" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleSel" SpName="NAP_LM_CustomerClassRuleSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleIns" SpName="NAP_LM_CustomerClassRuleIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassRuleEnable" SpName="NAP_LM_CustomerClassRuleEnable" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassRuleCheck" SpName="NAP_LM_CustomerClassRuleCheck" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassRuleDel" SpName="NAP_LM_CustomerClassRuleDel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassRuleDel" SpName="NAP_LM_CustomerClassRuleDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Policy-->
-    <Setting Key="NAP_LM_CustomerClassPolicySel" SpName="NAP_LM_CustomerClassPolicySel_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassPolicySel" SpName="NAP_LM_CustomerClassPolicySel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.wsv_nap" />
@@ -155,8 +155,8 @@
     <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteDel" SpName="NAP_LM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Customer Class Setting-->	
-    <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting_UAT2" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_LM_CustomerClassSetting_RuleDetail" SpName="NAP_LM_CustomerClassSetting_RuleDetail_UAT2" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSetting" SpName="NAP_LM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_LM_CustomerClassSetting_RuleDetail" SpName="NAP_LM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->
     <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />

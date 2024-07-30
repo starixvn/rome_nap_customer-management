@@ -15,7 +15,7 @@
 
     internal interface IRuleService
     {
-        PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null);
+        PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes);
 
         IEnumerable<Rule> GetRules(SearchRuleRequest request, IEnumerable<IdNameModel> sportTypes = null);
 
@@ -23,7 +23,7 @@
 
         Rule GetRule(int ruleId);
 
-        IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes = null);
+        IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes);
 
         Result AddRule(AddRuleRequest request);
 
@@ -59,7 +59,7 @@
             this.ruleDataAccess = ruleDataAccess ?? new RuleDataAccess();
         }
 
-        public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null)
+        public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes)
         {
             List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
 
@@ -163,7 +163,7 @@
             return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
         }
 
-        public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes = null)
+        public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes)
         {
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite));

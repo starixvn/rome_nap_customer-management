@@ -17,7 +17,7 @@
             CCSportTypeList = vm.CCSportType;
             VR_From = vm.VRFrom;
             VR_To = vm.VRTo;
-            VRStatus = 1;
+            VRStatus = 2;
             SporttypeList = vm.SportType;
             BettypeList = vm.BetType;
             LiveIndicator = vm.LiveIndicator;

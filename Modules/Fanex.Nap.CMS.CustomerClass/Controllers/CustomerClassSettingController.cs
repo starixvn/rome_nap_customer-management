@@ -39,6 +39,7 @@
             var viewModel = new CustomerClassSettingViewModel(
                 filterService.GetAllSites(),
                 filterService.GetCustomerClasses(),
+                filterService.GetAllCurrencies(),
                 havePermissionPortTypes,
                 filterService.GetLeagueGroups());
 
@@ -55,6 +56,18 @@
             }
 
             return JsonData(ruleService.GetRules(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
+        }
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.CustomerClassSetting, Policy = Constant.Policy.Read)]
+        public ActionResult RuleDetail(GetRuleDetailRequest request)
+        {
+            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => request.SportTypes.Split(',').Contains(sp.Id.ToString()));
+            if (!havePermissionPortTypes.Any())
+            {
+                return Forbidden(behavior: JsonRequestBehavior.AllowGet);
+            }
+
+            return JsonData(ruleService.GetRuleDetail(request, havePermissionPortTypes), JsonRequestBehavior.AllowGet);
         }
     }
 }

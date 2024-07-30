@@ -14,8 +14,13 @@ const policyManagementHelper = (function () {
     }
 
     function renderCustomerClass(rule, showEnableCriteria) {
-        let html = [renderRuleSetting(resources.customerClass, rule.CustomerClass)];
-
+        let html = [renderRuleSetting(resources.sportType, rule.SportTypeName)];
+        if (rule.CustomerClass) {
+            html.push(renderRuleSetting(resources.generalCC, rule.CustomerClass));
+        }
+        if (rule.CustomerClassDetail) {
+            html.push(renderRuleSetting(resources.sportCC, rule.CustomerClassDetail));
+        }
         if (showEnableCriteria) {
             html.push(renderRuleSetting(resources.enable, showEnableValue(rule.Enable)));
         }
@@ -26,7 +31,6 @@ const policyManagementHelper = (function () {
     function renderSportTypeLeagueGroupIsLive(rule) {
         return [
             '<div>',
-            renderRuleSetting(resources.sportType, rule.SportTypeName), ', ',
             renderRuleSetting(resources.leagueGroup, rule.IsAllLeagueGroups ? resources.all : rule.LeagueGroups.split(",").join(", ")), ', ',
             renderRuleSetting(resources.isLive, showIsLiveValue(rule.IsLive)),
             '</div>'

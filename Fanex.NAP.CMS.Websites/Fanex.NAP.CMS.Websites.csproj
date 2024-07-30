@@ -450,6 +450,7 @@
     <Content Include="Areas\CustomerClass\Scripts\siteManagementUpload.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagement.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagementHelper.js" />
+    <Content Include="Areas\CustomerClass\Styles\images\switch.png" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout-bulk-update.js" />
     <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout-verify.js" />

@@ -7,12 +7,19 @@
         cachedLicenseeSitesName = [],
         cachedCreditSites = [],
         cachedCreditSitesName = [],
+        isMultiSite = 0,
         freeGrid = $("#freegrid");
 
     function init() {
-        const ddlCustomerClass = $("#ddlCustomerClass");
+        const txtFilterCustomerClass = $("#txtFilterCustomerClass");
+        const txtFilterCustomerClassDetail = $("#txtFilterCustomerClassDetail");
+        txtFilterCustomerClass.blur(() => txtFilterCustomerClass.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClass.val())));
+        txtFilterCustomerClassDetail.blur(() => txtFilterCustomerClassDetail.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClassDetail.val())));
+        txtFilterCustomerClass.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
+        txtFilterCustomerClassDetail.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
         const ddlSportType = $("#ddlSportType");
         getCreditAndLicenseeSites();
+        renderCurrencies();
 
         const ddlSite = customerClassHelper.renderMultiSelect(
             "#ddlSites",
@@ -27,7 +34,8 @@
             e.preventDefault();
 
             const site = customerClassHelper.getSelectedTextReplaceAllValue("ddlSites", "All", siteList.length);
-            const customerClass = ddlCustomerClass.val();
+            const customerClass = txtFilterCustomerClass.val();
+            const customerClassDetail = txtFilterCustomerClassDetail.val();
             var sportTypes = ddlSportType.val();
             if (sportTypes === "0") {
                 sportTypes = sportList.map(sp => sp.Value).join(',');
@@ -36,12 +44,40 @@
             cachedFilter = {
                 Site: site,
                 CustomerClass: customerClass,
+                CustomerClassDetail: customerClassDetail,
                 SportTypes: sportTypes,
+                currencies: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
                 PageIndex: 0,
                 PageSize: 100
             };
             search(0, getPageSize());
         });
+    }
+
+    function getSelectedReplaceAllValue(divId, allvalue, allItemsLength) {
+        var selectedItems = $(`#${divId}`).fanexMultiSelect("getItems", true);
+
+        if (selectedItems.length === allItemsLength) {
+            return allvalue;
+        }
+
+        return selectedItems.join();
+    }
+
+    function renderCurrencies() {
+        let optionList = [];
+        currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: true, enable: true })
+        );
+
+        customerClassHelper.renderMultiSelect(
+            "#ddlCurrencies",
+            {
+                minWidth: 120,
+                maxHeight: 300,
+                listData: optionList,
+                showFilter: true
+            }
+        );
     }
 
     function getCreditAndLicenseeSites() {
@@ -102,13 +138,21 @@
     }
 
     function defaultGridOptions() {
+        var groupHeaderRows = [
+            {
+                Columns: [
+                    { HeaderText: "Conditions", Name: "colRuleTitle", MergeColNumber: 5, ThClass: "header-main" },
+                    { HeaderText: "Apply To", Name: "colLeagueGroup", MergeColNumber: 2, ThClass: "header-main" },
+                    { HeaderText: "Restriction Settings", Name: "colDiffBalanceRatio", MergeColNumber: 8, ThClass: "header-main" }
+                ]
+            }
+        ];
         var columns = [
-            { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true },
-            { HeaderText: resources.customerClass, Width: 100, Name: "colCustomerClass", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.site, Width: 100, Name: "colSite", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.currency, Width: 100, Name: "colCurrency", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.platform, Width: 100, Name: "colPlatform", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.ruleTitle, Width: 250, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", AllowTruncate: true, Sort: true, SortDirection: 'asc' },
             { HeaderText: resources.sportType, Width: 100, Name: "colSportType", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.generalCC, Width: 100, Name: "colGeneralCC", HeaderAlign: "center", CellAlign: "center", Sort: true, SortType: 'string' },
+            { HeaderText: resources.sportCC, Width: 100, Name: "colSportCC", HeaderAlign: "center", CellAlign: "center", Sort: true, SortType: 'string' },
+            { HeaderText: `${resources.site} - ${resources.currency} - ${resources.platform}`, Width: 150, Name: "colSiteCurPlat", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.leagueGroup, Width: 100, Name: "colLeagueGroup", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.isLive, Width: 60, Name: "colIsLive", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.diffBalanceRatio, Width: 60, Name: "colDiffBalanceRatio", HeaderAlign: "center", CellAlign: "center" },
@@ -122,6 +166,8 @@
         ];
 
         return {
+            customizeHeader: true,
+            groupHeaderRows: groupHeaderRows,
             showTitle: false,
             fullWidth: true,
             fullHeight: true,
@@ -135,6 +181,12 @@
             pagerOption: {
                 itemsPerPageArray: CMS.pagerRanges,
                 pagerSelectCallBack: search
+            },
+            sortOption: {
+                afterGridSorted: function (bodyRows, columnname, currentDirection) {
+                    bindEventsAfterRenderGridSuccessfully();
+                    return bodyRows;
+                }
             }
         };
     }
@@ -144,11 +196,10 @@
             return {
                 Columns: [
                     { Name: "colRuleTitle", Value: rule.RuleTitle, TdClass: "pink-cell" },
-                    { Name: "colCustomerClass", Value: rule.CustomerClass, TdClass: "pink-cell" },
-                    { Name: "colSite", Value: renderSitesCell(rule.Site), TdClass: "pink-cell" },
-                    { Name: "colCurrency", Value: renderLinkWithDetailsPopup(rule.IsAllCurrencies, rule.Currencies, "link-currency"), TdClass: "pink-cell" },
-                    { Name: "colPlatform", Value: renderLinkWithDetailsPopup(rule.IsAllPlatforms, rule.PlatformNames, "link-platform"), TdClass: "pink-cell" },
                     { Name: "colSportType", Value: rule.SportTypeName, TdClass: "green-cell" },
+                    { Name: "colGeneralCC", Value: rule.CustomerClass ? rule.CustomerClass.toString() : "", TdClass: "pink-cell" },
+                    { Name: "colSportCC", Value: rule.CustomerClassDetail ? rule.CustomerClassDetail.toString() : "", TdClass: "pink-cell" },
+                    { Name: "colSiteCurPlat", Value: renderLinkWithDetailsPopup(rule), TdClass: "pink-cell" },
                     { Name: "colLeagueGroup", Value: renderLeagueGroupCell(rule.IsAllLeagueGroups, rule.LeagueGroups, rule.SportType), TdClass: "green-cell" },
                     { Name: "colIsLive", Value: ruleManagementHelper.renderIsLiveCell(rule.IsLive), TdClass: "green-cell" },
                     { Name: "colDiffBalanceRatio", Value: ruleManagementHelper.renderPercentCell(rule.DiffBalanceRatio) },
@@ -164,58 +215,10 @@
         });
     }
 
-    function renderLinkWithDetailsPopup(isAll, data, className) {
-        if (isAll) {
-            return `<a href="javascript:;" class="${className}" data-details="${data}">${resources.all}</a>`;
-        }
-
-        const numOfData = data.split(",").length;
-        return numOfData < 2
-            ? data
-            : `<a href="javascript:;" class="${className}" data-details="${data}">${numOfData}</a>`;
+    function renderLinkWithDetailsPopup(rule) {
+        return `<a href="javascript:;" class="link-rule-detail" data-ruleid="${rule.RuleId}" data-ruletitle="${rule.RuleTitle}" data-sporttype="${rule.SportType}">View Detail</a>`;
     }
-
-
-    function renderSitesCell(sites) {
-        var arraySites = sites.split(',');
-        if (arraySites.includes('All')) {
-            return `<a href="javascript:;" class="link-sites" data-details="${siteList.map(s => s.Name).join()}">All</a>`;
-        }
-
-        if (arraySites.includes("AllCredit")) {
-            arraySites = arraySites.filter(st => !cachedCreditSitesName.includes(st));
-        }
-
-        if (arraySites.includes("AllDeposit")) {
-            arraySites = arraySites.filter(st => !cachedLicenseeSitesName.includes(st));
-        }
-
-        var removeDublicateSites = arraySites.join();
-
-        if (removeDublicateSites === "AllCredit") {
-            return `<a href="javascript:;" class="link-sites" data-details="${cachedCreditSitesName.join()}">All Credit</a>`;
-        }
-
-        if (removeDublicateSites === "AllDeposit") {
-            return `<a href="javascript:;" class="link-sites" data-details="${cachedLicenseeSitesName.join()}">All Deposit</a>`;
-        }
-
-        if (arraySites.includes("AllCredit")) {
-            removeDublicateSites = removeDublicateSites.replace("AllCredit", cachedCreditSitesName.join());
-        }
-
-        if (arraySites.includes("AllDeposit")) {
-            removeDublicateSites = removeDublicateSites.replace("AllDeposit", cachedLicenseeSitesName.join());
-        }
-        arraySites = removeDublicateSites.split(",");
-
-        const numOfSites = arraySites.length;
-
-        return numOfSites < 2
-            ? arraySites.join(", ")
-            : `<a href="javascript:;" class="link-sites" data-details="${removeDublicateSites}">${numOfSites}</a>`;
-    }
-
+    
     function renderLeagueGroupCell(isAllLeagueGroups, leagueGroups, sportType) {
         if (isAllLeagueGroups) {
 
@@ -229,24 +232,13 @@
     }
 
     function bindEventsAfterRenderGridSuccessfully() {
-        freeGrid.find(".link-currency")
-            .off("click")
-            .click(function () {
-                handleDetailsPopup(resources.currency, $(this));
-            });
-        freeGrid.find(".link-platform")
-            .off("click")
-            .click(function () {
-                handleDetailsPopup(resources.platform, $(this));
-            });
-        freeGrid.find(".link-sites")
-            .off("click")
-            .click(function () {
-                handleDetailsPopup(resources.site, $(this));
-            });
         freeGrid.find(".link-league-group")
             .off("click")
             .click(handleViewLeagueGroups);
+
+        freeGrid.find(".link-rule-detail")
+            .off("click")
+            .click(handleSiteCurrencyPlatformViewDetail);
     }
 
     function handleDetailsPopup(columnName, element) {
@@ -284,7 +276,6 @@
         }
 
         OpenPopUpLeague(sportType, $this.data("leaguegroups"));
-        
     }
 
     function OpenPopUpLeague(sportType, itemleagues) {
@@ -310,6 +301,114 @@
 
         CMS.modal(
             resources.leagueGroup,
+            html.join(""),
+            {
+                resizable: false,
+                position: {
+                    my: "center top",
+                    at: "center top",
+                    of: "#headline"
+                }
+            });
+    }
+
+    function handleSiteCurrencyPlatformViewDetail() {
+        const $this = $(this);
+        const ruleId = $this.data("ruleid");
+        const ruleTitle = $this.data("ruletitle");
+        const sportTypes = $this.data("sporttype");
+        const currencies = cachedFilter.currencies;
+        const request = {
+            ruleId,
+            sportTypes,
+            currencies,
+            isMultiSite
+        };
+
+        CallGetDetailRule(ruleTitle, request);
+    }
+
+    function CallGetDetailRule(ruleTitle, request) {
+        CMS.disableInput();
+        CMS.callAjax(
+            this,
+            CMS.resolveRootUrl(`CustomerClassSetting/RuleDetail`),
+            request,
+            function (data) {
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                } else {
+                    OpenPopupRuleDetail(ruleTitle, result);
+                    RegisterSwitchView(ruleTitle, request);
+                }
+            },
+            null,
+            function () {
+                CMS.enableInput();
+            });
+    }
+
+    function RegisterSwitchView(ruleTitle, request) {
+        $("#btn-switch-detail")
+            .off("click")
+            .click(function () {
+                isMultiSite = isMultiSite ? 0 : 1;
+                request.isMultiSite = isMultiSite;
+                CallGetDetailRule(ruleTitle, request);
+            });
+    }
+
+    function OpenPopupRuleDetail(ruleTitle, ruleDetail) {
+        var creditSiteCount = cachedCreditSites.length;
+        var depositSiteCount = cachedLicenseeSites.length;
+        let html = [
+            '<div class="form" id="viewRuleDetailsForm">',
+            `<div><b>Rule Title: </b>${ruleTitle}</div>`,
+            `<div class="divSwitch"><button id="btn-switch-detail" class="btn-switch"><span class="icon-switch"></span>${isMultiSite ? "Group by Site" : "Normal View"}</button></div>`,
+            '<table class="tbl-freegrid">',
+            '<thead><tr>',
+            '<th class="width-20" >No.</th >',
+            '<th class="width-250">Sites</th>',
+            isMultiSite ? '<th class="width-60">Number Of Sites</th>' : '',
+            isMultiSite ? '<th class="width-250">Currency Name</th>' : '<th class="width-310">Currency Name</th>',
+            '<th class="width-60">Number Of Currencies</th>',
+            '<th class="width-200">Platform</th>',
+            '<th class="width-60">Number Of Platforms</th>',
+            '</tr></thead><tbody>'
+        ];
+        ruleDetail.forEach(function (item, index) {
+            if (item.Sites.includes("AllCredit")) {
+                item.NumberOfSites = +item.NumberOfSites + creditSiteCount - 1;
+            }
+            if (item.Sites.includes("AllDeposit")) {
+                item.NumberOfSites = +item.NumberOfSites + depositSiteCount - 1;
+            }
+
+            if (item.Sites === "All") {
+                item.NumberOfSites = creditSiteCount + depositSiteCount;
+            }
+
+            if (item.CurrencyName === "All") {
+                item.NumberOfCurrencies = currencyList.length;
+            }
+
+            if (item.PlatformNames === "All Platforms") {
+                item.NumberOfPlatform = 5;
+            }
+            
+            html.push(`<tr><td class="align-center width-20">${index + 1}</td>
+                        <td class="width-250">${item.Sites.replace("AllCredit", "All Credit").replace("AllDeposit", "All Deposit")}</td>
+                        ${isMultiSite ? '<td class="width-60 detail-count">' + item.NumberOfSites + '</td>': ''}
+                        <td class="width-${isMultiSite ? '250' : '310'}">${item.CurrencyName}</td>
+                        <td class="width-60 detail-count">${item.NumberOfCurrencies}</td>
+                        <td class="width-200">${item.PlatformNames}</td>
+                        <td class="width-60 detail-count">${item.NumberOfPlatform}</td></tr>`);
+        });
+        html.push('</tbody></table></div>');
+
+        CMS.modal(
+            ruleTitle,
             html.join(""),
             {
                 resizable: false,

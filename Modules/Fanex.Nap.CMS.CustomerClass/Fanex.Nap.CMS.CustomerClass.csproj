@@ -156,6 +156,7 @@
     <Compile Include="Criteria\GetPagedRuleListCriteria.cs" />
     <Compile Include="Criteria\GetPolicyCriteria.cs" />
     <Compile Include="Criteria\GetPolicyTitleCriteria.cs" />
+    <Compile Include="Criteria\GetRuleDetailCriteria.cs" />
     <Compile Include="Criteria\GetRuleListBySportType.cs" />
     <Compile Include="Criteria\GetSiteSettingCriteria.cs" />
     <Compile Include="Criteria\GetSiteUploadProgressCriteria.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Models\PolicyItem.cs" />
     <Compile Include="Models\Rule.cs" />
     <Compile Include="Models\PagedRule.cs" />
+    <Compile Include="Models\RuleDetail.cs" />
     <Compile Include="Models\SiteSetting.cs" />
     <Compile Include="Models\SiteSettingExcel.cs" />
     <Compile Include="Models\SpreadRule.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Requests\DeleteRuleRequest.cs" />
     <Compile Include="Requests\DeleteSiteSettingRequest.cs" />
     <Compile Include="Requests\EnableOfferingRequest.cs" />
+    <Compile Include="Requests\GetRuleDetailRequest.cs" />
     <Compile Include="Requests\GetSiteSettingRequest.cs" />
     <Compile Include="Requests\Nonsports\AddEditNonsportsRequest.cs" />
     <Compile Include="Requests\Nonsports\SearchNonsportsRequest.cs" />

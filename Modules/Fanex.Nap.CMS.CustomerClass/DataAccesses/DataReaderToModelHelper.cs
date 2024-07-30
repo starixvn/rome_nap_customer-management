@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.DataAccesses
 {
+    using Fanex.Nap.CMS.CustomerClass.Models;
     using System;
     using System.Data;
     using Rule = Models.Rule;
@@ -11,10 +12,7 @@
             ? ToRule(
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
-                enable: Convert.ToBoolean(reader["Enable"]),
-                site: reader["Sites"].ToString(),
-                currencies: reader["CurrencyName"].ToString(),
-                platforms: reader["Platform"].ToString())
+                enable: Convert.ToBoolean(reader["Enable"]))
             : null;
 
         public static Rule ToRuleList(IDataReader reader)
@@ -50,7 +48,8 @@
 #pragma warning restore S3427
             => new Rule(
                 Convert.ToInt32(reader["RuleId"]),
-                Convert.ToInt16(reader["CustomerClass"]),
+                GetShort(reader["CustomerClass"]),
+                GetShort(reader["CustomerClassDetail"]),
                 reader["RuleTitle"].ToString(),
                 Convert.ToInt16(reader["SportType"]),
                 leagueGroupIds,
@@ -73,6 +72,15 @@
                 currencies,
                 platforms,
                 HasColumn(reader, "PolicyTitles") ? reader["PolicyTitles"].ToString() : string.Empty);
+
+        public static RuleDetail ToRuleDetail(IDataReader reader)
+            => new RuleDetail(
+                reader["Sites"].ToString(),
+                Convert.ToInt32(reader["NumberOfSites"]),
+                reader["CurrencyName"].ToString(),
+                Convert.ToInt32(reader["NumberOfCurrencies"]),
+                reader["Platform"].ToString(),
+                Convert.ToInt32(reader["NumberOfPlatform"]));
 
         private static int? GetInt(object value)
             => value == null || value == DBNull.Value

@@ -41,7 +41,7 @@
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Read)]
-        public ActionResult GetPolicies(string policyTitle, string sportTypes)
+        public ActionResult GetPolicies(string policyTitle, string sportTypes, string sortOrder, string fieldSort)
         {
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => sportTypes == "0" || sportTypes.Split(',').Contains(sp.Id.ToString()));
             if (!havePermissionPortTypes.Any())
@@ -49,7 +49,7 @@
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);
             }
 
-            return JsonData(policyService.GetPolicies(havePermissionPortTypes, policyTitle), JsonRequestBehavior.AllowGet);
+            return JsonData(policyService.GetPolicies(havePermissionPortTypes, sortOrder, fieldSort, policyTitle), JsonRequestBehavior.AllowGet);
         }
 
         [NapAuth(FunctionKey = CMSFunctionKeys.PolicyManagement, Policy = Constant.Policy.Host)]

@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Net;
     using System.Text;
-    using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
@@ -16,13 +15,15 @@
 
     internal interface IRuleService
     {
-        PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null);
+        PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes);
 
         IEnumerable<Rule> GetRules(SearchRuleRequest request, IEnumerable<IdNameModel> sportTypes = null);
 
         IEnumerable<Rule> GetRules(short sportType);
 
         Rule GetRule(int ruleId);
+
+        IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes);
 
         Result AddRule(AddRuleRequest request);
 
@@ -39,6 +40,18 @@
     {
         private readonly IFilterService filterService;
         private readonly IRuleDataAccess ruleDataAccess;
+        private static IDictionary<byte, string> Platforms
+             => new Dictionary<byte, string>
+             {
+                 [0] = Labels.AllPlatformDetail,
+                 [1] = Labels.Desktop,
+#pragma warning disable S109
+                [2] = Labels.Mobile,
+                 [3] = Labels.App,
+                 [4] = Labels.Oddsfeed,
+                 [5] = Labels.DirectAPI
+#pragma warning restore S109
+            };
 
         public RuleService(IFilterService filterService = null, IRuleDataAccess ruleDataAccess = null)
         {
@@ -46,7 +59,7 @@
             this.ruleDataAccess = ruleDataAccess ?? new RuleDataAccess();
         }
 
-        public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes = null)
+        public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes)
         {
             List<LeagueGroup> leagueGroups = new List<LeagueGroup>();
 
@@ -63,36 +76,18 @@
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
         {
-            var currencies = filterService.GetAllCurrencies().Select(x => x.Name);
-            var allCurrencies = string.Join(",", currencies);
-            var platformDict = PlatformConst.Platforms;
-            var allPlatformCount = platformDict.Count - 1;
             var sportTypes = filterService.GetSports();
             foreach (var item in rules)
             {
                 var sportType = sportTypes.FirstOrDefault(sp => sp.Id == item.SportType);
                 if (sportType != null)
                 {
-                    item.IsAllCurrencies = string.Equals(item.Currencies, Labels.All, StringComparison.OrdinalIgnoreCase) || NumberOfItemsSeparatedByComma(item.Currencies) == currencies.Count();
-                    if (item.IsAllCurrencies == true)
-                    {
-                        item.Currencies = allCurrencies;
-                    }
-
-                    item.IsAllPlatforms = allPlatformCount == NumberOfItemsSeparatedByComma(item.Platforms) || item.Platforms == "0";
-                    item.PlatformNames = string.Join(", ", item.Platforms
-                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(p => platformDict[Convert.ToByte(p)]));
-
                     item.IsAllLeagueGroups = item.LeagueGroups.Equals(Labels.All, StringComparison.OrdinalIgnoreCase);
                     item.SportTypeName = sportType.Name;
                     yield return item;
                 }
             }
         }
-
-        private static int NumberOfItemsSeparatedByComma(string value)
-            => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public IEnumerable<Rule> GetRules(SearchRuleRequest request, IEnumerable<IdNameModel> sportTypes = null)
         {
@@ -112,7 +107,7 @@
                 sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             }
 
-            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds));
+            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds)).OrderBy(rule => rule.CustomerClass?.ToString());
         }
 
         public IEnumerable<Rule> GetRules(short sportType)
@@ -166,6 +161,21 @@
             }
 
             return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
+        }
+
+        public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes)
+        {
+            var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
+            var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite));
+            
+            foreach (var item in ruleDetails)
+            {
+                item.PlatformNames = string.Join(", ", item.Platform
+                           .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                           .Select(p => Platforms[Convert.ToByte(p)]));
+
+                yield return item;
+            }
         }
     }
 }

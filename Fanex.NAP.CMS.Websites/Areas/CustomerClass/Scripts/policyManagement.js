@@ -29,7 +29,7 @@
             sportType = sportList.map(sp => sp.Value).join(',');
         }
         CMS.getJson(
-            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}`),
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=asc&fieldSort=RuleTitle`),
             function (data) {
                 var result = typeof data === "string" ? JSON.parse(data) : data;
                 if (result.Message) {
@@ -42,7 +42,7 @@
                     cachedGridOptions.bodyRows = buildBodyRows(result);
 
                     freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
-                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully();
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully("asc", "colRuleTitle");
                 }
             },
             function (error) {
@@ -54,8 +54,8 @@
 
     function defaultGridOptions() {
         var columns = [
-            { HeaderText: resources.ruleTitle, Width: 300, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true },
-            { HeaderText: resources.criteria, Width: 600, Name: "colCriteria", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: resources.ruleTitle, Width: 300, Name: "colRuleTitle", HeaderAlign: "center", CellAlign: "left", ShowCollapseExpand: true, Sort: true },
+            { HeaderText: resources.criteria, Width: 600, Name: "colCriteria", HeaderAlign: "center", CellAlign: "left", Sort: true }
         ];
 
         hasHostPermisson && columns.push({ HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
@@ -75,20 +75,23 @@
                 showCollapseExpandButton: true
             },
             showPager: false,
+            sortOption: {
+                //customGridSort: customerPolicyGridSort
+            },
             showTree: true
         };
     }
 
     function buildBodyRows(data) {
         return data.map(function (policy) {
-            const subRows = policy.Rules.map(function (rule) {
+            const subRows = policy.Rules  ? policy.Rules.map(function (rule) {
                 return {
                     Columns: [
                         { Name: "colRuleTitle", Value: rule.RuleTitle },
                         { Name: "colCriteria", Value: policyManagementHelper.renderCriteriaCell(rule), TdClass: "cell-criteria" }
                     ]
                 };
-            });
+            }) : [];
 
             const row = {
                 Columns: [{
@@ -123,7 +126,7 @@
         return `<input type="checkbox" class="chk-select-delete" data-id="${id}" data-sporttype="${sportType}">`;
     }
 
-    function bindEventsAfterRenderGridSuccessfully() {
+    function bindEventsAfterRenderGridSuccessfully(sortOrder, sortColumn) {
         $(".ico-edit")
             .off("click")
             .click(function (e) {
@@ -144,9 +147,51 @@
         freeGrid.find(".chk-select-delete")
             .off("click")
             .click(handleSingleCheckDel);
+        freeGrid.off('click', '#freegrid_header_sort_colRuleTitle', null);
+        freeGrid.off('click', '#freegrid_header_sort_colCriteria', null);
+        freeGrid.find("#freegrid_header_sort_colRuleTitle")
+            .off("click")
+            .click(handleSort);
+        freeGrid.find("#freegrid_header_sort_colCriteria")
+            .off("click")
+            .click(handleSort);
+        freeGrid.find(`#freegrid_header_sort_${sortColumn}`).find('.divSorter').addClass(sortOrder);
     }
 
+    function handleSort() {
+        var $this = $(this).find('.divSorter');
+        var policyTitle = encodeURIComponent($("#filterPolicy").val());
+        var sportType = $("#ddlSportTypeFilter").val();
+        if (sportType === "0") {
+            sportType = sportList.map(sp => sp.Value).join(',');
+        }
+        var nextSortOrder = $this.hasClass("asc") ? "desc" : "asc";
+        var sortType = $this.data("columnname");
+        var sortField = sortType === "colRuleTitle" ? "RuleTitle" : "CustomerClass";
+        CMS.disableInput();
+        CMS.getJson(
+            CMS.resolveRootUrl(`Policy/GetPolicies?policyTitle=${policyTitle}&sportTypes=${sportType}&sortOrder=${nextSortOrder}&fieldSort=${sortField}`),
+            function (data) {
+                var result = typeof data === "string" ? JSON.parse(data) : data;
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                    cachedGridOptions = defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows([]);
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                } else {
+                    cachedGridOptions = cachedGridOptions || defaultGridOptions();
+                    cachedGridOptions.bodyRows = buildBodyRows(result);
 
+                    freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+                    hasHostPermisson && bindEventsAfterRenderGridSuccessfully(nextSortOrder, sortType);
+                }
+            },
+            function (error) {
+                cachedGridOptions = defaultGridOptions();
+                cachedGridOptions.bodyRows = buildBodyRows([]);
+                freeGrid.removeClass("display-none").fanexGrid(cachedGridOptions);
+            });
+    }
 
     function handleCheckDelAll() {
         let checked = $(this).prop("checked");

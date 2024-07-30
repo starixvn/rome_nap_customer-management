@@ -11,20 +11,26 @@
         public GetPagedRuleListCriteria(SearchCustomerClassSettingRequest request, IEnumerable<LeagueGroup> leagueGroups, string sportTypes)
         {
             Site = request.Site;
-            CustomerClass = request.CustomerClass;
+            CustomerClass = request.CustomerClass ?? string.Empty;
+            CustomerClassDetail = request.CustomerClassDetail ?? string.Empty;
             SportTypes = sportTypes;
             PageIndex = request.PageIndex;
             PageSize = request.PageSize;
             LeagueGroups = BuildLeageGroupXML(leagueGroups);
+            Currencies = request.Currencies;
         }
 
         public string Site { get; }
 
-        public short CustomerClass { get; }
+        public string CustomerClass { get; }
+
+        public string CustomerClassDetail { get; }
 
         public string SportTypes { get; }
 
         public string LeagueGroups { get; }
+
+        public string Currencies { get; set; }
 
         public int PageIndex { get; }
 

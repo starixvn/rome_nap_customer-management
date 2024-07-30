@@ -29,7 +29,8 @@
                 }
 
                 xmlBuilder
-                    .Append(" CustomerClass=\"").Append(item.CustomerClass).Append("\"")
+                    .Append(" CustomerClass=\"").Append(item.CustomerClass == null ? string.Empty : item.CustomerClass.ToString()).Append("\"")
+                    .Append(" CustomerClassDetail=\"").Append(item.CustomerClassDetail == null ? string.Empty : item.CustomerClassDetail.ToString()).Append("\"")
                     .Append(" RuleTitle=\"").Append(item.RuleTitle).Append("\"")
                     .Append(" SportType=\"").Append(request.SportType).Append("\"")
                     .Append(" LeagueGroupIDs=\"").Append(request.LeagueGroups).Append("\"")

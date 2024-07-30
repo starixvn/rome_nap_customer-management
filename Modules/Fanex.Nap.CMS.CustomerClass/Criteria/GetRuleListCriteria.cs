@@ -6,14 +6,17 @@
     {
         public GetRuleListCriteria(SearchRuleRequest request, string leagueGroups, string sportTypes)
         {
-            CustomerClass = request.CustomerClass;
+            CustomerClass = request.CustomerClass ?? string.Empty;
+            CustomerClassDetail = request.CustomerClassDetail ?? string.Empty;
             SportTypes = sportTypes;
             LeagueGroup = request.LeagueGroups ?? string.Empty;
             IsLive = request.IsLive;
             LeagueGroups = leagueGroups;
         }
 
-        public short CustomerClass { get; }
+        public string CustomerClass { get; }
+
+        public string CustomerClassDetail { get; }
 
         public string SportTypes { get; }
 

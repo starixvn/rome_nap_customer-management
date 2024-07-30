@@ -109,6 +109,35 @@ const customerClassHelper = (function ($) {
             });
     }
 
+    function replaceCharsCommaInput(str) {
+        str = str.replace(/\s\s/g, ' ')
+            .replace(/\s/g, ',')
+            .replace(/\t/g, ',')
+            .replace(/;/g, ',')
+            .replace(/\\n|\\r\\n|\\r/g, ',')
+            .replaceAll(/,+/g, ',');
+
+        if (str.startsWith(',')) {
+            str = str.substr(1);
+        }
+
+        if (str.endsWith(',')) {
+            str = str.substr(0, str.length - 1);
+        }
+
+        return str;
+    }
+
+    function handleNumberCommanTextInput(e) {
+        const keyCodeArray = [46, 8, 9, 27, 13, 188];
+        if (keyCodeArray.indexOf(e.keyCode) !== -1) {
+            return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    }
+
     return {
         renderMultiSelect: renderMultiSelect,
         showInlineMessageAndClosePopup: showInlineMessageAndClosePopup,
@@ -117,6 +146,8 @@ const customerClassHelper = (function ($) {
         getSelectedTextReplaceAllValue: getSelectedTextReplaceAllValue,
         buildGroupSiteList: buildGroupSiteList,
         getLeagueGroups: getLeagueGroups,
-        leagueBySport: leagueBySport
+        leagueBySport: leagueBySport,
+        replaceCharsCommaInput: replaceCharsCommaInput,
+        handleNumberCommanTextInput: handleNumberCommanTextInput
     };
 })(jQuery);

@@ -71,6 +71,12 @@
                                 return false;
                             }
                         }
+
+                    },
+                    position: {
+                        my: "left top",
+                        at: "left bottom",
+                        collision: "fit flip"
                     }
                 })
                 .focusout(function () {

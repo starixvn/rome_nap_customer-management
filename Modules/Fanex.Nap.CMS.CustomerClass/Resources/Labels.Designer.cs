@@ -205,11 +205,29 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Platforms.
+        /// </summary>
+        public static string AllPlatformDetail {
+            get {
+                return ResourceManager.GetString("AllPlatformDetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to App.
         /// </summary>
         public static string App {
             get {
                 return ResourceManager.GetString("App", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply To.
+        /// </summary>
+        public static string ApplyTo {
+            get {
+                return ResourceManager.GetString("ApplyTo", resourceCulture);
             }
         }
         
@@ -493,6 +511,24 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Destination General CC.
+        /// </summary>
+        public static string DestinationGeneralCC {
+            get {
+                return ResourceManager.GetString("DestinationGeneralCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destination Sport CC.
+        /// </summary>
+        public static string DestinationSportCC {
+            get {
+                return ResourceManager.GetString("DestinationSportCC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Diff Balance Ratio.
         /// </summary>
         public static string DiffBalanceRatio {
@@ -642,6 +678,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string ExcelFile {
             get {
                 return ResourceManager.GetString("ExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General CC.
+        /// </summary>
+        public static string GeneralCC {
+            get {
+                return ResourceManager.GetString("GeneralCC", resourceCulture);
             }
         }
         
@@ -1173,6 +1218,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         public static string Soccer {
             get {
                 return ResourceManager.GetString("Soccer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sport CC.
+        /// </summary>
+        public static string SportCC {
+            get {
+                return ResourceManager.GetString("SportCC", resourceCulture);
             }
         }
         

@@ -2,7 +2,9 @@
 {
     public class CustomerClassRuleTitleRequest
     {
-        public short CustomerClass { get; set; }
+        public short? CustomerClass { get; set; }
+
+        public short? CustomerClassDetail { get; set; }
 
         public string RuleTitle { get; set; }
     }

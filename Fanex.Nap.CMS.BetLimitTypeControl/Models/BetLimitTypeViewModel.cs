@@ -17,7 +17,7 @@ namespace Fanex.NAP.CMS.BetLimitTypeControl.Models
 
         public BetLimitTypeViewModel(IEnumerable<LeagueGroup> leagueGroups)
         {
-            SabaSportsLeagueGroups = AllSabaLeagueGroups.Where(sblg => leagueGroups.Any(lg => lg.Id == sblg.Id));
+            SabaSportsLeagueGroups = leagueGroups.Where(lg => AllSabaLeagueGroups.Any(sblg => lg.Id == sblg.Id)).OrderBy(lg => lg.Id);
             OtherLeagueGroups = leagueGroups.Where(lg => !AllSabaLeagueGroups.Any(sblg => lg.Id == sblg.Id));
         }
 

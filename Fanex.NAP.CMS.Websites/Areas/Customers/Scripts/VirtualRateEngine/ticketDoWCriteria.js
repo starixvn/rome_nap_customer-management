@@ -10,7 +10,7 @@ function TicketDoWCriteria(conditionList, dowList) {
                 <input type="checkbox" id="chk-enableTicketDoWCriteria" />
                 <span class="note-info-message" id="span-noteTicketDoWCriteria" title="<p>Ticket Day of Week:</p><p>- Select days to apply the virtual rate rule.</p><p>- You can select from Monday to Sunday.</p>"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-ticketDoWCondition"></select>
                 </div>
@@ -53,7 +53,7 @@ function TicketDoWCriteria(conditionList, dowList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlTicketDoWCondition.combobox(action);
-        ddlTicketDoW.multiSelect(action);
+        ddlTicketDoW.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -61,9 +61,9 @@ function TicketDoWCriteria(conditionList, dowList) {
     }
 
     function validateFromData() {
-        var dow = ddlTicketDoW.multiSelect("isCheckedAllItems")
+        var dow = ddlTicketDoW.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlTicketDoW.multiSelect("getCheckedItems").join(",");
+            : ddlTicketDoW.fanexMultiSelect("getItems", true).join(",");
 
         if (!dow.length) {
             CMS.showTipsyError(ddlTicketDoW, resources.noneSelectedOptionError, "nw");

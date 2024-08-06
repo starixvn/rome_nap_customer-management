@@ -9,7 +9,7 @@ function BetTypeCriteria(conditionList, betTypeList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableBetTypeCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-betTypeCondition"></select>
                 </div>
@@ -46,7 +46,7 @@ function BetTypeCriteria(conditionList, betTypeList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlBetTypeCondition.combobox(action);
-        ddlBetType.multiSelect(action);
+        ddlBetType.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -54,9 +54,9 @@ function BetTypeCriteria(conditionList, betTypeList) {
     }
 
     function validateFromData() {
-        var betType = ddlBetType.multiSelect("isCheckedAllItems")
+        var betType = ddlBetType.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlBetType.multiSelect("getCheckedItems").join(",");
+            : ddlBetType.fanexMultiSelect("getItems", true).join(",");
 
         if (!betType.length) {
             CMS.showTipsyError(ddlBetType, resources.noneSelectedOptionError, "nw");

@@ -477,13 +477,13 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\betfromCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\betTypeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRCriteria.js" />
-    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\currentVRStatusCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerCategory.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\customerClassCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\eventCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\leagueGroupCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\otherControls.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\siteTypeCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCCCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\stakeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\ticketCurrencyCriteria.js" />

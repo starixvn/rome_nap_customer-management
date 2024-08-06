@@ -10,7 +10,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 <input type="checkbox" id="chk-enableLeagueGroupCriteria" />
                 <span class="note-info-message" id="span-noteLeagueGroupCriteria" title="<p>League Group:</p><p>- Apply for one or more league groups.</p><p>League:</p><p>- Load all leagues follow selected league group.</p><p>- You can leave this field blank to apply all leagues of selected league group(s).</p>"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueGroupCondition"></select>
                 </div>
@@ -24,7 +24,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 <span class="txt-name">League</span>
             </div>
             <div class="enable-criteria-container"></div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-leagueCondition"></select>
                 </div>
@@ -51,7 +51,20 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
         }
 
         ddlLeagueGroupCondition = VREngineHelper.renderCombobox("ddl-leagueGroupCondition", conditionList, conditionLeagueGroup);
-        ddlLeagueGroup = VREngineHelper.renderMultiSelect("ddl-leagueGroup", leagueGroupList, selectedLeagueGroup, 220);
+        let sabaLeagueIds = [42,74,108,113,122,151];
+        var sabaLeagues = leagueGroupList.filter(league => sabaLeagueIds.includes(league.Id));
+        var otherLeagues = leagueGroupList.filter(league => !sabaLeagueIds.includes(league.Id));
+        var options = [
+            {
+                Name: "Saba Sports",
+                Items: sabaLeagues
+            },
+            {
+                Name: "Others",
+                Items: otherLeagues
+            }];
+
+        ddlLeagueGroup = VREngineHelper.renderGroupMultiSelect("ddl-leagueGroup", options, selectedLeagueGroup, 220);
         ddlLeagueCondition = VREngineHelper.renderCombobox("ddl-leagueCondition", conditionList, conditionLeague);
 
         initLeagueAutoSuggestion();
@@ -78,7 +91,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
                 var getLeagueFormData = {
                     leagues: $.trim(extractLast(request.term))
                 };
-                getLeagueFormData[ddlLeagueGroupCondition.val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = ddlLeagueGroup.multiSelect("getCheckedItems").join(",");
+                getLeagueFormData[ddlLeagueGroupCondition.val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = ddlLeagueGroup.fanexMultiSelect("getItems", true).join(",");
 
                 $.getJSON(CMS.resolveRootUrl("Customers/VirtualRateEngine/GetLeagues"),
                     getLeagueFormData,
@@ -136,7 +149,7 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlLeagueGroupCondition.combobox(action);
-        ddlLeagueGroup.multiSelect(action);
+        ddlLeagueGroup.fanexMultiSelect(action);
         ddlLeagueCondition.combobox(action);
         txtLeague.autocomplete(action);
         txtLeague.prop("disabled", !isEnabled);
@@ -166,9 +179,9 @@ function LeagueGroupCriteria(conditionList, leagueGroupList) {
     }
 
     function validateLeagueGroup() {
-        var leagueGroup = ddlLeagueGroup.multiSelect("isCheckedAllItems")
+        var leagueGroup = ddlLeagueGroup.fanexMultiSelect("isCheckAll")
             ? "-1"
-            : ddlLeagueGroup.multiSelect("getCheckedItems").join(",");
+            : ddlLeagueGroup.fanexMultiSelect("getItems", true).join(",");
 
         if (!leagueGroup.length) {
             CMS.showTipsyError(ddlLeagueGroup, resources.noneSelectedOptionError, "nw");

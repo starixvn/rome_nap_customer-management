@@ -3,7 +3,7 @@ function CurrentVRCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
-                <span class="lbl-field-criteria-no">3.</span>
+                <span class="lbl-field-criteria-no">4.</span>
                 <span class="txt-name">Current Virtual Rate</span>
             </div>
             <div class="enable-criteria-container">

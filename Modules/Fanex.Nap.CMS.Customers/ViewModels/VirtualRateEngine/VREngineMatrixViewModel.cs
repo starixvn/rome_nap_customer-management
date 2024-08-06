@@ -10,13 +10,23 @@
 
     public class VREngineMatrixViewModel : VREngineMatrix
     {
+        private static readonly Dictionary<string, int> OrderedSports
+           = new Dictionary<string, int>
+            {
+                { "Soccer", 1 },
+                { "Basketball", 2 },
+                { "Other Sports", 3 },
+                { "E-Sports", 4 },
+                { "Non-Sports", 5 },
+                { "Saba Soccer", 6 },
+                { "Saba Basketball", 7 },
+                { "Uncategorized", 1000 },
+            };
+
         public VREngineMatrixViewModel(VREngineMatrix matrix) : base(
             matrix.CreditSites,
             matrix.LicenseeSites,
-            matrix.CustomerClasses
-                .Select(c => c.Id)
-                .Distinct()
-                .Select(c => BuildIdNameModel(c, c.ToString())),
+            GetOrderedSports(matrix.DetailSports).Select(s => BuildIdNameModel(s.Id, $"[{s.Id}] {s.Name}")),
             matrix.BetfromList,
             matrix.Sports.Select(s => BuildIdNameModel(s.Id, $"[{s.Id}] {s.Name}")),
             matrix.BetTypes.Select(b => BuildIdNameModel(b.Id, $"[{b.Id}] {b.Name}")),
@@ -72,5 +82,11 @@
 
         private static IdNameModel BuildIdNameModel(int id, string name)
             => new IdNameModel { Id = id, Name = name };
+        
+
+        private static IEnumerable<IdNameModel> GetOrderedSports(IEnumerable<IdNameModel> sports)
+        {
+            return sports.OrderBy(sport => OrderedSports.ContainsKey(sport.Name) ? OrderedSports[sport.Name] : OrderedSports["Uncategorized"]).ThenBy(sport => sport.Id);
+        }
     }
 }

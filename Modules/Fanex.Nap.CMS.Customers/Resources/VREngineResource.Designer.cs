@@ -196,6 +196,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please input at least one CC.
+        /// </summary>
+        public static string NoneSelectedCCError {
+            get {
+                return ResourceManager.GetString("NoneSelectedCCError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select at least one option.
         /// </summary>
         public static string NoneSelectedOptionError {

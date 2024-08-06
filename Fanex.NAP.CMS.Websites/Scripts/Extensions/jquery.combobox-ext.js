@@ -65,7 +65,7 @@
                             });
 
                             if (!valid) {
-                                Validator.showError(wrapper, value + ' didn\'t match any item.', 'w');
+                                Validator.showError(wrapper, value + ' didn\'t match any item.', self.errPos ? self.errPos : 'w');
                                 select.val('');
                                 input.data('autocomplete').term = '';
                                 return false;
@@ -189,6 +189,10 @@
         validInput: function () {
             var term = this.input.data('autocomplete').term;
             return (term && term.length !== 0);
+        },
+
+        updateValidatePosition: function (errorPosition) {
+            this.errPos = errorPosition;
         }
     });
 })(jQuery);

@@ -1,5 +1,5 @@
 ﻿var VREngineHelper = (function ($) {
-    function renderCombobox(id, dataList, selectedValue) {
+    function renderCombobox(id, dataList, selectedValue, errPos) {
         var datum, html = [];
         if (typeof selectedValue === "undefined") {
             selectedValue = dataList[0].Id;
@@ -20,7 +20,12 @@
             html.push('</option>');
         }
 
-        return $("#" + id).html(html.join("")).combobox();
+        var comboboxElement = $("#" + id).html(html.join("")).combobox();
+        if (errPos) {
+            comboboxElement.combobox('updateValidatePosition', errPos);
+        }
+
+        return comboboxElement;
     }
 
     function renderMultiSelect(id, dataList, selectedList, maxHeight) {
@@ -37,17 +42,64 @@
         for (var i = 0; i < max; i++) {
             datum = dataList[i];
             data.push({
-                Id: id + "-" + datum.Id,
-                Value: datum.Id,
-                Text: datum.Name,
-                Checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id),
-                Enable: true
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id),
+                enable: true
             });
         }
 
         var selector = "#" + id;
-        $(selector).multiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
+        $(selector).fanexMultiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
         return $(selector);
+    }
+
+    function renderGroupMultiSelect(id, dataList, selectedList, maxHeight) {
+        var datum,
+            selectedObject,
+            data = [],
+            max = dataList.length;
+        var isCheckAll = typeof selectedList === "undefined" || selectedList === "0" || selectedList === "-1";
+
+        if (!isCheckAll) {
+            selectedObject = toObject(selectedList.split(","));
+        }
+
+        for (var i = 0; i < max; i++) {
+            datum = dataList[i];
+            var option = {
+                value: datum.Name,
+                text: datum.Name,
+                enable: true,
+                items: buildChildSelection(id, datum.Items, isCheckAll, selectedObject)
+            };
+            var hasUncheckItem = option.items.findIndex(x => x.checked === false);
+            if (hasUncheckItem < 0) {
+                option.checked = true;
+            }
+
+            data.push(option);
+        }
+
+        var selector = "#" + id;
+        $(selector).fanexMultiSelect(getMultiSelectOptions(isCheckAll, data, maxHeight));
+        return $(selector);
+    }
+
+    function buildChildSelection(id, items, isCheckAll, selectedObject) {
+        var options = [];
+        for (const datum of items) {
+            options.push({
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                enable: true,
+                checked: isCheckAll || selectedObject.hasOwnProperty(datum.Id)
+            });
+        }
+
+        return options;
     }
 
     function updateMultiSelect($ddl, dataList) {
@@ -57,15 +109,15 @@
         for (var i = 0, max = dataList.length; i < max; i++) {
             datum = dataList[i];
             data.push({
-                Id: id + "-" + datum.Id,
-                Value: datum.Id,
-                Text: datum.Name,
-                Checked: true,
-                Enable: true
+                id: id + "-" + datum.Id,
+                value: datum.Id,
+                text: datum.Name,
+                checked: true,
+                enable: true
             });
         }
 
-        $ddl.multiSelect("updateItems", getMultiSelectOptions(true, data));
+        $ddl.fanexMultiSelect("createfanexMultiSelect", getMultiSelectOptions(true, data));
         return $("#" + id);
     }
 
@@ -74,12 +126,16 @@
             showTooltip: false,
             shadow: true,
             maxHeight: maxHeight || 350,
+            minWidth: 235,
             isCheckAll: isCheckAll,
             showFooter: false,
             showFilter: true,
             checkAllText: "All",
             tooltipNoItem: "Please select at least one option",
-            listData: listData
+            listData: listData,
+            onLeave: function () {
+                $(this).parent().find("#filter-delete-button").trigger("click.multipleselect");
+            }
         };
     }
 
@@ -113,11 +169,42 @@
         return time.substring(0, 5);
     }
 
+    function validateCCValue(txtArea) {
+        var txtCC = $(txtArea);
+        var replacedValue = txtCC.val()
+            .replace(/[^0-9,\s]/g, '');
+
+        txtCC.val(replacedValue);
+    }
+
+    function replaceCharCCValue(txtArea) {
+        var txtCC = $(txtArea);
+        var replacedValue = txtCC.val()
+            .replace(/\s\s/g, ' ')
+            .replace(/\s/g, ',')
+            .replace(/\t/g, ',')
+            .replace(/;/g, ',')
+            .replace(/\\n|\\r\\n|\\r/g, ',')
+            .replace(/,{2,}/g, ',');
+        if (replacedValue.startsWith(',')) {
+            replacedValue = replacedValue.substr(1);
+        }
+
+        if (replacedValue.endsWith(',')) {
+            replacedValue = replacedValue.substr(0, replacedValue.length - 1);
+        }
+
+        txtCC.val(replacedValue);
+    }
+
     return {
         renderCombobox: renderCombobox,
         renderMultiSelect: renderMultiSelect,
+        renderGroupMultiSelect: renderGroupMultiSelect,
         updateMultiSelect: updateMultiSelect,
         validateNumber: validateNumber,
-        extractHourMinute: extractHourMinute
+        extractHourMinute: extractHourMinute,
+        validateCCValue: validateCCValue,
+        replaceCharCCValue: replaceCharCCValue
     };
 })(jQuery);

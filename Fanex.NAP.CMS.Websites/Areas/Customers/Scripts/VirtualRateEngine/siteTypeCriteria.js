@@ -1,7 +1,7 @@
 ﻿"use strict";
 function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeSiteList, adminPermission) {
     var htmlTemplate =
-        `<div class="form-row-sub">
+        `<div class="form-row-sub site-row">
             <div class="lbl-field">
                 <span class="lbl-field-criteria-no">1.</span>
                 <span class="txt-name">Site Type</span>
@@ -10,16 +10,16 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
                 <input type="checkbox" id="chk-enableSiteTypeCriteria" />
                 <span class="note-info-message" id="span-noteSiteTypeCriteria" title="<p>Site Type:</p><p>- Load Site types.</p><p>- Options: All, Credit, Licensee.</p><p>Site:</p><p>- Load all sites follow selected site type.</p><p>- You can select one or more sites to apply virtual rate rule.</p>"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <select class="combobox-autocomplete width-60" id="ddl-siteType"></select>
             </div>
         </div>
-        <div class="form-row-sub">
+        <div class="form-row-sub site-row">
             <div class="lbl-field">
                 <span class="txt-name">Site</span>
             </div>
             <div class="enable-criteria-container"></div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-siteCondition"></select>
                 </div>
@@ -88,7 +88,7 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
         var action = isEnabled ? "enable" : "disable";
         ddlSiteType.combobox(action);
         ddlSiteCondition.combobox(action);
-        ddlSite.multiSelect(action);
+        ddlSite.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -96,9 +96,9 @@ function SiteTypeCriteria(siteTypeList, conditionList, creditSiteList, licenseeS
     }
 
     function validateFromData() {
-        var site = ddlSite.multiSelect("isCheckedAllItems")
+        var site = ddlSite.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlSite.multiSelect("getCheckedItems").join(",");
+            : ddlSite.fanexMultiSelect("getItems", true).join(",");
         if (!site.length) {
             CMS.showTipsyError(ddlSite, resources.noneSelectedOptionError, "nw");
             return { isInvalid: true };

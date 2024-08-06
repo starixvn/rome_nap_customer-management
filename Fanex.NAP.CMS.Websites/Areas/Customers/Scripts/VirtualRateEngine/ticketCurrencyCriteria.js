@@ -9,7 +9,7 @@ function TicketCurrencyCriteria(conditionList, curList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableTicketCurCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-ticketCurCondition"></select>
                 </div>
@@ -46,7 +46,7 @@ function TicketCurrencyCriteria(conditionList, curList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlTicketCurCondition.combobox(action);
-        ddlTicketCur.multiSelect(action);
+        ddlTicketCur.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -54,9 +54,9 @@ function TicketCurrencyCriteria(conditionList, curList) {
     }
 
     function validateFromData() {
-        var cur = ddlTicketCur.multiSelect("isCheckedAllItems")
+        var cur = ddlTicketCur.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlTicketCur.multiSelect("getCheckedItems").join(",");
+            : ddlTicketCur.fanexMultiSelect("getItems", true).join(",");
 
         if (!cur.length) {
             CMS.showTipsyError(ddlTicketCur, resources.noneSelectedOptionError, "nw");

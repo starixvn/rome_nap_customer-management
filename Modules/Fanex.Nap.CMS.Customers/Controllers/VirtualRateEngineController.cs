@@ -58,16 +58,6 @@
             return JsonData(new { model.Rules, Matrix = new VREngineMatrixViewModel(model.Matrix) });
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngine, Policy = Constant.Policy.Read)]
-        public ActionResult CustomerClassHint()
-        {
-            var matrix = vrEngineService.GetVREngineMatrix();
-
-            return View(
-                "~/Areas/Customers/Views/VirtualRateEngine/CustomerClassHint.cshtml",
-                matrix.CustomerClasses);
-        }
-
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.VirtualRateEngineAdminPermission, Policy = Constant.Policy.Host)]
         public ActionResult AddNewRule(AddNewRuleViewModel viewModel)

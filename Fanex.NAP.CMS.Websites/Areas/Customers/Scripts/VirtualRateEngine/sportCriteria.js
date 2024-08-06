@@ -9,7 +9,7 @@ function SportCriteria(conditionList, sportList) {
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableSportCriteria" />
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-sportCondition"></select>
                 </div>
@@ -46,7 +46,7 @@ function SportCriteria(conditionList, sportList) {
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlSportCondition.combobox(action);
-        ddlSport.multiSelect(action);
+        ddlSport.fanexMultiSelect(action);
     }
 
     function isEnableCriteria() {
@@ -54,9 +54,9 @@ function SportCriteria(conditionList, sportList) {
     }
 
     function validateFromData() {
-        var sportType = ddlSport.multiSelect("isCheckedAllItems")
+        var sportType = ddlSport.fanexMultiSelect("isCheckAll")
             ? "0"
-            : ddlSport.multiSelect("getCheckedItems").join(",");
+            : ddlSport.fanexMultiSelect("getItems", true).join(",");
 
         if (!sportType.length) {
             CMS.showTipsyError(ddlSport, resources.noneSelectedOptionError, "nw");

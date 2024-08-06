@@ -1,25 +1,24 @@
 ﻿"use strict";
-function CustomerClassCriteria(conditionList, customerClassList) {
+function CustomerClassCriteria(conditionList) {
     var htmlTemplate =
-        `<div class="form-row-sub">
+        `<div class="form-row-sub cc-group">
             <div class="lbl-field">
                 <span class="lbl-field-criteria-no">2.</span>
-                <span class="txt-name">Customer Class</span>
+                <span class="txt-name">General Customer Class</span>
             </div>
             <div class="enable-criteria-container">
                 <input type="checkbox" id="chk-enableCustomerClassCriteria" />
-                <span class="note-info-message" id="span-noteCustomerClassCriteria" title="Click to view Class and Category"></span>
             </div>
-            <div class="detail-rule">
+            <div class="detail-rule edit-with-error-field">
                 <div class="ddl-primary">
                     <select class="combobox-autocomplete width-60" id="ddl-customerClassCondition"></select>
                 </div>
-                <div class="ddl-second class-customer-box">
-                    <div id="ddl-customerClass"></div>
+                <div class="sport-cc">
+                    <textarea id="txtcustomerClass" rows="3" cols="27" placeholder="<CC1>,<CC2>,..." oninput="VREngineHelper.validateCCValue(this)" onblur="VREngineHelper.replaceCharCCValue(this)"></textarea>
                 </div>
             </div>
         </div>`;
-    var chkEnableCustomerClassCriteria, spanHintCustomerClassCriteria, ddlCustomerClassCondition, ddlCustomerClass;
+    var chkEnableCustomerClassCriteria, ddlCustomerClassCondition, txtCustomerClass;
 
     function cacheElements(rule, isHideEnabledCheckbox) {
         var selectedCustomerClass, condition;
@@ -30,12 +29,10 @@ function CustomerClassCriteria(conditionList, customerClassList) {
         }
 
         ddlCustomerClassCondition = VREngineHelper.renderCombobox("ddl-customerClassCondition", conditionList, condition);
-        ddlCustomerClass = VREngineHelper.renderMultiSelect("ddl-customerClass", customerClassList, selectedCustomerClass);
+        txtCustomerClass = $("#txtcustomerClass").val(selectedCustomerClass);
 
         chkEnableCustomerClassCriteria = $("#chk-enableCustomerClassCriteria").prop("checked", isEnabled);
         isHideEnabledCheckbox && chkEnableCustomerClassCriteria.css("visibility", "hidden");
-
-        spanHintCustomerClassCriteria = $("#span-noteCustomerClassCriteria").tipsy({ className: "criteria-hint", opacity: 1 });
     }
 
     function bindEvents() {
@@ -44,18 +41,12 @@ function CustomerClassCriteria(conditionList, customerClassList) {
             .on("change", function () {
                 enableCriteria(this.checked);
             });
-
-        spanHintCustomerClassCriteria
-            .off("click")
-            .on("click", function () {
-                window.open(CMS.resolveRootUrl("Customers/VirtualRateEngine/CustomerClassHint"), "_blank").focus();
-            });
     }
 
     function enableCriteria(isEnabled) {
         var action = isEnabled ? "enable" : "disable";
         ddlCustomerClassCondition.combobox(action);
-        ddlCustomerClass.multiSelect(action);
+        txtCustomerClass.prop("disabled", !isEnabled);
     }
 
     function isEnableCriteria() {
@@ -63,16 +54,16 @@ function CustomerClassCriteria(conditionList, customerClassList) {
     }
 
     function validateFromData() {
-        var customerClass = ddlCustomerClass.multiSelect("isCheckedAllItems")
+        var customerClass = txtCustomerClass.val().toLowerCase() === "all"
             ? "0"
-            : ddlCustomerClass.multiSelect("getCheckedItems").join(",");
+            : txtCustomerClass.val();
 
         if (!customerClass.length) {
-            CMS.showTipsyError(ddlCustomerClass, resources.noneSelectedOptionError, "nw");
+            CMS.showTipsyError(txtCustomerClass, resources.noneSelectedCCError, "nw");
             return { isInvalid: true };
         }
 
-        CMS.clearTipsyError(ddlCustomerClass);
+        CMS.clearTipsyError(txtCustomerClass);
 
         var formData = { name: "CustomerClass" };
         formData[ddlCustomerClassCondition.val() === "0" ? "customerClass" : "customerClassNotIn"] = customerClass;

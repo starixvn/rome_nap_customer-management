@@ -2,9 +2,9 @@
 function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermission) {
     var otherControls = new OtherControls(matrix.Adjustments, matrix.Actives);
     var siteTypeCriteria = new SiteTypeCriteria(matrix.SiteTypes, matrix.Conditions, matrix.CreditSites, matrix.LicenseeSites, adminPermission);
-    var customerClassCriteria = new CustomerClassCriteria(matrix.Conditions, matrix.CustomerClasses);
+    var customerClassCriteria = new CustomerClassCriteria(matrix.Conditions);
+    var sportCCCriteria = new SportCCCriteria(matrix.Conditions, matrix.CustomerClassesDetail, matrix.DetailSports, matrix.SportCC);
     var currentVRCriteria = new CurrentVRCriteria();
-    var currentVRStatusCriteria = new CurrentVRStatusCriteria(matrix.CurrentVRStatus);
     var sportCriteria = new SportCriteria(matrix.Conditions, matrix.Sports);
     var betTypeCriteria = new BetTypeCriteria(matrix.Conditions, matrix.BetTypes);
     var eventCriteria = new EventCriteria(matrix.Events);
@@ -49,11 +49,11 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
         var enabledCustomerClass = isShowAllCriteria || rule.EnabledCustomerClass;
         enabledCustomerClass && enabledCriteria.push(customerClassCriteria);
 
+        var enabledCustomerClassDetail = isShowAllCriteria || rule.EnabledCustomerClassDetail;
+        enabledCustomerClassDetail && enabledCriteria.push(sportCCCriteria);
+
         var enabledCurrentVR = isShowAllCriteria || rule.EnabledCurrentVR;
         enabledCurrentVR && enabledCriteria.push(currentVRCriteria);
-
-        var enabledCurrentVRStatus = isShowAllCriteria || rule.EnabledCurrentVRStatus;
-        enabledCurrentVRStatus && enabledCriteria.push(currentVRStatusCriteria);
 
         var enabledSport = isShowAllCriteria || rule.EnabledSport;
         enabledSport && enabledCriteria.push(sportCriteria);
@@ -167,7 +167,7 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
         var form = addOrUpdateForm.clone();
         CMS.modal(modalTitle, form, {
             height: "auto",
-            width: "640px",
+            width: "650px",
             resizable: false,
             position: {
                 my: "center top",

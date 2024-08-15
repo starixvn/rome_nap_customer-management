@@ -76,6 +76,7 @@
     </Setting>
   </Function>
   <Function Name="Virtual Rate Engine">
+    <Setting Key="NAP_VREngine_CriteriaMatrix_Check" SpName="NAP_VREngine_CriteriaMatrix_Check" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel" DbName="DBACC.bodb02.wsv_nap" />

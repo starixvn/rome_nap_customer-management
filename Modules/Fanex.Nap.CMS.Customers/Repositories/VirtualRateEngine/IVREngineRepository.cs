@@ -16,5 +16,9 @@
         VREngineRule GetRule(ICriteria criteria);
 
         Result ExecuteNonQuery(ICriteria criteria);
+
+        string GetSportBettype(ICriteria criteria);
+
+        Result CheckVREngineRule(ICriteria criteria);
     }
 }

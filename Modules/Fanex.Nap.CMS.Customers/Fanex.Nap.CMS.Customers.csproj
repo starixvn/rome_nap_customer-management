@@ -283,7 +283,9 @@
     <Compile Include="Criteria\ProblemAccount\SearchCriteria.cs" />
     <Compile Include="Criteria\ProblemAccount\UnmarkCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\AddNewVREngineRuleCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\CheckVREngineRuleCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\DeleteVREngineRuleCriteria.cs" />
+    <Compile Include="Criteria\VirtualRateEngine\GetCustomerVRGetSportBettypeCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineLeagueCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineMatrixCriteria.cs" />
     <Compile Include="Criteria\VirtualRateEngine\GetVREngineRuleCriteria.cs" />
@@ -318,6 +320,7 @@
     <Compile Include="Models\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteModel.cs" />
     <Compile Include="Models\ProblemAccount\ProblemAccountReason.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="Models\VirtualRateEngine\CheckVREngineRuleResult.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineBetfrom.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineMatrix.cs" />
     <Compile Include="Models\VirtualRateEngine\VREngineModel.cs" />

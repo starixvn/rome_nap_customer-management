@@ -96,6 +96,7 @@
     <Compile Include="Criteria\DeleteCriteria.cs" />
     <Compile Include="Criteria\GetLeagueCriteria.cs" />
     <Compile Include="Criteria\GetLeagueGroupCriteria.cs" />
+    <Compile Include="Criteria\GetSportBettypeCriteria.cs" />
     <Compile Include="Criteria\UpdateCriteria.cs" />
     <Compile Include="Criteria\InsertCriteria.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />

@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
+    using Fanex.NAP.CMS.BetLimitTypeControl.Models;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
@@ -25,7 +26,9 @@
         public ActionResult Index()
         {
             ViewBag.IsHost = HasRight(CMSFunctionKeys.BetLimitTypeControl, Constant.Policy.Host);
-            return View();
+            var viewModel = new BetLimitTypeViewModel(service.GetLeagueGroups());
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -47,5 +50,9 @@
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Host)]
         public JsonResult Delete(DeleteRequest request) => Json(service.Delete(request));
+
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetLimitTypeControl, Policy = Constant.Policy.Read)]
+        public ActionResult GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues)
+            => JsonData(service.GetLeagues(leagueGroupIds, leagueGroupListNotIn, leagues));
     }
 }

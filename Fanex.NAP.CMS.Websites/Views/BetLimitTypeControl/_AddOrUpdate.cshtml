@@ -1,5 +1,4 @@
 ﻿@using Fanex.Nap.CMS.Customers.Resources
-
 <div class="display-none">
     <div id="frmAdd" class="div-add form expand-form">
         <div id="msgAdd" class="inline-message"></div>
@@ -49,23 +48,23 @@
         </div>
         <div class="form-row form-row-no-margin">
             <div class="lbl-field width-auto">
-                <label for="txtLeagueGroupAdd">Sportsbook League Group ID (Separated by comma (,))</label>
+                <label for="txtLeagueGroupAdd">Sportsbook League Group</label>
             </div>
         </div>
         <div class="form-row form-row-no-margin">
-            <div class="edit-field">
-                <input type="checkbox" id="chkLeagueGroupNotIn" />
-                <label for="chkLeagueGroupNotIn">Not in</label>
+            <div class="lbl-field col-label league-group-condition-container">
+                <select id="ddlLeagueGroupInNotIn">
+                    <option value="0">@Labels.In</option>
+                    <option value="1">@Labels.NotIn</option>
+                </select>
             </div>
-        </div>
-        <div class="form-row margin-bottom">
-            <div class="edit-field">
-                <textarea id="txtLeagueGroupAdd" maxlength="5000" rows="3"></textarea>
+            <div id="ddlLeagueGroupAddContainer" class="edit-field">
+                <select id="ddlLeagueGroupAdd"></select>
             </div>
         </div>
         <div class="form-row form-row-no-margin">
             <div class="lbl-field width-auto">
-                <label for="txtLeagueAdd">Sportsbook League ID (Separated by comma (,))</label>
+                <label for="txtLeagueAdd">Sportsbook League (Separated by comma (,))</label>
             </div>
         </div>
         <div class="form-row margin-bottom">

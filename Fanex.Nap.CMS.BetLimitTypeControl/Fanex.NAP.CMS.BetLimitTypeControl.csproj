@@ -94,11 +94,15 @@
   <ItemGroup>
     <Compile Include="BetLimitTypeControlController.cs" />
     <Compile Include="Criteria\DeleteCriteria.cs" />
+    <Compile Include="Criteria\GetLeagueCriteria.cs" />
+    <Compile Include="Criteria\GetLeagueGroupCriteria.cs" />
     <Compile Include="Criteria\UpdateCriteria.cs" />
     <Compile Include="Criteria\InsertCriteria.cs" />
     <Compile Include="Criteria\SearchCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\BetLimitTypeViewModel.cs" />
     <Compile Include="Models\BetType.cs" />
+    <Compile Include="Models\LeagueGroup.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\QueryFilterModel.cs" />
     <Compile Include="Models\SearchModel.cs" />

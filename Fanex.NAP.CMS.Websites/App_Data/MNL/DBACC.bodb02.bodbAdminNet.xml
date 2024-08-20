@@ -70,6 +70,12 @@
       <Mapping DataField="Super_MaxPerMatch" ObjectProperty="SuperMaxPerMatch" />
     </Setting>
   </Function>
+  <Function Name="Bet Limit Type Control">
+    <Setting Key="NAP_BLTypeControl_LeagueSelect" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.wsv_nap">
+      <Mapping DataField="LeagueName" ObjectProperty="Name" />
+      <Mapping DataField="LeagueId" ObjectProperty="Id" />
+    </Setting>
+  </Function>
   <Function Name="Virtual Rate Engine">
     <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.wsv_nap" />

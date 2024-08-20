@@ -237,31 +237,24 @@ Fanex.CMS.BetLimitTypeControl = function () {
         sportTypeCheckedList = null;
         betTypeCheckedList = null;
 
-        var $txtLeagueGroupAdd = $('#txtLeagueGroupAdd');
-        var $chkLeagueGroupNotIn = $('#chkLeagueGroupNotIn').change(function () {
-            if (this.checked) {
-                $txtLeagueGroupAdd.attr('style', 'color:#ff0000');
-            } else {
-                $txtLeagueGroupAdd.removeAttr('style');
-            }
-        });
-
+        $("#ddlLeagueGroupInNotIn").combobox();
         if (isAdd) {
             $('#selectLiveIndicatorAdd').prop('selectedIndex', 0);
-            $chkLeagueGroupNotIn.prop('checked', false).removeAttr('style');
-            $txtLeagueGroupAdd.val('');
+            renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", "", true);
+            $('#txtLeagueAdd').val('');
+            $("#ddlLeagueGroupInNotIn").val("0").combobox('refresh');
         } else {
             $('#selectLiveIndicatorAdd').val(betLimitTypeData.LiveIndicator);
             var leagueGroupResult = getLeagueGroupList(betLimitTypeData.LeagueGroupList, betLimitTypeData.ExcludedLeagueGroupList);
-            $chkLeagueGroupNotIn.prop('checked', leagueGroupResult.isExcludedLeagueGroup);
-            $txtLeagueGroupAdd.val(leagueGroupResult.leagueGroupList);
+            renderDropdownListLeagueGroup("#ddlLeagueGroupAdd", leagueGroupResult.leagueGroupList, !leagueGroupResult.isExcludedLeagueGroup && leagueGroupResult.leagueGroupList === "");
+            $("#ddlLeagueGroupInNotIn").val(leagueGroupResult.isExcludedLeagueGroup ? "1" : "0").combobox('refresh');
         }
 
-        $chkLeagueGroupNotIn.trigger('change');
+        
         $('#txtTypeAdd').val(isAdd ? '' : betLimitTypeData.BetLimitType);
-        $('#txtLeagueAdd').val(isAdd ? '' : betLimitTypeData.LeagueList);
         $('#txtFromTimeAdd').val(isAdd ? '' : betLimitTypeData.BeginTime || '');
         $('#txtToTimeAdd').val(isAdd ? '' : betLimitTypeData.EndTime || '');
+        $('#txtLeagueAdd').val(isAdd ? '' : betLimitTypeData.LeagueList);
         $('#chkSpecificTime')
             .change(function () {
                 if ($(this).is(':checked')) {
@@ -288,14 +281,11 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 change: function () {
                     CMS.clearTipsyError($(this));
                 }
-            }
+            };
             $('#txtFromTimeAdd').timepicker(timePickerOptions);
             $('#txtToTimeAdd').timepicker(timePickerOptions);
             $('#btnCancelAdd').click(CMS.closePopup);
             $('#txtLeagueAdd').blur(function () {
-                reformatAndValidateInputId($(this));
-            });
-            $('#txtLeagueGroupAdd').blur(function () {
                 reformatAndValidateInputId($(this));
             });
             $addDialog = CMS.modal(title, $('#frmAdd'), {
@@ -306,6 +296,7 @@ Fanex.CMS.BetLimitTypeControl = function () {
                     of: '#headline'
                 }
             });
+            initLeagueAutoSuggestion();
         } else {
             $addDialog.dialog('open');
             $('#ui-dialog-title-dialog-popup').text(title);
@@ -319,6 +310,123 @@ Fanex.CMS.BetLimitTypeControl = function () {
                 addOrUpdate();
             }
         });
+    }
+
+    function initLeagueAutoSuggestion() {
+        // don't navigate away from the field on tab when selecting an item
+        $('#txtLeagueAdd').on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB
+                && $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        }).autocomplete({
+            source: function (request, response) {
+                var getLeagueFormData = {
+                    leagues: $.trim(extractLast(request.term))
+                };
+                getLeagueFormData[$("#ddlLeagueGroupInNotIn").val() === "0" ? "leagueGroupIds" : "leagueGroupListNotIn"] = $("#ddlLeagueGroupAdd").fanexMultiSelect("getItems", true).join(",");
+
+                $.getJSON(CMS.resolveRootUrl("BetLimitTypeControl/GetLeagues"),
+                    getLeagueFormData,
+                    function (dataString) {
+                        var data = JSON.parse(dataString);
+                        response($.map(data, function (item) {
+                            return {
+                                value: item.Id,
+                                label: item.Name
+                            };
+                        }));
+                    });
+            },
+            search: function () {
+                // custom minLength
+                var term = extractLast(this.value);
+                if ($.trim(term).length < 3) {
+                    return false;
+                }
+            },
+            focus: function () {
+                // prevent value inserted on focus
+                return false;
+            },
+            select: function (event, ui) {
+                var terms = split(this.value);
+                // remove the current input
+                terms.pop();
+                // add the selected item
+                terms.push(ui.item.value);
+                // add placeholder to get the comma-and-space at the end
+                terms.push("");
+                this.value = terms.join(", ");
+                return false;
+            }
+        });
+    }
+
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    function extractLast(term) {
+        return split(term).pop();
+    }
+
+    function renderDropdownListLeagueGroup(selectElementId, selectedLeagueGroup, isCheckAll) {
+        let selectedIdsList = selectedLeagueGroup.split(",");
+        var sabaItems = renderOptionLeagueGroup(viewModel.SabaSportsLeagueGroups, selectedIdsList, isCheckAll);
+        var isCheckAllSaba = true;
+        sabaItems.some(function (item) {
+            if (item.checked === false) {
+                isCheckAllSaba = false;
+                return true;
+            }
+        });
+
+        var otherItems = renderOptionLeagueGroup(viewModel.OtherLeagueGroups, selectedIdsList, isCheckAll);
+        var isCheckAllOther = true;
+        otherItems.some(function (item) {
+            if (item.checked === false) {
+                isCheckAllOther = false;
+                return true;
+            }
+        });
+        
+        let optionList = [
+            {
+                value: "sabasports",
+                text: "Saba Sports",
+                checked: isCheckAll || isCheckAllSaba,
+                enable: true,
+                items: sabaItems
+            },
+            {
+                value: "others",
+                text: "Others",
+                checked: isCheckAll || isCheckAllOther,
+                enable: true,
+                items: otherItems
+            }
+        ];
+
+        return $(selectElementId).fanexMultiSelect({
+            checkAllText: "All",
+            noneSelectedText: "Please select",
+            noItemText: "There is no data",
+            noItemFoundText: "No item found",
+            filterPlaceHolder: "",
+            minWidth: 345,
+            maxHeight: 230,
+            listData: optionList,
+            isCheckAll: isCheckAll || (isCheckAllSaba && isCheckAllOther),
+            showFilter: true
+        });
+    }
+
+    function renderOptionLeagueGroup(leagueGroups, seletecIds, isCheckAll) {
+        var options = [];
+        leagueGroups.forEach(lg => options.push({ value: lg.Id, text: lg.Name, checked: isCheckAll || seletecIds.includes(lg.Id.toString()), enable: true }));
+
+        return options;
     }
 
     function reformatAndValidateInputId(textarea) {
@@ -386,16 +494,12 @@ Fanex.CMS.BetLimitTypeControl = function () {
             CMS.showTipsyError($('#selectBetTypeAdd'), 'This field is required', 'w');
             return;
         }
-
-        var $txtLeagueGroupAdd = $('#txtLeagueGroupAdd');
-        var validateLeagueGroupResult = reformatAndValidateInputId($txtLeagueGroupAdd);
-        if (validateLeagueGroupResult.invalidIdList.length > 0) {
-            CMS.showTipsyError($txtLeagueGroupAdd, 'Invalid League Group ID: ' + validateLeagueGroupResult.invalidIdList.join(', '));
-            return;
-        }
-
-        if (validateLeagueGroupResult.duplicatedIdList.length > 0) {
-            CMS.showTipsyError($txtLeagueGroupAdd, 'Duplicated League Group ID: ' + validateLeagueGroupResult.duplicatedIdList.join(', '));
+        var leagueGroupUncheckedList = $('#ddlLeagueGroupAdd').fanexMultiSelect('getItems', false);
+        var leagueGroupCheckedList = $.map($('#ddlLeagueGroupAdd').fanexMultiSelect('getItems', true), function (x) {
+            return parseInt(x);
+        });
+        if (leagueGroupCheckedList.length === 0) {
+            CMS.showTipsyError($('#ddlLeagueGroupAdd'), 'This field is required', 'w');
             return;
         }
 
@@ -411,7 +515,6 @@ Fanex.CMS.BetLimitTypeControl = function () {
             return;
         }
 
-        var leagueGroupList = $txtLeagueGroupAdd.val();
         var leagueList = $txtLeagueAdd.val();
         var beginTime;
         var endTime;
@@ -440,8 +543,8 @@ Fanex.CMS.BetLimitTypeControl = function () {
             sportTypeList: sportTypeUncheckedList.length === 0 ? '0' : sportTypeCheckedList.join(','),
             betTypeList: betTypeUncheckedList.length === 0 ? '0' : betTypeCheckedList.join(','),
             liveIndicator: liveIndicator,
-            leagueGroupList: leagueGroupList,
-            isExcludedLeagueGroup: $('#chkLeagueGroupNotIn').is(':checked'),
+            leagueGroupList: leagueGroupUncheckedList.length === 0 && $('#ddlLeagueGroupInNotIn').val() === "0" ? '' : leagueGroupCheckedList.join(","),
+            isExcludedLeagueGroup: $('#ddlLeagueGroupInNotIn').val() === "1",
             leagueList: leagueList,
             beginTime: beginTime,
             endTime: endTime,

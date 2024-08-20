@@ -1,10 +1,12 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitTypeControl
 {
+    using System;
     using System.Collections.Generic;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.CMS.BetLimitTypeControl.Criteria;
     using Fanex.NAP.CMS.BetLimitTypeControl.Models;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
@@ -22,6 +24,10 @@
         Result Update(UpdateRequest request);
 
         Result Delete(DeleteRequest request);
+
+        IEnumerable<LeagueGroup> GetLeagueGroups();
+
+        IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues);
     }
 
     public class BetLimitTypeControlService : IBetLimitTypeControlService
@@ -29,6 +35,8 @@
         private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
+        private const string CachedLeagues = "BLT-Leagues";
+        private const int CachedDefaultInMinutes = 60;
 
         public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext)
             : this(currentSession, currentContext, null)
@@ -127,5 +135,24 @@
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
+        public IEnumerable<LeagueGroup> GetLeagueGroups()
+        {
+            var leagues = CacheManager.Get<IEnumerable<LeagueGroup>>(CachedLeagues);
+
+            if (leagues == null)
+            {
+                leagues = serviceBase.GetRepositoryData<LeagueGroup>(new GetLeagueGroupCriteria(0));
+                CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
+
+            return leagues;
+        }
+
+        public IEnumerable<IdNameModel> GetLeagues(
+            string leagueGroupIds,
+            string leagueGroupListNotIn,
+            string leagues)
+            => serviceBase.GetRepositoryData<IdNameModel>(
+                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues));
     }
 }

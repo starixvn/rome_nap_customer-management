@@ -14,8 +14,6 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
 
         public string Username { get; set; }
 
-        public int UserId { get; set; }
-
         public string Permission { get; set; }
 
         public int PageSize { get; set; }
@@ -28,6 +26,6 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
             => "NAP_BLControl_CustSelect";
 
         public override bool IsValid()
-            => UserId > 0 && PageSize > 0 && PageIndex > 0;
+            => PageSize > 0 && PageIndex > 0;
     }
 }

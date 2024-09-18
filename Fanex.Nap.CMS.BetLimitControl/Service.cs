@@ -117,7 +117,6 @@
         {
             var criteria = new SearchCriteria
             {
-                UserId = currentSession.UserId,
                 Permission = request.Permission,
                 LevelID = request.LevelId,
                 Currency = request.Currency,

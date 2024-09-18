@@ -89,17 +89,17 @@
     <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Bet Limit Control">
-    <Setting Key="NAP_BLControl_TypeSelect" SpName="NAP_BLControl_TypeSelect" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Sel" SpName="NAP_BLControl_DefaultSetting_Sel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Ins" SpName="NAP_BLControl_DefaultSetting_Ins" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeSelect" SpName="NAP_BLControl_TypeSelect_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeInsert" SpName="NAP_BLControl_TypeInsert_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeUpdate" SpName="NAP_BLControl_TypeUpdate_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_TypeDelete" SpName="NAP_BLControl_TypeDelete_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustUpdate" SpName="NAP_BLControl_CustUpdate_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustDelete" SpName="NAP_BLControl_CustDelete_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_CustInsert" SpName="NAP_BLControl_CustInsert_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Sel" SpName="NAP_BLControl_DefaultSetting_Sel_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Ins" SpName="NAP_BLControl_DefaultSetting_Ins_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Upd" SpName="NAP_BLControl_DefaultSetting_Upd_UAT3" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_BLControl_DefaultSetting_Del" SpName="NAP_BLControl_DefaultSetting_Del_UAT3" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Limit Daily PT Update">
     <Setting Key="NAP_LimitPTDaily_ProductList" SpName="NAP_LimitPTDaily_ProductList" DbName="DBCust.CustDB.wsv_nap" />
@@ -154,7 +154,7 @@
     <Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicySiteDel" SpName="NAP_LM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
-    <!--Customer Class Setting-->	
+    <!--Customer Class Setting-->
     <Setting Key="NAP_CM_CustomerClassSetting" SpName="NAP_CM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassSetting_RuleDetail" SpName="NAP_LM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->

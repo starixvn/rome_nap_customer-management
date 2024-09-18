@@ -1,4 +1,6 @@
-﻿namespace Fanex.NAP.CMS.BetLimitControl.Request
+﻿using System.Security.Policy;
+
+namespace Fanex.NAP.CMS.BetLimitControl.Request
 {
     public class AddRequest
     {
@@ -11,5 +13,7 @@
         public decimal MaxBet { get; set; }
 
         public decimal MaxPerMatch { get; set; }
+
+        public string Permission { get; set; }
     }
 }

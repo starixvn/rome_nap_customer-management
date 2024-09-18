@@ -15,7 +15,7 @@
 
     public interface IService
     {
-        IndexViewModel GetIndexViewModel();
+        IndexViewModel GetIndexViewModel(string permissions);
 
         SearchModel Search(SearchRequest request);
 
@@ -44,7 +44,7 @@
             this.currentSession = currentSession;
             this.currentContext = currentContext;
             this.serviceBase = serviceBase ?? new ServiceBase();
-        }
+    }
 
         public IEnumerable<Result> Add(AddRequest addRequest)
         {
@@ -56,6 +56,7 @@
 
             var criteria = new AddBetLimitControlCriteria
             {
+                Permission = addRequest.Permission,
                 Usernames = addRequest.Username,
                 BetLimitTypeID = addRequest.BetLimitTypeID,
                 Mode = addRequest.Mode,
@@ -84,8 +85,10 @@
 
         public Result Delete(DeleteRequest deleteRequest)
         {
+
             var criteria = new DeleteBetLimitControlCriteria
             {
+                Permission = deleteRequest.Permissisons,
                 CustID = deleteRequest.CustID,
                 BetLimitTypeID = deleteRequest.BetLimitTypeID,
                 UserId = currentSession.UserId,
@@ -97,10 +100,10 @@
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
-        public IndexViewModel GetIndexViewModel()
+        public IndexViewModel GetIndexViewModel(string permissions)
         {
             var currencies = serviceBase.GetRepositoryData<CurrencyModel>(new GetAllCurrencyCriteria());
-            var sites = serviceBase.GetRepositoryData<SiteModel>(new GetSiteByPermissionCriteria(currentSession.UserId));
+            var sites = serviceBase.GetRepositoryData<SiteModel>(new GetSiteByPermissionCriteria(permissions));
             var betLimitTypes = serviceBase.GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
             return new IndexViewModel
             {
@@ -115,6 +118,7 @@
             var criteria = new SearchCriteria
             {
                 UserId = currentSession.UserId,
+                Permission = request.Permission,
                 LevelID = request.LevelId,
                 Currency = request.Currency,
                 SiteID = request.SiteId,
@@ -138,6 +142,7 @@
         {
             var criteria = new UpdateBetLimitControlCriteria
             {
+                Permission = updateRequest.Permission,
                 CustID = updateRequest.CustID,
                 BetLimitTypeID = updateRequest.BetLimitTypeID,
                 NewBetLimitTypeID = updateRequest.NewBetLimitTypeID,

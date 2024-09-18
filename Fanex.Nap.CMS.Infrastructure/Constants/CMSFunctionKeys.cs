@@ -167,5 +167,9 @@ namespace Fanex.Nap.CMS.Infrastructure
         //Credit Payout Managment
         public const string CreditPayoutManagement = "CreditPayoutManagement";
 
+        public const string BLC_CN88Site = "BLC_CN88Site";
+        public const string BLC_LicenseeSite = "BLC_LicenseeSite";
+        public const string BLC_Credit = "BLC_Credit";
+
     }
 }

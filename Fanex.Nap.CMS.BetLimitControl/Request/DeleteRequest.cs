@@ -4,6 +4,8 @@
     {
         public int CustID { get; set; }
 
+        public string Permissisons { get; set; }
+
         public int BetLimitTypeID { get; set; }
     }
 }

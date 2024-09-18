@@ -4,15 +4,15 @@
 
     public class GetSiteByPermissionCriteria : CriteriaBase
     {
-        public GetSiteByPermissionCriteria(int userId)
+        public GetSiteByPermissionCriteria(string permission)
         {
-            UserId = userId;
+            Permission = permission;
         }
 
-        public int UserId { get; private set; }
+        public string Permission { get; set; }
 
         public override string GetSettingKey() => "NAP_BLControl_SiteByPermissionSelect";
 
-        public override bool IsValid() => UserId > 0;
+        public override bool IsValid() => true;
     }
 }

@@ -18,6 +18,8 @@
 
         public int UserId { get; set; }
 
+        public string Permission { get; set; }
+
         public string IP { get; set; }
 
         public int ErrorCode { get; set; }

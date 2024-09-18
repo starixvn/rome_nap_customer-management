@@ -67,8 +67,7 @@
 
         public IEnumerable<SearchModel> Search(SearchRequest request)
             => serviceBase.GetRepositoryData<SearchModel>(new SearchCriteria
-            {
-                UserId = currentSession.UserId,
+            {  
                 ProductId = request.ProductId,
                 SportType = request.SportTypeId,
                 BetType = request.BetTypeId,

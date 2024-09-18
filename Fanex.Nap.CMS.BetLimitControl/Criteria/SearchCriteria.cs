@@ -16,6 +16,8 @@ namespace Fanex.NAP.CMS.BetLimitControl.Criteria
 
         public int UserId { get; set; }
 
+        public string Permission { get; set; }
+
         public int PageSize { get; set; }
 
         public int PageIndex { get; set; }

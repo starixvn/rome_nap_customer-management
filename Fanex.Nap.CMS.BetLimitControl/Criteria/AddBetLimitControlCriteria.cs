@@ -18,6 +18,8 @@
 
         public string IP { get; set; }
 
+        public string Permission { get; set; }
+
         public override string GetSettingKey()
             => "NAP_BLControl_CustInsert";
 

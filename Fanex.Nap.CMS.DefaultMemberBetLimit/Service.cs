@@ -56,7 +56,6 @@
         {
             var criteria = new SearchCriteria
             {
-                UserId = currentSession.UserId,
                 BetLimitTypeId = request.BetLimitTypeId,
                 Username = request.Username
             };

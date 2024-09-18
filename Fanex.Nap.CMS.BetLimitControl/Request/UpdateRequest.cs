@@ -13,5 +13,7 @@
         public decimal MaxBet { get; set; }
 
         public decimal MaxPerMatch { get; set; }
+
+        public string Permission { get; set; }
     }
 }

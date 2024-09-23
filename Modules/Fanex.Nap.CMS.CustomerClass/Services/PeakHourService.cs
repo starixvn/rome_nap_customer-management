@@ -32,6 +32,7 @@
         private const string PeakHourTimeFormat = @"h\:mm";
         private const string PeakHourNoteFormat = "<p>Peak Hour Range:</p>{0}";
         private const string PeakHourByDateFormat = "<p>{0}: {1}</p>";
+        private const byte SundayWeekday = 1;
 
         protected static readonly IDictionary<int, string> DateNames = new Dictionary<int, string>
         {
@@ -71,7 +72,7 @@
 
         public IEnumerable<PeakHourModel> GetPeakHours()
         {
-            return dynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
+            return dynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay == SundayWeekday).ThenBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
         }
 
         public SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes, IEnumerable<LeagueGroup> leagueGroups)

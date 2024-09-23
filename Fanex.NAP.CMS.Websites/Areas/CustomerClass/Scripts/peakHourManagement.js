@@ -5,7 +5,6 @@
         cachedLicenseeSites = [],
         cachedCreditSites = [],
         cachedFilter = null,
-        ddlCustomerClasses = null,
         ddlSites = null,
         ddlCurrencies = null,
         ddlLeagueGroupBox = $("#ddlLeagueGroupBox"),
@@ -18,7 +17,9 @@
     let IsLiveOptions = [{ Text: "All", Value: "0" }, { Text: "Yes", Value: "1" }, { Text: "No", Value: "2" }];
 
     function init() {
-        renderCustomerClass();
+        const txtFilterCustomerClass = $("#txtFilterCustomerClass");
+        txtFilterCustomerClass.blur(() => txtFilterCustomerClass.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClass.val())));
+        txtFilterCustomerClass.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
         renderSites();
         renderCurrencies();
         const ddlSportType = $("#ddlSportType")
@@ -28,7 +29,7 @@
             e.preventDefault();
 
             const formData = {
-                customerClass: ddlCustomerClasses.fanexMultiSelect("getItems", true).join(),
+                customerClass: txtFilterCustomerClass.val(),
                 site: getSelectedReplaceAllValue("ddlSites", "0", siteList.length),
                 sportTypes: ddlSportType.val(),
                 currency: getSelectedReplaceAllValue("ddlCurrencies", "0", currencyList.length),
@@ -36,6 +37,10 @@
             };
             if (formData.sportTypes === "0") {
                 formData.sportTypes = sportList.map(sp => sp.Value).join(',');
+            }
+
+            if (formData.customerClass === "All") {
+                formData.customerClass = "";
             }
             cachedAddNewRule = null;
             cachedFilter = formData;
@@ -135,23 +140,6 @@
     }
 
 
-    function renderCustomerClass() {
-        let optionList = [];
-        customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: true, enable: true })
-        );
-
-        ddlCustomerClasses = customerClassHelper.renderMultiSelect(
-            "#ddlCustomerClasses",
-            {
-                minWidth: 180,
-                maxHeight: 300,
-                listData: optionList,
-                showFilter: true
-            }
-        );
-    }
-
-
     function renderSites() {
         var listData = buildGroupSiteList(true, true, "All");
         ddlSites = customerClassHelper.renderMultiSelect(
@@ -195,9 +183,9 @@
                 if (parsedResult.Message) {
                     CMS.showErrorMessage(parsedResult.Message);
                     cachedAddNewRule = null;
-                    renderGrid(new Array());
                     cachedData = [];
                     cachedPeakNote = "";
+                    renderGrid(new Array());
                 } else {
                     cachedData = parsedResult.SpreadRules;
                     cachedPeakNote = parsedResult.PeakNoteInfo;
@@ -234,6 +222,7 @@
             html.push('</tbody></table>');
 
             freeGrid.removeClass("display-none").html(html.join(""));
+            bindEventNotePeak();
         } else {
             if (cachedAddNewRule !== null) {
                 html.push(buildAddRow(data.length + 1));
@@ -401,6 +390,10 @@
             .off("click")
             .click(showEnableDisablePopup);
         freeGrid.find(".is-editting").trigger('click');
+        bindEventNotePeak();
+    }
+
+    function bindEventNotePeak() {
         $('.light-note-info-message').tipsy({
             className: 'custom-grid-colheader-note',
             html: true,

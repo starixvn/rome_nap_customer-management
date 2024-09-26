@@ -35,6 +35,7 @@
             disableParlay: "@Labels.DisableParlay",
             peakHourSpread: "@Labels.PeakHourSpread",
             enable: "@Labels.Enable",
+            topPriority: "@Labels.TopPriority",
             all: "@Labels.All",
             yes: "@Labels.Yes",
             no: "@Labels.No"
@@ -58,7 +59,7 @@
 <div class="filter-bar">
     @using (Html.BeginForm("Search", "CustomerClassSetting", FormMethod.Get, new { @class = "filter-form", id = "formSearch" }))
     {
-    <div class="filter-row last-row">
+    <div class="filter-row first-row">
         <div class="lbl-field col_2">
             <label>@Labels.Site</label>
         </div>
@@ -75,13 +76,13 @@
             <label>@Labels.GeneralCC</label>
         </div>
         <div class="edit-field col_4">
-            <input type="text" id="txtFilterCustomerClass" class="filter-cc" />
+            <input type="text" id="txtCCSFilterCustomerClass" class="filter-cc" />
         </div>
         <div class="lbl-field col_4">
             <label>@Labels.SportCC</label>
         </div>
         <div class="edit-field col_4">
-            <input type="text" id="txtFilterCustomerClassDetail" class="filter-cc" />
+            <input type="text" id="txtCCSFilterCustomerClassDetail" class="filter-cc" />
         </div>
         <div class="lbl-field col_4">
             <label>@Labels.Currency</label>

@@ -76,6 +76,40 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
 
             return Tuple.Create<int, IEnumerable<T>>(totalItems, resultSet);
         }
+        
+
+        public Tuple<int, IEnumerable<T>, Result> ExecuteReaderPagingWithError<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        {
+            var totalItems = 0;
+            IList<T> resultSet = new List<T>();
+
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        resultSet.Add(funcMapper(reader));
+                    }
+                }
+
+                var totalItemsOutputValue = db.GetOuputParams()["totalitems"];
+                if (totalItemsOutputValue != null && totalItemsOutputValue != DBNull.Value)
+                {
+                    totalItems = Convert.ToInt32(totalItemsOutputValue);
+                }
+
+                var outputParams = db.GetOuputParams();
+
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = Converter.ToString2(outputParams["errmsg"]);
+
+                var result = new Result { Code = code, Message = message };
+
+                return Tuple.Create<int, IEnumerable<T>, Result>(totalItems, resultSet, result);
+            }
+
+        }
 
         public Result DoAction(ICriteria criteria, string successfullyMessage = null)
         {

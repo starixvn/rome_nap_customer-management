@@ -12,7 +12,8 @@
             ? ToRule(
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
-                enable: Convert.ToBoolean(reader["Enable"]))
+                enable: Convert.ToBoolean(reader["Enable"]),
+                topPriority: Convert.ToBoolean(reader["TopPriority"]))
             : null;
 
         public static Rule ToRuleList(IDataReader reader)
@@ -20,7 +21,8 @@
             ? ToRule(
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
-                enable: Convert.ToBoolean(reader["Enable"]))
+                enable: Convert.ToBoolean(reader["Enable"]),
+                topPriority: Convert.ToBoolean(reader["TopPriority"]))
             : null;
 
         public static Rule ToPolicyRuleList(IDataReader reader)
@@ -28,7 +30,8 @@
             ? ToRule(
                 reader,
                 leagueGroups: reader["LeagueGroupNames"].ToString(),
-                enable: Convert.ToBoolean(reader["Enable"]))
+                enable: Convert.ToBoolean(reader["Enable"]),
+                topPriority: Convert.ToBoolean(reader["TopPriority"]))
             : null;
 
         public static Rule ToRule(IDataReader reader)
@@ -42,6 +45,7 @@
             string leagueGroupIds = null,
             string leagueGroups = null,
             bool? enable = false,
+            bool? topPriority = false,
             string site = null,
             string currencies = null,
             string platforms = null)
@@ -68,6 +72,7 @@
                 Convert.ToBoolean(reader["DisableParlay"]),
                 GetShort(reader["PeakHourSpreadAdjustment"]),
                 enable,
+                topPriority,
                 site,
                 currencies,
                 platforms,

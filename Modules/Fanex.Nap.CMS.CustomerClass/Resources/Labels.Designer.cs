@@ -1285,6 +1285,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Top Priority.
+        /// </summary>
+        public static string TopPriority {
+            get {
+                return ResourceManager.GetString("TopPriority", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Errors.
         /// </summary>
         public static string TotalErrors {

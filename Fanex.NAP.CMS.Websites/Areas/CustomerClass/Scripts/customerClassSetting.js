@@ -11,8 +11,8 @@
         freeGrid = $("#freegrid");
 
     function init() {
-        const txtFilterCustomerClass = $("#txtFilterCustomerClass");
-        const txtFilterCustomerClassDetail = $("#txtFilterCustomerClassDetail");
+        const txtFilterCustomerClass = $("#txtCCSFilterCustomerClass");
+        const txtFilterCustomerClassDetail = $("#txtCCSFilterCustomerClassDetail");
         txtFilterCustomerClass.blur(() => txtFilterCustomerClass.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClass.val())));
         txtFilterCustomerClassDetail.blur(() => txtFilterCustomerClassDetail.val(customerClassHelper.replaceCharsCommaInput(txtFilterCustomerClassDetail.val())));
         txtFilterCustomerClass.keydown((e) => customerClassHelper.handleNumberCommanTextInput(e));
@@ -143,7 +143,7 @@
                 Columns: [
                     { HeaderText: "Conditions", Name: "colRuleTitle", MergeColNumber: 5, ThClass: "header-main" },
                     { HeaderText: "Apply To", Name: "colLeagueGroup", MergeColNumber: 2, ThClass: "header-main" },
-                    { HeaderText: "Restriction Settings", Name: "colDiffBalanceRatio", MergeColNumber: 8, ThClass: "header-main" }
+                    { HeaderText: "Restriction Settings", Name: "colDiffBalanceRatio", MergeColNumber: 9, ThClass: "header-main" }
                 ]
             }
         ];
@@ -162,6 +162,7 @@
             { HeaderText: resources.repeatedBets, Width: 60, Name: "colRepeatedBets", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.seizeBet, Width: 60, Name: "colSeizeBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.disableParlay, Width: 60, Name: "colDisableParlay", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.topPriority + "&nbsp", Width: 90, Name: "colTopPriority", HeaderAlign: "center", CellAlign: "center", Sort: true, SortType: 'string' },
             { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
         ];
 
@@ -209,6 +210,7 @@
                     { Name: "colRepeatedBets", Value: rule.RepeatedBets },
                     { Name: "colSeizeBet", Value: ruleManagementHelper.renderPercentCell(rule.SeizeBet) },
                     { Name: "colDisableParlay", Value: ruleManagementHelper.renderBooleanCell(rule.DisableParlay) },
+                    { Name: "colTopPriority", Value: ruleManagementHelper.renderBooleanCell(rule.TopPriority) },
                     { Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) }
                 ]
             };

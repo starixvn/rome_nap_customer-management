@@ -43,7 +43,7 @@
         public string ErrMsg { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassSetting";
+            => "NAP_CM_CustomerClassSetting";
 
         protected string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagueGroups)
         {

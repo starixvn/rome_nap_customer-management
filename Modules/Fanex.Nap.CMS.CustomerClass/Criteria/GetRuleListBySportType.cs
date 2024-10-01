@@ -12,6 +12,6 @@
         public string LeagueGroups { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassSportGet";
+            => "NAP_CM_CustomerClassSportGet";
     }
 }

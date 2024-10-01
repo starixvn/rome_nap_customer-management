@@ -10,7 +10,7 @@
         public int RuleId  { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassRuleSel";
+            => "NAP_CM_CustomerClassRuleSel";
 
         public override bool IsValid()
             => RuleId > 0;

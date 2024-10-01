@@ -18,6 +18,6 @@
         public bool TopPriority { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassRuleEnable";
+            => "NAP_CM_CustomerClassRuleEnable";
     }
 }

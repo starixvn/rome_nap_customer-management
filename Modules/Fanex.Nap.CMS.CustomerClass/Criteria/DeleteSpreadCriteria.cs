@@ -6,6 +6,6 @@
         public byte Type { get; set; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassSpreadDel";
+            => "NAP_CM_CustomerClassSpreadDel";
     }
 }

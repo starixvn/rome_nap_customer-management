@@ -8,6 +8,6 @@
         }
 
         public override string GetSettingKey()
-            => "NAP_LM_CCPeakHourRangerUpd";
+            => "NAP_CM_CCPeakHourRangerUpd";
     }
 }

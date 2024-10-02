@@ -5,6 +5,6 @@
     internal class GetPeakHourCriteria : CommandBaseCriteria
     {
         public override string GetSettingKey()
-            => "NAP_LM_CCPeakHourRangerSel";
+            => "NAP_CM_CCPeakHourRangerSel";
     }
 }

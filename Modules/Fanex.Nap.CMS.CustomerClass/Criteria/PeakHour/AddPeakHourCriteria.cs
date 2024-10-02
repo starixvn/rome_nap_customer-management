@@ -17,6 +17,6 @@
         public int RangeID { get; set; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CCPeakHourRangerIns";
+            => "NAP_CM_CCPeakHourRangerIns";
     }
 }

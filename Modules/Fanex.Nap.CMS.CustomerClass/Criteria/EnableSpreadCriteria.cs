@@ -14,6 +14,6 @@
         public byte Type { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassSpreadEnable";
+            => "NAP_CM_CustomerClassSpreadEnable";
     }
 }

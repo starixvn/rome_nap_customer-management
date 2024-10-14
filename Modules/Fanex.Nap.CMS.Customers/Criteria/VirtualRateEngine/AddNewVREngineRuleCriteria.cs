@@ -4,7 +4,7 @@
 
     internal class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
-        public AddNewVREngineRuleCriteria(AddNewRuleViewModel vm)
+        public AddNewVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonCheckData)
             : base(vm.UserId, vm.IP)
         {
             RuleName = vm.RuleTitle;
@@ -38,6 +38,7 @@
 
             Criteria_NotApply = vm.CriteriaNotApply;
             Enabled_Columns = vm.EnabledColumns;
+            JsonCheckData = jsonCheckData;
         }
 
         public string RuleName { get; }
@@ -95,6 +96,8 @@
         public string Criteria_NotApply { get; }
 
         public string Enabled_Columns { get; }
+
+        public string JsonCheckData { get; }
 
         public override string GetSettingKey()
             => "NAP_VREngine_Rule_Insert";

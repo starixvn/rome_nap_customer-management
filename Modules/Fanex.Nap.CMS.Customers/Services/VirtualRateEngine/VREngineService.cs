@@ -13,6 +13,7 @@
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Web;
 
     public class VREngineService : IVREngineService
     {
@@ -30,6 +31,8 @@
         private const string TicketDoW = "DateOfWeek";
         private const string TicketTime = "TicketTime";
         private const string Currency = "Currency";
+        private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
+        private const int CachedDefaultInMinutes = 60;
         private readonly IVREngineRepository repository;
 
         public VREngineService(IVREngineRepository repository = null)
@@ -44,8 +47,12 @@
             string leagueGroupIds,
             string leagueGroupListNotIn,
             string leagues)
-            => repository.GetLeagues(
-                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues));
+        {
+            var jsonSportBetType = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+
+            return repository.GetLeagues(
+                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+        }
 
         public VREngineModel GetRules()
         {
@@ -329,14 +336,33 @@
         #endregion
 
         public Result AddNewRule(AddNewRuleViewModel viewModel)
-            => ExecuteNonQuery(
-                new AddNewVREngineRuleCriteria(viewModel),
-                VREngineResource.AddedNewRuleSuccessfully);
+        {
+            var jsonSportBetType = GetSportBettypeMatrix();
+            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
+            if (!resultCheck.IsSuccess)
+            {
+                return resultCheck;
+            }
+
+            return ExecuteNonQuery(
+                   new AddNewVREngineRuleCriteria(viewModel, resultCheck.Message),
+                   VREngineResource.AddedNewRuleSuccessfully);
+        }
 
         public Result UpdateRule(int ruleId, AddNewRuleViewModel viewModel)
-            => ExecuteNonQuery(
-                new UpdateVREngineRuleCriteria(ruleId, viewModel),
+        {
+
+            var jsonSportBetType = GetSportBettypeMatrix();
+            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
+            if (!resultCheck.IsSuccess)
+            {
+                return resultCheck;
+            }
+
+            return ExecuteNonQuery(
+                new UpdateVREngineRuleCriteria(ruleId, viewModel, resultCheck.Message),
                 VREngineResource.UpdatedRuleSuccessfully);
+        }
 
         public Result DeleteRule(int ruleId, int userId, string ip)
             => ExecuteNonQuery(
@@ -371,6 +397,18 @@
             }
 
             return result;
+        }
+
+        private string GetSportBettypeMatrix()
+        {
+            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+            if(jsonSBM == null)
+            {
+                jsonSBM = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
+
+            return jsonSBM;
         }
 
         #endregion

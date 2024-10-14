@@ -12,6 +12,7 @@
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
+    using Newtonsoft.Json;
 
     public interface IBetLimitTypeControlService
     {
@@ -37,6 +38,7 @@
         private readonly ICurrentContext currentContext;
         private const string CachedLeagues = "BLT-Leagues";
         private const int CachedDefaultInMinutes = 60;
+        private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
 
         public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext)
             : this(currentSession, currentContext, null)
@@ -152,7 +154,37 @@
             string leagueGroupIds,
             string leagueGroupListNotIn,
             string leagues)
-            => serviceBase.GetRepositoryData<IdNameModel>(
-                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues));
+        {
+            var jsonSportBetType = GetSportBetType();
+
+            return serviceBase.GetRepositoryData<IdNameModel>(
+                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+        }
+
+        private string GetSportBetType()
+        {
+            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+            if (jsonSBM == null)
+            {
+                var criteria = new GetSportBettypeCriteria();
+                var sporttypes = new List<object>();
+                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                {
+                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    {
+                        while (reader.Read())
+                        {
+                            sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
+                        }
+                    }
+                }
+
+                jsonSBM = JsonConvert.SerializeObject(sporttypes);
+                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
+
+            return jsonSBM;
+            
+        }
     }
 }

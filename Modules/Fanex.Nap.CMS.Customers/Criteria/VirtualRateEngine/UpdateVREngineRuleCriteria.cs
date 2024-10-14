@@ -4,8 +4,8 @@
 
     internal class UpdateVREngineRuleCriteria : AddNewVREngineRuleCriteria
     {
-        public UpdateVREngineRuleCriteria(int ruleId, AddNewRuleViewModel vm)
-            : base(vm)
+        public UpdateVREngineRuleCriteria(int ruleId, AddNewRuleViewModel vm, string jsonCheckData)
+            : base(vm, jsonCheckData)
         {
             RuleId = ruleId;
         }

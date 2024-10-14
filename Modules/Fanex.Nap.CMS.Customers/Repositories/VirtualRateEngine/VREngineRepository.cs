@@ -10,6 +10,7 @@
     using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Newtonsoft.Json;
 
     public class VREngineRepository : IVREngineRepository
     {
@@ -255,5 +256,67 @@
                     outputParams["errormsg"].ToString());
             }
         }
+
+        public string GetSportBettype(ICriteria criteria)
+        {
+            var sporttypes = new List<object>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
+                    }
+                }
+            }
+
+            return JsonConvert.SerializeObject(sporttypes);
+        }
+
+        public Result CheckVREngineRule(ICriteria criteria)
+        {
+            var checkResults = new List<CheckVREngineRuleResult>();
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                {
+                    while (reader.Read())
+                    {
+                        checkResults.Add(ToCheckVRRule(reader));
+                    }
+
+                    reader.Close();
+
+                    var outputParams = db.GetOuputParams();
+                    var result = new Result(
+                    Convert.ToInt32(outputParams["errorcode"]),
+                    outputParams["errormsg"].ToString());
+
+                    if (result.IsSuccess)
+                    {
+                        result.Message = JsonConvert.SerializeObject(checkResults);
+                    }
+
+                    return result;
+                }
+            }
+        }
+
+        private static CheckVREngineRuleResult ToCheckVRRule(IDataReader reader)
+            => new CheckVREngineRuleResult
+            {
+                Bettype = Convert.ToInt32(reader["Bettype"]),
+                Sporttype = Convert.ToInt32(reader["Sporttype"]),
+                CCSporttype = Convert.ToInt32(reader["CCSporttype"]),
+                CurrencyID = Convert.ToInt32(reader["CurrencyID"]),
+                CustomerClass = Convert.ToInt32(reader["CustomerClass"]),
+                CustomerClassDetail = Convert.ToInt32(reader["CustomerClassDetail"]),
+                DateOfWeek = Convert.ToInt32(reader["DateOfWeek"]),
+                LeagueGroupID = Convert.ToInt32(reader["LeagueGroupID"]),
+                LeagueID = Convert.ToInt32(reader["LeagueID"]),
+                SiteID = Convert.ToInt32(reader["SiteID"]),
+                IsApply = Convert.ToByte(reader["IsApply"])
+            };
     }
 }

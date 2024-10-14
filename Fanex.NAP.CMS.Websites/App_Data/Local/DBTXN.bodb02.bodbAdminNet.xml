@@ -28,4 +28,7 @@
   <Function Name="Credit Payout Management">
     <Setting Key="NAP_PayoutPromotion_Upd" SpName="NAP_PayoutPromotion_Upd" DbName="DBTXN.bodb02.wsv_nap" />
   </Function>
+  <Function Name="Virtual Rate Engine">
+    <Setting Key="Acc_CustomerVRGetSportBettype" SpName="Acc_CustomerVRGetSportBettype" DbName="DBTXN.bodb02.wsv_nap" />
+  </Function>
 </Functions>

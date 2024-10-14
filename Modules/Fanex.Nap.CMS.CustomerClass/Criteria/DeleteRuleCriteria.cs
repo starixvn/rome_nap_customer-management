@@ -12,6 +12,6 @@ namespace Fanex.Nap.CMS.CustomerClass.Criteria
         public string RuleIDs { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassRuleDel";
+            => "NAP_CM_CustomerClassRuleDel";
     }
 }

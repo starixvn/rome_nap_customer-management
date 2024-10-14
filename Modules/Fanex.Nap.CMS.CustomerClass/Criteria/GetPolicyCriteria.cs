@@ -16,6 +16,6 @@
         public string SportTypes { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicySel";
+            => "NAP_CM_CustomerClassPolicySel";
     }
 }

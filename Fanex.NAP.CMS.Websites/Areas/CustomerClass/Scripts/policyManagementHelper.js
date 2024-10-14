@@ -9,6 +9,7 @@ const policyManagementHelper = (function () {
             renderSeparateRuleSettings(resources.nextSuperSiteBetIntervalSec, rule.NextBetInterval, rule.SuperBetInterval, rule.SiteBetInterval),
             renderSeparateRuleSettings(resources.minMaxBetMPM, rule.MinBet, rule.MaxBet, rule.MaxPerMatch),
             renderRepeatedBetsSeizeBetDisableParlay(rule),
+            renderTopPriority(rule)
             //renderPeakHourSpread(rule)
         ].join("");
     }
@@ -86,6 +87,10 @@ const policyManagementHelper = (function () {
         html.push(renderRuleSetting(resources.disableParlay, showEnableValue(rule.DisableParlay)));
 
         return `<div>${html.join(", ")}</div>`;
+    }
+
+    function renderTopPriority(rule) {
+        return `<div>${renderRuleSetting(resources.topPriority, showEnableValue(rule.TopPriority))}</div>`;
     }
 
     function showEnableValue(value) {

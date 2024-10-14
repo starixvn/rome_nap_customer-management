@@ -13,7 +13,7 @@
         public string Rules { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassRuleIns";
+            => "NAP_CM_CustomerClassRuleIns";
 
         private static string ToXml(AddRuleRequest request, int ruleId)
         {

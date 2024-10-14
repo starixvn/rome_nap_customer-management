@@ -27,6 +27,6 @@
         public byte IsLive { get; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassRuleSearch";
+            => "NAP_CM_CustomerClassRuleSearch";
     }
 }

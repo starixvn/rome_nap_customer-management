@@ -549,4 +549,7 @@
   <data name="AllPlatformDetail" xml:space="preserve">
     <value>All Platforms</value>
   </data>
+  <data name="TopPriority" xml:space="preserve">
+    <value>Top Priority</value>
+  </data>
 </root>

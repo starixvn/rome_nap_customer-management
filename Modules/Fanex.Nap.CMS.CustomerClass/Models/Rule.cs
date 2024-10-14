@@ -25,6 +25,7 @@
             bool disableParlay,
             short? peakHourSpread,
             bool? enable,
+            bool? topPriority,
             string site,
             string currencies,
             string platforms,
@@ -52,6 +53,7 @@
             DisableParlay = disableParlay;
             PeakHourSpread = peakHourSpread;
             Enable = enable;
+            TopPriority = topPriority;
             Site = site;
             Currencies = currencies;
             Platforms = platforms;
@@ -103,6 +105,8 @@
         public short? PeakHourSpread { get; }
 
         public bool? Enable { get; }
+
+        public bool? TopPriority { get; }
 
         public string Site { get; }
 

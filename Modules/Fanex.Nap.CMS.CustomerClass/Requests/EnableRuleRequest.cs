@@ -10,6 +10,8 @@
 
         public bool Enable { get; set; }
 
+        public bool TopPriority { get; set; }
+
         public override bool IsValid()
             => base.IsValid() && RuleId > 0;
     }

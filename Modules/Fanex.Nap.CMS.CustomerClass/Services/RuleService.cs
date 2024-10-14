@@ -71,7 +71,7 @@
 
             var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds));
 
-            return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2));
+            return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2), resultSet.Item3);
         }
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)

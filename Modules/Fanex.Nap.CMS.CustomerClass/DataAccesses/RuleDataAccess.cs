@@ -7,13 +7,14 @@
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Responses;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.Framework.Data;
     using Rule = Models.Rule;
 
     internal interface IRuleDataAccess : IBaseRepository
     {
-        Tuple<int, IEnumerable<Rule>> GetPagedRule(ICriteria criteria);
+        Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(ICriteria criteria);
 
         IEnumerable<Rule> GetRules(ICriteria criteria);
 
@@ -26,8 +27,8 @@
 
     internal class RuleDataAccess : BaseRepository, IRuleDataAccess
     {
-        public Tuple<int, IEnumerable<Rule>> GetPagedRule(ICriteria criteria)
-            => ExecuteReaderPaging(criteria, DataReaderToModelHelper.ToPagedRule);
+        public Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(ICriteria criteria)
+            => ExecuteReaderPagingWithError(criteria, DataReaderToModelHelper.ToPagedRule);
 
         public IEnumerable<Rule> GetRules(ICriteria criteria)
             => ExecuteReader(criteria, DataReaderToModelHelper.ToRuleList);

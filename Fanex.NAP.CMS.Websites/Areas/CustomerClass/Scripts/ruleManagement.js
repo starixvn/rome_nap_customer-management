@@ -113,7 +113,7 @@
     }
 
     function defaultGridOptions() {
-        var restrictionColSpan = hasHostPermisson ? 12 : 10;
+        var restrictionColSpan = hasHostPermisson ? 13 : 11;
         var groupHeaderRows = [
             {
                 Columns: [
@@ -138,7 +138,8 @@
             { HeaderText: resources.seizeBet, Width: 60, Name: "colSeizeBet", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.policyTitle, Width: 160, Name: "colPolicies", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.disableParlay, Width: 60, Name: "colDisableParlay", HeaderAlign: "center", CellAlign: "center" },
-            { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" }
+            { HeaderText: resources.enable, Width: 60, Name: "colEnable", HeaderAlign: "center", CellAlign: "center" },
+            { HeaderText: resources.topPriority + "&nbsp", Width: 90, Name: "colTopPriority", HeaderAlign: "center", CellAlign: "center" }
         ];
         hasHostPermisson && columns.push({ HeaderText: resources.action, Width: 60, Name: "colAction", HeaderAlign: "center", CellAlign: "center" },
             { HeaderText: resources.delete + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Width: 80, Name: "colDelete", HeaderAlign: "center", CellAlign: "center" });
@@ -179,10 +180,13 @@
 
             hasHostPermisson
                 ? columns.push(
-                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.SportType, rule.Enable) },
+                    { Name: "colEnable", Value: renderEnableCell(rule.RuleId, rule.RuleTitle, rule.SportType, rule.Enable, rule.TopPriority) },
+                    { Name: "colTopPriority", Value: renderTopPriorityCell(rule.RuleId, rule.RuleTitle, rule.SportType, rule.TopPriority, rule.Enable) },
                     { Name: "colAction", Value: renderActionCell(rule.RuleId, rule.SportType) },
                     { Name: "colDelete", Value: renderDeleteCell(rule.RuleId, rule.SportType) })
-                : columns.push({ Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) });
+                : columns.push(
+                    { Name: "colEnable", Value: ruleManagementHelper.renderBooleanCell(rule.Enable) },
+                    { Name: "colTopPriority", Value: ruleManagementHelper.renderBooleanCell(rule.TopPriority) });
 
             return { Columns: columns };
         });
@@ -207,8 +211,12 @@
             : `<a href="javascript:;" class="link-league-group" data-leaguegroups="${policies}" data-title="${resources.policyTitle}">${numOfPolicies}</a>`;
     }
 
-    function renderEnableCell(ruleId, ruleTitle, sportType, enable) {
-        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sporttype="${sportType}" ${enable ? "checked" : ""}>`;
+    function renderEnableCell(ruleId, ruleTitle, sportType, enable, toppriority) {
+        return `<input type="checkbox" class="checkbox-enable" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sporttype="${sportType}" data-toppriority="${toppriority}" ${enable ? "checked" : ""}>`;
+    }
+
+    function renderTopPriorityCell(ruleId, ruleTitle, sportType, toppriority, enable) {
+        return `<input type="checkbox" class="checkbox-toppriority" data-ruleid="${ruleId}" data-ruletitle="${ruleTitle}" data-sporttype="${sportType}" data-enable="${enable}" ${toppriority ? "checked" : ""}>`;
     }
 
     function renderActionCell(ruleId, sportType) {
@@ -227,6 +235,10 @@
         freeGrid.find(".checkbox-enable")
             .off("change")
             .change(handleEnableRule);
+
+        freeGrid.find(".checkbox-toppriority")
+            .off("change")
+            .change(handleTopPriorityRule);
 
         freeGrid.find(".ico-edit")
             .off("click")
@@ -303,7 +315,36 @@
             CMS.callAjax(
                 this,
                 CMS.resolveRootUrl("Rule/Enable"),
-                { ruleId: $this.data("ruleid"), enable: isChecked, sportType: $this.data("sporttype")},
+                { ruleId: $this.data("ruleid"), enable: isChecked, topPriority: $this.data("toppriority"), sportType: $this.data("sporttype")},
+                function (result) {
+                    const resultJson = JSON.parse(result);
+                    if (resultJson.IsSuccess) {
+                        $this.prop("checked", isChecked);
+                    } else {
+                        CMS.showErrorMessage(resultJson.Message);
+                    }
+                });
+        });
+    }
+
+    function handleTopPriorityRule() {
+        const isChecked = this.checked;
+        const $this = $(this);
+        const confirmMessage = [
+            'Are you sure you want to ',
+            isChecked ? '<strong class="text-blue">ENABLE</strong>' : '<strong class="text-red">DISABLE</strong>',
+            ' "Top Priority" for rule title "',
+            $this.data("ruletitle"),
+            '"?'
+        ].join("");
+        this.checked = !isChecked;
+
+        CMS.showConfirmMessage(confirmMessage, function () {
+            CMS.disableInput();
+            CMS.callAjax(
+                this,
+                CMS.resolveRootUrl("Rule/Enable"),
+                { ruleId: $this.data("ruleid"), enable: $this.data("enable"), topPriority: isChecked, sportType: $this.data("sporttype") },
                 function (result) {
                     const resultJson = JSON.parse(result);
                     if (resultJson.IsSuccess) {

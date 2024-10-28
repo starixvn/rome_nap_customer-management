@@ -146,8 +146,9 @@ namespace Fanex.Nap.CMS.Infrastructure
 
         // ManageFollowBetAccount
         public const string ManageFollowBetAccount = "ManageFollowBetAccount";
-        
+
         // Customer Class Management
+        public const string SportsbookCCManagement = "SportsbookCCManagement";
         public const string CustomerClassSetting = "CustomerClassSetting";
         public const string RuleManagement = "RuleManagement";
         public const string PolicyManagement = "PolicyManagement";

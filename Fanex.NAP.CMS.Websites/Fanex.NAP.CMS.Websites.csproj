@@ -664,7 +664,6 @@
     <Content Include="Content\Themes\img\loading.gif" />
     <Content Include="Content\Themes\img\logo.png" />
     <Content Include="Content\Themes\img\cms.ico" />
-    <Content Include="Content\Themes\img\delete-no-border.png" />
     <Content Include="Content\Themes\img\save.jpg" />
     <Content Include="Content\Themes\img\seperation.png" />
     <Content Include="Content\Themes\img\small-arrow-down.png" />
@@ -679,7 +678,6 @@
     <Content Include="Content\Themes\img\tree-view.png" />
     <Content Include="Content\Themes\img\undo.png" />
     <Content Include="Content\Themes\img\user.png" />
-    <Content Include="Content\Themes\img\add-no-border.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_60_4264ac_40x100.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_75_5476bb_40x100.png" />
     <Content Include="Content\Themes\jquery\images\ui-bg_flat_90_466bb9_40x100.png" />
@@ -1188,8 +1186,8 @@
     <Content Include="Areas\Customers\Views\CreditPayout\_VerifyMember.cshtml" />
     <Content Include="Areas\Customers\Views\CreditPayout\_BulkUpdate.cshtml" />
     <Content Include="Areas\CustomerClass\Views\PeakHour\Index.cshtml" />
-    <Content Include="Areas\CustomerClass\Styles\peakHourManagement.less" />
     <Content Include="Areas\CustomerClass\Views\PeakHour\_AdjustPeakHour.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\peakHourManagement.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

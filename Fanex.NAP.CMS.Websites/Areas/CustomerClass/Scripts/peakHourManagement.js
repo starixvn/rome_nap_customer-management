@@ -14,7 +14,7 @@
         hasHostPermisson = null,
         isFirstLoad = true;
 
-    let IsLiveOptions = [{ Text: "All", Value: "0" }, { Text: "Yes", Value: "1" }, { Text: "No", Value: "2" }];
+    let IsLiveOptions = [{ Text: "No", Value: "0" }, { Text: "Yes", Value: "1" }, { Text: "All", Value: "2" }];
 
     function init() {
         const txtFilterCustomerClass = $("#txtFilterCustomerClass");

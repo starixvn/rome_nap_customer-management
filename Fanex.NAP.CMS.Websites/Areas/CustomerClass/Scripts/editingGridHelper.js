@@ -211,13 +211,13 @@ const editingGridHelper = (function ($) {
 
     function renderLiveCell(selectedIsLive) {
         if (+selectedIsLive === 0) {
-            return "All";
+            return "No";
         }
         if (+selectedIsLive === 1) {
             return "Yes";
         }
         if (+selectedIsLive === 2) {
-            return "No";
+            return "All";
         }
     }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.Nap.CMS.CustomerClass.ViewModels
+﻿namespace Fanex.Nap.CMS.CustomerClass.ViewModels
 {
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Models;

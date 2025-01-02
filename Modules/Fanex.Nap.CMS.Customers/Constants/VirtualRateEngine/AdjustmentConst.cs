@@ -4,5 +4,6 @@
     {
         public const byte FixedValue = 1;
         public const byte AdjustCurrentVirtualRate = 2;
+        public const byte AdjustExtraVirtualRate = 3;
     }
 }

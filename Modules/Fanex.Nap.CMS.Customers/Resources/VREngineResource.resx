@@ -201,4 +201,7 @@
   <data name="NoneSelectedCCError" xml:space="preserve">
     <value>Please input at least one CC</value>
   </data>
+  <data name="AdjustExtraVirtualRate" xml:space="preserve">
+    <value>Adjust Extra Virtual Rate</value>
+  </data>
 </root>

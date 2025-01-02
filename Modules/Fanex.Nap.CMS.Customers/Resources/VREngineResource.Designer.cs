@@ -97,6 +97,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust Extra Virtual Rate.
+        /// </summary>
+        public static string AdjustExtraVirtualRate {
+            get {
+                return ResourceManager.GetString("AdjustExtraVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjustment.
         /// </summary>
         public static string Adjustment {

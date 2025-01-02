@@ -24,7 +24,7 @@ function OtherControls(adjustmentList, activeList) {
             selectedAdjustmentType = rule.AdjustmentType;
             selectedStatus = rule.Status;
             ckbVRPlush.prop("checked", rule.AccumulatedBalance);
-            if (selectedAdjustmentType.toString() === "1") {
+            if (selectedAdjustmentType.toString() === "1" || selectedAdjustmentType.toString() === "3") {
                 vRPlushField.show();
             }
         }
@@ -43,7 +43,7 @@ function OtherControls(adjustmentList, activeList) {
             .on("change", function () {
                 txtAdjustment.val("");
                 ckbVRPlush.prop("checked", false);
-                if (ddlAdjustment.val() === "1") {
+                if (ddlAdjustment.val() === "1" || ddlAdjustment.val() === "3") {
                     vRPlushField.show();
                 } else {
                     vRPlushField.hide();
@@ -68,7 +68,7 @@ function OtherControls(adjustmentList, activeList) {
             isValid = false;
         }
         var isApplyVRPlush = ckbVRPlush.is(":checked");
-        if (isApplyVRPlush && (ddlAdjustment.val() !== "1" || adjustmentValue <= 0)) {
+        if (isApplyVRPlush && (ddlAdjustment.val() === "2" || adjustmentValue <= 0)) {
             isApplyVRPlush = false;
         }
 

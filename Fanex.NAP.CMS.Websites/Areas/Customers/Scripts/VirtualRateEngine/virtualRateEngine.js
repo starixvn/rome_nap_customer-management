@@ -151,6 +151,9 @@
         rule.EnabledTicketCur
             && pushMultipleSelectionCriteria("13. Currency: ", rule.CurrencyNameList, rule.CurrencyNameListNotIn);
 
+        rule.EnabledPreMatchPeriod
+            && html.push("14. Pre-match Period: " + (rule.PreMatchPeriod === 1 ? "1 hour" : `${rule.PreMatchPeriod} hours`));
+
         return html.join("<br/>");
     }
 

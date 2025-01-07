@@ -23,5 +23,7 @@ namespace Fanex.NAP.CMS.Models.OpenCloseMember
         public string Agent { get; set; }
 
         public bool Closed { get; set; }
+
+        public int AgentId { get; set; }
     }
 }

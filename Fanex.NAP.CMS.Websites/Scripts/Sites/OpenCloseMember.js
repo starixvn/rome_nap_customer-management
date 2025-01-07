@@ -247,7 +247,7 @@ Fanex.CMS.CloseOpenMember = function () {
                         row = bodyData[currentAgentRow];
                         row.Columns.splice(1, 0, {
                             Name: 'ColAgent',
-                            Value: chkFormat.format(agentChkId, masterChkId, agent.Username),
+                            Value: agent.Username.includes("__Agent") ? "" : chkFormat.format(agentChkId, masterChkId, agent.Username),
                             MergeRowNumber: agent.MemberStatusList.length,
                             CssClass: 'chk-column'
                         });
@@ -259,7 +259,7 @@ Fanex.CMS.CloseOpenMember = function () {
                     row = bodyData[currentMasterRow];
                     row.Columns.splice(1, 0, {
                         Name: 'ColMaster',
-                        Value: chkFormat.format(masterChkId, 'chkStatus', master.Username),
+                        Value: master.Username.includes("__Master") ? "" : chkFormat.format(masterChkId, 'chkStatus',master.Username),
                         MergeRowNumber: masterChildren,
                         CssClass: 'chk-column'
                     });

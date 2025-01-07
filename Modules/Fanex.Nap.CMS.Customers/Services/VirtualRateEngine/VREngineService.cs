@@ -322,10 +322,15 @@
         private static string BuildAdjustmentCell(VREngineRule rule)
         {
             var adjustment = rule.AdjustmentValue.ToString("N0");
-
-            return rule.AdjustmentType == AdjustmentConst.FixedValue
-                ? $"{adjustment}%{BuildAccumulatedBalance(rule)}"
-                : $"Member VR {adjustment}%";
+            switch (rule.AdjustmentType)
+            {
+                case AdjustmentConst.FixedValue:
+                    return $"{adjustment}%{BuildAccumulatedBalance(rule)}";
+                case AdjustmentConst.AdjustCurrentVirtualRate:
+                    return $"Member VR {adjustment}%";
+                default:
+                    return "-";
+            }
         }
 
         private static string BuildAccumulatedBalance(VREngineRule rule)

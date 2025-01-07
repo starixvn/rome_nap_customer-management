@@ -237,7 +237,7 @@
                 reader["currencyidlist"].ToString(),
                 reader["currencyidlist_notapply"].ToString(),
                 Convert.ToByte(reader["adjustmenttype"]),
-                Convert.ToDecimal(reader["adjustmentvalue"]),
+                reader["adjustmentvalue"] == DBNull.Value ? 0 : Convert.ToDecimal(reader["adjustmentvalue"]),
                 Convert.ToByte(reader["accumulatedbalance"]),
                 Convert.ToByte(reader["status"]),
                 Convert.ToDateTime(reader["createddts"]),

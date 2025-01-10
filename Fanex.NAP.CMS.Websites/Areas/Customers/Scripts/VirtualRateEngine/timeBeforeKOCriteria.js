@@ -1,67 +1,71 @@
 ﻿"use strict";
-function PreMatchPeriodCriteria() {
+function TimeBeforeKOCriteria() {
     var htmlTemplate =
         `<div class="form-row-sub">
             <div class="lbl-field">
                 <span class="lbl-field-criteria-no">14.</span>
-                <span class="txt-name">Pre-match Period</span>
+                <span class="txt-name">Time before KO</span>
             </div>
             <div class="enable-criteria-container">
-                <input type="checkbox" id="chk-enablePreMatchPeriodCriteria" />
+                <input type="checkbox" id="chk-enableTimeBeforeKOCriteria" />
             </div>
             <div class="detail-rule value-range">
                 <div class="pre-match-hour-value vr-text-field">
-                    <input type="text" id="txt-preMatchPeriod" autocomplete="off" maxlength="4" />
+                    <input type="text" id="txt-timeBeforeKO" autocomplete="off" maxlength="4" />
                     <span>hours</span>
                 </div>
             </div>
         </div>`;
-    var chkPreMatchPeriodCriteria, txtPreMatchPeriod;
+    var chkTimeBeforeKOCriteria, txtTimeBeforeKO;
 
     function cacheElements(rule, isHideEnabledCheckbox) {
-        txtPreMatchPeriod = $("#txt-preMatchPeriod");
+        txtTimeBeforeKO = $("#txt-timeBeforeKO");
 
-        var isEnabled = rule && rule.EnabledPreMatchPeriod;
+        var isEnabled = rule && rule.EnabledTimeBeforeKO;
         if (isEnabled) {
-            txtPreMatchPeriod.val(rule.PreMatchPeriod);
+            txtTimeBeforeKO.val(rule.TimeBeforeKO);
         }
 
-        chkPreMatchPeriodCriteria = $("#chk-enablePreMatchPeriodCriteria").prop("checked", isEnabled);
-        isHideEnabledCheckbox && chkPreMatchPeriodCriteria.css("visibility", "hidden");
+        chkTimeBeforeKOCriteria = $("#chk-enableTimeBeforeKOCriteria").prop("checked", isEnabled);
+        isHideEnabledCheckbox && chkTimeBeforeKOCriteria.css("visibility", "hidden");
     }
 
     function bindEvents() {
-        chkPreMatchPeriodCriteria
+        chkTimeBeforeKOCriteria
             .off("change")
             .on("change", function () {
                 enableCriteria(this.checked);
             });
 
-        txtPreMatchPeriod
+        txtTimeBeforeKO
             .off("keypress")
-            .on("keypress", CMS.forceNegativeNumberInput);
+            .on("keypress", CMS.forceNumericInput);
     }
 
     function enableCriteria(isEnabled) {
         var isDisabled = !isEnabled;
-        txtPreMatchPeriod.prop("disabled", isDisabled);
+        txtTimeBeforeKO.prop("disabled", isDisabled);
     }
 
     function isEnableCriteria() {
-        return chkPreMatchPeriodCriteria && chkPreMatchPeriodCriteria.is(":checked");
+        return chkTimeBeforeKOCriteria && chkTimeBeforeKOCriteria.is(":checked");
     }
 
     function validateFormData() {
-        var inputPeriod = VREngineHelper.validateNumber(txtPreMatchPeriod);
-        if (typeof inputPeriod === "undefined") {
+        var inputTime = VREngineHelper.validateFloat(txtTimeBeforeKO);
+        if (typeof inputTime === "undefined") {
+            return { isInvalid: true };
+        }
+        if (inputTime <= 0) {
+            CMS.showTipsyError(txtTimeBeforeKO, resources.timeBeforeKOError, "nw");
             return { isInvalid: true };
         }
 
-        CMS.clearTipsyError(txtPreMatchPeriod);
+        CMS.clearTipsyError(txtTimeBeforeKO);
 
         return {
-            name: "PreMatchPeriod",
-            PreMatchPeriod: inputPeriod
+            name: "TimeBeforeKO",
+            TimeBeforeKO: inputTime
         };
     }
 
@@ -71,7 +75,7 @@ function PreMatchPeriodCriteria() {
         cacheElements(rule, isHideEnabledCheckbox);
         bindEvents();
 
-        chkPreMatchPeriodCriteria.trigger("change");
+        chkTimeBeforeKOCriteria.trigger("change");
     };
 
     this.getFormData = function () {

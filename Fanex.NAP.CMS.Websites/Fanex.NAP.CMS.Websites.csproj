@@ -502,7 +502,7 @@
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\eventCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\leagueGroupCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\otherControls.js" />
-    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\preMatchPeriodCriteria.js" />
+    <Content Include="Areas\Customers\Scripts\VirtualRateEngine\timeBeforeKOCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\siteTypeCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCCCriteria.js" />
     <Content Include="Areas\Customers\Scripts\VirtualRateEngine\sportCriteria.js" />

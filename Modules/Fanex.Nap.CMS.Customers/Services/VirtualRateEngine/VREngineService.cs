@@ -33,7 +33,7 @@
         private const string TicketDoW = "DateOfWeek";
         private const string TicketTime = "TicketTime";
         private const string Currency = "Currency"; 
-        private const string PreMatchPeriod = "PreMatchPeriod";
+        private const string TimeBeforeKO = "TimeBeforeKO";
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
         private const int CachedDefaultInMinutes = 60;
 
@@ -121,7 +121,7 @@
             rule.EnabledTicketDoW = enabledCriteria.ContainsKey(TicketDoW);
             rule.EnabledTicketTime = enabledCriteria.ContainsKey(TicketTime);
             rule.EnabledTicketCur = enabledCriteria.ContainsKey(Currency);
-            rule.EnabledPreMatchPeriod = enabledCriteria.ContainsKey(PreMatchPeriod);
+            rule.EnabledTimeBeforeKO = enabledCriteria.ContainsKey(TimeBeforeKO);
         }
 
         #region Build Criteria methods

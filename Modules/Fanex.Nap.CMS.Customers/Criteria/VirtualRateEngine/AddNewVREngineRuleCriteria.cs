@@ -3,7 +3,7 @@
     public class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
         public string RuleName { get; set; }
-            PreMatchPeriod = vm.PreMatchPeriod;
+            TimeBeforeKO = vm.TimeBeforeKO;
 
         public int Priority { get; set; }
 
@@ -47,7 +47,7 @@
 
         public string CurrencyIDList { get; set; }
 
-        public int PreMatchPeriod { get; }
+        public decimal TimeBeforeKO { get; }
 
         public byte Adjustmenttype { get; set; }
 

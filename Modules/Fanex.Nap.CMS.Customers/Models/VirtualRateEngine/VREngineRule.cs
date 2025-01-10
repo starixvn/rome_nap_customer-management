@@ -7,8 +7,8 @@
         public int RuleId { get; set; }
         public string RuleName { get; set; }
         public int Priority { get; set; }
-            int preMatchPeriod,
-            PreMatchPeriod = preMatchPeriod;
+            decimal timeBeforeKO,
+            TimeBeforeKO = timeBeforeKO;
 
 
         public byte SiteType { get; set; }
@@ -87,8 +87,8 @@
         public string CurrencyNameListNotIn { get; set; } = string.Empty;
         public bool EnabledTicketCur { get; set; }
 
-        public int PreMatchPeriod { get; }
-        public bool EnabledPreMatchPeriod { get; set; }
+        public decimal TimeBeforeKO { get; }
+        public bool EnabledTimeBeforeKO { get; set; }
 
         public byte AdjustmentType { get; set; }
         public decimal AdjustmentValue { get; set; }

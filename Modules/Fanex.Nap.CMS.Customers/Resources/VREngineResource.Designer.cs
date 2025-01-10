@@ -196,6 +196,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The input accepts only positive decimal numbers (e.g. 1 or 1.5).
+        /// </summary>
+        public static string InvalidTimeBeforeKO {
+            get {
+                return ResourceManager.GetString("InvalidTimeBeforeKO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid time format.
         /// </summary>
         public static string InvalidTimeFormat {

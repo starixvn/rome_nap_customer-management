@@ -247,9 +247,9 @@ Fanex.CMS.CloseOpenMember = function () {
                         row = bodyData[currentAgentRow];
                         row.Columns.splice(1, 0, {
                             Name: 'ColAgent',
-                            Value: agent.Username.includes("__Agent") ? "" : chkFormat.format(agentChkId, masterChkId, agent.Username),
+                            Value: chkFormat.format(agentChkId, masterChkId, agent.Username),
                             MergeRowNumber: agent.MemberStatusList.length,
-                            CssClass: 'chk-column'
+                            CssClass: 'chk-column' + (agent.Username.includes("__Agent") ? " display-none" : "") 
                         });
                     }
                 });
@@ -259,9 +259,9 @@ Fanex.CMS.CloseOpenMember = function () {
                     row = bodyData[currentMasterRow];
                     row.Columns.splice(1, 0, {
                         Name: 'ColMaster',
-                        Value: master.Username.includes("__Master") ? "" : chkFormat.format(masterChkId, 'chkStatus',master.Username),
+                        Value: chkFormat.format(masterChkId, 'chkStatus',master.Username),
                         MergeRowNumber: masterChildren,
-                        CssClass: 'chk-column'
+                        CssClass: 'chk-column' + (master.Username.includes("__Master") ? " display-none" : "") 
                     });
                 }
             });

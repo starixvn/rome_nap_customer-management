@@ -176,9 +176,9 @@
     <Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Domain Management">
-    <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" />
   </Function>
   <Function Name="Bet Limit Increase">
     <Setting Key="NAP_CM_SVIPMaxBetPlayerSel" SpName="NAP_CM_SVIPMaxBetPlayerSel" DbName="DBCust.CustDB.wsv_nap" />

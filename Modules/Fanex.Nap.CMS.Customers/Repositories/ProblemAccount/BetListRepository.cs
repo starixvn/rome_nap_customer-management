@@ -13,9 +13,9 @@
         {
             IList<AbnormalBetTicket> abnormalBetTickets = new List<AbnormalBetTicket>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -24,18 +24,18 @@
                 }
 
                 return new Tuple<int, IEnumerable<AbnormalBetTicket>>(
-                    Convert.ToInt32(db.GetOuputParams()["totalrows"]),
+                    Convert.ToInt32(db.GetOutputParams()["totalrows"]),
                     abnormalBetTickets);
             }
         }
 
         public int GetTotalSporksbookBetTickets(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteScalar(criteria.GetSpParams());
+                db.ExecuteScalar(criteria);
 
-                return Convert.ToInt32(db.GetOuputParams()["totalbettickets"]);
+                return Convert.ToInt32(db.GetOutputParams()["totalbettickets"]);
             }
         }
 

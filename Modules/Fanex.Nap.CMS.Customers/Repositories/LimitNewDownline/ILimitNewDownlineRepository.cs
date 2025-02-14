@@ -11,6 +11,6 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitNewDownline
 
         IEnumerable<LimitDownlineItem> GetLimitDownlineList(GetLimitDownlineListCriteria criteria);
 
-        AddNewOrRemoveLimitResult ExecuteNonQuery(ICriteria criteria);
+        AddNewOrRemoveLimitResult ExecuteNonQuery(AddNewLimitCriteria criteria);
     }
 }

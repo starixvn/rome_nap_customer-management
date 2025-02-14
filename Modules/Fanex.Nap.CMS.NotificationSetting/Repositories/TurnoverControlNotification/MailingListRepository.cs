@@ -28,9 +28,9 @@ namespace Fanex.Nap.CMS.NotificationSetting.Repositories.TurnoverControlNotifica
         public MailingList GetMailingList(GetMailingCriteria criteria)
         {
             var mailingList = new MailingList();
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var _params = criteria.GetSpParams();
+                var _params = criteria;
                 IDataReader reader = objectDb.ExecuteReader(_params);
                 int index = 0;
                 while (reader.Read())
@@ -71,9 +71,9 @@ namespace Fanex.Nap.CMS.NotificationSetting.Repositories.TurnoverControlNotifica
         {
             int userGroup = 0;
 
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var _params = criteria.GetSpParams();
+                var _params = criteria;
                 IDataReader reader = objectDb.ExecuteReader(_params);
 
                 while (reader.Read())

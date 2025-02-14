@@ -9,51 +9,48 @@
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using Rule = Models.Rule;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     internal interface IRuleDataAccess : IBaseRepository
     {
-        Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(ICriteria criteria);
+        Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(CriteriaBase criteria);
 
-        IEnumerable<Rule> GetRules(ICriteria criteria);
+        IEnumerable<Rule> GetRules(CriteriaBase criteria);
 
-        Rule GetRule(ICriteria criteria);
+        Rule GetRule(CriteriaBase criteria);
 
-        CheckRuleResponse CheckRule(ICriteria criteria);
+        CheckRuleResponse CheckRule(CommandBaseCriteria criteria);
 
         IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailCriteria criteria);
     }
 
     internal class RuleDataAccess : BaseRepository, IRuleDataAccess
     {
-        public Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(ICriteria criteria)
+        public Tuple<int, IEnumerable<Rule>, Result> GetPagedRule(CriteriaBase criteria)
             => ExecuteReaderPagingWithError(criteria, DataReaderToModelHelper.ToPagedRule);
 
-        public IEnumerable<Rule> GetRules(ICriteria criteria)
+        public IEnumerable<Rule> GetRules(CriteriaBase criteria)
             => ExecuteReader(criteria, DataReaderToModelHelper.ToRuleList);
 
-        public Rule GetRule(ICriteria criteria)
+        public Rule GetRule(CriteriaBase criteria)
             => GetSingle(criteria, DataReaderToModelHelper.ToRule);
 
-        public CheckRuleResponse CheckRule(ICriteria criteria)
+        public CheckRuleResponse CheckRule(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var affectedRules = new List<string>();
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
                         affectedRules.Add(reader["RuleTitle"].ToString());
                     }
                 }
-                var outputParams = db.GetOuputParams();
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = Converter.ToString2(outputParams["errmsg"]);
-
-                return new CheckRuleResponse(string.Join(", ", affectedRules), code, message);
+                return new CheckRuleResponse(string.Join(", ", affectedRules), criteria.ErrCode, criteria.ErrMsg);
             }
         }
 

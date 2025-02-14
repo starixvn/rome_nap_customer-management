@@ -1,10 +1,10 @@
-﻿namespace Fanex.Nap.CMS.DomainManagement.Criteria
-{
-    using System.Linq;
-    using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.Infrastructure.Models;
+﻿using System.Linq;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
+using Fanex.Nap.CMS.Infrastructure.Models;
 
-    public class RemoveDomainCriteria : CriteriaBase
+namespace Fanex.Nap.CMS.DomainManagement.Criteria
+{
+    public class RemoveDomainCriteria : CommandBaseCriteria
     {
         public RemoveDomainCriteria(IdNameModel[] domains, int userId, string ip)
         {
@@ -19,10 +19,6 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public override string GetSettingKey()
             => "NAP_Domain_Del";
 
@@ -32,5 +28,8 @@
 
             return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

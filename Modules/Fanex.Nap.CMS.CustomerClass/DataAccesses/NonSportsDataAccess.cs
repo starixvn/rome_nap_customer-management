@@ -16,19 +16,14 @@
     {
         public AddOfferResponse AddOffer(AddNonSportsCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
+                var message = criteria.ErrCode == 0
+                    ? Labels.AddNonSportsSuccessfully ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var policyID = Converter.ToInt(outputParams["policyid"]);
-                var message = code == 0
-                    ? Labels.AddNonSportsSuccessfully ?? Converter.ToString2(outputParams["errmsg"])
-                    : Converter.ToString2(outputParams["errmsg"]);
-
-                return new AddOfferResponse(policyID, code, message);
+                return new AddOfferResponse(criteria.PolicyID, criteria.ErrCode, message);
             }
         }
     }

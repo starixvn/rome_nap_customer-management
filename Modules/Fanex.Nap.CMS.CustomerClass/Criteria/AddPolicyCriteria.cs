@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class AddPolicyCriteria : CommandCriteriaBase
+    internal class AddPolicyCriteria : CustomerClassCommandBaseCriteria
     {
         public AddPolicyCriteria(AddPolicyRequest request)
             : base(request.UserId, request.IP)

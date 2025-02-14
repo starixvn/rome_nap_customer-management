@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
            => "NAP_VREngine_Rule_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

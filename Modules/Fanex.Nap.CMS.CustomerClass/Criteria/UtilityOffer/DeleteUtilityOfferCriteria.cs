@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.UtilityOffer
 {
-    internal class DeleteUtilityOfferCriteria : CommandCriteriaBase
+    internal class DeleteUtilityOfferCriteria : CustomerClassCommandBaseCriteria
     {
         internal DeleteUtilityOfferCriteria(int policyId, int userId, string ip) : base(userId, ip)
         {

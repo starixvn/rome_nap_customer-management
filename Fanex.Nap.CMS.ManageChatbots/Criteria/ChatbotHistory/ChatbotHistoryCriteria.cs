@@ -55,5 +55,8 @@
 
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotMessageSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

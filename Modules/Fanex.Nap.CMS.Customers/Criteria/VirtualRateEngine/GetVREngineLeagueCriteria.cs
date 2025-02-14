@@ -26,5 +26,8 @@
 
         public override string GetSettingKey()
             => "NAP_VREngine_League_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

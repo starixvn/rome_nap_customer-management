@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
+    using Fanex.Data.Repository;
+
     public class GetHouseTurnoverCriteria : CriteriaBase
     {
         public GetHouseTurnoverCriteria(int custId, int matchId, bool isGroupHeadline, string eventDate)

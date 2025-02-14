@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 {
+    using Fanex.Data.Repository;
+
     public sealed class GetProfileCriteria : CriteriaBase
     {
         public GetProfileCriteria(short sportType)
@@ -13,5 +13,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 
         public override string GetSettingKey()
             => "NAP_TOControl_ProfileSelect";
+
+        public override bool IsValid()
+            => true;
     }
 }

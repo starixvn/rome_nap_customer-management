@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
-    using Fanex.NAP.Framework.Data;
 
     internal class QueryCriteriaBase : CriteriaBase
     {
@@ -10,5 +10,11 @@
         }
 
         public bool IsTest { get; } = AppSettings.IsTest;
+
+        public override string GetSettingKey()
+            => string.Empty;
+
+        public override bool IsValid()
+            => true;
     }
 }

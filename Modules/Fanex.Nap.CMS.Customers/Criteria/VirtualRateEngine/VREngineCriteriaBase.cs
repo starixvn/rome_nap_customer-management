@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    internal class VREngineCriteriaBase : CriteriaBase
+    public class VREngineCriteriaBase : CriteriaBase
     {
         protected VREngineCriteriaBase(int userId, string ip)
         {
@@ -17,6 +17,11 @@
         public int ErrorCode { get; set; }
 
         public string ErrorMsg { get; set; }
+
+        public override string GetSettingKey()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override bool IsValid()
             => UserId > 0;

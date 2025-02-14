@@ -109,8 +109,8 @@
                 UserID = userId,
                 BotID = botId
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            _repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -130,8 +130,8 @@
                 UserID = userId,
                 BotID = botId
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            _repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -152,8 +152,8 @@
                 UserID = userId,
                 BotID = botId,
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            _repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {

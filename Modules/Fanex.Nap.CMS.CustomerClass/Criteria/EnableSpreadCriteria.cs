@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class EnableSpreadCriteria : CommandCriteriaBase
+    internal class EnableSpreadCriteria : CustomerClassCommandBaseCriteria
     {
         internal EnableSpreadCriteria(int policyID, bool enable, int userId, string ip) : base(userId, ip)
         {

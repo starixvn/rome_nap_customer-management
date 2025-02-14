@@ -17,7 +17,7 @@
         public string SportTypes { get; }
         public string Sites { get; }
         public string Currencies { get; }
-        public float? Spread { get; }
+        public float Spread { get; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadSel";

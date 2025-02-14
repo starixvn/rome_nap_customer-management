@@ -4,20 +4,21 @@
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Data;
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.UploadVirtualRate;
     using Models.UploadVirtualRate;
 
     public class UploadVirtualRateRepository : IUploadVirtualRateRepository
     {
-        public ExcelErrorModel VerifyExcelTemplate(ICriteria criteria)
+        public ExcelErrorModel VerifyExcelTemplate(VerifyVirtualRateExcelTemplateCriteria criteria)
         {
             IList<ExcelErrorDTO> excelErrors = new List<ExcelErrorDTO>();
             const int commandTimeoutInMinutes = 60 * 10;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey(), commandTimeoutInMinutes))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -25,9 +26,9 @@
                     }
                 }
 
-                var outputParams = db.GetOuputParams();
+                var outputParams = db.GetOutputParams();
 
-                return new ExcelErrorModel(excelErrors, Convert.ToInt32(outputParams["validuser_count"]), 0, null);
+                return new ExcelErrorModel(excelErrors, criteria.ValidUser_Count, 0, null);
             }
         }
 
@@ -42,18 +43,15 @@
                 reader["reason"].ToString());
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
             const int commandTimeoutInMinutes = 60 * 60;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey(), commandTimeoutInMinutes))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
     }

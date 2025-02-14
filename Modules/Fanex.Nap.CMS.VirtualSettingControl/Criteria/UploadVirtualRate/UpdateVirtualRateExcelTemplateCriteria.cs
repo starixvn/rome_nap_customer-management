@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.UploadVirtualRate
 {
     using System;
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class UpdateVirtualRateExcelTemplateCriteria : CriteriaBase
+    public class UpdateVirtualRateExcelTemplateCriteria : CommandBaseCriteria
     {
         public UpdateVirtualRateExcelTemplateCriteria(
             int sportType,
@@ -25,11 +25,10 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public override string GetSettingKey()
             => "Acc_VR_AutoUpdateVirtualRate_ByExcel";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
             => "NAP_ProblemAccount_ActionSel";
+
+        public override bool IsValid()
+         => true;
     }
 }

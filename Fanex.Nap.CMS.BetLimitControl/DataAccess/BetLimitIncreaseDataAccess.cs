@@ -3,6 +3,7 @@
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.NAP.CMS.BetLimitControl.Criteria.BetLimitIncrease;
@@ -15,7 +16,7 @@
     {
         IEnumerable<BetLimitIncreaseModel> SearchBetLimitIncrease(SearchBetLimitIncreaseCriteria criteria);
         Tuple<Result, IEnumerable<BetLimitIncreaseModel>> ValidateUsername(CheckBetLimitIncreaseCriteria criteria);
-        Result DoAction(CriteriaBase criteria, string successfullyMessage = null);
+        Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null);
     }
 
     public class BetLimitIncreaseDataAccess: BaseRepository, IBetLimitIncreaseDataAccess
@@ -23,9 +24,9 @@
         public IEnumerable<BetLimitIncreaseModel> SearchBetLimitIncrease(SearchBetLimitIncreaseCriteria criteria)
         {
             var results = new List<BetLimitIncreaseModel>();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -40,9 +41,9 @@
         public Tuple<Result, IEnumerable<BetLimitIncreaseModel>> ValidateUsername(CheckBetLimitIncreaseCriteria criteria)
         {
             var validUsername = new List<BetLimitIncreaseModel>();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -50,31 +51,23 @@
                     }
                 }
 
-                var outputParams = db.GetOuputParams();
-
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = Converter.ToString2(outputParams["errmsg"]);
-
-                var result = new Result { Code = code, Message = message };
+                var result = new Result { Code = criteria.ErrCode, Message = criteria.ErrMsg };
 
                 return Tuple.Create<Result, IEnumerable<BetLimitIncreaseModel>>(result, validUsername);
             }
         }
 
-        public Result DoAction(CriteriaBase criteria, string successfullyMessage = null)
+        public Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = code == 0
-                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
-                    : Converter.ToString2(outputParams["errmsg"]);
+                var message = criteria.ErrCode == 0
+                    ? successfullyMessage ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
 
-                return new Result { Code = code, Message = message };
+                return new Result { Code = criteria.ErrCode, Message = message };
             }
         }
 

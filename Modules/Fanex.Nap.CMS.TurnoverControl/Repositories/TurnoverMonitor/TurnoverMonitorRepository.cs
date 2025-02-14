@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using Fanex.Data;
+using Fanex.Data.Repository;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Web;
 using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
 {
     public class TurnoverMonitorRepository : ITurnoverMonitorRepository
     {
-        public IEnumerable<IdNameModel> GetSports(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetSports(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -32,11 +33,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 Name = reader["sportname"].ToString()
             };
 
-        public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetLeagues(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -57,16 +58,16 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
             };
         }
 
-        public IEnumerable<IdNameModel> GetMatches(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetMatches(CriteriaBase criteria)
         {
             if (!criteria.IsValid())
             {
                 yield break;
             }
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -83,32 +84,31 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor
                 Name = $"{CacheRef.GetTeamName(reader["homeid"])} -vs- {CacheRef.GetTeamName(reader["awayid"])}"
             };
 
-        public IEnumerable<TurnoverMonitorItem> GetCustomerTurnovers(ICriteria criteria)
+        public IEnumerable<TurnoverMonitorItem> GetCustomerTurnovers(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<TurnoverMonitorItem>(criteria.GetSpParams());
+                return db.Query<TurnoverMonitorItem>(criteria);
             }
         }
 
-        public IEnumerable<HouseTurnover> GetHouseTurnovers(ICriteria criteria)
+        public IEnumerable<HouseTurnover> GetHouseTurnovers(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<HouseTurnover>(criteria.GetSpParams());
+                return db.Query<HouseTurnover>(criteria);
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
                 return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                    criteria.ErrCode,
+                    criteria.ErrMsg);
             }
         }
     }

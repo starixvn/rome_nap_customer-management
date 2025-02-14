@@ -20,7 +20,7 @@
         
         ChatBotsConfigModel GetConfigChatBot(ICriteria criteria);
         
-        Result ExecuteNonQuery(ICriteria criteria);
+        void ExecuteNonQuery(ICriteria criteria);
 
     }
 }

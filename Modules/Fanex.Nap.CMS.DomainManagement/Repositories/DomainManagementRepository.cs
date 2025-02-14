@@ -8,27 +8,28 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.DomainManagement.Criteria;
     using Fanex.Nap.CMS.DomainManagement.Models;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
     public interface IDomainManagementRepository
     {
-        IEnumerable<Domain> GetDomains(ICriteria criteria);
+        IEnumerable<Domain> GetDomains(CriteriaBase criteria);
 
-        Domain GetDomain(ICriteria criteria);
+        Domain GetDomain(CriteriaBase criteria);
 
         void AddOrEditDomain(AddOrEditDomainCriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(CommandBaseCriteria criteria);
 
-        void AddNormalAnnouncement(ICriteria criteria);
+        void AddNormalAnnouncement(CriteriaBase criteria);
     }
 
     public class DomainManagementRepository : IDomainManagementRepository
     {
-        public IEnumerable<Domain> GetDomains(ICriteria criteria)
+        public IEnumerable<Domain> GetDomains(CriteriaBase criteria)
             => Fetch(criteria, BuildDomain);
 
-        public Domain GetDomain(ICriteria criteria)
+        public Domain GetDomain(CriteriaBase criteria)
             => Fetch(criteria, BuildDomain).FirstOrDefault();
 
         private static Domain BuildDomain(IDataReader reader)
@@ -48,11 +49,11 @@
                 Convert.ToDateTime(reader["LastUpdateTime"]));
         }
 
-        private static IEnumerable<T> Fetch<T>(ICriteria criteria, Func<IDataReader, T> parser)
+        private static IEnumerable<T> Fetch<T>(CriteriaBase criteria, Func<IDataReader, T> parser)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -64,33 +65,27 @@
 
         public void AddOrEditDomain(AddOrEditDomainCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var ouputParams = db.GetOuputParams();
-                criteria.ErrCode = Convert.ToInt32(ouputParams["errcode"]);
-                criteria.ErrMsg = ouputParams["errmsg"].ToString();
-                criteria.DomainListOutput = ouputParams["domainlistoutput"].ToString();
+                db.ExecuteNonQuery(criteria);
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                return new Result(Convert.ToInt32(ouputParams["errcode"]), ouputParams["errmsg"].ToString());
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
 
-        public void AddNormalAnnouncement(ICriteria criteria)
+        public void AddNormalAnnouncement(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Criteria
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetBetTicketCriteria : CriteriaBase
@@ -14,5 +15,8 @@
         {
             return "NAP_PayoutTrans_SelBetTicket";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

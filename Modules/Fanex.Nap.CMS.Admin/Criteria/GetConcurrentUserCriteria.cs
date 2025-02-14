@@ -39,5 +39,8 @@ namespace Fanex.Nap.CMS.Admin.Criteria
 
         public override string GetSettingKey()
             => "Age_rpt_ConcurrentOnlineUser";
+
+        public override bool IsValid()
+            => true;
     }
 }

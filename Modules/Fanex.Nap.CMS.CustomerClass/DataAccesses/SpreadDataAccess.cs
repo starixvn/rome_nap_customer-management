@@ -16,19 +16,15 @@
     {
         public AddSpreadRuleResponse InsertRule(AddSpreadRuleCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.AssignParamValues(criteria.GetSpParams());
-                db.ExecuteNonQuery();
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var policyID = Converter.ToInt(outputParams["policyid"]);
-                var message = code == 0
-                    ? Labels.AddSpreadSuccessfully ?? Converter.ToString2(outputParams["errmsg"])
-                    : Converter.ToString2(outputParams["errmsg"]);
+                var message = criteria.ErrCode == 0
+                    ? Labels.AddSpreadSuccessfully ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
 
-                return new AddSpreadRuleResponse(policyID, code, message);
+                return new AddSpreadRuleResponse(criteria.PolicyID, criteria.ErrCode, message);
             }
         }
     }

@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
 
-    internal class AddNewVREngineRuleCriteria : VREngineCriteriaBase
+    public class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
         public AddNewVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonCheckData)
             : base(vm.UserId, vm.IP)

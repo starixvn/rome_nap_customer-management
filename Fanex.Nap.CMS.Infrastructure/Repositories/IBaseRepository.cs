@@ -12,17 +12,20 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
 
     public interface IBaseRepository
     {
-        T GetSingle<T>(ICriteria criteria, Func<IDataReader, T> funcMapper);
+        T GetSingle<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper);
 
-        IEnumerable<T> ExecuteReader<T>(ICriteria criteria, Func<IDataReader, T> funcMapper);
+        IEnumerable<T> ExecuteReader<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper);
 
-        Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(ICriteria criteria, Func<IDataReader, T> funcMapper);
+        IEnumerable<T> ExecuteReader<T>(CriteriaBase criteria);
 
-        Result DoAction(ICriteria criteria, string successfullyMessage = null);
+        Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper);
+
+        Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null);
     }
 }

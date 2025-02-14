@@ -14,5 +14,8 @@
         {
             return "NAP_BetRestriction_SiteDel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

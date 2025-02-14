@@ -15,18 +15,19 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
     using System.Net;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.Logging.Extensions.Web;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
-    using Fanex.NAP.Framework.Data;
 
     public class BaseRepository : IBaseRepository
     {
-        public T GetSingle<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        public T GetSingle<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -38,11 +39,11 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
             return default(T);
         }
 
-        public IEnumerable<T> ExecuteReader<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        public IEnumerable<T> ExecuteReader<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -52,14 +53,22 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
             }
         }
 
-        public Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)
+        public IEnumerable<T> ExecuteReader<T>(CriteriaBase criteria)
+        {
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<T>(criteria);
+            }
+        }
+
+        public Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper)
         {
             var totalItems = 0;
             IList<T> resultSet = new List<T>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -67,7 +76,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
                     }
                 }
 
-                var totalItemsOutputValue = db.GetOuputParams()["totalitems"];
+                var totalItemsOutputValue = db.GetOutputParams()["totalitems"];
                 if (totalItemsOutputValue != null && totalItemsOutputValue != DBNull.Value)
                 {
                     totalItems = Convert.ToInt32(totalItemsOutputValue);
@@ -83,9 +92,9 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
             var totalItems = 0;
             IList<T> resultSet = new List<T>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -93,13 +102,13 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
                     }
                 }
 
-                var totalItemsOutputValue = db.GetOuputParams()["totalitems"];
+                var totalItemsOutputValue = db.GetOutputParams()["totalitems"];
                 if (totalItemsOutputValue != null && totalItemsOutputValue != DBNull.Value)
                 {
                     totalItems = Convert.ToInt32(totalItemsOutputValue);
                 }
 
-                var outputParams = db.GetOuputParams();
+                var outputParams = db.GetOutputParams();
 
                 var code = Converter.ToInt(outputParams["errcode"]);
                 var message = Converter.ToString2(outputParams["errmsg"]);
@@ -111,23 +120,19 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
 
         }
 
-        public Result DoAction(ICriteria criteria, string successfullyMessage = null)
+        public Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null)
         {
             try
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
                 {
-                    
-                    db.AssignParamValues(criteria.GetSpParams());
-                    db.ExecuteNonQuery();
-                    var outputParams = db.GetOuputParams();
+                    db.ExecuteNonQuery(criteria);
 
-                    var code = Converter.ToInt(outputParams["errcode"]);
-                    var message = code == 0
-                        ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
-                        : Converter.ToString2(outputParams["errmsg"]);
+                    var message = criteria.ErrCode == 0
+                        ? successfullyMessage ?? criteria.ErrMsg
+                        : criteria.ErrMsg;
 
-                    return new Result { Code = code, Message = message };
+                    return new Result { Code = criteria.ErrCode, Message = message };
                 }
             }
             catch (Exception ex)

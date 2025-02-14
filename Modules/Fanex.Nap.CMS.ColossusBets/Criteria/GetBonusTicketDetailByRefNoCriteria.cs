@@ -10,5 +10,7 @@
         {
             return "NAP_ColossusBets_BonusTicket_SelRefInfo";
         }
+        public override bool IsValid()
+            => true;
     }
 }

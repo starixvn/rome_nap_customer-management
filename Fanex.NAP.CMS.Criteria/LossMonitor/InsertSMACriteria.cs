@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
     using Data.Repository;
+    using Fanex.Data;
 
     public class InsertSMACriteria : CriteriaBase
     {

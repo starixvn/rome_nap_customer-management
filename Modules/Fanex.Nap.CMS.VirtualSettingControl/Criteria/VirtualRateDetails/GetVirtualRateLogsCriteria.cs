@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetVirtualRateLogsCriteria : CriteriaBase
@@ -24,5 +25,8 @@
 
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplier_ViewLog";
+
+        public override bool IsValid()
+            => true;
     }
 }

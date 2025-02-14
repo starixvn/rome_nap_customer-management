@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
 {
+    using System.Collections.Generic;
+    using System.Text;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
+
     public class ValidateGlobalSettingCriteria : CriteriaBase
     {
         public ValidateGlobalSettingCriteria(short sportType, IEnumerable<GlobalSettingExcel> globalSettings)
@@ -16,17 +16,16 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
 
         public short SportType { get; }
 
+        public string GlobalSetting => ToXml();
+
+        [SpParam(Ignored = true)]
         public IEnumerable<GlobalSettingExcel> GlobalSettings { get; }
 
         public override string GetSettingKey()
             => "NAP_TOControl_GlobalSettingValidation";
 
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                [nameof(SportType)] = SportType,
-                ["GlobalSetting"] = ToXml()
-            };
+        public override bool IsValid()
+            => true;
 
         private string ToXml()
         {

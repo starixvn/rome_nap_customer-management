@@ -29,6 +29,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>List of RequestItem objects.</returns>
         public IEnumerable<RequestItem> GetRequestList(GetRequestInfoListCriteria criteria)
         {
+            criteria.Username = criteria.Username ?? string.Empty;
             IEnumerable<RequestInfo> rawData = this.Repository.Fetch<RequestInfo>(criteria);
             IEnumerable<RequestItem> result = null;
 

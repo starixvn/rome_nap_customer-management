@@ -16,5 +16,8 @@
 
         public override string GetSettingKey()
             => "NAP_Customer_RobotAccountNew_Del";
+
+        public override bool IsValid()
+            => true;
     }
 }

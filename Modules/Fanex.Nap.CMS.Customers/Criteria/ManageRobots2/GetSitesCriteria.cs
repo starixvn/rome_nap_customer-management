@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
            => "NAP_Customer_RobotSite_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

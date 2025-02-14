@@ -33,5 +33,8 @@
         public bool IsFollow { get; }
 
         public override string GetSettingKey() => "NAP_Customer_FollowBetAccountListSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

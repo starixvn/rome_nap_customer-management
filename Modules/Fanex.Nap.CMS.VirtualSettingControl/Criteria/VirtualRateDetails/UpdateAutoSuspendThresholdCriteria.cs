@@ -1,11 +1,10 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
-{
-    using System.Collections;
-    using System.Text;
-    using Fanex.Data.Repository;
-    using Models.VirtualRateDetails;
+﻿using System.Text;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
+using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
 
-    public class UpdateAutoSuspendThresholdCriteria : CriteriaBase
+namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
+{
+    public class UpdateAutoSuspendThresholdCriteria : CommandBaseCriteria
     {
         private const int OneHunded = 100;
 
@@ -29,19 +28,13 @@
 
         public string IP { get; }
 
+        public string XML => BuildXML();
+
         public override string GetSettingKey()
             => "Acc_VR_AutoSuspendThreshold_Upd";
 
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                ["sporttype"] = SportType,
-                ["xml"] = BuildXML(),
-                ["userid"] = UserId,
-                ["ip"] = IP,
-                ["errcode"] = 0,
-                ["errmsg"] = string.Empty
-            };
+        public override bool IsValid()
+            => true;
 
         private string BuildXML()
         {

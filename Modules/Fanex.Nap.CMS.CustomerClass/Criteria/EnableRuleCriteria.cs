@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class EnableRuleCriteria : CommandCriteriaBase
+    internal class EnableRuleCriteria : CustomerClassCommandBaseCriteria
     {
         public EnableRuleCriteria(EnableRuleRequest request)
             : base(request.UserId, request.IP)

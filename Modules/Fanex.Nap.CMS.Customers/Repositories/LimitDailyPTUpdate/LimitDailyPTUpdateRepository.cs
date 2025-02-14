@@ -14,9 +14,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
     {
         public IEnumerable<SelectListItem> GetSites(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -32,9 +32,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 
         public IEnumerable<SelectListItem> GetProducts(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -50,9 +50,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 
         public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -68,26 +68,21 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate
 
         public IEnumerable<LimitDailyPTUpdateItem> GetLimitDailyPTUpdateList(GetLimitDailyPTUpdateListCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var limitDailyPTUpdateList = db.Query<LimitDailyPTUpdateItem>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                var limitDailyPTUpdateList = db.Query<LimitDailyPTUpdateItem>(criteria);
+                var outputParams = db.GetOutputParams();
                 criteria.TotalItems = Convert.ToInt32(outputParams["totalitems"]);
 
                 return limitDailyPTUpdateList;
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public void ExecuteNonQuery(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

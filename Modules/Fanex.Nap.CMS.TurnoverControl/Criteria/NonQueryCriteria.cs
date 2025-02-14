@@ -1,8 +1,8 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria
 {
-    public class NonQueryCriteria : CriteriaBase
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
+
+    public class NonQueryCriteria : CommandBaseCriteria
     {
         public NonQueryCriteria(
             bool isGroupHeadline,
@@ -23,9 +23,5 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria
         public int UserId { get; }
 
         public string IP { get; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
     }
 }

@@ -4,7 +4,6 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using System.Collections.Generic;
-    using Fanex.NAP.Framework.Data;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.CustomerClass.Resources;
@@ -27,16 +26,14 @@
     internal class SpreadService : ISpreadService
     {
         private readonly ISpreadDataAccess spreadDataAccess;
-        private readonly IDynamicRepository dynamicRepository;
 
-        public SpreadService() : this(new SpreadDataAccess(), new DynamicRepository())
+        public SpreadService() : this(new SpreadDataAccess())
         {
         }
 
-        public SpreadService(ISpreadDataAccess spreadDataAccess, IDynamicRepository dynamicRepository)
+        public SpreadService(ISpreadDataAccess spreadDataAccess)
         {
             this.spreadDataAccess = spreadDataAccess;
-            this.dynamicRepository = dynamicRepository;
         }
         
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)
@@ -44,7 +41,7 @@
 
         public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
         {
-            return dynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
+            return spreadDataAccess.ExecuteReader<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
         }
 
         public Result UpdateRule(AddEditSpreadRuleRequest request, int userId, string iP)

@@ -26,5 +26,8 @@
 
         public override string GetSettingKey()
             => "Acc_VR_ManualUpdAcc_Remove";
+
+        public override bool IsValid()
+            => true;
     }
 }

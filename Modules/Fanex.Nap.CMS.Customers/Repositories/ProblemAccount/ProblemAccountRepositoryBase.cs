@@ -6,7 +6,10 @@
     using System.Data;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Customers.Criteria.ProblemAccount;
+    using Fanex.Nap.CMS.Customers.Criteria.ProblemAccountLicenseeSite;
     using Fanex.Nap.CMS.Customers.Resources;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Infrastructure.Models;
     using Models.ProblemAccount;
 
@@ -15,13 +18,12 @@
         private const int ErrorInvalidAccount = 100;
         private const int ErrorExistUnmarkedAccount = 101;
         private const int ErrorNotInSelectedLevelAccount = 102;
-        private const string ErrorCodeParam = "errcode";
 
-        public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetCurrencies(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -38,11 +40,11 @@
                 Name = reader["currency"].ToString()
             };
 
-        public IEnumerable<IdNameModel> GetReasons(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetReasons(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -59,11 +61,11 @@
                 Name = reader["reasonname"].ToString()
             };
 
-        public IEnumerable<IdNameModel> GetPreventiveActions(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetPreventiveActions(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -80,15 +82,15 @@
                 Name = reader["actionname"].ToString()
             };
 
-        public Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(ICriteria criteria)
+        public Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int> GetProblemAccounts(CriteriaBase criteria)
         {
             IList<ProblemAccountItem> problemAccounts = new List<ProblemAccountItem>();
             IList<ProblemAccountReason> reasons = new List<ProblemAccountReason>();
             int totalItems = 0;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey(), 60 * 5))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey(), 60 * 5))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -104,7 +106,7 @@
                     }
                 }
 
-                totalItems = Convert.ToInt32(db.GetOuputParams()["totalitems"]);
+                totalItems = Convert.ToInt32(db.GetOutputParams()["totalitems"]);
             }
 
             return new Tuple<IEnumerable<ProblemAccountItem>, IEnumerable<ProblemAccountReason>, int>(problemAccounts, reasons, totalItems);
@@ -128,41 +130,34 @@
                 Convert.ToDateTime(reader["createdate"]),
                 reader["reasonname"].ToString());
 
-        public Result MarkNew(ICriteria criteria)
+        public Result MarkNew(MarkNewCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                return new MarkNewResult(
-                    Convert.ToInt32(ouputParams[ErrorCodeParam]),
-                    ouputParams["errmsg"].ToString(),
-                    ouputParams["successlist"].ToString(),
-                    ouputParams["faillist"].ToString());
+                return new MarkNewResult(criteria.ErrCode, criteria.ErrMsg, criteria.SuccessList, criteria.FailList);
             }
         }
 
-        public Tuple<Result, string> Unmark(ICriteria criteria)
+        public Tuple<Result, string> Unmark(UnmarkLicenseeSiteCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
                         var error = MapToUnMarkMessage(
-                            Convert.ToInt32(reader[ErrorCodeParam]),
+                            criteria.ErrCode,
                             reader["username"].ToString());
 
                         return new Tuple<Result, string>(error, string.Empty);
                     }
                 }
 
-                var ouputParams = db.GetOuputParams();
-
-                var result = new Result(Convert.ToInt32(ouputParams[ErrorCodeParam]), ouputParams["errmsg"].ToString());
-                var custIds = ouputParams["successalldownlinelist"].ToString();
+                var result = new Result(criteria.ErrCode, criteria.ErrMsg);
+                var custIds = criteria.SuccessAllDownlineList;
 
                 return new Tuple<Result, string>(result, custIds);
             }
@@ -193,13 +188,13 @@
             return new Result(errorCode, errorMessage);
         }
 
-        public Tuple<Result, IEnumerable<CTSCustomerReason>> Update(ICriteria criteria, byte newReasonId)
+        public Tuple<Result, IEnumerable<CTSCustomerReason>> Update(NonQueryWithoutRoleIdCriteriaBase criteria, byte newReasonId)
         {
             var ctsCustomerReasons = new List<CTSCustomerReason>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -210,24 +205,19 @@
                     }
                 }
 
-                return new Tuple<Result, IEnumerable<CTSCustomerReason>>(ToResult(db.GetOuputParams()), ctsCustomerReasons);
+                return new Tuple<Result, IEnumerable<CTSCustomerReason>>(new Result(criteria.ErrCode, criteria.ErrMsg), ctsCustomerReasons);
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                db.ExecuteNonQuery(criteria);
 
-                return ToResult(db.GetOuputParams());
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
-
-        private static Result ToResult(Hashtable ouputParams)
-            => new Result(
-                Convert.ToInt32(ouputParams[ErrorCodeParam]),
-                ouputParams["errmsg"].ToString());
 
         private static int? ToInt32(object value)
             => value == null || value == DBNull.Value

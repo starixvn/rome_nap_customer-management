@@ -19,10 +19,9 @@
     {
         public IEnumerable<SelectListItem> GetSites(GetAllSiteCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     yield return new SelectListItem
@@ -36,10 +35,9 @@
 
         public IEnumerable<SelectListItem> GetCurrency(GetAllCurrencyCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     yield return new SelectListItem
@@ -91,10 +89,9 @@
                 SportType = sportType
             };
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 if (reader.Read())
                 {
                     var errMsg = composeMsgFunction(request, new CheckAddAccountResultModel(reader, criteria.UserName, sportType));
@@ -128,10 +125,9 @@
 
         public IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 while (reader.Read())
                 {

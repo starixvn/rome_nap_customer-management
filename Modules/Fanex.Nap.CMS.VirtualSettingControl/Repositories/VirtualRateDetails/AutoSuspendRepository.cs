@@ -24,10 +24,9 @@
 
             var logDTOs = new List<LogDTO>();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 while (reader.Read())
                 {
@@ -37,11 +36,9 @@
                 }
 
                 reader.Close();
-                var output = objDb.GetOuputParams();
-                result.ResultCode = Converter.ToInt(output["errcode"]);
-                result.ResultMessage = Converter.ToString2(output["errmsg"]);
+                result.ResultCode = criteria.ErrCode;
+                result.ResultMessage = criteria.ErrMsg;
             }
-
             result.Logs = GroupLogs(logDTOs);
 
             return result;

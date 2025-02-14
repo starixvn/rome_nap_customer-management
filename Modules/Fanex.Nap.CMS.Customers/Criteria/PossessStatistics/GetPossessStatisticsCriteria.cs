@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.PossessStatistics
 {
     using Data.Repository;
+    using Fanex.Data;
 
     public class GetPossessStatisticsCriteria : CriteriaBase
     {

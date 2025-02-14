@@ -18,9 +18,9 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         private const string ProfileCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Profile-{0}";
         private const string GlobalSettingSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.List-{0}";
 
-        private readonly IGlobalSettingRepository globalSettingRepository;
+        private readonly GlobalSettingRepository globalSettingRepository;
 
-        public GlobalSettingService(IGlobalSettingRepository globalSettingRepository = null)
+        public GlobalSettingService(GlobalSettingRepository globalSettingRepository = null)
         {
             this.globalSettingRepository = globalSettingRepository ?? new GlobalSettingRepository();
         }
@@ -149,7 +149,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Add(string username, MaxTurnoverItem[] maxTurnovers, bool isGroupHeadline, short sportType, int userId, string ip)
         {
-            var result = globalSettingRepository.ExecuteNonQuery(
+            var result = globalSettingRepository.DoAction(
                 new AddGlobalSettingCriteria(username, maxTurnovers, isGroupHeadline, sportType, userId, ip));
 
             if (result.IsSuccess)
@@ -163,7 +163,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Edit(UpdateMaxTurnoverParam param, int userId, string ip)
         {
-            var result = globalSettingRepository.ExecuteNonQuery(new EditGlobalSettingCriteria(param, userId, ip));
+            var result = globalSettingRepository.DoAction(new EditGlobalSettingCriteria(param, userId, ip));
 
             if (result.IsSuccess)
             {
@@ -176,7 +176,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Delete(int custId, bool isGroupHeadline, short sportType, int userId, string ip)
         {
-            var result = globalSettingRepository.ExecuteNonQuery(
+            var result = globalSettingRepository.DoAction(
                 new DeleteGlobalSettingCriteria(custId, isGroupHeadline, sportType, userId, ip));
 
             if (result.IsSuccess)
@@ -190,7 +190,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Lock(LockSettingParam param, int userId, string ip)
         {
-            var result = globalSettingRepository.ExecuteNonQuery(new LockGlobalSettingCriteria(param, userId, ip));
+            var result = globalSettingRepository.DoAction(new LockGlobalSettingCriteria(param, userId, ip));
 
             if (result.IsSuccess)
             {

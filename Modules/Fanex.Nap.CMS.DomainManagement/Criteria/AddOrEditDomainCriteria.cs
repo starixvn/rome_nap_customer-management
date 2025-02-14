@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.DomainManagement.Criteria
 {
-    using Fanex.Data.Repository;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class AddOrEditDomainCriteria : CriteriaBase
+    public class AddOrEditDomainCriteria : CommandBaseCriteria
     {
         public AddOrEditDomainCriteria(string domainList, int userId, string ip, bool isEdit)
         {
@@ -18,10 +19,6 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public string DomainListOutput { get; set; } = string.Empty;
 
         [SpParam(Ignored = true)]
@@ -29,5 +26,8 @@
 
         public override string GetSettingKey()
             => IsEdit ? "NAP_Domain_Upd" : "NAP_Domain_Ins";
+
+        public override bool IsValid()
+            => true;
     }
 }

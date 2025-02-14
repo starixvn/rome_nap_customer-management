@@ -24,9 +24,9 @@
 
             var logs = new List<StatusLogItem>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var dataset = db.ExecuteDataSet(criteria.GetSpParams()))
+                using (var dataset = db.ExecuteDataSet(criteria))
                 {
                     if (dataset.Tables.Count > 0)
                     {
@@ -49,7 +49,7 @@
                     }
                 }
 
-                var param = db.GetOuputParams();
+                var param = db.GetOutputParams();
                 result.TotalRows = Converter.ToInt(param["totalrows"]);
             }
 

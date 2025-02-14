@@ -14,5 +14,8 @@
 
         public override string GetSettingKey()
             => "NAP_Domain_SetMessage";
+
+        public override bool IsValid()
+            => true;
     }
 }

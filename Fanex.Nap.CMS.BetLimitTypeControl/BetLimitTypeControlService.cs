@@ -54,7 +54,7 @@
 
         public QueryFilterModel QueryFilter()
         {
-            using (var objDb = new ObjectDb("NAP_BLControl_SportBettypeSel"))
+            using (var objDb = ObjectDbFactory.CreateInstance("NAP_BLControl_SportBettypeSel"))
             {
                 var reader = objDb.QueryMultiple();
                 var products = reader.Read<Product>();
@@ -168,9 +168,9 @@
             {
                 var criteria = new GetSportBettypeCriteria();
                 var sporttypes = new List<object>();
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    using (var reader = db.ExecuteReader(criteria))
                     {
                         while (reader.Read())
                         {

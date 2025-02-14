@@ -18,9 +18,9 @@
             List<CreditCollectionSummaryItem> groups;
             int totalItems;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var dataset = db.ExecuteDataSet(criteria.GetSpParams()))
+                using (var dataset = db.ExecuteDataSet(criteria))
                 {
                     if (dataset.Tables.Count > 0)
                     {
@@ -48,7 +48,7 @@
                     groups = GroupData(breakDowns, uplines, balances, payments, criteria);
                 }
 
-                totalItems = Converter.ToInt(db.GetOuputParams()["totalitems"]);
+                totalItems = Converter.ToInt(db.GetOutputParams()["totalitems"]);
             }
 
             var result = new CreditCollectionSummaryReport

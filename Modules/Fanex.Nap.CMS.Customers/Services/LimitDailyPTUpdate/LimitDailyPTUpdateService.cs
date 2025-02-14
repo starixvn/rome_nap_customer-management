@@ -47,8 +47,7 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 
         public Result AddNewLimit(AddNewLimitDailyPTUpdateViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-                new AddNewLimitDailyPTUpdateCriteria(
+            var criteria = new AddNewLimitDailyPTUpdateCriteria(
                     viewModel.Product,
                     viewModel.SMAs,
                     viewModel.Currency,
@@ -57,7 +56,9 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                     viewModel.UserId,
                     viewModel.IP,
                     viewModel.LimitNewAccUpdPT
-                ));
+                );
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -69,8 +70,7 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 
         public Result RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-               new RemoveLimitDailyPTUpdateCriteria(
+            var criteria = new RemoveLimitDailyPTUpdateCriteria(
                    viewModel.ProductID,
                    viewModel.CustID,
                    viewModel.SiteID,
@@ -78,7 +78,9 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                    viewModel.Type,
                    viewModel.UserId,
                    viewModel.IP
-               ));
+               );
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -90,17 +92,18 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
 
         public Result UpdateLimit(UpdateLimitPTUpdateNewAccountViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-                           new UpdateLimitPTUpdateNewAccountCriteria(
-                               viewModel.ProductID,
-                               viewModel.CustID,
-                               viewModel.SiteID,
-                               viewModel.Currency,
-                               viewModel.Type,
-                               viewModel.UserId,
-                               viewModel.IP,
-                               viewModel.LimitNewAccUpdPT
-                           ));
+            var criteria = new UpdateLimitPTUpdateNewAccountCriteria(
+                    viewModel.ProductID,
+                    viewModel.CustID,
+                    viewModel.SiteID,
+                    viewModel.Currency,
+                    viewModel.Type,
+                    viewModel.UserId,
+                    viewModel.IP,
+                    viewModel.LimitNewAccUpdPT
+                );
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {

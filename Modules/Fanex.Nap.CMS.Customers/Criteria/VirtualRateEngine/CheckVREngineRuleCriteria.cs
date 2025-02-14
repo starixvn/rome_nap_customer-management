@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
 
-    internal class CheckVREngineRuleCriteria : CriteriaBase
+    public class CheckVREngineRuleCriteria : CriteriaBase
     {
         public CheckVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonSportList)
         {
@@ -37,5 +37,8 @@
         public string ErrorMsg { get; set; }
         public override string GetSettingKey()
             => "NAP_VREngine_CriteriaMatrix_Check";
+
+        public override bool IsValid()
+            => true;
     }
 }

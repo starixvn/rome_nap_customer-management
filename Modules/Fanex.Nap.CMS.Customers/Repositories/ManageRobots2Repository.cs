@@ -17,10 +17,9 @@
         {
             var sites = new List<SiteModel>();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     sites.Add(new SiteModel
@@ -53,10 +52,9 @@
                 ToDate = criteria.ToDate
             };
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     result.Robots.Add(new RobotModel
@@ -80,7 +78,7 @@
 
                 reader.Close();
 
-                var output = objDb.GetOuputParams();
+                var output = objDb.GetOutputParams();
                 result.TotalItems = Converter.ToInt(output["totalitems"]);
             }
 
@@ -91,12 +89,11 @@
         {
             var result = new Result();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
+                objDb.ExecuteNonQuery(criteria);
 
-                var output = objDb.GetOuputParams();
+                var output = objDb.GetOutputParams();
                 result.Code = Converter.ToInt(output["errorcode"]);
                 result.Message = Converter.ToString2(output["errmsg"]);
             }
@@ -108,14 +105,12 @@
         {
             var result = new Result();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
+                objDb.ExecuteNonQuery(criteria);
 
-                var output = objDb.GetOuputParams();
-                result.Code = Converter.ToInt(output["errcode"]);
-                result.Message = Converter.ToString2(output["errmsg"]).TrimEnd(',');
+                result.Code = criteria.ErrCode;
+                result.Message = criteria.ErrMsg;
             }
 
             return result;
@@ -125,10 +120,9 @@
         {
             var currencies = new List<CurrencyModel>();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     currencies.Add(new CurrencyModel

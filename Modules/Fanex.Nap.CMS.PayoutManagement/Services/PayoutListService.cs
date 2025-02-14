@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.PayoutManagement.Criteria;
@@ -32,7 +34,7 @@
             if (sitesLicensees == null || products == null)
             {
                 IList<ProductModel> productRawData;
-                ICriteria criteria = new GetSitesLicenseesProductsCriteria();
+                var criteria = new GetSitesLicenseesProductsCriteria();
                 _payoutRepository.GetSitesLicenseesProducts(criteria, out sitesLicensees, out productRawData);
 
                 if (sitesLicensees != null && sitesLicensees.Count > 0)
@@ -102,12 +104,19 @@
             return groupSitenamePermissionKey;
         }
 
-        public IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria)
+        public IEnumerable<PayoutItem> GetPayoutList(GetPayoutListCriteria criteria)
         {
+            CultureInfo provider = CultureInfo.InvariantCulture;
+            var fromDate = DateTime.ParseExact(criteria.From, "MM/dd/yyyy", provider);
+            var toDate = DateTime.ParseExact(criteria.To, "MM/dd/yyyy", provider);
+            criteria.FromDate = new DateTime(fromDate.Year, fromDate.Month, fromDate.Day, 0, 0, 0);
+            criteria.ToDate = new DateTime(toDate.Year, toDate.Month, toDate.Day, 0, 0, 0);
+            criteria.Username = string.IsNullOrEmpty(criteria.Username) ? string.Empty : criteria.Username;
+
             return _payoutRepository.GetPayoutList(criteria);
         }
 
-        public PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode)
+        public PayoutDetail GetPayoutDetail(CriteriaBase criteria, bool viewSecurityCode)
         {
             var payoutDetail = _payoutRepository.GetPayoutDetail(criteria, viewSecurityCode);
             if (payoutDetail != null && !string.IsNullOrEmpty(payoutDetail.SecurityCode))
@@ -122,7 +131,7 @@
             return payoutDetail;
         }
 
-        public Result UpdateTicketStatus(ICriteria criteria)
+        public Result UpdateTicketStatus(CommandBaseCriteria criteria)
         {
             var result = _payoutRepository.UpdateTicketStatus(criteria);
             if (result.Code == 0)

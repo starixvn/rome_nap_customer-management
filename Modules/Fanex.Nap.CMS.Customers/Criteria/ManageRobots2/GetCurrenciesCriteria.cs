@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
             => "NAP_Customer_RobotCurrencyList_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

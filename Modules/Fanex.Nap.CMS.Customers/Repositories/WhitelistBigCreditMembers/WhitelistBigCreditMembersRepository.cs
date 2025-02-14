@@ -11,9 +11,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.WhitelistBigCreditMembers
     {
         public IEnumerable<AddMemberResult> AddMembers(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {

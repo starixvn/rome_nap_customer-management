@@ -9,6 +9,7 @@
 
 namespace Fanex.NAP.CMS.Criteria.ManageRobots
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     /// <summary>

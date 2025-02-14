@@ -7,6 +7,7 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
+    using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
@@ -16,9 +17,9 @@
     {
         public VREngineMatrix GetVREngineMatrix(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     var sites = GetSites(reader);
 
@@ -134,9 +135,9 @@
 
         public IEnumerable<IdNameModel> GetLeagues(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     return GetIdNameModels(reader, ToLeague);
                 }
@@ -173,9 +174,9 @@
 
         public IEnumerable<VREngineRule> GetRules(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -187,9 +188,9 @@
 
         public VREngineRule GetRule(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -244,25 +245,24 @@
                 reader["createdby"].ToString(),
                 reader["enabled_column"].ToString());
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(VREngineCriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
                 return new Result(
-                    Convert.ToInt32(outputParams["errorcode"]),
-                    outputParams["errormsg"].ToString());
+                    criteria.ErrorCode,
+                    criteria.ErrorMsg);
             }
         }
 
         public string GetSportBettype(ICriteria criteria)
         {
             var sporttypes = new List<object>();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -274,12 +274,12 @@
             return JsonConvert.SerializeObject(sporttypes);
         }
 
-        public Result CheckVREngineRule(ICriteria criteria)
+        public Result CheckVREngineRule(CheckVREngineRuleCriteria criteria)
         {
             var checkResults = new List<CheckVREngineRuleResult>();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -288,10 +288,9 @@
 
                     reader.Close();
 
-                    var outputParams = db.GetOuputParams();
                     var result = new Result(
-                    Convert.ToInt32(outputParams["errorcode"]),
-                    outputParams["errormsg"].ToString());
+                        criteria.ErrorCode,
+                        criteria.ErrorMsg);
 
                     if (result.IsSuccess)
                     {

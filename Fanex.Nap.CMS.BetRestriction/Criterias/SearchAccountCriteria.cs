@@ -1,7 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.Nap.CMS.Infrastructure.Criteria;
-
     public class SearchAccountCriteria : SearchBaseCriteria
     {
         public string UserName { get; set; }
@@ -27,7 +25,7 @@
 
         public override bool IsValid()
         {
-            return RoleId >= 0 && RoleId <= 4;
+            return RoleId == null || RoleId >= 0 && RoleId <= 4;
         }
     }
 }

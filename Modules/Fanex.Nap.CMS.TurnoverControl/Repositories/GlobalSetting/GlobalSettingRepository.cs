@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Data;
 using Fanex.Data;
+using Fanex.Data.Repository;
 using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Repositories;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
 {
-    public class GlobalSettingRepository : IGlobalSettingRepository
+    public class GlobalSettingRepository : BaseRepository, IGlobalSettingRepository
     {
-        public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetCurrencies(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -31,11 +32,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
                 Name = reader["currency"].ToString()
             };
 
-        public IEnumerable<GlobalSettingItem> GetList(ICriteria criteria)
+        public IEnumerable<GlobalSettingItem> GetList(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -56,11 +57,11 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
                 reader["profilename"].ToString(),
                 Convert.ToDecimal(reader["maxturnover"]));
 
-        public IEnumerable<IdNameModel> GetProfiles(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetProfiles(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -76,18 +77,5 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.GlobalSetting
                 Id = Convert.ToInt32(reader["profileid"]),
                 Name = reader["profilename"].ToString()
             };
-
-        public Result ExecuteNonQuery(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
-            }
-        }
     }
 }

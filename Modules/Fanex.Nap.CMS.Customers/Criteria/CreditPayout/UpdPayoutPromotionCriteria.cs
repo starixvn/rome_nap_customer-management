@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.CreditPayout
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using System.Collections.Generic;
 
@@ -20,6 +21,9 @@
 
         public override string GetSettingKey()
             => "NAP_PayoutPromotion_Upd";
+
+        public override bool IsValid()
+            => true;
     }
 
     public class IdUsername

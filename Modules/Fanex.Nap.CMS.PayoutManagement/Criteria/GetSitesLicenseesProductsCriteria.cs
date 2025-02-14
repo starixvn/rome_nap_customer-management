@@ -11,12 +11,7 @@
 
     public class GetSitesLicenseesProductsCriteria : CriteriaBase
     {
-        public override string GetSettingKey()
-        {
-            return "NAP_PayoutTrans_SelPermission";
-        }
-
-        public override Hashtable GetSpParams()
+        public GetSitesLicenseesProductsCriteria()
         {
             int userId = 0;
             int payoutControl = 0;
@@ -25,7 +20,7 @@
             {
                 userId = AppSession.CurrentUser.Id;
                 int siteId = NapSettings.Settings.SiteId;
-                int readPolicy = (int)Constant.Policy.Read;
+                const int readPolicy = (int)Constant.Policy.Read;
 
                 IUserService userService = new UserService();
                 int boping = userService.GetPermission(userId, siteId, CMSFunctionKeys.PayoutForBopingLicensees);
@@ -48,11 +43,19 @@
                 }
             }
 
-            return new Hashtable 
-            {
-                { "AdminId", userId },
-                { "PayoutControl", payoutControl }
-            };
+            AdminId = userId;
+            PayoutControl = payoutControl;
         }
+
+        public int AdminId { get; set; }
+        public int PayoutControl { get; set; }
+
+        public override string GetSettingKey()
+        {
+            return "NAP_PayoutTrans_SelPermission";
+        }
+
+        public override bool IsValid()
+            => true;
     }
 }

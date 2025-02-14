@@ -17,9 +17,9 @@ namespace Fanex.NAP.CMS.Websites
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using Data.Configuration;
     using Fanex.Caching;
-    using Logging.Extensions.Database;
+    using Fanex.Data;
+    using Fanex.Data.SqlServer;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
     using ONEbook.UM;
@@ -41,8 +41,7 @@ namespace Fanex.NAP.CMS.Websites
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
             LoggingConfig.Init(
-                  new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" },
-                  getDbExceptionInfo: DatabaseInfoGetters.GetDbExceptionInfo);
+                  new[] { "password", "OldUserPwd", "UserPwd", "ConfirmUserPwd" });
 
             var umConfig = new UMClientConfiguration().Initialize();
             UMClientManager
@@ -53,7 +52,11 @@ namespace Fanex.NAP.CMS.Websites
             GlobalFilters.Filters.Add(new CheckUMFilterAttribute(
                 new MaintenanceService(UMClientManager.RestClient, UMClientManager.CacheService, UMClientManager.UMClientConfigs, UMClientManager.HttpContext), null));
 
-            DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager.StartNewSession()
+                .WithSqlServer()
+                .UseDefaultDbSettingProvider(ConfigurationManager.AppSettings["StoredProcedurePath"], true)
+                .UseDefaultConnectionStringProvider()
+                .Run();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

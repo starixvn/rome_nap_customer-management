@@ -7,7 +7,6 @@
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
     using System.Collections.Generic;
 
     internal interface IUtilityOfferingSerivce
@@ -23,19 +22,17 @@
     internal class UtilityOfferingSerivce : IUtilityOfferingSerivce
     {
         private readonly IOfferingDataAccess offeringDataAccess;
-        private readonly IDynamicRepository dynamicRepository;
-        public UtilityOfferingSerivce() : this(new DynamicRepository(), new OfferingDataAccess())
+        public UtilityOfferingSerivce() : this(new OfferingDataAccess())
         {
         }
 
-        public UtilityOfferingSerivce(IDynamicRepository dynamicRepository, IOfferingDataAccess offeringDataAccess)
+        public UtilityOfferingSerivce(IOfferingDataAccess offeringDataAccess)
         {
-            this.dynamicRepository = dynamicRepository;
             this.offeringDataAccess = offeringDataAccess ?? new OfferingDataAccess();
         }
 
         public IEnumerable<UtilityOfferingModel> GetOfferings(SearchUtilityOfferingRequest request)
-            => dynamicRepository.Fetch<UtilityOfferingModel>(new GetUtilityOfferCriteria(request));
+            => offeringDataAccess.ExecuteReader<UtilityOfferingModel>(new GetUtilityOfferCriteria(request));
 
         public AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP)
             => offeringDataAccess.AddOffer(new AddUtilityOfferCriteria(request, userId, iP));

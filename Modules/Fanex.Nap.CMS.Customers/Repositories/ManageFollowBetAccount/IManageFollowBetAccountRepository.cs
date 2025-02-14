@@ -12,6 +12,6 @@
         IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria);
         IEnumerable<SelectListItem> GetDummyAgents(ICriteria criteria);
         IEnumerable<FollowBetAccountItem> GetFollowBetAccountList(ICriteria criteria);
-        Result ExecuteNonQuery(ICriteria criteria);
+        void ExecuteNonQuery(ICriteria criteria);
     }
 }

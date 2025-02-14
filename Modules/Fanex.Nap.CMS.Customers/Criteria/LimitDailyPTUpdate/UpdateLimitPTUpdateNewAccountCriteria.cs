@@ -37,5 +37,8 @@
 
         public override string GetSettingKey()
            => "NAP_LimitPT_Upd";
+
+        public override bool IsValid()
+            => true;
     }
 }

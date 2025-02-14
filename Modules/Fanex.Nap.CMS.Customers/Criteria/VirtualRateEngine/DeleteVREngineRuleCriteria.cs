@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 {
-    internal class DeleteVREngineRuleCriteria : VREngineCriteriaBase
+    public class DeleteVREngineRuleCriteria : VREngineCriteriaBase
     {
         public DeleteVREngineRuleCriteria(int ruleId, int userId, string ip)
             : base(userId, ip)

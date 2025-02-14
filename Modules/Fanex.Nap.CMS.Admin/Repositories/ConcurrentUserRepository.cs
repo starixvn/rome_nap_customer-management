@@ -21,9 +21,9 @@ namespace Fanex.Nap.CMS.Admin.Repositories
     {
         public ConcurrentUserHistoryViewModel GetDataHistory(GetConcurrentUserCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var reader = objDb.QueryMultiple(criteria.GetSpParams());
+                var reader = objDb.QueryMultiple(criteria);
                 var summary = reader.Read<ConcurrentUserHistoryModel>();
                 var bySiteLabel = reader.Read<ConcurrentUserHistoryModel>();
                 var bySiteName = reader.Read<ConcurrentUserHistoryModel>();
@@ -35,9 +35,9 @@ namespace Fanex.Nap.CMS.Admin.Repositories
 
         public ConcurrentUserViewModel GetDataLatest(GetConcurrentUserCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var reader = objDb.QueryMultiple(criteria.GetSpParams());
+                var reader = objDb.QueryMultiple(criteria);
                 var summary = reader.Read<SMANumberModel>();
                 var bySiteLabel = reader.Read<ConcurrentUserDetailModel>();
                 var bySiteName = reader.Read<ConcurrentUserDetailModel>();

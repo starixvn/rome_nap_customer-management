@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Configurations;
-    using Fanex.Logging.Extensions.Database;
     using LogEngines;
     using Logging;
     using Logging.Extensions.Web;
@@ -24,8 +23,7 @@
             loggingConfiguration = loggingConfiguration
                 .GetHttpHeaderInfo()
                 .GetHttpSessionInfo()
-                .HideSensitiveInfo(regexSensitiveInfo)
-                .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+                .HideSensitiveInfo(regexSensitiveInfo);
 
             if (getDbExceptionInfo != null)
             {

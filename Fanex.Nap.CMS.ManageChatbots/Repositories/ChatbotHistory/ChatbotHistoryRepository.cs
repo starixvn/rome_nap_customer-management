@@ -12,10 +12,10 @@
     {
         public IEnumerable<ChatbotHistoryItem> GetChatbotHistories(ChatbotHistoryCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var result = db.Query<ChatbotHistoryItem>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                var result = db.Query<ChatbotHistoryItem>(criteria);
+                var outputParams = db.GetOutputParams();
                 criteria.TotalRows = Convert.ToInt32(outputParams["totalrows"]);
 
                 return result;
@@ -26,9 +26,9 @@
         {
             var functions = new List<FunctionModel>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {           
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {

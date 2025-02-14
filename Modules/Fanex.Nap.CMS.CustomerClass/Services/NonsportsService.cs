@@ -28,16 +28,14 @@
     internal class NonsportsService : INonsportsService
     {
         private readonly INonSportsDataAccess nonSportsDataAccess;
-        private readonly IDynamicRepository dynamicRepository;
         private const int AllProductId = 256;
 
-        public NonsportsService() : this(new DynamicRepository(), new NonSportsDataAccess())
+        public NonsportsService() : this(new NonSportsDataAccess())
         {
         }
 
-        public NonsportsService(IDynamicRepository dynamicRepository, INonSportsDataAccess nonSportsDataAccess)
+        public NonsportsService(INonSportsDataAccess nonSportsDataAccess)
         {
-            this.dynamicRepository = dynamicRepository;
             this.nonSportsDataAccess = nonSportsDataAccess ?? new NonSportsDataAccess();
         }
 
@@ -88,7 +86,7 @@
                 AllProducts = GetProductIds(allproducts)
             };
 
-            return dynamicRepository.Fetch<NonsportModel>(criteria);
+            return nonSportsDataAccess.ExecuteReader<NonsportModel>(criteria);
         }
 
         public Result UpdateOffer(AddEditNonsportsRequest request, IEnumerable<IdNameModel> allproducts, int userId, string iP)

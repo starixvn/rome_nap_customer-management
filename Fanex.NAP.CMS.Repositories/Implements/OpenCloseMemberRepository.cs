@@ -32,11 +32,10 @@ namespace Fanex.NAP.CMS.Repositories.Implements
         public IEnumerable<MemberStatusInfo> GetMembersStatusData(GetMembersStatusCriteria criteria)
         {
             List<MemberStatusInfo> memberList = new List<MemberStatusInfo>();
-            Hashtable param = criteria.GetSpParams();
 
-            using (IObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            using (IObjectDb db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var dataset = db.ExecuteDataSet(param))
+                using (var dataset = db.ExecuteDataSet(criteria))
                 {
                     if (dataset.Tables.Count > 0)
                     {
@@ -52,23 +51,6 @@ namespace Fanex.NAP.CMS.Repositories.Implements
                         }
                     }
                 }
-
-                param = db.GetOuputParams();
-
-                if (param.ContainsKey("totalitems"))
-                {
-                    criteria.TotalItems = Converter.ToInt(param["totalitems"]);
-                }
-
-                if (param.ContainsKey("errorcode"))
-                {
-                    criteria.ErrorCode = Converter.ToInt(param["errorcode"]);
-                }
-
-                if (param.ContainsKey("errormsg"))
-                {
-                    criteria.ErrorMsg = Converter.ToString2(param["errormsg"]);
-                }
             }
 
             return memberList;
@@ -76,17 +58,15 @@ namespace Fanex.NAP.CMS.Repositories.Implements
 
         public UpdateResult UpdateMembersStatus(UpdateMembersStatusCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var outputs = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
                 return new UpdateResult(
-                    Converter.ToInt(outputs["errcode"]),
-                    Converter.ToString2(outputs["errmsg"]),
-                    Converter.ToString2(outputs["listcustremove"]),
-                    Converter.ToInt(outputs["updatedcount"]));
+                    criteria.ErrCode,
+                    criteria.ErrMsg,
+                    criteria.ListCustRemove,
+                    criteria.UpdatedCount);
             }
         }
 

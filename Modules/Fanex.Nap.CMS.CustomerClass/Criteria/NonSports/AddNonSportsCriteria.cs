@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.NonSports
 {
-    internal class AddNonSportsCriteria : CommandCriteriaBase
+    internal class AddNonSportsCriteria : CustomerClassCommandBaseCriteria
     {
         internal AddNonSportsCriteria(int userId, string ip) : base(userId, ip)
         {

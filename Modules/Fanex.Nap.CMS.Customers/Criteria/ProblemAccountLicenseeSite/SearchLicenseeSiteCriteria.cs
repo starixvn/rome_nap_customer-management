@@ -61,5 +61,8 @@
 
         public override string GetSettingKey()
             => "NAP_ProblemAccount_LicenseeMonitorListSel";
+
+        public override bool IsValid()
+         => true;
     }
 }

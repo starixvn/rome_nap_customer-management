@@ -1,8 +1,8 @@
-﻿using System;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
+    using System;
+    using Fanex.Data.Repository;
+
     public class GetLeaguesCriteria : CriteriaBase
     {
         public GetLeaguesCriteria(
@@ -27,5 +27,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 
         public override string GetSettingKey()
             => "TurnoverControl_TurnoverMonitor_LeagueList";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -11,5 +11,8 @@
 
         public override string GetSettingKey()
             => "Age_Chatbot_BotFunctionSelAll";
+
+        public override bool IsValid()
+            => true;
     }
 }

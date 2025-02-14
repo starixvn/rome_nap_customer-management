@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Data;
 using Fanex.Data;
+using Fanex.Data.Repository;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting
 {
     public class ImportGlobalSettingRepository : IImportGlobalSettingRepository
     {
-        public Tuple<IEnumerable<GlobalSettingItem>, IEnumerable<ErrorGlobalSettingExcel>> ValidateGlobalSettingExcels(ICriteria criteria)
+        public Tuple<IEnumerable<GlobalSettingItem>, IEnumerable<ErrorGlobalSettingExcel>> ValidateGlobalSettingExcels(CriteriaBase criteria)
         {
             IList<GlobalSettingItem> validSettings = new List<GlobalSettingItem>();
             IList<ErrorGlobalSettingExcel> errorSettings = new List<ErrorGlobalSettingExcel>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -57,16 +58,13 @@ namespace Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting
                 reader["value"].ToString(),
                 reader["reason"].ToString());
 
-        public Result ImportGlobalSettings(ICriteria criteria)
+        public Result ImportGlobalSettings(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
     }

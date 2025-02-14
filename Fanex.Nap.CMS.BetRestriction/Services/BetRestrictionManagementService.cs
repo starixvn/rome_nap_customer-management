@@ -25,10 +25,9 @@
         public BetRestrictionSettingViewModel GetAllSettings(GetAllSettingCriteria criteria)
         {
             var result = new BetRestrictionSettingViewModel();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
                 while (reader.Read())
                 {
                     var level = reader["RestrictionLevel"].ToString();

@@ -392,7 +392,7 @@
         private static string ToString(IEnumerable<string> values)
             => string.Join(", ", values);
 
-        private Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage)
+        private Result ExecuteNonQuery(VREngineCriteriaBase criteria, string successfullyMessage)
         {
             var result = repository.ExecuteNonQuery(criteria);
 

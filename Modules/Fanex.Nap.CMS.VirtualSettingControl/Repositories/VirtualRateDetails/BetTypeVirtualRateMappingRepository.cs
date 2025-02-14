@@ -14,9 +14,9 @@
     {
         public IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<BetTypeVirtualRateMapping>(criteria.GetSpParams());
+                return db.Query<BetTypeVirtualRateMapping>(criteria);
             }
         }
     }

@@ -1,13 +1,14 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Repositories.UploadVirtualRate
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
+    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.UploadVirtualRate;
     using Infrastructure.Models;
     using Models.UploadVirtualRate;
 
     public interface IUploadVirtualRateRepository
     {
-        ExcelErrorModel VerifyExcelTemplate(ICriteria criteria);
+        ExcelErrorModel VerifyExcelTemplate(VerifyVirtualRateExcelTemplateCriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(CommandBaseCriteria criteria);
     }
 }

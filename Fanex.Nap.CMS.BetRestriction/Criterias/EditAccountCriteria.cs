@@ -12,5 +12,8 @@
         {
             return "NAP_BetRestriction_CustomerUpd";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

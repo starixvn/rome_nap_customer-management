@@ -57,10 +57,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
             {
                 return Enumerable.Empty<T>();
             }
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var result = db.Query<T>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                var result = db.Query<T>(criteria);
+                var outputParams = db.GetOutputParams();
                 if (outputParams != null)
                 {
                     Map(criteria, outputParams);
@@ -77,13 +77,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
 
         public virtual Result ExecuteNonQuery(ICriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.AddOutParameter("errcode", System.Data.DbType.Int32, sizeof(int));
-                objDb.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
+                objDb.ExecuteNonQuery(criteria);
+                var outputs = objDb.GetOutputParams();
                 return new Result(CMSConverter.ToInt32(outputs["errcode"]), CMSConverter.ToString(outputs["errmsg"]));
             }
         }
@@ -96,10 +93,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
                 throw new InvalidOperationException("Invalid criteria");
             }
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
+                var outputParams = db.GetOutputParams();
                 if (outputParams != null)
                 {
                     Map(criteria, outputParams);

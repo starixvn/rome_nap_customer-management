@@ -15,7 +15,10 @@
 
         public override string GetSettingKey()
         {
-            return "NAP_Report_CustMngt_CustomerMarginHistory"; 
+            return "NAP_Report_CustMngt_CustomerMarginHistory";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

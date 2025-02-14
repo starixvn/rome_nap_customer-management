@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
-
 namespace Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting
 {
-    public class AddMultipleGlobalSettingCriteria : NonQueryCriteria
+    using System.Text;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
+    using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
+
+    public class AddMultipleGlobalSettingCriteria : CommandBaseCriteria
     {
         public AddMultipleGlobalSettingCriteria(
             IEnumerable<GlobalSettingCustomer> globalSettings,
             short sportType,
             int userId,
-            string ip) : base(false, sportType, userId, ip)
+            string ip)
         {
+            SportType = sportType;
+            UserId = userId;
+            IP = ip;
             GlobalSettings = globalSettings;
         }
 
+        [SpParam(Ignored = true)]
+        public short SportType { get; }
+
+        public int UserId { get; }
+
+        public string IP { get; }
+
+        [SpParam(Ignored = true)]
         public IEnumerable<GlobalSettingCustomer> GlobalSettings { get; }
+        public string GlobalSetting => ToXml();
 
         public override string GetSettingKey()
             => "NAP_TOControl_GlobalSettingInsertMultiple";
-
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                ["GlobalSetting"] = ToXml(),
-                [nameof(UserId)] = UserId,
-                [nameof(IP)] = IP,
-                [nameof(ErrCode)] = ErrCode,
-                [nameof(ErrMsg)] = ErrMsg
-            };
 
         private string ToXml()
         {

@@ -9,9 +9,9 @@
     {
         public IEnumerable<BaseSetting> GetSettings(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<BaseSetting>(criteria.GetSpParams());
+                return db.Query<BaseSetting>(criteria);
             }
         }
     }

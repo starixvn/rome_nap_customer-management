@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
            => "Acc_ExchangeSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

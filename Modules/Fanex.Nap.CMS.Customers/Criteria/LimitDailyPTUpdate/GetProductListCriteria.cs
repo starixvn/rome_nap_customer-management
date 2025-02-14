@@ -9,5 +9,8 @@
 
         public override string GetSettingKey()
             => "NAP_LimitPTDaily_ProductList";
+
+        public override bool IsValid()
+            => true;
     }
 }

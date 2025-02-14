@@ -17,5 +17,13 @@
         public int PageIndex { get; set; }
 
         public int TotalItems { get; set; }
+
+        public override string GetSettingKey()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool IsValid()
+            => true;
     }
 }

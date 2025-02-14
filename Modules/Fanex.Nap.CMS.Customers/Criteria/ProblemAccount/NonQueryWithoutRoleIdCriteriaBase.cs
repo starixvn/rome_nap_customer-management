@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class NonQueryWithoutRoleIdCriteriaBase : CriteriaBase
+    public class NonQueryWithoutRoleIdCriteriaBase : CommandBaseCriteria
     {
         protected NonQueryWithoutRoleIdCriteriaBase(string customerList, int userId, string ip)
         {
@@ -17,9 +17,10 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
+        public override string GetSettingKey()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override bool IsValid()
             => UserId > 0

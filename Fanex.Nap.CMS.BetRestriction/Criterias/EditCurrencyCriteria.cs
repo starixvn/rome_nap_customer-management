@@ -26,5 +26,8 @@
         {
             return "NAP_BetRestriction_CurrencyUpd";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

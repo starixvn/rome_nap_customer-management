@@ -25,9 +25,9 @@
 
             if (criteria.IsValid())
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    using (var reader = db.ExecuteReader(criteria))
                     {
                         while (reader.Read())
                         {
@@ -35,7 +35,7 @@
                         }
                     }
 
-                    criteria.TotalItems = Convert.ToInt32(db.GetOuputParams()["totalitems"]);
+                    criteria.TotalItems = Convert.ToInt32(db.GetOutputParams()["totalitems"]);
                 }
             }
 
@@ -52,14 +52,11 @@
         {
             if (criteria.IsValid())
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
                 {
-                    db.ExecuteNonQuery(criteria.GetSpParams());
-                    var outputParams = db.GetOuputParams();
+                    db.ExecuteNonQuery(criteria);
 
-                    return new Result(
-                        Convert.ToInt32(outputParams["errcode"]),
-                        outputParams["errmsg"].ToString());
+                    return new Result(criteria.ErrCode, criteria.ErrMsg);
                 }
             }
 

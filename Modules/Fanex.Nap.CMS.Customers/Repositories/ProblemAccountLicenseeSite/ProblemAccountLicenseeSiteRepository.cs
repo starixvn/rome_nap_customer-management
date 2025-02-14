@@ -18,9 +18,9 @@
 
         public IEnumerable<LicenseeAcknowledgement> GetLicenseeAcknowledgements(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -43,9 +43,9 @@
             IList<ProblemAccountReason> reasons = new List<ProblemAccountReason>();
             int totalItems = 0;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -61,7 +61,7 @@
                     }
                 }
 
-                totalItems = Convert.ToInt32(db.GetOuputParams()["totalitems"]);
+                totalItems = Convert.ToInt32(db.GetOutputParams()["totalitems"]);
             }
 
             return new Tuple<IEnumerable<ProblemAccountLicenseeSiteItem>, IEnumerable<ProblemAccountReason>, int>(problemAccounts, reasons, totalItems);

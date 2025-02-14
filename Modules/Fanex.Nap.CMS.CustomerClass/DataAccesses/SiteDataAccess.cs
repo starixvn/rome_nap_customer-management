@@ -8,18 +8,19 @@
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Responses;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal interface ISiteDataAccess : IBaseRepository
     {
-        Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(ICriteria criteria);
+        Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(CriteriaBase criteria);
 
-        IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria);
+        IEnumerable<SiteSetting> GetSiteSettings(GetDuplicatedSiteSettingCriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null);
+        Result ExecuteNonQuery(CommandBaseCriteria criteria, string successfullyMessage = null);
 
         ProgressResponse GetUploadProgress(GetSiteUploadProgressCriteria criteria);
     }
@@ -28,26 +29,35 @@
     {
         private const string LastUpdatedTime = "Fanex.CMS.CCM.Site.LastUpdatedTime-{0}";
 
-        public Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(ICriteria criteria)
+        public Tuple<int, IEnumerable<SiteSetting>> GetPagedSiteSetting(CriteriaBase criteria)
             => ExecuteReaderPaging(criteria, ToSitesSetting);
 
-        public IEnumerable<SiteSetting> GetSiteSettings(ICriteria criteria)
-            => ExecuteReader(criteria, ToSiteSetting);
+        public IEnumerable<SiteSetting> GetSiteSettings(GetDuplicatedSiteSettingCriteria criteria)
+        {
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                using (var reader = db.ExecuteReader(criteria))
+                {
+                    while (reader.Read())
+                    {
+                        yield return ToSiteSetting(reader);
+                    }
+                }
+            }
+        }
 
-        public Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage = null)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria, string successfullyMessage = null)
         {
             const int commandTimeoutInMinutes = 40 * 60;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey(), commandTimeoutInMinutes))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey(), commandTimeoutInMinutes))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = code == 0
-                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
-                    : Converter.ToString2(outputParams["errmsg"]);
+                db.ExecuteNonQuery(criteria);
+                var message = criteria.ErrCode == 0
+                    ? successfullyMessage ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
 
-                return new Result { Code = code, Message = message };
+                return new Result { Code = criteria.ErrCode, Message = message };
             }
         }
 
@@ -73,17 +83,14 @@
         {
             var lastUpdatedTimeKey = string.Format(LastUpdatedTime, criteria.UserID);
             criteria.LastModifiedTime = CacheManager.Get<DateTime?>(lastUpdatedTimeKey);
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-                var countBatch = Converter.ToInt(outputParams["countbatch"]);
-                var initialBatch = Converter.ToInt(outputParams["initialbatch"]);
-                if (countBatch > 0 && initialBatch > 0)
+                db.ExecuteNonQuery(criteria);
+                if (criteria.CountBatch > 0 && criteria.InitialBatch > 0)
                 {
                     if(criteria.LastModifiedTime == null)
                     {
-                        var lastUpdatedTime = Converter.ToDateTime(outputParams["lastmodifiedtime"]);
+                        var lastUpdatedTime = criteria.LastModifiedTime;
                         CacheManager.Set(lastUpdatedTimeKey, lastUpdatedTime, new TimeSpan(1, 0, 0, 0));
                     }
                 } else
@@ -91,7 +98,7 @@
                     CacheManager.Remove(lastUpdatedTimeKey);
                 }
 
-                return new ProgressResponse(countBatch, initialBatch);
+                return new ProgressResponse(criteria.CountBatch, criteria.InitialBatch);
             }
         }
     }

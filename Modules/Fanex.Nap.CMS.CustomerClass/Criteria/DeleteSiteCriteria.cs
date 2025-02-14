@@ -3,7 +3,7 @@
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using System.Text;
 
-    internal class DeleteSiteCriteria : CommandCriteriaBase
+    internal class DeleteSiteCriteria : CustomerClassCommandBaseCriteria
     {
         internal DeleteSiteCriteria(DeleteSiteSettingRequest request, int userId, string ip) : base(userId, ip)
         {

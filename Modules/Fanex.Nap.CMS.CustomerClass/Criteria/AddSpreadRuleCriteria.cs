@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class AddSpreadRuleCriteria : CommandCriteriaBase
+    internal class AddSpreadRuleCriteria : CustomerClassCommandBaseCriteria
     {
         internal AddSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip) : base(userId, ip)
         {

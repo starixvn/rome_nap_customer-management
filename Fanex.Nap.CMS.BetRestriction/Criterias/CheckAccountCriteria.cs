@@ -12,5 +12,8 @@
         {
             return "NAP_BetRestriction_CheckExistLine";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

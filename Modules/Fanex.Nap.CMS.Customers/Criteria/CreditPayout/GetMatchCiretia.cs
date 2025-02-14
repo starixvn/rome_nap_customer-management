@@ -10,5 +10,8 @@
 
         public override string GetSettingKey()
            => "NAP_PayoutPromotion_MatchSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

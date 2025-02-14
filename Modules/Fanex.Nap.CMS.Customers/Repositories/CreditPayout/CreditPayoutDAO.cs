@@ -12,9 +12,9 @@
     {
         public IEnumerable<Match> GetMatches(GetMatchCiretia criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -31,10 +31,10 @@
 
         public IEnumerable<PayoutPromotion> SearchPayout(SelPayoutPromotionCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var result = new List<PayoutPromotion>();
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -59,7 +59,7 @@
                     }
                 }
 
-                var ouputParams = db.GetOuputParams();
+                var ouputParams = db.GetOutputParams();
                 criteria.TotalItems = Convert.ToInt32(ouputParams["totalitems"]);
 
                 return result;
@@ -68,9 +68,9 @@
 
         public PayoutPromotion ValidateVerifyCode(VerifySelPayoutPromotionCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     PayoutPromotion result = null;
                     if (reader.Read())
@@ -89,10 +89,6 @@
                         };
                     }
 
-                    var ouputParams = db.GetOuputParams();
-                    criteria.ErrCode = Convert.ToInt32(ouputParams["errcode"]);
-                    criteria.ErrMsg = ouputParams["errmsg"]?.ToString();
-
                     return result;
                 }
             }
@@ -100,12 +96,11 @@
 
         public Result UpdatePayoutPromotion(UpdPayoutPromotionCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
-                return new Result(Convert.ToInt32(DBNull.Value == ouputParams["errcode"]? 0: ouputParams["errcode"]), ouputParams["errmsg"]?.ToString());
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
     }

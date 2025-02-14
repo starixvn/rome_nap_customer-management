@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class AddUtilityOfferCriteria : CommandCriteriaBase
+    internal class AddUtilityOfferCriteria : CustomerClassCommandBaseCriteria
     {
         internal AddUtilityOfferCriteria(AddEditUtilityOfferRequest request, int userId, string ip) : base(userId, ip)
         {

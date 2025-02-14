@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class DeleteSpreadCriteria : CommandCriteriaBase
+    internal class DeleteSpreadCriteria : CustomerClassCommandBaseCriteria
     {
         internal DeleteSpreadCriteria(int policyID, int userId, string ip) : base(userId, ip)
         {

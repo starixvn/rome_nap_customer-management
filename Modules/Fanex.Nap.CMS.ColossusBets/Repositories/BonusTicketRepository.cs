@@ -12,17 +12,17 @@
     {
         public BonusTicketDetail GetBonusTicketDetail(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.QueryEntity<BonusTicketDetail>(criteria.GetSpParams());
+                return db.QueryEntity<BonusTicketDetail>(criteria);
             }
         }
 
         public BonusTicketDetail GetBonusTicketDetailByRefNo(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -44,19 +44,19 @@
 
         public IEnumerable<BonusTicket> GetBonusTickets(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<BonusTicket>(criteria.GetSpParams());
+                return db.Query<BonusTicket>(criteria);
             }
         }
 
         public Result SaveBonusTicket(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
+                db.ExecuteNonQuery(criteria);
 
-                var outputParam = db.GetOuputParams();
+                var outputParam = db.GetOutputParams();
                 if (outputParam != null)
                 {
                     return new Result

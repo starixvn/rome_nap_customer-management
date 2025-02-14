@@ -6,22 +6,23 @@
     using System.Linq;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.PayoutManagement.Models;
 
     public class PayoutListRepository : IPayoutListRepository
     {
         public void GetSitesLicenseesProducts(
-            ICriteria criteria,
+            CriteriaBase criteria,
             out IList<GroupIdNameModel> sitesLicensees,
             out IList<ProductModel> products)
         {
             string group;        
             IDictionary<string, GroupIdNameModel> sitesLicenseesHash = new Dictionary<string, GroupIdNameModel>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -55,11 +56,11 @@
             }
         }
 
-        public IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria)
+        public IEnumerable<PayoutItem> GetPayoutList(CriteriaBase criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -69,13 +70,13 @@
             }
         }
 
-        public PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode)
+        public PayoutDetail GetPayoutDetail(CriteriaBase criteria, bool viewSecurityCode)
         {
             PayoutDetail payoutDetail = null;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -97,20 +98,12 @@
             return payoutDetail;
         }
 
-        public Result UpdateTicketStatus(ICriteria criteria)
+        public Result UpdateTicketStatus(CommandBaseCriteria criteria)
         {
-            Result result = new Result();
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                
-                var outputParams = db.GetOuputParams();
-                result.Code = (int)outputParams["errcode"];
-                result.Message = (string)outputParams["errmsg"];
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
-
-            return result;
         }
 
         private IdNameModel ToSiteLicensee(IDataReader reader)

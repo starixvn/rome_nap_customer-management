@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
             => "NAP_ProblemAccount_LicenseeCurrencySel";
+
+        public override bool IsValid()
+         => true;
     }
 }

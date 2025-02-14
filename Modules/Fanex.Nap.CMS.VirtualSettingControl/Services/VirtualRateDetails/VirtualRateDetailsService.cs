@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualRateDetails;
@@ -31,7 +33,11 @@
             => _repository.GetVirtualRateDetails(criteria);
 
         public Result SaveVirtualRateDetails(SaveVirtualRateDetailsCriteria criteria)
-            => _repository.SaveVirtualRateDetails(criteria);
+        {
+            criteria.VirtualMultiplier = BuildXML(criteria);
+
+            return _repository.SaveVirtualRateDetails(criteria);
+        }
 
         public ValidateAssociatedAccountsResult ValidateAssociatedAccounts(ValidateAssociatedAccountsCriteria criteria)
             => _repository.ValidateAssociatedAccounts(criteria);
@@ -225,5 +231,77 @@
 
         public IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(int sportType)
             => _repository.GetBetTypeVirtualRateMapping(new GetBetTypeVirtualRateMappingCriteria(sportType));
+
+        private string BuildXML(SaveVirtualRateDetailsCriteria criteria)
+        {
+            var canSetAutoSuspendOnAllLevels = criteria.SportType == SportTypeConstants.Basketball;
+
+            var xml = new StringBuilder();
+            xml.Append("<Root>");
+
+            foreach (var sport in criteria.Rates.Sports)
+            {
+                xml.Append(BuildXMLRow(criteria, sport, canSetAutoSuspendOnAllLevels));
+
+                foreach (var game in sport.Childs)
+                {
+                    xml.Append(BuildXMLRow(criteria, game, canSetAutoSuspendOnAllLevels));
+
+                    foreach (var betTypeGroup in game.Childs)
+                    {
+                        xml.Append(BuildXMLRow(criteria, betTypeGroup, canSetAutoSuspendOnAllLevels));
+
+                        if (betTypeGroup.Childs != null)
+                        {
+                            foreach (var betType in betTypeGroup.Childs)
+                            {
+                                xml.Append(BuildXMLRow(criteria, betType, true));
+                            }
+                        }
+                    }
+                }
+            }
+
+            xml.Append("</Root>");
+
+            return xml.ToString();
+        }
+
+        private string BuildXMLRow(SaveVirtualRateDetailsCriteria criteria, VirtualRateDetailsByGroup rate, bool isBetType)
+            => !criteria.IsMemberCompactMode && criteria.IsMember && isBetType
+            ? BuildXMLRowAutoSuspend(rate)
+            : BuildXMLRowWithoutAutoSuspend(rate);
+
+        private string BuildXMLRowAutoSuspend(VirtualRateDetailsByGroup rate)
+        {
+            var xml = new StringBuilder();
+            xml.AppendFormat(
+                "<Row LevelID=\"{0}\" ValueIDLive=\"{1}\" ValueIDNonLive=\"{2}\" IsOverrideASNonLive=\"{3}\" IsOverrideASLive=\"{4}\"",
+                rate.LevelId,
+                rate.LiveId,
+                rate.NonliveId,
+                BoolToInt(rate.IsOverrideASNonlive),
+                BoolToInt(rate.IsOverrideASLive));
+            if (!rate.DisableNonliveAutoSuspend)
+            {
+                xml.AppendFormat(" IsNonLiveAutoSuspend=\"{0}\"", BoolToInt(rate.NonliveAutoSuspend));
+            }
+
+            if (!rate.DisableLiveAutoSuspend)
+            {
+                xml.AppendFormat(" IsLiveAutoSuspend=\"{0}\"", BoolToInt(rate.LiveAutoSuspend));
+            }
+
+            xml.Append(" />");
+
+            return xml.ToString();
+        }
+
+        private static int BoolToInt(bool value) => value ? 1 : 0;
+
+        private static string BuildXMLRowWithoutAutoSuspend(VirtualRateDetailsByGroup rate)
+            => rate.LiveId == 0 && rate.NonliveId == 0
+            ? string.Empty
+            : $"<Row LevelID=\"{rate.LevelId}\" ValueIDLive=\"{rate.LiveId}\" ValueIDNonLive=\"{rate.NonliveId}\" />";
     }
 }

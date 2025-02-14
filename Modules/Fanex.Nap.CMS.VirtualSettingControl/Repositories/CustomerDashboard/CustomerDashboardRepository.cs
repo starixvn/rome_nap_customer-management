@@ -16,10 +16,9 @@
 
         public CustomerDashboardModel GetDashboardInfo(GetDashboardInfoCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var dataSet = objDb.ExecuteDataSet();
+                var dataSet = objDb.ExecuteDataSet(criteria);
 
                 return ParseDashboardData(dataSet);
             }

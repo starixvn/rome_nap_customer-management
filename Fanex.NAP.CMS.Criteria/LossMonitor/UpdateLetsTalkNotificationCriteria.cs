@@ -2,6 +2,7 @@
 {
     using System.Collections;
     using Data.Repository;
+    using Fanex.Data;
 
     public class UpdateLetsTalkNotificationCriteria : CriteriaBase
     {
@@ -11,10 +12,12 @@
 
         public int CustId { get; set; }
 
+        [SpParam(SqlParamName = "notifyletstalk")]
         public bool IsEnable { get; set; }
 
-        [SpParam(SqlParamName = "Mode")]
         public bool IsGroupHeadline { get; set; }
+
+        public int Mode => GetUpdateMode();
 
         public int UserId { get; set; }
 
@@ -32,22 +35,6 @@
         public override bool IsValid()
         {
             return CustId >= 0;
-        }
-
-        public override Hashtable GetSpParams()
-        {
-            var mode = GetUpdateMode();
-
-            var result = new Hashtable
-            {
-                ["custid"] = CustId,
-                ["notifyletstalk"] = IsEnable,
-                ["mode"] = mode,
-                ["userid"] = UserId,
-                ["ip"] = IP
-            };
-
-            return result;
         }
 
         private int GetUpdateMode() => CustId == 0 ? UpdateAllMode :

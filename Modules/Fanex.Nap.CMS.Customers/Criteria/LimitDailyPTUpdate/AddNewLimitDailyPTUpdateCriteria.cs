@@ -40,5 +40,8 @@
 
         public override string GetSettingKey()
             => "NAP_LimitPTDaily_Ins";
+
+        public override bool IsValid()
+            => true;
     }
 }

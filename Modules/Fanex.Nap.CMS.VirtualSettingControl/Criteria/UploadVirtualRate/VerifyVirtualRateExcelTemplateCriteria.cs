@@ -33,5 +33,8 @@
 
         public override string GetSettingKey()
             => "Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp";
+
+        public override bool IsValid()
+            => true;
     }
 }

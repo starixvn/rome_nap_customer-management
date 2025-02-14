@@ -2,8 +2,10 @@
 {
     using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Requests;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    internal class GetDuplicatedSiteSettingCriteria : QueryCriteriaBase
+    internal class GetDuplicatedSiteSettingCriteria : CommandBaseCriteria
     {
         protected GetDuplicatedSiteSettingCriteria()
         {
@@ -13,6 +15,8 @@
             => PolicySites = ToXml(request);
 
         public string PolicySites { get; set; }
+
+        public bool IsTest { get; } = AppSettings.IsTest;
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicySiteCheck";

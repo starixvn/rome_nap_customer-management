@@ -15,9 +15,9 @@
     {
         public IEnumerable<IdNameModel> GetCurrencies(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -33,9 +33,9 @@
 
         public IEnumerable<SiteModel> GetSites(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -52,9 +52,9 @@
         
         public IEnumerable<IdNameModel> GetChatBotNames(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -70,9 +70,9 @@
 
         public IEnumerable<NapAccountingPolicyModel> GetNapAccountingPolicy(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -90,9 +90,9 @@
         {
             IList<ChatBotModel> chatBotModels = new List<ChatBotModel>();
             var TotalRows = 0;
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -100,7 +100,7 @@
                     }
                 }
 
-                TotalRows = Convert.ToInt32(db.GetOuputParams()["totalrows"]);
+                TotalRows = Convert.ToInt32(db.GetOutputParams()["totalrows"]);
             }
 
             return new ChatBotsMappingModel(TotalRows, chatBotModels);
@@ -111,9 +111,9 @@
             IList<ChatBotModel> chatBotModels = new List<ChatBotModel>();
             IList<ChatBotFunctionConfig> functions = new List<ChatBotFunctionConfig>();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -188,16 +188,11 @@
             return chatBotModel;
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public void ExecuteNonQuery(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

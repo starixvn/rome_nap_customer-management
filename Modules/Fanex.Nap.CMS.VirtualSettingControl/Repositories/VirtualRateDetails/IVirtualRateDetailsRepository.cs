@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
@@ -24,7 +25,7 @@
 
         IEnumerable<VirtualRateDTO> GetVirtualRateDetails(ICriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(CommandBaseCriteria criteria);
 
         IEnumerable<GlobalAutoSuspendThresholdLogDTO> GetGlobalAutoSuspendThresholdLogs(ICriteria criteria);
 

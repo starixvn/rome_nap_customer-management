@@ -7,6 +7,7 @@
     using Fanex.Common;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.VirtualSettingControl.Constants;
@@ -20,8 +21,6 @@
         private const string Username = "Username";
         private const string SportType = "SportType";
         private const string LevelId = "LevelId";
-        private const string ErrorCode = "errcode";
-        private const string ErrorMsg = "errmsg";
 
         public VirtualRateDetailsReport GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
         {
@@ -35,10 +34,9 @@
             };
 
             var virtualRateDTOs = new List<VirtualRateDTO>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 if (reader.Read())
                 {
@@ -89,9 +87,8 @@
                 }
 
                 reader.Close();
-                var output = objDb.GetOuputParams();
-                result.ResultCode = Converter.ToInt(output[ErrorCode]);
-                result.ResultMessage = Converter.ToString2(output[ErrorMsg]);
+                result.ResultCode = criteria.ErrCode;
+                result.ResultMessage = criteria.ErrMsg;
             }
 
             result.Sports = GetSports(virtualRateDTOs, minRange, maxRange);
@@ -102,13 +99,11 @@
         {
             var result = new Result();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.ExecuteNonQuery();
-                var output = objDb.GetOuputParams();
-                result.Code = Converter.ToInt(output[ErrorCode]);
-                result.Message = result.Code == 0 ? ViewLang.UpdateSuccessfull : Converter.ToString2(output[ErrorMsg]);
+                objDb.ExecuteNonQuery(criteria);
+                result.Code = criteria.ErrCode;
+                result.Message = result.Code == 0 ? ViewLang.UpdateSuccessfull : criteria.ErrMsg;
             }
 
             return result;
@@ -121,11 +116,9 @@
                 .Select(s => s.Trim());
             criteria.Accounts = string.Join(",", accounts);
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 while (reader.Read())
                 {
@@ -195,10 +188,9 @@
 
             var logDTOs = new List<LogDTO>();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 if (reader.Read())
                 {
@@ -214,9 +206,8 @@
                 }
 
                 reader.Close();
-                var output = objDb.GetOuputParams();
-                result.ResultCode = Converter.ToInt(output[ErrorCode]);
-                result.ResultMessage = Converter.ToString2(output[ErrorMsg]);
+                result.ResultCode = criteria.ErrCode;
+                result.ResultMessage = criteria.ErrMsg;
             }
 
             result.Logs = GroupLogs(logDTOs);
@@ -232,10 +223,9 @@
             };
 
             var virtualRateDTOs = new List<VirtualRateDTO>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
+                var reader = objDb.ExecuteReader(criteria);
 
                 if (reader.Read())
                 {
@@ -254,9 +244,8 @@
                 }
 
                 reader.Close();
-                var output = objDb.GetOuputParams();
-                result.ResultCode = Converter.ToInt(output[ErrorCode]);
-                result.ResultMessage = Converter.ToString2(output[ErrorMsg]);
+                result.ResultCode = criteria.ErrCode;
+                result.ResultMessage = criteria.ErrMsg;
             }
 
             result.Childs = GetSports(virtualRateDTOs, 0, 0);
@@ -268,11 +257,9 @@
             var criteria = new GetVirtualRateRangesCriteria();
             var result = new List<RateInfo>();
 
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-
-                using (var reader = objDb.ExecuteReader())
+                using (var reader = objDb.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -613,9 +600,9 @@
 
         public IEnumerable<VirtualRateDTO> GetVirtualRateDetails(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -646,24 +633,22 @@
             };
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
+                var outputParams = db.GetOutputParams();
 
-                return new Result(
-                    Converter.ToInt(outputParams[ErrorCode]),
-                    Converter.ToString2(outputParams[ErrorMsg]));
+                return new Result(criteria.ErrCode, criteria.ErrMsg);
             }
         }
 
         public IEnumerable<GlobalAutoSuspendThresholdLogDTO> GetGlobalAutoSuspendThresholdLogs(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -699,9 +684,9 @@
 
         public IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {

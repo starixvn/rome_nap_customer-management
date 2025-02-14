@@ -7,26 +7,26 @@
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     internal interface IFilterDataAccess
     {
-        IEnumerable<short> GetCustomerClasses(ICriteria criteria);
+        IEnumerable<short> GetCustomerClasses(CriteriaBase criteria);
 
-        IEnumerable<LeagueGroup> GetLeagueGroups(ICriteria criteria);
+        IEnumerable<LeagueGroup> GetLeagueGroups(CriteriaBase criteria);
 
-        IEnumerable<IdNameModel> GetSports(ICriteria criteria);
+        IEnumerable<IdNameModel> GetSports(CriteriaBase criteria);
     }
 
     internal class FilterDataAccess : BaseRepository, IFilterDataAccess
     {
-        public IEnumerable<short> GetCustomerClasses(ICriteria criteria)
+        public IEnumerable<short> GetCustomerClasses(CriteriaBase criteria)
             => ExecuteReader(criteria, ToCustomerClass);
 
         private static short ToCustomerClass(IDataReader reader)
             => Convert.ToInt16(reader["ResourceId"]);
 
-        public IEnumerable<LeagueGroup> GetLeagueGroups(ICriteria criteria)
+        public IEnumerable<LeagueGroup> GetLeagueGroups(CriteriaBase criteria)
             => ExecuteReader(criteria, ToLeagueGroup);
 
         private static LeagueGroup ToLeagueGroup(IDataReader reader)
@@ -35,7 +35,7 @@
                 Convert.ToInt32(reader["GroupId"]),
                 reader["GroupName"].ToString());
 
-        public IEnumerable<IdNameModel> GetSports(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetSports(CriteriaBase criteria)
             => ExecuteReader(criteria, ToSportType);
 
         private static IdNameModel ToSportType(IDataReader reader)

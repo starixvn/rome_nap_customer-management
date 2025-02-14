@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Models;
 
@@ -15,10 +16,10 @@
 
         VREngineRule GetRule(ICriteria criteria);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(VREngineCriteriaBase criteria);
 
         string GetSportBettype(ICriteria criteria);
 
-        Result CheckVREngineRule(ICriteria criteria);
+        Result CheckVREngineRule(CheckVREngineRuleCriteria criteria);
     }
 }

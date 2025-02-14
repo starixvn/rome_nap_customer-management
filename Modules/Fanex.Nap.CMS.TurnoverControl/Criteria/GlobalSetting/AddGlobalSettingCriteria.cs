@@ -19,24 +19,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
         }
 
         public string Username { get; }
+        public string GlobalSetting => ToXml();
 
         public MaxTurnoverItem[] MaxTurnovers { get; }
 
         public override string GetSettingKey()
             => "NAP_TOControl_GlobalSettingInsert";
-
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                [nameof(Username)] = Username,
-                ["GlobalSetting"] = ToXml(),
-                [nameof(IsGroupHeadline)] = IsGroupHeadline,
-                [nameof(SportType)] = SportType,
-                [nameof(UserId)] = UserId,
-                [nameof(IP)] = IP,
-                [nameof(ErrCode)] = ErrCode,
-                [nameof(ErrMsg)] = ErrMsg,
-            };
 
         private string ToXml()
         {

@@ -85,13 +85,11 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// <returns>The query result.</returns>
         protected virtual ICommandResult UpdateData(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var param = criteria.GetSpParams();
+                db.ExecuteNonQuery(criteria);
 
-                db.ExecuteNonQuery(param);
-
-                return GetCommandResult(param);
+                return GetCommandResult(db.GetOutputParams());
             }
         }
 

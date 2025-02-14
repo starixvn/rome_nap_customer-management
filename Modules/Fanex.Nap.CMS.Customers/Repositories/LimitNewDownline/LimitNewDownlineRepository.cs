@@ -11,9 +11,9 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitNewDownline
     {
         public IEnumerable<string> GetSites(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -25,27 +25,26 @@ namespace Fanex.Nap.CMS.Customers.Repositories.LimitNewDownline
 
         public IEnumerable<LimitDownlineItem> GetLimitDownlineList(GetLimitDownlineListCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var limitDownlineList = db.Query<LimitDownlineItem>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                var limitDownlineList = db.Query<LimitDownlineItem>(criteria);
+                var outputParams = db.GetOutputParams();
                 criteria.TotalItems = Convert.ToInt32(outputParams["totalitems"]);
 
                 return limitDownlineList;
             }
         }
 
-        public AddNewOrRemoveLimitResult ExecuteNonQuery(ICriteria criteria)
+        public AddNewOrRemoveLimitResult ExecuteNonQuery(AddNewLimitCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+                db.ExecuteNonQuery(criteria);
 
                 return new AddNewOrRemoveLimitResult(
-                    Convert.ToInt32(ouputParams["errcode"]),
-                    ouputParams["errmsg"].ToString(),
-                    Convert.ToInt32(ouputParams["cntmember"]));
+                    criteria.ErrCode,
+                    criteria.ErrMsg,
+                    criteria.CntMember);
             }
         }
     }

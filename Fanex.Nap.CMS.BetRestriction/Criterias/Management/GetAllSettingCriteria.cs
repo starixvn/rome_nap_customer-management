@@ -11,5 +11,8 @@
         {
             return "NAP_BetRestriction_SettingSel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

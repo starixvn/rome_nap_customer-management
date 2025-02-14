@@ -4,7 +4,7 @@
     using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class AddRuleCriteria : CommandCriteriaBase
+    internal class AddRuleCriteria : CustomerClassCommandBaseCriteria
     {
         public AddRuleCriteria(AddRuleRequest request, int ruleId = 0)
             : base(request.UserId, request.IP)

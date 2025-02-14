@@ -14,5 +14,8 @@
 
         public override string GetSettingKey()
             => "Acc_CustRealMultiplier_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

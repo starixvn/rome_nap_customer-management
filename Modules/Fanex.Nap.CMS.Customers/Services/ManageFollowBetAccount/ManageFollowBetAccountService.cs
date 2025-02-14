@@ -2,12 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Customers.Criteria.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.Repositories.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
 
     public class ManageFollowBetAccountService : IManageFollowBetAccountService
     {
@@ -36,12 +38,21 @@
 
         public Result AddNewFollowBetAccount(AddNewFollowBetAccountViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-                new AddNewFollowBetAccountCriteria(
+            var criteria = new AddNewFollowBetAccountCriteria(
                     viewModel.DummyAgentId,
                     viewModel.CustList,
                     viewModel.UserId,
-                    viewModel.IP));
+                    viewModel.IP);
+
+            if (!criteria.IsValid())
+            {
+                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
+            }
+
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(
+                criteria.ErrCode,
+                criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -53,13 +64,22 @@
 
         public Result UpdateFollowBetAccount(UpdateFollowBetAccountViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-                new UpdateFollowBetAccountCriteria(
+            var criteria = new UpdateFollowBetAccountCriteria(
                     viewModel.Username,
                     viewModel.DummyAgentId,
                     viewModel.IsActive,
                     viewModel.UserId,
-                    viewModel.IP));
+                    viewModel.IP);
+
+            if (!criteria.IsValid())
+            {
+                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
+            }
+
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(
+                criteria.ErrCode,
+                criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -71,12 +91,21 @@
 
         public Result RemoveFollowBetAccount(RemoveFollowBetAccountViewModel viewModel)
         {
-            var result = repository.ExecuteNonQuery(
-                new RemoveFollowBetAccountCriteria(
+            var criteria = new RemoveFollowBetAccountCriteria(
                     viewModel.Username,
                     viewModel.DummyAgentId,
                     viewModel.UserId,
-                    viewModel.IP));
+                    viewModel.IP);
+
+            if (!criteria.IsValid())
+            {
+                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
+            }
+
+            repository.ExecuteNonQuery(criteria);
+            var result = new Result(
+                criteria.ErrCode,
+                criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -116,11 +145,24 @@
         }
 
         public Result UpdateFollowStatus(UpdateFollowBetAccountViewModel viewModel)
-            => repository.ExecuteNonQuery(new UpdateFollowStatusCriteria(
+        {
+            var criteria = new UpdateFollowStatusCriteria(
                 viewModel.Username,
                 viewModel.DummyAgentId,
                 viewModel.IsActive,
                 viewModel.UserId,
-                viewModel.IP));
+                viewModel.IP);
+
+            if (!criteria.IsValid())
+            {
+                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
+            }
+
+            repository.ExecuteNonQuery(criteria);
+
+            return new Result(
+                criteria.ErrCode,
+                criteria.ErrMsg);
+        }
     }
 }

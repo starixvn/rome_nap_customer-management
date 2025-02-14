@@ -2,7 +2,7 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class DeletePolicyCriteria : CommandCriteriaBase
+    internal class DeletePolicyCriteria : CustomerClassCommandBaseCriteria
     {
         public DeletePolicyCriteria(DeletePolicyRequest request) : base(request.UserId, request.IP)
         {

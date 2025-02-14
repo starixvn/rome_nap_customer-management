@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Fanex.Nap.CMS.TurnoverControl.Models;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
-    public class UpdateMultipleMaxTurnoverCriteria : CriteriaBase
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Text;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
+    using Fanex.Nap.CMS.TurnoverControl.Models;
+
+    public class UpdateMultipleMaxTurnoverCriteria : CommandBaseCriteria
     {
         public UpdateMultipleMaxTurnoverCriteria(
             IEnumerable<UpdateMaxTurnoverParam> globalSettings,
@@ -18,7 +19,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
             IP = ip;
         }
 
+        [SpParam(Ignored = true)]
         public IEnumerable<UpdateMaxTurnoverParam> GlobalSettings { get; }
+
+        public string GlobalSetting => ToXml();
 
         public int UserId { get; }
 
@@ -26,16 +30,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 
         public override string GetSettingKey()
             => "NAP_TOControl_MatchTurnoverUpdateMultiple";
-
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                ["GlobalSetting"] = ToXml(),
-                [nameof(UserId)] = UserId,
-                [nameof(IP)] = IP,
-                ["ErrCode"] = 0,
-                ["ErrMsg"] = null
-            };
 
         private string ToXml()
         {
@@ -61,5 +55,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
                 item.MaxTurnover,
                 item.SportType,
                 item.ProfileId);
+
+        public override bool IsValid()
+            => true;
     }
 }

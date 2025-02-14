@@ -5,24 +5,25 @@
     using System.Data;
     using Fanex.Common;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Responses;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.NAP.Framework.Data;
 
     internal interface IPolicyDataAccess : IBaseRepository
     {
-        IEnumerable<Policy> GetPolicies(ICriteria criteria);
+        IEnumerable<Policy> GetPolicies(CriteriaBase criteria);
 
-        IEnumerable<IdNameModel> GetPolicyTitles(ICriteria criteria);
+        IEnumerable<IdNameModel> GetPolicyTitles(CriteriaBase criteria);
 
-        CheckPolicyResponse CheckPolicy(ICriteria criteria);
+        CheckPolicyResponse CheckPolicy(CommandBaseCriteria criteria);
     }
 
     internal class PolicyDataAccess : BaseRepository, IPolicyDataAccess
     {
-        public IEnumerable<Policy> GetPolicies(ICriteria criteria)
+        public IEnumerable<Policy> GetPolicies(CriteriaBase criteria)
             => ExecuteReader(criteria, ToPolicy);
 
         private static Policy ToPolicy(IDataReader reader)
@@ -32,7 +33,7 @@
                 Convert.ToInt16(reader["SportType"]),
                 DataReaderToModelHelper.ToPolicyRuleList(reader));
 
-        public IEnumerable<IdNameModel> GetPolicyTitles(ICriteria criteria)
+        public IEnumerable<IdNameModel> GetPolicyTitles(CriteriaBase criteria)
             => ExecuteReader(criteria, ToPolicyTitle);
 
         private static IdNameModel ToPolicyTitle(IDataReader reader)
@@ -42,24 +43,20 @@
                 Name = reader["PolicyTitle"].ToString()
             };
 
-        public CheckPolicyResponse CheckPolicy(ICriteria criteria)
+        public CheckPolicyResponse CheckPolicy(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var affectedPolicies = new List<string>();
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
                         affectedPolicies.Add(reader["PolicyTitle"].ToString());
                     }
                 }
-                var outputParams = db.GetOuputParams();
 
-                var code = Converter.ToInt(outputParams["errcode"]);
-                var message = Converter.ToString2(outputParams["errmsg"]);
-
-                return new CheckPolicyResponse(string.Join(", ", affectedPolicies), code, message);
+                return new CheckPolicyResponse(string.Join(", ", affectedPolicies), criteria.ErrCode, criteria.ErrMsg);
             }
         }
     }

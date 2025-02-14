@@ -2,7 +2,7 @@
 
 namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class DeleteRuleCriteria : CommandCriteriaBase
+    internal class DeleteRuleCriteria : CustomerClassCommandBaseCriteria
     {
         public DeleteRuleCriteria(DeleteRuleRequest request) : base(request.UserId, request.IP)
         {

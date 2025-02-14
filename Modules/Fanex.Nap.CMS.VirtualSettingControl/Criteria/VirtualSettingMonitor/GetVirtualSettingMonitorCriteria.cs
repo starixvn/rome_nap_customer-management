@@ -19,7 +19,10 @@
 
         public override string GetSettingKey()
         {
-            return "NAP_Report_CustMngt_VirtualRateMonitoring"; 
+            return "NAP_Report_CustMngt_VirtualRateMonitoring";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

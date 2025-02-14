@@ -12,10 +12,10 @@ namespace Fanex.Nap.CMS.ManageChatbots.Repositories.NotificationList
     {
         public IEnumerable<NotificationListItem> GetNotificationList(NotificationListCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var result = db.Query<NotificationListItem>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                var result = db.Query<NotificationListItem>(criteria);
+                var outputParams = db.GetOutputParams();
                 criteria.TotalRows = Convert.ToInt32(outputParams["totalrows"]);
 
                 return result;

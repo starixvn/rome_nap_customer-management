@@ -12,9 +12,9 @@
         public BetTicket GetMicrogaming(ICriteria criteria)
         {
             BetTicket microgaming = new BetTicket();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -33,9 +33,9 @@
                 BetTicketDetails = new List<BetTicketDetail>()
             };
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -54,9 +54,9 @@
 
         public string GetRNGCasinoJackpotRefNo2(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     if (reader.Read())
                     {
@@ -72,10 +72,10 @@
         {
             string siteId = string.Empty;
 
-            using (ObjectDb db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteScalar(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
+                db.ExecuteScalar(criteria);
+                var outputParams = db.GetOutputParams();
 
                 if (outputParams != null && outputParams.ContainsKey("siteid"))
                 {

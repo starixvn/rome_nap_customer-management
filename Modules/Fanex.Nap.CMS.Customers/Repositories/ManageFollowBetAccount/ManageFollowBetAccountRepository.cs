@@ -8,15 +8,14 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Resources;
 
     public class ManageFollowBetAccountRepository : IManageFollowBetAccountRepository
     {
         public IEnumerable<SelectListItem> GetSites(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -32,9 +31,9 @@
 
         public IEnumerable<SelectListItem> GetCurrencies(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -50,9 +49,9 @@
 
         public IEnumerable<SelectListItem> GetDummyAgents(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                using (var reader = db.ExecuteReader(criteria))
                 {
                     while (reader.Read())
                     {
@@ -68,27 +67,17 @@
 
         public IEnumerable<FollowBetAccountItem> GetFollowBetAccountList(ICriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<FollowBetAccountItem>(criteria.GetSpParams());
+                return db.Query<FollowBetAccountItem>(criteria);
             }
         }
 
-        public Result ExecuteNonQuery(ICriteria criteria)
+        public void ExecuteNonQuery(ICriteria criteria)
         {
-            if (!criteria.IsValid())
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
-            }
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-
-                return new Result(
-                    Convert.ToInt32(outputParams["errcode"]),
-                    outputParams["errmsg"].ToString());
+                db.ExecuteNonQuery(criteria);
             }
         }
     }

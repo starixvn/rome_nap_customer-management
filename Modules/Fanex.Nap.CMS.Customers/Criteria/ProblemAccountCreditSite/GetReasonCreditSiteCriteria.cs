@@ -13,5 +13,8 @@
 
         public override string GetSettingKey()
             => "NAP_ProblemAccount_ReasonSel";
+
+        public override bool IsValid()
+         => true;
     }
 }

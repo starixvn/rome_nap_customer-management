@@ -415,6 +415,8 @@
     <Content Include="App_Data\Local\NAPCMSSPNames.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\BetLimitIncrease\Scripts\add-edit-betlimit.js" />
+    <Content Include="Areas\BetLimitIncrease\Scripts\index.js" />
     <Content Include="Areas\BetRestriction\Scripts\Badminton\AccountManagement.js" />
     <Content Include="Areas\BetRestriction\Scripts\Badminton\Index.js" />
     <Content Include="Areas\BetRestriction\Scripts\Basketball\AccountManagement.js" />
@@ -1183,6 +1185,10 @@
     <Content Include="Areas\Customers\Styles\credit-payout.less" />
     <Content Include="Areas\Customers\Views\CreditPayout\_VerifyMember.cshtml" />
     <Content Include="Areas\Customers\Views\CreditPayout\_BulkUpdate.cshtml" />
+    <Content Include="Areas\BetLimitIncrease\Views\Index.cshtml" />
+    <Content Include="Areas\BetLimitIncrease\Views\Web.config" />
+    <Content Include="Areas\BetLimitIncrease\Views\_AddEditBetLimitIncrease.cshtml" />
+    <Content Include="Areas\BetLimitIncrease\Styles\index.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1262,6 +1268,7 @@
   <ItemGroup>
     <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout.js" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

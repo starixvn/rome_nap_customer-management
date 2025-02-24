@@ -181,4 +181,11 @@
     <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
+  <Function Name="Bet Limit Increase">
+    <Setting Key="NAP_CM_SVIPMaxBetPlayerSel" SpName="NAP_CM_SVIPMaxBetPlayerSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_SVIPMaxBetPlayerInsert" SpName="NAP_CM_SVIPMaxBetPlayerInsert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_SVIPMaxBetPlayerCheck" SpName="NAP_CM_SVIPMaxBetPlayerCheck" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_SVIPMaxBetPlayerUpd" SpName="NAP_CM_SVIPMaxBetPlayerUpd" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_SVIPMaxBetPlayerDel" SpName="NAP_CM_SVIPMaxBetPlayerDel" DbName="DBCust.CustDB.wsv_nap" />
+  </Function>
 </Functions>

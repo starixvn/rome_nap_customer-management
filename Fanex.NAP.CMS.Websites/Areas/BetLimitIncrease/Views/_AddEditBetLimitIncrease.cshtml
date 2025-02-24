@@ -1,0 +1,69 @@
+﻿@using Fanex.NAP.CMS.BetLimitControl.Resources
+@using ViewLang = Fanex.Nap.CMS.Infrastructure.Resources
+
+@model Fanex.NAP.CMS.BetLimitControl.ViewModels.BetLimitIncreaseViewModel
+
+<div id="frmAdd" class="form">
+    <div id="msgAdd" class="inline-message"></div>
+    <div id="add-username-container" class="form-row">
+        <div class="lbl-field col-label full-width">
+            <label for="txtUsernameAdd">@Labels.Username<span class="required-field">*</span></label>
+        </div>
+        <div class="edit-field mid-margin-top mid-margin-bottom" style="width:98%">
+            <textarea rows="7" cols="55" id="txtUsernameAdd" class="full-width" maxlength="12800" placeholder="Separated by comma, space, tab                                    Max.200"></textarea>
+        </div>
+    </div>
+    <div id="edit-username-container" class="form-row display-none">
+        <div class="lbl-field col-label">
+            <label for="txtUsernameEdit">@Labels.Username<span class="required-field">*</span></label>
+        </div>
+        <div class="edit-field mid-margin-top mid-margin-bottom">
+            <span id="txtUsernameEdit"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field col-label">
+            <label for="ddlInputSportType">@Labels.Sport<span class="required-field">*</span><span class="note-info-message small-margin-left" title="All Sports"></span></label>
+        </div>
+        <div class="edit-field">
+            <select id="ddlInputSportType" class="sport-type-select">
+                <option value="">Please Select</option>
+                <option value="0" selected>All</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field col-label">
+            <label for="ddlInputBetType">@Labels.BetType<span class="required-field">*</span><span class="note-info-message small-margin-left" title="(1) HDP, (3) OU, (7) 1H HDP, (8) 1H OU"></span></label>
+        </div>
+        <div class="edit-field">
+            <select id="ddlInputBetType" class="bet-type-select">
+                <option value="">Please Select</option>
+                <option value="0" selected>All</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field col-label">
+            <label for="txtMultiplier">@Labels.Multiplier<span class="required-field">*</span></label>
+        </div>
+        <div class="edit-field">
+            <input type="text" class="input-text-right" maxlength="4" id="txtMultiplier" autocomplete="off" />
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field col-label">
+            <label for="txtNote">@Labels.Note</label>
+        </div>
+        <div class="edit-field mid-margin-top mid-margin-bottom">
+            <textarea rows="3" cols="38" id="txtNote" class="full-width" maxlength="255"></textarea>
+        </div>
+    </div>
+    <div class="form-row float-right button-group">
+        <div class="lbl-field normal-label col-label lbl-btn-group"></div>
+        <div class="edit-field">
+            <input type="button" id="btnSave" class="blue-button" value="@ViewLang.Labels.Save" />
+            <input type="button" id="btnCancel" class="red-button" value="@ViewLang.Labels.Cancel" />
+        </div>
+    </div>
+</div>

@@ -61,7 +61,7 @@
     </Setting>
     <Setting Key="NAP_BLControl_AllTypeSelect" SpName="NAP_BLControl_AllTypeSelect" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BLControl_SiteByPermissionSelect" SpName="NAP_BLControl_SiteByPermissionSelect" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_BLControl_CustSelect" SpName="NAP_BLControl_CustSelect" DbName="DBACC.bodb02.wsv_nap">
+    <Setting Key="NAP_BLControl_CustSelect" SpName="NAP_BLControl_CustSelect" DbName="DBACC.bodb02.wsv_nap" TimeOut = "180">
       <Mapping DataField="Agent_MaxBet" ObjectProperty="AgentMaxBet" />
       <Mapping DataField="Agent_MaxPerMatch" ObjectProperty="AgentMaxPerMatch" />
       <Mapping DataField="Master_MaxBet" ObjectProperty="MasterMaxBet" />

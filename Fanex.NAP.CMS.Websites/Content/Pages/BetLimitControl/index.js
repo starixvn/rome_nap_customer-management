@@ -449,7 +449,7 @@ Fanex.CMS.BetLimitControl = function () {
                     CMS.showInlineSuccessMsg('New Bet Limit has been successfully created.', self.popupAdd.msgAddSuccess, true);
                     setTimeout(function () {
                         CMS.closePopup();
-                        Search();
+                        //Search();
                     }, 3000);
                 } else {
                     var errorMessage = [];

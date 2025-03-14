@@ -5,13 +5,11 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.NAP.CMS.BetLimitControl.Criteria.BetLimitIncrease;
     using Fanex.NAP.CMS.BetLimitControl.Models.BetLimitIncrease;
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Net;
 
     public interface IBetLimitIncreaseDataAccess
     {
@@ -25,23 +23,16 @@
         public IEnumerable<BetLimitIncreaseModel> SearchBetLimitIncrease(SearchBetLimitIncreaseCriteria criteria)
         {
             var results = new List<BetLimitIncreaseModel>();
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            results.Add(MappToBetLimitCheck(reader));
-                        }
+                        results.Add(MappToBetLimitCheck(reader));
                     }
-
-                    return results;
                 }
-            }
-            catch (Exception)
-            {
+
                 return results;
             }
         }
@@ -49,31 +40,22 @@
         public Tuple<Result, IEnumerable<BetLimitIncreaseModel>> ValidateUsername(CheckBetLimitIncreaseCriteria criteria)
         {
             var validUsername = new List<BetLimitIncreaseModel>();
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
+                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
                 {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            validUsername.Add(MappToBetLimitCheck(reader));
-                        }
+                        validUsername.Add(MappToBetLimitCheck(reader));
                     }
-
-                    var outputParams = db.GetOuputParams();
-
-                    var code = Converter.ToInt(outputParams["errcode"]);
-                    var message = Converter.ToString2(outputParams["errmsg"]);
-
-                    var result = new Result { Code = code, Message = message };
-
-                    return Tuple.Create<Result, IEnumerable<BetLimitIncreaseModel>>(result, validUsername);
                 }
-            }
-            catch (Exception ex)
-            {
-                var result = new Result((int)HttpStatusCode.BadRequest, Labels.BadRequest);
+
+                var outputParams = db.GetOuputParams();
+
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = Converter.ToString2(outputParams["errmsg"]);
+
+                var result = new Result { Code = code, Message = message };
 
                 return Tuple.Create<Result, IEnumerable<BetLimitIncreaseModel>>(result, validUsername);
             }
@@ -81,25 +63,18 @@
 
         public Result DoAction(CriteriaBase criteria, string successfullyMessage = null)
         {
-            try
+            using (var db = new ObjectDb(criteria.GetSettingKey()))
             {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    db.AssignParamValues(criteria.GetSpParams());
-                    db.ExecuteNonQuery();
-                    var outputParams = db.GetOuputParams();
+                db.AssignParamValues(criteria.GetSpParams());
+                db.ExecuteNonQuery();
+                var outputParams = db.GetOuputParams();
 
-                    var code = Converter.ToInt(outputParams["errcode"]);
-                    var message = code == 0
-                        ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
-                        : Converter.ToString2(outputParams["errmsg"]);
+                var code = Converter.ToInt(outputParams["errcode"]);
+                var message = code == 0
+                    ? successfullyMessage ?? Converter.ToString2(outputParams["errmsg"])
+                    : Converter.ToString2(outputParams["errmsg"]);
 
-                    return new Result { Code = code, Message = message };
-                }
-            }
-            catch (Exception)
-            {
-                return new Result((int)HttpStatusCode.BadRequest, Labels.BadRequest);
+                return new Result { Code = code, Message = message };
             }
         }
 

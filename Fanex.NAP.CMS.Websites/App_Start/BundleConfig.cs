@@ -16,6 +16,7 @@ namespace Fanex.NAP.CMS.Websites
     using Fanex.Nap.CMS.NotificationSetting.AppStart;
     using Fanex.Nap.CMS.TurnoverControl.AppStart;
     using Fanex.Nap.CMS.ManageProductSetting.AppStart;
+    using Fanex.NAP.CMS.BetLimitControl.AppBundles;
 
     /// <summary>
     /// Bundle Configuration.
@@ -42,6 +43,7 @@ namespace Fanex.NAP.CMS.Websites
             CustomerClassBundlesConfig.RegisterAll(bundles);
             ManageProductSettingBundleConfig.RegisterAll(bundles);
             DomainManagementBundleConfig.RegisterBundles(bundles);
+            BetLimitBundlesConfig.RegisterBundles(bundles);
         }
 
         /// <summary>

@@ -95,7 +95,7 @@
     <Setting Key="NAP_GlobalStakeLevelGroup_Sel" SpName="NAP_GlobalStakeLevelGroup_Sel" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Domain Management">
-    <Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap" />
   </Function>

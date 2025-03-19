@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -1239,10 +1239,10 @@
     <Content Include="Web.AppSettings.dr.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
-    <None Include="Web.ConnectionString.dev.config">
+    <Content Include="Web.ConnectionString.dev.config">
       <SubType>Designer</SubType>
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Web.ConnectionString.dr.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>

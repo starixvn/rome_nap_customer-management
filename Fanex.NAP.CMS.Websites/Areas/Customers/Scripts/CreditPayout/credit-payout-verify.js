@@ -73,7 +73,7 @@ const creditPayoutVerify = (function ($) {
             } else {
                 txtVerifyExpiredDate.removeClass("expired");
             }
-            txtVerifyExpiredDate.html(`<b>${payment.ExpiredDate}</b>`);
+            txtVerifyExpiredDate.html(`<b>${payment.ExpiredDateString}</b>`);
             txtVerifySite.html(`<b>${payment.Site}</b>`);
             txtVerifyAmount.html(`<b class="amount-cell">${payment.Amount} (${payment.Currency})</b>`);
         }
@@ -140,7 +140,7 @@ const creditPayoutVerify = (function ($) {
         txtVerifyPromotionType.html(`<b>${typePromotion}</b>`);
         txtVerifyMatch.html(`<b>${cachedPayment.Match}</b>`);
         $("#row-ExpiredDate").show();
-        txtVerifyExpiredDate.html(`<b>${cachedPayment.ExpiredDate}</b>`);
+        txtVerifyExpiredDate.html(`<b>${cachedPayment.ExpiredDateString}</b>`);
         if (cachedPayment.IsExpired) {
             txtVerifyExpiredDate.addClass("expired");
         } else {

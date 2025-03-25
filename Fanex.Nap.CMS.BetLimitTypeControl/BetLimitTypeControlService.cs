@@ -163,28 +163,31 @@
 
         private string GetSportBetType()
         {
-            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
-            if (jsonSBM == null)
-            {
-                var criteria = new GetSportBettypeCriteria();
-                var sporttypes = new List<object>();
-                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-                {
-                    using (var reader = db.ExecuteReader(criteria))
-                    {
-                        while (reader.Read())
-                        {
-                            sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
-                        }
-                    }
-                }
+            //var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+            //if (jsonSBM == null)
+            //{
+            //    var criteria = new GetSportBettypeCriteria();
+            //    var sporttypes = new List<object>();
+            //    using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            //    {
+            //        using (var reader = db.ExecuteReader(criteria))
+            //        {
+            //            while (reader.Read())
+            //            {
+            //                sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
+            //            }
+            //        }
+            //    }
 
-                jsonSBM = JsonConvert.SerializeObject(sporttypes);
-                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
-            }
+            //    jsonSBM = JsonConvert.SerializeObject(sporttypes);
+            //    CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            //}
 
-            return jsonSBM;
-            
+            //return jsonSBM;
+            // Todo: Missing GetSportBettypeCriteria Sp
+
+            return string.Empty;
+
         }
     }
 }

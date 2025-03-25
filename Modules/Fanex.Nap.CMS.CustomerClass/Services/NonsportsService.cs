@@ -1,14 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Services
 {
     using Fanex.Nap.CMS.CustomerClass.Criteria.NonSports;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Requests.Nonsports;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -25,18 +24,12 @@
         Result EnableOffer(EnableOfferingRequest request, int userId, string iP);
 
     }
-    internal class NonsportsService : INonsportsService
+    internal class NonsportsService : ServiceBase, INonsportsService
     {
-        private readonly INonSportsDataAccess nonSportsDataAccess;
         private const int AllProductId = 256;
 
-        public NonsportsService() : this(new NonSportsDataAccess())
+        public NonsportsService() : base()
         {
-        }
-
-        public NonsportsService(INonSportsDataAccess nonSportsDataAccess)
-        {
-            this.nonSportsDataAccess = nonSportsDataAccess ?? new NonSportsDataAccess();
         }
 
         public AddOfferResponse AddOffer(AddEditNonsportsRequest request, int userId, string iP)
@@ -50,8 +43,12 @@
                 MaxBet = request.MaxBet,
                 Enable = request.IsEnable
             };
+            DynamicRepository.Execute(criteria);
+            var message = criteria.ErrCode == 0
+                    ? Labels.AddNonSportsSuccessfully ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
 
-            return nonSportsDataAccess.AddOffer(criteria);
+            return new AddOfferResponse(criteria.PolicyID, criteria.ErrCode, message);
         }
 
         public Result DeleteOffer(int policyID, IEnumerable<IdNameModel> allproducts, int userId, string iP)
@@ -62,7 +59,7 @@
                 AllProducts = GetProductIds(allproducts)
             };
 
-            return nonSportsDataAccess.DoAction(criteria, Labels.DeleteNonSportSuccessfully);
+            return DoAction(criteria, Labels.DeleteNonSportSuccessfully);
         }
 
         public Result EnableOffer(EnableOfferingRequest request, int userId, string iP)
@@ -73,7 +70,7 @@
                 Enable = request.Enable
             };
 
-            return nonSportsDataAccess.DoAction(criteria, Labels.EditNonSportsSuccessfully);
+            return DoAction(criteria, Labels.EditNonSportsSuccessfully);
         }
 
         public IEnumerable<NonsportModel> GetOfferings(SearchNonsportsRequest request, IEnumerable<IdNameModel> allproducts)
@@ -86,7 +83,7 @@
                 AllProducts = GetProductIds(allproducts)
             };
 
-            return nonSportsDataAccess.ExecuteReader<NonsportModel>(criteria);
+            return DynamicRepository.Fetch<NonsportModel>(criteria);
         }
 
         public Result UpdateOffer(AddEditNonsportsRequest request, IEnumerable<IdNameModel> allproducts, int userId, string iP)
@@ -103,7 +100,7 @@
                 AllProducts = GetProductIds(allproducts)
             };
 
-            return nonSportsDataAccess.DoAction(criteria, Labels.EditNonSportsSuccessfully);
+            return DoAction(criteria, Labels.EditNonSportsSuccessfully);
         }
 
         private string GetProductIds(IEnumerable<IdNameModel> allproducts)

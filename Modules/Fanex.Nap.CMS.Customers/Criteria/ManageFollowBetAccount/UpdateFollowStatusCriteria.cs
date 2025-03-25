@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ManageFollowBetAccount
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class UpdateFollowStatusCriteria : CriteriaBase
+    public class UpdateFollowStatusCriteria : CommandBaseCriteria
     {
         public UpdateFollowStatusCriteria(string username, int dummyAgentId, bool isFollow, int userId, string ip)
         {
@@ -22,10 +22,6 @@
         public int UserId { get; }
 
         public string IP { get; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey() => "NAP_Customer_FollowBetAccountUpdFollowStatus";
 

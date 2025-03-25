@@ -9,6 +9,7 @@
     using Criteria.UploadVirtualRate;
     using Fanex.Logging.Extensions.Web;
     using Fanex.Nap.CMS.VirtualSettingControl.Constants;
+    using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails;
     using Infrastructure.Models;
     using Infrastructure.Web;
     using Models.UploadVirtualRate;
@@ -17,7 +18,6 @@
     using NPOI.SS.Util;
     using NPOI.XSSF.UserModel;
     using Repositories.UploadVirtualRate;
-    using Repositories.VirtualRateDetails;
     using Resources;
 
     public class UploadVirtualRateService : IUploadVirtualRateService
@@ -29,19 +29,18 @@
         private const string SessionIdSessionKey = "Fanex.Nap.CMS.VirtualSettingControl.Services.UploadVirtualRate.UploadVirtualRateService.SessionId_{0}";
 
         private readonly IUploadVirtualRateRepository uploadRepository;
-        private readonly IVirtualRateDetailsRepository virtualRateDetailsRepository;
+        private readonly IVirtualRateDetailsService virtualRateDetailsService;
         private readonly int sportType;
         private readonly int limitAccount;
         private readonly VirtualRateBetTypeCollection betTypes;
 
         public UploadVirtualRateService(
             int sportType,
-            IUploadVirtualRateRepository uploadRepository = null,
-            IVirtualRateDetailsRepository virtualRateDetailsRepository = null)
+            IUploadVirtualRateRepository uploadRepository = null)
         {
             this.sportType = sportType;
             this.uploadRepository = uploadRepository ?? new UploadVirtualRateRepository();
-            this.virtualRateDetailsRepository = virtualRateDetailsRepository ?? new VirtualRateDetailsRepository();
+            virtualRateDetailsService = new VirtualRateDetailsService();
 
             limitAccount = LimitAccountConstants.GetLimitAccount(sportType);
             betTypes = sportType == SportTypeConstants.ESports
@@ -150,7 +149,7 @@
         {
             IRow row;
             var excelErrors = new List<ExcelErrorDTO>();
-            var rateRanges = virtualRateDetailsRepository.GetVirtualRateRanges().ToDictionary(kvp => kvp.Value, kvp => true);
+            var rateRanges = virtualRateDetailsService.GetVirtualRateRanges().ToDictionary(kvp => kvp.Value, kvp => true);
             var accountsHash = new Dictionary<string, bool>();
 
             var totalSheetRows = sheet.LastRowNum + 1;

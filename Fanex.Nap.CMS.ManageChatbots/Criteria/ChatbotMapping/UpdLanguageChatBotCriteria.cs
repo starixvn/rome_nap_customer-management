@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdLanguageChatBotCriteria : CriteriaBase
+    public class UpdLanguageChatBotCriteria : NonQueryCommand
     {
         public int UserID { get; set; }
 
@@ -20,5 +20,8 @@
         
         public override string GetSettingKey()
             => "Age_Chatbot_CustBotAccountLanguageUpd";
+
+        public override bool IsValid()
+            => true;
     }
 }

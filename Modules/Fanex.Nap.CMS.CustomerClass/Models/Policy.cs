@@ -4,6 +4,10 @@ namespace Fanex.Nap.CMS.CustomerClass.Models
 {
     internal class Policy
     {
+        public Policy()
+        {
+        }
+
         public Policy(int policyId, string policyTitle, short sportType, Rule rule)
         {
             PolicyId = policyId;
@@ -20,14 +24,14 @@ namespace Fanex.Nap.CMS.CustomerClass.Models
             Rules = rules;
         }
 
-        public int PolicyId { get; }
+        public int PolicyId { get; set; }
 
-        public string PolicyTitle { get; }
+        public string PolicyTitle { get; set; }
 
-        public short SportType { get; }
+        public short SportType { get; set; }
 
-        public Rule Rule { get; }
+        public Rule Rule { get; set; }
 
-        public IEnumerable<Rule> Rules { get; }
+        public IEnumerable<Rule> Rules { get; set; }
     }
 }

@@ -66,7 +66,7 @@ const creditPayoutBulkUpdate = (function ($) {
             $("#ddlEditStatus").val(status);
             if (status === '2') {
                 $(".row-payment").show();
-                $('#popup-paymentDate').val(payout.PaymentDate).removeAttr('readonly');
+                $('#popup-paymentDate').val(payout.PaymentDateString).removeAttr('readonly');
             } else {
                 $(".row-payment").hide();
                 $('#popup-paymentDate').val(currrentDate).removeAttr('readonly');

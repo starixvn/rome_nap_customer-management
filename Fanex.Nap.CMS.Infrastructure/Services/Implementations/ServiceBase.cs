@@ -7,12 +7,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Net;
     using System.Reflection;
     using Fanex.Common.Helper;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
 
     public class ServiceBase : IServiceBase
@@ -102,6 +105,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
                     Map(criteria, outputParams);
                 }
             }
+        }
+        public Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null)
+        {
+            DynamicRepository.Execute(criteria);
+            var message = criteria.ErrCode == 0
+                        ? successfullyMessage ?? criteria.ErrMsg
+                        : criteria.ErrMsg;
+
+            return new Result { Code = criteria.ErrCode, Message = message };
         }
 
         private static void Map(ICriteria criteria, Hashtable outputParams)

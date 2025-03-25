@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -911,10 +911,6 @@
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.csproj">
       <Project>{8bb82249-f026-4061-a9dc-82067dd0fb09}</Project>
       <Name>Fanex.Nap.CMS.Admin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.ColossusBets\Fanex.Nap.CMS.ColossusBets.csproj">
-      <Project>{68353271-9457-411a-a5cc-398f9d0b5fe7}</Project>
-      <Name>Fanex.Nap.CMS.ColossusBets</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.CustomerClass\Fanex.Nap.CMS.CustomerClass.csproj">
       <Project>{d9633e17-e562-4c8f-a8b9-719df019546d}</Project>

@@ -2,6 +2,10 @@
 {
     public class SiteGroup : IdNameModel
     {
+        public SiteGroup()
+        {
+        }
+
         public SiteGroup(int id, string name, bool isLicensee)
         {
             Id = id;

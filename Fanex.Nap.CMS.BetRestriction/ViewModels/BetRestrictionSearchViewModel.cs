@@ -12,7 +12,7 @@
 
         public BetRestrictionDataGridViewModel<SiteModel> SiteViewModel { get; set; }
 
-        public BetRestrictionDataGridViewModel<CurrencyModel> CurrencyViewModel { get; set; }
+        public BetRestrictionDataGridViewModel<BetRestrictionCurrencyModel> CurrencyViewModel { get; set; }
     }
 
     public class BetRestrictionDataGridViewModel<T>

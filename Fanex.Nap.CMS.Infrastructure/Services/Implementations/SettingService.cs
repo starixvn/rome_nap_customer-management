@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Repositories;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.Nap.CMS.Infrastructure.Web;
 
@@ -19,22 +19,24 @@
         private const string CachedAllCurrencies = "Fanex.Nap.CMS.Infrastructure.All.Currencies";
         private const string CachedNonsportsProducts = "Fanex.Nap.CMS.Infrastructure.NonsportsProducts";
 
-        private readonly ISettingRepository settingRepository;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public SettingService() : this(new SettingRepository())
+        public SettingService() : this(new DynamicRepository())
         {
         }
 
-        internal SettingService(ISettingRepository settingRepository)
-            => this.settingRepository = settingRepository;
-
-        public IEnumerable<IdNameModel> GetAllCurrencies()
+        internal SettingService(IDynamicRepository dynamicRepository)
         {
-            var allCurrencies = CacheManager.Get<IEnumerable<IdNameModel>>(CachedAllCurrencies);
+            this.dynamicRepository = dynamicRepository; 
+        }
+
+        public IEnumerable<CurrencyModel> GetAllCurrencies()
+        {
+            var allCurrencies = CacheManager.Get<IEnumerable<CurrencyModel>>(CachedAllCurrencies);
 
             if (allCurrencies == null)
             {
-                allCurrencies = settingRepository.GetCurrencies(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Name);
+                allCurrencies = dynamicRepository.Fetch<CurrencyModel>(new GetCurrencyCriteria(AllCurrency)).OrderBy(cur => cur.Currency);
 
                 CacheManager.Set(CachedAllCurrencies, allCurrencies, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
@@ -42,8 +44,8 @@
             return allCurrencies;
         }
 
-        public IEnumerable<IdNameModel> GetCreditCurrencies()
-            => settingRepository.GetCurrencies(new GetCurrencyCriteria(CreditCurrency)).OrderBy(cur => cur.Name);
+        public IEnumerable<CurrencyModel> GetCreditCurrencies()
+            => dynamicRepository.Fetch<CurrencyModel>(new GetCurrencyCriteria(CreditCurrency)).OrderBy(cur => cur.Currency);
 
         /// <summary>
         /// UserId to check Special_Site permisson.
@@ -51,11 +53,11 @@
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<SiteGroup> GetAllSites(int userId = 0)
-            => settingRepository.GetAllSites(new GetAllSiteCriteria(userId)).OrderBy(site => site.Name);
+        public IEnumerable<SiteGroup> GetAllSites(int? userId = null)
+            => dynamicRepository.Fetch<SiteGroup>(new GetAllSiteCriteria(userId)).OrderBy(site => site.Name);
 
         public IEnumerable<IdNameModel> GetCreditSites()
-            => settingRepository.GetCreditSites(new GetCreditSiteCriteria()).OrderBy(site => site.Name);
+            => dynamicRepository.Fetch<SiteGroup>(new GetCreditSiteCriteria()).OrderBy(site => site.Name);
         
         public IEnumerable<IdNameModel> GetNonsportsProducts()
         {
@@ -63,7 +65,7 @@
 
             if (products == null)
             {
-                products = settingRepository.GetNonsportsProducts(new GetNonsportsProductCriteria());
+                products = dynamicRepository.Fetch<IdNameModel>(new GetNonsportsProductCriteria());
 
                 CacheManager.Set(CachedNonsportsProducts, products, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
@@ -77,7 +79,7 @@
 
             if (sites == null)
             {
-                sites = settingRepository.GetSitesMarketCode(new GetSiteMarketCodeCriteria());
+                sites = dynamicRepository.Fetch<SiteGroup>(new GetSiteMarketCodeCriteria());
 
                 CacheManager.Set(CachedSitesMarketCode, sites, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
@@ -91,7 +93,7 @@
 
             if (countries == null)
             {
-                countries = settingRepository.GetCountries(new GetCountriesCriteria());
+                countries = dynamicRepository.Fetch<Country>(new GetCountriesCriteria());
 
                 CacheManager.Set(CachedCountries, countries, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }

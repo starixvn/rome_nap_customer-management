@@ -20,14 +20,14 @@
             return Convert.ToDateTime(expiredDate).Date < timeNow.Date;
         }
 
-        internal static string ExtractDateFromDB(object column)
+        internal static string ExtractDateFromDB(DateTime? value)
         {
-            if (DBNull.Value == column)
+            if (value == null)
             {
                 return string.Empty;
             }
 
-            return Convert.ToDateTime(column).ToString(FormatDate);
+            return value.Value.ToString(FormatDate);
         }
 
         internal static string ExtractDateTimeFromDB(object column)

@@ -48,7 +48,7 @@
                     <option value="0">@Labels.All</option>
                     @foreach (var currency in Model.Currencies)
                     {
-                        <option value="@currency.CurrencyId">@currency.CurrencyName</option>
+                        <option value="@currency.ExchangeId">@currency.Currency</option>
                     }
                 </select>
             </div>

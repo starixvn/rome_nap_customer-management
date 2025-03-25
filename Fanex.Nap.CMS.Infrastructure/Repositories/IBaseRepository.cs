@@ -24,8 +24,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
 
         IEnumerable<T> ExecuteReader<T>(CriteriaBase criteria);
 
-        Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper);
-
         Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null);
     }
 }

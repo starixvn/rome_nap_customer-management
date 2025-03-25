@@ -19,6 +19,8 @@
         public string Action { get; set; }
 
         public string SPName { get; set; }
+        public string TrackingValue { get; set; }
+        public string TrackingValue2 { get; set; }
 
         public string NewCollStatus { get; set; }
 

@@ -1,26 +1,56 @@
 ﻿namespace Fanex.NAP.CMS.Services.Implements
 {
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CMS.Criteria.StatusLog;
     using Interfaces;
     using Models.StatusLog;
-    using Repositories.Implements;
     using Repositories.Interfaces;
+    using System.Xml;
+    using Fanex.Common.Extensions;
+    using Fanex.Common;
 
     public class StatusLogService : CMSBaseService, IStatusLogService
     {
-        private readonly IStatusLogRepository _statusLogRepository;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public StatusLogService() : this( null)
+        public StatusLogService() : this(new DynamicRepository())
         {
         }
 
-        public StatusLogService(IStatusLogRepository statusLogRepository)
+        public StatusLogService(IDynamicRepository dynamicRepository)
         {
-            _statusLogRepository = statusLogRepository ?? new StatusLogRepository();
+            this.dynamicRepository = dynamicRepository;
         }
 
         public StatusLogReport Logs(LogFilter filter)
         {
-            return _statusLogRepository.Logs(filter);
+            var result = new StatusLogReport();
+
+            var criteria = new LogCriteria
+            {
+                Code = filter.Code,
+                PageIndex = filter.PageIndex,
+                PageSize = filter.PageSize
+            };
+
+            var logs = dynamicRepository.Fetch<StatusLogItem>(criteria);
+            logs.ForEach(log =>
+            {
+                log.NewCollStatus = GetCollStatus(trackingValue: log.TrackingValue);
+                log.OldCollStatus = GetCollStatus(log.TrackingValue2);
+            });
+
+            result.Logs = logs;
+            result.TotalRows = criteria.TotalRows;
+            return result;
+        }
+
+        private static string GetCollStatus(string trackingValue)
+        {
+            var doc = new XmlDocument();
+            doc.LoadXml(trackingValue);
+
+            return Converter.ToString2(doc.FirstChild.Attributes["Coll_Status"].Value);
         }
     }
 }

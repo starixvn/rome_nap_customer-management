@@ -15,12 +15,12 @@
             bool hasHostPermission,
             IEnumerable<IdNameModel> sites,
             IEnumerable<IdNameModel> policyTitles,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> sportTypes) : base(hasHostPermission)
         {
             Sites = sites;
             PolicyTitles = policyTitles.Select(p => ToSelectListItem(p)).InsertAllItem();
-            Currencies = currencies;
+            Currencies = currencies.Select(c => new IdNameModel { Id = c.ExchangeId, Name = c.Currency }); ;
             SportTypes = sportTypes.Select(c => ToSelectListItem(c));
         }
 

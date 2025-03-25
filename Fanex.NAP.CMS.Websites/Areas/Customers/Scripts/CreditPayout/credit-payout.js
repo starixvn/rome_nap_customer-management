@@ -188,15 +188,15 @@
             columns.push(...[
                 { Name: "colUsername", Value: payout.Username },
                 { Name: "colSite", Value: payout.Site },
-                { Name: "colAmount", Value: payout.Amount, CssClass: "amount-cell" },
+                { Name: "colAmount", Value: payout.AmountString, CssClass: "amount-cell" },
                 { Name: "colCurrency", Value: payout.Currency },
                 { Name: "colMatchId", Value: payout.MatchID },
                 { Name: "colMatch", Value: payout.Match },
                 { Name: "colStatus", Value: payout.Status },
-                { Name: "colCreatedDate", Value: payout.CreatedDate },
-                { Name: "colExpiredDate", Value: payout.ExpiredDate, CssClass: payout.IsExpired ? "expired" : "" },
-                { Name: "colPaymentDate", Value: payout.PaymentDate },
-                { Name: "colLastUpdatedDate", Value: payout.LastModifiedDate },
+                { Name: "colCreatedDate", Value: payout.CreatedDateString },
+                { Name: "colExpiredDate", Value: payout.ExpiredDateString, CssClass: payout.IsExpired ? "expired" : "" },
+                { Name: "colPaymentDate", Value: payout.PaymentDateString },
+                { Name: "colLastUpdatedDate", Value: payout.LastModifiedDateString },
                 { Name: "colUpdatedBy", Value: payout.LastModifiedUser },
                 { Name: "colRemark", Value: payout.Remark }
             ]);
@@ -268,7 +268,7 @@
             Username: payout.Username,
             DrawID: payout.DrawID,
             CustID: payout.CustID,
-            Amount: payout.Amount,
+            Amount: payout.AmountString,
             Currency: payout.Currency,
             Match: payout.Match,
             Site: payout.Site

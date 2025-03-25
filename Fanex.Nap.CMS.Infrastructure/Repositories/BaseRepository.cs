@@ -60,31 +60,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Repositories
                 return db.Query<T>(criteria);
             }
         }
-
-        public Tuple<int, IEnumerable<T>> ExecuteReaderPaging<T>(CriteriaBase criteria, Func<IDataReader, T> funcMapper)
-        {
-            var totalItems = 0;
-            IList<T> resultSet = new List<T>();
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria))
-                {
-                    while (reader.Read())
-                    {
-                        resultSet.Add(funcMapper(reader));
-                    }
-                }
-
-                var totalItemsOutputValue = db.GetOutputParams()["totalitems"];
-                if (totalItemsOutputValue != null && totalItemsOutputValue != DBNull.Value)
-                {
-                    totalItems = Convert.ToInt32(totalItemsOutputValue);
-                }
-            }
-
-            return Tuple.Create<int, IEnumerable<T>>(totalItems, resultSet);
-        }
         
 
         public Tuple<int, IEnumerable<T>, Result> ExecuteReaderPagingWithError<T>(ICriteria criteria, Func<IDataReader, T> funcMapper)

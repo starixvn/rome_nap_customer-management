@@ -2,124 +2,66 @@
 {
     internal class Rule
     {
-#pragma warning disable S107
-        public Rule(
-            int ruleId,
-            short? customerClass,
-            short? customerClassDetail,
-            string ruleTitle,
-            short sportType,
-            string leagueGroupIds,
-            string leagueGroups,
-            byte isLive,
-            int? diffBalanceRatio,
-            int? betDelay,
-            short? nextBetInterval,
-            short? superBetInterval,
-            short? siteBetInterval,
-            int? minBet,
-            int? maxBet,
-            int? maxPerMatch,
-            byte? repeatedBets,
-            byte? seizeBet,
-            bool disableParlay,
-            short? peakHourSpread,
-            bool? enable,
-            bool? topPriority,
-            string site,
-            string currencies,
-            string platforms,
-            string policyTitles)
-#pragma warning restore S107
-        {
-            RuleId = ruleId;
-            CustomerClass = customerClass == 0 ? null : customerClass;
-            CustomerClassDetail = customerClassDetail == 0 ? null : customerClassDetail;
-            RuleTitle = ruleTitle;
-            SportType = sportType;
-            LeagueGroupIds = leagueGroupIds;
-            LeagueGroups = leagueGroups;
-            IsLive = isLive;
-            DiffBalanceRatio = diffBalanceRatio;
-            BetDelay = betDelay;
-            NextBetInterval = nextBetInterval;
-            SuperBetInterval = superBetInterval;
-            SiteBetInterval = siteBetInterval;
-            MinBet = minBet;
-            MaxBet = maxBet;
-            MaxPerMatch = maxPerMatch;
-            RepeatedBets = repeatedBets;
-            SeizeBet = seizeBet;
-            DisableParlay = disableParlay;
-            PeakHourSpread = peakHourSpread;
-            Enable = enable;
-            TopPriority = topPriority;
-            Site = site;
-            Currencies = currencies;
-            Platforms = platforms;
-            PolicyTitles = policyTitles;
-        }
+        public int RuleId { get; set; }
 
-        public int RuleId { get; }
+        public short? CustomerClass { get; set; }
 
-        public short? CustomerClass { get; }
+        public short? CustomerClassDetail { get; set; }
 
-        public short? CustomerClassDetail { get; }
+        public string RuleTitle { get; set; }
 
-        public string RuleTitle { get; }
-
-        public short SportType { get; }
+        public short SportType { get; set; }
 
         public string SportTypeName { get; set; }
 
-        public string LeagueGroupIds { get; }
+        public string LeagueGroupIds { get; set; }
 
-        public string LeagueGroups { get; }
+        public string LeagueGroups { get; set; } = string.Empty;
 
         public bool? IsAllLeagueGroups { get; set; }
 
-        public byte IsLive { get; }
+        public byte IsLive { get; set; }
 
-        public int? DiffBalanceRatio { get; }
+        public int? DiffBalanceRatio { get; set; }
 
-        public int? BetDelay { get; }
+        public int? BetDelay { get; set; }
 
-        public short? NextBetInterval { get; }
+        public short? NextBetInterval { get; set; }
 
-        public short? SuperBetInterval { get; }
+        public short? SuperBetInterval { get; set; }
 
-        public short? SiteBetInterval { get; }
+        public short? SiteBetInterval { get; set; }
 
-        public int? MinBet { get; }
+        public int? MinBet { get; set; }
 
-        public int? MaxBet { get; }
+        public int? MaxBet { get; set; }
 
-        public int? MaxPerMatch { get; }
+        public int? MaxPerMatch { get; set; }
 
-        public byte? RepeatedBets { get; }
+        public byte? RepeatedBets { get; set; }
 
-        public byte? SeizeBet { get; }
+        public byte? SeizeBet { get; set; }
 
-        public bool DisableParlay { get; }
+        public bool DisableParlay { get; set; }
 
-        public short? PeakHourSpread { get; }
+        public short? PeakHourSpread { get; set; }
 
-        public bool? Enable { get; }
+        public bool? Enable { get; set; }
 
-        public bool? TopPriority { get; }
+        public bool? TopPriority { get; set; }
 
-        public string Site { get; }
+        public string Site { get; set; }
 
         public string Currencies { get; set; }
 
         public bool? IsAllCurrencies { get; set; }
 
-        public string Platforms { get; }
+        public string Platforms { get; set; }
 
         public string PlatformNames { get; set; }
 
         public bool? IsAllPlatforms { get; set; }
 
-        public string PolicyTitles { get; set; }
+        public string PolicyTitles { get; set; } = string.Empty;
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate
 {
-    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class AddNewLimitDailyPTUpdateCriteria : CriteriaBase 
+    public class AddNewLimitDailyPTUpdateCriteria : CommandBaseCriteria 
     {
         public AddNewLimitDailyPTUpdateCriteria(string productId, string smaName, byte currency, int siteId, byte type, int userId, string ip, bool limitNewAccUpdPT)
         {
@@ -33,9 +33,6 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
         public bool LimitNewAccUpdPT { get; set; }
 
         public override string GetSettingKey()

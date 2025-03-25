@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl.Models
 {
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Models;
 
     public class IndexViewModel
     {

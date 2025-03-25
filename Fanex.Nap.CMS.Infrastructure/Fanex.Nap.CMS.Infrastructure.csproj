@@ -312,6 +312,7 @@
     <Compile Include="Models\Alignment.cs" />
     <Compile Include="Models\BalanceUpDayInfo.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\ExcelColumn.cs" />
     <Compile Include="Models\ExportExcelInfoByNPOI.cs" />
     <Compile Include="Models\IdNameModel.cs" />
@@ -322,7 +323,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
     <Compile Include="Repositories\IBaseRepository.cs" />
-    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Requests\CommandBase.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>

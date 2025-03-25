@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System;
 
-    internal class GetSiteUploadProgressCriteria : CriteriaBase
+    internal class GetSiteUploadProgressCriteria : NonQueryCommand
     {
         public int UserID { get; set; }
 
@@ -15,5 +15,8 @@
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicyProcessImport";
+
+        public override bool IsValid()
+            => true;
     }
 }

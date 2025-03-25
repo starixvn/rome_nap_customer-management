@@ -136,7 +136,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="VaultSharp, Version=1.17.5.1, Culture=neutral, PublicKeyToken=cb3d4aad92b0eded, processorArchitecture=MSIL">
       <HintPath>..\packages\VaultSharp.1.17.5.1\lib\net472\VaultSharp.dll</HintPath>
-	</Reference>
+    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -156,7 +156,6 @@
     <Compile Include="Criteria\GetAllCurrencyCriteria.cs" />
     <Compile Include="Criteria\GetSiteByPermissionCriteria.cs" />
     <Compile Include="Criteria\UpdateBetLimitControlCriteria.cs" />
-    <Compile Include="DataAccess\BetLimitIncreaseDataAccess.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AddBetLimitControlResult.cs" />
     <Compile Include="Models\BetLimitIncrease\BetLimitIncreaseModel.cs" />
@@ -165,7 +164,6 @@
     <Compile Include="Models\CustomerBetLimitModel.cs" />
     <Compile Include="Models\Modes.cs" />
     <Compile Include="Models\SearchModel.cs" />
-    <Compile Include="Models\CurrencyModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\AddRequest.cs" />

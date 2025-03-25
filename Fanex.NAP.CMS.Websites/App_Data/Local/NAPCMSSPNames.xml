@@ -18,6 +18,8 @@
     <Setting Key="Member_LoginVerifySelReqById" SpName="Member_LoginVerifySelReqById" DbName="DBCust.CustDB.wsv_nap">
     </Setting>
     <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBCust.IPDB.wsv_nap">
+				<Mapping DataField="CountryCode" ObjectProperty="Code" />
+				<Mapping DataField="CountryName" ObjectProperty="Name" />
     </Setting>
   </Function>
   <Function Name="OpenCloseMember">
@@ -108,12 +110,19 @@
   </Function>
   <Function Name="Credit Collection Summary">
     <Setting Key="Acc_Rpt_CreditCollection" SpName="Acc_Rpt_CreditCollection" DbName="DBACC.bodb02.wsv_nap" TimeOut="300">
+				<Mapping DataField="StartDate" ObjectProperty="FromDate" />
+				<Mapping DataField="EndDate" ObjectProperty="ToDate" />
+				<Mapping DataField="Username" ObjectProperty="Code" />
+				<Mapping DataField="Coll_Status" ObjectProperty="Status" />
     </Setting>
     <Setting Key="Acc_CreditCollStatusUpd" SpName="Acc_CreditCollStatusUpd" DbName="DBCust.CustDB.wsv_nap">
     </Setting>
   </Function>
   <Function Name="Status Log">
     <Setting Key="NAP_StatusLog_CreditCollection_List" SpName="NAP_StatusLog_CreditCollection_List" DbName="DBLOG.bodb_CustomerLog.wsv_nap">
+				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
+				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
+				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
     </Setting>
   </Function>
 </Functions>

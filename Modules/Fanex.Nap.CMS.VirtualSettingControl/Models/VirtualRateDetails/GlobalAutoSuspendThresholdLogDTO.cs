@@ -41,37 +41,37 @@
             Updatedby = updatedby;
         }
 
-        public int LogId { get; }
+        public int LogId { get; set; }
 
-        public DateTime LogTime { get; }
+        public DateTime LogTime { get; set; }
 
-        public int SportType { get; }
+        public int SportType { get; set; }
 
-        public string SportName { get; }
+        public string SportName { get; set; }
 
-        public int LeagueGroupId { get; }
+        public int LeagueGroupId { get; set; }
 
-        public string LeagueGroup { get; }
+        public string LeagueGroup { get; set; }
 
-        public int BetTypeGroupId { get; }
+        public int BetTypeGroupId { get; set; }
 
-        public string BetTypeGroup { get; }
+        public string BetTypeGroup { get; set; }
 
-        public int BetType { get; }
+        public int BetType { get; set; }
 
-        public string BetTypeName { get; }
+        public string BetTypeName { get; set; }
 
-        public decimal VRAutoSuspendThresholdLive_New { get; }
+        public decimal VRAutoSuspendThresholdLive_New { get; set; }
 
-        public decimal VRAutoSuspendThresholdNonLive_New { get; }
+        public decimal VRAutoSuspendThresholdNonLive_New { get; set; }
 
-        public decimal VRAutoSuspendThresholdLive_Old { get; }
+        public decimal VRAutoSuspendThresholdLive_Old { get; set; }
 
-        public decimal VRAutoSuspendThresholdNonLive_Old { get; }
+        public decimal VRAutoSuspendThresholdNonLive_Old { get; set; }
 
-        public bool IsNew { get; }
+        public bool IsNew { get; set; }
 
-        public string Updatedby { get; }
+        public string Updatedby { get; set; }
 
         public string LogTimeString => LogTime.ToShortFormatedDateWithHourMinute();
     }

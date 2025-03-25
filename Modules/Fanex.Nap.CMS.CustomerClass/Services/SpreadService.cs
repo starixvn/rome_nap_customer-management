@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Services
 {
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using System.Collections.Generic;
@@ -9,6 +8,7 @@
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using System.Linq;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
     internal interface ISpreadService
     {
@@ -23,34 +23,33 @@
         Result EnableRule(int policyID, bool enable, int userId, string iP);
     }
 
-    internal class SpreadService : ISpreadService
+    internal class SpreadService : ServiceBase, ISpreadService
     {
-        private readonly ISpreadDataAccess spreadDataAccess;
-
-        public SpreadService() : this(new SpreadDataAccess())
+        public SpreadService() : base()
         {
-        }
-
-        public SpreadService(ISpreadDataAccess spreadDataAccess)
-        {
-            this.spreadDataAccess = spreadDataAccess;
         }
         
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)
-            => spreadDataAccess.InsertRule(new AddSpreadRuleCriteria(request, userId, iP));
-
-        public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
         {
-            return spreadDataAccess.ExecuteReader<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
+            var criteria = new AddSpreadRuleCriteria(request, userId, iP);
+            DynamicRepository.Execute(criteria);
+            var message = criteria.ErrCode == 0
+                    ? Labels.AddSpreadSuccessfully ?? criteria.ErrMsg
+                    : criteria.ErrMsg;
+
+            return new AddSpreadRuleResponse(criteria.PolicyID, criteria.ErrCode, message);
         }
 
+        public IEnumerable<SpreadRule> GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes)
+            => DynamicRepository.Fetch<SpreadRule>(new GetSpreadRuleCriteria(request, string.Join(",", sportTypes.Select(sp => sp.Id))));
+
         public Result UpdateRule(AddEditSpreadRuleRequest request, int userId, string iP)
-            => spreadDataAccess.DoAction(new EditSpreadRuleCriteria(request, userId, iP), Labels.EditSpreadSuccessfully);
+            => DoAction(new EditSpreadRuleCriteria(request, userId, iP), Labels.EditSpreadSuccessfully);
 
         public Result DeleteRule(int policyID, int userId, string iP)
-            => spreadDataAccess.DoAction(new DeleteSpreadCriteria(policyID, userId, iP), Labels.DeleteSpreadSuccessfully);
+            => DoAction(new DeleteSpreadCriteria(policyID, userId, iP), Labels.DeleteSpreadSuccessfully);
 
         public Result EnableRule(int policyID, bool enable, int userId, string iP)
-            => spreadDataAccess.DoAction(new EnableSpreadCriteria(policyID, enable, userId, iP), Labels.EditStatusSpreadSuccessfully);
+            => DoAction(new EnableSpreadCriteria(policyID, enable, userId, iP), Labels.EditStatusSpreadSuccessfully);
     }
 }

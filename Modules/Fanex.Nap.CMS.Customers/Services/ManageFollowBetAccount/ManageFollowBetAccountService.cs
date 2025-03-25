@@ -2,33 +2,35 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using Fanex.Nap.CMS.Customers.Criteria.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.Models.ManageFollowBetAccount;
-    using Fanex.Nap.CMS.Customers.Repositories.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Customers.ViewModels.ManageFollowBetAccount;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Resources;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
-    public class ManageFollowBetAccountService : IManageFollowBetAccountService
+    public class ManageFollowBetAccountService : ServiceBase, IManageFollowBetAccountService
     {
-        private readonly IManageFollowBetAccountRepository repository;
-
-        public ManageFollowBetAccountService(IManageFollowBetAccountRepository repository = null)
-            => this.repository = repository ?? new ManageFollowBetAccountRepository();
-
         public IEnumerable<SelectListItem> GetSites()
-            => repository.GetSites(new GetCreditSiteCriteria(0));
+        {
+            return DynamicRepository.Fetch<IdNameModel>(new GetCreditSiteCriteria(0))
+                .Select(site => new SelectListItem { Text = site.Name, Value = site.Id.ToString() });
+        }
 
         public IEnumerable<SelectListItem> GetCurrencies()
-           => repository.GetCurrencies(new GetCurrencyListCriteria());
+        {
+            return DynamicRepository.Fetch<CurrencyModel>(new GetCurrencyListCriteria())
+                .Select(currency => new SelectListItem { Text = currency.Currency, Value = currency.ExchangeId.ToString() });
+        }
 
         public IEnumerable<SelectListItem> GetDummyAgents()
-            => repository.GetDummyAgents(new GetDummyAgentCriteria()).ToList();
+        {
+            return DynamicRepository.Fetch<DummyAgentDTO>(new GetDummyAgentCriteria())
+                .Select(agent => new SelectListItem { Text = agent.Username, Value = agent.CustId.ToString() });
+        }
 
         public IEnumerable<FollowBetAccountItem> GetFollowBetAccountList(SearchFollowBetAccountViewModel viewModel)
-            => repository.GetFollowBetAccountList(new GetFollowBetAccountListCriteria(
+            => DynamicRepository.Fetch<FollowBetAccountItem>(new GetFollowBetAccountListCriteria(
                 viewModel.Username ?? string.Empty,
                 viewModel.CurrencyId,
                 viewModel.SiteName ?? string.Empty,
@@ -44,22 +46,7 @@
                     viewModel.UserId,
                     viewModel.IP);
 
-            if (!criteria.IsValid())
-            {
-                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
-            }
-
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(
-                criteria.ErrCode,
-                criteria.ErrMsg);
-
-            if (result.IsSuccess)
-            {
-                result.Message = Resources.Labels.AllAccountHaveBeenSuccessfullyAdded;
-            }
-
-            return result;
+            return DoAction(criteria, Resources.Labels.AllAccountHaveBeenSuccessfullyAdded);
         }
 
         public Result UpdateFollowBetAccount(UpdateFollowBetAccountViewModel viewModel)
@@ -71,22 +58,7 @@
                     viewModel.UserId,
                     viewModel.IP);
 
-            if (!criteria.IsValid())
-            {
-                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
-            }
-
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(
-                criteria.ErrCode,
-                criteria.ErrMsg);
-
-            if (result.IsSuccess)
-            {
-                result.Message = Resources.Labels.UpdatedSuccessfully;
-            }
-
-            return result;
+            return DoAction(criteria, Resources.Labels.UpdatedSuccessfully);
         }
 
         public Result RemoveFollowBetAccount(RemoveFollowBetAccountViewModel viewModel)
@@ -97,22 +69,7 @@
                     viewModel.UserId,
                     viewModel.IP);
 
-            if (!criteria.IsValid())
-            {
-                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
-            }
-
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(
-                criteria.ErrCode,
-                criteria.ErrMsg);
-
-            if (result.IsSuccess)
-            {
-                result.Message = Resources.Labels.RemovedSuccessfully;
-            }
-
-            return result;
+            return DoAction(criteria, Resources.Labels.RemovedSuccessfully);
         }
 
         public Result RemoveFollowBetAccounts(RemoveFollowBetAccountsViewModel viewModel)
@@ -153,16 +110,7 @@
                 viewModel.UserId,
                 viewModel.IP);
 
-            if (!criteria.IsValid())
-            {
-                return new Result((int)HttpStatusCode.Forbidden, Labels.AccessDenied);
-            }
-
-            repository.ExecuteNonQuery(criteria);
-
-            return new Result(
-                criteria.ErrCode,
-                criteria.ErrMsg);
+            return DoAction(criteria);
         }
     }
 }

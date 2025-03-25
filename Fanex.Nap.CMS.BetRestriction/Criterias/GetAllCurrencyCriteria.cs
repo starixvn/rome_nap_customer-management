@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetAllCurrencyCriteria : CriteriaBase
     {
@@ -8,5 +8,8 @@
         {
             return "NAP_BetRestriction_SelAllCurrency";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

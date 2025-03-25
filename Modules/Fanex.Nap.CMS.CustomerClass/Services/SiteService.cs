@@ -3,15 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+    using Fanex.Nap.CMS.Infrastructure.Web;
 
     internal interface ISiteService
     {
@@ -28,27 +28,32 @@
         ProgressResponse  GetUploadProgress(int userId);
     }
 
-    internal class SiteService : ISiteService
+    internal class SiteService : ServiceBase, ISiteService
     {
         private readonly IFilterService filterService;
-        private readonly ISiteDataAccess siteDataAccess;
 
-        public SiteService(IFilterService filterService = null, ISiteDataAccess siteDataAccess = null)
+        private const string LastUpdatedTime = "Fanex.CMS.CCM.Site.LastUpdatedTime-{0}";
+
+        public SiteService() : this(new FilterService())
+        {
+        }
+
+        public SiteService(IFilterService filterService) : base()
         {
             this.filterService = filterService ?? new FilterService();
-            this.siteDataAccess = siteDataAccess ?? new SiteDataAccess();
         }
 
         public PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request, string sportTypes)
         {
-            var resultSet = siteDataAccess.GetPagedSiteSetting(new GetSiteSettingCriteria(request, sportTypes));
+            var criteria = new GetSiteSettingCriteria(request, sportTypes);
+            var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
-            return new PagedSiteSetting(resultSet.Item1, BuildSiteSettings(resultSet.Item2));
+            return new PagedSiteSetting(criteria.TotalItems, BuildSiteSettings(siteSettings));
         }
 
         public IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request)
         {
-            var siteSettings = siteDataAccess.GetSiteSettings(new GetDuplicatedSiteSettingCriteria(request));
+            var siteSettings = DynamicRepository.Fetch<SiteSetting>(new GetDuplicatedSiteSettingCriteria(request));
 
             return BuildSiteSettings(siteSettings);
         }
@@ -73,19 +78,38 @@
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite)
-            => siteDataAccess.DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
+            => DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
             var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip) { ActionID = 1 };
 
-            return siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadSiteWarning);
+            return DoAction(criteria, Labels.UploadSiteWarning);
         }
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
-            => siteDataAccess.DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
+            => DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
 
         public ProgressResponse GetUploadProgress(int userId)
-            => siteDataAccess.GetUploadProgress(new GetSiteUploadProgressCriteria() { UserID = userId });
+        {
+            var lastUpdatedTimeKey = string.Format(LastUpdatedTime, userId);
+            var criteria = new GetSiteUploadProgressCriteria() { UserID = userId, LastModifiedTime = CacheManager.Get<DateTime?>(lastUpdatedTimeKey) };
+
+            DynamicRepository.Execute(criteria);
+            if (criteria.CountBatch > 0 && criteria.InitialBatch > 0)
+            {
+                if (criteria.LastModifiedTime == null)
+                {
+                    var lastUpdatedTime = criteria.LastModifiedTime;
+                    CacheManager.Set(lastUpdatedTimeKey, lastUpdatedTime, new TimeSpan(1, 0, 0, 0));
+                }
+            }
+            else
+            {
+                CacheManager.Remove(lastUpdatedTimeKey);
+            }
+
+            return new ProgressResponse(criteria.CountBatch, criteria.InitialBatch);
+        }
     }
 }

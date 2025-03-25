@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Infrastructure.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetNonsportsProductCriteria : CriteriaBase
     {
@@ -8,5 +8,8 @@
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassNonSportsProduct";
+
+        public override bool IsValid()
+            => true;
     }
 }

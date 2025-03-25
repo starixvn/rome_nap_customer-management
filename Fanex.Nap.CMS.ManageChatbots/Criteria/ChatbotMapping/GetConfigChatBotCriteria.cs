@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetConfigChatBotCriteria : CriteriaBase
     {
@@ -12,5 +12,8 @@
         
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotAccountAllInfoSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

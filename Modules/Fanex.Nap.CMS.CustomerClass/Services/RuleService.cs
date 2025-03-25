@@ -6,12 +6,12 @@
     using System.Net;
     using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
     internal interface IRuleService
     {
@@ -36,10 +36,9 @@
         Result DeleteRules(DeleteRuleRequest request);
     }
 
-    internal class RuleService : IRuleService
+    internal class RuleService : ServiceBase, IRuleService
     {
         private readonly IFilterService filterService;
-        private readonly IRuleDataAccess ruleDataAccess;
         private static IDictionary<byte, string> Platforms
              => new Dictionary<byte, string>
              {
@@ -53,10 +52,13 @@
 #pragma warning restore S109
             };
 
-        public RuleService(IFilterService filterService = null, IRuleDataAccess ruleDataAccess = null)
+        public RuleService() : this( new FilterService())
         {
-            this.filterService = filterService ?? new FilterService();
-            this.ruleDataAccess = ruleDataAccess ?? new RuleDataAccess();
+        }
+
+        public RuleService(IFilterService filterService) : base()
+        {
+            this.filterService = filterService;
         }
 
         public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes)
@@ -68,10 +70,11 @@
                 leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
             }
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
+            var criteria = new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds);
+            var rules = DynamicRepository.Fetch<Rule>(criteria);
+            var resultError = new Result(criteria.ErrCode, criteria.ErrMsg);
 
-            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds));
-
-            return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2), resultSet.Item3);
+            return new PagedRule(criteria.TotalItems, BuildRules(rules), resultError);
         }
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
@@ -120,7 +123,7 @@
         private IEnumerable<Rule> GetRules(QueryCriteriaBase criteria)
         {
             var sportTypes = filterService.GetSports();
-            var rules = ruleDataAccess.GetRules(criteria);
+            var rules = DynamicRepository.Fetch<Rule>(criteria);
 
             foreach (var item in rules)
             {
@@ -131,22 +134,27 @@
         }
 
         public Rule GetRule(int ruleId)
-            => ruleDataAccess.GetRule(new GetRuleByIdCriteria(ruleId));
+            => DynamicRepository.Get<Rule>(new GetRuleByIdCriteria(ruleId));
 
         public Result AddRule(AddRuleRequest request)
-            => ruleDataAccess.DoAction(new AddRuleCriteria(request), Labels.AddRuleSuccessfully);
+            => DoAction(new AddRuleCriteria(request), Labels.AddRuleSuccessfully);
 
         public Result EditRule(int ruleId, AddRuleRequest request)
-            => ruleDataAccess.DoAction(new EditRuleCriteria(request, ruleId), Labels.EditRuleSuccessfully);
+            => DoAction(new EditRuleCriteria(request, ruleId), Labels.EditRuleSuccessfully);
 
         public Result EnableRule(EnableRuleRequest request)
-            => ruleDataAccess.DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
+            => DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
 
         public CheckRuleResponse CheckRuleDel(DeleteRuleRequest request)
-            => ruleDataAccess.CheckRule(new CheckRuleDelCriteria(request));
+        {
+            var criteria = new CheckRuleDelCriteria(request);
+            var affectedRules = DynamicRepository.Fetch<CheckRuleDTO>(criteria);
+
+            return new CheckRuleResponse(string.Join(", ", affectedRules), criteria.ErrCode, criteria.ErrMsg);
+        }
 
         public Result DeleteRules(DeleteRuleRequest request)
-            => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
+            => DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
         
         protected string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagueGroups)
         {
@@ -166,10 +174,14 @@
         public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes)
         {
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
-            var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite));
+            var criteria = new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite);
+            var ruleDetails = DynamicRepository.Fetch<RuleDetail>(criteria);
             
             foreach (var item in ruleDetails)
             {
+
+                item.Sites = string.Join(", ", item.Sites.Split(','));
+                item.CurrencyName = string.Join(", ", item.CurrencyName.Split(','));
                 item.PlatformNames = string.Join(", ", item.Platform
                            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                            .Select(p => Platforms[Convert.ToByte(p)]));

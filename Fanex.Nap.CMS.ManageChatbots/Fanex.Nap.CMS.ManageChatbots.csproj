@@ -220,14 +220,9 @@
     <Compile Include="Criteria\ChatbotHistory\ChatbotHistoryCriteria.cs" />
     <Compile Include="Criteria\ChatbotHistory\GetAllFunctionsCriteria.cs" />
     <Compile Include="Models\ChatbotHistory\ChatbotHistoryModel.cs" />
-    <Compile Include="Models\ChatbotMapping\SiteModel.cs" />
     <Compile Include="Models\NotificationList\NotificationListItem.cs" />
     <Compile Include="Models\NotificationList\NotificationListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ChatbotHistory\ChatbotHistoryRepository.cs" />
-    <Compile Include="Repositories\ChatbotHistory\IChatbotHistoryRepository.cs" />
-    <Compile Include="Repositories\ChatbotMapping\ChatbotMappingRepository.cs" />
-    <Compile Include="Repositories\ChatbotMapping\IChatbotMappingRepository.cs" />
     <Compile Include="Repositories\NotificationList\INotificationListRepository.cs" />
     <Compile Include="Repositories\NotificationList\NotificationListRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">

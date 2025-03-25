@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class RemoveLimitDailyPTUpdateCriteria : CriteriaBase
+    public class RemoveLimitDailyPTUpdateCriteria : CommandBaseCriteria
     {
         public RemoveLimitDailyPTUpdateCriteria(byte productID, int custID, int siteID, byte currency, byte type, int userId, string ip)
         {
@@ -28,10 +28,6 @@
         public int UserId { get; }
 
         public string IP { get; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
            => "NAP_LimitPTDaily_Del";

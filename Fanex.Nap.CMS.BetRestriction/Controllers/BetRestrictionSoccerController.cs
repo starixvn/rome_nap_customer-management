@@ -56,7 +56,7 @@
             => Json(_betRestrictionService.SearchDataGrid<SiteModel>(new SearchSiteCriteria(request.PageSize, request.PageIndex)));
 
         public JsonResult SearchCurrencyPaging(SearchRequest request)
-            => Json(_betRestrictionService.SearchDataGrid<CurrencyModel>(new SearchCurrencyCriteria(request.PageSize, request.PageIndex)));
+            => Json(_betRestrictionService.SearchDataGrid<BetRestrictionCurrencyModel>(new SearchCurrencyCriteria(request.PageSize, request.PageIndex)));
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_Soccer, Policy = Constant.Policy.Host)]

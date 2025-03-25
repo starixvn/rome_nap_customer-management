@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Services.CreditPayout
 {
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Criteria.CreditPayout;
     using Fanex.Nap.CMS.Customers.Models.CreditPayout;
-    using Fanex.Nap.CMS.Customers.Repositories.CreditPayout;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using System.Collections.Generic;
     using System.Linq;
@@ -11,31 +11,31 @@
 
     public class CreditPayoutService : ICreditPayoutService
     {
-        private readonly ICreditPayoutDAO payoutDAO;
+        private readonly IDynamicRepository dynamicRepository;
         private readonly byte StatusVerified = 1;
         private readonly string ErrorFormat = "{0}: {1}";
         private const string FilterMatchPattern = "[{2}] {0} -vs- {1}";
         private const string MatchPattern = "{0} -vs- {1}";
 
-        public CreditPayoutService() : this(null)
+        public CreditPayoutService() : this(new DynamicRepository())
         {
         }
 
-        public CreditPayoutService(ICreditPayoutDAO payoutDAO)
+        public CreditPayoutService(IDynamicRepository dynamicRepository)
         {
-            this.payoutDAO = payoutDAO ?? new CreditPayoutDAO();
+            this.dynamicRepository = dynamicRepository;
         }
 
         public IEnumerable<SelectListItem> GetMatches(int typeId)
         {
-            return payoutDAO.GetMatches(new GetMatchCiretia { TypeId = typeId })
+            return dynamicRepository.Fetch<Match>(new GetMatchCiretia { TypeId = typeId })
                 .Select(match => new SelectListItem { Text = string.Format(FilterMatchPattern, match.Home, match.Away, match.MatchID), Value = match.MatchID.ToString() });
         }
 
         public SearchPayoutResponse SearchPayout(SelPayoutPromotionCriteria request)
         {
-            var payouts = payoutDAO.SearchPayout(request);
-            var matches = payoutDAO.GetMatches(new GetMatchCiretia { TypeId = request.TypeId }).ToDictionary(match => match.MatchID);
+            var payouts = dynamicRepository.Fetch<PayoutPromotion>(request);
+            var matches = dynamicRepository.Fetch<Match>(new GetMatchCiretia { TypeId = request.TypeId }).ToDictionary(match => match.MatchID);
             foreach (var payout in payouts)
             {
                 if(matches.TryGetValue(payout.MatchID, out var match))
@@ -59,17 +59,17 @@
             {
                 request.Remark = request.Remark ?? string.Empty;
             }
-            var result = payoutDAO.UpdatePayoutPromotion(request);
+            dynamicRepository.Execute(request);
 
-            return ParseErrorResultUpdate(result, request.UsernameList);
+            return ParseErrorResultUpdate(new Result(request.ErrCode, request.ErrMsg), request.UsernameList);
         }
 
         public PayoutPromotion ValidateVerifyCode(VerifySelPayoutPromotionCriteria request)
         {
-            var payout = payoutDAO.ValidateVerifyCode(request);
+            var payout = dynamicRepository.Get<PayoutPromotion>(request);
             if(payout != null)
             {
-                var match = payoutDAO.GetMatches(new GetMatchCiretia { TypeId = request.TypeID }).FirstOrDefault(m => m.MatchID == payout.MatchID);
+                var match = dynamicRepository.Fetch<Match>(new GetMatchCiretia { TypeId = request.TypeID }).FirstOrDefault(m => m.MatchID == payout.MatchID);
                 if(match != null)
                 {
                     payout.Match = string.Format(MatchPattern, match.Home, match.Away);
@@ -82,7 +82,8 @@
         public Result VerifyPayoutPromotion(UpdPayoutPromotionCriteria request)
         {
             request.Status = StatusVerified;
-            var result = payoutDAO.UpdatePayoutPromotion(request);
+            dynamicRepository.Execute(request);
+            var result = new Result(request.ErrCode, request.ErrMsg);
 
             return result.IsSuccess ? result : ParseErrorResultUpdate(result, request.UsernameList)[0];
         }

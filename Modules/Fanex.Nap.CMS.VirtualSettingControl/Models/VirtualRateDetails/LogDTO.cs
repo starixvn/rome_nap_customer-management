@@ -8,7 +8,7 @@
 
         public string Username { get; set; }
 
-        public decimal ExchangeRate { get; set; }
+        public decimal ExchangeRate { get; set; } = -1;
 
         public string ExchangeRateText { get; set; }
 

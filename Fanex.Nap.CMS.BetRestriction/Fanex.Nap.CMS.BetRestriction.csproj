@@ -199,7 +199,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AccountDetailModel.cs" />
     <Compile Include="Models\AccountModel.cs" />
-    <Compile Include="Models\CurrencyModel.cs" />
+    <Compile Include="Models\BetRestrictionCurrencyModel.cs" />
     <Compile Include="Models\CheckAddAccountResultModel.cs" />
     <Compile Include="Models\LeagueGroupModel.cs" />
     <Compile Include="Models\Management\BetRestrictionSettingModel.cs" />

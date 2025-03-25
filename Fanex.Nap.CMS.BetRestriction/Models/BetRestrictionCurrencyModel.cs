@@ -1,13 +1,10 @@
-﻿using Fanex.Nap.CMS.Infrastructure.Resources;
+﻿using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Resources;
 
 namespace Fanex.Nap.CMS.BetRestriction.Models
 {
-    public class CurrencyModel
+    public class BetRestrictionCurrencyModel :CurrencyModel
     {
-        public int ExchangeId { get; set; }
-
-        public string Currency { get; set; }
-
         public int Type { get; set; }
 
         public string TypeName 

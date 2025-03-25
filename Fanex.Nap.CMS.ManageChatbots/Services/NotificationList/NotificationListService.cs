@@ -7,23 +7,24 @@
     using Fanex.Nap.CMS.ManageChatbots.Criteria.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
     using Fanex.Nap.CMS.ManageChatbots.Models.NotificationList;
-    using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
     using Fanex.Nap.CMS.ManageChatbots.Repositories.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.Constants;
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
+    using Fanex.Data.Repository;
 
     public class NotificationListService : INotificationListService
     {
+        private readonly IDynamicRepository dynamicRepository;
         private readonly INotificationListRepository notificationListRepository;
-        private readonly IChatbotHistoryRepository chatbotHistoryRepository;
         private readonly IChatBotMappingService chatbotMappingservice;
 
-        public NotificationListService(INotificationListRepository notificationListRepository = null,
-            IChatbotHistoryRepository historyRepository = null, IChatBotMappingService chatbotMappingservice = null)
+        public NotificationListService() : this(null) { }
+
+        public NotificationListService(IDynamicRepository dynamicRepository, INotificationListRepository notificationListRepository = null, IChatBotMappingService chatbotMappingservice = null)
         {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
             this.notificationListRepository = notificationListRepository ?? new NotificationListRepository();
-            this.chatbotHistoryRepository = historyRepository ?? new ChatbotHistoryRepository();
             this.chatbotMappingservice = chatbotMappingservice ?? new ChatBotMappingService();
         }
         public NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel, int userId)
@@ -46,7 +47,7 @@
 
         public IEnumerable<FunctionModel> GetNotifyFunctions()
         {
-            var functions = chatbotHistoryRepository.GetAllFunctions(new GetAllFunctionsCriteria())
+            var functions = dynamicRepository.Fetch<FunctionModel>(new GetAllFunctionsCriteria())
                             .Where(function => function.FunctionType == 2 
                             && !HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId));
             return functions;

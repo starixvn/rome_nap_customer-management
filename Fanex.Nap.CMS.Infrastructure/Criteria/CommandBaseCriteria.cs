@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class CommandBaseCriteria : CriteriaBase
+    public class CommandBaseCriteria : NonQueryCommand
     {
         public int ErrCode { get; set; }
         public string ErrMsg { get; set; }

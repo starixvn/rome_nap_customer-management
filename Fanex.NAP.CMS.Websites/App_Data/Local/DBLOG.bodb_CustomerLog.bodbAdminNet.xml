@@ -12,7 +12,13 @@
     <Setting Key="NAP_UserLog_SmartPunterSel" SpName="NAP_UserLog_SmartPunterSel" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
+		<Setting Key="Acc_CustVirtualMultiplier_ViewLog" SpName="Acc_CustVirtualMultiplier_ViewLog" DbName="DBLOG.bodb_CustomerLog.wsv_nap">
+				<Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
+				<Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
+				<Mapping DataField="CurrencyRate" ObjectProperty="ExchangeRate" />
+				<Mapping DataField="UpdatedTime" ObjectProperty="UpdatedDate" />
+				<Mapping DataField="UpdatedBy" ObjectProperty="Editor" />
+		</Setting>
     <Setting Key="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" SpName="Acc_CustVirtualMultiplier_ViewLog_AutoSuspend" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
     <Setting Key="Acc_VR_ViewLog_AutoSuspendThreshold" SpName="Acc_VR_ViewLog_AutoSuspendThreshold" DbName="DBLOG.bodb_CustomerLog.wsv_nap" />
   </Function>

@@ -252,9 +252,12 @@
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLog.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLogDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\GlobalAutoSuspendThresholdLogByGroup.cs" />
+    <Compile Include="Models\VirtualRateDetails\LogCurrencyDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\LogDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\RateInfo.cs" />
+    <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\ValidateAssociatedAccountsResult.cs" />
+    <Compile Include="Models\VirtualRateDetails\VirtualRateInfoDTO.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateDetailsByGroup.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateDetailsReport.cs" />
     <Compile Include="Models\VirtualRateDetails\VirtualRateDTO.cs" />
@@ -275,8 +278,6 @@
     <Compile Include="Repositories\VirtualRateDetails\AutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\BetTypeVirtualRateMappingRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
-    <Compile Include="Repositories\VirtualRateDetails\IVirtualRateDetailsRepository.cs" />
-    <Compile Include="Repositories\VirtualRateDetails\VirtualRateDetailsRepository.cs" />
     <Compile Include="Resources\ESportsResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

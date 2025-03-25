@@ -2,7 +2,7 @@
 
 namespace Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline
 {
-    public class AddNewLimitCriteria : CriteriaBase
+    public class AddNewLimitCriteria : NonQueryCommand
     {
         public AddNewLimitCriteria(string usernames, int userId, string ip)
         {

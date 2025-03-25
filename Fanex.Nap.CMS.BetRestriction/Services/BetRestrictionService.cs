@@ -1,20 +1,21 @@
-﻿namespace Fanex.NAP.CMS.Services.Implements
-{
-    using Fanex.Data;
-    using Fanex.Nap.CMS.BetRestriction.Criterias;
-    using Fanex.Nap.CMS.BetRestriction.Models;
-    using Fanex.Nap.CMS.BetRestriction.Requests;
-    using Fanex.Nap.CMS.BetRestriction.ViewModels;
-    using Fanex.Nap.CMS.Infrastructure.Criteria;
-    using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Resources;
-    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.NAP.CMS.Services.Interfaces;
-    using System;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
+﻿using Fanex.Data;
+using Fanex.Nap.CMS.BetRestriction.Criterias;
+using Fanex.Nap.CMS.BetRestriction.Models;
+using Fanex.Nap.CMS.BetRestriction.Requests;
+using Fanex.Nap.CMS.BetRestriction.ViewModels;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Resources;
+using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+using Fanex.Nap.CMS.Infrastructure.Web;
+using Fanex.NAP.CMS.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 
+namespace Fanex.NAP.CMS.Services.Implements
+{
     public class BetRestrictionService : ServiceBase, IBetRestrictionService
     {
         public IEnumerable<SelectListItem> GetSites(GetAllSiteCriteria criteria)
@@ -35,18 +36,8 @@
 
         public IEnumerable<SelectListItem> GetCurrency(GetAllCurrencyCriteria criteria)
         {
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria);
-                while (reader.Read())
-                {
-                    yield return new SelectListItem
-                    {
-                        Text = reader["currency"].ToString(),
-                        Value = reader["exchangeid"].ToString()
-                    };
-                }
-            }
+            return Repository.Fetch<Nap.CMS.BetRestriction.Models.BetRestrictionCurrencyModel>(criteria)
+                .Select(cur => new SelectListItem { Text = cur.Currency, Value = cur.ExchangeId.ToString()});
         }
 
         public BetRestrictionSearchViewModel Search(SearchAccountCriteria criteria)
@@ -54,7 +45,7 @@
             var result = new BetRestrictionSearchViewModel
             {
                 AccountViewModel = SearchDataGrid<AccountModel>(criteria),
-                CurrencyViewModel = SearchDataGrid<CurrencyModel>(new SearchCurrencyCriteria(criteria.PageSize, criteria.PageIndex)),
+                CurrencyViewModel = SearchDataGrid<BetRestrictionCurrencyModel>(new SearchCurrencyCriteria(criteria.PageSize, criteria.PageIndex)),
                 SiteViewModel = SearchDataGrid<SiteModel>(new SearchSiteCriteria(criteria.PageSize, criteria.PageIndex))
 
             };           
@@ -88,20 +79,13 @@
                 UserName = request.UserName,
                 SportType = sportType
             };
+            var checkAddAccountResult = Repository.Get<CheckAddAccountResultModel>(criteria);
+            checkAddAccountResult.UserName = criteria.UserName;
+            checkAddAccountResult.SportType = sportType;
 
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria);
-                if (reader.Read())
-                {
-                    var errMsg = composeMsgFunction(request, new CheckAddAccountResultModel(reader, criteria.UserName, sportType));
-                    return string.IsNullOrWhiteSpace(errMsg) ? new Result() : new Result(500, errMsg + Labels.BetRestriction_WarningProceed);
-                }
-                else
-                {
-                    return new Result();
-                }
-            }
+            var errMsg = composeMsgFunction(request, checkAddAccountResult);
+
+            return string.IsNullOrWhiteSpace(errMsg) ? new Result() : new Result(500, errMsg + Labels.BetRestriction_WarningProceed);
         }
 
         private static string ComposeCheckAddAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
@@ -125,19 +109,8 @@
 
         public IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria)
         {
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria);
-
-                while (reader.Read())
-                {
-                    yield return new SelectListItem
-                    {
-                        Text = reader["groupname"].ToString(),
-                        Value = reader["groupid"].ToString()
-                    };
-                }
-            }
+            return Repository.Fetch<LeagueGroupModel>(criteria)
+                .Select(league => new SelectListItem { Text = league.LeagueGroupName, Value = league.LeagueGroupId.ToString() });
         }
     }
 }

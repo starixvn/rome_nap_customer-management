@@ -5,29 +5,32 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
     using Fanex.Nap.CMS.Customers.Criteria.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline;
     using Fanex.Nap.CMS.Customers.Models.LimitDailyPTUpdate;
-    using Fanex.Nap.CMS.Customers.Repositories.LimitDailyPTUpdate;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Customers.ViewModels.LimitDailyPTUpdate;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
 
-    public class LimitDailyPTUpdateService : ILimitDailyPTUpdateService
+    public class LimitDailyPTUpdateService : ServiceBase, ILimitDailyPTUpdateService
     {
-        private readonly ILimitDailyPTUpdateRepository repository;
-
-        public LimitDailyPTUpdateService(ILimitDailyPTUpdateRepository repository = null)
+        public IEnumerable<SelectListItem> GetSites()
         {
-            this.repository = repository ?? new LimitDailyPTUpdateRepository();
+            return DynamicRepository.Fetch<IdNameModel>(new GetCreditSiteCriteria(0))
+                .Select(site => new SelectListItem { Text = site.Name, Value = site.Id.ToString() });
         }
 
-        public IEnumerable<SelectListItem> GetSites()
-            => repository.GetSites(new GetCreditSiteCriteria(0));
-
         public IEnumerable<SelectListItem> GetProducts()
-           => repository.GetProducts(new GetProductListCriteria());
+        {
+            return DynamicRepository.Fetch<ProductDTO>(new GetProductListCriteria())
+                .Select(product => new SelectListItem { Text = product.ProductName, Value = product.ProductId.ToString() });
+        }
 
         public IEnumerable<SelectListItem> GetCurrencies()
-           => repository.GetCurrencies(new GetCurrencyListCriteria());
+        {
+            return DynamicRepository.Fetch<CurrencyModel>(new GetCurrencyListCriteria())
+                .Select(currency => new SelectListItem { Text = currency.Currency, Value = currency.ExchangeId.ToString() });
+        }
 
         public LimitDailyPTUpdateReport GetLimitReport(SearchDailyPTUpdateViewModel viewModel)
         {
@@ -40,7 +43,7 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                     viewModel.PageIndex,
                     viewModel.PageSize, 
                     viewModel.LimitUpdatePT);
-            var limitDailyPTUpdateList = repository.GetLimitDailyPTUpdateList(criteria);
+            var limitDailyPTUpdateList = DynamicRepository.Fetch<LimitDailyPTUpdateItem>(criteria);
 
             return new LimitDailyPTUpdateReport(limitDailyPTUpdateList, criteria.TotalItems);
         }
@@ -57,15 +60,8 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                     viewModel.IP,
                     viewModel.LimitNewAccUpdPT
                 );
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
-            if (result.IsSuccess)
-            {
-                result.Message = LimitDailyPTUpdateResource.AddLimitSuccessfully;
-            }
-
-            return result;
+            return DoAction(criteria, LimitDailyPTUpdateResource.AddLimitSuccessfully);
         }
 
         public Result RemoveLimit(RemoveLimitDailyPTUpdateViewModel viewModel)
@@ -79,15 +75,8 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                    viewModel.UserId,
                    viewModel.IP
                );
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
-            if (result.IsSuccess)
-            {
-                result.Message = LimitDailyPTUpdateResource.RemoveLimitSuccessfully;
-            }
-
-            return result;
+            return DoAction(criteria, LimitDailyPTUpdateResource.RemoveLimitSuccessfully);
         }
 
         public Result UpdateLimit(UpdateLimitPTUpdateNewAccountViewModel viewModel)
@@ -102,15 +91,8 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitDailyPTUpdate
                     viewModel.IP,
                     viewModel.LimitNewAccUpdPT
                 );
-            repository.ExecuteNonQuery(criteria);
-            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
-            if (result.IsSuccess)
-            {
-                result.Message = LimitDailyPTUpdateResource.UpdateLimitSuccessfully;
-            }
-
-            return result;
+            return DoAction(criteria, LimitDailyPTUpdateResource.UpdateLimitSuccessfully);
         }
     }
 }

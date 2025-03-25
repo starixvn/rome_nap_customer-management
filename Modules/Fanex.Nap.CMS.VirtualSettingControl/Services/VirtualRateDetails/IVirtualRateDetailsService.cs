@@ -29,5 +29,7 @@
         IEnumerable<GlobalAutoSuspendThresholdLog> GetGlobalAutoSuspendThresholdLogs(int sportType, DateTime fromDate, DateTime toDate);
 
         IEnumerable<BetTypeVirtualRateMapping> GetBetTypeVirtualRateMapping(int sportType);
+
+        IEnumerable<RateInfo> GetVirtualRateRanges();
     }
 }

@@ -4,7 +4,7 @@
     using Fanex.Data.Repository;
     using System.Collections.Generic;
 
-    public class UpdPayoutPromotionCriteria : CriteriaBase
+    public class UpdPayoutPromotionCriteria : NonQueryCommand
     {
         [SpParam(Ignored = true)]
         public List<IdUsername> UsernameList { get; set; }

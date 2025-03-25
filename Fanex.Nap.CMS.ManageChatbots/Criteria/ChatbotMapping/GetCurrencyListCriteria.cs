@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetCurrencyListCriteria : CriteriaBase
     {
@@ -8,5 +8,8 @@
         
         public override string GetSettingKey()
             => "Acc_ExchangeSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -4,6 +4,8 @@
     
     public class LeagueGroup : IdNameModel
     {
+        public LeagueGroup() { }
+
         public LeagueGroup(short groupId, string groupName, short sportType)
         {
             SportType = sportType;
@@ -11,6 +13,6 @@
             Name = groupName;
         }
 
-        public short SportType { get; }
+        public short SportType { get; set; }
     }
 }

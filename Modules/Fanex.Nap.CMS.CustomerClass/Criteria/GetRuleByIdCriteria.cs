@@ -1,7 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
     internal class GetRuleByIdCriteria : QueryCriteriaBase
     {
         public GetRuleByIdCriteria(int ruleId)

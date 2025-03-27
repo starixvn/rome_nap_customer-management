@@ -1,17 +1,16 @@
-﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualRateDetails
-{
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Linq;
-    using Fanex.Common;
-    using Fanex.Data;
-    using Fanex.Nap.CMS.Infrastructure.Web;
-    using Fanex.Nap.CMS.VirtualSettingControl.Constants;
-    using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
-    using Fanex.Nap.CMS.VirtualSettingControl.Extensions;
-    using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
+﻿using System.Collections.Generic;
+using System.Data;
+using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+using Fanex.Nap.CMS.VirtualSettingControl.Constants;
+using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
+using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
+using Fanex.Common;
+using Fanex.Nap.CMS.Infrastructure.Web;
+using System.Linq;
 
-    public class AutoSuspendRepository : IAutoSuspendRepository
+namespace Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualRateDetails
+{
+    public class AutoSuspendService : ServiceBase, IAutoSuspendService
     {
         public AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria)
         {
@@ -23,35 +22,32 @@
             };
 
             var logDTOs = new List<LogDTO>();
-
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            var dataSet = DynamicRepository.FetchDataSet(criteria);
+            if(dataSet.Tables.Count > 0)
             {
-                var reader = objDb.ExecuteReader(criteria);
-
-                while (reader.Read())
+                foreach (DataRow row in dataSet.Tables[0].Rows)
                 {
-                    var l = MapLogDTO(reader);
+                    var l = MapLogDTO(row);
                     l.Username = criteria.Username;
                     logDTOs.Add(l);
                 }
-
-                reader.Close();
-                result.ResultCode = criteria.ErrCode;
-                result.ResultMessage = criteria.ErrMsg;
             }
+
+            result.ResultCode = criteria.ErrCode;
+            result.ResultMessage = criteria.ErrMsg;
             result.Logs = GroupLogs(logDTOs);
 
             return result;
         }
 
-        private LogDTO MapLogDTO(IDataReader reader)
+        private LogDTO MapLogDTO(DataRow reader)
         {
             var dto = new LogDTO
             {
                 SportType = Converter.ToInt(reader["SportType"]),
                 LeagueGroupName = Converter.ToString2(reader["LeagueGroup"]),
                 BetTypeGroupName = Converter.ToString2(reader["BetTypeGroup"]),
-                BetTypeId = reader.ToInt("BetType", -1),
+                BetTypeId = reader["BetType"] == null ? -1 : Converter.ToInt(reader["BetType"]),
                 Level = Converter.ToInt(reader["LevelId"]),
                 LogId = Converter.ToString2(reader["LogID"]),
                 UpdatedDate = Converter.ToDateTime(reader["LogTime"]),

@@ -275,9 +275,7 @@
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
     <Compile Include="Repositories\UploadVirtualRate\IUploadVirtualRateRepository.cs" />
     <Compile Include="Repositories\UploadVirtualRate\UploadVirtualRateRepository.cs" />
-    <Compile Include="Repositories\VirtualRateDetails\AutoSuspendRepository.cs" />
     <Compile Include="Repositories\VirtualRateDetails\BetTypeVirtualRateMappingRepository.cs" />
-    <Compile Include="Repositories\VirtualRateDetails\IAutoSuspendRepository.cs" />
     <Compile Include="Resources\ESportsResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -288,7 +286,9 @@
     <Compile Include="Services\ManualUpdateVRAccount\ManualUpdateVRAccountService.cs" />
     <Compile Include="Services\UploadVirtualRate\UploadVirtualRateService.cs" />
     <Compile Include="Services\UploadVirtualRate\IUploadVirtualRateService.cs" />
+    <Compile Include="Services\VirtualRateDetails\AutoSuspendService.cs" />
     <Compile Include="Services\VirtualRateDetails\GlobalAutoSuspendThresholdExporter.cs" />
+    <Compile Include="Services\VirtualRateDetails\IAutoSuspendService.cs" />
     <Compile Include="Services\VirtualRateDetails\IVirtualRateDetailsService.cs" />
     <Compile Include="Services\VirtualRateDetails\SoccerVirtualRateDetailsExporter.cs" />
     <Compile Include="Services\VirtualRateDetails\VirtualRateRealValuesExporter.cs" />

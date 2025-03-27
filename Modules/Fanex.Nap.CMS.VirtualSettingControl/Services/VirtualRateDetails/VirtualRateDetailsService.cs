@@ -12,7 +12,6 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Constants;
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails;
-    using Fanex.Nap.CMS.VirtualSettingControl.Repositories.VirtualRateDetails;
     using Fanex.NAP.CMS.Core.Resources;
     using Microsoft.Practices.ObjectBuilder2;
 
@@ -23,11 +22,11 @@
         private const int Level3 = 3;
         private const int Level4 = 4;
 
-        private readonly IAutoSuspendRepository _autoSuspendRepository;
+        private readonly IAutoSuspendService autoSuspendService;
 
-        public VirtualRateDetailsService(IAutoSuspendRepository autoSuspendRepository = null)
+        public VirtualRateDetailsService() : base()
         {
-            _autoSuspendRepository = autoSuspendRepository ?? new AutoSuspendRepository();
+            autoSuspendService = new AutoSuspendService();
         }
 
         public VirtualRateDetailsReport GetVirtualRateDetails(GetVirtualRateDetailsCriteria criteria)
@@ -155,7 +154,7 @@
         }
 
         public AutoSuspendLogReport GetAutoSuspendLogs(GetAutoSuspendLogsCriteria criteria)
-            => _autoSuspendRepository.GetAutoSuspendLogs(criteria);
+            => autoSuspendService.GetAutoSuspendLogs(criteria);
 
         public GlobalAutoSuspendThreshold GetGlobalAutoSuspendThreshold(int sportType)
         {

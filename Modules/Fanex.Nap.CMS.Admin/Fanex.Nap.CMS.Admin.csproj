@@ -195,7 +195,6 @@
     <Compile Include="Models\ConcurrentUser\ConcurrentUserDetailModel.cs" />
     <Compile Include="Models\ConcurrentUser\ConcurrentUserHistoryModel.cs" />
     <Compile Include="Models\ConcurrentUser\SMANumberModel.cs" />
-    <Compile Include="Repositories\ConcurrentUserRepository.cs" />
     <Compile Include="Resources\AdminResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

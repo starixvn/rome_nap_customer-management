@@ -27,7 +27,7 @@
 
         public string Remark { get; set; }
 
-        public DateTime? ExpiredDate { get; set; } = default;
+        public DateTime? ExpiredDate { get; set; } = new DateTime();
 
         public string ExpiredDateString => ExpiredDate.ToShortFormatedDateWithSlash();
 

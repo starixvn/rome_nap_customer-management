@@ -158,8 +158,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\BaseSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ISettingRepository.cs" />
-    <Compile Include="Repositories\SettingRepository.cs" />
     <Compile Include="Services\SettingService.cs" />
     <Compile Include="Services\ISettingService.cs" />
   </ItemGroup>

@@ -20,6 +20,8 @@
     <Setting Key="Member_GetAllCountry" SpName="Member_GetAllCountry" DbName="DBCust.IPDB.wsv_nap">
 				<Mapping DataField="CountryCode" ObjectProperty="Code" />
 				<Mapping DataField="CountryName" ObjectProperty="Name" />
+				<Mapping DataField="CountryCode" ObjectProperty="CountryCode" />
+				<Mapping DataField="CountryName" ObjectProperty="CountryName" />
     </Setting>
   </Function>
   <Function Name="OpenCloseMember">

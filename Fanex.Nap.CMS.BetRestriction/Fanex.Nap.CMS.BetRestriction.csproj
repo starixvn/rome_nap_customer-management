@@ -192,6 +192,7 @@
   <ItemGroup>
     <Compile Include="Controllers\BetRestrictionBadmintonController.cs" />
     <Compile Include="Controllers\BetRestrictionBasketballController.cs" />
+    <Compile Include="Controllers\BetRestrictionESportsController.cs" />
     <Compile Include="Controllers\BetRestrictionManagementController.cs" />
     <Compile Include="Controllers\BetRestrictionSoccerController.cs" />
     <Compile Include="Controllers\BetRestrictionTennisController.cs" />

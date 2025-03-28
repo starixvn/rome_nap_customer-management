@@ -909,4 +909,7 @@
   <data name="CreditSite" xml:space="preserve">
     <value>Credit Site</value>
   </data>
+  <data name="BetRestrictionESports" xml:space="preserve">
+    <value>Bet Restriction - E-Sports</value>
+  </data>
 </root>

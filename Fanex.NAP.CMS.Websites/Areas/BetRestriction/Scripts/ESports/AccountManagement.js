@@ -213,27 +213,30 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
             AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
-        if (isEdit) {
-            saveAccount(params, isEdit);
-        } else {
-            CMS.callAjax(
-                this,
-                'CheckAddAccount',
-                params,
-                function (result) {
-                    if (result.Code > 0) {
-                        CMS.showConfirmMessage(
-                            '<span style="white-space: pre-line">' + result.Message + '</span>',
-                            function () {
-                                return saveAccount(params, isEdit);
-                            }
-                        );
-                    } else {
-                        saveAccount(params, isEdit);
-                    }
-                }
-            );
-        }
+        saveAccount(params, isEdit);
+
+        // not handle check exit line in this pharse
+        // if (isEdit) {
+        //     saveAccount(params, isEdit);
+        // } else {
+        //     CMS.callAjax(
+        //         this,
+        //         'CheckAddAccount',
+        //         params,
+        //         function (result) {
+        //             if (result.Code > 0) {
+        //                 CMS.showConfirmMessage(
+        //                     '<span style="white-space: pre-line">' + result.Message + '</span>',
+        //                     function () {
+        //                         return saveAccount(params, isEdit);
+        //                     }
+        //                 );
+        //             } else {
+        //                 saveAccount(params, isEdit);
+        //             }
+        //         }
+        //     );
+        // }
     };
 
     var saveAccount = function (params, isEdit) {

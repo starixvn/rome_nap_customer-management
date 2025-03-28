@@ -81,6 +81,14 @@
         }
 
         [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_ESports, Policy = Constant.Policy.Read)]
+        public JsonResult GetAccountDetail(int custId)
+        {
+            var data = _betRestrictionService.GetAccountDetailForEdit(custId, _sportType);
+            return Json(data);
+        }
+
+        [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_ESports, Policy = Constant.Policy.Host)]
         public JsonResult EditAccount(AccountRequest request)
         {

@@ -3,19 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
     using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
-    using Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Newtonsoft.Json;
 
-    public class VREngineService : IVREngineService
+    public class VREngineService : ServiceBase, IVREngineService
     {
         private const string SiteType = "Site";
         private const string CustomerClass = "CustomerClass";
@@ -33,25 +33,42 @@
         private const string Currency = "Currency";
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
         private const int CachedDefaultInMinutes = 60;
-        private readonly IVREngineRepository repository;
-
-        public VREngineService(IVREngineRepository repository = null)
-        {
-            this.repository = repository ?? new VREngineRepository();
-        }
 
         public VREngineMatrix GetVREngineMatrix()
-            => repository.GetVREngineMatrix(new GetVREngineMatrixCriteria());
+        {
+            var typeList = new[] {
+                typeof(VREngineSiteDTO),
+                typeof(BetFromDTO),
+                typeof(SportTypeDTO),
+                typeof(BetTypeDTO),
+                typeof(LeagueGroupDTO),
+                typeof(CurrencyDTO),
+                typeof(SportDetailDTO)
+            };
+            var result = DynamicRepository.FetchMultiple(new GetVREngineMatrixCriteria(), typeList);
+            var sites = result[0].Cast<VREngineSiteDTO>();
+            var creditSites = sites.Where(s => s.SiteType == SiteTypeConst.Credit).Select(s => new IdNameModel { Id =  s.SiteId, Name = s.Site });
+            var licenseeSites = sites.Where(s => s.SiteType == SiteTypeConst.Licensee).Select(s => new IdNameModel { Id = s.SiteId, Name = s.Site });
+            var betFromList = result[1].Cast<BetFromDTO>().Select(b => new VREngineBetfrom(b.BetFrom, b.Name));
+            var sports = result[2].Cast<SportTypeDTO>().Select(s => new IdNameModel { Id = s.Sporttype, Name = s.SportName });
+            var betTypes = result[3].Cast<BetTypeDTO>().Select(b => new IdNameModel { Id = b.BetType, Name = b.BetTypeName });
+            var leagueGroupList = result[4].Cast<LeagueGroupDTO>().Select(l => new IdNameModel { Id = l.LeagueGroupId, Name = l.GroupName }).OrderBy(lg => lg.Name);
+            var currenciesList = result[5].Cast<CurrencyDTO>().Select(c => new IdNameModel { Id = c.CurrencyId, Name = c.CurrencyName });
+            var detailSports = result[6].Cast<SportDetailDTO>().Select(s => new IdNameModel { Id = s.SportType, Name = s.SportName });
+
+            return new VREngineMatrix(creditSites, licenseeSites, detailSports, betFromList, sports, betTypes, leagueGroupList, currenciesList);
+        }
 
         public IEnumerable<IdNameModel> GetLeagues(
             string leagueGroupIds,
             string leagueGroupListNotIn,
             string leagues)
         {
-            var jsonSportBetType = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+            var jsonSportBetType = GetSportBettypeMatrix();
 
-            return repository.GetLeagues(
-                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+            return DynamicRepository.Fetch<LeagueDTO>(
+                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType))
+                .Select(lg => new IdNameModel { Id = lg.LeagueId, Name = lg.LeagueName});
         }
 
         public VREngineModel GetRules()
@@ -63,7 +80,7 @@
 
         private IEnumerable<VREngineRule> GetRules(VREngineMatrix matrix)
         {
-            var rules = repository.GetRules(new GetVREngineRuleListCriteria());
+            var rules = DynamicRepository.Fetch<VREngineRule>(new GetVREngineRuleListCriteria());
 
             foreach (var rule in rules)
             {
@@ -83,7 +100,7 @@
 
         public VREngineRule GetRule(int ruleId)
         {
-            var rule = repository.GetRule(new GetVREngineRuleCriteria(ruleId));
+            var rule = DynamicRepository.Get<VREngineRule>(new GetVREngineRuleCriteria(ruleId));
 
             if (rule != null && !string.IsNullOrWhiteSpace(rule.EnabledCriteria))
             {
@@ -343,7 +360,9 @@
         public Result AddNewRule(AddNewRuleViewModel viewModel)
         {
             var jsonSportBetType = GetSportBettypeMatrix();
-            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
+            var criteria = new CheckVREngineRuleCriteria(viewModel, jsonSportBetType);
+            DynamicRepository.Execute(criteria);
+            var resultCheck = new Result(criteria.ErrorCode, criteria.ErrorMsg);
             if (!resultCheck.IsSuccess)
             {
                 return resultCheck;
@@ -358,14 +377,15 @@
         {
 
             var jsonSportBetType = GetSportBettypeMatrix();
-            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
-            if (!resultCheck.IsSuccess)
+            var criteria = new CheckVREngineRuleCriteria(viewModel, jsonSportBetType);
+            var checkResults = DynamicRepository.Fetch<CheckVREngineRuleResult>(criteria);
+            if (criteria.ErrorCode != 0)
             {
-                return resultCheck;
+                return new Result(criteria.ErrorCode, criteria.ErrorMsg);
             }
 
             return ExecuteNonQuery(
-                new UpdateVREngineRuleCriteria(ruleId, viewModel, resultCheck.Message),
+                new UpdateVREngineRuleCriteria(ruleId, viewModel, JsonConvert.SerializeObject(checkResults)),
                 VREngineResource.UpdatedRuleSuccessfully);
         }
 
@@ -394,7 +414,8 @@
 
         private Result ExecuteNonQuery(VREngineCriteriaBase criteria, string successfullyMessage)
         {
-            var result = repository.ExecuteNonQuery(criteria);
+            DynamicRepository.Execute(criteria);
+            var result = new Result(criteria.ErrorCode, criteria.ErrorMsg);
 
             if (result.IsSuccess)
             {
@@ -409,7 +430,10 @@
             var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
             if(jsonSBM == null)
             {
-                jsonSBM = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+                var sportBetType = DynamicRepository.Fetch<SportTypeDTO>(new GetCustomerVRGetSportBettypeCriteria())
+                .Select(spt => new { spt.Sporttype });
+                jsonSBM = JsonConvert.SerializeObject(sportBetType);
+
                 CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 

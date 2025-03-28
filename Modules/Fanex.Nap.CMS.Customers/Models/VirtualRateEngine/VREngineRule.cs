@@ -4,203 +4,101 @@
 
     public class VREngineRule
     {
-        public VREngineRule(
-            int ruleId,
-            string ruleName,
-            int priority,
-            byte siteType,
-            string siteIdList,
-            string siteIdListNotIn,
-            string customerClassList,
-            string customerClassListNotIn,
-            string customerClassDetailList,
-            string customerClassDetailListNotIn,
-            string sportTypeCCList,
-            string sportTypeCCListNotIn,
-            decimal vrFrom,
-            decimal vrto,
-            byte vrStatus,
-            string sportTypeList,
-            string sportTypeListNotIn,
-            string betTypeList,
-            string betTypeListNotIn,
-            byte liveIndicator,
-            string leagueGroupList,
-            string leagueGroupListNotIn,
-            string leagueList,
-            string leagueListNotIn,
-            string betfrom,
-            decimal stakeFrom,
-            decimal stakeTo,
-            string dateOfWeekList,
-            string dateOfWeekListNotIn,
-            string beginTime,
-            string endTime,
-            string currencyIDList,
-            string currencyIDListNotIn,
-            byte adjustmentType,
-            decimal adjustmentValue,
-            byte accumulatedBalance,
-            byte status,
-            DateTime createdDTS,
-            string createdBy,
-            string enabledCriteria)
-        {
-            RuleId = ruleId;
-            RuleName = ruleName;
-            Priority = priority;
+        public int RuleId { get; set; }
+        public string RuleName { get; set; }
+        public int Priority { get; set; }
 
-            SiteType = siteType;
-            SiteIdList = siteIdList;
-            SiteIdListNotIn = siteIdListNotIn;
-
-            CustomerClassList = customerClassList;
-            CustomerClassListNotIn = customerClassListNotIn;
-
-            CustomerClassDetailList = customerClassDetailList;
-            CustomerClassDetailListNotIn = customerClassDetailListNotIn;
-            SportTypeCCList = sportTypeCCList;
-            SportTypeCCListNotIn = sportTypeCCListNotIn;
-
-            VRFrom = vrFrom;
-            VRTo = vrto;
-
-            VRStatus = vrStatus;
-
-            SportTypeList = sportTypeList;
-            SportTypeListNotIn = sportTypeListNotIn;
-
-            BetTypeList = betTypeList;
-            BetTypeListNotIn = betTypeListNotIn;
-
-            LiveIndicator = liveIndicator;
-
-            LeagueGroupList = leagueGroupList;
-            LeagueGroupListNotIn = leagueGroupListNotIn;
-            LeagueList = leagueList;
-            LeagueListNotIn = leagueListNotIn;
-
-            Betfrom = betfrom;
-
-            StakeFrom = stakeFrom;
-            StakeTo = stakeTo;
-
-            DoWList = dateOfWeekList;
-            DoWListNotIn = dateOfWeekListNotIn;
-
-            BeginTime = beginTime;
-            EndTime = endTime;
-
-            CurrencyIDList = currencyIDList;
-            CurrencyIDListNotIn = currencyIDListNotIn;
-
-            AdjustmentType = adjustmentType;
-            AdjustmentValue = adjustmentValue;
-            AccumulatedBalance = accumulatedBalance;
-
-            Status = status;
-
-            CreatedDTS = createdDTS;
-            CreatedBy = createdBy;
-
-            EnabledCriteria = enabledCriteria;
-        }
-
-        public int RuleId { get; }
-        public string RuleName { get; }
-        public int Priority { get; }
-
-        public byte SiteType { get; }
-        public string SiteIdList { get; }
-        public string SiteIdListNotIn { get; }
+        public byte SiteType { get; set; }
+        public string SiteIdList { get; set; } = string.Empty;
+        public string SiteIdListNotIn { get; set; } = string.Empty;
         public bool EnabledSiteType { get; set; }
         public string SiteTypeName { get; set; }
-        public string SiteNameList { get; set; }
-        public string SiteNameListNotIn { get; set; }
+        public string SiteNameList { get; set; } = string.Empty;
+        public string SiteNameListNotIn { get; set; } = string.Empty;
 
-        public string CustomerClassList { get; }
-        public string CustomerClassListNotIn { get; }
+        public string CustomerClassList { get; set; } = string.Empty;
+        public string CustomerClassListNotIn { get; set; } = string.Empty;
         public bool EnabledCustomerClass { get; set; }
 
-        public string CustomerClassDetailList { get; }
-        public string CustomerClassDetailListNotIn { get; }
-        public string SportTypeCCList { get; }
-        public string SportTypeCCListNotIn { get; }
-        public string SportTypeCCNameList { get; set; }
-        public string SportTypeCCNameListNotIn { get; set; }
+        public string CustomerClassDetailList { get; set; } = string.Empty;
+        public string CustomerClassDetailListNotIn { get; set; } = string.Empty;
+        public string SportTypeCCList { get; set; } = string.Empty;
+        public string SportTypeCCListNotIn { get; set; } = string.Empty;
+        public string SportTypeCCNameList { get; set; } = string.Empty;
+        public string SportTypeCCNameListNotIn { get; set; } = string.Empty;
         public bool EnabledCustomerClassDetail { get; set; }
 
-        public decimal VRFrom { get; }
-        public decimal VRTo { get; }
+        public decimal VRFrom { get; set; }
+        public decimal VRTo { get; set; }
         public bool EnabledCurrentVR { get; set; }
 
-        public byte VRStatus { get; }
+        public byte VRStatus { get; set; }
         public bool EnabledCurrentVRStatus { get; set; }
         public string VRStatusName { get; set; }
 
-        public string SportTypeList { get; }
-        public string SportTypeListNotIn { get; }
+        public string SportTypeList { get; set; } = string.Empty;
+        public string SportTypeListNotIn { get; set; } = string.Empty;
         public bool EnabledSport { get; set; }
-        public string SportTypeNameList { get; set; }
-        public string SportTypeNameListNotIn { get; set; }
+        public string SportTypeNameList { get; set; } = string.Empty;
+        public string SportTypeNameListNotIn { get; set; } = string.Empty;
 
-        public string BetTypeList { get; }
-        public string BetTypeListNotIn { get; }
+        public string BetTypeList { get; set; } = string.Empty;
+        public string BetTypeListNotIn { get; set; } = string.Empty;
         public bool EnabledBetType { get; set; }
-        public string BetTypeNameList { get; set; }
-        public string BetTypeNameListNotIn { get; set; }
+        public string BetTypeNameList { get; set; } = string.Empty;
+        public string BetTypeNameListNotIn { get; set; } = string.Empty;
 
-        public byte LiveIndicator { get; }
+        public byte LiveIndicator { get; set; }
         public bool EnabledEvent { get; set; }
         public string LiveIndicatorName { get; set; }
 
-        public string LeagueGroupList { get; }
-        public string LeagueGroupListNotIn { get; }
-        public string LeagueList { get; }
-        public string LeagueListNotIn { get; }
+        public string LeagueGroupList { get; set; } = string.Empty;
+        public string LeagueGroupListNotIn { get; set; } = string.Empty;
+        public string LeagueList { get; set; } = string.Empty;
+        public string LeagueListNotIn { get; set; } = string.Empty;
         public bool EnabledLeagueGroup { get; set; }
-        public string LeagueGroupNameList { get; set; }
-        public string LeagueGroupNameListNotIn { get; set; }
+        public string LeagueGroupNameList { get; set; } = string.Empty;
+        public string LeagueGroupNameListNotIn { get; set; } = string.Empty;
 
-        public string Betfrom { get; }
+        public string Betfrom { get; set; }
         public bool EnabledBetfrom { get; set; }
         public string BetfromName { get; set; }
 
-        public decimal StakeFrom { get; }
-        public decimal StakeTo { get; }
+        public decimal StakeFrom { get; set; }
+        public decimal StakeTo { get; set; }
         public bool EnabledStake { get; set; }
 
-        public string DoWList { get; }
-        public string DoWListNotIn { get; }
+        public string DoWList { get; set; } = string.Empty;
+        public string DoWListNotIn { get; set; } = string.Empty;
         public bool EnabledTicketDoW { get; set; }
         public string DoWNameList { get; set; }
         public string DoWNameListNotIn { get; set; }
 
-        public string BeginTime { get; }
-        public string EndTime { get; }
+        public TimeSpan BeginTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         public bool EnabledTicketTime { get; set; }
 
-        public string CurrencyIDList { get; }
-        public string CurrencyIDListNotIn { get; }
-        public string CurrencyNameList { get; set; }
-        public string CurrencyNameListNotIn { get; set; }
+        public string CurrencyIDList { get; set; } = string.Empty;
+        public string CurrencyIDListNotIn { get; set; } = string.Empty;
+        public string CurrencyNameList { get; set; } = string.Empty;
+        public string CurrencyNameListNotIn { get; set; } = string.Empty;
         public bool EnabledTicketCur { get; set; }
 
-        public byte AdjustmentType { get; }
-        public decimal AdjustmentValue { get; }
-        public byte AccumulatedBalance { get; }
+        public byte AdjustmentType { get; set; }
+        public decimal AdjustmentValue { get; set; }
+        public byte AccumulatedBalance { get; set; }
         public string AdjustmentCell { get; set; }
 
-        public byte Status { get; }
+        public byte Status { get; set; }
 
         public string StatusName { get; set; }
 
-        public DateTime CreatedDTS { get; }
+        public DateTime CreatedDTS { get; set; }
 
         public string CreatedDate { get; set; }
 
-        public string CreatedBy { get; }
+        public string CreatedBy { get; set; }
 
-        public string EnabledCriteria { get; }
+        public string EnabledCriteria { get; set; }
     }
 }

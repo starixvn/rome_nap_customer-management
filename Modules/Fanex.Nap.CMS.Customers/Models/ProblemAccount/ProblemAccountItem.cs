@@ -5,6 +5,10 @@
 
     public class ProblemAccountItem
     {
+        public ProblemAccountItem()
+        {
+        }
+
 #pragma warning disable S107 // Methods should not have too many parameters
         public ProblemAccountItem(
             int custId,
@@ -67,57 +71,57 @@
             LimitAmount = limitAmount;
         }
 
-        public int CustId { get; }
+        public int CustId { get; set; }
 
-        public string Username { get; }
+        public string Username { get; set; }
 
-        public string Headline { get; }
+        public string Headline { get; set; }
 
-        public string Super { get; }
+        public string Super { get; set; }
 
-        public string Master { get; }
+        public string Master { get; set; }
 
-        public string Agent { get; }
+        public string Agent { get; set; }
 
-        public bool IsProblemAccSuper { get; }
+        public bool IsProblemAccSuper { get; set; }
 
-        public bool IsProblemAccMaster { get; }
+        public bool IsProblemAccMaster { get; set; }
 
-        public bool IsProblemAccAgent { get; }
+        public bool IsProblemAccAgent { get; set; }
 
-        public bool IsProblemAcc { get; }
+        public bool IsProblemAcc { get; set; }
 
-        public decimal? SuperMPM { get; }
+        public decimal? SuperMPM { get; set; }
 
-        public decimal? SuperMaxBet { get; }
+        public decimal? SuperMaxBet { get; set; }
 
-        public decimal? MasterMPM { get; }
+        public decimal? MasterMPM { get; set; }
 
-        public decimal? MasterMaxBet { get; }
+        public decimal? MasterMaxBet { get; set; }
 
-        public decimal? AgentMPM { get; }
+        public decimal? AgentMPM { get; set; }
 
-        public decimal? AgentMaxBet { get; }
+        public decimal? AgentMaxBet { get; set; }
 
-        public decimal? MPM { get; }
+        public decimal? MPM { get; set; }
 
-        public decimal? MaxBet { get; }
+        public decimal? MaxBet { get; set; }
 
-        public byte CustStatus { get; }
+        public byte CustStatus { get; set; }
 
-        public DateTime MarkDate { get; }
+        public DateTime MarkDate { get; set; }
 
-        public string Comment { get; }
+        public string Comment { get; set; }
 
-        public int? AbnormalBetNumber { get; }
+        public int? AbnormalBetNumber { get; set; }
 
-        public string FirstWeekInformed { get; }
+        public string FirstWeekInformed { get; set; }
 
-        public string SecondWeekInformed { get; }
+        public string SecondWeekInformed { get; set; }
 
-        public string Currency { get; }
+        public string Currency { get; set; }
 
-        public byte PreventiveActionId { get; }
+        public byte PreventiveActionId { get; set; }
 
         public string PreventiveAction { get; set; }
 

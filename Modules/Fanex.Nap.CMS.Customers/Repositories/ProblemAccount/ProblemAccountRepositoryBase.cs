@@ -1,7 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Repositories.ProblemAccount
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using Fanex.Data;

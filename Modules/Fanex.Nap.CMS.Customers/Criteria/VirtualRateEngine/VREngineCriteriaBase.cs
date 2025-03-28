@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class VREngineCriteriaBase : CriteriaBase
+    public class VREngineCriteriaBase : NonQueryCommand
     {
         protected VREngineCriteriaBase(int userId, string ip)
         {

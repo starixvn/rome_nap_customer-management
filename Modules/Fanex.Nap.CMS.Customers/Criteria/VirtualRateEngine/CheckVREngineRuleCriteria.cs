@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
 
-    public class CheckVREngineRuleCriteria : CriteriaBase
+    public class CheckVREngineRuleCriteria : NonQueryCommand
     {
         public CheckVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonSportList)
         {

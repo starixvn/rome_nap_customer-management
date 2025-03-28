@@ -8,8 +8,8 @@
     using Fanex.Nap.CMS.Customers.Params.PossessStatistics;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Models.PossessStatistics;
-    using Repositories;
 
     public interface PossessStatisticsService
     {
@@ -20,15 +20,8 @@
         Result UpdateMonitorStatus(UpdateMonitorStatusParam param);
     }
 
-    public class PossessStatisticsServiceImpl : PossessStatisticsService
+    public class PossessStatisticsServiceImpl : ServiceBase, PossessStatisticsService
     {
-        private readonly PossessStatisticsRepository repository;
-
-        public PossessStatisticsServiceImpl(PossessStatisticsRepository repository = null)
-        {
-            this.repository = repository ?? new PossessStatisticsRepositoryImpl();
-        }
-
         public Tuple<int, IEnumerable<PossessStatisticsModel>> GetPossessStatistics(GetPossessStatisticsParam param)
         {
             var criteria = new GetPossessStatisticsCriteria(
@@ -45,7 +38,7 @@
                 param.FilterDanger,
                 param.PageIndex,
                 param.PageSize);
-            var possessStatistics = repository.PossessStatistics(criteria);
+            var possessStatistics = DynamicRepository.Fetch<PossessStatisticsModel>(criteria);
 
             return Tuple.Create(criteria.TotalItems, possessStatistics);
         }
@@ -64,7 +57,7 @@
                     param.UserId,
                     param.IP);
 
-                var result = repository.UpdateDangerLevel(criteria);
+                var result = DoAction(criteria);
 
                 if (!result.IsSuccess)
                 {
@@ -82,7 +75,7 @@
 
         public Result UpdateMonitorStatus(UpdateMonitorStatusParam param)
         {
-            var result = repository.UpdateMonitorStatus(new UpdateMonitorStatusCriteria(param.CustomerList, param.IsMonitored, param.UserId, param.IP));
+            var result = DoAction(new UpdateMonitorStatusCriteria(param.CustomerList, param.IsMonitored, param.UserId, param.IP));
 
             if (result.IsSuccess)
             {

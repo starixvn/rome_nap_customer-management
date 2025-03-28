@@ -387,8 +387,6 @@
     <Compile Include="Repositories\ProblemAccount\ProblemAccountCN88Repository.cs" />
     <Compile Include="Repositories\ProblemAccountLicenseeSite\ProblemAccountLicenseeSiteRepository.cs" />
     <Compile Include="Repositories\ProblemAccount\ProblemAccountRepositoryBase.cs" />
-    <Compile Include="Repositories\WhitelistBigCreditMembers\IWhitelistBigCreditMembersRepository.cs" />
-    <Compile Include="Repositories\WhitelistBigCreditMembers\WhitelistBigCreditMembersRepository.cs" />
     <Compile Include="Resources\BetListResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

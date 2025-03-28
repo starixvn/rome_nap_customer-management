@@ -15,6 +15,7 @@
   <Function Name="VirtualRateDetails">
 		<Setting Key="Acc_VirtualMultiplierList_Sel" SpName="Acc_VirtualMultiplierList_Sel" DbName="DBACC.bodb02.wsv_nap">
 				<Mapping DataField="ValueID" ObjectProperty="Id" />
+				<Mapping DataField="Value" ObjectProperty="ValueDecimal" />
 		</Setting>
     <Setting Key="Acc_CustVirtualMultiplierInvalid_Check" SpName="Acc_CustVirtualMultiplierInvalid_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
@@ -148,7 +149,9 @@
 				<Mapping DataField="SiteName" ObjectProperty="Name" />
 		</Setting>
     <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap" />
+		<Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="Domain" ObjectProperty="DomainName" />
+		</Setting>
   </Function>
   <Function Name="Credit Payout Management">
     <Setting Key="NAP_PayoutPromotion_MatchSel" SpName="NAP_PayoutPromotion_MatchSel" DbName="DBACC.bodb02.wsv_nap" />

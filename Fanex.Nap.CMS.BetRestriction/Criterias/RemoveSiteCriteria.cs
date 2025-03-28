@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class RemoveSiteCriteria : CriteriaBase
+    public class RemoveSiteCriteria : CommandBaseCriteria
     {
         public int SiteId { get; set; }
 

@@ -4,7 +4,6 @@
     using Fanex.Nap.CMS.DefaultMemberBetLimit.Models;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Criteria;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Models;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Requests;
@@ -25,27 +24,20 @@
         Result Delete(DeleteRequest request);
     }
 
-    public class Service : IService
+    public class Service : ServiceBase, IService
     {
-        private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
 
         public Service(ICurrentSession currentSession, ICurrentContext currentContext)
-            : this(currentSession, currentContext, null)
-        {
-        }
-
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;
-            this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public IndexViewModel GetIndexViewModel()
         {
-            var betLimitTypes = serviceBase.GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
+            var betLimitTypes = GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
             return new IndexViewModel
             {
                 BetLimitTypes = betLimitTypes
@@ -60,7 +52,7 @@
                 BetLimitTypeId = request.BetLimitTypeId,
                 Username = request.Username
             };
-            return serviceBase.GetRepositoryData<SearchModel>(criteria);
+            return GetRepositoryData<SearchModel>(criteria);
         }
 
         public Result Insert(InsertRequest request)
@@ -74,7 +66,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            Repository.Execute(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -89,7 +81,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            Repository.Execute(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
@@ -103,7 +95,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            Repository.Execute(criteria);
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
     }

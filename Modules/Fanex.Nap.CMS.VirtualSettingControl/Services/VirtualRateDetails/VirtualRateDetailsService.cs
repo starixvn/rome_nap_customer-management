@@ -172,7 +172,7 @@
             var criteria = new GetVirtualRateRangesCriteria();
             var ranges = DynamicRepository.Fetch<RateInfo>(criteria);
             var result = ranges.Where(r => r.Id != 0);
-            result.ForEach(r => r.Value = (int)(r.Value * 100 - 100));
+            result.ForEach(r => r.Value = (int)(r.ValueDecimal * 100 - 100));
 
             return result;
         }

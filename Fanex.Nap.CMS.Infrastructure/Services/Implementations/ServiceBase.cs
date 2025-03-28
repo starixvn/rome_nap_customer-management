@@ -53,58 +53,14 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
             return new List<T>();
         }
 
-        public virtual IEnumerable<T> GetRepositoryDataWithMapOutput<T>(ICriteria criteria)
-        {
-            Check.Argument.IsNotNull(criteria, "criteria");
-            if (!criteria.IsValid())
-            {
-                return Enumerable.Empty<T>();
-            }
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var result = db.Query<T>(criteria);
-                var outputParams = db.GetOutputParams();
-                if (outputParams != null)
-                {
-                    Map(criteria, outputParams);
-                }
-
-                return result;
-            }
-        }
-
         public virtual IEnumerable<T> GetData<T>(ICriteria criteria)
         {
             return (new DynamicRepository()).Fetch<T>(criteria);
         }
 
-        public virtual Result ExecuteNonQuery(ICriteria criteria)
+        public virtual Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                objDb.ExecuteNonQuery(criteria);
-                var outputs = objDb.GetOutputParams();
-                return new Result(CMSConverter.ToInt32(outputs["errcode"]), CMSConverter.ToString(outputs["errmsg"]));
-            }
-        }
-
-        public virtual void ExecuteNonQueryWithMapOutput(ICriteria criteria)
-        {
-            Check.Argument.IsNotNull(criteria, "criteria");
-            if (!criteria.IsValid())
-            {
-                throw new InvalidOperationException("Invalid criteria");
-            }
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria);
-                var outputParams = db.GetOutputParams();
-                if (outputParams != null)
-                {
-                    Map(criteria, outputParams);
-                }
-            }
+            return DoAction(criteria);
         }
         public Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null)
         {
@@ -114,21 +70,6 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
                         : criteria.ErrMsg;
 
             return new Result { Code = criteria.ErrCode, Message = message };
-        }
-
-        private static void Map(ICriteria criteria, Hashtable outputParams)
-        {
-            foreach (string key in outputParams.Keys)
-            {
-                var propertyInfos = criteria.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
-                foreach (var propertyInfo in propertyInfos)
-                {
-                    if (propertyInfo.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        propertyInfo.SetValue(criteria, outputParams[key]);
-                    }
-                }
-            }
         }
     }
 }

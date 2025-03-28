@@ -15,7 +15,7 @@
 
         public Result UnmarkManualUpdateAccount(int sportType, string custIds, int userId, string ip)
         {
-            var result = ExecuteNonQuery(new UnmarkManualUpdateAccountsCriteria(sportType, custIds, userId, ip));
+            var result = DoAction(new UnmarkManualUpdateAccountsCriteria(sportType, custIds, userId, ip));
 
             if (result.IsSuccess)
             {

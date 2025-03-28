@@ -164,7 +164,6 @@
     <Compile Include="Criteria\RemoveDomainCriteria.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\DomainManagementRepository.cs" />
     <Compile Include="Requests\AddOrEditDomainCommand.cs" />
     <Compile Include="Requests\SearchDomainQuery.cs" />
     <Compile Include="Resources\Labels.Designer.cs">

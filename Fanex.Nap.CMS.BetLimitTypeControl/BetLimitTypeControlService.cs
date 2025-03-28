@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.CMS.BetLimitTypeControl.Criteria;
     using Fanex.NAP.CMS.BetLimitTypeControl.Models;
@@ -31,42 +31,29 @@
         IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues);
     }
 
-    public class BetLimitTypeControlService : IBetLimitTypeControlService
+    public class BetLimitTypeControlService : ServiceBase, IBetLimitTypeControlService
     {
-        private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
         private const string CachedLeagues = "BLT-Leagues";
         private const int CachedDefaultInMinutes = 60;
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
 
-        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext)
-            : this(currentSession, currentContext, null)
-        {
-        }
-
-        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
+        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext) 
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;
-            this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public QueryFilterModel QueryFilter()
         {
-            using (var objDb = ObjectDbFactory.CreateInstance("NAP_BLControl_SportBettypeSel"))
-            {
-                var reader = objDb.QueryMultiple();
-                var products = reader.Read<Product>();
-                var sportTypes = reader.Read<SportType>();
-                var betTypes = reader.Read<BetType>();
+            var (products, sportTypes, betTypes) =  DynamicRepository.FetchMultiple<Product, SportType, BetType>(new GetProductSportBettypeCriteria());
 
-                return new QueryFilterModel(products, sportTypes, betTypes);
-            }
+            return new QueryFilterModel(products, sportTypes, betTypes);
         }
 
         public IEnumerable<SearchModel> Search(SearchRequest request)
-            => serviceBase.GetRepositoryData<SearchModel>(new SearchCriteria
+            => DynamicRepository.Fetch<SearchModel>(new SearchCriteria
             {
                 UserId = currentSession.UserId,
                 ProductId = request.ProductId,
@@ -93,8 +80,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
@@ -119,7 +105,7 @@
                 UserId = currentSession.UserId
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
@@ -133,7 +119,7 @@
                 UserId = currentSession.UserId
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
@@ -143,7 +129,7 @@
 
             if (leagues == null)
             {
-                leagues = serviceBase.GetRepositoryData<LeagueGroup>(new GetLeagueGroupCriteria(0));
+                leagues = DynamicRepository.Fetch<LeagueGroup>(new GetLeagueGroupCriteria(0));
                 CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 
@@ -157,36 +143,23 @@
         {
             var jsonSportBetType = GetSportBetType();
 
-            return serviceBase.GetRepositoryData<IdNameModel>(
+            return DynamicRepository.Fetch<IdNameModel>(
                 new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
         }
 
         private string GetSportBetType()
         {
-            //var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
-            //if (jsonSBM == null)
-            //{
-            //    var criteria = new GetSportBettypeCriteria();
-            //    var sporttypes = new List<object>();
-            //    using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            //    {
-            //        using (var reader = db.ExecuteReader(criteria))
-            //        {
-            //            while (reader.Read())
-            //            {
-            //                sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
-            //            }
-            //        }
-            //    }
+            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+            if (jsonSBM == null)
+            {
+                var criteria = new GetSportBettypeCriteria();
+                var sporttypes = DynamicRepository.Fetch<SportType>(criteria).Select(sport => new { Sporttype = sport.SportTypeId });
 
-            //    jsonSBM = JsonConvert.SerializeObject(sporttypes);
-            //    CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
-            //}
+                jsonSBM = JsonConvert.SerializeObject(sporttypes);
+                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+            }
 
-            //return jsonSBM;
-            // Todo: Missing GetSportBettypeCriteria Sp
-
-            return string.Empty;
+            return jsonSBM;
 
         }
     }

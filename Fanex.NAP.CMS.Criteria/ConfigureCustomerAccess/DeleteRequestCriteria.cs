@@ -10,21 +10,18 @@
 namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that are used to delete a request.
     /// </summary>
-    public class DeleteRequestCriteria : CriteriaBase
+    public class DeleteRequestCriteria : CommandBaseCriteria
     {
         public int RequestID { get; set; }
 
         public int DeletedBy { get; set; }
 
         public string IPAction { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

@@ -9,22 +9,18 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that are used to remove a league exception.
     /// </summary>
-    public class RemoveLeagueExceptionCriteria : CriteriaBase
+    public class RemoveLeagueExceptionCriteria : CommandBaseCriteria
     {
         public int LeagueID { get; set; }
 
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

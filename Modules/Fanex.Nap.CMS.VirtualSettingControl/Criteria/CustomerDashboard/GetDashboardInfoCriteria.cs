@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.CustomerDashboard
 {
     using System;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// Get Dashboard info.

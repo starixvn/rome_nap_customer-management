@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class DeleteSMACriteria : CriteriaBase
+    public class DeleteSMACriteria : CommandBaseCriteria
     {
         public int CustId { get; set; }
 
@@ -11,10 +11,6 @@
         public int UserId { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

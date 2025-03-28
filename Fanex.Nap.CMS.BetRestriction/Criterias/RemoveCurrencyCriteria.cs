@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class RemoveCurrencyCriteria : CriteriaBase
+    public class RemoveCurrencyCriteria : CommandBaseCriteria
     {
         public int ExchangeId { get; set; }
 

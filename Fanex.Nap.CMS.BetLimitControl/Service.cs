@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -26,24 +27,17 @@
         Result Delete(DeleteRequest deleteRequest);
     }
 
-    public class Service : IService
+    public class Service : ServiceBase, IService
     {
         private const int MaxUsernames = 100;
 
-        private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
 
         public Service(ICurrentSession currentSession, ICurrentContext currentContext)
-            : this(currentSession, currentContext, null)
-        {
-        }
-
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;
-            this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public IEnumerable<Result> Add(AddRequest addRequest)
@@ -65,8 +59,7 @@
                 IP = currentContext.IP
             };
 
-            var groupResults = serviceBase
-                .GetRepositoryData<AddBetLimitControlResult>(criteria)
+            var groupResults = GetRepositoryData<AddBetLimitControlResult>(criteria)
                 .GroupBy(r => new { r.ErrorCode, r.ErrorMsg });
 
             foreach (var group in groupResults)
@@ -92,16 +85,16 @@
                 IP = currentContext.IP
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            Repository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
 
         public IndexViewModel GetIndexViewModel()
         {
-            var currencies = serviceBase.GetRepositoryData<CurrencyModel>(new GetAllCurrencyCriteria());
-            var sites = serviceBase.GetRepositoryData<SiteModel>(new GetSiteByPermissionCriteria(currentSession.UserId));
-            var betLimitTypes = serviceBase.GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
+            var currencies = GetRepositoryData<CurrencyModel>(new GetAllCurrencyCriteria());
+            var sites = GetRepositoryData<SiteModel>(new GetSiteByPermissionCriteria(currentSession.UserId));
+            var betLimitTypes = GetRepositoryData<BetLimitTypeModel>(new GetAllBetLimitTypeCriteria());
             return new IndexViewModel
             {
                 Currencies = currencies,
@@ -123,7 +116,7 @@
                 PageSize = request.PageSize,
                 PageIndex = request.PageIndex,
             };
-            var customerBetLimitControls = serviceBase.GetRepositoryData<CustomerBetLimitModel>(criteria);
+            var customerBetLimitControls = GetRepositoryData<CustomerBetLimitModel>(criteria);
 
             var result = new SearchModel
             {
@@ -148,7 +141,7 @@
                 IP = currentContext.IP
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            Repository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }

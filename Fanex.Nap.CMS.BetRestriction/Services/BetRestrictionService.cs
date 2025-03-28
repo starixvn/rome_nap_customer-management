@@ -20,23 +20,14 @@ namespace Fanex.NAP.CMS.Services.Implements
     {
         public IEnumerable<SelectListItem> GetSites(GetAllSiteCriteria criteria)
         {
-            using (var objDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria);
-                while (reader.Read())
-                {
-                    yield return new SelectListItem
-                    {
-                        Text = reader["Site"].ToString(),
-                        Value = reader["SiteID"].ToString()
-                    };
-                }
-            }
+            var sites = DynamicRepository.Fetch<SiteModel>(criteria);
+
+            return sites.Select(site => new SelectListItem { Text = site.Site, Value = site.SiteId.ToString() });
         }
 
         public IEnumerable<SelectListItem> GetCurrency(GetAllCurrencyCriteria criteria)
         {
-            return Repository.Fetch<Nap.CMS.BetRestriction.Models.BetRestrictionCurrencyModel>(criteria)
+            return Repository.Fetch<BetRestrictionCurrencyModel>(criteria)
                 .Select(cur => new SelectListItem { Text = cur.Currency, Value = cur.ExchangeId.ToString()});
         }
 

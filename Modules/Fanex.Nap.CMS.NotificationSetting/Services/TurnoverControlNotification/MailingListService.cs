@@ -6,38 +6,33 @@
 
 namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
 {
+    using System.Dynamic;
+    using System.Linq;
     using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.NotificationSetting.Criteria.TurnoverControlNotification;
     using Fanex.Nap.CMS.NotificationSetting.Model.TurnoverControlNotification;
-    using Fanex.Nap.CMS.NotificationSetting.Repositories.TurnoverControlNotification;
     using Fanex.Nap.CMS.NotificationSetting.Resources;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class MailingListService : IMailingListService
+    public class MailingListService : ServiceBase, IMailingListService
     {
-        private readonly IMailingListRepository _repository;
-
-        public MailingListService()
-            : this(null)
-        {
-        }
-
-        public MailingListService(IMailingListRepository repository)
-        {
-            _repository = repository ?? new MailingListRepository();
-        }
-
         /// <summary>
         /// Gets the email list.
         /// </summary>
         /// <returns>The email list.</returns>
         public MailingList MailingList()
         {
-            return _repository.GetMailingList(new GetMailingCriteria());
+            var mailingList = new MailingList();
+            var mailList = DynamicRepository.Fetch<MailInfo>(new GetMailingCriteria()).ToList();
+            mailingList.MailInfo = mailList;
+            mailingList.NonMailingList = string.Join(", ", mailList.Where(mail => !mail.IsMailExist).Select(mail => mail.SiteName));
+
+            return mailingList;
         }
 
         /// <summary>
@@ -64,7 +59,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
                 string.Empty :
                 criteria.MailInfo.BCCList;
 
-            Result result = _repository.DoAction(criteria);
+            Result result = DoAction(criteria);
 
             if (result.Code == ErrorCodeConstants.NoneError)
             {
@@ -81,7 +76,7 @@ namespace Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification
                 UserId = AppSession.CurrentUser.Id
             };
 
-            return _repository.GetUserGroup(criteria);
+            return DynamicRepository.Get<int>(criteria);
         }
     }
 }

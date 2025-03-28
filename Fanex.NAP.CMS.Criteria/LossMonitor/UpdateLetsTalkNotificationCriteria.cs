@@ -1,10 +1,9 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using System.Collections;
-    using Data.Repository;
     using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class UpdateLetsTalkNotificationCriteria : CriteriaBase
+    public class UpdateLetsTalkNotificationCriteria : CommandBaseCriteria
     {
         private const int UpdateAllMode = 2;
         private const int UpdateHeadlineMode = 1;
@@ -22,10 +21,6 @@
         public int UserId { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

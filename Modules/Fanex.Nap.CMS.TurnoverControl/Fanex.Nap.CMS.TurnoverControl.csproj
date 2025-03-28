@@ -220,6 +220,8 @@
     <Compile Include="Models\ImportGlobalSetting\MaxTurnoverExcel.cs" />
     <Compile Include="Models\LockSettingParam.cs" />
     <Compile Include="Models\TurnoverMonitor\BetTypeTurnover.cs" />
+    <Compile Include="Models\TurnoverMonitor\MatchDTO.cs" />
+    <Compile Include="Models\TurnoverMonitor\SportTypeTurnover.cs" />
     <Compile Include="Models\TurnoverMonitor\TurnoverMonitorItem.cs" />
     <Compile Include="Models\TurnoverMonitor\LeagueTurnover.cs" />
     <Compile Include="Models\TurnoverMonitor\MatchTurnover.cs" />
@@ -227,12 +229,6 @@
     <Compile Include="Models\TurnoverMonitor\HouseTurnover.cs" />
     <Compile Include="Models\UpdateMaxTurnoverParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\GlobalSetting\GlobalSettingRepository.cs" />
-    <Compile Include="Repositories\GlobalSetting\IGlobalSettingRepository.cs" />
-    <Compile Include="Repositories\ImportGlobalSetting\ImportGlobalSettingRepository.cs" />
-    <Compile Include="Repositories\ImportGlobalSetting\IImportGlobalSettingRepository.cs" />
-    <Compile Include="Repositories\TurnoverMonitor\ITurnoverMonitorRepository.cs" />
-    <Compile Include="Repositories\TurnoverMonitor\TurnoverMonitorRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

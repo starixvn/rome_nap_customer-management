@@ -11,11 +11,12 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
 {
     using System;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that contain the updated data of a request.
     /// </summary>
-    public class UpdateRequestCriteria : CriteriaBase
+    public class UpdateRequestCriteria : CommandBaseCriteria
     {
         public int RequestId { get; set; }
 
@@ -32,10 +33,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
         public int UpdatedBy { get; set; }
 
         public string IPAction { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Framework.Command;
     using Models.LossMonitor;
     using ViewModels.LossMonitor;
@@ -10,13 +11,13 @@
     {
         IEnumerable<SMALossGroup> GetCustomerLoss();
 
-        ICommandResult InsertSMA(ICriteria criteria);
+        ICommandResult InsertSMA(CommandBaseCriteria criteria);
 
-        ICommandResult DeleteSMA(ICriteria criteria);
+        ICommandResult DeleteSMA(CommandBaseCriteria criteria);
 
-        ICommandResult UpdateMaxLoss(ICriteria criteria);
+        ICommandResult UpdateMaxLoss(CommandBaseCriteria criteria);
 
-        ICommandResult UpdateLetsTalkNotification(ICriteria criteria);
+        ICommandResult UpdateLetsTalkNotification(CommandBaseCriteria criteria);
 
         IEnumerable<SMALossInfo> GetGroupDownlines(ICriteria criteria);
     }

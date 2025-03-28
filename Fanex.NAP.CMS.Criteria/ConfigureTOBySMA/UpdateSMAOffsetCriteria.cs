@@ -10,11 +10,12 @@
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOBySMA
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria contain the updated data of an SMA offset.
     /// </summary>
-    public class UpdateSMAOffsetCriteria : CriteriaBase
+    public class UpdateSMAOffsetCriteria : CommandBaseCriteria
     {
         public int SMAID { get; set; }
 
@@ -23,10 +24,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOBySMA
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

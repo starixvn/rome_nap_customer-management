@@ -34,20 +34,20 @@
             MaxTurnover = maxTurnover;
         }
 
-        public int CustId { get; }
+        public int CustId { get; set; }
 
-        public string Username { get; }
+        public string Username { get; set; }
 
-        public string Level { get; }
+        public string Level { get; set; }
 
-        public bool IsLock { get; }
+        public bool IsLock { get; set; }
 
-        public string Currency { get; }
+        public string Currency { get; set; }
 
-        public int ProfileId { get; }
+        public int ProfileId { get; set; }
 
-        public string ProfileName { get; }
+        public string ProfileName { get; set; }
 
-        public decimal MaxTurnover { get; }
+        public decimal MaxTurnover { get; set; }
     }
 }

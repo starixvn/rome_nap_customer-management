@@ -196,9 +196,9 @@
 
         public bool HasSpecialSitePermission(int customerId)
         {
-            var accountingPolicy = dynamicRepository.Fetch<NapAccountingPolicyModel>(new GetNapAccountingPolicy { CustID = customerId });
+            var accountingPolicy = dynamicRepository.Fetch<NAPAccPolicy>(new GetNapAccountingPolicy { CustID = customerId });
             var isHasAccessSpecialSites =
-                accountingPolicy.Any(policy => policy.FunctionName == CMSFunctionKeys.SpecialSites);
+                accountingPolicy.Any(policy => policy.FuncName == CMSFunctionKeys.SpecialSites);
 
             return isHasAccessSpecialSites;
         }

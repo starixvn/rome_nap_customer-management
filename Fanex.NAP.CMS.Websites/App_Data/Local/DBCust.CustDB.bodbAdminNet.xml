@@ -21,15 +21,22 @@
   </Function>
   <Function Name="TurnoverControl-GlobalSetting">
     <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.wsv_nap">
+				<Mapping DataField="IsGlobalLockTOLimit" ObjectProperty="IsLock" />
+		</Setting>
     <Setting Key="NAP_TOControl_GlobalSettingUpdate" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_TOControl_GlobalSettingInsert" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_TOControl_GlobalSettingDelete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.wsv_nap">
+				<Mapping DataField="profileid" ObjectProperty="Id" />
+				<Mapping DataField="profilename" ObjectProperty="Name" />
+		</Setting>
     <Setting Key="NAP_TOControl_GlobalSettingLockTOLimit_Update" SpName="NAP_TOControl_GlobalSettingLockTOLimit_Update" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="TurnoverControl-ImportGlobalSetting">
-    <Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.wsv_nap">
+				<Mapping DataField="rowid" ObjectProperty="ExcelRow" />
+		</Setting>
     <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
@@ -170,7 +177,10 @@
     <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Whitelist Big Credit Members">
-    <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.wsv_nap">
+				<Mapping DataField="errorcode" ObjectProperty="Code" />
+				<Mapping DataField="errormsg" ObjectProperty="Message" />
+		</Setting>
   </Function>
   <Function Name="Virtual Rate Engine">
     <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.wsv_nap" />

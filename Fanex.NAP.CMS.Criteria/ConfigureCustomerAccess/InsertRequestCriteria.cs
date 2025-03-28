@@ -11,11 +11,12 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
 {
     using System;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that contain the data of new request.
     /// </summary>
-    public class InsertRequestCriteria : CriteriaBase
+    public class InsertRequestCriteria : CommandBaseCriteria
     {
         public string Username { get; set; }
 
@@ -30,10 +31,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess
         public int Creator { get; set; }
 
         public string IPAction { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

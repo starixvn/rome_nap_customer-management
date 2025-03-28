@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.ManualUpdateVRAccount
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class UnmarkManualUpdateAccountsCriteria : CriteriaBase
+    public class UnmarkManualUpdateAccountsCriteria : CommandBaseCriteria
     {
         public UnmarkManualUpdateAccountsCriteria(
             int sportType,

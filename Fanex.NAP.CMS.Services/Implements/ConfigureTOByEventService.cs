@@ -12,6 +12,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.NAP.CMS.Core.Resources;
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.Common;
@@ -121,7 +122,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria contain updated data.</param>
         /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
-        public ICommandResult UpdateTurnover(ICriteria criteria)
+        public ICommandResult UpdateTurnover(CommandBaseCriteria criteria)
         {
             return this.UpdateData(criteria);
         }

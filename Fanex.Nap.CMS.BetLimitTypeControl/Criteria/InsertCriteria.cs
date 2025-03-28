@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class InsertCriteria : CriteriaBase
+    public class InsertCriteria : NonQueryCommand
     {
         public string BetLimitType { get; set; }
 

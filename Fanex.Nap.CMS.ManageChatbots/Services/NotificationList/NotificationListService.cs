@@ -7,26 +7,22 @@
     using Fanex.Nap.CMS.ManageChatbots.Criteria.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
     using Fanex.Nap.CMS.ManageChatbots.Models.NotificationList;
-    using Fanex.Nap.CMS.ManageChatbots.Repositories.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.Constants;
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
-    public class NotificationListService : INotificationListService
+    public class NotificationListService : ServiceBase, INotificationListService
     {
-        private readonly IDynamicRepository dynamicRepository;
-        private readonly INotificationListRepository notificationListRepository;
         private readonly IChatBotMappingService chatbotMappingservice;
 
         public NotificationListService() : this(null) { }
 
-        public NotificationListService(IDynamicRepository dynamicRepository, INotificationListRepository notificationListRepository = null, IChatBotMappingService chatbotMappingservice = null)
+        public NotificationListService(IChatBotMappingService chatbotMappingservice = null) : base()
         {
-            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
-            this.notificationListRepository = notificationListRepository ?? new NotificationListRepository();
             this.chatbotMappingservice = chatbotMappingservice ?? new ChatBotMappingService();
         }
+
         public NotificationListModel GetNotificationList(SearchNotificationListViewModel viewModel, int userId)
         {
             var criteia = new NotificationListCriteria
@@ -42,14 +38,17 @@
                 PageIndex = viewModel.PageIndex,
                 PageSize = viewModel.PageSize
             };
-            return new NotificationListModel(notificationListRepository.GetNotificationList(criteia), criteia.TotalRows);
+            var notificationList = DynamicRepository.Fetch<NotificationListItem>(criteia);
+
+            return new NotificationListModel(notificationList, criteia.TotalRows);
         }
 
         public IEnumerable<FunctionModel> GetNotifyFunctions()
         {
-            var functions = dynamicRepository.Fetch<FunctionModel>(new GetAllFunctionsCriteria())
+            var functions = DynamicRepository.Fetch<FunctionModel>(new GetAllFunctionsCriteria())
                             .Where(function => function.FunctionType == 2 
                             && !HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId));
+
             return functions;
         }
     }

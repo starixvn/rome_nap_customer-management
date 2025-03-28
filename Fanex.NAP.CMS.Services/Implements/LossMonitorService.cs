@@ -5,6 +5,7 @@
     using Core.Resources;
     using Criteria.LossMonitor;
     using Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Framework.Command;
     using Interfaces;
     using Models.LossMonitor;
@@ -42,28 +43,28 @@
                 Repository.Fetch<SMALossInfo>(criteria);
         }
 
-        public ICommandResult InsertSMA(ICriteria criteria)
+        public ICommandResult InsertSMA(CommandBaseCriteria criteria)
         {
             return !criteria.IsValid() ?
                 new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
-        public ICommandResult UpdateMaxLoss(ICriteria criteria)
+        public ICommandResult UpdateMaxLoss(CommandBaseCriteria criteria)
         {
             return !criteria.IsValid() ?
                 new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
-        public ICommandResult UpdateLetsTalkNotification(ICriteria criteria)
+        public ICommandResult UpdateLetsTalkNotification(CommandBaseCriteria criteria)
         {
             return !criteria.IsValid() ?
                 new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
                 UpdateData(criteria);
         }
 
-        public ICommandResult DeleteSMA(ICriteria criteria)
+        public ICommandResult DeleteSMA(CommandBaseCriteria criteria)
         {
             return !criteria.IsValid() ?
                 new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :

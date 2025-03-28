@@ -10,11 +10,12 @@
 namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// Updating smart punter criteria.
     /// </summary>
-    public class UpdateSmartPunterCriteria : CriteriaBase
+    public class UpdateSmartPunterCriteria : CommandBaseCriteria
     {
         public int CustID { get; set; }
 
@@ -23,10 +24,6 @@ namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

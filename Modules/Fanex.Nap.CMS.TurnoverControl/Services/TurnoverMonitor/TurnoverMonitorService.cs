@@ -3,32 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using Fanex.Nap.CMS.Infrastructure.Extensions;
 using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 using Fanex.Nap.CMS.Infrastructure.Web;
 using Fanex.Nap.CMS.TurnoverControl.Constants;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor;
 using Fanex.Nap.CMS.TurnoverControl.Models;
 using Fanex.Nap.CMS.TurnoverControl.Models.TurnoverMonitor;
-using Fanex.Nap.CMS.TurnoverControl.Repositories.TurnoverMonitor;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 {
-    public class TurnoverMonitorService : ITurnoverMonitorService
+    public class TurnoverMonitorService : ServiceBase, ITurnoverMonitorService
     {
-        private readonly ITurnoverMonitorRepository turnoverMonitorRepository;
-
-        public TurnoverMonitorService(ITurnoverMonitorRepository turnoverMonitorRepository = null)
-        {
-            this.turnoverMonitorRepository = turnoverMonitorRepository ?? new TurnoverMonitorRepository();
-        }
-
         public IEnumerable<IdNameModel> GetSports(byte mode, short sportType)
-            => turnoverMonitorRepository.GetSports(new GetSportsCriteria(mode, sportType));
+        {
+            return DynamicRepository
+                .Fetch<SportTypeTurnover>(new GetSportsCriteria(mode, sportType))
+                .Select(x => new IdNameModel { Id = x.SportType, Name = x.SportName });
+        }
 
         public IEnumerable<IdNameModel> GetLeagues(string fromDate, string toDate, short sportType, DateTime moveBetsDay)
         {
-            var leagues = turnoverMonitorRepository
-                .GetLeagues(new GetLeaguesCriteria(fromDate, toDate, sportType, moveBetsDay))
+            var leagues = DynamicRepository
+                .Fetch<LeagueTurnover>(new GetLeaguesCriteria(fromDate, toDate, sportType, moveBetsDay))
+                .Select(x => new IdNameModel { Id = x.LeagueId, Name = CacheRef.GetLeagueName(x.LeagueId.ToString()) })
                 .ToList();
             leagues.Insert(0, new IdNameModel { Id = 0, Name = Labels.All_Leagues });
 
@@ -37,8 +35,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
         public IEnumerable<IdNameModel> GetMatches(string fromDate, string toDate, int leagueId)
         {
-            var matches = turnoverMonitorRepository
-                .GetMatches(new GetMatchesCriteria(fromDate, toDate, leagueId))
+            var matches = DynamicRepository.Fetch<MatchDTO>(new GetMatchesCriteria(fromDate, toDate, leagueId))
+                .Select(x => new IdNameModel { Id = x.MatchId, Name = $"{CacheRef.GetTeamName(x.HomeId)} -vs- {CacheRef.GetTeamName(x.AwayId)}" })
                 .ToList();
             matches.Insert(0, new IdNameModel { Id = 0, Name = Labels.AllMatches });
 
@@ -56,7 +54,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
             int percentageUsed,
             DateTime moveBetsDay)
         {
-            var rawData = turnoverMonitorRepository.GetCustomerTurnovers(
+            var rawData = DynamicRepository.Fetch<TurnoverMonitorItem>(
                 new GetCustomerTurnoversCriteria(
                     fromDate,
                     toDate,
@@ -156,7 +154,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
         public IEnumerable<HouseTurnover> GetHouseTurnovers(int custId, int matchId, bool isGroupHeadline, string eventDate)
         {
-            var houseTurnovers = turnoverMonitorRepository.GetHouseTurnovers(
+            var houseTurnovers = DynamicRepository.Fetch<HouseTurnover>(
                 new GetHouseTurnoverCriteria(custId, matchId, isGroupHeadline, eventDate));
 
             if (houseTurnovers.Any())
@@ -179,7 +177,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
         public Result UpdateMaxTurnover(UpdateMaxTurnoverParam param, int userId, string ip)
         {
-            var result = turnoverMonitorRepository.ExecuteNonQuery(
+            var result = DoAction(
                 new UpdateMaxTurnoverCriteria(param, userId, ip));
 
             if (result.IsSuccess)
@@ -192,7 +190,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
 
         public Result UpdateMultipleMaxTurnover(IEnumerable<UpdateMaxTurnoverParam> param, int userId, string ip)
         {
-            var result = turnoverMonitorRepository.ExecuteNonQuery(
+            var result = DoAction(
                 new UpdateMultipleMaxTurnoverCriteria(param, userId, ip));
 
             if (result.IsSuccess)
@@ -204,6 +202,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.TurnoverMonitor
         }
 
         public Result Lock(LockSettingParam param, int userId, string ip)
-            => turnoverMonitorRepository.ExecuteNonQuery(new LockEventSettingCriteria(param, userId, ip));
+            => DoAction(new LockEventSettingCriteria(param, userId, ip));
     }
 }

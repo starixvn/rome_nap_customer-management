@@ -2,7 +2,7 @@
 
 namespace Fanex.NAP.CMS.BetLimitTypeControl.Criteria
 {
-    public class DeleteCriteria : CriteriaBase
+    public class DeleteCriteria : NonQueryCommand
     {
         public int BetLimitTypeId { get; set; }
 

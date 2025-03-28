@@ -114,7 +114,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\GetBalanceUpDayCriteria.cs" />
     <Compile Include="Common\GetMatchesOfLeagueCriteria.cs" />
     <Compile Include="Common\PagingCriteria.cs" />
     <Compile Include="Common\QueryResult.cs" />
@@ -192,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="WriteLogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Nap.CMS.Infrastructure\Fanex.Nap.CMS.Infrastructure.csproj">
+      <Project>{468362D3-46E5-43E2-AE63-8C8827F5CA55}</Project>
+      <Name>Fanex.Nap.CMS.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

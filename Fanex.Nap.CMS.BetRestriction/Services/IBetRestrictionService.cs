@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.CMS.Services.Interfaces
 {
-    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.BetRestriction.Criterias;
     using Fanex.Nap.CMS.BetRestriction.Requests;
     using Fanex.Nap.CMS.BetRestriction.ViewModels;
@@ -27,7 +26,7 @@
 
         EditCurrencyViewModel GetCurrencyDetailForEdit(int exchangeId, int type);
 
-        Result ExecuteNonQuery(ICriteria criteria);
+        Result ExecuteNonQuery(CommandBaseCriteria criteria);
 
         IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria);
     }

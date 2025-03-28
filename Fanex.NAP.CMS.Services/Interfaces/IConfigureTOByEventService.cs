@@ -11,6 +11,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureTOByEvent;
     using Fanex.NAP.CMS.Models.Common;
@@ -46,7 +47,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// </summary>
         /// <param name="criteria">The criteria contain updated data.</param>
         /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
-        ICommandResult UpdateTurnover(ICriteria criteria);
+        ICommandResult UpdateTurnover(CommandBaseCriteria criteria);
 
         /// <summary>
         /// Gets the sport list.

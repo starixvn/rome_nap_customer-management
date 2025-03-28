@@ -273,9 +273,6 @@
     <Compile Include="Models\VirtualSettingMonitor\CustomerMarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\MarginModel.cs" />
     <Compile Include="Models\VirtualSettingMonitor\VirtualSettingModel.cs" />
-    <Compile Include="Repositories\UploadVirtualRate\IUploadVirtualRateRepository.cs" />
-    <Compile Include="Repositories\UploadVirtualRate\UploadVirtualRateRepository.cs" />
-    <Compile Include="Repositories\VirtualRateDetails\BetTypeVirtualRateMappingRepository.cs" />
     <Compile Include="Resources\ESportsResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -306,8 +303,6 @@
     <Compile Include="Utility\Helper.cs" />
     <Compile Include="ViewModels\VirtualSettingMonitor\VirtualSettingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\CustomerDashboard\ICustomerDashboardRepository.cs" />
-    <Compile Include="Repositories\CustomerDashboard\CustomerDashboardRepository.cs" />
     <Compile Include="Services\VirtualSettingMonitor\IVirtualSettingMonitorService.cs" />
     <Compile Include="Services\VirtualSettingMonitor\VirtualSettingMonitorService.cs" />
     <Compile Include="ViewModels\VrAutoAdjustmentReport\LogEntryViewModel.cs" />

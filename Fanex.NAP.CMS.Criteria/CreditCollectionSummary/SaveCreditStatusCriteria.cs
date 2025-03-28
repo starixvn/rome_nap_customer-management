@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.CreditCollectionSummary
 {
-    using Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class SaveCreditStatusCriteria : CriteriaBase
+    public class SaveCreditStatusCriteria : CommandBaseCriteria
     {
         public int CustId { get; set; }
 
@@ -13,10 +13,6 @@
         public string IP { get; set; }
 
         public string Language { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

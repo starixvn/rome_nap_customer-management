@@ -223,8 +223,6 @@
     <Compile Include="Models\NotificationList\NotificationListItem.cs" />
     <Compile Include="Models\NotificationList\NotificationListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\NotificationList\INotificationListRepository.cs" />
-    <Compile Include="Repositories\NotificationList\NotificationListRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

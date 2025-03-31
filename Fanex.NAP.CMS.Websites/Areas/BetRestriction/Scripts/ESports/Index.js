@@ -100,7 +100,7 @@ Fanex.CMS.BetRestrictionESports = function () {
     }
 
     var renderAccountGrid = function (viewModel, pageIndex, pageSize) {
-        var hiddenColumns = hasHostPermission ? [] : [9];
+        var hiddenColumns = hasHostPermission ? [] : [11];
 
         var accountGridOptions = {
             customizeHeader: true,

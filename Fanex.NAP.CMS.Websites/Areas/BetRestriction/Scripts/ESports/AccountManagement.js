@@ -213,30 +213,7 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
             AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
-        saveAccount(params, isEdit);
-
-        // not handle check exit line in this pharse
-        // if (isEdit) {
-        //     saveAccount(params, isEdit);
-        // } else {
-        //     CMS.callAjax(
-        //         this,
-        //         'CheckAddAccount',
-        //         params,
-        //         function (result) {
-        //             if (result.Code > 0) {
-        //                 CMS.showConfirmMessage(
-        //                     '<span style="white-space: pre-line">' + result.Message + '</span>',
-        //                     function () {
-        //                         return saveAccount(params, isEdit);
-        //                     }
-        //                 );
-        //             } else {
-        //                 saveAccount(params, isEdit);
-        //             }
-        //         }
-        //     );
-        // }
+        saveAccount(params, isEdit);        
     };
 
     var saveAccount = function (params, isEdit) {
@@ -288,7 +265,7 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
     this.ShowAddAccountPopup = function () {
         oldData = null;
         var form = MainDOMElements.formAccountManager.clone();
-        CMS.modal('Add Bet Restricted - Basketball Account', form);
+        CMS.modal('Add Bet Restricted - E-Sport Account', form);
         cacheDOMElements();
         bindingEvents();
         CachedDOMElements.selPopupAccLiveBetAccept.combobox();
@@ -304,7 +281,7 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
         oldData = null;
         CMS.disableInput();
         var form = MainDOMElements.formAccountManager.clone();
-        CMS.modal('Edit Bet Restricted - Basketball Account', form);
+        CMS.modal('Edit Bet Restricted - E-Sport Account', form);
         $('#popupAccUsernameRequired').remove();
         cacheDOMElements();
         bindingEvents();

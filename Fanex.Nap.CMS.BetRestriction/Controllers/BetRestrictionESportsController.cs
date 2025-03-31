@@ -37,7 +37,7 @@
             {
                 Sites = _betRestrictionService.GetSites(new GetAllSiteCriteria()),
                 Currency = _betRestrictionService.GetCurrency(new GetAllCurrencyCriteria()),
-                LeagueGroups = _betRestrictionService.GetLeagueGroup(new GetAllLeagueGroupCriteria(_sportType)),
+                LeagueGroups = _betRestrictionService.GetLeagueGroup(new GetAllLeagueGroupCriteria(_sportType)),               
                 HasHostPermission = HasRight(CMSFunctionKeys.BetRestriction_ESports, Constant.Policy.Host)
             };
 
@@ -53,6 +53,8 @@
             return Json(data);
         }
 
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_ESports, Policy = Constant.Policy.Read)]
         public JsonResult SearchAccountPaging(SearchRequest request)
         {
             var data = _betRestrictionService.SearchDataGrid<AccountModel>(CreateSearchCriteriaFromRequest(request));

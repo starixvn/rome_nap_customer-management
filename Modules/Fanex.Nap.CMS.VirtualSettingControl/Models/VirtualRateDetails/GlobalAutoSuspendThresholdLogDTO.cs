@@ -5,42 +5,6 @@
 
     public class GlobalAutoSuspendThresholdLogDTO
     {
-        public GlobalAutoSuspendThresholdLogDTO(
-            int logId,
-            DateTime logTime,
-            int sportType,
-            string sportName,
-            int leagueGroupId,
-            string leagueGroup,
-            int betTypeGroupId,
-            string betTypeGroup,
-            int betType,
-            string betTypeName,
-            decimal vrAutoSuspendThresholdLive_New,
-            decimal vrAutoSuspendThresholdNonLive_New,
-            decimal vrAutoSuspendThresholdLive_Old,
-            decimal vrAutoSuspendThresholdNonLive_Old,
-            bool isNew,
-            string updatedby)
-        {
-            LogId = logId;
-            LogTime = logTime;
-            SportType = sportType;
-            SportName = sportName;
-            LeagueGroupId = leagueGroupId;
-            LeagueGroup = leagueGroup;
-            BetTypeGroupId = betTypeGroupId;
-            BetTypeGroup = betTypeGroup;
-            BetType = betType;
-            BetTypeName = betTypeName;
-            VRAutoSuspendThresholdLive_New = vrAutoSuspendThresholdLive_New;
-            VRAutoSuspendThresholdNonLive_New = vrAutoSuspendThresholdNonLive_New;
-            VRAutoSuspendThresholdLive_Old = vrAutoSuspendThresholdLive_Old;
-            VRAutoSuspendThresholdNonLive_Old = vrAutoSuspendThresholdNonLive_Old;
-            IsNew = isNew;
-            Updatedby = updatedby;
-        }
-
         public int LogId { get; set; }
 
         public DateTime LogTime { get; set; }

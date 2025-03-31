@@ -6,15 +6,14 @@
     using Criteria.LossMonitor;
     using Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
-    using Framework.Command;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Interfaces;
     using Models.LossMonitor;
     using ViewModels.LossMonitor;
 
-    public class LossMonitorService : CMSBaseService, ILossMonitorService
+    public class LossMonitorService : ServiceBase, ILossMonitorService
     {
-        private const int BadRequestErrorCode = 400;
-
         public IEnumerable<SMALossGroup> GetCustomerLoss()
         {
             var rawdata = Repository.Fetch<SMALossInfo>(new GetSMALossMonitorListCriteria());
@@ -43,32 +42,24 @@
                 Repository.Fetch<SMALossInfo>(criteria);
         }
 
-        public ICommandResult InsertSMA(CommandBaseCriteria criteria)
+        public Result InsertSMA(CommandBaseCriteria criteria)
         {
-            return !criteria.IsValid() ?
-                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
-                UpdateData(criteria);
+            return DoAction(criteria);
         }
 
-        public ICommandResult UpdateMaxLoss(CommandBaseCriteria criteria)
+        public Result UpdateMaxLoss(CommandBaseCriteria criteria)
         {
-            return !criteria.IsValid() ?
-                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
-                UpdateData(criteria);
+            return DoAction(criteria);
         }
 
-        public ICommandResult UpdateLetsTalkNotification(CommandBaseCriteria criteria)
+        public Result UpdateLetsTalkNotification(CommandBaseCriteria criteria)
         {
-            return !criteria.IsValid() ?
-                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
-                UpdateData(criteria);
+            return DoAction(criteria);
         }
 
-        public ICommandResult DeleteSMA(CommandBaseCriteria criteria)
+        public Result DeleteSMA(CommandBaseCriteria criteria)
         {
-            return !criteria.IsValid() ?
-                new CommandResult { Code = BadRequestErrorCode, Message = Messages.BadRequest } :
-                UpdateData(criteria);
+            return DoAction(criteria);
         }
 
         private static string LossLevelValueToName(int value, int? higherValue)

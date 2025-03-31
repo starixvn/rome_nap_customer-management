@@ -34,25 +34,36 @@
             var ranges = GetVirtualRateRanges();
             var minRange = ranges.Min(r => r.Value);
             var maxRange = ranges.Max(r => r.Value);
+            VirtualRateDetailsReport result;
 
             var (reportDetails, virtualRateDetails) = DynamicRepository.FetchMultiple<VirtualRateDetailsReport, VirtualRateDTO>(criteria);
-            var result = reportDetails.FirstOrDefault();
-            result.VirtualRateValueRange = ranges;
-            result.ReportLevel = string.IsNullOrWhiteSpace(result.Username) ? 0 : result.ReportLevel;
-            virtualRateDetails.ForEach(virtualRate => 
+            if (reportDetails.Any())
             {
-                virtualRate.SportName = CacheRef.GetSportName(virtualRate.SportType);
-                virtualRate.BetTypeName = GetBetTypeName(virtualRate.SportType, virtualRate.BetTypeId);
-                if(criteria.IsGlobalSetting)
+                result = reportDetails.FirstOrDefault();
+                result.VirtualRateValueRange = ranges;
+                result.ReportLevel = string.IsNullOrWhiteSpace(result.Username) ? 0 : result.ReportLevel;
+                virtualRateDetails.ForEach(virtualRate =>
                 {
-                    virtualRate.IsOverrideASLive = false;
-                    virtualRate.IsOverrideASNonlive = false;
-                }
-            });
+                    virtualRate.SportName = CacheRef.GetSportName(virtualRate.SportType);
+                    virtualRate.BetTypeName = GetBetTypeName(virtualRate.SportType, virtualRate.BetTypeId);
+                    if (criteria.IsGlobalSetting)
+                    {
+                        virtualRate.IsOverrideASLive = false;
+                        virtualRate.IsOverrideASNonlive = false;
+                    }
+                });
+
+                result.Sports = GetSportsVirtualRateDetail(virtualRateDetails, minRange, maxRange);
+            } else
+            {
+                result = new VirtualRateDetailsReport
+                {
+                    VirtualRateValueRange = ranges
+                };
+            }
 
             result.ResultCode = criteria.ErrCode;
             result.ResultMessage = criteria.ErrMsg;
-            result.Sports = GetSportsVirtualRateDetail(virtualRateDetails, minRange, maxRange);
 
             return result;
         }

@@ -141,26 +141,28 @@
             string leagueGroupListNotIn,
             string leagues)
         {
-            var jsonSportBetType = GetSportBetType();
+            //var jsonSportBetType = GetSportBetType();
 
-            return DynamicRepository.Fetch<IdNameModel>(
-                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+            //return DynamicRepository.Fetch<IdNameModel>(
+            //    new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+
+            return new List<IdNameModel>();
         }
 
-        private string GetSportBetType()
-        {
-            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
-            if (jsonSBM == null)
-            {
-                var criteria = new GetSportBettypeCriteria();
-                var sporttypes = DynamicRepository.Fetch<SportType>(criteria).Select(sport => new { Sporttype = sport.SportTypeId });
+        //private string GetSportBetType()
+        //{
+        //    var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+        //    if (jsonSBM == null)
+        //    {
+        //        var criteria = new GetSportBettypeCriteria();
+        //        var sporttypes = DynamicRepository.Fetch<SportType>(criteria).Select(sport => new { Sporttype = sport.SportTypeId });
 
-                jsonSBM = JsonConvert.SerializeObject(sporttypes);
-                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
-            }
+        //        jsonSBM = JsonConvert.SerializeObject(sporttypes);
+        //        CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+        //    }
 
-            return jsonSBM;
+        //    return jsonSBM;
 
-        }
+        //}
     }
 }

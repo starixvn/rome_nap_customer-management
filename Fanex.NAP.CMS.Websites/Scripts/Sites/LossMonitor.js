@@ -38,7 +38,7 @@
                 form.action,
                 addSettingParams,
                 function (data) {
-                    if (!data.IsSuccessful) {
+                    if (!data.IsSuccess) {
                         CMS.showInlineErrorMsg(data.Message, resultAddMessageDiv);
                     }
                     else {
@@ -185,7 +185,7 @@
                 rootUrl + "LossMonitor/Update",
                 { CustId: custId, MaxLoss: maxLoss, IsGroupHeadline: isGroupHeadline },
                 function (data) {
-                    if (!data.IsSuccessful) {
+                    if (!data.IsSuccess) {
                         CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
                     }
                     else {
@@ -436,7 +436,7 @@
             rootUrl + "LossMonitor/UpdateLetsTalkNotification",
             { CustId: custId, IsEnable: isEnable, IsGroupHeadline: isGroupHeadline },
             function (data) {
-                if (!data.IsSuccessful) {
+                if (!data.IsSuccess) {
                     CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
 
                     if (custId === 0) {
@@ -682,7 +682,7 @@
                         rootUrl + "LossMonitor/Remove",
                         { CustId: custId, Mode: mode },
                         function (data) {
-                            if (!data.IsSuccessful) {
+                            if (!data.IsSuccess) {
                                 CMS.showInlineErrorMsg(data.Message, resultMessageDiv);
                             } else {
                                 CMS.showInlineSuccessMsg(

@@ -4,7 +4,6 @@
     using Fanex.NAP.CMS.Criteria.StatusLog;
     using Interfaces;
     using Models.StatusLog;
-    using Repositories.Interfaces;
     using System.Xml;
     using Fanex.Common.Extensions;
     using Fanex.Common;

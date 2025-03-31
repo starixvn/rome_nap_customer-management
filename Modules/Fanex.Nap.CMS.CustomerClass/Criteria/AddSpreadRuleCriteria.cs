@@ -17,11 +17,11 @@
             Enable = request.Enable;
         }
 
-        public int PolicyID { get; }
+        public int PolicyID { get; set; }
         public string PolicyTitle { get; }
         public int SportType { get; }
         public decimal Spread { get; }
-        public string CustomerClasses { get; }
+        public string CustomerClasses { get;}
         public string Currencies { get; }
         public string Sites { get; }
         public string Platforms { get; }

@@ -8,7 +8,6 @@
     using Framework.Command;
     using Interfaces;
     using Models.CreditCollectionSummary;
-    using Repositories.Interfaces;
 
     public class CreditCollectionSummaryService : CMSBaseService, ICreditCollectionSummaryService
     {

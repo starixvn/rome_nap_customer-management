@@ -928,10 +928,6 @@
       <Project>{91147E01-1591-4BC1-852E-0A9FA06B8475}</Project>
       <Name>Fanex.Nap.CMS.NotificationSetting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Modules\Fanex.Nap.CMS.PayoutManagement\Fanex.Nap.CMS.PayoutManagement.csproj">
-      <Project>{FD9DD3AC-71B9-42C1-9E8D-50BFE6F76F24}</Project>
-      <Name>Fanex.Nap.CMS.PayoutManagement</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.TurnoverControl\Fanex.Nap.CMS.TurnoverControl.csproj">
       <Project>{254A702A-C370-4BF6-B200-2DEDE2D58AC5}</Project>
       <Name>Fanex.Nap.CMS.TurnoverControl</Name>

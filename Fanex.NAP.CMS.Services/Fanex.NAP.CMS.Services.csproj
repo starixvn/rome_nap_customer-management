@@ -258,10 +258,6 @@
       <Project>{34A16B0A-8DBE-41C0-B46B-4E226D3B9F59}</Project>
       <Name>Fanex.NAP.CMS.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.CMS.Repositories\Fanex.NAP.CMS.Repositories.csproj">
-      <Project>{7FBEED0D-8FC5-4A37-B458-2D5D85A17EF1}</Project>
-      <Name>Fanex.NAP.CMS.Repositories</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CMS.ViewModels\Fanex.NAP.CMS.ViewModels.csproj">
       <Project>{88808F97-D8C0-45BE-80D8-9C814A5CFDE6}</Project>
       <Name>Fanex.NAP.CMS.ViewModels</Name>

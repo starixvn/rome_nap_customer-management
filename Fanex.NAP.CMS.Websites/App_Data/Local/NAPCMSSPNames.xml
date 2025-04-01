@@ -123,8 +123,6 @@
   <Function Name="Status Log">
     <Setting Key="NAP_StatusLog_CreditCollection_List" SpName="NAP_StatusLog_CreditCollection_List" DbName="DBLOG.bodb_CustomerLog.wsv_nap">
 				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
-				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
-				<Mapping DataField="ActionNameEN" ObjectProperty="Action" />
     </Setting>
   </Function>
 </Functions>

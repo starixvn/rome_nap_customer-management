@@ -265,7 +265,7 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
     this.ShowAddAccountPopup = function () {
         oldData = null;
         var form = MainDOMElements.formAccountManager.clone();
-        CMS.modal('Add Bet Restricted - E-Sport Account', form);
+        CMS.modal('Add Bet Restricted - E-Sports Account', form);
         cacheDOMElements();
         bindingEvents();
         CachedDOMElements.selPopupAccLiveBetAccept.combobox();
@@ -281,7 +281,7 @@ Fanex.CMS.BetRestrictionESports.AccountManagement = function () {
         oldData = null;
         CMS.disableInput();
         var form = MainDOMElements.formAccountManager.clone();
-        CMS.modal('Edit Bet Restricted - E-Sport Account', form);
+        CMS.modal('Edit Bet Restricted - E-Sports Account', form);
         $('#popupAccUsernameRequired').remove();
         cacheDOMElements();
         bindingEvents();

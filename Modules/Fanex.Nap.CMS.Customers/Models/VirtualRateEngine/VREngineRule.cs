@@ -86,7 +86,7 @@
 
         public byte AdjustmentType { get; set; }
         public decimal AdjustmentValue { get; set; }
-        public byte AccumulatedBalance { get; set; }
+        public bool AccumulatedBalance { get; set; }
         public string AdjustmentCell { get; set; }
 
         public byte Status { get; set; }

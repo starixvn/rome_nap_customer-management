@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -12,7 +11,6 @@
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Newtonsoft.Json;
 
     public interface IBetLimitTypeControlService
     {
@@ -125,12 +123,12 @@
         }
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
-            var leagues = CacheManager.Get<IEnumerable<LeagueGroup>>(CachedLeagues);
+            var leagues = Nap.CMS.Infrastructure.Web.CacheManager.Get<IEnumerable<LeagueGroup>>(CachedLeagues);
 
             if (leagues == null)
             {
                 leagues = DynamicRepository.Fetch<LeagueGroup>(new GetLeagueGroupCriteria(0));
-                CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+                Nap.CMS.Infrastructure.Web.CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 
             return leagues;

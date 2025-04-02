@@ -7,19 +7,16 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
+using System;
+using System.Collections.Generic;
+using Fanex.Data.Repository;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
+using Fanex.NAP.CMS.Core.Web;
+using Fanex.NAP.CMS.Criteria.Common;
+using Fanex.NAP.CMS.Models.Common;
+
 namespace Fanex.NAP.CMS.Services.Implements
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Fanex.Data;
-    using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.Infrastructure.Criteria;
-    using Fanex.NAP.CMS.Core.Web;
-    using Fanex.NAP.CMS.Criteria.Common;
-    using Fanex.NAP.CMS.Models.Common;
-    using Fanex.NAP.CMS.Models.Common;
-
     /// <summary>
     /// Base Service.
     /// </summary>

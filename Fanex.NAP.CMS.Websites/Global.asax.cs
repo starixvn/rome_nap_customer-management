@@ -19,7 +19,6 @@ namespace Fanex.NAP.CMS.Websites
     using System.Web.Routing;
     using Fanex.Caching;
     using Fanex.Data;
-    using Fanex.Data.SqlServer;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
     using ONEbook.UM;
@@ -51,12 +50,12 @@ namespace Fanex.NAP.CMS.Websites
                 .UseHttpContext(new HttpContextHelper());
             GlobalFilters.Filters.Add(new CheckUMFilterAttribute(
                 new MaintenanceService(UMClientManager.RestClient, UMClientManager.CacheService, UMClientManager.UMClientConfigs, UMClientManager.HttpContext), null));
-
-            DbSettingProviderManager.StartNewSession()
-                .WithSqlServer()
-                .UseDefaultDbSettingProvider(ConfigurationManager.AppSettings["StoredProcedurePath"], true)
-                .UseDefaultConnectionStringProvider()
+            
+            DbSettingProviderManager
+                .StartNewSession()
+                .Register(true)
                 .Run();
+            
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

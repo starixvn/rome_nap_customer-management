@@ -18,7 +18,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Core.Web;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Models.Common;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     /// <summary>
     /// Base Service.

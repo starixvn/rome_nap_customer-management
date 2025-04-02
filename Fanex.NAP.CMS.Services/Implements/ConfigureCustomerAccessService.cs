@@ -15,7 +15,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Models.ConfigureCustomerAccess;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     /// <summary>
     /// Access management service.

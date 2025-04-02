@@ -14,12 +14,12 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Web.Mvc;
     using Fanex.NAP.CMS.Core;
     using Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess;
+    using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Command;
 
     /// <summary>
     /// Allow Access Management controller.

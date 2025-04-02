@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Common\BalanceUpDayInfo.cs" />
     <Compile Include="Common\CountryInfo.cs" />
+    <Compile Include="Common\CommandResult.cs" />
     <Compile Include="Common\MatchInfo.cs" />
     <Compile Include="ConfigureCustomerAccess\RequestInfo.cs" />
     <Compile Include="Common\LeagueInfo.cs" />

@@ -12,7 +12,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
     using System.Collections.Generic;
     using Fanex.NAP.CMS.Criteria.ConfigureCustomerAccess;
     using Fanex.NAP.CMS.ViewModels.ConfigureCustomerAccess;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     public interface IConfigureCustomerAccessService
     {

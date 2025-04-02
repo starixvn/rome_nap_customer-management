@@ -16,7 +16,7 @@ namespace Fanex.NAP.CMS.Services.Interfaces
     using Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     public interface IConfigureSMATOByEventService
     {

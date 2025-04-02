@@ -5,7 +5,7 @@
     using System.Linq;
     using Criteria.CreditCollectionSummary;
     using Fanex.Data.Repository;
-    using Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
     using Interfaces;
     using Models.CreditCollectionSummary;
 

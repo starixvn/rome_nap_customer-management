@@ -18,7 +18,7 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.CMS.ViewModels.ConfigureTOBySMA;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     /// <summary>
     /// Configure turnover by SMA controller.

@@ -8,31 +8,29 @@
 
     internal class AssignSiteSettingCriteria : GetDuplicatedSiteSettingCriteria
     {
-        public AssignSiteSettingCriteria(AssignSiteSettingRequest request, bool isOverwrite)
-            : base(request)
+        public AssignSiteSettingCriteria(string policySites, bool isOverwrite)
+            : base(policySites)
         {
             IsOverwrite = isOverwrite;
-            UserId = request.UserId;
-            IP = request.IP;
         }
 
         public AssignSiteSettingCriteria(
-            IEnumerable<SiteSettingExcel> siteSettingExcels,
+            string policySites,
             bool isOverwride,
             int userId,
-            string ip)
+            string ip) : base(policySites)
         {
-            PolicySites = ToXml(siteSettingExcels);
+            PolicySites = policySites;
             IsOverwrite = isOverwride;
             UserId = userId;
             IP = ip;
         }
 
-        public bool IsOverwrite { get; }
+        public bool IsOverwrite { get; set; }
 
-        public int UserId { get; }
+        public int UserId { get; set; }
 
-        public string IP { get; }
+        public string IP { get; set; }
 
         public byte ActionID { get; set; }
         
@@ -40,21 +38,6 @@
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicySiteIns_Loop";
 
-        private static string ToXml(IEnumerable<SiteSettingExcel> siteSettingExcels)
-        {
-            var xmlBuilder = new StringBuilder();
-
-            foreach (var item in siteSettingExcels)
-            {
-                AppendElement(
-                    xmlBuilder,
-                    item.PolicyId,
-                    string.Join(",", item.Sites.Distinct()),
-                    string.Join(",", item.Currencies.Distinct()),
-                    string.Join(",", item.Platforms.Distinct()));
-            }
-
-            return InsertRoot(xmlBuilder.ToString());
-        }
+        
     }
 }

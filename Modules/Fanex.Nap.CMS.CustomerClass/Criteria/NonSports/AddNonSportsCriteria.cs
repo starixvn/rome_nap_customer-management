@@ -2,10 +2,6 @@
 {
     internal class AddNonSportsCriteria : CustomerClassCommandBaseCriteria
     {
-        internal AddNonSportsCriteria(int userId, string ip) : base(userId, ip)
-        {
-        }
-
         public int PolicyID { get; set; }
 
         public string PolicyTitle { get; set; }

@@ -1,30 +1,18 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
     internal class GetRuleListCriteria : QueryCriteriaBase
     {
-        public GetRuleListCriteria(SearchRuleRequest request, string leagueGroups, string sportTypes)
-        {
-            CustomerClass = request.CustomerClass ?? string.Empty;
-            CustomerClassDetail = request.CustomerClassDetail ?? string.Empty;
-            SportTypes = sportTypes;
-            LeagueGroup = request.LeagueGroups ?? string.Empty;
-            IsLive = request.IsLive;
-            LeagueGroups = leagueGroups;
-        }
+        public string CustomerClass { get; set; }
 
-        public string CustomerClass { get; }
+        public string CustomerClassDetail { get; set; }
 
-        public string CustomerClassDetail { get; }
+        public string SportTypes { get; set; }
 
-        public string SportTypes { get; }
+        public string LeagueGroup { get; set; }
 
-        public string LeagueGroup { get; }
+        public string LeagueGroups { get; set; }
 
-        public string LeagueGroups { get; }
-
-        public byte IsLive { get; }
+        public byte IsLive { get; set; }
 
         public override string GetSettingKey()
             => "NAP_CM_CustomerClassRuleSearch";

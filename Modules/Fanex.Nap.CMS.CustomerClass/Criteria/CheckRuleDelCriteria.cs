@@ -6,9 +6,9 @@ namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
     internal class CheckRuleDelCriteria : CommandBaseCriteria
     {
-        public CheckRuleDelCriteria(DeleteRuleRequest request)
+        public CheckRuleDelCriteria(string ruleIds)
         {
-            RuleIDs = request.RuleIDs;
+            RuleIDs = ruleIds;
         }
 
         public bool IsTest { get; } = AppSettings.IsTest;

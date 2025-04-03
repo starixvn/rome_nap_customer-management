@@ -1,31 +1,16 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
     internal class AddSpreadRuleCriteria : CustomerClassCommandBaseCriteria
     {
-        internal AddSpreadRuleCriteria(AddEditSpreadRuleRequest request, int userId, string ip) : base(userId, ip)
-        {
-            PolicyID = request.PolicyID;
-            PolicyTitle = request.PolicyTitle;
-            SportType = request.SportType;
-            Spread = request.Spread;
-            CustomerClasses = request.CustomerClass;
-            Currencies = request.Currencies;
-            Sites = request.Sites;
-            Platforms = request.Platforms;
-            Enable = request.Enable;
-        }
-
         public int PolicyID { get; set; }
-        public string PolicyTitle { get; }
-        public int SportType { get; }
-        public decimal Spread { get; }
-        public string CustomerClasses { get;}
-        public string Currencies { get; }
-        public string Sites { get; }
-        public string Platforms { get; }
-        public bool Enable { get; }
+        public string PolicyTitle { get; set; }
+        public int SportType { get; set; }
+        public decimal Spread { get; set; }
+        public string CustomerClasses { get; set; }
+        public string Currencies { get; set; }
+        public string Sites { get; set; }
+        public string Platforms { get; set; }
+        public bool Enable { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadIns";

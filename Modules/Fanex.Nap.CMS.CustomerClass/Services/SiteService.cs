@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
@@ -45,7 +46,15 @@
 
         public PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request, string sportTypes)
         {
-            var criteria = new GetSiteSettingCriteria(request, sportTypes);
+            var criteria = new GetSiteSettingCriteria
+            {
+                Site = request.Sites ?? string.Empty,
+                PolicyId = request.PolicyId,
+                Platform = request.Platforms ?? string.Empty,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                SportTypes = sportTypes
+            };
             var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
             return new PagedSiteSetting(criteria.TotalItems, BuildSiteSettings(siteSettings));
@@ -53,7 +62,9 @@
 
         public IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request)
         {
-            var siteSettings = DynamicRepository.Fetch<SiteSetting>(new GetDuplicatedSiteSettingCriteria(request));
+            var criteria = new GetDuplicatedSiteSettingCriteria(ToDuplicatedSiteSettingXml(request));
+
+            var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
             return BuildSiteSettings(siteSettings);
         }
@@ -78,17 +89,34 @@
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite)
-            => DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
+        {
+            var criteria = new AssignSiteSettingCriteria(ToDuplicatedSiteSettingXml(request), isOverwrite)
+            {
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.AssignSiteSettingSuccessfully);
+        }
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
-            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip) { ActionID = 1 };
+            var criteria = new AssignSiteSettingCriteria(ToAssignSiteSettingXml(siteSettingExcels), isOverwrite, userId, ip) { ActionID = 1 };
 
             return DoAction(criteria, Labels.UploadSiteWarning);
         }
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
-            => DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
+        {
+            var criteria = new DeleteSiteCriteria
+            {
+                PolicySites = ToDeleteSiteXml(request),
+                UserId = userId,
+                IP = ip
+            };
+
+            return DoAction(criteria, Labels.DeleteSiteSettingSuccessfully);
+        }
 
         public ProgressResponse GetUploadProgress(int userId)
         {
@@ -110,6 +138,69 @@
             }
 
             return new ProgressResponse(criteria.CountBatch, criteria.InitialBatch);
+        }
+        private static string ToDeleteSiteXml(DeleteSiteSettingRequest request)
+        {
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in request.SiteSettings)
+            {
+                xmlBuilder
+                    .Append("<r PolicyID=\"").Append(item.PolicyId).Append("\"")
+                    .Append(" Site=\"").Append(item.Site).Append("\"")
+                    .Append(" Currency=\"").Append(item.Currency).Append("\"")
+                    .Append(" Platform=\"").Append(item.Platform).Append("\"/>");
+            }
+
+            xmlBuilder.Append("</ROOT>");
+            return xmlBuilder.ToString();
+        }
+
+        private static string ToAssignSiteSettingXml(IEnumerable<SiteSettingExcel> siteSettingExcels)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var item in siteSettingExcels)
+            {
+                AppendElement(
+                    xmlBuilder,
+                    item.PolicyId,
+                    string.Join(",", item.Sites.Distinct()),
+                    string.Join(",", item.Currencies.Distinct()),
+                    string.Join(",", item.Platforms.Distinct()));
+            }
+
+            return InsertRoot(xmlBuilder.ToString());
+        }
+
+        private static string ToDuplicatedSiteSettingXml(AssignSiteSettingRequest request)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var item in request.SiteCurrencies)
+            {
+                AppendElement(xmlBuilder, request.PolicyId, item.Sites, item.Currencies, item.Platforms);
+            }
+
+            return InsertRoot(xmlBuilder.ToString());
+        }
+
+        protected static string InsertRoot(string xml)
+            => $"<ROOT>{xml}</ROOT>";
+
+        protected static void AppendElement(
+            StringBuilder xmlBuilder,
+            int policyId,
+            string sites,
+            string currencies,
+            string platforms)
+        {
+            xmlBuilder
+                .Append("<r PolicyID=\"").Append(policyId).Append("\"")
+                .Append(" Site=\"").Append(sites).Append("\"")
+                .Append(" Currency=\"").Append(currencies).Append("\"")
+                .Append(" Platform=\"").Append(platforms).Append("\"/>");
         }
     }
 }

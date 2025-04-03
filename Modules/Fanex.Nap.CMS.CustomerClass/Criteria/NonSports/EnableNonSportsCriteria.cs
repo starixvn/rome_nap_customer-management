@@ -2,10 +2,6 @@
 {
     internal class EnableNonSportsCriteria : CustomerClassCommandBaseCriteria
     {
-        internal EnableNonSportsCriteria(int userId, string ip) : base(userId, ip)
-        {
-        }
-
         public int PolicyID { get; set; }
 
         public bool Enable { get; set; }

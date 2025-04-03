@@ -30,7 +30,17 @@
 
         public AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP)
         {
-            var criteria = new AddUtilityOfferCriteria(request, userId, iP);
+            var criteria = new AddUtilityOfferCriteria
+            {
+                PolicyID = request.PolicyId,
+                PolicyTitle = request.PolicyTitle,
+                CustomerClasses = request.CustomerClass,
+                Currencies = request.Currencies,
+                Sites = request.Sites,
+                UtilityOffering = request.UtilityOffering,
+                UserId = userId,
+                IP = iP
+            };
             DynamicRepository.Execute(criteria);
             var message = criteria.ErrCode == 0
                 ? Labels.AddUtilityOfferingSuccessfully ?? criteria.ErrMsg
@@ -40,9 +50,32 @@
         }
 
         public Result UpdateOffer(AddEditUtilityOfferRequest request, int userId, string iP)
-            => DoAction(new EditUtilityOfferCriteria(request, userId, iP), Labels.EditUtilityOfferSuccessfully);
+        {
+            var criteria = new EditUtilityOfferCriteria
+            {
+                PolicyID = request.PolicyId,
+                PolicyTitle = request.PolicyTitle,
+                CustomerClasses = request.CustomerClass,
+                Currencies = request.Currencies,
+                Sites = request.Sites,
+                UtilityOffering = request.UtilityOffering,
+                UserId = userId,
+                IP = iP
+            };
+
+            return DoAction(criteria, Labels.EditUtilityOfferSuccessfully);
+        }
 
         public Result DeleteOffer(int policyID, int userId, string iP)
-            => DoAction(new DeleteUtilityOfferCriteria(policyID, userId, iP), Labels.DeleteUtilityOfferingSuccessfully);
+        {
+            var criteria = new DeleteUtilityOfferCriteria
+            {
+                PolicyID = policyID,
+                UserId = userId,
+                IP = iP
+            };
+
+            return DoAction(criteria, Labels.DeleteUtilityOfferingSuccessfully);
+        }
     }
 }

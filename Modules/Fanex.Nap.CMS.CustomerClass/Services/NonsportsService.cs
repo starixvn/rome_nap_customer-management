@@ -34,14 +34,16 @@
 
         public AddOfferResponse AddOffer(AddEditNonsportsRequest request, int userId, string iP)
         {
-            var criteria = new AddNonSportsCriteria(userId, iP)
+            var criteria = new AddNonSportsCriteria
             {
                 CustomerClasses = request.CustomerClass,
                 Sites = request.Sites,
                 Products = request.Products,
                 PolicyTitle = request.PolicyTitle,
                 MaxBet = request.MaxBet,
-                Enable = request.IsEnable
+                Enable = request.IsEnable,
+                UserId = userId,
+                IP = iP
             };
             DynamicRepository.Execute(criteria);
             var message = criteria.ErrCode == 0
@@ -53,10 +55,12 @@
 
         public Result DeleteOffer(int policyID, IEnumerable<IdNameModel> allproducts, int userId, string iP)
         {
-            var criteria = new DeleteNonSportsCriteria(userId, iP)
+            var criteria = new DeleteNonSportsCriteria
             {
                 PolicyID = policyID,
-                AllProducts = GetProductIds(allproducts)
+                AllProducts = GetProductIds(allproducts),
+                UserId = userId,
+                IP = iP
             };
 
             return DoAction(criteria, Labels.DeleteNonSportSuccessfully);
@@ -64,10 +68,12 @@
 
         public Result EnableOffer(EnableOfferingRequest request, int userId, string iP)
         {
-            var criteria = new EnableNonSportsCriteria(userId, iP)
+            var criteria = new EnableNonSportsCriteria
             {
                 PolicyID = request.PolicyId,
-                Enable = request.Enable
+                Enable = request.Enable,
+                UserId = userId,
+                IP = iP
             };
 
             return DoAction(criteria, Labels.EditNonSportsSuccessfully);
@@ -88,7 +94,7 @@
 
         public Result UpdateOffer(AddEditNonsportsRequest request, IEnumerable<IdNameModel> allproducts, int userId, string iP)
         {
-            var criteria = new EditNonSportsCriteria(userId, iP)
+            var criteria = new EditNonSportsCriteria
             {
                 CustomerClasses = request.CustomerClass,
                 Sites = request.Sites,
@@ -97,7 +103,9 @@
                 PolicyTitle = request.PolicyTitle,
                 MaxBet = request.MaxBet,
                 Enable = request.IsEnable,
-                AllProducts = GetProductIds(allproducts)
+                AllProducts = GetProductIds(allproducts),
+                UserId = userId,
+                IP = iP
             };
 
             return DoAction(criteria, Labels.EditNonSportsSuccessfully);

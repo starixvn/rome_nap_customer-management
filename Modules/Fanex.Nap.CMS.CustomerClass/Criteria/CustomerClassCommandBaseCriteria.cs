@@ -5,15 +5,10 @@ namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
     internal class CustomerClassCommandBaseCriteria : CommandBaseCriteria
     {
-        protected CustomerClassCommandBaseCriteria(int userId, string ip)
-        {
-            UserId = userId;
-            IP = ip;
-        }
         public bool IsTest { get; } = AppSettings.IsTest;
 
-        public int UserId { get; }
+        public int UserId { get; set; }
 
-        public string IP { get; }
+        public string IP { get; set; }
     }
 }

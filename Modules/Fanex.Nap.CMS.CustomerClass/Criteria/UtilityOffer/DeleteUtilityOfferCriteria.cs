@@ -2,12 +2,7 @@
 {
     internal class DeleteUtilityOfferCriteria : CustomerClassCommandBaseCriteria
     {
-        internal DeleteUtilityOfferCriteria(int policyId, int userId, string ip) : base(userId, ip)
-        {
-            PolicyID = policyId;
-        }
-
-        public int PolicyID { get; }
+        public int PolicyID { get; set; }
 
         public override bool IsValid()
             => PolicyID > 0;

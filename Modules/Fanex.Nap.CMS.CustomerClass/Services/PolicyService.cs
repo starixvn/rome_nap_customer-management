@@ -143,22 +143,57 @@
         }
 
         public Result AddPolicy(AddPolicyRequest request)
-            => DoAction(new AddPolicyCriteria(request), Labels.AddPolicySuccessfully);
+        {
+            var criteria = new AddPolicyCriteria
+            {
+                SportType = request.SportType,
+                PolicyTitle = request.PolicyTitle,
+                RuleIds = request.RuleIds,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.AddPolicySuccessfully);
+        }
 
         public Result EditPolicy(int policyId, AddPolicyRequest request)
-            => DoAction(new EditPolicyCriteria(policyId, request), Labels.EditPolicySuccessfully);
+        {
+            var criteria = new EditPolicyCriteria
+            {
+                SportType = request.SportType,
+                PolicyTitle = request.PolicyTitle,
+                RuleIds = request.RuleIds,
+                PolicyId = policyId,
+                UserId = request.UserId,
+                IP = request.IP
+
+            };
+            return DoAction(criteria, Labels.EditPolicySuccessfully);
+        }
 
 
         public CheckPolicyResponse CheckPolicies(DeletePolicyRequest request)
         {
-            var criteria = new CheckPolicyDelCriteria(request);
+            var criteria = new CheckPolicyDelCriteria
+            {
+                Policies = request.Policies
+            };
             var policies = DynamicRepository.Fetch<Policy>(criteria).Select(plc => plc.PolicyTitle);
 
             return new CheckPolicyResponse(string.Join(", ", policies), criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result DeletePolicies(DeletePolicyRequest request)
-            => DoAction(new DeletePolicyCriteria(request), Labels.DeletePolicySuccessfully);
+        {
+            var criteria = new DeletePolicyCriteria
+            {
+                Policies = request.Policies,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.DeletePolicySuccessfully);
+        }
 
         private IEnumerable<Rule> SortRule(IEnumerable<Rule> rules , string sortOrder, string fieldSort)
         {

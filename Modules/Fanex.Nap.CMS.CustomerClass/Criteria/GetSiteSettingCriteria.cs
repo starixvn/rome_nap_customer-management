@@ -1,19 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
     internal class GetSiteSettingCriteria : QueryCriteriaBase
     {
-        public GetSiteSettingCriteria(GetSiteSettingRequest request, string sportTypes)
-        {
-            Site = request.Sites ?? string.Empty;
-            PolicyId = request.PolicyId;
-            Platform = request.Platforms ?? string.Empty;
-            PageIndex = request.PageIndex;
-            PageSize = request.PageSize;
-            SportTypes = sportTypes;
-        }
-
         public string Site { get; set; }
 
         public int PolicyId { get; set; }

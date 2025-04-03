@@ -9,7 +9,7 @@
             UserId = userId;
         }
 
-        public int UserId { get; private set; }
+        public int UserId { get; set; }
 
         public override string GetSettingKey() => "NAP_BLControl_SiteByPermissionSelect";
 

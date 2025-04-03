@@ -1,38 +1,20 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 {
     using Fanex.Data.Repository;
-    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-
     public class CheckVREngineRuleCriteria : NonQueryCommand
     {
-        public CheckVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonSportList)
-        {
-            CustomerClassList = vm.CustomerClass;
-            CustomerClassDetailList = vm.CustomerClassDetail;
-            CCSportTypeList = vm.CCSportType;
-            SporttypeList = vm.SportType;
-            BettypeList = vm.BetType;
-            LeagueGroupList = vm.LeagueGroup;
-            LeagueList = vm.League;
-            DateOfWeekList = vm.DayOfWeek;
-            CurrencyIDList = vm.CurrencyIDList;
-            Criteria_NotApply = vm.CriteriaNotApply;
-            SiteIDList = vm.Site;
-            JsonSportList = jsonSportList;
-        }
-
-        public string CustomerClassList { get; }
-        public string CustomerClassDetailList { get; }
-        public string CCSportTypeList { get; }
-        public string SporttypeList { get; }
-        public string SiteIDList { get; }
-        public string BettypeList { get; }
-        public string LeagueGroupList { get; }
-        public string LeagueList { get; }
-        public string DateOfWeekList { get; }
+        public string CustomerClassList { get; set; }
+        public string CustomerClassDetailList { get; set; }
+        public string CCSportTypeList { get; set; }
+        public string SporttypeList { get; set; }
+        public string SiteIDList { get; set; }
+        public string BettypeList { get; set; }
+        public string LeagueGroupList { get; set; }
+        public string LeagueList { get; set; }
+        public string DateOfWeekList { get; set; }
         public string CurrencyIDList { get; set; }
-        public string Criteria_NotApply { get; }
-        public string JsonSportList { get; }
+        public string Criteria_NotApply { get; set; }
+        public string JsonSportList { get; set; }
         public int ErrorCode { get; set; }
         public string ErrorMsg { get; set; }
         public override string GetSettingKey()

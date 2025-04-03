@@ -26,8 +26,6 @@
 
         public string AccStatus { get; set; }
 
-        public bool Status { get; set; }
-
         public bool IsVerifyOTP { get; set; }
 
         public int CusID { get; set; }

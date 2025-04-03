@@ -26,7 +26,16 @@
         }
 
         public IEnumerable<UtilityOfferingModel> GetOfferings(SearchUtilityOfferingRequest request)
-            => DynamicRepository.Fetch<UtilityOfferingModel>(new GetUtilityOfferCriteria(request));
+        {
+            var criteria = new GetUtilityOfferCriteria(request)
+            {
+                CustomerClasses = request.CustomerClass,
+                Sites = request.Site,
+                Currencies = request.Currency
+            };
+
+            return DynamicRepository.Fetch<UtilityOfferingModel>(criteria);
+        }
 
         public AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP)
         {

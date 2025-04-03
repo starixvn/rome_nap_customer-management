@@ -2,8 +2,8 @@
 {
     public class Product
     {
-        public int ProductId { get; private set; }
+        public int ProductId { get; set; }
 
-        public string ProductName { get; private set; }
+        public string ProductName { get; set; }
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web.UI.WebControls.Expressions;
     using Fanex.Nap.CMS.Customers.Criteria.PossessStatistics;
     using Fanex.Nap.CMS.Customers.Params.PossessStatistics;
     using Fanex.Nap.CMS.Customers.Resources;
@@ -49,13 +50,15 @@
 
             Parallel.ForEach(param.SelectedCustomers, customer =>
             {
-                var criteria = new UpdateDangerLevelCritera(
-                    customer.Key,
-                    param.UpdateDownline,
-                    param.DangerType,
-                    param.DangerLevel,
-                    param.UserId,
-                    param.IP);
+                var criteria = new UpdateDangerLevelCritera
+                {
+                    CustId = customer.Key,
+                    UpdateDownline = param.UpdateDownline,
+                    DangerType = param.DangerType,
+                    DangerLevel = param.DangerLevel,
+                    UserId = param.UserId,
+                    IP = param.IP
+                };
 
                 var result = DoAction(criteria);
 
@@ -75,7 +78,15 @@
 
         public Result UpdateMonitorStatus(UpdateMonitorStatusParam param)
         {
-            var result = DoAction(new UpdateMonitorStatusCriteria(param.CustomerList, param.IsMonitored, param.UserId, param.IP));
+            var criteria = new UpdateMonitorStatusCriteria
+            {
+                CustIdList = param.CustomerList,
+                IsMonitorPT = param.IsMonitored,
+                UserId = param.UserId,
+                IP = param.IP
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {

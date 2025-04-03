@@ -4,15 +4,9 @@
 
     public class NonQueryBaseCriteria : CommandBaseCriteria
     {
-        public NonQueryBaseCriteria(int userId, string ip)
-        {
-            UserId = userId;
-            IP = ip;
-        }
+        public int UserId { get; set; }
 
-        public int UserId { get; }
-
-        public string IP { get; }
+        public string IP { get; set; }
 
         public override string GetSettingKey()
         {

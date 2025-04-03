@@ -73,13 +73,14 @@
                 SubAccID = paramModel.SubAccId
             };
 
-            var (chatBotModel, functionConfigs) = dynamicRepository.FetchMultiple<ChatBotModel, ChatBotFunctionConfig>(criteria);
+            var (chatBotModel, functionConfigs) = dynamicRepository.FetchMultiple<ChatBotConfigModelItem, ChatBotFunctionConfig>(criteria);
 
             return new ChatBotsConfigModel { ChatBotModel = chatBotModel.FirstOrDefault(), FunctionConfigs = functionConfigs };
         }
 
         public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel, int customerId)
         {
+            var hasSpecialPer = HasSpecialSitePermission(customerId);
             var criteria = new GetChatBotsCriteria
             {
                 ChatID = paramModel.ChatID,
@@ -92,7 +93,7 @@
                 Status = paramModel.AccStatus,
                 PageIndex = paramModel.PageIndex + 1,
                 PageSize = paramModel.PageSize,
-                IsSpecialSite = HasSpecialSitePermission(customerId),
+                IsSpecialSite = hasSpecialPer,
                 BotIDs = paramModel.BotIDs
             };
 

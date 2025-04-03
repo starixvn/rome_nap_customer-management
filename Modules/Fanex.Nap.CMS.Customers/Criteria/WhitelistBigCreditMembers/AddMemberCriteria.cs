@@ -4,6 +4,8 @@ namespace Fanex.Nap.CMS.Customers.Criteria.WhitelistBigCreditMembers
 {
     public class AddMemberCriteria : CriteriaBase
     {
+        public AddMemberCriteria() { }
+
         public AddMemberCriteria(string usernames, int userId, string ip)
             : this(usernames, 1, userId, ip)
         {

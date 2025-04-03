@@ -4,24 +4,12 @@
 
     public class NonQueryCriteria : CommandBaseCriteria
     {
-        public NonQueryCriteria(
-            bool isGroupHeadline,
-            short sportType,
-            int userId,
-            string ip)
-        {
-            IsGroupHeadline = isGroupHeadline;
-            SportType = sportType;
-            UserId = userId;
-            IP = ip;
-        }
+        public bool IsGroupHeadline { get; set; }
 
-        public bool IsGroupHeadline { get; }
+        public short SportType { get; set; }
 
-        public short SportType { get; }
+        public int UserId { get; set; }
 
-        public int UserId { get; }
-
-        public string IP { get; }
+        public string IP { get; set; }
     }
 }

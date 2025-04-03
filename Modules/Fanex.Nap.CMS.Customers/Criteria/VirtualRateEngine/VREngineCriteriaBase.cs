@@ -4,15 +4,9 @@
 
     public class VREngineCriteriaBase : NonQueryCommand
     {
-        protected VREngineCriteriaBase(int userId, string ip)
-        {
-            UserId = userId;
-            IP = ip;
-        }
+        public int UserId { get; set; }
 
-        public int UserId { get; }
-
-        public string IP { get; }
+        public string IP { get; set; }
 
         public int ErrorCode { get; set; }
 

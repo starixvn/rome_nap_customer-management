@@ -143,7 +143,14 @@
 
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
-            var result = DoAction(new RemoveDomainCriteria(domains, userId, ip));
+            var criteria = new RemoveDomainCriteria
+            {
+                DomainList = BuildDomainListXml(domains),
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
@@ -151,6 +158,12 @@
             }
 
             return result;
+        }
+        private static string BuildDomainListXml(IdNameModel[] domains)
+        {
+            var domainList = domains.Select(domain => $"<Domain id=\"{domain.Id}\" d=\"{domain.Name}\"/>");
+
+            return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }
     }
 }

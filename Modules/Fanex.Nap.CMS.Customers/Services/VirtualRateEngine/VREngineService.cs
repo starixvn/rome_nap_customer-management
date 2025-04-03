@@ -93,7 +93,7 @@
 
         public VREngineRule GetRule(int ruleId)
         {
-            var rule = DynamicRepository.Get<VREngineRule>(new GetVREngineRuleCriteria(ruleId));
+            var rule = DynamicRepository.Get<VREngineRule>(new GetVREngineRuleCriteria{ RuleId = ruleId});
 
             if (rule != null && !string.IsNullOrWhiteSpace(rule.EnabledCriteria))
             {
@@ -353,39 +353,141 @@
         public Result AddNewRule(AddNewRuleViewModel viewModel)
         {
             var jsonSportBetType = GetSportBettypeMatrix();
-            var criteria = new CheckVREngineRuleCriteria(viewModel, jsonSportBetType);
+            var criteria = new CheckVREngineRuleCriteria
+            {
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                DateOfWeekList = viewModel.DayOfWeek,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                SiteIDList = viewModel.Site,
+                JsonSportList = jsonSportBetType
+            };
+
             DynamicRepository.Execute(criteria);
             var resultCheck = new Result(criteria.ErrorCode, criteria.ErrorMsg);
             if (!resultCheck.IsSuccess)
             {
                 return resultCheck;
             }
+            var addNewCriteria = new AddNewVREngineRuleCriteria
+            {
+                RuleName = viewModel.RuleTitle,
+                Priority = viewModel.PriorityOrder,
+                SiteType = viewModel.SiteType,
+                SiteIDList = viewModel.Site,
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                VR_From = viewModel.VRFrom,
+                VR_To = viewModel.VRTo,
+                VRStatus = 2,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LiveIndicator = viewModel.LiveIndicator,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                Betfrom = viewModel.Betfrom,
+                StakeRM_From = viewModel.StakeFrom,
+                StakeRM_To = viewModel.StakeTo,
+                DateOfWeekList = viewModel.DayOfWeek,
+                BeginTime = viewModel.BeginTime,
+                EndTime = viewModel.EndTime,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Adjustmenttype = viewModel.AdjustmentType,
+                AdjustmentValue = viewModel.AdjustmentValue,
+                AccumulatedBalance = viewModel.AccumulatedBalance,
+                Status = viewModel.Active,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                Enabled_Columns = viewModel.EnabledColumns,
+                JsonCheckData = resultCheck.Message,
+                UserId = viewModel.UserId,
+                IP = viewModel.IP
+            };
 
-            return ExecuteNonQuery(
-                   new AddNewVREngineRuleCriteria(viewModel, resultCheck.Message),
-                   VREngineResource.AddedNewRuleSuccessfully);
+            return ExecuteNonQuery(addNewCriteria, VREngineResource.AddedNewRuleSuccessfully);
         }
 
         public Result UpdateRule(int ruleId, AddNewRuleViewModel viewModel)
         {
 
             var jsonSportBetType = GetSportBettypeMatrix();
-            var criteria = new CheckVREngineRuleCriteria(viewModel, jsonSportBetType);
+            var criteria = new CheckVREngineRuleCriteria
+            {
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                DateOfWeekList = viewModel.DayOfWeek,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                SiteIDList = viewModel.Site,
+                JsonSportList = jsonSportBetType
+            };
             var checkResults = DynamicRepository.Fetch<CheckVREngineRuleResult>(criteria);
             if (criteria.ErrorCode != 0)
             {
                 return new Result(criteria.ErrorCode, criteria.ErrorMsg);
             }
 
-            return ExecuteNonQuery(
-                new UpdateVREngineRuleCriteria(ruleId, viewModel, JsonConvert.SerializeObject(checkResults)),
-                VREngineResource.UpdatedRuleSuccessfully);
+            var editCriteria = new UpdateVREngineRuleCriteria
+            {
+                RuleId = ruleId,
+                RuleName = viewModel.RuleTitle,
+                Priority = viewModel.PriorityOrder,
+                SiteType = viewModel.SiteType,
+                SiteIDList = viewModel.Site,
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                VR_From = viewModel.VRFrom,
+                VR_To = viewModel.VRTo,
+                VRStatus = 2,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LiveIndicator = viewModel.LiveIndicator,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                Betfrom = viewModel.Betfrom,
+                StakeRM_From = viewModel.StakeFrom,
+                StakeRM_To = viewModel.StakeTo,
+                DateOfWeekList = viewModel.DayOfWeek,
+                BeginTime = viewModel.BeginTime,
+                EndTime = viewModel.EndTime,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Adjustmenttype = viewModel.AdjustmentType,
+                AdjustmentValue = viewModel.AdjustmentValue,
+                AccumulatedBalance = viewModel.AccumulatedBalance,
+                Status = viewModel.Active,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                Enabled_Columns = viewModel.EnabledColumns,
+                JsonCheckData = JsonConvert.SerializeObject(checkResults),
+                UserId = viewModel.UserId,
+                IP = viewModel.IP
+            };
+
+            return ExecuteNonQuery(editCriteria, VREngineResource.UpdatedRuleSuccessfully);
         }
 
         public Result DeleteRule(int ruleId, int userId, string ip)
-            => ExecuteNonQuery(
-                new DeleteVREngineRuleCriteria(ruleId, userId, ip),
-                VREngineResource.DeletedRuleSuccessfully);
+        {
+            var criteria = new DeleteVREngineRuleCriteria
+            {
+                RuleId = ruleId,
+                UserId = userId,
+                IP = ip
+            };
+
+            return ExecuteNonQuery(criteria, VREngineResource.DeletedRuleSuccessfully);
+        }
 
         #region Helper methods
 

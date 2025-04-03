@@ -6,14 +6,11 @@ namespace Fanex.Nap.CMS.CustomerClass.Criteria.UtilityOffer
     {
         public GetUtilityOfferCriteria(SearchUtilityOfferingRequest request)
         {
-            CustomerClasses = request.CustomerClass;
-            Sites = request.Site;
-            Currencies = request.Currency;
         }
 
-        public string CustomerClasses { get; }
-        public string Sites { get; }
-        public string Currencies { get; }
+        public string CustomerClasses { get; set; }
+        public string Sites { get; set; }
+        public string Currencies { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassUtilityOfferSel";

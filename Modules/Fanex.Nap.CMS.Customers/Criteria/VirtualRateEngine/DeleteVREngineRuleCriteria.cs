@@ -2,13 +2,7 @@
 {
     public class DeleteVREngineRuleCriteria : VREngineCriteriaBase
     {
-        public DeleteVREngineRuleCriteria(int ruleId, int userId, string ip)
-            : base(userId, ip)
-        {
-            RuleId = ruleId;
-        }
-
-        public int RuleId { get; }
+        public int RuleId { get; set; }
 
         public override string GetSettingKey()
            => "NAP_VREngine_Rule_Delete";

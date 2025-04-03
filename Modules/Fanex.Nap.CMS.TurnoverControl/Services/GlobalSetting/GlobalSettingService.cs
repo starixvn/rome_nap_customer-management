@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Models;
 using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -140,8 +141,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Add(string username, MaxTurnoverItem[] maxTurnovers, bool isGroupHeadline, short sportType, int userId, string ip)
         {
-            var result = DoAction(
-                new AddGlobalSettingCriteria(username, maxTurnovers, isGroupHeadline, sportType, userId, ip));
+            var criteria = new AddGlobalSettingCriteria
+            {
+                Username = username,
+                GlobalSetting = ToMaxTurnOverXml(maxTurnovers),
+                SportType = sportType,
+                IsGroupHeadline = isGroupHeadline,
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
@@ -152,9 +162,38 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
             return result;
         }
 
+        private static string ToMaxTurnOverXml(MaxTurnoverItem[] maxTurnovers)
+        {
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in maxTurnovers)
+            {
+                xmlBuilder.Append(ToMaxTurnOverXml(item));
+            }
+
+            xmlBuilder.Append("</ROOT>");
+
+            return xmlBuilder.ToString();
+        }
+
+        private static string ToMaxTurnOverXml(MaxTurnoverItem item)
+            => $"<GlobalSetting MaxTurnover=\"{item.MaxTurnover}\" ProfileID=\"{item.ProfileId}\"/>";
+
         public Result Edit(UpdateMaxTurnoverParam param, int userId, string ip)
         {
-            var result = DoAction(new EditGlobalSettingCriteria(param, userId, ip));
+            var criteria = new EditGlobalSettingCriteria
+            {
+                CustId = param.CustId,
+                ProfileId = param.ProfileId,
+                MaxTurnover = param.MaxTurnover,
+                IsGroupHeadline = param.IsGroupHeadline,
+                SportType = param.SportType,
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
@@ -167,8 +206,16 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Delete(int custId, bool isGroupHeadline, short sportType, int userId, string ip)
         {
-            var result = DoAction(
-                new DeleteGlobalSettingCriteria(custId, isGroupHeadline, sportType, userId, ip));
+            var criteria = new DeleteGlobalSettingCriteria
+            {
+                CustId = custId,
+                IsGroupHeadline = isGroupHeadline,
+                SportType = sportType,
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
@@ -181,7 +228,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
         public Result Lock(LockSettingParam param, int userId, string ip)
         {
-            var result = DoAction(new LockGlobalSettingCriteria(param, userId, ip));
+            var criteria = new LockGlobalSettingCriteria
+            {
+                CustId = param.CustId,
+                IsGlobalLockTOLimit = param.IsLock,
+                IsGroupHeadline = param.IsGroupHeadline,
+                SportType = param.SportType,
+                UserId = userId,
+                IP = ip,
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {

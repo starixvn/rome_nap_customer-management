@@ -276,7 +276,7 @@
                 }
             }
             if (xmlBuilder.Length == 0) return null;
-            var criteria = new VerifyVirtualRateExcelTemplateCriteria(sportType, sessionId, userId, $"<Rt>{xmlBuilder.ToString()}</Rt>");
+            var criteria = new VerifyVirtualRateExcelTemplateCriteria(sportType, sessionId.ToString(), userId, $"<Rt>{xmlBuilder}</Rt>");
             var errors = DynamicRepository.Fetch<ExcelErrorDTO>(criteria);
             errors.ForEach(e => e.Value = e.Username);
 
@@ -334,7 +334,7 @@
 
         public Result Update(int userId, string ip)
         {
-            var result = DoAction(new UpdateVirtualRateExcelTemplateCriteria(sportType, GetSessionId(), userId, ip));
+            var result = DoAction(new UpdateVirtualRateExcelTemplateCriteria(sportType, GetSessionId().ToString(), userId, ip));
 
             // Ignore disabled account error.
             if (result.IsSuccess || result.Code == DisabledAccountErrCode)

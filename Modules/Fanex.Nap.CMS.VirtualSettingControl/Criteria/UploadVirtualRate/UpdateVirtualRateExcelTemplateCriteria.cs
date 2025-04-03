@@ -7,19 +7,19 @@
     {
         public UpdateVirtualRateExcelTemplateCriteria(
             int sportType,
-            Guid sessionId,
+            string sessionId,
             int userId,
             string ip)
         {
             SportType = sportType;
-            SessionId = sessionId;
+            SessionIdString = sessionId;
             UserId = userId;
             IP = ip;
         }
 
         public int SportType { get; }
 
-        public Guid SessionId { get; }
+        public string SessionIdString { get; }
 
         public int UserId { get; }
 

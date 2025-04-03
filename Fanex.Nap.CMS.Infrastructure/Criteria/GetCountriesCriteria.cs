@@ -5,7 +5,7 @@
     public class GetCountriesCriteria : CriteriaBase
     {
         public override string GetSettingKey()
-            => "Member_GetAllCountry";
+            => "DomainManagement_Member_GetAllCountry";
 
         public override bool IsValid()
             => true;

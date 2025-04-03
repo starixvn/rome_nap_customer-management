@@ -7,19 +7,19 @@
     {
         public VerifyVirtualRateExcelTemplateCriteria(
             int sportType,
-            Guid sessionId,
+            string sessionId,
             int userId,
             string xml)
         {
             SportType = sportType;
-            SessionId = sessionId;
+            SessionIdString = sessionId;
             UserId = userId;
             XML = xml;
         }
 
         public int SportType { get; }
 
-        public Guid SessionId { get; }
+        public string SessionIdString { get; }
 
         public int UserId { get; }
 

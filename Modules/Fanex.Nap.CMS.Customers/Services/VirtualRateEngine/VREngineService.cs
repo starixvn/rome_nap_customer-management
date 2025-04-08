@@ -368,13 +368,14 @@
                 SiteIDList = viewModel.Site,
                 JsonSportList = jsonSportBetType
             };
+            var jsonCheckData = DynamicRepository.Fetch<CheckVREngineRuleResult>(criteria);
 
-            DynamicRepository.Execute(criteria);
             var resultCheck = new Result(criteria.ErrorCode, criteria.ErrorMsg);
             if (!resultCheck.IsSuccess)
             {
                 return resultCheck;
             }
+
             var addNewCriteria = new AddNewVREngineRuleCriteria
             {
                 RuleName = viewModel.RuleTitle,
@@ -405,7 +406,7 @@
                 Status = viewModel.Active,
                 Criteria_NotApply = viewModel.CriteriaNotApply,
                 Enabled_Columns = viewModel.EnabledColumns,
-                JsonCheckData = resultCheck.Message,
+                JsonCheckData = JsonConvert.SerializeObject(jsonCheckData),
                 UserId = viewModel.UserId,
                 IP = viewModel.IP
             };

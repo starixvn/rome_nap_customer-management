@@ -18,6 +18,6 @@
         }
 
         public override bool IsValid()
-            => UserId > 0;
+            => true;
     }
 }

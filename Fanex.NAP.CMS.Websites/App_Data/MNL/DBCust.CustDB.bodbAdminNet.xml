@@ -226,7 +226,10 @@
 			<Mapping DataField="Platform" ObjectProperty="Platforms" />
 			<Mapping DataField="Sites" ObjectProperty="Site" />
 		</Setting>
-		<Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_LM_CustomerClassPolicySiteCheck" SpName="NAP_LM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap">
+			<Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
+			<Mapping DataField="Platform" ObjectProperty="Platforms" />
+		</Setting>
 		<Setting Key="NAP_LM_CustomerClassPolicySiteIns" SpName="NAP_LM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassPolicySiteIns_Loop" SpName="NAP_LM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />

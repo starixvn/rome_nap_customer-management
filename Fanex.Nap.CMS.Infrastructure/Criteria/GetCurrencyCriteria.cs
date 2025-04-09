@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Infrastructure.Criteria
 {
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
-    using Fanex.NAP.Framework.Data;
 
     internal sealed class GetCurrencyCriteria : CriteriaBase
     {
@@ -14,5 +14,8 @@
 
         public override string GetSettingKey()
             => "Acc_ExchangeSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

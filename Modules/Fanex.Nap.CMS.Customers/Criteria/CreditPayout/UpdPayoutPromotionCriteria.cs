@@ -1,9 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.CreditPayout
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using System.Collections.Generic;
 
-    public class UpdPayoutPromotionCriteria : CriteriaBase
+    public class UpdPayoutPromotionCriteria : NonQueryCommand
     {
         [SpParam(Ignored = true)]
         public List<IdUsername> UsernameList { get; set; }
@@ -20,6 +21,9 @@
 
         public override string GetSettingKey()
             => "NAP_PayoutPromotion_Upd";
+
+        public override bool IsValid()
+            => true;
     }
 
     public class IdUsername

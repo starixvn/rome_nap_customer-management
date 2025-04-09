@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotHistory;
 using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotHistory;
-using Fanex.Nap.CMS.ManageChatbots.Repositories.ChatbotHistory;
 using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
 using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
 using System.Linq;
 using Fanex.Nap.CMS.ManageChatbots.Constants;
+using Fanex.Data.Repository;
 
 namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
 {
     public class ChatbotHistoryService : IChatbotHistoryService
     {
-        private readonly IChatbotHistoryRepository repository;
         private readonly IChatBotMappingService chatbotMappingservice;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public ChatbotHistoryService(IChatbotHistoryRepository repository = null, IChatBotMappingService chatbotMappingservice = null)
+        public ChatbotHistoryService(): this(null) { }
+
+        public ChatbotHistoryService(IDynamicRepository dynamicRepository, IChatBotMappingService chatbotMappingservice = null)
         {
-            this.repository = repository ?? new ChatbotHistoryRepository();
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
             this.chatbotMappingservice = chatbotMappingservice ?? new ChatBotMappingService();
         }
         public ChatbotHistoryModel GetChatbotHistories(SearchChatbotHistoryViewModel viewModel, int userId)
@@ -33,7 +35,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
                 chatbotMappingservice.HasSpecialSitePermission(userId),
                 viewModel.PageIndex,
                 viewModel.PageSize);
-            var chatbotHistories = this.repository.GetChatbotHistories(criteria);
+            var chatbotHistories = dynamicRepository.Fetch<ChatbotHistoryItem>(criteria);
 
             return new ChatbotHistoryModel(chatbotHistories, criteria.TotalRows);
         }
@@ -46,7 +48,7 @@ namespace Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory
             };
 
             const int CommonFunctions = 3;
-            functions.AddRange(repository.GetAllFunctions(new GetAllFunctionsCriteria())
+            functions.AddRange(dynamicRepository.Fetch<FunctionModel>(new GetAllFunctionsCriteria())
                 .Where(function => function.FunctionType == 1 || function.FunctionType == CommonFunctions || HiddenNotifyFunction.HiddenNotifyFunctions.Contains(function.FunctionId)));
 
             return functions;

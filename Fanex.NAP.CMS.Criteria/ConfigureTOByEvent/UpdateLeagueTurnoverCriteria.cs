@@ -9,12 +9,12 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// Criteria that contain the updated data of league turnover.
     /// </summary>
-    public class UpdateLeagueTurnoverCriteria : CriteriaBase
+    public class UpdateLeagueTurnoverCriteria : CommandBaseCriteria
     {
         public int LeagueID { get; set; }
 
@@ -23,10 +23,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

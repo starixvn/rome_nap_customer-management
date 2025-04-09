@@ -1,8 +1,9 @@
-﻿using System;
-using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 {
+    using System;
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class GetCustomerTurnoversCriteria : CriteriaBase
     {
         public GetCustomerTurnoversCriteria(
@@ -21,7 +22,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
             SportType = sportType;
             LeagueId = leagueId;
             MatchId = matchId;
-            UserName = username;
+            UserName = username ?? string.Empty;
             IsExcludeCompletedEvent = isExcludeCompletedEvent;
             PercentageUsed = percentageUsed;
             MoveBetsDay = moveBetsDay;
@@ -48,5 +49,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.TurnoverMonitor
 
         public override string GetSettingKey()
             => "NAP_TOControl_MatchTurnoverSelect";
+
+        public override bool IsValid()
+            => true;
     }
 }

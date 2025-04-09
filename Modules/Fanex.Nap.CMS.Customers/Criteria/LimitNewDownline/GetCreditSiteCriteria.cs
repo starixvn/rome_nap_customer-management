@@ -13,5 +13,8 @@ namespace Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline
 
         public override string GetSettingKey()
             => "Acc_SiteSel_Credit";
+
+        public override bool IsValid()
+            => true;
     }
 }

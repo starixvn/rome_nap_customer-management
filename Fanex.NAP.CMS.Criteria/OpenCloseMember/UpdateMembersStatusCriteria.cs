@@ -14,7 +14,7 @@ namespace Fanex.NAP.CMS.Criteria.OpenCloseMember
     /// <summary>
     /// The criteria that contain the list of members that needed to update.
     /// </summary>
-    public class UpdateMembersStatusCriteria : CriteriaBase
+    public class UpdateMembersStatusCriteria : NonQueryCommand
     {
         public string CustIDs { get; set; }
 

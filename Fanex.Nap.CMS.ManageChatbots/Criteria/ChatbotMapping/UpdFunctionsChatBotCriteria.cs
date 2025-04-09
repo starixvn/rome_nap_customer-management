@@ -1,17 +1,21 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     using System.Collections;
     using System.Text;
     using Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping;
     using System;
+    using Fanex.Data;
 
-    public class UpdFunctionsChatBotCriteria : CriteriaBase
+    public class UpdFunctionsChatBotCriteria : NonQueryCommand
     {
         public int UserID { get; set; }
 
         public int BotID { get; set; }
+
         public int Creator { get; set; }
+
+        public string Setting => ToXml();
 
         public string IP { get; set; }
 
@@ -19,22 +23,11 @@
 
         public string ErrMsg { get; set; }
 
+        [SpParam(Ignored = true)]
         public ChatBotFunctionConfig[] FunctionConfigs { get; set; }
 
         public override string GetSettingKey()
             => "Age_Chatbot_CustBotFunctionUpd";
-
-        public override Hashtable GetSpParams()
-            => new Hashtable
-            {
-                [nameof(UserID)] = UserID,
-                [nameof(BotID)] = BotID,
-                ["Setting"] = ToXml(),
-                [nameof(Creator)] = Creator,
-                [nameof(IP)] = IP,
-                [nameof(ErrCode)] = ErrCode,
-                [nameof(ErrMsg)] = ErrMsg,
-            };
 
         private string ToXml()
         {
@@ -57,5 +50,8 @@
 
         private static string ToXml(ChatBotFunctionConfig item)
             => $"<r id=\"{item.FunctionId}\" stt=\"{Convert.ToInt16(item.IsEnabled)}\"/>";
+
+        public override bool IsValid()
+            => true;
     }
 }

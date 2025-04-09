@@ -2,20 +2,21 @@
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.PayoutManagement.Models;
 
     public interface IPayoutListRepository
     {
         void GetSitesLicenseesProducts(
-            ICriteria criteria,
+            CriteriaBase criteria,
             out IList<GroupIdNameModel> sitesLicensees,
             out IList<ProductModel> products);
 
-        IEnumerable<PayoutItem> GetPayoutList(ICriteria criteria);
+        IEnumerable<PayoutItem> GetPayoutList(CriteriaBase criteria);
 
-        PayoutDetail GetPayoutDetail(ICriteria criteria, bool viewSecurityCode);
+        PayoutDetail GetPayoutDetail(CriteriaBase criteria, bool viewSecurityCode);
 
-        Result UpdateTicketStatus(ICriteria criteria);
+        Result UpdateTicketStatus(CommandBaseCriteria criteria);
     }
 }

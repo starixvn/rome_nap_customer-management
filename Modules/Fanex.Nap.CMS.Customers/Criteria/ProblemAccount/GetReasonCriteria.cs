@@ -13,5 +13,8 @@
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_ReasonSel";
+
+        public override bool IsValid()
+         => true;
     }
 }

@@ -9,12 +9,12 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that contain the data of new SMA turnover.
     /// </summary>
-    public class InsertSMATurnoverByEventCriteria : CriteriaBase
+    public class InsertSMATurnoverByEventCriteria : CommandBaseCriteria
     {
         public string SMAName { get; set; }
 
@@ -25,10 +25,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

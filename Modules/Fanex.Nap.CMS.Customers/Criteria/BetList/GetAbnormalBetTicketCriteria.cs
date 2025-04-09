@@ -33,5 +33,8 @@
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_VoidedTransactionList";
+
+        public override bool IsValid()
+            => true;
     }
 }

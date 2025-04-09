@@ -23,5 +23,8 @@
 
         public override string GetSettingKey()
             => "Acc_VR_ViewLog_AutoSuspendThreshold";
+
+        public override bool IsValid()
+            => true;
     }
 }

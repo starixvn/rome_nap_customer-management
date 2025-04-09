@@ -5,33 +5,18 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
 {
     public class CheckAddAccountResultModel
     {
-        public CheckAddAccountResultModel(IDataReader reader, string userName, short sportType) : this(reader, userName, sportType, null)
-        { }
+        public int CustId { get; set; }
 
-        public CheckAddAccountResultModel(IDataReader reader, string userName, short sportType, ICMSConverter converter)
-        {
-            ICMSConverter _converter = converter ?? new CMSConverterImplement(); 
-            CustId = _converter.ToInt32(reader["CustID"]);
-            IsUplineExists = _converter.ToBoolean(reader["IsUplineExists"]);
-            UplineLevel = _converter.ToString(reader["UplineLevel"]);
-            ExistingUplineUserName = _converter.ToString(reader["ExistingUplineUserName"]);
-            IsDownlineExists = _converter.ToBoolean(reader["IsDownlineExists"]);
-            UserName = userName;
-            SportType = sportType;
-        }
+        public string UserName { get; set; }
 
-        public int CustId { get; }
+        public bool IsUplineExists { get; set; }
 
-        public string UserName { get; }
+        public string UplineLevel { get; set; }
 
-        public bool IsUplineExists { get; }
+        public string ExistingUplineUserName { get; set; }
 
-        public string UplineLevel { get; }
+        public bool IsDownlineExists { get; set; }
 
-        public string ExistingUplineUserName { get; }
-
-        public bool IsDownlineExists { get; }
-
-        public short SportType { get; }
+        public short SportType { get; set; }
     }
 }

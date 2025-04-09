@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Services
 {
+    using Fanex.Common.Extensions;
     using Fanex.Data;
     using Fanex.Nap.CMS.BetRestriction.Criterias.Management;
     using Fanex.Nap.CMS.BetRestriction.Models.Management;
@@ -9,6 +10,7 @@
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Data;
     using System.Text;
+    using static Fanex.NAP.Core.Business.Constant;
 
     public class BetRestrictionManagementService : ServiceBase, IBetRestrictionManagementService
     {
@@ -25,29 +27,24 @@
         public BetRestrictionSettingViewModel GetAllSettings(GetAllSettingCriteria criteria)
         {
             var result = new BetRestrictionSettingViewModel();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            var settings = Repository.Fetch<BetRestrictionSettingModel>(criteria);
+            settings.ForEach(setting =>
             {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                var reader = objDb.ExecuteReader();
-                while (reader.Read())
+                switch (setting.RestrictionLevel)
                 {
-                    var level = reader["RestrictionLevel"].ToString();
-                    switch (level)
-                    {
-                        case "BetRestriction_Customer":
-                            result.AccountSession.Add(MappingSP(reader));
-                            break;
-                        case "BetRestriction_Site":
-                            result.SiteSession.Add(MappingSP(reader));
-                            break;
-                        case "BetRestriction_Currency":
-                            result.CurrencySession.Add(MappingSP(reader));
-                            break;
-                        default:
-                            break;
-                    }
+                    case "BetRestriction_Customer":
+                        result.AccountSession.Add(setting);
+                        break;
+                    case "BetRestriction_Site":
+                        result.SiteSession.Add(setting);
+                        break;
+                    case "BetRestriction_Currency":
+                        result.CurrencySession.Add(setting);
+                        break;
+                    default:
+                        break;
                 }
-            }
+            });
 
             return result;
         }
@@ -76,19 +73,6 @@
 
             xml.Append("</R>");
             return xml.ToString();
-        }
-
-        private BetRestrictionSettingModel MappingSP(IDataReader reader)
-        {
-            return new BetRestrictionSettingModel
-            {
-                SettingId = _cMSConverter.ToInt32(reader["SettingID"]),
-                SportType = _cMSConverter.ToInt32(reader["SportType"]),
-                IsLicensee = _cMSConverter.ToBoolean(reader["IsLicensee"]),
-                BetLimitStatus = _cMSConverter.ToBoolean(reader["BetLimitStatus"]),
-                LiveBetAcceptStatus = _cMSConverter.ToBoolean(reader["LiveBetAcceptStatus"]),
-                SeizeBetTicketStatus = _cMSConverter.ToBoolean(reader["SeizeBetTicketStatus"])
-            };
         }
     }
 }

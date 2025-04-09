@@ -12,41 +12,46 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Infrastructure;
     using Models.ChatbotMapping;
-    using Repositories.ChatbotMapping;
     using Resources;
     using TelegramBot.Client.Services;
     using ViewModels.ChatbotMapping;
     using Criteria.Share;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.ManageChatBots.Models.ChatbotMapping;
 
     public class ChatBotMappingService : IChatBotMappingService
     {
-        private readonly IChatbotMappingRepository _repository;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public ChatBotMappingService(IChatbotMappingRepository repository = null)
+        public ChatBotMappingService() : this(new DynamicRepository()) { }
+
+        public ChatBotMappingService(IDynamicRepository dynamicRepository)
         {
-            _repository = repository ?? new ChatBotMappingRepository();
+            this.dynamicRepository = dynamicRepository;
         }
 
         public IEnumerable<IdNameModel> GetCurrencies()
         {
-            return _repository.GetCurrencies(new GetCurrencyListCriteria { Mode = 1 });
+            var currencies = dynamicRepository.Fetch<CurrencyModel>(new GetCurrencyListCriteria { Mode = 1 });
+
+            return currencies.Select(cur => new IdNameModel { Id = cur.ExchangeId, Name = cur.Currency });
         }
 
         public IEnumerable<SiteViewModel> GetSites()
         {
             var sites = new List<SiteViewModel>();
-            _repository.GetSites(new GetSiteCriteria { Mode = 0 })
+            dynamicRepository.Fetch<SiteGroup>(new GetSiteCriteria { Mode = 0 })
                .GroupBy(p => p.SiteLabel)
                .ToList()
                .ForEach(grp =>
                {
                    if (string.IsNullOrEmpty(grp.Key))
                    {
-                       sites.AddRange(grp.Select(pt => new SiteViewModel(pt.SiteId.ToString(), pt.SiteName, null)));
+                       sites.AddRange(grp.Select(pt => new SiteViewModel(pt.Id.ToString(), pt.Name, null)));
                    }
                    else
                    {
-                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.SiteId.ToString(), p.SiteName, null))));
+                       sites.Add(new SiteViewModel(grp.Key, grp.Key, grp.Select(p => new SiteViewModel(p.Id.ToString(), p.Name, null))));
                    }
                });
 
@@ -56,7 +61,7 @@
 
         public IEnumerable<IdNameModel> GetChatBotNames()
         {
-            return _repository.GetChatBotNames(new GetChatbotNamesCriteria());
+            return dynamicRepository.Fetch<IdNameModel>(new GetChatbotNamesCriteria());
         }
 
         public ChatBotsConfigModel GetConfig(GetConfigViewModel paramModel)
@@ -68,12 +73,14 @@
                 SubAccID = paramModel.SubAccId
             };
 
-            var chatBotsConfig = _repository.GetConfigChatBot(criteria);
-            return chatBotsConfig;
+            var (chatBotModel, functionConfigs) = dynamicRepository.FetchMultiple<ChatBotConfigModelItem, ChatBotFunctionConfig>(criteria);
+
+            return new ChatBotsConfigModel { ChatBotModel = chatBotModel.FirstOrDefault(), FunctionConfigs = functionConfigs };
         }
 
         public ChatBotsMappingModel SearchChatBots(SearchChatBotsViewModel paramModel, int customerId)
         {
+            var hasSpecialPer = HasSpecialSitePermission(customerId);
             var criteria = new GetChatBotsCriteria
             {
                 ChatID = paramModel.ChatID,
@@ -86,12 +93,13 @@
                 Status = paramModel.AccStatus,
                 PageIndex = paramModel.PageIndex + 1,
                 PageSize = paramModel.PageSize,
-                IsSpecialSite = HasSpecialSitePermission(customerId),
+                IsSpecialSite = hasSpecialPer,
                 BotIDs = paramModel.BotIDs
             };
 
-            var rawData = _repository.GetChatBots(criteria);
-            return rawData;
+            var rawData = dynamicRepository.Fetch<ChatBotModel>(criteria);
+
+            return new ChatBotsMappingModel(criteria.TotalRows, rawData);
         }
 
         public Result UpdateFunctionsConfig(
@@ -109,8 +117,8 @@
                 UserID = userId,
                 BotID = botId
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            dynamicRepository.Execute(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -130,8 +138,8 @@
                 UserID = userId,
                 BotID = botId
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            dynamicRepository.Execute(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -152,8 +160,8 @@
                 UserID = userId,
                 BotID = botId,
             };
-
-            var result = _repository.ExecuteNonQuery(criteria);
+            dynamicRepository.Execute(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
 
             if (result.IsSuccess)
             {
@@ -189,10 +197,9 @@
 
         public bool HasSpecialSitePermission(int customerId)
         {
-            var accountingPolicy =
-                _repository.GetNapAccountingPolicy(new GetNapAccountingPolicy { CustID = customerId });
+            var accountingPolicy = dynamicRepository.Fetch<NAPAccPolicy>(new GetNapAccountingPolicy { CustID = customerId });
             var isHasAccessSpecialSites =
-                accountingPolicy.Any(policy => policy.FunctionName == CMSFunctionKeys.SpecialSites);
+                accountingPolicy.Any(policy => policy.FuncName == CMSFunctionKeys.SpecialSites);
 
             return isHasAccessSpecialSites;
         }

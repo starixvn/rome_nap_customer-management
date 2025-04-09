@@ -10,11 +10,12 @@
 namespace Fanex.NAP.CMS.Criteria.ManageRobots
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that contain the updated data of a robot account.
     /// </summary>
-    public class UpdateRobotInfoCriteria : CriteriaBase
+    public class UpdateRobotInfoCriteria : CommandBaseCriteria
     {
         public int CustID { get; set; }
 
@@ -23,10 +24,6 @@ namespace Fanex.NAP.CMS.Criteria.ManageRobots
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

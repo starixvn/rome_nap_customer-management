@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.ManageProductSetting.Repositories.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using System.Linq;
     using Fanex.Nap.CMS.ManageProductSetting.Criteria.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting;
+    using Fanex.Data.Repository;
 
     public interface ICompanyBetLimitSettingService
     {
@@ -34,11 +34,15 @@
         private const string SiteCacheKey =
             "Fanex.Nap.CMS.ManageProductSetting.Services.CompanyBetLimitSetting.Site";
 
-        private readonly ICompanyBetLimitRepository _repository;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public CompanyBetLimitSettingService(ICompanyBetLimitRepository repository = null)
+        public CompanyBetLimitSettingService() : this(new DynamicRepository())
         {
-            _repository = repository ?? new CompanyBetLimitRepository();
+        }
+
+        public CompanyBetLimitSettingService(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository;
         }
 
         public IEnumerable<IdNameModel> GetCachedData(string cacheKey, Func<IEnumerable<IdNameModel>> getRepositoryData)
@@ -55,13 +59,13 @@
 
         public IEnumerable<IdNameModel> GetCurrencies(bool isCredit) =>
             GetCachedData(CurrencyCacheKey + isCredit,
-                () => _repository.GetCurrencies(new GetCurrenciesCriteria { IsCredit = isCredit }));
+                () => dynamicRepository.Fetch<IdNameModel>(new GetCurrenciesCriteria { IsCredit = isCredit }));
 
         public IEnumerable<IdNameModel> GetProducts(bool isCredit) => GetCachedData(
-            ProductCacheKey + isCredit, () => _repository.GetProducts(new GetProductsCriteria { IsCredit = isCredit }));
+            ProductCacheKey + isCredit, () => dynamicRepository.Fetch<IdNameModel>(new GetProductsCriteria { IsCredit = isCredit }));
 
         public IEnumerable<IdNameModel> GetSites(bool isCredit) => GetCachedData(SiteCacheKey + isCredit,
-            () => _repository.GetSites(new GetSiteCriteria { IsCredit = isCredit }));
+            () => dynamicRepository.Fetch<IdNameModel>(new GetSiteCriteria { IsCredit = isCredit }));
 
         public IEnumerable<CompanyBetLimitSetting> GetBetLimitSetting(GetCompanyBetLimitSettingViewModels searchParams)
         {
@@ -72,15 +76,13 @@
                 return new List<CompanyBetLimitSetting>();
             }
 
-            var result = _repository.GetBetLimitSettings(new GetBetLimitSettingCriteria
+            return dynamicRepository.Fetch<CompanyBetLimitSetting>(new GetBetLimitSettingCriteria
             {
                 IsCredit = searchParams.IsCredit,
                 PMutilProductID = searchParams.ProductIds,
                 PMutilCurrency = searchParams.Currencies,
                 PMutilSite = searchParams.Sites,
             });
-
-            return result;
         }
 
         public IEnumerable<CompanyBetLimitSettingGroups> GetBetLimitSettingGroups(

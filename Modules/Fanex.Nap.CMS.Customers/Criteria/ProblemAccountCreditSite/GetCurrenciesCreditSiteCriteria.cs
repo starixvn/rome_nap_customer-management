@@ -6,5 +6,8 @@ namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountCreditSite
     {
         public override string GetSettingKey()
             => "NAP_ProblemAccount_CurrencySel";
+
+        public override bool IsValid()
+         => true;
     }
 }

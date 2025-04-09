@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ManageRobots2
 {
     using System;
-    using System.Collections;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetRobotsCriteria : CriteriaBase
@@ -12,9 +12,9 @@
 
         public DateTime? ToDate { get; set; }
 
-        public int Level { get; set; }
+        public int? Level { get; set; }
 
-        public int Currency { get; set; }
+        public int? Currency { get; set; }
 
         public string Site { get; set; }
 
@@ -24,7 +24,10 @@
 
         public string SortColumnName { get; set; }
 
+        [SpParam(SqlParamName = "ordertype")]
         public string SortDirection { get; set; } = string.Empty;
+
+        public int OrderOption => GetOrderOption();
 
         [SpParam(Ignored = true)]
         public int ErrCode { get; set; }
@@ -37,34 +40,8 @@
         public override string GetSettingKey()
             => "NAP_Customer_RobotAccountNew_Sel";
 
-        public override Hashtable GetSpParams()
-        {
-            var result = new Hashtable
-            {
-                { "username", Username },
-                { "site", Site },
-                { "pagesize", PageSize },
-                { "pageindex", PageIndex },
-                { "fromDate", FromDate },
-                { "toDate", ToDate?.AddDays(1).AddTicks(-1) },
-                { "totalitems", 0 }
-            };
-
-            result.Add("ordertype", SortDirection);
-            result.Add("orderoption", GetOrderOption());
-
-            if (Level != 0)
-            {
-                result.Add("level", Level);
-            }
-
-            if (Currency != 0)
-            {
-                result.Add("currency", Currency);
-            }
-
-            return result;
-        }
+        public override bool IsValid()
+            => true;
 
         private int GetOrderOption()
         {

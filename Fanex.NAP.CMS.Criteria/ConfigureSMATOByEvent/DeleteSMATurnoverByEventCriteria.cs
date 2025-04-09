@@ -9,12 +9,12 @@
 
 namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria using to delete a SMA turnover.
     /// </summary>
-    public class DeleteSMATurnoverByEventCriteria : CriteriaBase
+    public class DeleteSMATurnoverByEventCriteria : CommandBaseCriteria
     {
         public int SMAID { get; set; }
 
@@ -23,10 +23,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

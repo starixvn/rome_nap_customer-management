@@ -10,11 +10,12 @@
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that contain the updated data of sport turnover.
     /// </summary>
-    public class UpdateSportTurnoverCriteria : CriteriaBase
+    public class UpdateSportTurnoverCriteria : CommandBaseCriteria
     {
         public int SportID { get; set; }
 
@@ -23,10 +24,6 @@ namespace Fanex.NAP.CMS.Criteria.ConfigureTOByEvent
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

@@ -1,15 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
-    internal class DeletePolicyCriteria : CommandCriteriaBase
+    internal class DeletePolicyCriteria : CustomerClassCommandBaseCriteria
     {
-        public DeletePolicyCriteria(DeletePolicyRequest request) : base(request.UserId, request.IP)
-        {
-            Policies = request.Policies;
-        }
-
-        public string Policies { get; }
+        public string Policies { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicyDel";

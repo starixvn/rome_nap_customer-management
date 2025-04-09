@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.ViewModels.ManageRobots2
 {
-    using Fanex.Nap.CMS.Customers.Models;
     using System;
     using System.Collections.Generic;
+    using Fanex.Nap.CMS.Infrastructure.Models;
 
     public class ManageRobots2IndexViewModel
     {

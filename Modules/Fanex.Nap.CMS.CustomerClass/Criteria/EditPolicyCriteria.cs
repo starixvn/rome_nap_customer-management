@@ -4,10 +4,7 @@
 
     internal class EditPolicyCriteria : AddPolicyCriteria
     {
-        public EditPolicyCriteria(int policyId, AddPolicyRequest request) : base(request)
-            => PolicyId = policyId;
-
-        public int PolicyId { get; }
+        public int PolicyId { get; set;}
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicyUpd";

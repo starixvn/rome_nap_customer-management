@@ -2,20 +2,22 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
-    using Fanex.Data.Repository;
+    using Fanex.Common.Extensions;
     using Fanex.Nap.CMS.Customers.Constants.ProblemAccount;
     using Fanex.Nap.CMS.Customers.Constants.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Models.VirtualRateEngine;
-    using Fanex.Nap.CMS.Customers.Repositories.VirtualRateEngine;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Web;
+    using Newtonsoft.Json;
 
-    public class VREngineService : IVREngineService
+    public class VREngineService : ServiceBase, IVREngineService
     {
         private const string SiteType = "Site";
         private const string CustomerClass = "CustomerClass";
@@ -33,25 +35,33 @@
         private const string Currency = "Currency";
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
         private const int CachedDefaultInMinutes = 60;
-        private readonly IVREngineRepository repository;
-
-        public VREngineService(IVREngineRepository repository = null)
-        {
-            this.repository = repository ?? new VREngineRepository();
-        }
 
         public VREngineMatrix GetVREngineMatrix()
-            => repository.GetVREngineMatrix(new GetVREngineMatrixCriteria());
+        {
+            var result = DynamicRepository.FetchDataSet(new GetVREngineMatrixCriteria());
+            var sites = ToSite(result.Tables[0].Rows);
+            var creditSites = sites.Where(s => s.SiteType == SiteTypeConst.Credit).Select(s => new IdNameModel { Id =  s.SiteId, Name = s.Site });
+            var licenseeSites = sites.Where(s => s.SiteType == SiteTypeConst.Licensee).Select(s => new IdNameModel { Id = s.SiteId, Name = s.Site });
+            var betFromList = ToBetFrom(result.Tables[1].Rows);
+            var sports = ToSportType(result.Tables[2].Rows);
+            var betTypes = ToBetType(result.Tables[3].Rows);
+            var leagueGroupList = ToLeagueGroup(result.Tables[4].Rows).OrderBy(lg => lg.Name);
+            var currenciesList = ToCurrency(result.Tables[5].Rows);
+            var detailSports = ToSportDetail(result.Tables[6].Rows);
+
+            return new VREngineMatrix(creditSites, licenseeSites, detailSports, betFromList, sports, betTypes, leagueGroupList, currenciesList);
+        }
 
         public IEnumerable<IdNameModel> GetLeagues(
             string leagueGroupIds,
             string leagueGroupListNotIn,
             string leagues)
         {
-            var jsonSportBetType = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+            var jsonSportBetType = GetSportBettypeMatrix();
 
-            return repository.GetLeagues(
-                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+            return DynamicRepository.Fetch<LeagueDTO>(
+                new GetVREngineLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType))
+                .Select(lg => new IdNameModel { Id = lg.LeagueId, Name = lg.LeagueName});
         }
 
         public VREngineModel GetRules()
@@ -63,7 +73,7 @@
 
         private IEnumerable<VREngineRule> GetRules(VREngineMatrix matrix)
         {
-            var rules = repository.GetRules(new GetVREngineRuleListCriteria());
+            var rules = DynamicRepository.Fetch<VREngineRule>(new GetVREngineRuleListCriteria());
 
             foreach (var rule in rules)
             {
@@ -83,7 +93,7 @@
 
         public VREngineRule GetRule(int ruleId)
         {
-            var rule = repository.GetRule(new GetVREngineRuleCriteria(ruleId));
+            var rule = DynamicRepository.Get<VREngineRule>(new GetVREngineRuleCriteria{ RuleId = ruleId});
 
             if (rule != null && !string.IsNullOrWhiteSpace(rule.EnabledCriteria))
             {
@@ -335,7 +345,7 @@
 
         private static string BuildAccumulatedBalance(VREngineRule rule)
         {
-            return rule.AccumulatedBalance == 1 ? $"</br>Apply {VREngineResource.VRAccumulatedBalance}" : "";
+            return rule.AccumulatedBalance? $"</br>Apply {VREngineResource.VRAccumulatedBalance}" : "";
         }
 
         #endregion
@@ -343,36 +353,142 @@
         public Result AddNewRule(AddNewRuleViewModel viewModel)
         {
             var jsonSportBetType = GetSportBettypeMatrix();
-            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
+            var criteria = new CheckVREngineRuleCriteria
+            {
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                DateOfWeekList = viewModel.DayOfWeek,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                SiteIDList = viewModel.Site,
+                JsonSportList = jsonSportBetType
+            };
+            var jsonCheckData = DynamicRepository.Fetch<CheckVREngineRuleResult>(criteria);
+
+            var resultCheck = new Result(criteria.ErrorCode, criteria.ErrorMsg);
             if (!resultCheck.IsSuccess)
             {
                 return resultCheck;
             }
 
-            return ExecuteNonQuery(
-                   new AddNewVREngineRuleCriteria(viewModel, resultCheck.Message),
-                   VREngineResource.AddedNewRuleSuccessfully);
+            var addNewCriteria = new AddNewVREngineRuleCriteria
+            {
+                RuleName = viewModel.RuleTitle,
+                Priority = viewModel.PriorityOrder,
+                SiteType = viewModel.SiteType,
+                SiteIDList = viewModel.Site,
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                VR_From = viewModel.VRFrom,
+                VR_To = viewModel.VRTo,
+                VRStatus = 2,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LiveIndicator = viewModel.LiveIndicator,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                Betfrom = viewModel.Betfrom,
+                StakeRM_From = viewModel.StakeFrom,
+                StakeRM_To = viewModel.StakeTo,
+                DateOfWeekList = viewModel.DayOfWeek,
+                BeginTime = viewModel.BeginTime,
+                EndTime = viewModel.EndTime,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Adjustmenttype = viewModel.AdjustmentType,
+                AdjustmentValue = viewModel.AdjustmentValue,
+                AccumulatedBalance = viewModel.AccumulatedBalance,
+                Status = viewModel.Active,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                Enabled_Columns = viewModel.EnabledColumns,
+                JsonCheckData = JsonConvert.SerializeObject(jsonCheckData),
+                UserId = viewModel.UserId,
+                IP = viewModel.IP
+            };
+
+            return ExecuteNonQuery(addNewCriteria, VREngineResource.AddedNewRuleSuccessfully);
         }
 
         public Result UpdateRule(int ruleId, AddNewRuleViewModel viewModel)
         {
 
             var jsonSportBetType = GetSportBettypeMatrix();
-            var resultCheck = repository.CheckVREngineRule(new CheckVREngineRuleCriteria(viewModel, jsonSportBetType));
-            if (!resultCheck.IsSuccess)
+            var criteria = new CheckVREngineRuleCriteria
             {
-                return resultCheck;
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                DateOfWeekList = viewModel.DayOfWeek,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                SiteIDList = viewModel.Site,
+                JsonSportList = jsonSportBetType
+            };
+            var checkResults = DynamicRepository.Fetch<CheckVREngineRuleResult>(criteria);
+            if (criteria.ErrorCode != 0)
+            {
+                return new Result(criteria.ErrorCode, criteria.ErrorMsg);
             }
 
-            return ExecuteNonQuery(
-                new UpdateVREngineRuleCriteria(ruleId, viewModel, resultCheck.Message),
-                VREngineResource.UpdatedRuleSuccessfully);
+            var editCriteria = new UpdateVREngineRuleCriteria
+            {
+                RuleId = ruleId,
+                RuleName = viewModel.RuleTitle,
+                Priority = viewModel.PriorityOrder,
+                SiteType = viewModel.SiteType,
+                SiteIDList = viewModel.Site,
+                CustomerClassList = viewModel.CustomerClass,
+                CustomerClassDetailList = viewModel.CustomerClassDetail,
+                CCSportTypeList = viewModel.CCSportType,
+                VR_From = viewModel.VRFrom,
+                VR_To = viewModel.VRTo,
+                VRStatus = 2,
+                SporttypeList = viewModel.SportType,
+                BettypeList = viewModel.BetType,
+                LiveIndicator = viewModel.LiveIndicator,
+                LeagueGroupList = viewModel.LeagueGroup,
+                LeagueList = viewModel.League,
+                Betfrom = viewModel.Betfrom,
+                StakeRM_From = viewModel.StakeFrom,
+                StakeRM_To = viewModel.StakeTo,
+                DateOfWeekList = viewModel.DayOfWeek,
+                BeginTime = viewModel.BeginTime,
+                EndTime = viewModel.EndTime,
+                CurrencyIDList = viewModel.CurrencyIDList,
+                Adjustmenttype = viewModel.AdjustmentType,
+                AdjustmentValue = viewModel.AdjustmentValue,
+                AccumulatedBalance = viewModel.AccumulatedBalance,
+                Status = viewModel.Active,
+                Criteria_NotApply = viewModel.CriteriaNotApply,
+                Enabled_Columns = viewModel.EnabledColumns,
+                JsonCheckData = JsonConvert.SerializeObject(checkResults),
+                UserId = viewModel.UserId,
+                IP = viewModel.IP
+            };
+
+            return ExecuteNonQuery(editCriteria, VREngineResource.UpdatedRuleSuccessfully);
         }
 
         public Result DeleteRule(int ruleId, int userId, string ip)
-            => ExecuteNonQuery(
-                new DeleteVREngineRuleCriteria(ruleId, userId, ip),
-                VREngineResource.DeletedRuleSuccessfully);
+        {
+            var criteria = new DeleteVREngineRuleCriteria
+            {
+                RuleId = ruleId,
+                UserId = userId,
+                IP = ip
+            };
+
+            return ExecuteNonQuery(criteria, VREngineResource.DeletedRuleSuccessfully);
+        }
 
         #region Helper methods
 
@@ -392,9 +508,10 @@
         private static string ToString(IEnumerable<string> values)
             => string.Join(", ", values);
 
-        private Result ExecuteNonQuery(ICriteria criteria, string successfullyMessage)
+        private Result ExecuteNonQuery(VREngineCriteriaBase criteria, string successfullyMessage)
         {
-            var result = repository.ExecuteNonQuery(criteria);
+            DynamicRepository.Execute(criteria);
+            var result = new Result(criteria.ErrorCode, criteria.ErrorMsg);
 
             if (result.IsSuccess)
             {
@@ -409,11 +526,114 @@
             var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
             if(jsonSBM == null)
             {
-                jsonSBM = repository.GetSportBettype(new GetCustomerVRGetSportBettypeCriteria());
+                var sportBetType = DynamicRepository.Fetch<SportTypeDTO>(new GetCustomerVRGetSportBettypeCriteria())
+                .Select(spt => new { spt.Sporttype });
+                jsonSBM = JsonConvert.SerializeObject(sportBetType);
+
                 CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 
             return jsonSBM;
+        }
+
+        private static IEnumerable<VREngineSiteDTO> ToSite(DataRowCollection dataRows)
+        {
+            var result = new List<VREngineSiteDTO>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                result.Add(new VREngineSiteDTO
+                {
+                    SiteId = Convert.ToInt32(dataRow["SiteId"]),
+                    Site = dataRow["Site"].ToString(),
+                    SiteType = Convert.ToInt32(dataRow["SiteType"])
+                });
+            }
+
+            return result;
+        }
+        private static IEnumerable<VREngineBetfrom> ToBetFrom(DataRowCollection dataRows)
+        {
+            var result = new List<VREngineBetfrom>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                result.Add(new VREngineBetfrom(dataRow["betfrom"].ToString(), dataRow["name"].ToString()));
+            }
+
+            return result;
+        }
+        private static IEnumerable<IdNameModel> ToSportType(DataRowCollection dataRows)
+        {
+            var result = new List<IdNameModel>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                var sportType = Convert.ToInt32(dataRow["sporttype"]);
+                result.Add(new IdNameModel
+                {
+                    Id = sportType,    
+                    Name = CacheRef.GetSportName(sportType)
+                });
+            }
+
+            return result;
+        }
+        private static IEnumerable<IdNameModel> ToBetType(DataRowCollection dataRows)
+        {
+            var result = new List<IdNameModel>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                var betType = Convert.ToInt32(dataRow["bettype"]);
+                result.Add(new IdNameModel
+                {
+                    Id = betType,
+                    Name = CacheRef.GetBetType(betType)
+                });
+            }
+
+            return result;
+        }
+        private static IEnumerable<IdNameModel> ToLeagueGroup(DataRowCollection dataRows)
+        {
+            var result = new List<IdNameModel>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                result.Add(new IdNameModel
+                {
+                    Id = Convert.ToInt32(dataRow["leaguegroupid"]),
+                    Name = dataRow["groupname"].ToString()
+                });
+            }
+
+            return result;
+        }
+        private static IEnumerable<IdNameModel> ToCurrency(DataRowCollection dataRows)
+        {
+            var result = new List<IdNameModel>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                result.Add(new IdNameModel
+                {
+                    Id = Convert.ToInt32(dataRow["currencyid"]),
+                    Name = dataRow["currencyname"].ToString()
+                });
+            }
+
+            return result;
+        }
+        private static IEnumerable<IdNameModel> ToSportDetail(DataRowCollection dataRows)
+        {
+            var result = new List<IdNameModel>();
+            foreach (DataRow dataRow in dataRows)
+            {
+                var sportType = Convert.ToInt32(dataRow["sporttype"]);
+
+                result.Add(new IdNameModel
+                {
+                    Id = sportType,
+                    Name = dataRow["sportname"].ToString()
+                });
+            }
+
+            return result;
         }
 
         #endregion

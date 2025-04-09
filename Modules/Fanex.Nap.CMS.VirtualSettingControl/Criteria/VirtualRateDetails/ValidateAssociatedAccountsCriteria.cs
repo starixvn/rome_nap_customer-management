@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class ValidateAssociatedAccountsCriteria : CriteriaBase
@@ -9,5 +10,8 @@
 
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplierInvalid_Check";
+
+        public override bool IsValid()
+            => true;
     }
 }

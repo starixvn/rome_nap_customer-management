@@ -2,6 +2,7 @@
 {
     using System;
     using Data.Repository;
+    using Fanex.Data;
 
     public class CreditCollectionSummaryCriteria : CriteriaBase
     {

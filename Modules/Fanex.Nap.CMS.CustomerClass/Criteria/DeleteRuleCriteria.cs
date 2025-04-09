@@ -1,15 +1,8 @@
-﻿using Fanex.Nap.CMS.CustomerClass.Requests;
-
-namespace Fanex.Nap.CMS.CustomerClass.Criteria
+﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class DeleteRuleCriteria : CommandCriteriaBase
+    internal class DeleteRuleCriteria : CustomerClassCommandBaseCriteria
     {
-        public DeleteRuleCriteria(DeleteRuleRequest request) : base(request.UserId, request.IP)
-        {
-            RuleIDs = request.RuleIDs;
-        }
-
-        public string RuleIDs { get; }
+        public string RuleIDs { get; set; }
 
         public override string GetSettingKey()
             => "NAP_CM_CustomerClassRuleDel";

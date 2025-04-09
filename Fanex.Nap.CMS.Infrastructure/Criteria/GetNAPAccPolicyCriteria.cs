@@ -11,5 +11,8 @@
 
         public override string GetSettingKey()
             => "Acc_Con_FileNameSelByCustID";
+
+        public override bool IsValid()
+            => true;
     }
 }

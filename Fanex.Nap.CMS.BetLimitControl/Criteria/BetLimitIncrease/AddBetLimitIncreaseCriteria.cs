@@ -1,9 +1,9 @@
 ﻿namespace Fanex.NAP.CMS.BetLimitControl.Criteria.BetLimitIncrease
 {
-    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class AddBetLimitIncreaseCriteria : CriteriaBase
+    public class AddBetLimitIncreaseCriteria : CommandBaseCriteria
     {
         public string CustIDs { get; set; }
 
@@ -20,10 +20,6 @@
         public bool IsTest => AppSettings.IsTest;
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
             => "NAP_CM_SVIPMaxBetPlayerInsert";

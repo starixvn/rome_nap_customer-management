@@ -7,12 +7,15 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Net;
     using System.Reflection;
     using Fanex.Common.Helper;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
 
     public class ServiceBase : IServiceBase
@@ -50,76 +53,23 @@ namespace Fanex.Nap.CMS.Infrastructure.Services.Implementations
             return new List<T>();
         }
 
-        public virtual IEnumerable<T> GetRepositoryDataWithMapOutput<T>(ICriteria criteria)
-        {
-            Check.Argument.IsNotNull(criteria, "criteria");
-            if (!criteria.IsValid())
-            {
-                return Enumerable.Empty<T>();
-            }
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var result = db.Query<T>(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-                if (outputParams != null)
-                {
-                    Map(criteria, outputParams);
-                }
-
-                return result;
-            }
-        }
-
         public virtual IEnumerable<T> GetData<T>(ICriteria criteria)
         {
             return (new DynamicRepository()).Fetch<T>(criteria);
         }
 
-        public virtual Result ExecuteNonQuery(ICriteria criteria)
+        public virtual Result ExecuteNonQuery(CommandBaseCriteria criteria)
         {
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.AssignParamValues(criteria.GetSpParams());
-                objDb.AddOutParameter("errcode", System.Data.DbType.Int32, sizeof(int));
-                objDb.AddOutParameter("errmsg", System.Data.DbType.String, int.MaxValue);
-                objDb.ExecuteNonQuery();
-                var outputs = objDb.GetOuputParams();
-                return new Result(CMSConverter.ToInt32(outputs["errcode"]), CMSConverter.ToString(outputs["errmsg"]));
-            }
+            return DoAction(criteria);
         }
-
-        public virtual void ExecuteNonQueryWithMapOutput(ICriteria criteria)
+        public Result DoAction(CommandBaseCriteria criteria, string successfullyMessage = null)
         {
-            Check.Argument.IsNotNull(criteria, "criteria");
-            if (!criteria.IsValid())
-            {
-                throw new InvalidOperationException("Invalid criteria");
-            }
+            DynamicRepository.Execute(criteria);
+            var message = criteria.ErrCode == 0
+                        ? successfullyMessage ?? criteria.ErrMsg
+                        : criteria.ErrMsg;
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var outputParams = db.GetOuputParams();
-                if (outputParams != null)
-                {
-                    Map(criteria, outputParams);
-                }
-            }
-        }
-
-        private static void Map(ICriteria criteria, Hashtable outputParams)
-        {
-            foreach (string key in outputParams.Keys)
-            {
-                var propertyInfos = criteria.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty);
-                foreach (var propertyInfo in propertyInfos)
-                {
-                    if (propertyInfo.Name.Equals(key, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        propertyInfo.SetValue(criteria, outputParams[key]);
-                    }
-                }
-            }
+            return new Result { Code = criteria.ErrCode, Message = message };
         }
     }
 }

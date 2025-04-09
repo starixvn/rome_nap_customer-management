@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.CMS.BetLimitControl.Criteria.BetLimitIncrease;
-    using Fanex.NAP.CMS.BetLimitControl.DataAccess;
     using Fanex.NAP.CMS.BetLimitControl.Models.BetLimitIncrease;
     using Fanex.NAP.CMS.BetLimitControl.Request.BetLimitIncrease;
     using Fanex.NAP.CMS.BetLimitControl.Resources;
@@ -20,17 +21,17 @@
 
     public class BetLimitIncreaseService : IBetLimitIncreaseService
     {
-        private readonly BetLimitIncreaseDataAccess dataAccess;
+        private readonly IDynamicRepository dynamicRepository;
 
         private const string CustIdFormat = "{{\"CustID\":\"{0}\", \"siteid\":\"{1}\"}},";
         private const string AllSportsValue = "0";
         private const string AllBettypesValue = "0";
 
-        public BetLimitIncreaseService() : this(new BetLimitIncreaseDataAccess()) { }
+        public BetLimitIncreaseService() : this(new DynamicRepository()) { }
 
-        public BetLimitIncreaseService(BetLimitIncreaseDataAccess dataAccess)
+        public BetLimitIncreaseService(IDynamicRepository dynamicRepository)
         {
-            this.dataAccess = dataAccess;
+            this.dynamicRepository = dynamicRepository;
         }
 
         public Result AddBetLimitIncrease(AddBetLimitIncreaseRequest request, string ip, int userId)
@@ -42,16 +43,16 @@
                 Bettypes = AllBettypesValue,
                 Multiplier = request.Multiplier
             };
-            var validateUsername = dataAccess.ValidateUsername(checkUsernameCriteria);
+            var validateUsernames = dynamicRepository.Fetch<BetLimitIncreaseModel>(checkUsernameCriteria);
 
-            if (!validateUsername.Item1.IsSuccess)
+            if (checkUsernameCriteria.ErrCode != 0)
             {
-                return validateUsername.Item1;
+                return new Result(checkUsernameCriteria.ErrCode, checkUsernameCriteria.ErrMsg);
             }
 
             var addBetLimitCriteria = new AddBetLimitIncreaseCriteria
             {
-                CustIDs = BuildCustId(validateUsername.Item2),
+                CustIDs = BuildCustId(validateUsernames),
                 SportTypes = AllSportsValue,
                 Bettypes = AllBettypesValue,
                 Multiplier = request.Multiplier,
@@ -60,7 +61,7 @@
                 UserID = userId
             };
 
-            return dataAccess.DoAction(addBetLimitCriteria, Labels.AddBetLimitIncreaseSuccessMsg);
+            return DoAction(addBetLimitCriteria, Labels.AddBetLimitIncreaseSuccessMsg);
         }
 
         public Result UpdateBetLimitIncrease(BetLimitIncreaseModel request, string ip, int userId)
@@ -76,7 +77,7 @@
                 UserID = userId
             };
 
-            return dataAccess.DoAction(criteria, Labels.EditBetLimitInceaseSuccessMsg);
+            return DoAction(criteria, Labels.EditBetLimitInceaseSuccessMsg);
         }
 
         public Result DeleteBetLimitIncrease(BetLimitIncreaseModel request, string ip, int userId)
@@ -90,7 +91,7 @@
                 UserID = userId
             };
 
-            return dataAccess.DoAction(criteria);
+            return DoAction(criteria);
         }
 
         public IEnumerable<BetLimitIncreaseModel> SearchBetLimitIncrease(SearchBetLimitIncreaseRequest request)
@@ -102,7 +103,7 @@
                 SiteID = request.SiteID
             };
 
-            return dataAccess.SearchBetLimitIncrease(criteria);
+            return dynamicRepository.Fetch<BetLimitIncreaseModel>(criteria);
         }
 
         private static string BuildCustId(IEnumerable<BetLimitIncreaseModel> usernames)
@@ -121,6 +122,16 @@
             custIds.Append("]");
 
             return custIds.ToString();
+        }
+
+        private Result DoAction(CommandBaseCriteria command, string successfullyMessage = null)
+        {
+            dynamicRepository.Execute(command);
+            var message = command.ErrCode == 0
+                    ? successfullyMessage ?? command.ErrMsg
+                    : command.ErrMsg;
+
+            return new Result { Code = command.ErrCode, Message = message };
         }
     }
 }

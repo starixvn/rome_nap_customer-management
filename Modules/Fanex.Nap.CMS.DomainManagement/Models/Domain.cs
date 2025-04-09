@@ -5,57 +5,33 @@
 
     public class Domain
     {
-        public Domain(
-            int domainId,
-            string domainName,
-            string system,
-            string site,
-            string brandName,
-            byte status,
-            string restrictedCountries,
-            string remark,
-            DateTime? expiredDate,
-            DateTime lastUpdated)
-        {
-            DomainId = domainId;
-            DomainName = domainName;
-            System = system;
-            Site = site;
-            BrandName = brandName;
-            Status = status;
-            RestrictedCountries = restrictedCountries;
-            Remark = remark;
-            ExpiredDate = expiredDate;
-            LastUpdateTime = lastUpdated;
-        }
+        public int DomainId { get; set; }
 
-        public int DomainId { get; }
+        public string DomainName { get; set; }
 
-        public string DomainName { get; }
+        public string System { get; set; }
 
-        public string System { get; }
-
-        public string Site { get; }
+        public string Site { get; set; }
 
         public string SiteNames { get; set; }
 
-        public string BrandName { get; }
+        public string BrandName { get; set; }
 
-        public byte Status { get; }
+        public byte Status { get; set; }
 
         public string StatusName { get; set; }
 
-        public string RestrictedCountries { get; }
+        public string RestrictedCountries { get; set; }
 
         public string RestrictedCountryNames { get; set; }
 
-        public string Remark { get; }
+        public string Remark { get; set; }
 
-        public DateTime? ExpiredDate { get; }
+        public DateTime? ExpiredDate { get; set; } = new DateTime();
 
         public string ExpiredDateString => ExpiredDate.ToShortFormatedDateWithSlash();
 
-        public DateTime LastUpdateTime { get; }
+        public DateTime LastUpdateTime { get; set; }
 
         public string LastUpdated => LastUpdateTime.ToLongDate24hWithSlash();
     }

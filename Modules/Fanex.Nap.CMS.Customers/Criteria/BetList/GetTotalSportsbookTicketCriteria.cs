@@ -29,5 +29,8 @@
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_TotalSportsbookTickets";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -4,6 +4,10 @@
 
     public class ProblemAccountReason
     {
+        public ProblemAccountReason()
+        {
+        }
+
         public ProblemAccountReason(
             int custId,
             string username,
@@ -15,13 +19,12 @@
             CreateDate = createDate;
             Reason = reason;
         }
+        public int CustId { get; set; }
 
-        public int CustId { get; }
+        public string Username { get; set; }
 
-        public string Username { get; }
+        public DateTime CreateDate { get; set; }
 
-        public DateTime CreateDate { get; }
-
-        public string Reason { get; }
+        public string Reason { get; set; }
     }
 }

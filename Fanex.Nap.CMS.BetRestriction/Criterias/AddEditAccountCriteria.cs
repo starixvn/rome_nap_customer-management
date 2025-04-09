@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public abstract class AddEditAccountCriteria : CriteriaBase
+    public abstract class AddEditAccountCriteria : CommandBaseCriteria
     {
         public short? LiveBetAccept { get; set; }
 

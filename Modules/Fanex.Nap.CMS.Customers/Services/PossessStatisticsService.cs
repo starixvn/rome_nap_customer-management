@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web.UI.WebControls.Expressions;
     using Fanex.Nap.CMS.Customers.Criteria.PossessStatistics;
     using Fanex.Nap.CMS.Customers.Params.PossessStatistics;
     using Fanex.Nap.CMS.Customers.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Models.PossessStatistics;
-    using Repositories;
 
     public interface PossessStatisticsService
     {
@@ -20,15 +21,8 @@
         Result UpdateMonitorStatus(UpdateMonitorStatusParam param);
     }
 
-    public class PossessStatisticsServiceImpl : PossessStatisticsService
+    public class PossessStatisticsServiceImpl : ServiceBase, PossessStatisticsService
     {
-        private readonly PossessStatisticsRepository repository;
-
-        public PossessStatisticsServiceImpl(PossessStatisticsRepository repository = null)
-        {
-            this.repository = repository ?? new PossessStatisticsRepositoryImpl();
-        }
-
         public Tuple<int, IEnumerable<PossessStatisticsModel>> GetPossessStatistics(GetPossessStatisticsParam param)
         {
             var criteria = new GetPossessStatisticsCriteria(
@@ -45,7 +39,7 @@
                 param.FilterDanger,
                 param.PageIndex,
                 param.PageSize);
-            var possessStatistics = repository.PossessStatistics(criteria);
+            var possessStatistics = DynamicRepository.Fetch<PossessStatisticsModel>(criteria);
 
             return Tuple.Create(criteria.TotalItems, possessStatistics);
         }
@@ -56,15 +50,17 @@
 
             Parallel.ForEach(param.SelectedCustomers, customer =>
             {
-                var criteria = new UpdateDangerLevelCritera(
-                    customer.Key,
-                    param.UpdateDownline,
-                    param.DangerType,
-                    param.DangerLevel,
-                    param.UserId,
-                    param.IP);
+                var criteria = new UpdateDangerLevelCritera
+                {
+                    CustId = customer.Key,
+                    UpdateDownline = param.UpdateDownline,
+                    DangerType = param.DangerType,
+                    DangerLevel = param.DangerLevel,
+                    UserId = param.UserId,
+                    IP = param.IP
+                };
 
-                var result = repository.UpdateDangerLevel(criteria);
+                var result = DoAction(criteria);
 
                 if (!result.IsSuccess)
                 {
@@ -82,7 +78,15 @@
 
         public Result UpdateMonitorStatus(UpdateMonitorStatusParam param)
         {
-            var result = repository.UpdateMonitorStatus(new UpdateMonitorStatusCriteria(param.CustomerList, param.IsMonitored, param.UserId, param.IP));
+            var criteria = new UpdateMonitorStatusCriteria
+            {
+                CustIdList = param.CustomerList,
+                IsMonitorPT = param.IsMonitored,
+                UserId = param.UserId,
+                IP = param.IP
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {

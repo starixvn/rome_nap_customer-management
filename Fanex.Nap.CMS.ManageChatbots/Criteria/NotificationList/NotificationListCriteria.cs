@@ -30,5 +30,8 @@ namespace Fanex.Nap.CMS.ManageChatbots.Criteria.NotificationList
 
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotNotificationListSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

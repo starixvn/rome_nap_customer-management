@@ -1,8 +1,8 @@
-﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountLicenseeSite
-{
-    using Fanex.Data.Repository;
+﻿using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class UpdateLicenseeAcknowledgementCriteria : CriteriaBase
+namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccountLicenseeSite
+{
+    public class UpdateLicenseeAcknowledgementCriteria : CommandBaseCriteria
     {
         public UpdateLicenseeAcknowledgementCriteria(
             int licenseeId,
@@ -28,11 +28,10 @@
 
         public string IP { get; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public override string GetSettingKey()
             => "NAP_ProblemAccount_LicenseeAcknowledgementUpd";
+
+        public override bool IsValid()
+         => true;
     }
 }

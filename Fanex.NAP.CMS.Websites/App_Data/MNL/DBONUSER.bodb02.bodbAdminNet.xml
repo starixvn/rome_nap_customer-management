@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Functions SiteId="102" SiteName="NAP - CM">
   <Function Name="Manage Robots 2">
-    <Setting Key="NAP_Customer_RobotSite_Sel" SpName="NAP_Customer_RobotSite_Sel" DbName="DBONUSER.bodb02.wsv_nap" />
+		<Setting Key="NAP_Customer_RobotSite_Sel" SpName="NAP_Customer_RobotSite_Sel" DbName="DBONUSER.bodb02.wsv_nap">
+			<Mapping DataField="site" ObjectProperty="SiteName" />
+		</Setting>
     <Setting Key="NAP_Customer_RobotCurrencyList_Sel" SpName="NAP_Customer_RobotCurrencyList_Sel" DbName="DBONUSER.bodb02.wsv_nap" />
   </Function>
 </Functions>

@@ -10,11 +10,12 @@
 namespace Fanex.NAP.CMS.Criteria.ManageRobots
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that are used to add new robot.
     /// </summary>
-    public class InsertRobotAccountCriteria : CriteriaBase
+    public class InsertRobotAccountCriteria : CommandBaseCriteria
     {
         public string Usernames { get; set; }
 
@@ -25,10 +26,6 @@ namespace Fanex.NAP.CMS.Criteria.ManageRobots
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

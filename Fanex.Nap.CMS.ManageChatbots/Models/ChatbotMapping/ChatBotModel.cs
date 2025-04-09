@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Models.ChatbotMapping
 {
     using System;
+    using Fanex.Nap.CMS.Infrastructure.Constants;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
 
     public class ChatBotModel
@@ -17,13 +18,13 @@
 
         public string Language { get; set; }
 
-        public string Level { get; set; }
+        public int RoleId { get; set; }
+
+        public string Level => RoleIdConstants.GetRoleName(RoleId);
 
         public string Currency { get; set; }
 
         public string AccStatus { get; set; }
-
-        public bool Status { get; set; }
 
         public bool IsVerifyOTP { get; set; }
 

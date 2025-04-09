@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias.Management
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class EditSettingsCriteria : CriteriaBase
+    public class EditSettingsCriteria : CommandBaseCriteria
     {
         public int UserId { get; set; }
 

@@ -10,21 +10,18 @@
 namespace Fanex.NAP.CMS.Criteria.ManageSmartPunters
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// Deleting smart punter criteria.
     /// </summary>
-    public class DeleteSmartPunterCriteria : CriteriaBase
+    public class DeleteSmartPunterCriteria : CommandBaseCriteria
     {
         public int CustID { get; set; }
 
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

@@ -8,5 +8,8 @@
         {
             return "NAP_LimitLoss_ActionConfigSel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
+    using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Constants;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+    using Fanex.Nap.CMS.Infrastructure.Web;
 
     internal interface ISiteService
     {
@@ -28,27 +29,42 @@
         ProgressResponse  GetUploadProgress(int userId);
     }
 
-    internal class SiteService : ISiteService
+    internal class SiteService : ServiceBase, ISiteService
     {
         private readonly IFilterService filterService;
-        private readonly ISiteDataAccess siteDataAccess;
 
-        public SiteService(IFilterService filterService = null, ISiteDataAccess siteDataAccess = null)
+        private const string LastUpdatedTime = "Fanex.CMS.CCM.Site.LastUpdatedTime-{0}";
+
+        public SiteService() : this(new FilterService())
+        {
+        }
+
+        public SiteService(IFilterService filterService) : base()
         {
             this.filterService = filterService ?? new FilterService();
-            this.siteDataAccess = siteDataAccess ?? new SiteDataAccess();
         }
 
         public PagedSiteSetting GetPagedSiteSetting(GetSiteSettingRequest request, string sportTypes)
         {
-            var resultSet = siteDataAccess.GetPagedSiteSetting(new GetSiteSettingCriteria(request, sportTypes));
+            var criteria = new GetSiteSettingCriteria
+            {
+                Site = request.Sites ?? string.Empty,
+                PolicyId = request.PolicyId,
+                Platform = request.Platforms ?? string.Empty,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                SportTypes = sportTypes
+            };
+            var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
-            return new PagedSiteSetting(resultSet.Item1, BuildSiteSettings(resultSet.Item2));
+            return new PagedSiteSetting(criteria.TotalItems, BuildSiteSettings(siteSettings));
         }
 
         public IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request)
         {
-            var siteSettings = siteDataAccess.GetSiteSettings(new GetDuplicatedSiteSettingCriteria(request));
+            var criteria = new GetDuplicatedSiteSettingCriteria(ToDuplicatedSiteSettingXml(request));
+
+            var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
             return BuildSiteSettings(siteSettings);
         }
@@ -73,19 +89,118 @@
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite)
-            => siteDataAccess.DoAction(new AssignSiteSettingCriteria(request, isOverwrite), Labels.AssignSiteSettingSuccessfully);
+        {
+            var criteria = new AssignSiteSettingCriteria(ToDuplicatedSiteSettingXml(request), isOverwrite)
+            {
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.AssignSiteSettingSuccessfully);
+        }
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
-            var criteria = new AssignSiteSettingCriteria(siteSettingExcels, isOverwrite, userId, ip) { ActionID = 1 };
+            var criteria = new AssignSiteSettingCriteria(ToAssignSiteSettingXml(siteSettingExcels), isOverwrite, userId, ip) { ActionID = 1 };
 
-            return siteDataAccess.ExecuteNonQuery(criteria, Labels.UploadSiteWarning);
+            return DoAction(criteria, Labels.UploadSiteWarning);
         }
 
         public Result Delete(DeleteSiteSettingRequest request, int userId, string ip)
-            => siteDataAccess.DoAction(new DeleteSiteCriteria(request, userId, ip), Labels.DeleteSiteSettingSuccessfully);
+        {
+            var criteria = new DeleteSiteCriteria
+            {
+                PolicySites = ToDeleteSiteXml(request),
+                UserId = userId,
+                IP = ip
+            };
+
+            return DoAction(criteria, Labels.DeleteSiteSettingSuccessfully);
+        }
 
         public ProgressResponse GetUploadProgress(int userId)
-            => siteDataAccess.GetUploadProgress(new GetSiteUploadProgressCriteria() { UserID = userId });
+        {
+            var lastUpdatedTimeKey = string.Format(LastUpdatedTime, userId);
+            var criteria = new GetSiteUploadProgressCriteria() { UserID = userId, LastModifiedTime = CacheManager.Get<DateTime?>(lastUpdatedTimeKey) };
+
+            DynamicRepository.Execute(criteria);
+            if (criteria.CountBatch > 0 && criteria.InitialBatch > 0)
+            {
+                if (criteria.LastModifiedTime == null)
+                {
+                    var lastUpdatedTime = criteria.LastModifiedTime;
+                    CacheManager.Set(lastUpdatedTimeKey, lastUpdatedTime, new TimeSpan(1, 0, 0, 0));
+                }
+            }
+            else
+            {
+                CacheManager.Remove(lastUpdatedTimeKey);
+            }
+
+            return new ProgressResponse(criteria.CountBatch, criteria.InitialBatch);
+        }
+        private static string ToDeleteSiteXml(DeleteSiteSettingRequest request)
+        {
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in request.SiteSettings)
+            {
+                xmlBuilder
+                    .Append("<r PolicyID=\"").Append(item.PolicyId).Append("\"")
+                    .Append(" Site=\"").Append(item.Site).Append("\"")
+                    .Append(" Currency=\"").Append(item.Currency).Append("\"")
+                    .Append(" Platform=\"").Append(item.Platform).Append("\"/>");
+            }
+
+            xmlBuilder.Append("</ROOT>");
+            return xmlBuilder.ToString();
+        }
+
+        private static string ToAssignSiteSettingXml(IEnumerable<SiteSettingExcel> siteSettingExcels)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var item in siteSettingExcels)
+            {
+                AppendElement(
+                    xmlBuilder,
+                    item.PolicyId,
+                    string.Join(",", item.Sites.Distinct()),
+                    string.Join(",", item.Currencies.Distinct()),
+                    string.Join(",", item.Platforms.Distinct()));
+            }
+
+            return InsertRoot(xmlBuilder.ToString());
+        }
+
+        private static string ToDuplicatedSiteSettingXml(AssignSiteSettingRequest request)
+        {
+            var xmlBuilder = new StringBuilder();
+
+            foreach (var item in request.SiteCurrencies)
+            {
+                AppendElement(xmlBuilder, request.PolicyId, item.Sites, item.Currencies, item.Platforms);
+            }
+
+            return InsertRoot(xmlBuilder.ToString());
+        }
+
+        protected static string InsertRoot(string xml)
+            => $"<ROOT>{xml}</ROOT>";
+
+        protected static void AppendElement(
+            StringBuilder xmlBuilder,
+            int policyId,
+            string sites,
+            string currencies,
+            string platforms)
+        {
+            xmlBuilder
+                .Append("<r PolicyID=\"").Append(policyId).Append("\"")
+                .Append(" Site=\"").Append(sites).Append("\"")
+                .Append(" Currency=\"").Append(currencies).Append("\"")
+                .Append(" Platform=\"").Append(platforms).Append("\"/>");
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ManageRobots2
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class DeleteRobotCriteria : CriteriaBase
+    public class DeleteRobotCriteria : CommandBaseCriteria
     {
         public int CustId { get; set; }
 
@@ -10,11 +10,10 @@
 
         public string IP { get; set; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; } = string.Empty;
-
         public override string GetSettingKey()
             => "NAP_Customer_RobotAccountNew_Del";
+
+        public override bool IsValid()
+            => true;
     }
 }

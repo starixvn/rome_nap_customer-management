@@ -6,5 +6,8 @@
     {
         public override string GetSettingKey()
             => "Acc_VirtualMultiplierList_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

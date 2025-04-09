@@ -65,5 +65,8 @@
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_MonitorList";
+
+        public override bool IsValid()
+            => true;
     }
 }

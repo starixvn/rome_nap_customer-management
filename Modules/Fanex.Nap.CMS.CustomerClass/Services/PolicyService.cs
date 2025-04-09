@@ -5,13 +5,14 @@
     using System.Linq;
     using System.Net;
     using System.Text;
+    using Fanex.Data;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
     internal interface IPolicyService
     {
@@ -30,18 +31,16 @@
         Result DeletePolicies(DeletePolicyRequest request);
     }
 
-    internal class PolicyService : IPolicyService
+    internal class PolicyService : ServiceBase, IPolicyService
     {
         private readonly IFilterService filterService;
-        private readonly IPolicyDataAccess policyDataAccess;
 
         private const string ASC = "asc";
         private const string RuleTitle = "RuleTitle";
 
-        public PolicyService(IFilterService filterService = null, IPolicyDataAccess policyDataAccess = null)
+        public PolicyService(IFilterService filterService = null) : base()
         {
             this.filterService = filterService ?? new FilterService();
-            this.policyDataAccess = policyDataAccess ?? new PolicyDataAccess();
         }
 
         public IEnumerable<Policy> GetPolicies(IEnumerable<IdNameModel> sportTypes, string sortOrder, string fieldSort, string policyTitle = null)
@@ -70,7 +69,8 @@
             var leagueGroupDict = ToLeagueGroupDictionary(leagues);
             var sportListDict = ToSportListDictionary(sportTypes);
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
-            var policies = policyDataAccess.GetPolicies(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues), sportTypeIds));
+            var policyWithRules = DynamicRepository.Fetch<PolicyRuleDTO>(new GetPolicyCriteria(policyId, policyTitle, BuildLeageGroupXML(leagues), sportTypeIds));
+            var policies = policyWithRules.Select(plc => MapToPolicy(plc));
 
             foreach (var item in policies)
             {
@@ -138,20 +138,62 @@
             => value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Length;
 
         public IEnumerable<IdNameModel> GetPolicyTitles(string sportTypes)
-            => policyDataAccess.GetPolicyTitles(new GetPolicyTitleCriteria(sportTypes));
+        {
+            return DynamicRepository.Fetch<Policy>(new GetPolicyTitleCriteria(sportTypes)).Select(plc => new IdNameModel { Id = plc.PolicyId, Name = plc.PolicyTitle });
+        }
 
         public Result AddPolicy(AddPolicyRequest request)
-            => policyDataAccess.DoAction(new AddPolicyCriteria(request), Labels.AddPolicySuccessfully);
+        {
+            var criteria = new AddPolicyCriteria
+            {
+                SportType = request.SportType,
+                PolicyTitle = request.PolicyTitle,
+                RuleIds = request.RuleIds,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.AddPolicySuccessfully);
+        }
 
         public Result EditPolicy(int policyId, AddPolicyRequest request)
-            => policyDataAccess.DoAction(new EditPolicyCriteria(policyId, request), Labels.EditPolicySuccessfully);
+        {
+            var criteria = new EditPolicyCriteria
+            {
+                SportType = request.SportType,
+                PolicyTitle = request.PolicyTitle,
+                RuleIds = request.RuleIds,
+                PolicyId = policyId,
+                UserId = request.UserId,
+                IP = request.IP
+
+            };
+            return DoAction(criteria, Labels.EditPolicySuccessfully);
+        }
 
 
         public CheckPolicyResponse CheckPolicies(DeletePolicyRequest request)
-            => policyDataAccess.CheckPolicy(new CheckPolicyDelCriteria(request));
+        {
+            var criteria = new CheckPolicyDelCriteria
+            {
+                Policies = request.Policies
+            };
+            var policies = DynamicRepository.Fetch<Policy>(criteria).Select(plc => plc.PolicyTitle);
+
+            return new CheckPolicyResponse(string.Join(", ", policies), criteria.ErrCode, criteria.ErrMsg);
+        }
 
         public Result DeletePolicies(DeletePolicyRequest request)
-            => policyDataAccess.DoAction(new DeletePolicyCriteria(request), Labels.DeletePolicySuccessfully);
+        {
+            var criteria = new DeletePolicyCriteria
+            {
+                Policies = request.Policies,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.DeletePolicySuccessfully);
+        }
 
         private IEnumerable<Rule> SortRule(IEnumerable<Rule> rules , string sortOrder, string fieldSort)
         {
@@ -180,6 +222,13 @@
             }
 
             return rules.OrderByDescending(rule => rule.CustomerClass?.ToString());
+        }
+
+        private Policy MapToPolicy(PolicyRuleDTO policyRuleDTO)
+        {
+            var rule = policyRuleDTO as Rule;
+
+            return new Policy(policyRuleDTO.PolicyId, policyRuleDTO.PolicyTitle, policyRuleDTO.SportType, rule);
         }
     }
 }

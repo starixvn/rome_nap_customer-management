@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualRateDetails
 {
     using System.Collections.Generic;
+    using Fanex.Common;
 
     public class VirtualRateRealValues
     {

@@ -21,5 +21,8 @@
         {
             return "NAP_Report_CustMngt_VirtualRateMonitoringAdvanced";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

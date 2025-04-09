@@ -1,21 +1,19 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.PossessStatistics
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class NonQueryBaseCriteria : CriteriaBase
+    public class NonQueryBaseCriteria : CommandBaseCriteria
     {
-        public NonQueryBaseCriteria(int userId, string ip)
+        public int UserId { get; set; }
+
+        public string IP { get; set; }
+
+        public override string GetSettingKey()
         {
-            UserId = userId;
-            IP = ip;
+            throw new System.NotImplementedException();
         }
 
-        public int UserId { get; }
-
-        public string IP { get; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
+        public override bool IsValid()
+            => true;
     }
 }

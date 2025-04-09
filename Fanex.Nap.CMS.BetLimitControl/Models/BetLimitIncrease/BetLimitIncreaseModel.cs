@@ -13,7 +13,7 @@
         public int SportType { get; set; }
         public int BetType { get; set; }
         public string Note { get; set; }
-        public string LastModifiedUser { get; set; }
+        public string LastModifiedUserName { get; set; }
         public string LastModifiedTime { get; set; }
     }
 }

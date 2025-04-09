@@ -26,7 +26,7 @@
 
         public string LeagueGroupID { get;set; }
 
-        public byte AccumulateBalance { get; set; }
+        public bool AccumulateBalance { get; set; }
 
         public string Currency { get; set; }
 

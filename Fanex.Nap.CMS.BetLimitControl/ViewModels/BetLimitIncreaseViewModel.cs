@@ -2,13 +2,14 @@
 {
     using Fanex.Nap.CMS.Infrastructure.Models;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class BetLimitIncreaseViewModel
     {
-        public BetLimitIncreaseViewModel(IEnumerable<IdNameModel> sites, IEnumerable<IdNameModel> currencies, bool hasHostPermission)
+        public BetLimitIncreaseViewModel(IEnumerable<IdNameModel> sites, IEnumerable<CurrencyModel> currencies, bool hasHostPermission)
         {
             Sites = sites;
-            Currencies = currencies;
+            Currencies = currencies.Select(c => new IdNameModel { Id = c.ExchangeId, Name = c.Currency });
             HasHostPermission = hasHostPermission;
         }
 

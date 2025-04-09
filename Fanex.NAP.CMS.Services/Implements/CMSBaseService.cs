@@ -7,18 +7,16 @@
 //   <change who="Jason.Ly" date="2014.3.6">Created</change>
 // </history>
 
+using System;
+using System.Collections.Generic;
+using Fanex.Data.Repository;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
+using Fanex.NAP.CMS.Core.Web;
+using Fanex.NAP.CMS.Criteria.Common;
+using Fanex.NAP.CMS.Models.Common;
+
 namespace Fanex.NAP.CMS.Services.Implements
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using Fanex.Data;
-    using Fanex.Data.Repository;
-    using Fanex.NAP.CMS.Core.Web;
-    using Fanex.NAP.CMS.Criteria.Common;
-    using Fanex.NAP.CMS.Models.Common;
-    using Fanex.NAP.Framework.Command;
-
     /// <summary>
     /// Base Service.
     /// </summary>
@@ -83,32 +81,14 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The query result.</returns>
-        protected virtual ICommandResult UpdateData(ICriteria criteria)
+        protected virtual ICommandResult UpdateData(CommandBaseCriteria criteria)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var param = criteria.GetSpParams();
-
-                db.ExecuteNonQuery(param);
-
-                return GetCommandResult(param);
-            }
-        }
-
-        /// <summary>
-        /// Gets the command result.
-        /// </summary>
-        /// <param name="hash">The hash table.</param>
-        /// <returns>CommandResult object contains error code and error message.</returns>
-        private CommandResult GetCommandResult(Hashtable hash)
-        {
-            var errCode = hash["errcode"];
-            var errMsg = hash["errmsg"];
+            _repository.ExecuteAsync(criteria);
 
             return new CommandResult
             {
-                Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
-                Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
+                Code = criteria.ErrCode,
+                Message = criteria.ErrMsg
             };
         }
     }

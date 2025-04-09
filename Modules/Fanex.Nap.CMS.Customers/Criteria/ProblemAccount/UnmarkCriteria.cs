@@ -1,6 +1,8 @@
-﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
+﻿using Fanex.Nap.CMS.Customers.Criteria.ProblemAccountLicenseeSite;
+
+namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
 {
-    public class UnmarkCriteria : NonQueryCriteriaBase
+    public class UnmarkCriteria : UnmarkLicenseeSiteCriteria
     {
         public UnmarkCriteria(
             string usernames,
@@ -8,17 +10,18 @@
             bool excludeAbnormalMember,
             bool excludeDirectMark,
             int userId,
-            string ip) : base(usernames, roleId, userId, ip)
+            string ip) : base(usernames, userId, ip)
         {
             ExcludeAbnormalMember = excludeAbnormalMember;
             ExcludeDirectMark = excludeDirectMark;
+            RoleId = roleId;
         }
 
         public bool ExcludeAbnormalMember { get; }
 
         public bool ExcludeDirectMark { get; }
 
-        public string SuccessAllDownlineList { get; set; }
+        public byte RoleId { get; }
 
         public override string GetSettingKey()
             => "CS_ProblemAccount_RemoveCustomer";

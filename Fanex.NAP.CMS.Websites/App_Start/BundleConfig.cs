@@ -259,6 +259,10 @@ namespace Fanex.NAP.CMS.Websites
                 "~/Areas/BetRestriction/Scripts/Badminton/Index.js",
                 "~/Areas/BetRestriction/Scripts/Badminton/AccountManagement.js"));
 
+            bundles.Add(new ScriptBundle("~/scripts/BetRestrictionESports").Include(              
+                "~/Areas/BetRestriction/Scripts/ESports/Index.js",
+                "~/Areas/BetRestriction/Scripts/ESports/AccountManagement.js"));
+
             bundles.Add(new ScriptBundle("~/scripts/BetRestrictionTennis").Include(
                 "~/Areas/BetRestriction/Scripts/Tennis/Index.js",
                 "~/Areas/BetRestriction/Scripts/Tennis/AccountManagement.js"));

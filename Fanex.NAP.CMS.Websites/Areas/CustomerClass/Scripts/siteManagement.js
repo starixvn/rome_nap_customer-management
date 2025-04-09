@@ -2,6 +2,7 @@
 
 (function ($) {
     let cachedSearchUrlWithQueryString = null,
+        cachedFormSearch = {},
         cachedGridOptions = null,
         hasHostPermisson = false,
         cachedSites = [],
@@ -45,7 +46,8 @@
             if (formData.sportTypes === "0") {
                 formData.sportTypes = sportList.map(sp => sp.Value).join(',');
             }
-            cachedSearchUrlWithQueryString = `${this.action}?${$.param(formData)}`;
+            cachedFormSearch = formData;
+            cachedSearchUrlWithQueryString = `${this.action}`;
             search(0, getPageSize());
         });
 
@@ -157,8 +159,12 @@
 
     function search(pageIndex, pageSize) {
         // PageIndex of Fanex.Grid begin at 0 whereas server site begin at 1.
-        CMS.getJson(
-            `${cachedSearchUrlWithQueryString}&pageIndex=${pageIndex + 1}&pageSize=${pageSize}`,
+        cachedFormSearch.pageIndex = pageIndex + 1;
+        cachedFormSearch.pageSize = pageSize;
+        CMS.callAjax(
+            this,
+            cachedSearchUrlWithQueryString,
+            cachedFormSearch,
             function (data) {
                 var result = typeof data === "string" ? JSON.parse(data) : data;
                 if (result.Message) {

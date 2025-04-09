@@ -1,22 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Fanex.Nap.CMS.Customers.Criteria.LimitNewDownline;
 using Fanex.Nap.CMS.Customers.Models.LimitNewDownline;
-using Fanex.Nap.CMS.Customers.Repositories.LimitNewDownline;
 using Fanex.Nap.CMS.Customers.Resources;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
 namespace Fanex.Nap.CMS.Customers.Services.LimitNewDownline
 {
-    public class LimitNewDownlineService : ILimitNewDownlineService
+    public class LimitNewDownlineService : ServiceBase, ILimitNewDownlineService
     {
-        private readonly ILimitNewDownlineRepository repository;
-
-        public LimitNewDownlineService(ILimitNewDownlineRepository repository = null)
-        {
-            this.repository = repository ?? new LimitNewDownlineRepository();
-        }
-
         public IEnumerable<string> GetSites()
-            => repository.GetSites(new GetCreditSiteCriteria(0));
+            => DynamicRepository.Fetch<SiteGroup>(new GetCreditSiteCriteria(0)).Select(site => site.Name);
 
         public LimitDownlineReport GetLimitDownlineReport(string username, byte level, string site, int pageIndex, int pageSize)
         {
@@ -26,18 +21,23 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitNewDownline
                 site,
                 pageIndex,
                 pageSize);
-            var limitDownlineList = repository.GetLimitDownlineList(criteria);
+            var limitDownlineList = DynamicRepository.Fetch<LimitDownlineItem>(criteria).ToList();
 
             return new LimitDownlineReport(limitDownlineList, criteria.TotalItems);
         }
 
         public AddNewOrRemoveLimitResult AddNewLimit(string usernames, int userId, string ip)
         {
-            var result = repository.ExecuteNonQuery(new AddNewLimitCriteria(usernames, userId, ip));
+            var criteria = new AddNewLimitCriteria(usernames, userId, ip);
+            DynamicRepository.Execute(criteria);
+            var result = new AddNewOrRemoveLimitResult(
+                    criteria.ErrCode,
+                    criteria.ErrMsg,
+                    criteria.CntMember);
 
             if (result.IsSuccess)
             {
-                result.Message = string.Format(LimitNewDownlineResource.AddOrRemoveLimitSuccessfully, result.CountMember);
+                result.Message = string.Format(LimitNewDownlineResource.AddOrRemoveLimitSuccessfully, criteria.CntMember);
             }
 
             return result;
@@ -45,11 +45,16 @@ namespace Fanex.Nap.CMS.Customers.Services.LimitNewDownline
 
         public AddNewOrRemoveLimitResult RemoveLimit(string usernames, int userId, string ip)
         {
-            var result = repository.ExecuteNonQuery(new RemoveLimitCriteria(usernames, userId, ip));
+            var  criteria = new RemoveLimitCriteria(usernames, userId, ip);
+            DynamicRepository.Execute(criteria);
+            var result = new AddNewOrRemoveLimitResult(
+                    criteria.ErrCode,
+                    criteria.ErrMsg,
+                    criteria.CntMember);
 
             if (result.IsSuccess)
             {
-                result.Message = string.Format(LimitNewDownlineResource.AddOrRemoveLimitSuccessfully, result.CountMember);
+                result.Message = string.Format(LimitNewDownlineResource.AddOrRemoveLimitSuccessfully, criteria.CntMember);
             }
 
             return result;

@@ -5,5 +5,8 @@
     public class GetDummyAgentCriteria : CriteriaBase
     {
         public override string GetSettingKey() => "NAP_Customer_FollowBetAccountDummyAgentSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -1,8 +1,9 @@
 ﻿namespace Fanex.NAP.CMS.Criteria.LossMonitor
 {
-    using Data.Repository;
+    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class InsertSMACriteria : CriteriaBase
+    public class InsertSMACriteria : CommandBaseCriteria
     {
         public string Username { get; set; }
 
@@ -16,10 +17,6 @@
         public int UserId { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         public override string GetSettingKey()
         {

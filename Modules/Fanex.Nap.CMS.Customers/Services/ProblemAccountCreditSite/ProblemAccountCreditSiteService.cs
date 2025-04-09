@@ -2,33 +2,33 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Net;
     using Constants.ProblemAccount;
     using Constants.ProblemAccountCreditSite;
     using Criteria.ProblemAccountCreditSite;
+    using Fanex.Common.Extensions;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Infrastructure.Extensions;
     using Infrastructure.Models;
     using Infrastructure.Web;
     using Models.ProblemAccount;
-    using Repositories.ProblemAccount;
-    using Repositories.ProblemAccountCreditSite;
     using Resources;
 
-    public class ProblemAccountCreditSiteService : IProblemAccountCreditSiteService
+    public class ProblemAccountCreditSiteService : ServiceBase, IProblemAccountCreditSiteService
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Currency";
         private const string PreventiveActionCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.PreventiveAction";
         private const string ReasonCacheKey = "Fanex.Nap.CMS.Customers.Services.ProblemAccountCreditSiteService.Reason_{0}";
+        private const int ErrorInvalidAccount = 100;
+        private const int ErrorExistUnmarkedAccount = 101;
+        private const int ErrorNotInSelectedLevelAccount = 102;
 
-        private readonly IProblemAccountRepository repository;
         private readonly IProblemAccountCTSService ctsService;
 
-        public ProblemAccountCreditSiteService(
-            IProblemAccountRepository repository = null,
-            IProblemAccountCTSService ctsService = null)
+        public ProblemAccountCreditSiteService(IProblemAccountCTSService ctsService = null)
         {
-            this.repository = repository ?? new ProblemAccountCreditSiteRepository();
             this.ctsService = ctsService ?? new ProblemAccountCTSService();
         }
 
@@ -38,7 +38,7 @@
 
             if (currencies == null)
             {
-                currencies = repository.GetCurrencies(new GetCurrenciesCreditSiteCriteria()).ToList();
+                currencies = DynamicRepository.Fetch<CurrencyModel>(new GetCurrenciesCreditSiteCriteria()).Select(cur => new IdNameModel { Id = cur.ExchangeId, Name = cur.Currency}).ToList();
                 currencies.Insert(0, new IdNameModel { Id = 0, Name = ProblemAccountResource.All });
 
                 CacheManager.Set(CurrencyCacheKey, currencies);
@@ -56,7 +56,7 @@
 
             if (reasons == null)
             {
-                reasons = repository.GetReasons(new GetReasonCreditSiteCriteria(mode)).ToList();
+                reasons = DynamicRepository.Fetch<IdNameModel>(new GetReasonCreditSiteCriteria(mode)).ToList();
                 CacheManager.Set(cacheKey, reasons);
             }
 
@@ -69,7 +69,7 @@
 
             if (preventiveActions == null)
             {
-                preventiveActions = repository.GetPreventiveActions(new GetPreventiveActionCreditSiteCriteria()).ToList();
+                preventiveActions = DynamicRepository.Fetch<IdNameModel>(new GetPreventiveActionCreditSiteCriteria()).ToList();
                 CacheManager.Set(PreventiveActionCacheKey, preventiveActions);
             }
 
@@ -108,11 +108,10 @@
                 pageIndex,
                 pageSize);
 
-            var rawData = repository.GetProblemAccounts(criteria);
+            var (problemAccounts, problemAccountReasons) = DynamicRepository.FetchMultiple<ProblemAccountItem, ProblemAccountReason>(criteria);
             var preventiveActionHash = GetPreventiveActions().ToDictionary(kvp => (byte)kvp.Id, kvp => kvp.Name);
             var accountStatusHash = AccountStatusCreditSiteConst.AccountStatusList;
-            var reasonHash = BuildProblemAccountReasons(rawData.Item2);
-            var problemAccounts = rawData.Item1;
+            var reasonHash = BuildProblemAccountReasons(problemAccountReasons);
 
             foreach (var item in problemAccounts)
             {
@@ -122,7 +121,7 @@
                 item.Reasons = reasonHash.ContainsKey(item.CustId) ? reasonHash[item.CustId] : null;
             }
 
-            return new ProblemAccountModel(rawData.Item3, problemAccounts);
+            return new ProblemAccountModel(criteria.TotalItems, problemAccounts);
         }
 
         public Result MarkNew(
@@ -135,7 +134,7 @@
             decimal limitAmount,
             int userId,
             string ip)
-            => repository.MarkNew(new MarkNewCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, userId, ip));
+            => DoAction(new MarkNewCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, userId, ip));
 
         public Result Update(
             string usernames,
@@ -150,16 +149,18 @@
             int userId,
             string ip)
         {
-            var updateResult = repository.Update(
-                new UpdateCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, updateTime, updateLimitAmount, userId, ip),
-                reasonId);
-            var result = updateResult.Item1;
-
-            if (result.IsSuccess)
+            var criteria = new UpdateCreditSiteCriteria(usernames, roleId, preventiveActionId, reasonId, HtmlEncodeText(comment), voidTime, limitAmount, updateTime, updateLimitAmount, userId, ip);
+            var updateResult = DynamicRepository.Fetch<CTSCustomerReason>(criteria);
+            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
+            if (criteria.ErrCode == 0)
             {
                 result.Message = ProblemAccountCreditDepositResource.UpdateProblemAccountSuccessfully;
+                updateResult.ForEach(item =>
+                {
+                    item.ToReasonID = reasonId;
+                });
 
-                ctsService.UpdateProblemAccounts(new CTSUpdateProblemAccount(updateResult.Item2, userId));
+                ctsService.UpdateProblemAccounts(new CTSUpdateProblemAccount(updateResult, userId));
             }
 
             return result;
@@ -173,17 +174,23 @@
             int userId,
             string ip)
         {
-            var unmarkResult = repository.Unmark(
-                new UnmarkCreditSiteCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip));
-
-            var result = unmarkResult.Item1;
-
-            if (result.IsSuccess)
+            var criteria = new UnmarkCreditSiteCriteria(usernames, roleId, excludeAbnormalMember, excludeDirectMark, userId, ip);
+            var dataSet = DynamicRepository.FetchDataSet(criteria);
+            var resultErros = new List<Result>();
+            foreach (DataRow item in dataSet.Tables[0].Rows)
             {
-                result.Message = ProblemAccountResource.UnmarkSuccessfully;
-
-                ctsService.RemoveProblemAccounts(unmarkResult.Item2);
+                var error = MapToUnMarkMessage(
+                              criteria.ErrCode,
+                              item["username"].ToString());
+                resultErros.Add(error);
             }
+            if(resultErros.Any())
+            {
+                return resultErros.First();
+            }
+
+            var result = new Result(criteria.ErrCode, ProblemAccountResource.UnmarkSuccessfully);
+            ctsService.RemoveProblemAccounts(criteria.SuccessAllDownlineList);
 
             return result;
         }
@@ -196,7 +203,7 @@
             int userId,
             string ip)
         {
-            var result = repository.ExecuteNonQuery(
+            var result = DoAction(
                 new ReduceBLCreditSiteCriteria(usernames, roleId, maxPerEvent, maxPerBet, userId, ip));
 
             if (result.IsSuccess)
@@ -209,7 +216,7 @@
 
         public Result Close(string usernames, byte roleId, bool confirmed, int userId, string ip)
         {
-            var result = repository.ExecuteNonQuery(
+            var result = DoAction(
                 new CloseAccountCriteria(usernames, roleId, confirmed, userId, ip));
 
             if (result.IsSuccess)
@@ -236,7 +243,7 @@
             int userId,
             string ip)
         {
-            var result = repository.ExecuteNonQuery(
+            var result = DoAction(
                 new RemoveReduceBLCreditSiteCriteria(usernames, roleId, isAllDownlines, confirmed, userId, ip));
 
             if (result.IsSuccess)
@@ -253,6 +260,30 @@
             }
 
             return result;
+        }
+        private static Result MapToUnMarkMessage(int errorCode, string username)
+        {
+            string errorMessage;
+            var newUsername = string.Join(", ", username.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+            if (errorCode == ErrorInvalidAccount)
+            {
+                errorMessage = string.Format(ProblemAccountResource.ErrorInvalidAccount, newUsername);
+            }
+            else if (errorCode == ErrorExistUnmarkedAccount)
+            {
+                errorMessage = string.Format(ProblemAccountResource.ErrorExistingUnmarked, newUsername);
+            }
+            else if (errorCode == ErrorNotInSelectedLevelAccount)
+            {
+                errorMessage = string.Format(ProblemAccountResource.ErrorNotInSelectedLevelAccount, newUsername);
+            }
+            else
+            {
+                errorMessage = $"{errorCode}: {newUsername}";
+            }
+
+            return new Result(errorCode, errorMessage);
         }
 
         private static IDictionary<int, IList<string>> BuildProblemAccountReasons(

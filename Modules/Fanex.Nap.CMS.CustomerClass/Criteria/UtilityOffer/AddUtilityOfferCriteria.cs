@@ -1,25 +1,13 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.UtilityOffer
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
-    internal class AddUtilityOfferCriteria : CommandCriteriaBase
+    internal class AddUtilityOfferCriteria : CustomerClassCommandBaseCriteria
     {
-        internal AddUtilityOfferCriteria(AddEditUtilityOfferRequest request, int userId, string ip) : base(userId, ip)
-        {
-            PolicyID = request.PolicyId;
-            PolicyTitle = request.PolicyTitle;
-            CustomerClasses = request.CustomerClass;
-            Currencies = request.Currencies;
-            Sites = request.Sites;
-            UtilityOffering = request.UtilityOffering;
-        }
-
         public int PolicyID { get; set; }
-        public string PolicyTitle { get; }
-        public string CustomerClasses { get; }
-        public string Currencies { get; }
-        public string Sites { get; }
-        public string UtilityOffering { get; }
+        public string PolicyTitle { get; set; }
+        public string CustomerClasses { get; set; }
+        public string Currencies { get; set; }
+        public string Sites { get; set; }
+        public string UtilityOffering { get; set; }
 
         public override bool IsValid()
             => !(string.IsNullOrWhiteSpace(PolicyTitle)

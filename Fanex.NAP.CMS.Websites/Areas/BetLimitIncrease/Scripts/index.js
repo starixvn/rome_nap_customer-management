@@ -99,7 +99,7 @@
                 { Name: "colSite", Value: betLimit.Site },
                 { Name: "colCurrency", Value: betLimit.Currency },
                 { Name: "colMultiplier", Value: betLimit.Multiplier },
-                { Name: "colAddBy", Value: betLimit.LastModifiedUser },
+                { Name: "colAddBy", Value: betLimit.LastModifiedUserName },
                 { Name: "colAddDate", Value: betLimit.LastModifiedTime }
             ];
 

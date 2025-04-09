@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.ProblemAccount
 {
     using Data.Repository;
+    using Fanex.Data;
 
     public class ReduceBLCriteria : NonQueryCriteriaBase
     {

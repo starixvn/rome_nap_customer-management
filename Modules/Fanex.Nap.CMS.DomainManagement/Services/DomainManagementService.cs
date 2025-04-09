@@ -9,7 +9,6 @@
     using Fanex.Nap.CMS.DomainManagement.Constants;
     using Fanex.Nap.CMS.DomainManagement.Criteria;
     using Fanex.Nap.CMS.DomainManagement.Models;
-    using Fanex.Nap.CMS.DomainManagement.Repositories;
     using Fanex.Nap.CMS.DomainManagement.Requests;
     using Fanex.Nap.CMS.DomainManagement.Resources;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
@@ -32,17 +31,18 @@
         Result RemoveDomains(IdNameModel[] domains, int userId, string ip);
     }
 
-    public class DomainManagementService : IDomainManagementService
+    public class DomainManagementService : ServiceBase, IDomainManagementService
     {
-        private readonly IDomainManagementRepository domainManagementRepository;
         private readonly ISettingService settingService;
 
-        public DomainManagementService(
-            IDomainManagementRepository domainManagementRepository = null,
-            ISettingService settingService = null)
+        public DomainManagementService()
+            : this(new SettingService())
         {
-            this.domainManagementRepository = domainManagementRepository ?? new DomainManagementRepository();
-            this.settingService = settingService ?? new SettingService();
+        }
+
+        public DomainManagementService(ISettingService settingService) : base()
+        {
+            this.settingService = settingService;
         }
 
         public IEnumerable<Country> GetCountries()
@@ -58,7 +58,7 @@
 
         public IEnumerable<Domain> GetDomains(SearchDomainQuery message)
         {
-            var domains = domainManagementRepository.GetDomains(
+            var domains = DynamicRepository.Fetch<Domain>(
                 new GetDomainsCriteria(message.System, message.Site, message.Status, message.Remark, message.Countries)).ToList();
             if (domains.Any())
             {
@@ -82,14 +82,13 @@
         }
 
         public Domain GetDomain(int domainId)
-            => domainManagementRepository.GetDomain(new GetDomainByIdCriteria(domainId));
+            => DynamicRepository.Get<Domain>(new GetDomainByIdCriteria(domainId));
 
         public Result AddOrEditDomain(AddOrEditDomainCommand command)
         {
             var criteria = new AddOrEditDomainCriteria(BuildDomainListXML(command), command.UserId, command.IP, command.IsEdit);
-            domainManagementRepository.AddOrEditDomain(criteria);
 
-            var result = new Result(criteria.ErrCode, criteria.ErrMsg);
+            var result = DoAction(criteria);
             if (result.IsSuccess)
             {
                 result.Message = command.IsEdit
@@ -132,7 +131,7 @@
                 {
                     try
                     {
-                        domainManagementRepository.AddNormalAnnouncement(new AddNormalAnnouncementCriteria(domainList));
+                        DynamicRepository.Execute(new AddNormalAnnouncementCriteria(domainList));
                     }
                     catch (Exception ex)
                     {
@@ -144,7 +143,14 @@
 
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
-            var result = domainManagementRepository.ExecuteNonQuery(new RemoveDomainCriteria(domains, userId, ip));
+            var criteria = new RemoveDomainCriteria
+            {
+                DomainList = BuildDomainListXml(domains),
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
@@ -152,6 +158,12 @@
             }
 
             return result;
+        }
+        private static string BuildDomainListXml(IdNameModel[] domains)
+        {
+            var domainList = domains.Select(domain => $"<Domain id=\"{domain.Id}\" d=\"{domain.Name}\"/>");
+
+            return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }
     }
 }

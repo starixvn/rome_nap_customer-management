@@ -25,5 +25,8 @@
 
         public override string GetSettingKey()
             => "NAP_Domain_Sel";
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -2,17 +2,9 @@
 {
     using Fanex.Nap.CMS.CustomerClass.Requests;
 
-    internal class AddPolicyCriteria : CommandCriteriaBase
+    internal class AddPolicyCriteria : CustomerClassCommandBaseCriteria
     {
-        public AddPolicyCriteria(AddPolicyRequest request)
-            : base(request.UserId, request.IP)
-        {
-            SportType = request.SportType;
-            PolicyTitle = request.PolicyTitle;
-            RuleIds = request.RuleIds;
-        }
-
-        public short SportType { get; }
+        public short SportType { get; set; }
 
         public string PolicyTitle { get; set; }
 

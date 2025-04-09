@@ -7,7 +7,6 @@
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.Settings.Criteria;
     using Fanex.Nap.CMS.Settings.Models;
-    using Fanex.Nap.CMS.Settings.Repositories;
 
     public class SettingService : ISettingService
     {
@@ -15,11 +14,11 @@
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.Settings.Currency";
         private const string ProductCacheKey = "Fanex.Nap.CMS.Settings.Product";
 
-        private readonly ISettingRepository _settingRepository;
+        private readonly IDynamicRepository dynamicRepository;
 
-        public SettingService(ISettingRepository settingRepository = null)
+        public SettingService(IDynamicRepository dynamicRepository = null)
         {
-            _settingRepository = settingRepository ?? new SettingRepository();
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public IList<BaseSetting> GetCurrencies()
@@ -39,7 +38,7 @@
             var settings = CacheManager.Get<IList<BaseSetting>>(cacheKey);
             if (settings == null)
             {
-                settings = _settingRepository.GetSettings(criteria).ToList();
+                settings = dynamicRepository.Fetch<BaseSetting>(criteria).ToList();
                 if (settings.Count != 0)
                 {
                     var cacheExpiration = DateTime.Now.AddMinutes(CacheDurationInMinutes);

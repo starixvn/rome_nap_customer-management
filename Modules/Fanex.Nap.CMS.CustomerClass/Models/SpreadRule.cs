@@ -4,33 +4,17 @@
     
     public class SpreadRule
     {
-        public SpreadRule(int policyID, string policyTitle, short sportType, decimal spread, string customerClass, string currencies, string sites, string platforms, bool enable, byte isTest, int lastModifiedUser, DateTime lastModifiedTime)
-        {
-            PolicyID = policyID;
-            PolicyTitle = policyTitle;
-            SportType = sportType;
-            Spread = spread;
-            CustomerClass = customerClass;
-            Currencies = currencies;
-            Sites = sites;
-            Platforms = platforms;
-            Enable = enable;
-            IsTest = isTest;
-            LastModifiedUser = lastModifiedUser;
-            LastModifiedTime = lastModifiedTime;
-        }
-
-        public int PolicyID { get; }
-        public string PolicyTitle { get; }
-        public decimal Spread { get; }
-        public short SportType { get; }
-        public string CustomerClass { get; }
-        public string Currencies { get; }
-        public string Sites { get; }
-        public string Platforms { get; }
-        public bool Enable { get; }
-        public byte IsTest { get; }
-        public int LastModifiedUser { get; }
-        public DateTime LastModifiedTime { get; }
+        public int PolicyID { get; set; }
+        public string PolicyTitle { get; set; }
+        public decimal Spread { get; set; }
+        public short SportType { get; set; }
+        public string CustomerClass { get; set; }
+        public string Currencies { get; set; }
+        public string Sites { get; set; }
+        public string Platforms { get; set; }
+        public bool Enable { get; set; }
+        public byte IsTest { get; set; }
+        public int LastModifiedUser { get; set; }
+        public DateTime LastModifiedTime { get; set; }
     }
 }

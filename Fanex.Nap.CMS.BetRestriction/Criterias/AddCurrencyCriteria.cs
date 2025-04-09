@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class AddCurrencyCriteria : CriteriaBase
+    public class AddCurrencyCriteria : CommandBaseCriteria
     {
         public int ExchangeId { get; set; }
 
@@ -24,5 +24,8 @@
         {
             return "NAP_BetRestriction_CurrencyIns";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

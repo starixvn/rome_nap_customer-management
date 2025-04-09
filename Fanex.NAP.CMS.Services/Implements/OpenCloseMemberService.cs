@@ -12,11 +12,10 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Fanex.Data.Repository;
     using Fanex.NAP.CMS.Core.Constants;
     using Fanex.NAP.CMS.Criteria.OpenCloseMember;
     using Fanex.NAP.CMS.Models.OpenCloseMember;
-    using Fanex.NAP.CMS.Repositories.Implements;
-    using Fanex.NAP.CMS.Repositories.Interfaces;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
 
@@ -25,16 +24,16 @@ namespace Fanex.NAP.CMS.Services.Implements
     /// </summary>
     public class OpenCloseMemberService : CMSBaseService, IOpenCloseMemberService
     {
-        private readonly IOpenCloseMemberRepository _openCloseMemberRepository;      
+        private readonly IDynamicRepository dynamicRepository;
 
         public OpenCloseMemberService() :
-            this(null)
+            this(new DynamicRepository())
         {
         }
 
-        public OpenCloseMemberService(IOpenCloseMemberRepository openCloseMemberRepository)
+        public OpenCloseMemberService(IDynamicRepository dynamicRepository)
         {
-            this._openCloseMemberRepository = openCloseMemberRepository ?? new OpenCloseMemberRepository();
+            this.dynamicRepository = dynamicRepository;
         }
 
         /// <summary>
@@ -52,7 +51,8 @@ namespace Fanex.NAP.CMS.Services.Implements
                 ItemPerPage = filter.PageSize,
                 PageIndex = filter.PageIndex + 1
             };
-            IEnumerable<MemberStatusInfo> memberList = this._openCloseMemberRepository.GetMembersStatusData(criteria);
+            var memberList = dynamicRepository.Fetch<MemberStatusInfo>(criteria);
+
             var groups = memberList.GroupBy(member => new { member.Master, member.Agent }).GroupBy(agent => agent.Key.Master);
 
             result.ErrorCode = criteria.ErrorCode;
@@ -139,8 +139,13 @@ namespace Fanex.NAP.CMS.Services.Implements
                 UserID = filter.AdminId,
                 IP = filter.IP
             };
+            dynamicRepository.Execute(criteria);
 
-            return _openCloseMemberRepository.UpdateMembersStatus(criteria);
+            return new UpdateResult(
+                criteria.ErrCode,
+                criteria.ErrMsg,
+                criteria.ListCustRemove,
+                criteria.UpdatedCount);
         }
 
         /// <summary>

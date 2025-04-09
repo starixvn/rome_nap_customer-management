@@ -24,14 +24,14 @@
                 ToNullableDecimal(reader["mastermaxbet"]),
                 ToNullableDecimal(reader["agentmpm"]),
                 ToNullableDecimal(reader["agentmaxbet"]),
-                ToNullableDecimal(reader["mpm"]),
-                ToNullableDecimal(reader["maxbet"]),
-                Convert.ToByte(reader["custstatus"]),
+                ToNullableDecimal(reader["mpm"]),//
+                ToNullableDecimal(reader["maxbet"]),//
+                Convert.ToByte(reader["custstatus"]),//
                 Convert.ToDateTime(reader["markdate"]),
                 reader["comment"].ToString(),
                 ToNullableInt32(reader["abnormalbetnumber"]),
-                reader["informed1by"].ToString(),
-                reader["informed2by"].ToString(),
+                reader["informed1by"].ToString(),//
+                reader["informed2by"].ToString(),//
                 null,
                 0,
                 null,

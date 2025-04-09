@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.PayoutManagement.Criteria
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetPayoutDetailCriteria : CriteriaBase
@@ -11,5 +12,8 @@
         {
             return "NAP_PayoutTrans_SelDetail";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

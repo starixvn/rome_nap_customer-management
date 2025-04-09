@@ -15,5 +15,8 @@
         {
             return "NAP_BetRestriction_LeagueGroupSel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

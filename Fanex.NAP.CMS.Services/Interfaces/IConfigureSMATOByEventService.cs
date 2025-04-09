@@ -11,11 +11,12 @@ namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using System.Collections.Generic;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     public interface IConfigureSMATOByEventService
     {
@@ -45,6 +46,6 @@ namespace Fanex.NAP.CMS.Services.Interfaces
         /// </summary>
         /// <param name="criteria">The criteria contain updated data.</param>
         /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
-        ICommandResult UpdateTurnover(ICriteria criteria);
+        ICommandResult UpdateTurnover(CommandBaseCriteria criteria);
     }
 }

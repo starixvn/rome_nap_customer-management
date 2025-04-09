@@ -2,13 +2,6 @@
 {
     public class NapAccountingPolicyModel
     {
-        public NapAccountingPolicyModel(
-            string functionName
-        )
-        {
-            FunctionName = functionName;
-        }
-
-        public string FunctionName { get; }
+        public string FunctionName { get; set; }
     }
 }

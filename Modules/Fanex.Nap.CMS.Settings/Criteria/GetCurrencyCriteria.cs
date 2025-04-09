@@ -16,5 +16,8 @@
         {
             return "NAP_WinLimit_CurrencySel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

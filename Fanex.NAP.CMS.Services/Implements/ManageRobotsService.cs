@@ -15,7 +15,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Models.ManageRobots;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageRobots;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     /// <summary>
     /// Manage robot service.

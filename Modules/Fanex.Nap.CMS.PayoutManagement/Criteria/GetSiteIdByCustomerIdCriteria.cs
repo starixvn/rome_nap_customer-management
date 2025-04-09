@@ -1,4 +1,5 @@
-﻿using Fanex.Data.Repository;
+﻿using Fanex.Data;
+using Fanex.Data.Repository;
 
 namespace Fanex.Nap.CMS.PayoutManagement.Criteria
 {

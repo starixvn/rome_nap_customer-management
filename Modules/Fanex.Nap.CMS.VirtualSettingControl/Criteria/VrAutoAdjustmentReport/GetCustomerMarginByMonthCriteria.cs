@@ -15,5 +15,8 @@
         {
             return "NAP_Report_CustMngt_CustomerMarginHistory";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

@@ -5,11 +5,11 @@
 
     public interface ISettingService
     {
-        IEnumerable<IdNameModel> GetAllCurrencies();
+        IEnumerable<CurrencyModel> GetAllCurrencies();
 
-        IEnumerable<IdNameModel> GetCreditCurrencies();
+        IEnumerable<CurrencyModel> GetCreditCurrencies();
 
-        IEnumerable<SiteGroup> GetAllSites(int userId = 0);
+        IEnumerable<SiteGroup> GetAllSites(int? userId = null);
 
         IEnumerable<IdNameModel> GetCreditSites();
 

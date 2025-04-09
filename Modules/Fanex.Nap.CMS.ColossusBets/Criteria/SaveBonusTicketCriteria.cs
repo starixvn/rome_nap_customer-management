@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.ColossusBets.Criteria
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class SaveBonusTicketCriteria : CriteriaBase
@@ -35,5 +36,7 @@
         {
             return "NAP_ColossusBets_BonusTicket_InsUpd";
         }
+        public override bool IsValid()
+            => true;
     }
 }

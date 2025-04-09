@@ -1,18 +1,14 @@
 ﻿using Fanex.Nap.CMS.CustomerClass.Requests;
+using Fanex.Nap.CMS.Infrastructure.Configurations;
+using Fanex.Nap.CMS.Infrastructure.Criteria;
 
 namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class CheckPolicyDelCriteria : QueryCriteriaBase
+    internal class CheckPolicyDelCriteria : CommandBaseCriteria
     {
-        public CheckPolicyDelCriteria(DeletePolicyRequest request)
-        {
-            Policies = request.Policies;
-        }
-        public string Policies { get; }
+        public bool IsTest { get; } = AppSettings.IsTest;
 
-        public int ErrCode { get; }
-
-        public string ErrMsg { get; }
+        public string Policies { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassPolicyCheck";

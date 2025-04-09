@@ -109,6 +109,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string BetRestriction_Soccer = "BetRestriction_Soccer";
         public const string BetRestriction_BasketBall = "BetRestriction_Basketball";
         public const string BetRestriction_Badminton = "BetRestriction_Badminton";
+        public const string BetRestriction_ESports = "BetRestriction_ESports";            
         public const string BetRestriction_Tennis = "BetRestriction_Tennis";
         public const string OnOffBetRestriction = "OnOffBetRestriction";
 

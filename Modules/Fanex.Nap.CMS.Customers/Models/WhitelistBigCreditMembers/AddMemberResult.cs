@@ -8,13 +8,18 @@ namespace Fanex.Nap.CMS.Customers.Models.WhitelistBigCreditMembers
         private static readonly int[] ErrorCodes = new[] { 1001, 1002 };
         private static readonly int[] WarningCodes = new[] { 1003, 1004, 1005 };
 
+        public AddMemberResult()
+        {
+        }
+
+
         public AddMemberResult(string username, int code, string message)
             : base(code, message)
         {
             Username = username;
         }
 
-        public string Username { get; }
+        public string Username { get; set; }
 
         public bool IsError => ErrorCodes.Contains(Code);
 

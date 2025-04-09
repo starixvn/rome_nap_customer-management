@@ -5,73 +5,37 @@
 
     public class GlobalAutoSuspendThresholdLogDTO
     {
-        public GlobalAutoSuspendThresholdLogDTO(
-            int logId,
-            DateTime logTime,
-            int sportType,
-            string sportName,
-            int leagueGroupId,
-            string leagueGroup,
-            int betTypeGroupId,
-            string betTypeGroup,
-            int betType,
-            string betTypeName,
-            decimal vrAutoSuspendThresholdLive_New,
-            decimal vrAutoSuspendThresholdNonLive_New,
-            decimal vrAutoSuspendThresholdLive_Old,
-            decimal vrAutoSuspendThresholdNonLive_Old,
-            bool isNew,
-            string updatedby)
-        {
-            LogId = logId;
-            LogTime = logTime;
-            SportType = sportType;
-            SportName = sportName;
-            LeagueGroupId = leagueGroupId;
-            LeagueGroup = leagueGroup;
-            BetTypeGroupId = betTypeGroupId;
-            BetTypeGroup = betTypeGroup;
-            BetType = betType;
-            BetTypeName = betTypeName;
-            VRAutoSuspendThresholdLive_New = vrAutoSuspendThresholdLive_New;
-            VRAutoSuspendThresholdNonLive_New = vrAutoSuspendThresholdNonLive_New;
-            VRAutoSuspendThresholdLive_Old = vrAutoSuspendThresholdLive_Old;
-            VRAutoSuspendThresholdNonLive_Old = vrAutoSuspendThresholdNonLive_Old;
-            IsNew = isNew;
-            Updatedby = updatedby;
-        }
+        public int LogId { get; set; }
 
-        public int LogId { get; }
+        public DateTime LogTime { get; set; }
 
-        public DateTime LogTime { get; }
+        public int SportType { get; set; }
 
-        public int SportType { get; }
+        public string SportName { get; set; }
 
-        public string SportName { get; }
+        public int LeagueGroupId { get; set; }
 
-        public int LeagueGroupId { get; }
+        public string LeagueGroup { get; set; }
 
-        public string LeagueGroup { get; }
+        public int BetTypeGroupId { get; set; }
 
-        public int BetTypeGroupId { get; }
+        public string BetTypeGroup { get; set; }
 
-        public string BetTypeGroup { get; }
+        public int BetType { get; set; }
 
-        public int BetType { get; }
+        public string BetTypeName { get; set; }
 
-        public string BetTypeName { get; }
+        public decimal VRAutoSuspendThresholdLive_New { get; set; }
 
-        public decimal VRAutoSuspendThresholdLive_New { get; }
+        public decimal VRAutoSuspendThresholdNonLive_New { get; set; }
 
-        public decimal VRAutoSuspendThresholdNonLive_New { get; }
+        public decimal VRAutoSuspendThresholdLive_Old { get; set; }
 
-        public decimal VRAutoSuspendThresholdLive_Old { get; }
+        public decimal VRAutoSuspendThresholdNonLive_Old { get; set; }
 
-        public decimal VRAutoSuspendThresholdNonLive_Old { get; }
+        public bool IsNew { get; set; }
 
-        public bool IsNew { get; }
-
-        public string Updatedby { get; }
+        public string Updatedby { get; set; }
 
         public string LogTimeString => LogTime.ToShortFormatedDateWithHourMinute();
     }

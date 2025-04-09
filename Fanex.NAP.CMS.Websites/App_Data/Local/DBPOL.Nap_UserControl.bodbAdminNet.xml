@@ -11,6 +11,6 @@
       <Mapping DataField="ModifierId" ObjectProperty="Id" />
       <Mapping DataField="ModifierUsername" ObjectProperty="Username" />
     </Setting>
-    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.Nap_UserControl.wsv_nap"/>
+		<Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.Nap_UserControl.wsv_nap" />
   </Function>
 </Functions>

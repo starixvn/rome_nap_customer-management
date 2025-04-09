@@ -2,18 +2,8 @@
 {
     public class Country
     {
-        public Country()
-        {
-        }
+        public string Code { get; set; }
 
-        public Country(string code, string name)
-        {
-            Code = code;
-            Name = name;
-        }
-
-        public string Code { get; }
-
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

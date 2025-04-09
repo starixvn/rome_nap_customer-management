@@ -2,8 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Data.Repository;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -21,17 +22,21 @@
 
     internal class FilterService : SettingService, IFilterService
     {
-        private readonly IFilterDataAccess dataAccess;
+        private readonly IDynamicRepository dynamicRepository;
 
         private const string CachedSportTypes = "CCM-SportTypes";
         private const string CachedLeagues = "CCM-Leagues-{0}";
         private const int CachedDefaultInMinutes = 60;
 
-        public FilterService(IFilterDataAccess dataAccess = null)
-            => this.dataAccess = dataAccess ?? new FilterDataAccess();
+        public FilterService(IDynamicRepository dynamicRepository = null)
+            => this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
 
         public IEnumerable<short> GetCustomerClasses()
-            => dataAccess.GetCustomerClasses(new GetCustomerClassCriteria());
+        {
+            var criteria = new GetCustomerClassCriteria();
+
+            return dynamicRepository.Fetch<CustomerClassDTO>(criteria).Select(ctc => ctc.ResourceId);
+        }
 
         public IEnumerable<LeagueGroup> GetLeagueGroups(int sportType = 0)
         {
@@ -40,7 +45,7 @@
 
             if (leagues == null)
             {
-                leagues = dataAccess.GetLeagueGroups(new GetLeagueGroupCriteria(sportType));
+                leagues = dynamicRepository.Fetch<LeagueGroup>(new GetLeagueGroupCriteria(sportType));
                 CacheManager.Set(cachedKey, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 
@@ -53,7 +58,7 @@
 
             if (sports == null)
             {
-                sports = dataAccess.GetSports(new GetSportsCriteria());
+                sports = dynamicRepository.Fetch<IdNameModel>(new GetSportsCriteria());
                 CacheManager.Set(CachedSportTypes, sports, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 

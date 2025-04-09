@@ -1,103 +1,64 @@
 ﻿namespace Fanex.Nap.CMS.Customers.Criteria.VirtualRateEngine
 {
-    using Fanex.Nap.CMS.Customers.ViewModels.VirtualRateEngine;
-
-    internal class AddNewVREngineRuleCriteria : VREngineCriteriaBase
+    public class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
-        public AddNewVREngineRuleCriteria(AddNewRuleViewModel vm, string jsonCheckData)
-            : base(vm.UserId, vm.IP)
-        {
-            RuleName = vm.RuleTitle;
-            Priority = vm.PriorityOrder;
+        public string RuleName { get; set; }
 
-            SiteType = vm.SiteType;
-            SiteIDList = vm.Site;
-            CustomerClassList = vm.CustomerClass;
-            CustomerClassDetailList = vm.CustomerClassDetail;
-            CCSportTypeList = vm.CCSportType;
-            VR_From = vm.VRFrom;
-            VR_To = vm.VRTo;
-            VRStatus = 2;
-            SporttypeList = vm.SportType;
-            BettypeList = vm.BetType;
-            LiveIndicator = vm.LiveIndicator;
-            LeagueGroupList = vm.LeagueGroup;
-            LeagueList = vm.League;
-            Betfrom = vm.Betfrom;
-            StakeRM_From = vm.StakeFrom;
-            StakeRM_To = vm.StakeTo;
-            DateOfWeekList = vm.DayOfWeek;
-            BeginTime = vm.BeginTime;
-            EndTime = vm.EndTime;
-            CurrencyIDList = vm.CurrencyIDList;
+        public int Priority { get; set; }
 
-            Adjustmenttype = vm.AdjustmentType;
-            AdjustmentValue = vm.AdjustmentValue;
-            AccumulatedBalance = vm.AccumulatedBalance;
-            Status = vm.Active;
+        public byte? SiteType { get; set; }
 
-            Criteria_NotApply = vm.CriteriaNotApply;
-            Enabled_Columns = vm.EnabledColumns;
-            JsonCheckData = jsonCheckData;
-        }
+        public string SiteIDList { get; set; }
 
-        public string RuleName { get; }
+        public string CustomerClassList { get; set; }
 
-        public int Priority { get; }
+        public string CustomerClassDetailList { get; set; }
 
-        public byte? SiteType { get; }
+        public string CCSportTypeList { get; set; }
 
-        public string SiteIDList { get; }
+        public decimal? VR_From { get; set; }
 
-        public string CustomerClassList { get; }
+        public decimal? VR_To { get; set; }
 
-        public string CustomerClassDetailList { get; }
+        public byte? VRStatus { get; set; }
 
-        public string CCSportTypeList { get; }
+        public string SporttypeList { get; set; }
 
-        public decimal? VR_From { get; }
+        public string BettypeList { get; set; }
 
-        public decimal? VR_To { get; }
+        public byte? LiveIndicator { get; set; }
 
-        public byte? VRStatus { get; }
+        public string LeagueGroupList { get; set; }
 
-        public string SporttypeList { get; }
+        public string LeagueList { get; set; }
 
-        public string BettypeList { get; }
+        public string Betfrom { get; set; }
 
-        public byte? LiveIndicator { get; }
+        public decimal? StakeRM_From { get; set; }
 
-        public string LeagueGroupList { get; }
+        public decimal? StakeRM_To { get; set; }
 
-        public string LeagueList { get; }
+        public string DateOfWeekList { get; set; }
 
-        public string Betfrom { get; }
+        public string BeginTime { get; set; }
 
-        public decimal? StakeRM_From { get; }
-
-        public decimal? StakeRM_To { get; }
-
-        public string DateOfWeekList { get; }
-
-        public string BeginTime { get; }
-
-        public string EndTime { get; }
+        public string EndTime { get; set; }
 
         public string CurrencyIDList { get; set; }
 
-        public byte Adjustmenttype { get; }
+        public byte Adjustmenttype { get; set; }
 
-        public decimal AdjustmentValue { get; }
+        public decimal AdjustmentValue { get; set; }
 
-        public byte AccumulatedBalance { get; }
+        public byte AccumulatedBalance { get; set; }
 
-        public byte Status { get; }
+        public byte Status { get; set; }
 
-        public string Criteria_NotApply { get; }
+        public string Criteria_NotApply { get; set; }
 
-        public string Enabled_Columns { get; }
+        public string Enabled_Columns { get; set; }
 
-        public string JsonCheckData { get; }
+        public string JsonCheckData { get; set; }
 
         public override string GetSettingKey()
             => "NAP_VREngine_Rule_Insert";

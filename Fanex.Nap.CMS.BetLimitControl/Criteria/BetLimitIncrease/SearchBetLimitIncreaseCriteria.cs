@@ -12,5 +12,8 @@
 
         public override string GetSettingKey()
                 => "NAP_CM_SVIPMaxBetPlayerSel";
+
+        public override bool IsValid()
+            => true;
     }
 }

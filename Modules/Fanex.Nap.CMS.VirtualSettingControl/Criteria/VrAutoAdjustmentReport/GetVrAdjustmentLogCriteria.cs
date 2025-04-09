@@ -3,7 +3,6 @@
 namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport
 {
     using System;
-    using Fanex.NAP.CMS.Criteria.Common;
 
     public class GetVrAdjustmentLogCriteria : CriteriaBase
     {
@@ -15,5 +14,8 @@ namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport
         {
             return "NAP_Report_CustMngt_GetVrAdjustmentLog";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

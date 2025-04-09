@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualRateDetails
 {
     using System;
+    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetAutoSuspendLogsCriteria : CriteriaBase
@@ -21,5 +22,8 @@
 
         public override string GetSettingKey()
             => "Acc_CustVirtualMultiplier_ViewLog_AutoSuspend";
+
+        public override bool IsValid()
+            => true;
     }
 }

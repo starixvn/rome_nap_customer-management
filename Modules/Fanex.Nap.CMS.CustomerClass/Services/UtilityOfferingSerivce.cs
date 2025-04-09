@@ -1,13 +1,12 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Services
 {
     using Fanex.Nap.CMS.CustomerClass.Criteria.UtilityOffer;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Collections.Generic;
 
     internal interface IUtilityOfferingSerivce
@@ -20,30 +19,72 @@
 
         Result DeleteOffer(int policyID, int userId, string iP);
     }
-    internal class UtilityOfferingSerivce : IUtilityOfferingSerivce
+    internal class UtilityOfferingSerivce : ServiceBase, IUtilityOfferingSerivce
     {
-        private readonly IOfferingDataAccess offeringDataAccess;
-        private readonly IDynamicRepository dynamicRepository;
-        public UtilityOfferingSerivce() : this(new DynamicRepository(), new OfferingDataAccess())
+        public UtilityOfferingSerivce() : base()
         {
-        }
-
-        public UtilityOfferingSerivce(IDynamicRepository dynamicRepository, IOfferingDataAccess offeringDataAccess)
-        {
-            this.dynamicRepository = dynamicRepository;
-            this.offeringDataAccess = offeringDataAccess ?? new OfferingDataAccess();
         }
 
         public IEnumerable<UtilityOfferingModel> GetOfferings(SearchUtilityOfferingRequest request)
-            => dynamicRepository.Fetch<UtilityOfferingModel>(new GetUtilityOfferCriteria(request));
+        {
+            var criteria = new GetUtilityOfferCriteria(request)
+            {
+                CustomerClasses = request.CustomerClass,
+                Sites = request.Site,
+                Currencies = request.Currency
+            };
+
+            return DynamicRepository.Fetch<UtilityOfferingModel>(criteria);
+        }
 
         public AddOfferResponse AddOffer(AddEditUtilityOfferRequest request, int userId, string iP)
-            => offeringDataAccess.AddOffer(new AddUtilityOfferCriteria(request, userId, iP));
+        {
+            var criteria = new AddUtilityOfferCriteria
+            {
+                PolicyID = request.PolicyId,
+                PolicyTitle = request.PolicyTitle,
+                CustomerClasses = request.CustomerClass,
+                Currencies = request.Currencies,
+                Sites = request.Sites,
+                UtilityOffering = request.UtilityOffering,
+                UserId = userId,
+                IP = iP
+            };
+            DynamicRepository.Execute(criteria);
+            var message = criteria.ErrCode == 0
+                ? Labels.AddUtilityOfferingSuccessfully ?? criteria.ErrMsg
+                : criteria.ErrMsg;
+
+            return new AddOfferResponse(criteria.PolicyID, criteria.ErrCode, message);
+        }
 
         public Result UpdateOffer(AddEditUtilityOfferRequest request, int userId, string iP)
-            => offeringDataAccess.DoAction(new EditUtilityOfferCriteria(request, userId, iP), Labels.EditUtilityOfferSuccessfully);
+        {
+            var criteria = new EditUtilityOfferCriteria
+            {
+                PolicyID = request.PolicyId,
+                PolicyTitle = request.PolicyTitle,
+                CustomerClasses = request.CustomerClass,
+                Currencies = request.Currencies,
+                Sites = request.Sites,
+                UtilityOffering = request.UtilityOffering,
+                UserId = userId,
+                IP = iP
+            };
+
+            return DoAction(criteria, Labels.EditUtilityOfferSuccessfully);
+        }
 
         public Result DeleteOffer(int policyID, int userId, string iP)
-            => offeringDataAccess.DoAction(new DeleteUtilityOfferCriteria(policyID, userId, iP), Labels.DeleteUtilityOfferingSuccessfully);
+        {
+            var criteria = new DeleteUtilityOfferCriteria
+            {
+                PolicyID = policyID,
+                UserId = userId,
+                IP = iP
+            };
+
+            return DoAction(criteria, Labels.DeleteUtilityOfferingSuccessfully);
+        }
     }
 }

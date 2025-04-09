@@ -5,14 +5,12 @@
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.NAP.CMS.BetLimitTypeControl.Criteria;
     using Fanex.NAP.CMS.BetLimitTypeControl.Models;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
     using Fanex.NAP.Core.Web.Context;
     using Fanex.NAP.Core.Web.Session;
-    using Newtonsoft.Json;
 
     public interface IBetLimitTypeControlService
     {
@@ -31,42 +29,29 @@
         IEnumerable<IdNameModel> GetLeagues(string leagueGroupIds, string leagueGroupListNotIn, string leagues);
     }
 
-    public class BetLimitTypeControlService : IBetLimitTypeControlService
+    public class BetLimitTypeControlService : ServiceBase, IBetLimitTypeControlService
     {
-        private readonly IServiceBase serviceBase;
         private readonly ICurrentSession currentSession;
         private readonly ICurrentContext currentContext;
         private const string CachedLeagues = "BLT-Leagues";
         private const int CachedDefaultInMinutes = 60;
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
 
-        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext)
-            : this(currentSession, currentContext, null)
-        {
-        }
-
-        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext, IServiceBase serviceBase)
+        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext) 
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;
-            this.serviceBase = serviceBase ?? new ServiceBase();
         }
 
         public QueryFilterModel QueryFilter()
         {
-            using (var objDb = new ObjectDb("NAP_BLControl_SportBettypeSel"))
-            {
-                var reader = objDb.QueryMultiple();
-                var products = reader.Read<Product>();
-                var sportTypes = reader.Read<SportType>();
-                var betTypes = reader.Read<BetType>();
+            var (products, sportTypes, betTypes) =  DynamicRepository.FetchMultiple<Product, SportType, BetType>(new GetProductSportBettypeCriteria());
 
-                return new QueryFilterModel(products, sportTypes, betTypes);
-            }
+            return new QueryFilterModel(products, sportTypes, betTypes);
         }
 
         public IEnumerable<SearchModel> Search(SearchRequest request)
-            => serviceBase.GetRepositoryData<SearchModel>(new SearchCriteria
+            => DynamicRepository.Fetch<SearchModel>(new SearchCriteria
             {
                 UserId = currentSession.UserId,
                 ProductId = request.ProductId,
@@ -93,8 +78,7 @@
                 IP = currentContext.IP,
                 UserId = currentSession.UserId
             };
-
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
@@ -119,7 +103,7 @@
                 UserId = currentSession.UserId
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
@@ -133,18 +117,18 @@
                 UserId = currentSession.UserId
             };
 
-            serviceBase.ExecuteNonQueryWithMapOutput(criteria);
+            DynamicRepository.Execute(criteria);
 
             return new Result(criteria.ErrorCode, criteria.ErrorMsg);
         }
         public IEnumerable<LeagueGroup> GetLeagueGroups()
         {
-            var leagues = CacheManager.Get<IEnumerable<LeagueGroup>>(CachedLeagues);
+            var leagues = Nap.CMS.Infrastructure.Web.CacheManager.Get<IEnumerable<LeagueGroup>>(CachedLeagues);
 
             if (leagues == null)
             {
-                leagues = serviceBase.GetRepositoryData<LeagueGroup>(new GetLeagueGroupCriteria(0));
-                CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+                leagues = DynamicRepository.Fetch<LeagueGroup>(new GetLeagueGroupCriteria(0));
+                Nap.CMS.Infrastructure.Web.CacheManager.Set(CachedLeagues, leagues, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
             }
 
             return leagues;
@@ -155,36 +139,28 @@
             string leagueGroupListNotIn,
             string leagues)
         {
-            var jsonSportBetType = GetSportBetType();
+            //var jsonSportBetType = GetSportBetType();
 
-            return serviceBase.GetRepositoryData<IdNameModel>(
-                new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+            //return DynamicRepository.Fetch<IdNameModel>(
+            //    new GetLeagueCriteria(leagueGroupIds, leagueGroupListNotIn, leagues, jsonSportBetType));
+
+            return new List<IdNameModel>();
         }
 
-        private string GetSportBetType()
-        {
-            var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
-            if (jsonSBM == null)
-            {
-                var criteria = new GetSportBettypeCriteria();
-                var sporttypes = new List<object>();
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                    {
-                        while (reader.Read())
-                        {
-                            sporttypes.Add(new { Sporttype = Convert.ToInt32(reader["sporttype"]) });
-                        }
-                    }
-                }
+        //private string GetSportBetType()
+        //{
+        //    var jsonSBM = CacheManager.Get<string>(SportBetTypeMatrixCachedKey);
+        //    if (jsonSBM == null)
+        //    {
+        //        var criteria = new GetSportBettypeCriteria();
+        //        var sporttypes = DynamicRepository.Fetch<SportType>(criteria).Select(sport => new { Sporttype = sport.SportTypeId });
 
-                jsonSBM = JsonConvert.SerializeObject(sporttypes);
-                CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
-            }
+        //        jsonSBM = JsonConvert.SerializeObject(sporttypes);
+        //        CacheManager.Set(SportBetTypeMatrixCachedKey, jsonSBM, DateTime.Now.AddMinutes(CachedDefaultInMinutes));
+        //    }
 
-            return jsonSBM;
-            
-        }
+        //    return jsonSBM;
+
+        //}
     }
 }

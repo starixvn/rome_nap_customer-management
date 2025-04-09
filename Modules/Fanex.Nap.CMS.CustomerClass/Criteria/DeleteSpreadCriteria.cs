@@ -1,13 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    internal class DeleteSpreadCriteria : CommandCriteriaBase
+    internal class DeleteSpreadCriteria : CustomerClassCommandBaseCriteria
     {
-        internal DeleteSpreadCriteria(int policyID, int userId, string ip) : base(userId, ip)
-        {
-            PolicyID = policyID;
-        }
-
-        public int PolicyID { get; }
+        public int PolicyID { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadDel";

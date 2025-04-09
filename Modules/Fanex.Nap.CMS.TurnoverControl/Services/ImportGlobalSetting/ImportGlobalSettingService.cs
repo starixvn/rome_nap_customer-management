@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using Fanex.Logging.Extensions.Web;
 using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Models.ImportGlobalSetting;
-using Fanex.Nap.CMS.TurnoverControl.Repositories.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Resources;
 using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using NPOI.HSSF.UserModel;
@@ -18,7 +19,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
 {
-    public class ImportGlobalSettingService : IImportGlobalSettingService
+    public class ImportGlobalSettingService : ServiceBase, IImportGlobalSettingService
     {
         private const int BadRequest = (int)HttpStatusCode.BadRequest;
         private const int UsernameColumnIndex = 0;
@@ -26,14 +27,10 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
         private const int StartOfMaxTurnoverColumnIndex = 2;
 
         private readonly IGlobalSettingService globalSettingService;
-        private readonly IImportGlobalSettingRepository importRepository;
 
-        public ImportGlobalSettingService(
-            IGlobalSettingService globalSettingService = null,
-            IImportGlobalSettingRepository importRepository = null)
+        public ImportGlobalSettingService(IGlobalSettingService globalSettingService = null) 
         {
             this.globalSettingService = globalSettingService ?? new GlobalSettingService();
-            this.importRepository = importRepository ?? new ImportGlobalSettingRepository();
         }
 
         public ImportGlobalSettingModel ReadExcelStream(short sportType, Stream stream, string fileExtension)
@@ -48,10 +45,15 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
             }
 
             var globalSettingExcels = ReadExcelStream(sheet, profiles);
-            var rawData = importRepository.ValidateGlobalSettingExcels(
-                new ValidateGlobalSettingCriteria(sportType, globalSettingExcels));
+            var criteria = new ValidateGlobalSettingCriteria
+            {
+                GlobalSetting = ToValidateTemplateXml(globalSettingExcels, sportType),
+                SportType = sportType
+            };
 
-            var validSettings = rawData.Item1
+            var (globalSetting, errorExcel) = DynamicRepository.FetchMultiple<GlobalSettingItem, ErrorGlobalSettingExcel>(criteria);
+
+            var validSettings = globalSetting
                     .GroupBy(g => new { g.CustId, g.Username, g.Level, g.Currency })
                     .Select(grp => new GlobalSettingCustomer(
                         grp.Key.CustId,
@@ -61,13 +63,51 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
                         grp.Key.Currency,
                         grp.Select(g => new MaxTurnoverItem(g.ProfileId, g.MaxTurnover)).ToList()));
 
-            return new ImportGlobalSettingModel(validSettings, rawData.Item2);
+            return new ImportGlobalSettingModel(validSettings, errorExcel);
+        }
+
+        private static string ToValidateTemplateXml(IEnumerable<GlobalSettingExcel> globalSettings, int sportType)
+        {
+            var builder = new StringBuilder();
+            builder.Append("<ROOT>");
+
+            foreach (var item in globalSettings)
+            {
+                foreach (var mto in item.MaxTurnovers)
+                {
+                    builder.Append(ToValidateTemplateXml(item, mto, sportType));
+                }
+            }
+
+            builder.Append("</ROOT>");
+
+            return builder.ToString();
+        }
+
+        private static string ToValidateTemplateXml(GlobalSettingExcel globalSetting, MaxTurnoverExcel mto, int sportType)
+        {
+            var builder = new StringBuilder("<gs ")
+                .Append("us=\"").Append(globalSetting.Username).Append("\" ")
+                .Append("isGH=\"").Append(globalSetting.Headline).Append("\" ")
+                .Append("maxTO=\"").Append(mto.MaxTurnover).Append("\" ")
+                .Append("spt=\"").Append(sportType).Append("\" ")
+                .Append("pfID=\"").Append(mto.ProfileId).Append("\" ")
+                .Append("rowID=\"").Append(globalSetting.ExcelRow).Append("\"")
+                .Append("/>");
+
+            return builder.ToString();
         }
 
         public Result ImportGlobalSettings(short sportType, IEnumerable<GlobalSettingCustomer> globalSettings, int userId, string ip)
         {
-            var result = importRepository.ImportGlobalSettings(
-                new AddMultipleGlobalSettingCriteria(globalSettings, sportType, userId, ip));
+            var criteria = new AddMultipleGlobalSettingCriteria
+            {
+                GlobalSetting = ToXml(globalSettings, sportType),
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = DoAction(criteria);
 
             if (result.Code == ErrorCodeConstants.NoneError)
             {
@@ -76,6 +116,42 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting
 
             return result;
         }
+
+        private static string ToXml(IEnumerable<GlobalSettingCustomer> globalSettings, int sportType)
+        {
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in globalSettings)
+            {
+                foreach (var mto in item.MaxTurnovers)
+                {
+                    xmlBuilder.Append(ToXml(item, mto, sportType));
+                }
+            }
+
+            xmlBuilder.Append("</ROOT>");
+
+            return xmlBuilder.ToString();
+        }
+
+        private static string ToXml(GlobalSettingCustomer item, MaxTurnoverItem mto, int sportType)
+        {
+            var builder = new StringBuilder("<gs ")
+                .Append("us=\"").Append(item.Username).Append("\" ")
+                .Append("isGH=\"").Append(GetIsGroupHeadlineValue(item.Level)).Append("\" ")
+                .Append("maxTO=\"").Append(mto.MaxTurnover).Append("\" ")
+                .Append("spt=\"").Append(sportType).Append("\" ")
+                .Append("pfID=\"").Append(mto.ProfileId).Append("\"")
+                .Append("/>");
+
+            return builder.ToString();
+        }
+
+        private static int GetIsGroupHeadlineValue(string level)
+            => !string.IsNullOrEmpty(level) && level.Equals("headline", StringComparison.OrdinalIgnoreCase)
+            ? 1
+            : 0;
 
         #region Validate excel template
 

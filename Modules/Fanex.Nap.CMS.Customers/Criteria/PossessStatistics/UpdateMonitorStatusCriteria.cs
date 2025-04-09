@@ -2,20 +2,9 @@
 {
     public class UpdateMonitorStatusCriteria : NonQueryBaseCriteria
     {
-        public UpdateMonitorStatusCriteria(
-            string custIdList,
-            bool isMonitorPT,
-            int userId,
-            string ip)
-            : base(userId, ip)
-        {
-            CustIdList = custIdList;
-            IsMonitorPT = isMonitorPT;
-        }
+        public string CustIdList { get; set; }
 
-        public string CustIdList { get; }
-
-        public bool IsMonitorPT { get; }
+        public bool IsMonitorPT { get; set; }
 
         public override string GetSettingKey() => "CS_Customer_MonitorPT_Upd";
 

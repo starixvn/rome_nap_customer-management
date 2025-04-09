@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.BetRestriction.Criterias
 {
-    using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    public class AddSiteCriteria : CriteriaBase
+    public class AddSiteCriteria : CommandBaseCriteria
     {
         public int SiteId { get; set; }
 
@@ -22,5 +22,8 @@
         {
             return "NAP_BetRestriction_SiteIns";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

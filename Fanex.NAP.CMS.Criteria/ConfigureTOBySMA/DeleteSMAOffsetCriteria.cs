@@ -10,21 +10,18 @@
 namespace Fanex.NAP.CMS.Criteria.ConfigureTOBySMA
 {
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
     /// <summary>
     /// The criteria that are used to delete a SMA offset.
     /// </summary>
-    public class DeleteSMAOffsetCriteria : CriteriaBase
+    public class DeleteSMAOffsetCriteria : CommandBaseCriteria
     {
         public int SMAID { get; set; }
 
         public int UserID { get; set; }
 
         public string IP { get; set; }
-
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
 
         /// <summary>
         /// Gets the setting key.

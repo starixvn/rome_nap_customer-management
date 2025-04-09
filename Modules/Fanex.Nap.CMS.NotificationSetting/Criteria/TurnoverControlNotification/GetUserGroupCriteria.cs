@@ -6,7 +6,7 @@
 
 namespace Fanex.Nap.CMS.NotificationSetting.Criteria.TurnoverControlNotification
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     /// <summary>
     /// TODO: Update summary.

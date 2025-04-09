@@ -1,21 +1,10 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria
 {
-    using Fanex.Nap.CMS.CustomerClass.Requests;
-
-    internal class EnableRuleCriteria : CommandCriteriaBase
+    internal class EnableRuleCriteria : CustomerClassCommandBaseCriteria
     {
-        public EnableRuleCriteria(EnableRuleRequest request)
-            : base(request.UserId, request.IP)
-        {
-            RuleId = request.RuleId;
-            Enable = request.Enable;
-            TopPriority = request.TopPriority;
-        }
-
-        public int RuleId { get; }
-
-        public bool Enable { get; }
-        public bool TopPriority { get; }
+        public int RuleId { get; set; }
+        public bool Enable { get; set; }
+        public bool TopPriority { get; set; }
 
         public override string GetSettingKey()
             => "NAP_CM_CustomerClassRuleEnable";

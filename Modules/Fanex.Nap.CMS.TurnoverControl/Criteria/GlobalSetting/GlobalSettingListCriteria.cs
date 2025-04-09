@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
+﻿namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 {
+    using Fanex.Data.Repository;
+
     public class GlobalSettingListCriteria : CriteriaBase
     {
         public GlobalSettingListCriteria(string username, short sportType, int exchangeId)
@@ -19,5 +19,8 @@ namespace Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting
 
         public override string GetSettingKey()
             => "NAP_TOControl_GlobalSettingSelect";
+
+        public override bool IsValid()
+            => true;
     }
 }

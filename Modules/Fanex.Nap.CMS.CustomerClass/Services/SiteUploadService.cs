@@ -25,7 +25,7 @@
             Stream fileStream,
             string extension,
             IEnumerable<IdNameModel> sites,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> policyTitles);
     }
 
@@ -46,7 +46,7 @@
             Stream fileStream,
             string extension,
             IEnumerable<IdNameModel> sites,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> policyTitles)
         {
             excelErrors.Clear();
@@ -147,11 +147,11 @@
         private IEnumerable<SiteSettingExcel> ValidateBodyRows(
             ISheet sheet,
             IEnumerable<IdNameModel> sites,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> policyTitles)
         {
             var siteDict = ToDictionary(sites);
-            var currencyDict = ToDictionary(currencies);
+            var currencyDict = ToDictionary(currencies.Select(c => new IdNameModel { Id = c.ExchangeId, Name = c.Currency }));
             var policyDict = ToDictionary(policyTitles);
             var platformDict = PlatformConst.Platforms.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
             var siteSettingExcelList = new List<SiteSettingExcel>();

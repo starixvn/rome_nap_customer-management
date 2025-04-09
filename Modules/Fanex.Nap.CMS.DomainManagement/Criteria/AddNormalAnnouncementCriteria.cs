@@ -3,7 +3,7 @@
     using Fanex.Data.Repository;
     using Fanex.Nap.CMS.Infrastructure.Configurations;
 
-    public class AddNormalAnnouncementCriteria : CriteriaBase
+    public class AddNormalAnnouncementCriteria : NonQueryCommand
     {
         public AddNormalAnnouncementCriteria(string domainList)
             => DomainList = domainList;
@@ -14,5 +14,8 @@
 
         public override string GetSettingKey()
             => "NAP_Domain_SetMessage";
+
+        public override bool IsValid()
+            => true;
     }
 }

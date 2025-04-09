@@ -8,5 +8,8 @@
         {
             return "NAP_Report_CustMngt_GetCustomerMarginHistoryDate";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

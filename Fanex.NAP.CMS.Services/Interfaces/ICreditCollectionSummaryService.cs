@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.CMS.Services.Interfaces
 {
-    using Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
     using Models.CreditCollectionSummary;
 
     public interface ICreditCollectionSummaryService

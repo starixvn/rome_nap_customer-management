@@ -226,7 +226,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
-                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance ? 'Yes' : 'No' },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     { Name: 'MaxBet', Value: viewModel.DataList[i].MaxBet == null ? '' : viewModel.DataList[i].MaxBet },
                     { Name: 'MaxPerMatch', Value: viewModel.DataList[i].MaxPerMatch == null ? '' : viewModel.DataList[i].MaxPerMatch },
@@ -296,7 +296,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
-                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance ? 'Yes' : 'No' },
                     { Name: 'Action', Value: '<span class="ico-edit edit-site" data-site-id="' + viewModel.DataList[i].SiteId + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-site" data-site-id="' + viewModel.DataList[i].SiteId + '" data-site-name="' + viewModel.DataList[i].Site + '"></span>' }
                 ]
             };
@@ -366,7 +366,7 @@ Fanex.CMS.BetRestrictionSoccer = function () {
                     { Name: 'LiveBetAccept', Value: getDisplayValueOfLiveBetAccept(viewModel.DataList[i].LiveBetAccept) },
                     { Name: 'SeizeBetTicket', Value: getDisplayValueOfSeizeBetTicket(viewModel.DataList[i].SeizeBetTicket) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
-                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance ? 'Yes' : 'No' },
                     { Name: 'Action', Value: '<span class="ico-edit edit-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-type="' + viewModel.DataList[i].Type + '"></span>&nbsp;&nbsp;&nbsp;<span class="ico-delete delete-currency" data-exchange-id="' + viewModel.DataList[i].ExchangeId + '" data-currency-name="' + viewModel.DataList[i].Currency + '" data-type="' + viewModel.DataList[i].Type + '"></span>' }
                 ]
             };

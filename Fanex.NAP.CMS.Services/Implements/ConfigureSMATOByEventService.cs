@@ -12,13 +12,14 @@ namespace Fanex.NAP.CMS.Services.Implements
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
     using Fanex.NAP.CMS.Criteria.Common;
     using Fanex.NAP.CMS.Criteria.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Models.Common;
     using Fanex.NAP.CMS.Models.ConfigureSMATOByEvent;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ConfigureSMATOByEvent;
-    using Fanex.NAP.Framework.Command;
+    using Fanex.NAP.CMS.Models.Common;
 
     /// <summary>
     /// Configure SMA turnover by match service.
@@ -94,7 +95,7 @@ namespace Fanex.NAP.CMS.Services.Implements
         /// </summary>
         /// <param name="criteria">The criteria contain updated data.</param>
         /// <returns>ICommandResult indicates the updating process is successful or not.</returns>
-        public ICommandResult UpdateTurnover(ICriteria criteria)
+        public ICommandResult UpdateTurnover(CommandBaseCriteria criteria)
         {
             return this.UpdateData(criteria);
         }

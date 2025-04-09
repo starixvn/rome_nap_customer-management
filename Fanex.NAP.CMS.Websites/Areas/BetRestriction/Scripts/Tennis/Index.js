@@ -231,7 +231,7 @@ Fanex.CMS.BetRestrictionTennis = function () {
                         )
                     },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
-                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance === 0 ? 'No' : 'Yes' },
+                    { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance ? 'Yes' : 'No' },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     {
                         Name: 'Action',

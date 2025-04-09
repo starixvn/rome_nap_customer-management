@@ -2,28 +2,14 @@
 {
     public class ErrorGlobalSettingExcel
     {
-        public ErrorGlobalSettingExcel(
-            int excelRow,
-            string username,
-            string field,
-            string value,
-            string reason)
-        {
-            ExcelRow = excelRow;
-            Username = username;
-            Field = field;
-            Value = value;
-            Reason = reason;
-        }
+        public int ExcelRow { get; set; }
 
-        public int ExcelRow { get; }
+        public string Username { get; set; }
 
-        public string Username { get; }
+        public string Field { get; set; }
 
-        public string Field { get; }
+        public string Value { get; set; }
 
-        public string Value { get; }
-
-        public string Reason { get; }
+        public string Reason { get; set; }
     }
 }

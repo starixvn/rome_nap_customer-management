@@ -2,8 +2,8 @@
 {
     public class SiteModel
     {
-        public int SiteId { get; private set; }
+        public int SiteId { get; set; }
 
-        public string Site { get; private set; }
+        public string Site { get; set; }
     }
 }

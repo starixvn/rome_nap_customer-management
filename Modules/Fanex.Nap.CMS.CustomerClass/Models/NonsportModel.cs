@@ -4,29 +4,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Models
 {
     public class NonsportModel
     {
-        public NonsportModel(int policyId, string policyTitle, int maxBet, string customerClass, string sites, string products, bool enable, byte isTest, int lastModifiedUser, DateTime lastModifiedTime)
-        {
-            PolicyId = policyId;
-            PolicyTitle = policyTitle;
-            CustomerClass = customerClass;
-            Sites = sites;
-            Products = products;
-            MaxBet = maxBet;
-            IsEnable = enable;
-            IsTest = isTest;
-            LastModifiedUser = lastModifiedUser;
-            LastModifiedTime = lastModifiedTime;
-        }
-
-        public int PolicyId { get; }
-        public string PolicyTitle { get; }
-        public string CustomerClass { get; }
-        public string Sites { get; }
-        public string Products { get; }
-        public int MaxBet { get; }
-        public bool IsEnable { get; }
-        public byte IsTest { get; }
-        public int LastModifiedUser { get; }
-        public DateTime LastModifiedTime { get; }
+        public int PolicyId { get; set; }
+        public string PolicyTitle { get; set; }
+        public string CustomerClass { get; set; }
+        public string Sites { get; set; }
+        public string Products { get; set; }
+        public int MaxBet { get; set; }
+        public bool IsEnable { get; set; }
+        public byte IsTest { get; set; }
+        public int LastModifiedUser { get; set; }
+        public DateTime LastModifiedTime { get; set; }
     }
 }

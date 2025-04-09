@@ -10,7 +10,12 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
             string username,
             bool isGroupHeadline,
             IEnumerable<MaxTurnoverItem> maxTurnovers)
-            : this(0, username, isGroupHeadline ? "headline" : string.Empty, false, string.Empty, maxTurnovers)
+            : this(0,
+                   username,
+                   isGroupHeadline ? "headline" : string.Empty,
+                   false,
+                   string.Empty,
+                   maxTurnovers)
         {
         }
 
@@ -43,6 +48,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Models.GlobalSetting
         public IEnumerable<MaxTurnoverItem> MaxTurnovers { get; }
 
         public bool IsGroupHeadline
-            => Level.Equals("headline", StringComparison.OrdinalIgnoreCase);
+            => !string.IsNullOrEmpty(Level) && Level.Equals("headline", StringComparison.OrdinalIgnoreCase);
     }
 }

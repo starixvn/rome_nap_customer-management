@@ -9,7 +9,9 @@
 
         public string Code { get; set; }
 
-        public int AccountType { get; set; }
+        public int AccountType => IsGroupHeadline ? CodeType.Headline : CodeType.Direct;
+
+        public bool IsGroupHeadline { get; set; }
 
         public int GroupId { get; set; }
 

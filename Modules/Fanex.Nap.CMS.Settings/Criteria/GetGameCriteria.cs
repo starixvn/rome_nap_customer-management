@@ -8,5 +8,8 @@
         {
             return "NAP_WinLimit_ProductSel";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

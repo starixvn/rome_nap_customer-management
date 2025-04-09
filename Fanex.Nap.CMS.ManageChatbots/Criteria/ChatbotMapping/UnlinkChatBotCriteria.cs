@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.ManageChatbots.Criteria.ChatbotMapping
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UnlinkChatBotCriteria : CriteriaBase
+    public class UnlinkChatBotCriteria : NonQueryCommand
     {
         public int UserID { get; set; }
 
@@ -22,5 +22,8 @@
 
         public override string GetSettingKey()
             => "NAP_Chatbot_CustBotAccountInfoUpd";
+
+        public override bool IsValid()
+            => true;
     }
 }

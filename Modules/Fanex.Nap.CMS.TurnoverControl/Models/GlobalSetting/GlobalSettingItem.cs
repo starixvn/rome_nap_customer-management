@@ -2,52 +2,20 @@
 {
     public class GlobalSettingItem
     {
-        public GlobalSettingItem(
-            string username,
-            string level,
-            bool isLock,
-            string currency,
-            int profileId,
-            string name,
-            decimal maxTurnover)
-            : this(0, username, level, isLock, currency, profileId, name, maxTurnover)
-        {
-        }
+        public int CustId { get; set; }
 
-        public GlobalSettingItem(
-            int custId,
-            string username,
-            string level,
-            bool isLock,
-            string currency,
-            int profileId,
-            string profileName,
-            decimal maxTurnover)
-        {
-            CustId = custId;
-            Username = username;
-            Level = level;
-            IsLock = isLock;
-            Currency = currency;
-            ProfileId = profileId;
-            ProfileName = profileName;
-            MaxTurnover = maxTurnover;
-        }
+        public string Username { get; set; }
 
-        public int CustId { get; }
+        public string Level { get; set; }
 
-        public string Username { get; }
+        public bool IsLock { get; set; }
 
-        public string Level { get; }
+        public string Currency { get; set; }
 
-        public bool IsLock { get; }
+        public int ProfileId { get; set; }
 
-        public string Currency { get; }
+        public string ProfileName { get; set; }
 
-        public int ProfileId { get; }
-
-        public string ProfileName { get; }
-
-        public decimal MaxTurnover { get; }
+        public decimal MaxTurnover { get; set; }
     }
 }

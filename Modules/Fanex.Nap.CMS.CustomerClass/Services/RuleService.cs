@@ -4,14 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Net.Http.Headers;
     using System.Text;
     using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.CustomerClass.DataAccesses;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 
     internal interface IRuleService
     {
@@ -36,10 +37,9 @@
         Result DeleteRules(DeleteRuleRequest request);
     }
 
-    internal class RuleService : IRuleService
+    internal class RuleService : ServiceBase, IRuleService
     {
         private readonly IFilterService filterService;
-        private readonly IRuleDataAccess ruleDataAccess;
         private static IDictionary<byte, string> Platforms
              => new Dictionary<byte, string>
              {
@@ -53,10 +53,13 @@
 #pragma warning restore S109
             };
 
-        public RuleService(IFilterService filterService = null, IRuleDataAccess ruleDataAccess = null)
+        public RuleService() : this( new FilterService())
         {
-            this.filterService = filterService ?? new FilterService();
-            this.ruleDataAccess = ruleDataAccess ?? new RuleDataAccess();
+        }
+
+        public RuleService(IFilterService filterService) : base()
+        {
+            this.filterService = filterService;
         }
 
         public PagedRule GetRules(SearchCustomerClassSettingRequest request, IEnumerable<IdNameModel> sportTypes)
@@ -68,10 +71,21 @@
                 leagueGroups.AddRange(filterService.GetLeagueGroups(sportType.Id));
             }
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
+            var criteria = new GetPagedRuleListCriteria
+            {
+                Site = request.Site,
+                CustomerClass = request.CustomerClass ?? string.Empty,
+                CustomerClassDetail = request.CustomerClassDetail ?? string.Empty,
+                SportTypes = sportTypeIds,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                LeagueGroups = BuildLeageGroupXML(leagueGroups),
+                Currencies = request.Currencies
+            };
+            var rules = DynamicRepository.Fetch<Rule>(criteria);
+            var resultError = new Result(criteria.ErrCode, criteria.ErrMsg);
 
-            var resultSet = ruleDataAccess.GetPagedRule(new GetPagedRuleListCriteria(request, leagueGroups, sportTypeIds));
-
-            return new PagedRule(resultSet.Item1, BuildRules(resultSet.Item2), resultSet.Item3);
+            return new PagedRule(criteria.TotalItems, BuildRules(rules), resultError);
         }
 
         private IEnumerable<Rule> BuildRules(IEnumerable<Rule> rules)
@@ -107,7 +121,17 @@
                 sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
             }
 
-            return GetRules(new GetRuleListCriteria(request, BuildLeageGroupXML(leagueGroups), sportTypeIds)).OrderBy(rule => rule.CustomerClass?.ToString());
+            var criteria = new GetRuleListCriteria
+            {
+                CustomerClass = request.CustomerClass ?? string.Empty,
+                CustomerClassDetail = request.CustomerClassDetail ?? string.Empty,
+                SportTypes = sportTypeIds,
+                LeagueGroup = request.LeagueGroups,
+                IsLive = request.IsLive,
+                LeagueGroups = BuildLeageGroupXML(leagueGroups)
+            };
+
+            return GetRules(criteria).OrderBy(rule => rule.CustomerClass?.ToString());
         }
 
         public IEnumerable<Rule> GetRules(short sportType)
@@ -120,7 +144,7 @@
         private IEnumerable<Rule> GetRules(QueryCriteriaBase criteria)
         {
             var sportTypes = filterService.GetSports();
-            var rules = ruleDataAccess.GetRules(criteria);
+            var rules = DynamicRepository.Fetch<Rule>(criteria);
 
             foreach (var item in rules)
             {
@@ -131,22 +155,64 @@
         }
 
         public Rule GetRule(int ruleId)
-            => ruleDataAccess.GetRule(new GetRuleByIdCriteria(ruleId));
+            => DynamicRepository.Get<Rule>(new GetRuleByIdCriteria(ruleId));
 
         public Result AddRule(AddRuleRequest request)
-            => ruleDataAccess.DoAction(new AddRuleCriteria(request), Labels.AddRuleSuccessfully);
+        {
+            var criteria = new AddRuleCriteria
+            {
+                Rules = ToXml(request, 0),
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.AddRuleSuccessfully);
+        }
 
         public Result EditRule(int ruleId, AddRuleRequest request)
-            => ruleDataAccess.DoAction(new EditRuleCriteria(request, ruleId), Labels.EditRuleSuccessfully);
+        {
+            var criteria = new EditRuleCriteria
+            {
+                Rules = ToXml(request, ruleId),
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.EditRuleSuccessfully);
+        }
 
         public Result EnableRule(EnableRuleRequest request)
-            => ruleDataAccess.DoAction(new EnableRuleCriteria(request), Labels.EditRuleSuccessfully);
+        {
+            var criteria = new EnableRuleCriteria
+            {
+                RuleId = request.RuleId,
+                Enable = request.Enable,
+                TopPriority = request.TopPriority,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+            return DoAction(criteria, Labels.EditRuleSuccessfully);
+        }
 
         public CheckRuleResponse CheckRuleDel(DeleteRuleRequest request)
-            => ruleDataAccess.CheckRule(new CheckRuleDelCriteria(request));
+        {
+            var criteria = new CheckRuleDelCriteria(request.RuleIDs);
+            var affectedRules = DynamicRepository.Fetch<CheckRuleDTO>(criteria);
+
+            return new CheckRuleResponse(string.Join(", ", affectedRules), criteria.ErrCode, criteria.ErrMsg);
+        }
 
         public Result DeleteRules(DeleteRuleRequest request)
-            => ruleDataAccess.DoAction(new DeleteRuleCriteria(request), Labels.DeleteRuleSuccessfully);
+        {
+            var criteria = new DeleteRuleCriteria
+            {
+                RuleIDs = request.RuleIDs,
+                UserId = request.UserId,
+                IP = request.IP
+            };
+
+            return DoAction(criteria, Labels.DeleteRuleSuccessfully);
+        }
         
         protected string BuildLeageGroupXML(IEnumerable<LeagueGroup> leagueGroups)
         {
@@ -162,14 +228,55 @@
 
             return $"<ROOT>{xmlBuilder.ToString()}</ROOT>";
         }
+        private static string ToXml(AddRuleRequest request, int ruleId)
+        {
+            var xmlBuilder = new StringBuilder();
+            xmlBuilder.Append("<ROOT>");
+
+            foreach (var item in request.CCRuleTitles)
+            {
+                xmlBuilder.Append("<r");
+                if (ruleId != 0)
+                {
+                    xmlBuilder.Append(" RuleID=\"").Append(ruleId).Append("\"");
+                }
+
+                xmlBuilder
+                    .Append(" CustomerClass=\"").Append(item.CustomerClass == null ? string.Empty : item.CustomerClass.ToString()).Append("\"")
+                    .Append(" CustomerClassDetail=\"").Append(item.CustomerClassDetail == null ? string.Empty : item.CustomerClassDetail.ToString()).Append("\"")
+                    .Append(" RuleTitle=\"").Append(item.RuleTitle).Append("\"")
+                    .Append(" SportType=\"").Append(request.SportType).Append("\"")
+                    .Append(" LeagueGroupIDs=\"").Append(request.LeagueGroups).Append("\"")
+                    .Append(" IsLive=\"").Append(request.IsLive).Append("\"")
+                    .Append(" DiffBalanceRatio=\"").Append(request.DiffBalanceRatio).Append("\"")
+                    .Append(" BetDelay=\"").Append(request.BetDelay).Append("\"")
+                    .Append(" NextBetInterval=\"").Append(request.NextBetIntervalSec).Append("\"")
+                    .Append(" SuperBetInterval=\"").Append(request.SuperBetIntervalSec).Append("\"")
+                    .Append(" SiteBetInterval=\"").Append(request.SiteBetIntervalSec).Append("\"")
+                    .Append(" MinBet=\"").Append(request.MinBet).Append("\"")
+                    .Append(" MaxBet=\"").Append(request.MaxBet).Append("\"")
+                    .Append(" MaxPerMatch=\"").Append(request.MaxPerMatch).Append("\"")
+                    .Append(" RepeatedBets=\"").Append(request.RepeatedBets).Append("\"")
+                    .Append(" SeizeBetTicket=\"").Append(request.SeizeBet).Append("\"")
+                    .Append(" DisableParlay=\"").Append(Convert.ToByte(request.DisableParlay)).Append("\"")
+                    .Append(" PeakHourSpreadAdjustment=\"").Append(request.PeakHourSpread).Append("\"/>");
+            }
+
+            xmlBuilder.Append("</ROOT>");
+            return xmlBuilder.ToString();
+        }
 
         public IEnumerable<RuleDetail> GetRuleDetail(GetRuleDetailRequest request, IEnumerable<IdNameModel> sportTypes)
         {
             var sportTypeIds = string.Join(",", sportTypes.Select(sp => sp.Id));
-            var ruleDetails = ruleDataAccess.GetRuleDetail(new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite));
+            var criteria = new GetRuleDetailCriteria(request.RuleId, sportTypeIds, request.Currencies, request.IsMultiSite);
+            var ruleDetails = DynamicRepository.Fetch<RuleDetail>(criteria);
             
             foreach (var item in ruleDetails)
             {
+
+                item.Sites = string.Join(", ", item.Sites.Split(','));
+                item.CurrencyName = string.Join(", ", item.CurrencyName.Split(','));
                 item.PlatformNames = string.Join(", ", item.Platform
                            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                            .Select(p => Platforms[Convert.ToByte(p)]));

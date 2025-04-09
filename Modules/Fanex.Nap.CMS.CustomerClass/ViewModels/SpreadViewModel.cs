@@ -12,12 +12,12 @@
         public SpreadViewModel(bool hasHostPermission,
             IEnumerable<short> customerClasses,
             IEnumerable<IdNameModel> sites,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> sportTypes) : base(hasHostPermission)
         {
             CustomerClasses = customerClasses;
             Sites = sites;
-            Currencies = currencies;
+            Currencies = currencies.Select(c => new IdNameModel { Id = c.ExchangeId, Name = c.Currency });
             SportTypes = sportTypes.Select(c => ToSelectListItem(c));
         }
 

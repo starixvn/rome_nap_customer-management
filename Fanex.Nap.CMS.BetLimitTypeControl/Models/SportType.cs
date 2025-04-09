@@ -4,8 +4,8 @@
     {
         public int ProductId { get; set; }
 
-        public int SportTypeId { get; private set; }
+        public int SportTypeId { get; set; }
 
-        public string SportTypeName { get; private set; }
+        public string SportTypeName { get; set; }
     }
 }

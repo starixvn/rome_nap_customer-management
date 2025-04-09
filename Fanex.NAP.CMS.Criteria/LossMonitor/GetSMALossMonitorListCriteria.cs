@@ -8,5 +8,8 @@
         {
             return "NAP_LimitLoss_MonitorList";
         }
+
+        public override bool IsValid()
+            => true;
     }
 }

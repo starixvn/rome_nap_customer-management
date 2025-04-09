@@ -12,14 +12,14 @@
         public CustomerClassSettingViewModel(
             IEnumerable<IdNameModel> sites,
             IEnumerable<short> customerClasses,
-            IEnumerable<IdNameModel> currencies,
+            IEnumerable<CurrencyModel> currencies,
             IEnumerable<IdNameModel> sportTypes,
             IEnumerable<LeagueGroup> leagueGroups) : base(false)
         {
             Sites = sites;
             CustomerClasses = customerClasses.Select(c => ToSelectListItem(c)).InsertAllItem();
             SportTypes = sportTypes.Select(c => ToSelectListItem(c));
-            Currencies = currencies;
+            Currencies = currencies.Select(c => new IdNameModel { Id = c.ExchangeId, Name = c.Currency });
             LeagueGroups = leagueGroups;
         }
 

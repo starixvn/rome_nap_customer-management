@@ -62,7 +62,10 @@
 
         public IEnumerable<SiteSetting> GetDuplicatedSiteSettings(AssignSiteSettingRequest request)
         {
-            var criteria = new GetDuplicatedSiteSettingCriteria(ToDuplicatedSiteSettingXml(request));
+            var criteria = new GetDuplicatedSiteSettingCriteria
+            {
+                PolicySites = ToDuplicatedSiteSettingXml(request)
+            };
 
             var siteSettings = DynamicRepository.Fetch<SiteSetting>(criteria);
 
@@ -90,8 +93,10 @@
 
         public Result AssignSiteSetting(AssignSiteSettingRequest request, bool isOverwrite)
         {
-            var criteria = new AssignSiteSettingCriteria(ToDuplicatedSiteSettingXml(request), isOverwrite)
+            var criteria = new AssignSiteSettingCriteria
             {
+                IsOverwrite = isOverwrite,
+                PolicySites = ToDuplicatedSiteSettingXml(request),
                 UserId = request.UserId,
                 IP = request.IP
             };
@@ -101,7 +106,14 @@
 
         public Result Upload(IEnumerable<SiteSettingExcel> siteSettingExcels, bool isOverwrite, int userId, string ip)
         {
-            var criteria = new AssignSiteSettingCriteria(ToAssignSiteSettingXml(siteSettingExcels), isOverwrite, userId, ip) { ActionID = 1 };
+            var criteria = new AssignSiteSettingCriteria
+            { 
+                ActionID = 1,
+                IsOverwrite = isOverwrite,
+                PolicySites = ToAssignSiteSettingXml(siteSettingExcels),
+                UserId = userId,
+                IP = ip
+            };
 
             return DoAction(criteria, Labels.UploadSiteWarning);
         }

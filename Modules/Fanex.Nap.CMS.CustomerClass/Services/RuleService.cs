@@ -196,7 +196,10 @@
 
         public CheckRuleResponse CheckRuleDel(DeleteRuleRequest request)
         {
-            var criteria = new CheckRuleDelCriteria(request.RuleIDs);
+            var criteria = new CheckRuleDelCriteria
+            {
+                RuleIDs = request.RuleIDs,
+            };
             var affectedRules = DynamicRepository.Fetch<CheckRuleDTO>(criteria);
 
             return new CheckRuleResponse(string.Join(", ", affectedRules), criteria.ErrCode, criteria.ErrMsg);

@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="SonarQube - Rome / Fanex NAP CM Sonar way" ToolsVersion="14.0">
-  <Include Path="..\sonarqube\fanex.nap.cmcsharp.ruleset" Action="Default" />
-</RuleSet>

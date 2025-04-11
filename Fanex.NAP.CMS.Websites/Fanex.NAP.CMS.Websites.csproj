@@ -633,12 +633,14 @@
     <Content Include="Content\Extensions\images\BA.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Themes\img\add-no-border.png" />
     <Content Include="Content\Themes\img\bgmenu-hover.png" />
     <Content Include="Content\Themes\img\bgmenu-more.png" />
     <Content Include="Content\Themes\img\bg_footer.jpg" />
     <Content Include="Content\Themes\img\bg_header.png" />
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
+    <Content Include="Content\Themes\img\delete-no-border.png" />
     <Content Include="Content\Themes\img\icon-save-16.png" />
     <Content Include="Content\Themes\img\icon-close.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />

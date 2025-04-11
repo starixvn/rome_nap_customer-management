@@ -151,7 +151,9 @@
 			<Mapping DataField="SiteId" ObjectProperty="Id" />
 			<Mapping DataField="SiteName" ObjectProperty="Name" />
 		</Setting>
-		<Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" />
+    <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" >
+      <Mapping DataField="Domain" ObjectProperty="DomainName" />
+    </Setting>
 		<Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap">
 			<Mapping DataField="Domain" ObjectProperty="DomainName" />
 		</Setting>

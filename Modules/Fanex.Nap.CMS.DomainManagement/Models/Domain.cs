@@ -27,9 +27,9 @@
 
         public string Remark { get; set; }
 
-        public DateTime? ExpiredDate { get; set; } = new DateTime();
+        public DateTime? ExpiredDate { get; set; }
 
-        public string ExpiredDateString => ExpiredDate.ToShortFormatedDateWithSlash();
+        public string ExpiredDateString => ExpiredDate.HasValue && ExpiredDate > DateTime.MinValue ? ExpiredDate.ToShortFormatedDateWithSlash() : string.Empty;
 
         public DateTime LastUpdateTime { get; set; }
 

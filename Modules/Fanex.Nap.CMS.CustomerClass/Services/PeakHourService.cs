@@ -63,7 +63,7 @@
 
         public IEnumerable<PeakHourModel> GetPeakHours()
         {
-            return dynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay == SundayWeekday).ThenBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
+            return DynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay == SundayWeekday).ThenBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
         }
 
         public SearchPeakHourResponse GetSpreadRules(SearchSpreadRuleRequest request, IEnumerable<IdNameModel> sportTypes, IEnumerable<LeagueGroup> leagueGroups)

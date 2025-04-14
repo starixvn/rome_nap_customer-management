@@ -12,9 +12,9 @@
         public string Currencies { get; set; }
         public string Sites { get; set; }
         public string Platforms { get; set; }
-        public string LeagueGroups { get; }
+        public string LeagueGroups { get; set; }
         public bool Enable { get; set; }
-        public short IsLive { get; }
+        public short IsLive { get; set; }
         public byte IsTest { get; set; }
         public int LastModifiedUser { get; set; }
         public DateTime LastModifiedTime { get; set; }

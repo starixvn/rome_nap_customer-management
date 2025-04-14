@@ -1,8 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.PeakHour
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Nap.CMS.Infrastructure.Criteria;
 
-    internal class GetPeakHourCriteria : CriteriaBase
+    internal class GetPeakHourCriteria : CommandBaseCriteria
     {
         public override string GetSettingKey()
             => "NAP_LM_CCPeakHourRangerSel";

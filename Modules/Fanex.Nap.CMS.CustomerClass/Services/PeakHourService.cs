@@ -5,9 +5,7 @@
     using Fanex.Nap.CMS.CustomerClass.Requests.PeakHour;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.Infrastructure.Models;
-    using Fanex.Nap.CMS.Infrastructure.Repositories;
-    using Fanex.NAP.Framework.Data;
-    using System;
+    using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -17,34 +15,25 @@
         Result AddPeakHour(AddPeakHourRequest request, int userId, string iP);
         Result DeletePeakHour(int rangeId, int userId, string iP);
     }
-    internal class PeakHourService : IPeakHourService
+    internal class PeakHourService : ServiceBase, IPeakHourService
     {
-        private readonly IDynamicRepository dynamicRepository;
-        private readonly IBaseRepository baseRepository;
-
-        public PeakHourService() : this(new DynamicRepository(), new BaseRepository())
+        public PeakHourService() : base()
         {
-        }
-
-        public PeakHourService(IDynamicRepository dynamicRepository, IBaseRepository baseRepository)
-        {
-            this.dynamicRepository = dynamicRepository;
-            this.baseRepository = baseRepository;
         }
 
         public Result AddPeakHour(AddPeakHourRequest request, int userId, string iP)
         {
-            return baseRepository.DoAction(new AddPeakHourCriteria(request.WeekDay, request.StartRange, request.EndRange, userId, iP), Labels.AddPeakHourSuccessfully);
+            return DoAction(new AddPeakHourCriteria(request.WeekDay, request.StartRange, request.EndRange, userId, iP), Labels.AddPeakHourSuccessfully);
         }
 
         public Result DeletePeakHour(int rangeId, int userId, string iP)
         {
-            return baseRepository.DoAction(new DeletePeakHourCriteria(rangeId, userId, iP), Labels.DeletePeakHourSuccessfully);
+            return DoAction(new DeletePeakHourCriteria(rangeId, userId, iP), Labels.DeletePeakHourSuccessfully);
         }
 
         public IEnumerable<PeakHourModel> GetPeakHours()
         {
-            return dynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
+            return DynamicRepository.Fetch<PeakHourModel>(new GetPeakHourCriteria()).OrderBy(peak => peak.WeekDay).ThenBy(peak => peak.StartRange);
         }
     }
 }

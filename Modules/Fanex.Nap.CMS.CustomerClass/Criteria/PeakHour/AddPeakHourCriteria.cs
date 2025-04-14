@@ -1,15 +1,17 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.PeakHour
 {
-    using System;
-
-    internal class AddPeakHourCriteria : CommandCriteriaBase
+    internal class AddPeakHourCriteria : CustomerClassCommandBaseCriteria
     {
-        public AddPeakHourCriteria(byte weekDay, string startRange, string endRange, int userId, string ip) : base(userId, ip)
+        public AddPeakHourCriteria(byte weekDay, string startRange, string endRange, int userId, string ip)
         {
             WeekDay = weekDay;
             StartRange = startRange;
             EndRange = endRange;
+            base.UserId = userId;
+            base.IP = ip;
         }
+
+        public AddPeakHourCriteria() { }
 
         public byte WeekDay { get; set; }
         public string StartRange { get; set; }

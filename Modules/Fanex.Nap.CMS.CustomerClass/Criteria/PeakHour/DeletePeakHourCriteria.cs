@@ -1,10 +1,12 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Criteria.PeakHour
 {
-    internal class DeletePeakHourCriteria : CommandCriteriaBase
+    internal class DeletePeakHourCriteria : CustomerClassCommandBaseCriteria
     {
-        public DeletePeakHourCriteria(int rangeID, int userId, string iP) : base(userId, iP)
+        public DeletePeakHourCriteria(int rangeID, int userId, string iP)
         {
             RangeID = rangeID;
+            base.UserId = userId;
+            base.IP = iP;
         }
 
         public int RangeID { get; set; }

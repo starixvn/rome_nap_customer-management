@@ -4,7 +4,7 @@
     {
         public int PolicyID { get; set; }
         public bool Enable { get; set; }
-        public byte Type { get; }
+        public byte Type { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadEnable";

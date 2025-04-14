@@ -11,9 +11,9 @@
         public string Sites { get; set; }
         public string Platforms { get; set; }
         public bool Enable { get; set; }
-        public string LeagueGroups { get; }
-        public byte IsLive { get; }
-        public byte Type { get; }
+        public string LeagueGroups { get; set; }
+        public byte IsLive { get; set; }
+        public byte Type { get; set; }
 
         public override string GetSettingKey()
             => "NAP_LM_CustomerClassSpreadIns";

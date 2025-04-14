@@ -183,9 +183,9 @@
 		</Setting>
   </Function>
   <Function Name="Virtual Rate Engine">
-    <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert_xtest" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update_xtest" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete_xtest" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Update" SpName="NAP_VREngine_Rule_Update" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_VREngine_Rule_Delete" SpName="NAP_VREngine_Rule_Delete" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Manage Follow Bet Account">
     <Setting Key="NAP_Customer_FollowBetAccountDummyAgentSel" SpName="NAP_Customer_FollowBetAccountDummyAgentSel" DbName="DBCust.CustDB.wsv_nap" />

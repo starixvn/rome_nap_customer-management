@@ -339,7 +339,7 @@
                 case AdjustmentConst.FixedValue:
                     return $"{adjustment}%{BuildAccumulatedBalance(rule)}";
                 case AdjustmentConst.AdjustExtraVirtualRate:
-                    return $"Extra {adjustment}%{BuildAccumulatedBalance(rule)}";
+                    return $"Extra VR {adjustment}%{BuildAccumulatedBalance(rule)}";
                 case AdjustmentConst.AdjustCurrentVirtualRate:
                     return $"Member VR {adjustment}%";
                 default:
@@ -411,6 +411,7 @@
                 Criteria_NotApply = viewModel.CriteriaNotApply,
                 Enabled_Columns = viewModel.EnabledColumns,
                 JsonCheckData = JsonConvert.SerializeObject(jsonCheckData),
+                TimeBeforeKO = viewModel.TimeBeforeKO,
                 UserId = viewModel.UserId,
                 IP = viewModel.IP
             };
@@ -475,6 +476,7 @@
                 Criteria_NotApply = viewModel.CriteriaNotApply,
                 Enabled_Columns = viewModel.EnabledColumns,
                 JsonCheckData = JsonConvert.SerializeObject(checkResults),
+                TimeBeforeKO = viewModel.TimeBeforeKO,
                 UserId = viewModel.UserId,
                 IP = viewModel.IP
             };

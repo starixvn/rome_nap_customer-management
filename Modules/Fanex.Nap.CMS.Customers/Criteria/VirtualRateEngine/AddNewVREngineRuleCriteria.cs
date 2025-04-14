@@ -3,7 +3,6 @@
     public class AddNewVREngineRuleCriteria : VREngineCriteriaBase
     {
         public string RuleName { get; set; }
-            TimeBeforeKO = vm.TimeBeforeKO;
 
         public int Priority { get; set; }
 
@@ -47,7 +46,7 @@
 
         public string CurrencyIDList { get; set; }
 
-        public decimal TimeBeforeKO { get; }
+        public decimal TimeBeforeKO { get; set; }
 
         public byte Adjustmenttype { get; set; }
 

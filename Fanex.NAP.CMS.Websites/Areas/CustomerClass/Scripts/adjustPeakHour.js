@@ -126,6 +126,7 @@ const adjustPeakHour = (function ($) {
                     of: "#headline"
                 },
                 close: function () {
+                    $('.ui-timepicker-container').addClass('ui-helper-hidden ui-timepicker-hidden');
                     $(this).remove();
                     openModal();
                 }

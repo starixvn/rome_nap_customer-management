@@ -53,6 +53,12 @@ namespace Fanex.NAP.CMS.Services.Implements
             };
             var memberList = dynamicRepository.Fetch<MemberStatusInfo>(criteria);
 
+            foreach (var member in memberList)
+            {
+                member.Master = member.AgentId == -4 ? filter.Username + "__Master" : member.Master;
+                member.Agent = member.AgentId == -4 ? filter.Username + "__Agent" : member.AgentId == -3 ? member.Master + "__Agent" : member.Agent;
+            }
+
             var groups = memberList.GroupBy(member => new { member.Master, member.Agent }).GroupBy(agent => agent.Key.Master);
 
             result.ErrorCode = criteria.ErrorCode;

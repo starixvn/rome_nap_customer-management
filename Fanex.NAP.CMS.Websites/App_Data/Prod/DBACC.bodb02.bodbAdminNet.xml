@@ -117,6 +117,21 @@
 			<Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
 		</Setting>
 		<Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel" DbName="DBACC.bodb02.wsv_nap">
+			<Mapping DataField="siteidlist_notapply" ObjectProperty="SiteIdListNotIn" />
+			<Mapping DataField="customerclasslist_notapply" ObjectProperty="CustomerClassListNotIn" />
+			<Mapping DataField="customerclassdetaillist_notapply" ObjectProperty="CustomerClassDetailListNotIn" />
+			<Mapping DataField="ccsporttypelist_notapply" ObjectProperty="SportTypeCCListNotIn" />
+			<Mapping DataField="vr_from" ObjectProperty="VRFrom" />
+			<Mapping DataField="vr_to" ObjectProperty="VRTo" />
+			<Mapping DataField="sporttypelist_notapply" ObjectProperty="SportTypeListNotIn" />
+			<Mapping DataField="bettypelist_notapply" ObjectProperty="BetTypeListNotIn" />
+			<Mapping DataField="leaguegrouplist_notapply" ObjectProperty="LeagueGroupListNotIn" />
+			<Mapping DataField="leaguelist_notapply" ObjectProperty="LeagueListNotIn" />
+			<Mapping DataField="stakerm_from" ObjectProperty="StakeFrom" />
+			<Mapping DataField="stakerm_to" ObjectProperty="StakeTo" />
+			<Mapping DataField="dateofweeklist" ObjectProperty="DoWList" />
+			<Mapping DataField="dateofweeklist_notapply" ObjectProperty="DoWListNotIn" />
+			<Mapping DataField="currencyidlist_notapply" ObjectProperty="CurrencyIDListNotIn" />
 			<Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
 		</Setting>
   </Function>

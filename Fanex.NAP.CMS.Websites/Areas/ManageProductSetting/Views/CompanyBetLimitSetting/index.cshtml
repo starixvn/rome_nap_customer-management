@@ -1,6 +1,7 @@
 ﻿@using Fanex.Nap.CMS.ManageProductSetting.AppStart
 @using BaseLabels = Fanex.Nap.CMS.Infrastructure.Resources.Labels
 @using Labels = Fanex.Nap.CMS.ManageProductSetting.Resources.Labels
+@using Newtonsoft.Json
 @model Fanex.Nap.CMS.ManageProductSetting.ViewModels.CompanyBetLimitSetting.FilterAreaModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,18 +16,19 @@
 {
     <div class="title">
         <div>
-            <span class="curr">Non-sports Company Bet Limit Setting</span>
+            <span class="curr">@Labels.NonSportsCompanyBetLimitSettingPageTitle</span>
         </div>
     </div>
 }
 
 <div class="filter-bar">
     <div class="tabs-area">
-        <div id="tab-1" class="tab first">Company Bet Limit Setting</div>
-        @* <div id="tab-2" class="tab">Import Data</div> *@
+        <div id="tab-1" class="tab first">@Labels.TabCompanyBetLimitSetting</div>
+        <div id="tab-2" class="tab">@Labels.TabImportExcel</div>
+        <div id="tab-3" class="tab">@Labels.TabCurrencyGroup</div>
     </div>
     <div class="form-area">
-        <div id="form-tab-1" class="form-search first ">
+        <div id="form-tab-1" class="form-search first">
             @using (Html.BeginForm("Search", "NonSportsCompanyBetLimitSetting", FormMethod.Get, new { id = "formCompanyBetLimitSetting", @class = "filter-form" }))
             {
                 <div class="filter-row">
@@ -78,34 +80,108 @@
             }
 
         </div>
-        <div id="form-tab-2" class="form-search display-none">Sorry, please waiting...</div>
+        <div id="form-tab-2" class="form-search display-none first">
+            <div id="form-excel" class="filter-form">
+                <div class="filter-row">
+                    <div class="edit-field col_18">
+                        <b>@Labels.lblExcelFile</b>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="inputFile edit-field col_12">
+                        <input type="file" id="file" style="width: 99%;"
+                               accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+                    </div>
+                    <div class="col_4" style="display: inline-flex;">
+                        <button id="verifyBtn" class="fileUpload green-button">@Labels.lblSubmit</button>
+                        <button id="importBtn" class="fileUpload green-button" disabled>@Labels.lblImport</button>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="edit-field col_12">
+                        <div class="float-left" style="font-style: italic;">@Labels.lblFileSizeLimit</div>
+                        <div class="float-right"><a href="#" id="iconDownloadTemplate">@Labels.DownloadTemplate</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="form-tab-3" class="form-search display-none first">
+            <div class="filter-form">
+                <div class="filter-row">
+                    <div class="lbl-field col_1 radio-button">
+                        @Html.RadioButton("CurrencyRestriction", "Credit", true, new { id = "lblCurrencyCredit", data_id = "lblCurrencyDeposit", @class = "rdbCurrencyGroup" })
+                    </div>
+                    <div class="lbl-field col_1">
+                        @Html.Label("lblCurrencyCredit", Labels.lblCredit)
+                    </div>
+                    <div class="lbl-field col_2 radio-button">
+                        @Html.RadioButton("CurrencyRestriction", "Deposit", false, new { id = "lblCurrencyDeposit", data_id = "lblCurrencyCredit", @class = "rdbCurrencyGroup" })
+                    </div>
+                    <div class="lbl-field col_2">
+                        @Html.Label("lblCurrencyDeposit", Labels.lblDeposit)
+                    </div>
+                    <div class="col_2">&nbsp</div>
+                    @if (ViewBag.IsHost)
+                    {
+                        <div class="col_12">
+                            <button id="btnAddNewCurrencyGroup" class="blue-button">@Labels.lblAddCurrencyGroup</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="result-area">
-    <div id="form-result-tab-1" class="content-grid form-result">
-        <div id="grid-table" class="freegrid display-none"></div>
+    <div class="result-area">
+        <div id="form-result-tab-1" class="content-grid form-result">
+            <div id="grid-table" class="freegrid display-none"></div>
+        </div>
+        <div id="form-result-tab-2" class="content-grid form-result">
+            <div id="errExcel" class="inline-message"></div>
+            <div id="grid-excel-table" class="freegrid display-none"></div>
+        </div>
+        <div id="form-result-tab-3" class="content-grid form-result">
+            <div id="errCurrencyGroup" class="inline-message"></div>
+            <div id="grid-currency-table" class="freegrid display-none"></div>
+        </div>
     </div>
+    @if (ViewBag.IsHost)
+    {
+        <div id="div-popup" class="display-none">
+            @Html.Partial("~/Areas/ManageProductSetting/Views/CompanyBetLimitSetting/_AddCurrencyGroup.cshtml", Model.GroupTypes)
+        </div>
+    }
 </div>
 
 @section Foot
 {
-    <script type="text/javascript">
-          var viewResources = {
-               lblSymbol_No: '@BaseLabels.Symbol_No',
-               lblSportTypeID: '@Labels.lblSportTypeID',
-               lblSportTypeName: '@Labels.lblSportTypeName',
-               lblCreditCurrency: '@Labels.lblCreditCurrency',
-               lblDepositCurrency: '@Labels.lblDepositCurrency',
-               lblCreditSite: '@Labels.lblCreditSite',
-               lblDepositSite: '@Labels.lblDepositSite',
-               lblGameGroup: '@Labels.lblGameGroup',
-               lblBetLimit: '@Labels.lblBetLimit',
-               lblMaxBet: '@Labels.lblMaxBet',
-               lblMinBet: '@Labels.lblMinBet',
-               lblRemark: '@Labels.lblRemark',
-               lblEdit: '@Labels.lblEdit',
-               lblRemove: '@Labels.lblRemove',
-          };
-        </script>
+<script type="text/javascript">
+    var viewResources = {
+        lblSymbol_No: '@BaseLabels.Symbol_No',
+        lblSportTypeID: '@Labels.lblSportTypeID',
+        lblSportTypeName: '@Labels.lblSportTypeName',
+        lblCreditCurrency: '@Labels.lblCreditCurrency',
+        lblDepositCurrency: '@Labels.lblDepositCurrency',
+        lblCreditSite: '@Labels.lblCreditSite',
+        lblDepositSite: '@Labels.lblDepositSite',
+        lblGameGroup: '@Labels.lblGameGroup',
+        lblBetLimit: '@Labels.lblBetLimit',
+        lblMaxBet: '@Labels.lblMaxBet',
+        lblMinBet: '@Labels.lblMinBet',
+        lblRemark: '@Labels.lblRemark',
+        lblEdit: '@Labels.lblEdit',
+        lblRemove: '@Labels.lblRemove',
+        lblCurrentValue: '@Labels.lblCurrentValue',
+        lblNewValue: '@Labels.lblNewValue',
+        lblBetTypeID: '@Labels.lblBetTypeID',
+        lblBetTypeName: '@Labels.lblBetTypeName',
+        lblCurrencyGroup: '@Labels.lblCurrencyGroup',
+        lblCurrencyGroupId: '@Labels.lblCurrencyGroupId',
+        lblAddCurrencyGroup: '@Labels.lblAddCurrencyGroup',
+        Credit: '@Labels.Credit',
+        Deposit: '@Labels.Deposit',
+        requiredField: '@Labels.RequiredField',
+        site: '@Labels.lblSite'
+    };
+</script>
     @Scripts.Render(ManageProductSettingBundleConfig.CompanyBetLimitSettingScripts)
 }

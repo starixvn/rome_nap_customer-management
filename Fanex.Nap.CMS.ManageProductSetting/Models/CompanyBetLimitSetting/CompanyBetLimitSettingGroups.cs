@@ -9,7 +9,7 @@
 
         public string SportName { get; set; }
 
-        public IEnumerable<CurrencyGroup> CurrencyGroups { get; set; }
+        public IEnumerable<BetLimitCurrencyGroup> CurrencyGroups { get; set; }
 
         public int NumberRow => CurrencyGroups.Select(e => e.NumberRow).Sum();
         

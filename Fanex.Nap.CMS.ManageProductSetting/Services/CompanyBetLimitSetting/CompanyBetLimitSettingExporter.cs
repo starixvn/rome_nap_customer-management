@@ -146,7 +146,7 @@
             }
         }
 
-        private void RenderSiteGroup(ref int siteRow, ref int gameGroupRow, ref int rowCount, CurrencyGroup siteGroups)
+        private void RenderSiteGroup(ref int siteRow, ref int gameGroupRow, ref int rowCount, BetLimitCurrencyGroup siteGroups)
         {
             foreach (var siteGroup in siteGroups.SiteGroups)
             {

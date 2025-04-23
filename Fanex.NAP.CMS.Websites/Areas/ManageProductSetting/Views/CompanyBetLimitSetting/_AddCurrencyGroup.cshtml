@@ -1,0 +1,25 @@
+﻿@using Labels =  Fanex.Nap.CMS.ManageProductSetting.Resources.Labels;
+@model IEnumerable<SelectListItem>
+<div class="form" id="addNewCurrencyGroupForm">
+    <div id="inlineMessage" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label for="txtPolicyTitle">@Labels.GroupType</label>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("groupType", Model, new { id = "ddlGroupType", @class = "width-60" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field">
+            <label for="divDdlNewCurrency">@Labels.Currency</label>
+        </div>
+        <div class="edit-field">
+            <div id="divDdlNewCurrency">&nbsp</div>
+        </div>
+    </div>
+    <div class="align-right float-right form-row margin-top-80">
+        <button type="button" class="blue-button" id="btnAddGroup">@Labels.Save</button>
+        <button type="button" class="red-button" id="btnCancelAdd">@Labels.Cancel</button>
+    </div>
+</div>

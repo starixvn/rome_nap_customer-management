@@ -1,87 +1,156 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <root>
-    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-        <xsd:element name="root" msdata:IsDataSet="true">
-            
-        </xsd:element>
-    </xsd:schema>
-    <resheader name="resmimetype">
-        <value>text/microsoft-resx</value>
-    </resheader>
-    <resheader name="version">
-        <value>1.3</value>
-    </resheader>
-    <resheader name="reader">
-        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <resheader name="writer">
-        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-    </resheader>
-    <data name="NonSportCompanyBetLimitSetting" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true"></xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NonSportCompanyBetLimitSetting" xml:space="preserve">
         <value>Non-Sport Company Bet Limit Setting_{0}</value>
     </data>
-    <data name="NonSportCompanyBetLimitSetting_sheetName" xml:space="preserve">
+  <data name="NonSportCompanyBetLimitSetting_sheetName" xml:space="preserve">
         <value>Company Bet Limit</value>
     </data>
-    <data name="NonSportCompanyBetLimitSetting_title" xml:space="preserve">
+  <data name="NonSportCompanyBetLimitSetting_title" xml:space="preserve">
         <value>Non-Sport Company Bet Limit Setting</value>
     </data>
-    <data name="lblSportTypeID" xml:space="preserve">
+  <data name="lblSportTypeID" xml:space="preserve">
         <value>Sport Type ID</value>
     </data>
-    <data name="lblSportTypeName" xml:space="preserve">
+  <data name="lblSportTypeName" xml:space="preserve">
         <value>Sport Type Name</value>
     </data>
-    <data name="lblCreditCurrency" xml:space="preserve">
+  <data name="lblCreditCurrency" xml:space="preserve">
         <value>Credit Currency</value>
     </data>
-    <data name="lblDepositCurrency" xml:space="preserve">
+  <data name="lblDepositCurrency" xml:space="preserve">
         <value>Deposit Currency</value>
     </data>
-    <data name="lblBetLimit" xml:space="preserve">
+  <data name="lblBetLimit" xml:space="preserve">
         <value>Bet Limit</value>
     </data>
-    <data name="lblGameGroup" xml:space="preserve">
+  <data name="lblGameGroup" xml:space="preserve">
         <value>Game Group</value>
     </data>
-    <data name="lblMinBet" xml:space="preserve">
+  <data name="lblMinBet" xml:space="preserve">
         <value>Min Bet</value>
     </data>
-    <data name="lblMaxBet" xml:space="preserve">
+  <data name="lblMaxBet" xml:space="preserve">
         <value>Max Bet</value>
     </data>
-    <data name="lblEdit" xml:space="preserve">
+  <data name="lblEdit" xml:space="preserve">
         <value>Edit</value>
     </data>
-    <data name="lblRemove" xml:space="preserve">
+  <data name="lblRemove" xml:space="preserve">
         <value>Remove</value>
     </data>
-    <data name="lblRemark" xml:space="preserve">
+  <data name="lblRemark" xml:space="preserve">
         <value>Remark</value>
     </data>
-    <data name="lblSearch" xml:space="preserve">
+  <data name="lblSearch" xml:space="preserve">
         <value>Search</value>
     </data>
-    <data name="lblCreditSite" xml:space="preserve">
+  <data name="lblCreditSite" xml:space="preserve">
         <value>Credit Site</value>
     </data>
-    <data name="lblDepositSite" xml:space="preserve">
+  <data name="lblDepositSite" xml:space="preserve">
         <value>Deposit Site</value>
     </data>
-    <data name="lblCredit" xml:space="preserve">
+  <data name="lblCredit" xml:space="preserve">
         <value>Credit</value>
     </data>
-    <data name="lblDeposit" xml:space="preserve">
+  <data name="lblDeposit" xml:space="preserve">
         <value>Deposit</value>
     </data>
-    <data name="lblProduct" xml:space="preserve">
+  <data name="lblProduct" xml:space="preserve">
         <value>Product</value>
     </data>
-    <data name="lblSite" xml:space="preserve">
+  <data name="lblSite" xml:space="preserve">
         <value>Site</value>
     </data>
-    <data name="lblCurrency" xml:space="preserve">
+  <data name="lblCurrency" xml:space="preserve">
         <value>Currency</value>
     </data>
+  <data name="lblImport" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="lblSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="lblExcelFile" xml:space="preserve">
+    <value>Choose an excel file to upload(Format: *xls, *xlsx)</value>
+  </data>
+  <data name="lblFileSizeLimit" xml:space="preserve">
+    <value>File size limit 1MB.</value>
+  </data>
+  <data name="DownloadTemplate" xml:space="preserve">
+    <value>Click here to download template.</value>
+  </data>
+  <data name="Error_NotExcelFile" xml:space="preserve">
+    <value>The selected file is not in excel format.</value>
+  </data>
+  <data name="lblCurrentValue" xml:space="preserve">
+    <value>Current Value</value>
+  </data>
+  <data name="lblNewValue" xml:space="preserve">
+    <value>New Value</value>
+  </data>
+  <data name="lblBetTypeID" xml:space="preserve">
+    <value>Bet Type ID</value>
+  </data>
+  <data name="lblBetTypeName" xml:space="preserve">
+    <value>Bet Type Name</value>
+  </data>
+  <data name="NonSportsCompanyBetLimitSettingPageTitle" xml:space="preserve">
+    <value>Non-sports Company Bet Limit Setting</value>
+  </data>
+  <data name="TabCompanyBetLimitSetting" xml:space="preserve">
+    <value>Company Bet Limit Setting</value>
+  </data>
+  <data name="TabImportExcel" xml:space="preserve">
+    <value>Import Excel</value>
+  </data>
+  <data name="TabCurrencyGroup" xml:space="preserve">
+    <value>Manage Group Currency</value>
+  </data>
+  <data name="lblAddCurrencyGroup" xml:space="preserve">
+    <value>Add New Currency Group</value>
+  </data>
+  <data name="lblCurrencyGroup" xml:space="preserve">
+    <value>{0} Group Currency</value>
+  </data>
+  <data name="lblCurrencyGroupId" xml:space="preserve">
+    <value>{0} Group Id</value>
+  </data>
+  <data name="Credit" xml:space="preserve">
+    <value>Credit</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="GroupType" xml:space="preserve">
+    <value>Group</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field!</value>
+  </data>
 </root>

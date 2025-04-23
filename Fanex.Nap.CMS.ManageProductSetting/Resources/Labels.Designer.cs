@@ -61,11 +61,101 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credit.
+        /// </summary>
+        public static string Credit {
+            get {
+                return ResourceManager.GetString("Credit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deposit.
+        /// </summary>
+        public static string Deposit {
+            get {
+                return ResourceManager.GetString("Deposit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to download template..
+        /// </summary>
+        public static string DownloadTemplate {
+            get {
+                return ResourceManager.GetString("DownloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected file is not in excel format..
+        /// </summary>
+        public static string Error_NotExcelFile {
+            get {
+                return ResourceManager.GetString("Error_NotExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group.
+        /// </summary>
+        public static string GroupType {
+            get {
+                return ResourceManager.GetString("GroupType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Currency Group.
+        /// </summary>
+        public static string lblAddCurrencyGroup {
+            get {
+                return ResourceManager.GetString("lblAddCurrencyGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bet Limit.
         /// </summary>
         public static string lblBetLimit {
             get {
                 return ResourceManager.GetString("lblBetLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type ID.
+        /// </summary>
+        public static string lblBetTypeID {
+            get {
+                return ResourceManager.GetString("lblBetTypeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bet Type Name.
+        /// </summary>
+        public static string lblBetTypeName {
+            get {
+                return ResourceManager.GetString("lblBetTypeName", resourceCulture);
             }
         }
         
@@ -106,6 +196,33 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Group Currency.
+        /// </summary>
+        public static string lblCurrencyGroup {
+            get {
+                return ResourceManager.GetString("lblCurrencyGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Group Id.
+        /// </summary>
+        public static string lblCurrencyGroupId {
+            get {
+                return ResourceManager.GetString("lblCurrencyGroupId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Value.
+        /// </summary>
+        public static string lblCurrentValue {
+            get {
+                return ResourceManager.GetString("lblCurrentValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deposit.
         /// </summary>
         public static string lblDeposit {
@@ -142,11 +259,38 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose an excel file to upload(Format: *xls, *xlsx).
+        /// </summary>
+        public static string lblExcelFile {
+            get {
+                return ResourceManager.GetString("lblExcelFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size limit 1MB..
+        /// </summary>
+        public static string lblFileSizeLimit {
+            get {
+                return ResourceManager.GetString("lblFileSizeLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Game Group.
         /// </summary>
         public static string lblGameGroup {
             get {
                 return ResourceManager.GetString("lblGameGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import.
+        /// </summary>
+        public static string lblImport {
+            get {
+                return ResourceManager.GetString("lblImport", resourceCulture);
             }
         }
         
@@ -165,6 +309,15 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         public static string lblMinBet {
             get {
                 return ResourceManager.GetString("lblMinBet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Value.
+        /// </summary>
+        public static string lblNewValue {
+            get {
+                return ResourceManager.GetString("lblNewValue", resourceCulture);
             }
         }
         
@@ -232,6 +385,15 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string lblSubmit {
+            get {
+                return ResourceManager.GetString("lblSubmit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Non-Sport Company Bet Limit Setting_{0}.
         /// </summary>
         public static string NonSportCompanyBetLimitSetting {
@@ -255,6 +417,60 @@ namespace Fanex.Nap.CMS.ManageProductSetting.Resources {
         public static string NonSportCompanyBetLimitSetting_title {
             get {
                 return ResourceManager.GetString("NonSportCompanyBetLimitSetting_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-sports Company Bet Limit Setting.
+        /// </summary>
+        public static string NonSportsCompanyBetLimitSettingPageTitle {
+            get {
+                return ResourceManager.GetString("NonSportsCompanyBetLimitSettingPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required field!.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company Bet Limit Setting.
+        /// </summary>
+        public static string TabCompanyBetLimitSetting {
+            get {
+                return ResourceManager.GetString("TabCompanyBetLimitSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Group Currency.
+        /// </summary>
+        public static string TabCurrencyGroup {
+            get {
+                return ResourceManager.GetString("TabCurrencyGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Excel.
+        /// </summary>
+        public static string TabImportExcel {
+            get {
+                return ResourceManager.GetString("TabImportExcel", resourceCulture);
             }
         }
     }

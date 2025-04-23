@@ -525,7 +525,9 @@
     <Content Include="Areas\Customers\Scripts\problemAccount-search.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount-unmark.js" />
     <Content Include="Areas\Customers\Scripts\problemAccount.js" />
+    <Content Include="Areas\ManageProductSetting\Scripts\CompanyBetLimitSetting\currencyGroup.js" />
     <Content Include="Areas\ManageProductSetting\Scripts\CompanyBetLimitSetting\index.js" />
+    <Content Include="Areas\ManageProductSetting\Scripts\CompanyBetLimitSetting\importExcel.js" />
     <Content Include="Areas\ManageProductSetting\Styles\CompanyBetLimitSetting\index.less" />
     <Content Include="Areas\DomainManagement\Scripts\domainManagement.js" />
     <Content Include="Areas\DomainManagement\Scripts\domainManagementAddOrEdit.js" />
@@ -1205,6 +1207,9 @@
     <Content Include="Areas\Customers\Styles\credit-payout.less" />
     <Content Include="Areas\Customers\Views\CreditPayout\_VerifyMember.cshtml" />
     <Content Include="Areas\Customers\Views\CreditPayout\_BulkUpdate.cshtml" />
+    <Content Include="Areas\ManageProductSetting\Views\CompanyBetLimitSetting\_AddCurrencyGroup.cshtml" />
+    <Content Include="Areas\ManageProductSetting\Styles\CompanyBetLimitSetting\_common.less" />
+    <Content Include="App_Data\ExcelTemplates\CompanyBetLimit\CompanyBetLimit.xls" />
     <Content Include="Areas\BetLimitIncrease\Views\Index.cshtml" />
     <Content Include="Areas\BetLimitIncrease\Views\Web.config" />
     <Content Include="Areas\BetLimitIncrease\Views\_AddEditBetLimitIncrease.cshtml" />

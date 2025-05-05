@@ -241,11 +241,11 @@
 		</Setting>
 		<Setting Key="NAP_CM_CustomerClassSetting_RuleDetail" SpName="NAP_CM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
 		<!--Spread-->
-		<Setting Key="NAP_CM_CustomerClassSpreadSel" SpName="NAP_CM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CustomerClassSpreadIns" SpName="NAP_CM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CustomerClassSpreadUpd" SpName="NAP_CM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CustomerClassSpreadDel" SpName="NAP_CM_CustomerClassSpreadDel" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CustomerClassSpreadEnable" SpName="NAP_CM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CustomerClassSpreadSel" SpName="NAP_CM_CustomerClassSpreadSel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CustomerClassSpreadIns" SpName="NAP_CM_CustomerClassSpreadIns_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CustomerClassSpreadUpd" SpName="NAP_CM_CustomerClassSpreadUpd_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CustomerClassSpreadDel" SpName="NAP_CM_CustomerClassSpreadDel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CustomerClassSpreadEnable" SpName="NAP_CM_CustomerClassSpreadEnable_xtest" DbName="DBCust.CustDB.wsv_nap" />
 		<!--Utility Offering-->
 		<Setting Key="NAP_LM_CustomerClassUtilityOfferSel" SpName="NAP_LM_CustomerClassUtilityOfferSel" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassUtilityOfferIns" SpName="NAP_LM_CustomerClassUtilityOfferIns" DbName="DBCust.CustDB.wsv_nap" />
@@ -258,10 +258,10 @@
 		<Setting Key="NAP_LM_CustomerClassNonSportsDel" SpName="NAP_LM_CustomerClassNonSportsDel" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_LM_CustomerClassNonSportsEnable" SpName="NAP_LM_CustomerClassNonSportsEnable" DbName="DBCust.CustDB.wsv_nap" />
 		<!--PeakHour-->
-		<Setting Key="NAP_CM_CCPeakHourRangerDel" SpName="NAP_CM_CCPeakHourRangerDel" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CCPeakHourRangerIns" SpName="NAP_CM_CCPeakHourRangerIns" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CCPeakHourRangerSel" SpName="NAP_CM_CCPeakHourRangerSel" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_CM_CCPeakHourRangerUpd" SpName="NAP_CM_CCPeakHourRangerUpd" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CCPeakHourRangerDel" SpName="NAP_CM_CCPeakHourRangerDel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CCPeakHourRangerIns" SpName="NAP_CM_CCPeakHourRangerIns_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CCPeakHourRangerSel" SpName="NAP_CM_CCPeakHourRangerSel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CM_CCPeakHourRangerUpd" SpName="NAP_CM_CCPeakHourRangerUpd_xtest" DbName="DBCust.CustDB.wsv_nap" />
 	</Function>
 	<Function Name="Domain Management">
 		<Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />

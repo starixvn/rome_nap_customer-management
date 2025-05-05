@@ -31,8 +31,7 @@
         const ddlPlatform = renderPlatform();
         progressbar = $("#progressbar");
         progressLabel = $("#progressLabel");
-        hasHostPermisson = btnUpload.length > 0;
-        hasHostPermisson && getUploadProgress();
+        getUploadProgress();
 
         $("#formSearch").submit(function (e) {
             e.preventDefault();

@@ -69,6 +69,7 @@
             = new[]
             {
                 BuildIdNameModel(AdjustmentConst.AdjustCurrentVirtualRate, VREngineResource.AdjustCurrentVirtualRate),
+                BuildIdNameModel(AdjustmentConst.AdjustExtraVirtualRate, VREngineResource.AdjustExtraVirtualRate),
                 BuildIdNameModel(AdjustmentConst.FixedValue, VREngineResource.FixedValue)
             };
 

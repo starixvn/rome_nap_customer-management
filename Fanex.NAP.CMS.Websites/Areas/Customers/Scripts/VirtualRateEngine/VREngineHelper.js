@@ -165,6 +165,22 @@
         return parseInt(inputNumber);
     }
 
+    function validateFloat(txtFloat) {
+        var inputNumber = $.trim(txtFloat.val());
+
+        if (!inputNumber.length) {
+            CMS.showTipsyError(txtFloat, resources.requiredFieldError, "nw");
+            return;
+        }
+
+        if (!CMS.isNumeric(inputNumber)) {
+            CMS.showTipsyError(txtFloat, resources.invalidValueError, "nw");
+            return;
+        }
+
+        return parseFloat(inputNumber);
+    }
+
     function extractHourMinute(time) {
         return time.substring(0, 5);
     }
@@ -203,6 +219,7 @@
         renderGroupMultiSelect: renderGroupMultiSelect,
         updateMultiSelect: updateMultiSelect,
         validateNumber: validateNumber,
+        validateFloat: validateFloat,
         extractHourMinute: extractHourMinute,
         validateCCValue: validateCCValue,
         replaceCharCCValue: replaceCharCCValue

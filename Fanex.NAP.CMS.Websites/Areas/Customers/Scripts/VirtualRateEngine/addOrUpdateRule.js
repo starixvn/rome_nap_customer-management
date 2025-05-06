@@ -14,6 +14,7 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
     var ticketDoWCriteria = new TicketDoWCriteria(matrix.Conditions, matrix.DayOfWeeks);
     var ticketCurCriteria = new TicketCurrencyCriteria(matrix.Conditions, matrix.Currencies);
     var ticketTimeCriteria = new TicketTimeCriteria();
+    var ticketTimeBeforeKOCriteria = new TimeBeforeKOCriteria();
 
     function init(form, rule) {
         otherControls.init(form, rule);
@@ -81,6 +82,9 @@ function AddOrUpdateRule(addOrUpdateForm, getRuleListHandler, matrix, adminPermi
 
         var enabledTicketCur = isShowAllCriteria || rule.EnabledTicketCur;
         enabledTicketCur && enabledCriteria.push(ticketCurCriteria);
+
+        var enabledTimeBeforeKO = isShowAllCriteria || rule.EnabledTimeBeforeKO;
+        enabledTimeBeforeKO && enabledCriteria.push(ticketTimeBeforeKOCriteria);
 
         return enabledCriteria;
     }

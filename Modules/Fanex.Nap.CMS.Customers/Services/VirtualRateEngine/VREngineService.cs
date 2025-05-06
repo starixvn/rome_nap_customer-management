@@ -32,7 +32,8 @@
         private const string Stake = "StakeRM";
         private const string TicketDoW = "DateOfWeek";
         private const string TicketTime = "TicketTime";
-        private const string Currency = "Currency";
+        private const string Currency = "Currency"; 
+        private const string TimeBeforeKO = "TimeBeforeKO";
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
         private const int CachedDefaultInMinutes = 60;
 
@@ -120,6 +121,7 @@
             rule.EnabledTicketDoW = enabledCriteria.ContainsKey(TicketDoW);
             rule.EnabledTicketTime = enabledCriteria.ContainsKey(TicketTime);
             rule.EnabledTicketCur = enabledCriteria.ContainsKey(Currency);
+            rule.EnabledTimeBeforeKO = enabledCriteria.ContainsKey(TimeBeforeKO);
         }
 
         #region Build Criteria methods
@@ -336,6 +338,8 @@
             {
                 case AdjustmentConst.FixedValue:
                     return $"{adjustment}%{BuildAccumulatedBalance(rule)}";
+                case AdjustmentConst.AdjustExtraVirtualRate:
+                    return $"Extra VR {adjustment}%{BuildAccumulatedBalance(rule)}";
                 case AdjustmentConst.AdjustCurrentVirtualRate:
                     return $"Member VR {adjustment}%";
                 default:
@@ -407,6 +411,7 @@
                 Criteria_NotApply = viewModel.CriteriaNotApply,
                 Enabled_Columns = viewModel.EnabledColumns,
                 JsonCheckData = JsonConvert.SerializeObject(jsonCheckData),
+                TimeBeforeKO = viewModel.TimeBeforeKO,
                 UserId = viewModel.UserId,
                 IP = viewModel.IP
             };
@@ -471,6 +476,7 @@
                 Criteria_NotApply = viewModel.CriteriaNotApply,
                 Enabled_Columns = viewModel.EnabledColumns,
                 JsonCheckData = JsonConvert.SerializeObject(checkResults),
+                TimeBeforeKO = viewModel.TimeBeforeKO,
                 UserId = viewModel.UserId,
                 IP = viewModel.IP
             };

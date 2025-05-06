@@ -97,6 +97,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust Extra Virtual Rate.
+        /// </summary>
+        public static string AdjustExtraVirtualRate {
+            get {
+                return ResourceManager.GetString("AdjustExtraVirtualRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Adjustment.
         /// </summary>
         public static string Adjustment {
@@ -183,6 +192,15 @@ namespace Fanex.Nap.CMS.Customers.Resources {
         public static string In {
             get {
                 return ResourceManager.GetString("In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The input accepts only positive decimal numbers (e.g. 1 or 1.5).
+        /// </summary>
+        public static string InvalidTimeBeforeKO {
+            get {
+                return ResourceManager.GetString("InvalidTimeBeforeKO", resourceCulture);
             }
         }
         

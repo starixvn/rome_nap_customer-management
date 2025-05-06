@@ -151,6 +151,9 @@
         rule.EnabledTicketCur
             && pushMultipleSelectionCriteria("13. Currency: ", rule.CurrencyNameList, rule.CurrencyNameListNotIn);
 
+        rule.EnabledTimeBeforeKO
+            && html.push("14. Time before KO: " + (rule.TimeBeforeKO === 1 ? "1 hour" : `${rule.TimeBeforeKO} hours`));
+
         return html.join("<br/>");
     }
 

@@ -64,6 +64,9 @@
 
         public string CurrencyIDNotIn { get; set; }
 
+        // 14
+        public decimal TimeBeforeKO { get; set; }
+
         public byte AdjustmentType { get; set; }
 
         public decimal AdjustmentValue { get; set; }

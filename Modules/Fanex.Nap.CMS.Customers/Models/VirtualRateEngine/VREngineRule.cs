@@ -7,7 +7,6 @@
         public int RuleId { get; set; }
         public string RuleName { get; set; }
         public int Priority { get; set; }
-
         public byte SiteType { get; set; }
         public string SiteIdList { get; set; } = string.Empty;
         public string SiteIdListNotIn { get; set; } = string.Empty;
@@ -83,6 +82,9 @@
         public string CurrencyNameList { get; set; } = string.Empty;
         public string CurrencyNameListNotIn { get; set; } = string.Empty;
         public bool EnabledTicketCur { get; set; }
+
+        public decimal TimeBeforeKO { get; set; }
+        public bool EnabledTimeBeforeKO { get; set; }
 
         public byte AdjustmentType { get; set; }
         public decimal AdjustmentValue { get; set; }

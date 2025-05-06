@@ -46,6 +46,8 @@
 
         public string CurrencyIDList { get; set; }
 
+        public decimal TimeBeforeKO { get; set; }
+
         public byte Adjustmenttype { get; set; }
 
         public decimal AdjustmentValue { get; set; }

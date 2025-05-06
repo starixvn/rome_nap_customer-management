@@ -8,8 +8,6 @@
 
         public short SportType { get; set; }
 
-        public int CustID { get; set; }
-
         public override string GetSettingKey()
         {
             return "NAP_BetRestriction_ValidateCustomer";

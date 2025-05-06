@@ -187,7 +187,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has already exists in the Bet Restriction list..
+        ///   Looks up a localized string similar to {0} has already existed in the Bet Restriction list..
         /// </summary>
         public static string BetRestriction_UsernameExistsInBetRestrictionList {
             get {

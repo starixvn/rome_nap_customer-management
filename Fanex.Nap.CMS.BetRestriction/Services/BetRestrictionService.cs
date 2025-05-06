@@ -52,8 +52,6 @@ namespace Fanex.NAP.CMS.Services.Implements
 
         public Result CheckAddAccount(AccountRequest request, short sportType) => CheckAccount(request, ComposeCheckAddAccountMessage, sportType);
 
-        //public ValidateCustomerResultModel ValidateCustomer(AccountRequest request, short sportType) => ValidateCustomer(request, ComposeValidateCustomerMessage, sportType);
-
         public EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType) => Repository.Get<EditAccountViewModel>(new GetAccountDetailCriteria { CustId = custId, SportType = sportType });
 
         public EditSiteViewModel GetSiteDetailForEdit(int siteId) => Repository.Get<EditSiteViewModel>(new GetSiteDetailCriteria { SiteId = siteId });
@@ -81,7 +79,7 @@ namespace Fanex.NAP.CMS.Services.Implements
             return string.IsNullOrWhiteSpace(errMsg) ? new Result() : new Result(500, errMsg + Labels.BetRestriction_WarningProceed);
         }
 
-        public ValidateCustomerResultModel ValidateCustomer(AccountRequest request, short sportType)
+        public Result ValidateCustomer(AccountRequest request, short sportType)
         {
             var criteria = new ValidateCustomerCriteria
             {
@@ -89,55 +87,30 @@ namespace Fanex.NAP.CMS.Services.Implements
                 SportType = sportType
             };
 
-            DynamicRepository.Execute(criteria);
-            var result = new ValidateCustomerResultModel();
+            Repository.Execute(criteria);
 
-            var errorMessage = string.Empty;
-
-            if (criteria.ErrCode == 1)
-            {
-                errorMessage += string.Format(Labels.BetRestriction_InvalidUserName) + Environment.NewLine;
-            }
-
-            if (criteria.ErrCode == 2)
-            {
-                errorMessage += string.Format(Labels.BetRestriction_UsernameExistsInBetRestrictionList) + Environment.NewLine;
-            }
+            var errorMessage = GetValidationErrorMessage(criteria.ErrCode, criteria.UserName);
 
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                result.ErrorMessage = errorMessage;
+                criteria.ErrMsg = errorMessage;
             }
 
-            return result;
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
-
-        //private ValidateCustomerResultModel ValidateCustomer(AccountRequest request, Func<AccountRequest, ValidateCustomerResultModel, string> composeMsgFunction, short sportType)
-        //{
-        //    var criteria = new ValidateCustomerCriteria
-        //    {
-        //        UserName = request.UserName,
-        //        SportType = sportType
-        //    };
-
-        //    var validateCustomerResult = Repository.Get<ValidateCustomerResultModel>(criteria);
-           
-        //    var errMsg = composeMsgFunction(request, validateCustomerResult);
-
-        //    if (!string.IsNullOrWhiteSpace(errMsg))
-        //    {
-        //        return new ValidateCustomerResultModel
-        //        {
-        //            ErrCode = validateCustomerResult.ErrCode,
-        //            UserName = validateCustomerResult.UserName,
-        //            SportType = validateCustomerResult.SportType,
-        //            ErrorMessage = errMsg
-        //        };
-        //    }
-
-        //    return validateCustomerResult;
-        //}
+        private static string GetValidationErrorMessage(int errCode, string userName)
+        {
+            switch (errCode)
+            {
+                case 1:
+                    return string.Format(Labels.BetRestriction_InvalidUserName);
+                case 2:
+                    return string.Format(Labels.BetRestriction_UsernameExistsInBetRestrictionList, userName, "{UserName}");
+                default:
+                    return string.Empty;
+            }
+        }
 
         private static string ComposeCheckAddAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
@@ -156,25 +129,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             return result;
         }
-
-        //private static string ComposeValidateCustomerMessage(AccountRequest request, ValidateCustomerResultModel validateResult)
-        //{
-        //    //var sportBetRestrictionName = string.Format("Bet Restriction - {0}", CacheRef.GetSportName(validateResult.SportType));
-        //    var result = string.Empty;
-
-        //    if (validateResult.ErrCode == 1)
-        //    {
-        //        result += string.Format(Labels.BetRestriction_InvalidUserName) + Environment.NewLine;
-        //    }
-            
-        //    if (validateResult.ErrCode == 2)
-        //    {
-        //        result += string.Format(Labels.BetRestriction_UsernameExistsInBetRestrictionList) + Environment.NewLine;
-        //    }
-
-        //    return result;
-        //}
-
+        
         public IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria)
         {
             return Repository.Fetch<LeagueGroupModel>(criteria)

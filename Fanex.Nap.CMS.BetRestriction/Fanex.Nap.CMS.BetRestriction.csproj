@@ -228,7 +228,6 @@
     <Compile Include="Models\LeagueGroupModel.cs" />
     <Compile Include="Models\Management\BetRestrictionSettingModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
-    <Compile Include="ViewModels\ValidateCustomerResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CurrencyRequest.cs" />
     <Compile Include="Requests\EditSettingRequest.cs" />

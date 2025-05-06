@@ -81,6 +81,9 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         });
 
         CachedDOMElements.txtPopupAccTicketStakeRM.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        CachedDOMElements.txtPopupAccTicketStakeRM.on("cut copy paste", function (e) {
+            e.preventDefault();
+        });
     };
 
     var update8RMAccountStatus = function () {
@@ -219,7 +222,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
-        validateCustomer(params, function (isValid) {
+        validateCustomer(params, isEdit, function (isValid) {
             if (!isValid) {
                 CMS.enableInput();
                 return;
@@ -233,13 +236,15 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         });
     };
 
-    var validateCustomer = function (params, callback) {
+    var validateCustomer = function (params, isEdit, callback) {
         CMS.callAjax(this, 'ValidateCustomer', params, function (result) {
-            if (result.Code > 0) {
+            if (result.Code == 0 || (isEdit && result.Code == 2)) {
                 callback(true);
             } else {
-                CMS.showErrorMessage(result.Message);
-                callback(false); 
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                }
+                callback(false);
             }
         });
     };

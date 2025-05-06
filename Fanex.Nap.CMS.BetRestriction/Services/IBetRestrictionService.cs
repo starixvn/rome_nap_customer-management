@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CMS.Services.Interfaces
 {
     using Fanex.Nap.CMS.BetRestriction.Criterias;
+    using Fanex.Nap.CMS.BetRestriction.Models;
     using Fanex.Nap.CMS.BetRestriction.Requests;
     using Fanex.Nap.CMS.BetRestriction.ViewModels;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
@@ -19,6 +20,8 @@
         BetRestrictionDataGridViewModel<T> SearchDataGrid<T>(PagingCriteria criteria);
 
         Result CheckAddAccount(AccountRequest request, short sportType);
+
+        ValidateCustomerResultModel ValidateCustomer(AccountRequest request, short sportType);
 
         EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType);
 

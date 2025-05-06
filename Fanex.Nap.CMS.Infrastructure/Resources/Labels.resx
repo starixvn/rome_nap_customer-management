@@ -237,6 +237,12 @@
   <data name="BetRestriction_UplineExisted" xml:space="preserve">
     <value>Upline {0}: {1} of the selected account has already exists in the {2} list.</value>
   </data>
+  <data name="BetRestriction_UsernameExistsInBetRestrictionList" xml:space="preserve">
+   <value>{0} has already exists in the Bet Restriction list.</value>
+  </data>
+  <data name="BetRestriction_InvalidUserName" xml:space="preserve">
+   <value>Invalid Username.</value>
+  </data>
   <data name="BetRestriction_WarningDownlineSeizeBetLower" xml:space="preserve">
     <value>The Seize Bet Ticket % of downlines ({0}) is lower than the Seize Bet Ticket of this account.</value>
   </data>

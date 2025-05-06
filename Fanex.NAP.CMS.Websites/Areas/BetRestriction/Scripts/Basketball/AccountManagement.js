@@ -81,9 +81,6 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         });
 
         CachedDOMElements.txtPopupAccTicketStakeRM.keydown(function (e) { return CMS.forceNumericInput(e, true); });
-        CachedDOMElements.txtPopupAccTicketStakeRM.on("cut copy paste", function (e) {
-            e.preventDefault();
-        });
     };
 
     var update8RMAccountStatus = function () {
@@ -222,27 +219,44 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
-        if (isEdit) {
-            saveAccount(params, isEdit);
-        } else {
-            CMS.callAjax(
-                this,
-                'CheckAddAccount',
-                params,
-                function (result) {
-                    if (result.Code > 0) {
-                        CMS.showConfirmMessage(
-                            '<span style="white-space: pre-line">' + result.Message + '</span>',
-                            function () {
-                                return saveAccount(params, isEdit);
-                            }
-                        );
-                    } else {
+        validateCustomer(params, function (isValid) {
+            if (!isValid) {
+                CMS.enableInput();
+                return;
+            }
+
+            if (isEdit) {
+                saveAccount(params, isEdit);
+            } else {
+                checkAddAccount(params, isEdit);
+            }
+        });
+    };
+
+    var validateCustomer = function (params, callback) {
+        CMS.callAjax(this, 'ValidateCustomer', params, function (result) {
+            if (result.Code > 0) {
+                callback(true);
+            } else {
+                CMS.showErrorMessage(result.Message);
+                callback(false); 
+            }
+        });
+    };
+
+    var checkAddAccount = function (params, isEdit) {
+        CMS.callAjax(this, 'CheckAddAccount', params, function (result) {
+            if (result.Code > 0) {
+                CMS.showConfirmMessage(
+                    '<span style="white-space: pre-line">' + result.Message + '</span>',
+                    function () {
                         saveAccount(params, isEdit);
                     }
-                }
-            );
-        }
+                );
+            } else {
+                saveAccount(params, isEdit);
+            }
+        });
     };
 
     var saveAccount = function (params, isEdit) {

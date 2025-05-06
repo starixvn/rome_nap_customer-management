@@ -219,6 +219,7 @@
     <Compile Include="Criterias\SearchCurrencyCriteria.cs" />
     <Compile Include="Criterias\CheckAccountCriteria.cs" />
     <Compile Include="Criterias\SearchSiteCriteria.cs" />
+    <Compile Include="Criterias\ValidateCustomerCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AccountDetailModel.cs" />
     <Compile Include="Models\AccountModel.cs" />
@@ -227,6 +228,7 @@
     <Compile Include="Models\LeagueGroupModel.cs" />
     <Compile Include="Models\Management\BetRestrictionSettingModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
+    <Compile Include="ViewModels\ValidateCustomerResultModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\CurrencyRequest.cs" />
     <Compile Include="Requests\EditSettingRequest.cs" />

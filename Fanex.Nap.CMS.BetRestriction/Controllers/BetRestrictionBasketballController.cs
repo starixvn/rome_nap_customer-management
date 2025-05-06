@@ -53,6 +53,10 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
+        public JsonResult ValidateCustomer(AccountRequest request) => Json(_betRestrictionService.ValidateCustomer(request, _sportType));
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
         public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
 
         [HttpPost]

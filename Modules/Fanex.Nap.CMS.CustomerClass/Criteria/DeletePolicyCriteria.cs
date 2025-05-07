@@ -5,6 +5,6 @@
         public string Policies { get; set; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicyDel";
+            => "NAP_CM_CustomerClassPolicyDel";
     }
 }

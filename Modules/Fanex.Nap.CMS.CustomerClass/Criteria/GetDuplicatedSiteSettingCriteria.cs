@@ -10,6 +10,6 @@
         public bool IsTest { get; } = AppSettings.IsTest;
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicySiteCheck";
+            => "NAP_CM_CustomerClassPolicySiteCheck";
     }
 }

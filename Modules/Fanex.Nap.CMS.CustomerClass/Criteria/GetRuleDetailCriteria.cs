@@ -19,6 +19,6 @@
         public byte IsMultiSite { get; set; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassSetting_RuleDetail";
+            => "NAP_CM_CustomerClassSetting_RuleDetail";
     }
 }

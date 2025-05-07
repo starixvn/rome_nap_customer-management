@@ -220,26 +220,26 @@
     <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyCheck" SpName="NAP_LM_CustomerClassPolicyCheck" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_CM_CustomerClassPolicyDel" SpName="NAP_CM_CustomerClassPolicyDel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassPolicyDel" SpName="NAP_CM_CustomerClassPolicyDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Site-->
 		<Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.wsv_nap">
 				<Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
 				<Mapping DataField="Platform" ObjectProperty="Platforms" />
 				<Mapping DataField="Sites" ObjectProperty="Site" />
 		</Setting>
-		<Setting Key="NAP_CM_CustomerClassPolicySiteCheck" SpName="NAP_CM_CustomerClassPolicySiteCheck_xtest" DbName="DBCust.CustDB.wsv_nap">
+		<Setting Key="NAP_CM_CustomerClassPolicySiteCheck" SpName="NAP_CM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap">
 			<Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
 			<Mapping DataField="Platform" ObjectProperty="Platforms" />
 		</Setting>
-    <Setting Key="NAP_CM_CustomerClassPolicySiteIns" SpName="NAP_CM_CustomerClassPolicySiteIns_xtest" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_CM_CustomerClassPolicySiteIns_Loop" SpName="NAP_CM_CustomerClassPolicySiteIns_Loop_xtest" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassPolicySiteIns" SpName="NAP_CM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassPolicySiteIns_Loop" SpName="NAP_CM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_CM_CustomerClassPolicySiteDel" SpName="NAP_CM_CustomerClassPolicySiteDel_xtest" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassPolicySiteDel" SpName="NAP_CM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Customer Class Setting-->
 		<Setting Key="NAP_CM_CustomerClassSetting" SpName="NAP_CM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap">
 				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
 		</Setting>
-    <Setting Key="NAP_CM_CustomerClassSetting_RuleDetail" SpName="NAP_CM_CustomerClassSetting_RuleDetail_xtest" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassSetting_RuleDetail" SpName="NAP_CM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->
     <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassSpreadIns" SpName="NAP_LM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />

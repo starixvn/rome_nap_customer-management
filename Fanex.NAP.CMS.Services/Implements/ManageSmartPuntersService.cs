@@ -7,20 +7,12 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
-using System.Configuration;
-using Fanex.Common.Extensions;
-using Fanex.Data.Repository;
-using Fanex.NAP.CMS.Core;
-using Fanex.NAP.CMS.Core.Helpers;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Configuration;
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Web.Session;
-
 namespace Fanex.NAP.CMS.Services.Implements
 {
-    using System;
+    using System.Configuration;
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CMS.Core;
+    using Fanex.NAP.Core.Service.Impl;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -33,6 +25,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
     using Fanex.NAP.CMS.Models.Common;
+    using Fanex.NAP.Core.Business;
 
     /// <summary>
     /// Manage smart punters service.
@@ -296,9 +289,15 @@ namespace Fanex.NAP.CMS.Services.Implements
                 propertyName = "RoleId";
             }
 
-            var result = direction == "asc" ? actionMonitoringLogs.OrderBy(propertyName) : actionMonitoringLogs.OrderByDescending(propertyName);
+            var propertyInfo = typeof(ActionMonitoringLog).GetProperty(propertyName);
+            if (propertyInfo == null)
+            {
+                return actionMonitoringLogs;
+            }
 
-            return result;
+            return direction == "asc" 
+                ? actionMonitoringLogs.OrderBy(x => propertyInfo.GetValue(x, null))
+                : actionMonitoringLogs.OrderByDescending(x => propertyInfo.GetValue(x, null));
         }
 
         /// <summary>

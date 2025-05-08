@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.ManageProduct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Nap.CMS.DomainManagement", "Modules\Fanex.Nap.CMS.DomainManagement\Fanex.Nap.CMS.DomainManagement.csproj", "{88EF5E6D-CBA0-45F8-BC9B-D1E8FA5C5493}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SignIn", "Fanex.NAP.SignInFramework\Fanex.NAP.SignIn.csproj", "{4D7C4282-7251-4241-8796-7E316441492F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -158,6 +160,10 @@ Global
 		{88EF5E6D-CBA0-45F8-BC9B-D1E8FA5C5493}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88EF5E6D-CBA0-45F8-BC9B-D1E8FA5C5493}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88EF5E6D-CBA0-45F8-BC9B-D1E8FA5C5493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7C4282-7251-4241-8796-7E316441492F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7C4282-7251-4241-8796-7E316441492F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7C4282-7251-4241-8796-7E316441492F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7C4282-7251-4241-8796-7E316441492F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,6 +190,7 @@ Global
 		{8BB82249-F026-4061-A9DC-82067DD0FB09} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{6EA9705A-DE47-415F-B97A-16FA38B3E630} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 		{88EF5E6D-CBA0-45F8-BC9B-D1E8FA5C5493} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
+		{4D7C4282-7251-4241-8796-7E316441492F} = {CF456BE6-696C-4102-B161-7F35F34FD4A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E08A2867-264F-4443-BC13-A4DD81DAB9FC}

@@ -16,7 +16,7 @@
     <AssemblyName>Fanex.NAP.CMS.Websites</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -93,12 +93,6 @@
     </Reference>
     <Reference Include="Fanex.MailDeliver.MailClient, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.MailDeliver.MailClient.1.0.0.2\lib\net40\Fanex.MailDeliver.MailClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Core.Client.2.0.0.1\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Fanex.NAP.Core.SignIn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.NAP.Core.SignIn.2.0.0.1\lib\net461\Fanex.NAP.Core.SignIn.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.RemotingRef, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.RemotingRef.1.5.1\lib\net461\Fanex.RemotingRef.dll</HintPath>
@@ -853,9 +847,18 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="WhoamI.aspx" />
-    <Content Include="wwwroot\nap-auth\auth-sample.css" />
+    <Content Include="wwwroot\nap-auth\accessdenied.css" />
     <Content Include="wwwroot\nap-auth\auth.css" />
-    <Content Include="wwwroot\nap-auth\otp.css" />
+    <Content Include="wwwroot\nap-auth\changepassword.css" />
+    <Content Include="wwwroot\nap-auth\cryptojs.js" />
+    <Content Include="wwwroot\nap-auth\error.css" />
+    <Content Include="wwwroot\nap-auth\jquery-1.8.0.min.js" />
+    <Content Include="wwwroot\nap-auth\jquery.validate.min.js" />
+    <Content Include="wwwroot\nap-auth\jquery.validate.unobtrusive.min.js" />
+    <Content Include="wwwroot\nap-auth\jquery.validationEngine-en.js" />
+    <Content Include="wwwroot\nap-auth\jquery.validationEngine.js" />
+    <Content Include="wwwroot\nap-auth\recheckin.js" />
+    <Content Include="wwwroot\nap-auth\validationEngine.jquery.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Nap.CMS.BetLimitControl\Fanex.NAP.CMS.BetLimitControl.csproj">
@@ -897,6 +900,10 @@
     <ProjectReference Include="..\Fanex.NAP.CMS.ViewModels\Fanex.NAP.CMS.ViewModels.csproj">
       <Project>{88808f97-d8c0-45be-80d8-9c814a5cfde6}</Project>
       <Name>Fanex.NAP.CMS.ViewModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SignInFramework\Fanex.NAP.SignIn.csproj">
+      <Project>{4d7c4282-7251-4241-8796-7e316441492f}</Project>
+      <Name>Fanex.NAP.SignIn</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\Fanex.Nap.CMS.Admin\Fanex.Nap.CMS.Admin.csproj">
       <Project>{8bb82249-f026-4061-a9dc-82067dd0fb09}</Project>
@@ -1262,6 +1269,7 @@
     <Content Include="Web.dr.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Auth\FirstLoginFlow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

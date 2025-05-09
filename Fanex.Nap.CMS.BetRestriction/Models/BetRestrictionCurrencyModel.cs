@@ -31,6 +31,8 @@ namespace Fanex.Nap.CMS.BetRestriction.Models
 
         public string FollowAccount { get; set; }
 
+        public decimal? LeastStake { get; set; }
+
         public bool AccumulateBalance { get; set; }
     }
 }

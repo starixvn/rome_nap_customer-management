@@ -79,9 +79,41 @@ namespace Fanex.NAP.CMS.Services.Implements
             return string.IsNullOrWhiteSpace(errMsg) ? new Result() : new Result(500, errMsg + Labels.BetRestriction_WarningProceed);
         }
 
+        public Result ValidateCustomer(AccountRequest request, short sportType)
+        {
+            var criteria = new ValidateCustomerCriteria
+            {
+                UserName = request.UserName,
+                SportType = sportType
+            };
+
+            Repository.Execute(criteria);
+
+            var errorMessage = GetValidationErrorMessage(criteria.ErrCode, criteria.UserName);
+
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                criteria.ErrMsg = errorMessage;
+            }
+
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
+        }
+
+        private static string GetValidationErrorMessage(int errCode, string userName)
+        {
+            switch (errCode)
+            {
+                case 1:
+                    return string.Format(Labels.BetRestriction_InvalidUserName);
+                case 2:
+                    return string.Format(Labels.BetRestriction_UsernameExistsInBetRestrictionList, userName, "{UserName}");
+                default:
+                    return string.Empty;
+            }
+        }
+
         private static string ComposeCheckAddAccountMessage(AccountRequest request, CheckAddAccountResultModel checkResult)
         {
-            
             var sportBetRestrictionName = string.Format("Bet Restriction - {0}", CacheRef.GetSportName(checkResult.SportType));
             var result = string.Empty;
             if (checkResult.IsDownlineExists)
@@ -97,7 +129,7 @@ namespace Fanex.NAP.CMS.Services.Implements
 
             return result;
         }
-
+        
         public IEnumerable<SelectListItem> GetLeagueGroup(GetAllLeagueGroupCriteria criteria)
         {
             return Repository.Fetch<LeagueGroupModel>(criteria)

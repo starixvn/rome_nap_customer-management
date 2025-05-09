@@ -53,6 +53,10 @@
 
         [HttpPost]
         [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
+        public JsonResult ValidateCustomer(AccountRequest request) => Json(_betRestrictionService.ValidateCustomer(request, _sportType));
+
+        [HttpPost]
+        [NapAuth(FunctionKey = CMSFunctionKeys.BetRestriction_BasketBall, Policy = Constant.Policy.Host)]
         public JsonResult CheckAddAccount(AccountRequest request) => Json(_betRestrictionService.CheckAddAccount(request, _sportType));
 
         [HttpPost]
@@ -64,6 +68,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             LeagueGroupId = request.LeagueGroupId,
             FollowAccount = request.FollowAccount,
+            LeastStake = request.LeastStake,
             AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,
@@ -83,6 +88,7 @@
             SeizeBetTicket = request.SeizeBetTicket,
             FollowAccount = request.FollowAccount,
             LeagueGroupId = request.LeagueGroupId,
+            LeastStake = request.LeastStake,
             AccumulateBalance = request.AccumulateBalance,
             SportType = _sportType,
             UserId = CurrentSession.UserId,

@@ -2104,6 +2104,15 @@ namespace Fanex.NAP.CMS.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ticket Stake (RM).
+        /// </summary>
+        public static string TicketStakeRM {
+            get {
+                return ResourceManager.GetString("TicketStakeRM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to To.
         /// </summary>
         public static string To {

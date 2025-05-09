@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -169,11 +169,29 @@ namespace Fanex.Nap.CMS.Infrastructure.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Username..
+        /// </summary>
+        public static string BetRestriction_InvalidUserName {
+            get {
+                return ResourceManager.GetString("BetRestriction_InvalidUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upline {0}: {1} of the selected account has already exists in the {2} list..
         /// </summary>
         public static string BetRestriction_UplineExisted {
             get {
                 return ResourceManager.GetString("BetRestriction_UplineExisted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} has already existed in the Bet Restriction list..
+        /// </summary>
+        public static string BetRestriction_UsernameExistsInBetRestrictionList {
+            get {
+                return ResourceManager.GetString("BetRestriction_UsernameExistsInBetRestrictionList", resourceCulture);
             }
         }
         

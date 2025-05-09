@@ -912,4 +912,7 @@
   <data name="BetRestrictionESports" xml:space="preserve">
     <value>Bet Restriction - E-Sports</value>
   </data>
+  <data name="TicketStakeRM" xml:space="preserve">
+    <value>Ticket Stake (RM)</value>
+  </data>
 </root>

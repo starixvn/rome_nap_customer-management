@@ -37,5 +37,7 @@
         public string ProblemAccount { get; set; }
 
         public string FollowAccount { get; set; }
+
+        public decimal? LeastStake { get; set; }
     }
 }

@@ -53,13 +53,12 @@
     <Setting Key="NAP_BetRestriction_SelAllSite" SpName="NAP_BetRestriction_SelAllSite" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CustomerSel" SpName="NAP_BetRestriction_CustomerSel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_SiteSel" SpName="NAP_BetRestriction_SiteSel" DbName="DBACC.bodb02.wsv_nap" />
-		<Setting Key="NAP_BetRestriction_SelAllCurrency" SpName="NAP_BetRestriction_SelAllCurrency" DbName="DBACC.bodb02.wsv_nap" />
+	<Setting Key="NAP_BetRestriction_SelAllCurrency" SpName="NAP_BetRestriction_SelAllCurrency" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CurrencySel" SpName="NAP_BetRestriction_CurrencySel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_ValidateCurrency" SpName="NAP_BetRestriction_ValidateCurrency" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_SiteSelDetail" SpName="NAP_BetRestriction_SiteSelDetail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_ValidateSite" SpName="NAP_BetRestriction_ValidateSite" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CustomerSelDetail" SpName="NAP_BetRestriction_CustomerSelDetail" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_BetRestriction_ValidateCustomer" SpName="NAP_BetRestriction_ValidateCustomer" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CurrencySelDetail" SpName="NAP_BetRestriction_CurrencySelDetail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CheckExistLine" SpName="NAP_BetRestriction_CheckExistLine" DbName="DBACC.bodb02.wsv_nap" />
 		<Setting Key="NAP_BetRestriction_LeagueGroupSel" SpName="NAP_BetRestriction_LeagueGroupSel" DbName="DBACC.bodb02.wsv_nap">

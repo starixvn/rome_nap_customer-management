@@ -28,7 +28,8 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         spanPopupAccLiveBetAccept: null,
         optsPopupAccSeizeBetTicket: null,
         inpPopupAccSeizeBetTicket: null,
-        spanPopupAccSeizeBetTicket: null
+        spanPopupAccSeizeBetTicket: null,
+        txtPopupAccTicketStakeRM: null
     };
 
     var cacheDOMElements = function () {
@@ -38,6 +39,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
         CachedDOMElements.selPopupAccLiveBetAccept = $('#selPopupAccLiveBetAccept');
         CachedDOMElements.selPopupAccSeizeBetTicket = $('#selPopupAccSeizeBetTicket');
         CachedDOMElements.txtPopupAcc8RMAccount = $('#txtPopupAcc8RMAccount');
+        CachedDOMElements.txtPopupAccTicketStakeRM = $('#txtPopupAccTicketStakeRM');
         CachedDOMElements.ckbAccumulateBalance = $('#ckbAccumulateBalance');
         CachedDOMElements.btnSave = $('#btnAccSave');
         CachedDOMElements.btnCancel = $('#btnAccCancel');
@@ -76,6 +78,11 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 update8RMAccountStatus();
             }
             
+        });
+
+        CachedDOMElements.txtPopupAccTicketStakeRM.keydown(function (e) { return CMS.forceNumericInput(e, true); });
+        CachedDOMElements.txtPopupAccTicketStakeRM.on("cut copy paste", function (e) {
+            e.preventDefault();
         });
     };
 
@@ -147,6 +154,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
                 LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
                 FollowAccount: HasSeizeBetTicket() && !CachedDOMElements.ckbAccumulateBalance.is(":checked") ? CachedDOMElements.txtPopupAcc8RMAccount.val() : '',
+                LeastStake: CachedDOMElements.txtPopupAccTicketStakeRM.val(),
                 AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
             };
 
@@ -210,30 +218,50 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             SeizeBetTicket: CachedDOMElements.selPopupAccSeizeBetTicket.val(),
             LeagueGroupId: HasSeizeBetTicket() ? GetLeagueGroupCheckedItems(CachedDOMElements.multiSelPopupLeagueGroup) : '',
             FollowAccount: HasSeizeBetTicket() && !CachedDOMElements.ckbAccumulateBalance.is(":checked") ? CachedDOMElements.txtPopupAcc8RMAccount.val() : '',
+            LeastStake: CachedDOMElements.txtPopupAccTicketStakeRM.val(), 
             AccumulateBalance: HasSeizeBetTicket() && CachedDOMElements.ckbAccumulateBalance.is(":checked") ? 1 : 0
         };
 
-        if (isEdit) {
-            saveAccount(params, isEdit);
-        } else {
-            CMS.callAjax(
-                this,
-                'CheckAddAccount',
-                params,
-                function (result) {
-                    if (result.Code > 0) {
-                        CMS.showConfirmMessage(
-                            '<span style="white-space: pre-line">' + result.Message + '</span>',
-                            function () {
-                                return saveAccount(params, isEdit);
-                            }
-                        );
-                    } else {
+        validateCustomer(params, isEdit, function (isValid) {
+            if (!isValid) {
+                CMS.enableInput();
+                return;
+            }
+
+            if (isEdit) {
+                saveAccount(params, isEdit);
+            } else {
+                checkAddAccount(params, isEdit);
+            }
+        });
+    };
+
+    var validateCustomer = function (params, isEdit, callback) {
+        CMS.callAjax(this, 'ValidateCustomer', params, function (result) {
+            if (result.Code == 0 || (isEdit && result.Code == 2)) {
+                callback(true);
+            } else {
+                if (result.Message) {
+                    CMS.showErrorMessage(result.Message);
+                }
+                callback(false);
+            }
+        });
+    };
+
+    var checkAddAccount = function (params, isEdit) {
+        CMS.callAjax(this, 'CheckAddAccount', params, function (result) {
+            if (result.Code > 0) {
+                CMS.showConfirmMessage(
+                    '<span style="white-space: pre-line">' + result.Message + '</span>',
+                    function () {
                         saveAccount(params, isEdit);
                     }
-                }
-            );
-        }
+                );
+            } else {
+                saveAccount(params, isEdit);
+            }
+        });
     };
 
     var saveAccount = function (params, isEdit) {
@@ -264,6 +292,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
                 LeagueGroupId:
                     result.LeagueGroupId == null ? '' : result.LeagueGroupId + '',
                 FollowAccount: result.FollowAccount == null ? '' : result.FollowAccount,
+                LeastStake: result.LeastStake == null ? '' : result.LeastStake,
                 AccumulateBalance: result.AccumulateBalance
             };
 
@@ -272,6 +301,7 @@ Fanex.CMS.BetRestrictionBasketball.AccountManagement = function () {
             CachedDOMElements.hidCustId.val(result.CustId);
             CachedDOMElements.selPopupAccLiveBetAccept.val(oldData.LiveBetAccept).combobox('refresh').trigger('change');
             CachedDOMElements.txtPopupAcc8RMAccount.val(result.FollowAccount);
+            CachedDOMElements.txtPopupAccTicketStakeRM.val(result.LeastStake);
             CachedDOMElements.ckbAccumulateBalance.prop('checked', result.AccumulateBalance);
             CachedDOMElements.selPopupAccSeizeBetTicket.val(oldData.SeizeBetTicket).combobox('refresh').trigger('change');
         });

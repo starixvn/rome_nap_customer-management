@@ -20,6 +20,8 @@
 
         Result CheckAddAccount(AccountRequest request, short sportType);
 
+        Result ValidateCustomer(AccountRequest request, short sportType);
+
         EditAccountViewModel GetAccountDetailForEdit(int custId, short sportType);
 
         EditSiteViewModel GetSiteDetailForEdit(int siteId);

@@ -100,7 +100,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
     };
 
     var renderAccountGrid = function (viewModel, pageIndex, pageSize) {
-        var hiddenColumns = hasHostPermission ? [] : [9];
+        var hiddenColumns = hasHostPermission ? [] : [12];
 
         var accountGridOptions = {
             customizeHeader: true,
@@ -113,7 +113,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                         { HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 },
                         { HeaderText: 'Site', Name: 'Site', MergeRowNumber: 2 },
                         { HeaderText: 'Live Bet Accept (Secs)', Name: 'LiveBetAccept', MergeRowNumber: 2 },
-                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 4 },
+                        { HeaderText: 'Seize Bet', Name: 'SeizeBetTicket', MergeColNumber: 5 },
                         { HeaderText: 'Currency', Name: 'Currency', MergeRowNumber: 2 },
                         { HeaderText: 'Action', Name: 'Action', MergeRowNumber: 2 }
                     ]
@@ -187,6 +187,13 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     AllowTruncate: true,
                 },
                 {
+                    HeaderText: 'Ticket Stake (RM)',
+                    Width: 120,
+                    Name: 'LeastStake',
+                    HeaderAlign: 'center',
+                    CellAlign: 'center',
+                },
+                {
                     HeaderText: 'Accumulate Balance',
                     Width: 80, Name: 'AccumulateBalance',
                     HeaderAlign: 'center',
@@ -241,6 +248,7 @@ Fanex.CMS.BetRestrictionBasketball = function () {
                     },
                     { Name: 'LeagueGroup', Value: renderLeagueGroupCell(viewModel.DataList[i].LeagueGroupID) },
                     { Name: 'FollowAccount', Value: viewModel.DataList[i].FollowAccount },
+                    { Name: 'LeastStake', Value: viewModel.DataList[i].LeastStake },
                     { Name: 'AccumulateBalance', Value: viewModel.DataList[i].AccumulateBalance ? 'Yes' : 'No' },
                     { Name: 'Currency', Value: viewModel.DataList[i].Currency },
                     {

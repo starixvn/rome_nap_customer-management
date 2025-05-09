@@ -16,6 +16,8 @@
 
         public string FollowAccount { get; set; }
 
+        public decimal? LeastStake { get; set; }
+
         public byte AccumulateBalance { get; set; }
 
         public int UserId { get; set; }

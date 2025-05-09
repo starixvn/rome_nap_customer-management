@@ -219,6 +219,7 @@
     <Compile Include="Criterias\SearchCurrencyCriteria.cs" />
     <Compile Include="Criterias\CheckAccountCriteria.cs" />
     <Compile Include="Criterias\SearchSiteCriteria.cs" />
+    <Compile Include="Criterias\ValidateCustomerCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\AccountDetailModel.cs" />
     <Compile Include="Models\AccountModel.cs" />

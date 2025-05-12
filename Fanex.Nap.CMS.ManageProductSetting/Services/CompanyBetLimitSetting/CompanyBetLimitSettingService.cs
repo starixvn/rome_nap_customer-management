@@ -63,6 +63,8 @@
         private const string CurrencyGroupCacheKey =
             "Fanex.Nap.CMS.ManageProductSetting.Services.CompanyBetLimitSetting.CurrencyGroup";
 
+        private const string CommarChar = ",";
+
         private readonly IDynamicRepository dynamicRepository;
 
         public CompanyBetLimitSettingService() : this(new DynamicRepository())
@@ -206,22 +208,37 @@
             var betLimitXml = new StringBuilder();
             foreach (var setting in settings)
             {
-                betLimitXml.Append("<BetLimit");
-                betLimitXml.AppendFormat(" SportType=\"{0}\"", setting.SportType);
-                betLimitXml.AppendFormat(" CreditGroupID=\"{0}\"", setting.CreditGroupID ?? string.Empty);
-                betLimitXml.AppendFormat(" LicenseeGroupID=\"{0}\"", setting.LicenseeGroupID ?? string.Empty);
-                betLimitXml.AppendFormat(" SiteID=\"{0}\"", setting.SiteID);
-                betLimitXml.AppendFormat(" GameGroupID=\"{0}\"", setting.GameGroupID);
-                betLimitXml.AppendFormat(" NewMinBet=\"{0}\"", setting.NewMinBet);
-                betLimitXml.AppendFormat(" NewMaxBet=\"{0}\"", setting.NewMaxBet);
-                betLimitXml.AppendFormat(" NewRemark=\"{0}\"", setting.NewRemark ?? string.Empty);
-                betLimitXml.AppendFormat(" CurMinBet=\"{0}\"", setting.CurMinBet ?? string.Empty);
-                betLimitXml.AppendFormat(" CurMaxBet=\"{0}\"", setting.CurMaxBet ?? string.Empty);
-                betLimitXml.AppendFormat(" CurRemark=\"{0}\"", setting.CurRemark ?? string.Empty);
-                betLimitXml.Append(" />");
+                if (IsHaveChangeData(setting))
+                {
+                    betLimitXml.Append("<BetLimit");
+                    betLimitXml.AppendFormat(" SportType=\"{0}\"", setting.SportType);
+                    betLimitXml.AppendFormat(" CreditGroupID=\"{0}\"", setting.CreditGroupID ?? string.Empty);
+                    betLimitXml.AppendFormat(" LicenseeGroupID=\"{0}\"", setting.LicenseeGroupID ?? string.Empty);
+                    betLimitXml.AppendFormat(" SiteID=\"{0}\"", setting.SiteID);
+                    betLimitXml.AppendFormat(" GameGroupID=\"{0}\"", setting.GameGroupID);
+                    betLimitXml.AppendFormat(" NewMinBet=\"{0}\"", setting.NewMinBet);
+                    betLimitXml.AppendFormat(" NewMaxBet=\"{0}\"", setting.NewMaxBet);
+                    betLimitXml.AppendFormat(" NewRemark=\"{0}\"", setting.NewRemark ?? string.Empty);
+                    betLimitXml.AppendFormat(" CurMinBet=\"{0}\"", setting.CurMinBet ?? string.Empty);
+                    betLimitXml.AppendFormat(" CurMaxBet=\"{0}\"", setting.CurMaxBet ?? string.Empty);
+                    betLimitXml.AppendFormat(" CurRemark=\"{0}\"", setting.CurRemark ?? string.Empty);
+                    betLimitXml.Append(" />");
+                }
+            }
+
+            if (betLimitXml.Length == 0)
+            {
+                return string.Empty;
             }
 
             return string.Format("<ROOT>{0}</ROOT>", betLimitXml.ToString());
+        }
+
+        private bool IsHaveChangeData(UpdateBetLimitSettingModel model)
+        {
+            return  decimal.Parse(model.NewMinBet) != decimal.Parse(model.CurMinBet) ||
+                    decimal.Parse(model.NewMaxBet) != decimal.Parse(model.CurMaxBet) ||
+                    model.NewRemark != model.CurRemark;
         }
 
         private string BuildDeleteXML(IEnumerable<CompanyBetLimitSetting> settings)

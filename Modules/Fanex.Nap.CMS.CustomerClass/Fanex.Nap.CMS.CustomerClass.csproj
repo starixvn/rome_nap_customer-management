@@ -54,8 +54,8 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.NAP.Client, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Fanex.NAP.Client.Framework.1.0.0\lib\net472\Fanex.NAP.Client.dll</HintPath>
+    <Reference Include="Fanex.NAP.Client.Framework, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fanex.NAP.Client.Framework.1.0.0.1\lib\net472\Fanex.NAP.Client.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Core.Client, Version=1.2.1.6, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fanex.NAP.Core.Client.2.0.0.2\lib\net40\Fanex.NAP.Core.Client.dll</HintPath>

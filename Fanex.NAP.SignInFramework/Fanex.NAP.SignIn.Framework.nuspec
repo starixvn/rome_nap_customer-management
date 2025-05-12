@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Fanex.NAP.SignIn.Framework</id>
+    <version>1.0.0</version>
+    <title>Fanex NAP SignIn Framework</title>
+    <authors>Fanex</authors>
+    <owners>Fanex</owners>
+    <description>Authentication and sign-in framework for Fanex NAP applications. Provides controllers, models, and utilities for user authentication, password management, and health checks.</description>
+    <releaseNotes>Initial release of Fanex.NAP.SignIn.Framework package.</releaseNotes>
+    <summary>Authentication framework for Fanex NAP applications</summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/fanex/nap-signin-framework</projectUrl>
+    <licenseUrl>https://github.com/fanex/nap-signin-framework/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>fanex nap authentication signin login security</tags>
+    <dependencies>
+      <group targetFramework="net472">
+        <dependency id="Fanex.NAP.Client.Framework" version="1.0.0.1" />
+        <dependency id="Microsoft.AspNet.Mvc" version="5.2.9" />
+        <dependency id="Newtonsoft.Json" version="13.0.3" />
+        <dependency id="ONEbook.UM" version="3.1.1" />
+        <dependency id="ONEbook.UM.AspNetMVC" version="3.1.3" />
+        <dependency id="ONEBook.UM.NETFramework" version="3.1.5" />
+        <dependency id="System.ComponentModel.Annotations" version="5.0.0" />
+        <dependency id="System.Configuration.ConfigurationManager" version="5.0.0" />
+        <dependency id="System.Security.AccessControl" version="5.0.0" />
+        <dependency id="System.Security.Permissions" version="5.0.0" />
+        <dependency id="System.Security.Principal.Windows" version="5.0.0" />
+      </group>
+    </dependencies>
+    <frameworkReferences>
+      <group targetFramework="net472">
+        <frameworkReference name="System" />
+        <frameworkReference name="System.ComponentModel.DataAnnotations" />
+        <frameworkReference name="System.Configuration" />
+        <frameworkReference name="System.Core" />
+        <frameworkReference name="System.Data.OracleClient" />
+        <frameworkReference name="System.Drawing" />
+        <frameworkReference name="System.Net" />
+        <frameworkReference name="System.Security" />
+        <frameworkReference name="System.ServiceProcess" />
+        <frameworkReference name="System.Transactions" />
+        <frameworkReference name="System.Web" />
+        <frameworkReference name="System.Web.Abstractions" />
+        <frameworkReference name="System.Web.Extensions" />
+        <frameworkReference name="System.Web.Routing" />
+        <frameworkReference name="System.Xml.Linq" />
+        <frameworkReference name="System.Data.DataSetExtensions" />
+        <frameworkReference name="Microsoft.CSharp" />
+        <frameworkReference name="System.Data" />
+        <frameworkReference name="System.Net.Http" />
+        <frameworkReference name="System.Xml" />
+        <frameworkReference name="WindowsBase" />
+      </group>
+    </frameworkReferences>
+  </metadata>
+  <files>
+    <file src="bin\Release\Fanex.NAP.SignIn.dll" target="lib\net472\" />
+    <file src="bin\Release\Fanex.NAP.SignIn.pdb" target="lib\net472\" />
+    <file src="css-tool\dist\login.css" target="content\css\" />
+    <file src="css-tool\src\img\*" target="content\img\" />
+  </files>
+</package> 

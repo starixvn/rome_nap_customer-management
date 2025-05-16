@@ -8,6 +8,7 @@ Namespace.Register('Fanex.CMS.NonSportCompanyBLC');
 Fanex.CMS.NonSportCompanyBLC = function () {
     let elements = {
         isCredit: true,
+        hasHostPermission: false,
         rdbRestriction: $("[name=Restriction]")
     };
 
@@ -118,39 +119,49 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                 HeaderAlign: "center",
                 CellAlign: "center"
             },
+        ];
+        if (elements.hasHostPermission) {
+            headerColumns.push(
+                {
+                    HeaderText: viewResources.lblEdit,
+                    Name: "IconEdit",
+                    Width: 60,
+                    HeaderAlign: "center",
+                    CellAlign: "center"
+                });
+            headerColumns.push(
+                    {
+                        HeaderText: viewResources.lblRemove,
+                        Name: "IconRemove",
+                        Width: 60,
+                        HeaderAlign: "center",
+                        CellAlign: "center"
+                    });
+        }
+
+        var groupHeaderRows = [
             {
-                HeaderText: viewResources.lblEdit,
-                Name: "IconEdit",
-                Width: 60,
-                HeaderAlign: "center",
-                CellAlign: "center"
-            },
-            {
-                HeaderText: viewResources.lblRemove,
-                Name: "IconRemove",
-                Width: 40,
-                HeaderAlign: "center",
-                CellAlign: "center"
+                Columns: [
+                    { HeaderText: viewResources.lblSymbol_No, Name: "ColNo", MergeRowNumber: 2 },
+                    { HeaderText: viewResources.lblSportTypeID, Name: "SportType", MergeRowNumber: 2 },
+                    { HeaderText: viewResources.lblSportTypeName, Name: "SportName", MergeRowNumber: 2 },
+                    { HeaderText: currencyLabel, Name: "Currency", MergeRowNumber: 2 },
+                    { HeaderText: siteLabel, Name: "Site", MergeRowNumber: 2 },
+                    { HeaderText: viewResources.lblGameGroup, Name: "GameGroups", MergeRowNumber: 2 },
+                    { HeaderText: viewResources.lblBetLimit, Name: "MinBet", MergeColNumber: 3 }
+                    
+                ]
             }
         ];
+        if (elements.hasHostPermission) {
+            groupHeaderRows[0].Columns.push({ HeaderText: viewResources.lblEdit, Name: "IconEdit", MergeRowNumber: 2 });
+            groupHeaderRows[0].Columns.push({ HeaderText: viewResources.lblRemove, Name: "IconRemove", MergeRowNumber: 2 });
+        }
+
         return {
             columns: headerColumns,
             customizeHeader: true,
-            groupHeaderRows: [
-                {
-                    Columns: [
-                        { HeaderText: viewResources.lblSymbol_No, Name: "ColNo", MergeRowNumber: 2 },
-                        { HeaderText: viewResources.lblSportTypeID, Name: "SportType", MergeRowNumber: 2 },
-                        { HeaderText: viewResources.lblSportTypeName, Name: "SportName", MergeRowNumber: 2 },
-                        { HeaderText: currencyLabel, Name: "Currency", MergeRowNumber: 2 },
-                        { HeaderText: siteLabel, Name: "Site", MergeRowNumber: 2 },
-                        { HeaderText: viewResources.lblGameGroup, Name: "GameGroups", MergeRowNumber: 2 },
-                        { HeaderText: viewResources.lblBetLimit, Name: "MinBet", MergeColNumber: 3 },
-                        { HeaderText: viewResources.lblEdit, Name: "IconEdit", MergeRowNumber: 2 },
-                        { HeaderText: viewResources.lblRemove, Name: "IconRemove", MergeRowNumber: 2 }
-                    ]
-                }
-            ],
+            groupHeaderRows: groupHeaderRows,
             showTitle: true,
             titleInfo: {
                 text: "",
@@ -212,7 +223,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                                     { Name: 'GameGroups', Value: gameGroup.GameGroupName, TdClass: highlightClass },
                                     { Name: 'MinBet', Value: minBetCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, index, entry.MinBet === undefined ? "" : formatNumber(entry.MinBet)), TdClass: highlightClass },
                                     { Name: 'MaxBet', Value: maxBetCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, index, entry.MaxBet === undefined ? "" : formatNumber(entry.MaxBet)), TdClass: highlightClass },
-                                    { Name: 'Remark', Value: remarkCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, index, entry.Remark), TdClass: highlightClass }
+                                    { Name: 'Remark', Value: remarkCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, index, entry.Remark === undefined ? "" : entry.Remark), TdClass: highlightClass }
                                 ]
                             };
 
@@ -225,18 +236,20 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                             Value: siteGroup.SiteGroupName,
                             MergeRowNumber: siteGroup.GameGroups.length
                         });
-                        row.Columns.push(
-                            {
-                                Name: 'IconEdit',
-                                Value: editCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, "Edit"),
-                                MergeRowNumber: siteGroup.GameGroups.length
-                            },
-                            {
-                                Name: 'IconRemove',
-                                Value: delCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, "Delete"),
-                                MergeRowNumber: siteGroup.GameGroups.length
-                            }
-                        );
+                        if (elements.hasHostPermission) {
+                            row.Columns.push(
+                                {
+                                    Name: 'IconEdit',
+                                    Value: editCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, "Edit"),
+                                    MergeRowNumber: siteGroup.GameGroups.length
+                                },
+                                {
+                                    Name: 'IconRemove',
+                                    Value: delCol.format(sportGroupIndex, currencyGroupIndex, siteGroupIndex, "Delete"),
+                                    MergeRowNumber: siteGroup.GameGroups.length
+                                }
+                            );
+                        }
                     });
                     row = bodyData[currentCurrencyGroupRow];
                     row.Columns.splice(1, 0, {
@@ -468,6 +481,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
     }
 
     this.InitPage = function () {
+        elements.hasHostPermission = $("#addNewCurrencyGroupForm").length > 0;
         registerSubmitHandler();
         registerRadiobuttonHandler();
         renderMultiChoiceDDL();

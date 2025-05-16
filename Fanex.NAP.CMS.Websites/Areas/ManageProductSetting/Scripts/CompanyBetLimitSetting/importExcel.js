@@ -36,6 +36,7 @@ Fanex.CMS.NonSportCompanyBLCExcel = function () {
     function validateUploadedFile(fileControl) {
         var textboxFile = $("#file");
         CMS.clearTipsyError(textboxFile);
+        CMS.hideInlineMsg(errExcelDiv);
         var fileName = getFileName(fileControl.files[0].name);
 
         if (!fileName || !fileName.length) {
@@ -45,12 +46,12 @@ Fanex.CMS.NonSportCompanyBLCExcel = function () {
         var fileExtension = getFileExtension(fileName);
 
         if (fileExtension !== "xls" && fileExtension !== "xlsx") {
-            CMS.showTipsyError(textboxFile, "Not Excel File", "sw");
+            CMS.showInlineErrorMsg("Sorry, you choose an invalid file extension. Please choose an Excel file (.xls or .xlsx).", errExcelDiv);
             return false;
         }
 
         if (fileControl.files[0].size > MaxFileSize) {
-            CMS.showTipsyError(textboxFile, "Reach Max Size", "sw");
+            CMS.showInlineErrorMsg("Your uploaded file's size can't be larger than 1 MB.", errExcelDiv);
             return false;
         }
 

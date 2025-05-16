@@ -24,7 +24,10 @@
 <div class="filter-bar">
     <div class="tabs-area">
         <div id="tab-1" class="tab first">@Labels.TabCompanyBetLimitSetting</div>
-        <div id="tab-2" class="tab">@Labels.TabImportExcel</div>
+        @if (ViewBag.IsHost)
+        {
+            <div id="tab-2" class="tab">@Labels.TabImportExcel</div>
+        }
         <div id="tab-3" class="tab">@Labels.TabCurrencyGroup</div>
     </div>
     <div class="form-area">
@@ -80,31 +83,36 @@
             }
 
         </div>
-        <div id="form-tab-2" class="form-search display-none first">
-            <div id="form-excel" class="filter-form">
-                <div class="filter-row">
-                    <div class="edit-field col_18">
-                        <b>@Labels.lblExcelFile</b>
-                    </div>
-                </div>
-                <div class="filter-row">
-                    <div class="inputFile edit-field col_12">
-                        <input type="file" id="file" style="width: 99%;"
-                               accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
-                    </div>
-                    <div class="col_4" style="display: inline-flex;">
-                        <button id="verifyBtn" class="fileUpload green-button">@Labels.lblSubmit</button>
-                        <button id="importBtn" class="fileUpload green-button" disabled>@Labels.lblImport</button>
-                    </div>
-                </div>
-                <div class="filter-row">
-                    <div class="edit-field col_12">
-                        <div class="float-left" style="font-style: italic;">@Labels.lblFileSizeLimit</div>
-                        <div class="float-right"><a href="#" id="iconDownloadTemplate">@Labels.DownloadTemplate</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        @if (ViewBag.IsHost)
+        {
+           <div id="form-tab-2" class="form-search display-none first">
+               <div id="form-excel" class="filter-form">
+                   <div class="filter-row">
+                       <div class="edit-field col_18">
+                           <b>@Labels.lblExcelFile</b>
+                       </div>
+                   </div>
+                   <div class="filter-row">
+                       <div class="inputFile edit-field col_12">
+                           <input type="file" id="file" style="width: 99%;"
+                                  accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+                       </div>
+                       <div class="col_4" style="display: inline-flex;">
+                           <button id="verifyBtn" class="fileUpload green-button">@Labels.lblSubmit</button>
+                           <button id="importBtn" class="fileUpload green-button" disabled>@Labels.lblImport</button>
+                       </div>
+                   </div>
+                   <div class="filter-row">
+                       <div class="edit-field col_12">
+                           <div class="float-left" style="font-style: italic;">@Labels.lblFileSizeLimit</div>
+                           <div class="float-right"><a href="#" id="iconDownloadTemplate">@Labels.DownloadTemplate</a></div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+        }
+        
         <div id="form-tab-3" class="form-search display-none first">
             <div class="filter-form">
                 <div class="filter-row">
@@ -135,10 +143,13 @@
         <div id="form-result-tab-1" class="content-grid form-result">
             <div id="grid-table" class="freegrid display-none"></div>
         </div>
-        <div id="form-result-tab-2" class="content-grid form-result">
-            <div id="errExcel" class="inline-message"></div>
-            <div id="grid-excel-table" class="freegrid display-none"></div>
-        </div>
+        @if (ViewBag.IsHost)
+        {
+            <div id="form-result-tab-2" class="content-grid form-result">
+                <div id="errExcel" class="inline-message"></div>
+                <div id="grid-excel-table" class="freegrid display-none"></div>
+            </div>
+        }
         <div id="form-result-tab-3" class="content-grid form-result">
             <div id="errCurrencyGroup" class="inline-message"></div>
             <div id="grid-currency-table" class="freegrid display-none"></div>

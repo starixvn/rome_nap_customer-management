@@ -168,6 +168,13 @@
 
         public Result UpdateBetLimitSetting(IEnumerable<UpdateBetLimitSettingModel> settings, int userId, string ip)
         {
+            // Check for HTML characters in remarks
+            var settingsList = settings.ToList();
+            var validateSettingsResult = ValidateSettings(settingsList);
+            if (!validateSettingsResult.IsSuccess)
+            {
+                return validateSettingsResult;
+            }
 
             var criteriaCheck = new CheckBetLimitSettingCriteria
             {
@@ -188,6 +195,29 @@
             };
 
             return DoAction(updateCriteria);
+        }
+
+        private Result ValidateSettings(IList<UpdateBetLimitSettingModel> settings)
+        {
+            for (int i = 0; i < settings.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(settings[i].NewMaxBet))
+                {
+                    return new Result(1, $"Row {i + 1}:  The Max Bet parameter is required field.");
+                }
+
+                if (string.IsNullOrWhiteSpace(settings[i].NewMinBet))
+                {
+                    return new Result(1, $"Row {i + 1}:  The Min Bet parameter is required field.");
+                }
+
+                if (!string.IsNullOrWhiteSpace(settings[i].NewRemark) && ContainsHtmlCharacters(settings[i].NewRemark))
+                {
+                    return new Result(1, $"Row {i + 1}: Invalid Remark parameter value.");
+                }
+            }
+
+            return new Result(0, "Success");
         }
 
         public Result DeleteBetLimitSetting(IEnumerable<CompanyBetLimitSetting> settings, bool isCredit, int userId, string iP)
@@ -351,15 +381,15 @@
                     {
                         SportTypeId = int.Parse(row.GetCell(0).ToString()),
                         SiteId = int.Parse(row.GetCell(1).ToString()),
-                        CreditCurrencyGroupId = row.GetCell(2) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(2).ToString().Replace(" ", string.Empty)),
-                        DepositCurrencyGroupId = row.GetCell(3) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString().Replace(" ", string.Empty)),
-                        GameGroup = row.GetCell(4) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString().Replace(" ", string.Empty)),
+                        CreditCurrencyGroupId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(2).ToString()),
+                        DepositCurrencyGroupId = row.GetCell(3) == null || string.IsNullOrWhiteSpace(row.GetCell(3).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString()),
+                        GameGroup = row.GetCell(4) == null || string.IsNullOrWhiteSpace(row.GetCell(4).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString()),
                         MinBet = row.GetCell(5) == null || string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(5).ToString()),
                         MaxBet = row.GetCell(6) == null || string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(6).ToString()),
-                        Remark = row.GetCell(7) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(7).ToString().Replace(" ", string.Empty)),
+                        Remark = row.GetCell(7) == null || string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(7).ToString()),
                         CurMinBet = row.GetCell(8) == null || string.IsNullOrWhiteSpace(row.GetCell(8).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(8).ToString()),
                         CurMaxBet = row.GetCell(9) == null || string.IsNullOrWhiteSpace(row.GetCell(9).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(9).ToString()),
-                        CurRemark = row.GetCell(10) == null ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(10).ToString().Replace(" ", string.Empty))
+                        CurRemark = row.GetCell(10) == null || string.IsNullOrWhiteSpace(row.GetCell(10).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(10).ToString())
                     };
 
                     betLimit.SportType = CacheRef.GetSportName(betLimit.SportTypeId);
@@ -428,6 +458,18 @@
             if (row.GetCell(6) == null || string.IsNullOrWhiteSpace(row.GetCell(6).ToString()))
             {
                 return new Result(1, "Row " + rowCount.ToString() + ": The New Max Bet is required field.");
+            }
+
+            if (!string.IsNullOrEmpty(row.GetCell(7).ToString()) && ContainsHtmlCharacters(row.GetCell(7).ToString())
+                || !string.IsNullOrEmpty(row.GetCell(10).ToString()) && ContainsHtmlCharacters(row.GetCell(10).ToString()))
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": Invalid Remark parameter value.");
+            }
+            
+            if (!string.IsNullOrEmpty(row.GetCell(7).ToString()) && row.GetCell(7).ToString().Length > 1000
+                || !string.IsNullOrEmpty(row.GetCell(10).ToString()) && row.GetCell(10).ToString().Length > 1000)
+            {
+                return new Result(1, "Row " + rowCount.ToString() + ": The Remark parameter value's 1000 characters.");
             }
 
             return null;
@@ -531,6 +573,16 @@
             dynamicRepository.Execute(command);
 
             return new Result(command.ErrCode, command.ErrMsg);
+        }
+
+        private bool ContainsHtmlCharacters(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return false;
+            
+            return text.Contains("<") || 
+                   text.Contains(">") || 
+                   text.Contains("&") || 
+                   text.Contains("\"");
         }
     }
 }

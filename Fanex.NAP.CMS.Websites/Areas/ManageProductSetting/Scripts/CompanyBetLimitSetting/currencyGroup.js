@@ -208,6 +208,7 @@ Fanex.CMS.CurrencyGroup = function () {
 
 
         $(`#${divId}`).next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('keypress', function (e) {
+            CMS.clearTipsyError($(`#${divId}`));
             if (e.which == 13) {
                 var filterValue = $(`#${divId}`).next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
                 var selectedCurrency = filterValue.split(/(?:,| )+/);
@@ -245,6 +246,10 @@ Fanex.CMS.CurrencyGroup = function () {
 
     function addCurrencyGroup() {
         var selectedCurs = $(`#divDdlNewCurrency`).multiSelect("getCheckedItems").join();
+        if (!validateRequiredField($(`#divDdlNewCurrency`), selectedCurs)) {
+            return;
+        }
+
         var currencyGroup = {
             ExchangeIDs: selectedCurs
         };
@@ -290,6 +295,7 @@ Fanex.CMS.CurrencyGroup = function () {
         $('#divDdlNewCurrency').multiSelect(option);
 
         $('#divDdlNewCurrency').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').on('keypress', function (e) {
+            CMS.clearTipsyError($(`#divDdlNewCurrency`));
             if (e.which == 13) {
                 var filterValue = $('#divDdlNewCurrency').next('div.ui-multiselect-options').find('input.ui-multiselect-widget-header-filter').val().toLowerCase();
                 var selectedCurrency = filterValue.split(/(?:,| )+/);
@@ -307,7 +313,10 @@ Fanex.CMS.CurrencyGroup = function () {
     function validateRequiredField(div, value) {
         if (isEmptyValue(value)) {
             CMS.showTipsyError(div, viewResources.requiredField, "n");
-            return;
+            $(div).next('div.ui-multiselect-options').find('ul').on('change', function () {
+                CMS.clearTipsyError(div);
+            });
+            return false;
         }
 
         return value;

@@ -163,7 +163,7 @@
   <Function Name="Domain Management">
 		<Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBGLOB.GlobCustDB.wsv_nap">
 			<Mapping DataField="SiteId" ObjectProperty="Id" />
-			<Mapping DataField="SiteName" ObjectProperty="Name" />
+			<Mapping DataField="site" ObjectProperty="Name" />
 		</Setting>
     <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" >
       <Mapping DataField="Domain" ObjectProperty="DomainName" />

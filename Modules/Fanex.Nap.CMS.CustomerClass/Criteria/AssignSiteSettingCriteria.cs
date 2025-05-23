@@ -12,7 +12,7 @@
         
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicySiteIns_Loop";
+            => "NAP_CM_CustomerClassPolicySiteIns_Loop";
 
         
     }

@@ -5,7 +5,7 @@
         public string PolicySites { get; set; }
 
         public override string GetSettingKey()
-            => "NAP_LM_CustomerClassPolicySiteDel";
+            => "NAP_CM_CustomerClassPolicySiteDel";
     }
     
 }

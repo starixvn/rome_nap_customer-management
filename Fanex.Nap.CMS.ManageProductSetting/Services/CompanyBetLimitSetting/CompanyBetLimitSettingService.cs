@@ -19,6 +19,7 @@
     using System.Web;
     using Fanex.Nap.CMS.ManageProductSetting.Resources;
     using System.Web.Mvc;
+    using System.Text.RegularExpressions;
 
     public interface ICompanyBetLimitSettingService
     {
@@ -27,6 +28,8 @@
         IEnumerable<IdNameModel> GetProducts(bool isCredit);
         
         IEnumerable<IdNameModel> GetSites(bool isCredit, bool isGetAll);
+
+        IEnumerable<IdNameModel> GetCachedAllSites();
 
         GetCurrencyGroupViewModel GetCurrencyGroups(bool isCredit);
 
@@ -95,8 +98,19 @@
         public IEnumerable<IdNameModel> GetProducts(bool isCredit) => GetCachedData(
             ProductCacheKey + isCredit, () => dynamicRepository.Fetch<IdNameModel>(new GetProductsCriteria { IsCredit = isCredit }));
 
-        public IEnumerable<IdNameModel> GetSites(bool isCredit, bool isGetAll) => GetCachedData(SiteCacheKey + (isGetAll ? "All" : isCredit.ToString()),
-            () => dynamicRepository.Fetch<IdNameModel>(new GetSiteCriteria { IsCredit = isCredit }));
+        public IEnumerable<IdNameModel> GetSites(bool isCredit, bool isGetAll) => GetCachedData(SiteCacheKey + (isGetAll ? "All" : string.Empty) + (isCredit ? "Credit" : "Deposit"),
+            () => dynamicRepository.Fetch<IdNameModel>(new GetSiteCriteria { IsCredit = isCredit, IsGetAll = isGetAll }));
+            
+        public IEnumerable<IdNameModel> GetCachedAllSites()
+            => GetCachedData(SiteCacheKey + "AllSites", GetAllSites);
+
+        private IEnumerable<IdNameModel> GetAllSites()
+        {
+            var sitesCredit = GetSites(true, true);
+            var sitesDeposit = GetSites(false, true);
+
+            return sitesCredit.Concat(sitesDeposit);  
+        }
 
         public GetCurrencyGroupViewModel GetCurrencyGroups(bool isCredit)
         {
@@ -248,10 +262,10 @@
                     betLimitXml.AppendFormat(" GameGroupID=\"{0}\"", setting.GameGroupID);
                     betLimitXml.AppendFormat(" NewMinBet=\"{0}\"", setting.NewMinBet);
                     betLimitXml.AppendFormat(" NewMaxBet=\"{0}\"", setting.NewMaxBet);
-                    betLimitXml.AppendFormat(" NewRemark=\"{0}\"", setting.NewRemark ?? string.Empty);
+                    betLimitXml.AppendFormat(" NewRemark=\"{0}\"", EscapeXmlAttribute(setting.NewRemark ?? string.Empty));
                     betLimitXml.AppendFormat(" CurMinBet=\"{0}\"", setting.CurMinBet ?? string.Empty);
                     betLimitXml.AppendFormat(" CurMaxBet=\"{0}\"", setting.CurMaxBet ?? string.Empty);
-                    betLimitXml.AppendFormat(" CurRemark=\"{0}\"", setting.CurRemark ?? string.Empty);
+                    betLimitXml.AppendFormat(" CurRemark=\"{0}\"", EscapeXmlAttribute(setting.CurRemark ?? string.Empty));
                     betLimitXml.Append(" />");
                 }
             }
@@ -321,7 +335,7 @@
 
             var creditCurrencyGroups = GetCurrencyGroups(true);
             var depositCurrencyGroups = GetCurrencyGroups(false);
-            var sites = GetSites(true, true);
+            var sites = GetCachedAllSites();
 
             return new ValidateBetLimitSettingResponse
             {
@@ -383,7 +397,7 @@
                         SiteId = int.Parse(row.GetCell(1).ToString()),
                         CreditCurrencyGroupId = row.GetCell(2) == null || string.IsNullOrWhiteSpace(row.GetCell(2).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(2).ToString()),
                         DepositCurrencyGroupId = row.GetCell(3) == null || string.IsNullOrWhiteSpace(row.GetCell(3).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(3).ToString()),
-                        GameGroup = row.GetCell(4) == null || string.IsNullOrWhiteSpace(row.GetCell(4).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(4).ToString()),
+                        GameGroup = int.Parse(row.GetCell(4).ToString()),
                         MinBet = row.GetCell(5) == null || string.IsNullOrWhiteSpace(row.GetCell(5).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(5).ToString()),
                         MaxBet = row.GetCell(6) == null || string.IsNullOrWhiteSpace(row.GetCell(6).ToString()) ? (decimal?)null : decimal.Parse(row.GetCell(6).ToString()),
                         Remark = row.GetCell(7) == null || string.IsNullOrWhiteSpace(row.GetCell(7).ToString()) ? string.Empty : HttpUtility.HtmlEncode(row.GetCell(7).ToString()),
@@ -486,12 +500,12 @@
                 betLimitXml.AppendFormat(" LicenseeGroupID=\"{0}\"", setting.DepositCurrencyGroupId);
                 betLimitXml.AppendFormat(" SiteID=\"{0}\"", setting.SiteId);
                 betLimitXml.AppendFormat(" GameGroupID=\"{0}\"", setting.GameGroup);
-                betLimitXml.AppendFormat(" NewMinBet=\"{0}\"", setting.MinBet);
-                betLimitXml.AppendFormat(" NewMaxBet=\"{0}\"", setting.MaxBet);
-                betLimitXml.AppendFormat(" NewRemark=\"{0}\"", setting.Remark);
-                betLimitXml.AppendFormat(" CurMinBet=\"{0}\"", setting.CurMinBet);
-                betLimitXml.AppendFormat(" CurMaxBet=\"{0}\"", setting.CurMaxBet);
-                betLimitXml.AppendFormat(" CurRemark=\"{0}\"", setting.CurRemark);
+                betLimitXml.AppendFormat(" NewMinBet=\"{0}\"", setting.MinBet?.ToString() ?? string.Empty);
+                betLimitXml.AppendFormat(" NewMaxBet=\"{0}\"", setting.MaxBet?.ToString() ?? string.Empty);
+                betLimitXml.AppendFormat(" NewRemark=\"{0}\"", EscapeXmlAttribute(setting.Remark));
+                betLimitXml.AppendFormat(" CurMinBet=\"{0}\"", setting.CurMinBet?.ToString() ?? string.Empty);
+                betLimitXml.AppendFormat(" CurMaxBet=\"{0}\"", setting.CurMaxBet?.ToString() ?? string.Empty);
+                betLimitXml.AppendFormat(" CurRemark=\"{0}\"", EscapeXmlAttribute(setting.CurRemark));
                 betLimitXml.Append(" />");
             }
 
@@ -579,10 +593,19 @@
         {
             if (string.IsNullOrEmpty(text)) return false;
             
-            return text.Contains("<") || 
-                   text.Contains(">") || 
-                   text.Contains("&") || 
-                   text.Contains("\"");
+            return Regex.IsMatch(text, @"<[^>]*>");
+        }
+
+        private string EscapeXmlAttribute(string value)
+        {
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            
+            return value
+                .Replace("&", "&amp;")
+                .Replace("<", "&lt;")
+                .Replace(">", "&gt;")
+                .Replace("\"", "&quot;")
+                .Replace("'", "&apos;");
         }
     }
 }

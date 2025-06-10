@@ -10,7 +10,7 @@
         public string DepositCurrencyGroup { get; set; }
         public int SiteId { get; set; }
         public string Site { get; set; }
-        public string GameGroup { get; set; }
+        public int GameGroup { get; set; }
         public decimal? MinBet { get; set; }
         public decimal? MaxBet { get; set; }
         public string Remark { get; set; }

@@ -198,9 +198,9 @@ Fanex.CMS.NonSportCompanyBLC = function () {
         let highlightClass;
         const editCol = `<span class="ico-edit col-view-sport-{0}-cur-{1}-site-{2}" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}" title={3}></span><span class="ico-save-16 col-edit-sport-{0}-cur-{1}-site-{2} hidden" title="Save" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}"></span><span class="ico-cancel col-edit-sport-{0}-cur-{1}-site-{2} ml-10 hidden" title="Cancel" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}"></span>`;
         const delCol = `<span class="ico-delete" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}" title={3}></span>`;
-        const minBetCol = `<div><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="minbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
-        const maxBetCol = `<div><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="maxbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
-        const remarkCol = `<div><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><textarea id="remark-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-remark hidden" maxlenght="100" cols="5" rows="1">{4}</textarea></div>`;
+        const minBetCol = `<div class="input-minMaxBet"><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="minbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
+        const maxBetCol = `<div class="input-minMaxBet"><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="maxbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
+        const remarkCol = `<div><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><textarea id="remark-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-remark hidden" cols="5" rows="1">{4}</textarea></div>`;
 
         if (data.length > 0) {
 
@@ -314,17 +314,46 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                     $(this).addClass("hidden");
                 }
             });
+            cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
+                CMS.clearTipsyError($(`#minbet-${posSport}-${posCur}-${posSite}-${index}`));
+                CMS.clearTipsyError($(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`));
+                CMS.clearTipsyError($(`#remark-${posSport}-${posCur}-${posSite}-${index}`));
+            });
         });
 
         $(".ico-save-16").off("click").click(function () {
             var posSport = +$(this).data("pos-sport");
             var posCur = +$(this).data("pos-cur");
             var posSite = +$(this).data("pos-site");
+            var isHaveError = false;
             var requestBody = [];
             cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
-                var newMinBet = $(`#minbet-${posSport}-${posCur}-${posSite}-${index}`).val();
-                var newMaxBet = $(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`).val();
-                var newRemark = $(`#remark-${posSport}-${posCur}-${posSite}-${index}`).val();
+                var newMinBetDiv = $(`#minbet-${posSport}-${posCur}-${posSite}-${index}`);
+                var newMinBet = newMinBetDiv.val();
+                var newMaxBetDiv = $(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`);
+                var newMaxBet = newMaxBetDiv.val();
+                var newRemarkDiv = $(`#remark-${posSport}-${posCur}-${posSite}-${index}`);
+                var newRemark = newRemarkDiv.val();
+                if (newMinBet === "") {
+                    CMS.showTipsyError(newMinBetDiv, viewResources.requiredField, "w");
+                    isHaveError = true;
+                }
+                if (newMaxBet === "") {
+                    CMS.showTipsyError(newMaxBetDiv, viewResources.requiredField, "w");
+                    isHaveError = true;
+                }
+                var posRemarkError = "se";
+                if(posSport === 0 && posCur === 0 && ( posSite === 0 && index < 2 || posSite === 1 && index < 1)) {
+                    posRemarkError = "ne";
+                }
+                if (newRemark.length > 1000) {
+                    CMS.showTipsyError(newRemarkDiv, viewResources.remarkLengthError, posRemarkError);
+                    isHaveError = true;
+                }
+                if (newRemark.match(/<[^>]*>/)) {
+                    CMS.showTipsyError(newRemarkDiv, "Invalid parameter value.", posRemarkError);
+                    isHaveError = true;
+                }
                 const entry = gameGroup.Entries.find(e => e.GameGroup === gameGroup.GameGroupName);
                 if (+newMinBet !== entry.MinBet || +newMaxBet !== entry.MaxBet || newRemark !== entry.Remark) {
                     requestBody.push({
@@ -343,6 +372,9 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                     });
                 }
             });
+            if (isHaveError) {
+                return;
+            }
             if (requestBody.length <= 0) {
                 CMS.showErrorMessage("The New Min Bet, New Max Bet are the same as The Current Min Bet, the Current Max Bet. Please input another value for the New values again.");
                 return;
@@ -381,6 +413,11 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                     SiteID: entry.SiteID,
                     GameGroupID: entry.GameGroupID
 
+                });
+                cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
+                    CMS.clearTipsyError($(`#minbet-${posSport}-${posCur}-${posSite}-${index}`));
+                    CMS.clearTipsyError($(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`));
+                    CMS.clearTipsyError($(`#remark-${posSport}-${posCur}-${posSite}-${index}`));
                 });
             });
 

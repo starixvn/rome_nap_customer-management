@@ -8,6 +8,8 @@
 
     public class FilterAreaModel
     {
+        private const string DropDownListFormat = "[{0}] {1}";
+
         public IEnumerable<SelectListItem> CreditCurrencies { get; }
 
         public IEnumerable<SelectListItem> DepositCurrencies { get; }
@@ -31,17 +33,17 @@
             IEnumerable<IdNameModel> depositSites)
         {
             CreditCurrencies = creditCurrencies.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             DepositCurrencies = depositCurrencies.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             CreditProducts = creditProducts.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             DepositProducts = depositProducts.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             CreditSites = creditSites.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             DepositSites = depositSites.ToList()
-                .ConvertAll(e => new SelectListItem { Text = e.Name, Value = e.Id.ToString() });
+                .ConvertAll(e => new SelectListItem { Text = string.Format(DropDownListFormat, e.Id, e.Name), Value = e.Id.ToString() });
             GroupTypes = new List<SelectListItem>()
             {
                 new SelectListItem { Text = Labels.Credit, Value = "Credit" },

@@ -36,6 +36,15 @@
         resize: vertical;
     }
   }
+  .freegrid td, .freegrid .grid-fixed-table td {
+      overflow:unset;
+  }
+}
+
+#grid-table .input-minMaxBet {
+    .error-tipsy-inner {
+        width: max-content;
+    }
 }
 
 .hidden {
@@ -163,3 +172,11 @@
         }
     }
 }
+
+.ui-dialog {
+    overflow: visible;
+
+    .ui-dialog-content {
+        overflow: visible;
+    }
+} 

@@ -128,6 +128,7 @@ Fanex.CMS.CurrencyGroup = function () {
             });
             $(`#ddlEditCur-${pos}`).html('').addClass("hidden");
             $(`#btn-save-cur-${pos}`).off('click');
+            CMS.clearTipsyError($(`#ddlEditCur-${pos}`));
         });
 
         $(".ico-delete").off("click").click(function () {
@@ -180,6 +181,7 @@ Fanex.CMS.CurrencyGroup = function () {
 
     function RenderDDLCurEdit(divId, currencyGroup) {
         $(`#${divId}`).html('');
+        $(`#${divId}`).attr("title", '');
         $(divId).removeClass("hidden");
         var currencies = creditCurrencies;
         var groupedCur = elements.groupedCreditCur;
@@ -197,12 +199,13 @@ Fanex.CMS.CurrencyGroup = function () {
         });
         var option = {
             minWidth: 150,
-            maxHeight: 75,
+            maxHeight: 120,
             checkAllText: 'All',
             listData: currencies,
             showFilter: true,
             showFooter: false,
-            shadow: true
+            shadow: true,
+            tooltipNoItem: 'There is no item was choosen.'
         };
         $(`#${divId}`).multiSelect(option);
 
@@ -245,6 +248,7 @@ Fanex.CMS.CurrencyGroup = function () {
     }
 
     function addCurrencyGroup() {
+        CMS.clearTipsyError($(`#divDdlNewCurrency`));
         var selectedCurs = $(`#divDdlNewCurrency`).multiSelect("getCheckedItems").join();
         if (!validateRequiredField($(`#divDdlNewCurrency`), selectedCurs)) {
             return;
@@ -284,7 +288,7 @@ Fanex.CMS.CurrencyGroup = function () {
         });
         var option = {
             minWidth: 280,
-            maxHeight: 75,
+            maxHeight: 150,
             checkAllText: 'All',
             listData: currencies,
             showFilter: true,

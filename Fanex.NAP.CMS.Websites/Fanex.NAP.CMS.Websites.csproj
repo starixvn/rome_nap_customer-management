@@ -1014,11 +1014,14 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.prod.config">
+      <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.uat.config">
+      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.sit.config">
+      <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -1234,7 +1237,9 @@
     <Content Include="Web.ConnectionString.aws.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.aws.config" />
+    <Content Include="Web.aws.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
     <Content Include="Views\Auth\OtpLoginFlow.cshtml" />
     <Content Include="Views\Auth\Offline.cshtml" />
     <Content Include="Views\Auth\NotFound.cshtml" />
@@ -1260,8 +1265,18 @@
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
     <Content Include="Web.dr.config">
+      <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Web.KLSIMPLE.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.AppSettings.KLSIMPLE.config">
+		<DependentUpon>Web.AppSettings.config</DependentUpon>
+	</Content>
+    <Content Include="Web.ConnectionString.KLSIMPLE.config" >
+	<DependentUpon>Web.ConnectionString.config</DependentUpon>
+	</Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

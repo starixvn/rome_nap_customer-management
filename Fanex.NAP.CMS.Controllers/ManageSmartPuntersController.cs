@@ -33,16 +33,16 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly IPermissionSerivce _permissionSerivce;
 
         public ManageSmartPuntersController() :
-            this(null)
+            this(null, null)
         {
         }
 
-        public ManageSmartPuntersController(IManageSmartPuntersService manageSmartPuntersService)
+        public ManageSmartPuntersController(IManageSmartPuntersService manageSmartPuntersService, IPermissionSerivce permissionSerivce)
         {
             int lastYear = DateTime.Today.AddYears(-1).Year;
 
-            this._manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
-            _permissionSerivce = _permissionSerivce ?? new PermissionSerivce(new UserService());
+            _manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
+            _permissionSerivce = permissionSerivce ?? new PermissionSerivce(new UserService());
             ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
             ViewBag.MinDate = new DateTime(lastYear, 1, 1);
         }

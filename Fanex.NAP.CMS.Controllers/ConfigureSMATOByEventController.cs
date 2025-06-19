@@ -38,7 +38,6 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureSMATOByEventController(IConfigureSMATOByEventService configureSMATOByMatchService)
         {
             this._configureSMATOByMatchService = configureSMATOByMatchService ?? new ConfigureSMATOByEventService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ControlTOBySMAEvent, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -49,6 +48,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOBySMAEvent, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ControlTOBySMAEvent, Constant.Policy.Host);
+            
             return View();
         }
 

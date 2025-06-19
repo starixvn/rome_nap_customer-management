@@ -22,13 +22,14 @@
         public CreditCollectionSummaryController(ICreditCollectionSummaryService creditCollectionSummary)
         {
             _creditCollectionSummary = creditCollectionSummary ?? new CreditCollectionSummaryService();
-            ViewBag.HasEditAccessRight = HasRight(CMSFunctionKeys.CreditCollection, Constant.Policy.Host);
         }
 
         [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.CreditCollection, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditAccessRight = HasRight(CMSFunctionKeys.CreditCollection, Constant.Policy.Host);
+            
             return View();
         }
 

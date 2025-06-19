@@ -33,7 +33,6 @@ namespace Fanex.NAP.CMS.Controllers
         public ManageRobotsController(IManageRobotsService manageRobotService)
         {
             this._manageRobotService = manageRobotService ?? new ManageRobotsService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageRobots, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -44,6 +43,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageRobots, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageRobots, Constant.Policy.Host);
+            
             return View();
         }
 

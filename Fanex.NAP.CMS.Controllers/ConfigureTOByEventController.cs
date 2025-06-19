@@ -39,7 +39,6 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureTOByEventController(IConfigureTOByEventService configureTOByEventService)
         {
             this._configureTOByEventService = configureTOByEventService ?? new ConfigureTOByEventService();
-            ViewBag.HasEditRight = this.HasRight(CMSFunctionKeys.ControlTOByEvent, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -50,6 +49,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ControlTOByEvent, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            ViewBag.HasEditRight = this.HasRight(CMSFunctionKeys.ControlTOByEvent, Constant.Policy.Host);
+            
             return View();
         }
 

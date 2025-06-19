@@ -27,6 +27,7 @@ namespace Fanex.NAP.CMS.Controllers
     /// <summary>
     /// Manage smart punters controller.
     /// </summary>
+    [NapSuperAuth]
     public class ManageSmartPuntersController : BaseController
     {
         private readonly IManageSmartPuntersService _manageSmartPuntersService;
@@ -39,12 +40,8 @@ namespace Fanex.NAP.CMS.Controllers
 
         public ManageSmartPuntersController(IManageSmartPuntersService manageSmartPuntersService, IPermissionSerivce permissionSerivce)
         {
-            int lastYear = DateTime.Today.AddYears(-1).Year;
-
             _manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
             _permissionSerivce = permissionSerivce ?? new PermissionSerivce(new UserService());
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
-            ViewBag.MinDate = new DateTime(lastYear, 1, 1);
         }
 
         /// <summary>
@@ -55,6 +52,9 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.ManageSmartPunters, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
+            int lastYear = DateTime.Today.AddYears(-1).Year;
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
+            ViewBag.MinDate = new DateTime(lastYear, 1, 1);
             ViewBag.CanViewActionMonitoring = _permissionSerivce.HasPermission(CurrentSession.UserId, CMSFunctionKeys.ActionMonitoringLog, Constant.Policy.Read);
 
             return View();

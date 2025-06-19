@@ -32,7 +32,6 @@ namespace Fanex.NAP.CMS.Controllers
         public CloseOpenMemberController(IOpenCloseMemberService openCloseMemberService)
         {
             this._openCloseMemberService = openCloseMemberService ?? new OpenCloseMemberService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.CloseOpenMembers, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -43,6 +42,8 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.CloseOpenMembers, Policy = Constant.Policy.Host)]
         public ActionResult Index()
         {
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.CloseOpenMembers, Constant.Policy.Host);
+            
             return View();
         }
 

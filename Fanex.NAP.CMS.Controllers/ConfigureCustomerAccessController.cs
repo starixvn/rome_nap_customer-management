@@ -36,7 +36,6 @@ namespace Fanex.NAP.CMS.Controllers
         public ConfigureCustomerAccessController(IConfigureCustomerAccessService accessManagementService)
         {
             this._accessManagementService = accessManagementService ?? new ConfigureCustomerAccessService();
-            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ConfigureCustomerAccess, Constant.Policy.Host);
         }
 
         /// <summary>
@@ -46,7 +45,9 @@ namespace Fanex.NAP.CMS.Controllers
         [HttpGet]
         [NapAuth(FunctionKey = CMSFunctionKeys.ConfigureCustomerAccess, Policy = Constant.Policy.Read)]
         public ActionResult Index()
-        {
+        {   
+            ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ConfigureCustomerAccess, Constant.Policy.Host);
+        
             return View();
         }
 

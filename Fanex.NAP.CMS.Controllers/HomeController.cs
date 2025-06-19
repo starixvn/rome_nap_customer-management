@@ -17,7 +17,6 @@ namespace Fanex.NAP.CMS.Controllers
     /// <summary>
     /// Home controller.
     /// </summary>
-    [NapSuperAuth]
     public class HomeController : BaseController
     {
         /// <summary>

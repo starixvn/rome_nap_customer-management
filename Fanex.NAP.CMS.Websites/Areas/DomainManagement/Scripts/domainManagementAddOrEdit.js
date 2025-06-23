@@ -9,6 +9,7 @@ const domainManagementAddOrEdit = (function ($) {
         inlineMessage = null,
         txtDomain = null,
         ddlSystem = null,
+        ddlOfferType = null,
         ddlSite = null,
         ddlStatus = null,
         txtExpiredDate = null,
@@ -90,6 +91,7 @@ const domainManagementAddOrEdit = (function ($) {
             null);
         txtExpiredDate = $('#popup-expiredDate').val(domain.ExpiredDateString || resources.PleaseSelect).removeAttr('readonly');
         ddlSystem = renderCombobox('popup-system', domain.System);
+        ddlOfferType = renderCombobox('popup-offer-type', domain.OfferType);
         ddlStatus = renderCombobox('popup-status', domain.Status);
         ddlBrandName = renderCombobox('popup-brandName', domain.BrandName);
         ddlSite = $('#popup-site');
@@ -147,11 +149,13 @@ const domainManagementAddOrEdit = (function ($) {
     function getFormData(domain) {
         const domainArray = isBulkEdit() ? [] : validateDomain();
         const system = validateCombobox(ddlSystem, ddlSystem.next('#popup-system'));
+        const offerType = validateCombobox(ddlOfferType, ddlOfferType.next('#popup-offer-type'));
         const site = validateSite();
         const status = validateCombobox(ddlStatus, ddlStatus.next('#popup-status'));
 
         const isValid = !isUndefined(domainArray)
             && !isUndefined(system)
+            && !isUndefined(offerType)
             && !isUndefined(site)
             && !isUndefined(status);
 
@@ -171,6 +175,7 @@ const domainManagementAddOrEdit = (function ($) {
             return {
                 domains,
                 system,
+                offerType: parseInt(offerType),
                 site,
                 status,
                 expiredDate: getExpiredDate(),

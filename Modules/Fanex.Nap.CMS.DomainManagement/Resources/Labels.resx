@@ -210,4 +210,13 @@
   <data name="BulkRemoveDomainConfirm" xml:space="preserve">
     <value>&lt;b&gt;# domains selected&lt;/b&gt;. Are you sure you want to delete them?</value>
   </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="OfferCashService" xml:space="preserve">
+    <value>Offer Cash Service</value>
+  </data>
 </root>

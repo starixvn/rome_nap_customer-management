@@ -174,7 +174,7 @@
             }
 
             columns.push({ Name: 'colNo', Value: ++number });
-            columns.push({ Name: 'colDomain', Value: domain.DomainName });
+            columns.push({ Name: 'colDomain', Value: renderDomainName(domain.DomainName, domain.OfferType)  });
             columns.push({ Name: 'colSystem', Value: domain.System });
             columns.push({ Name: 'colSite', Value: renderTooltipCell(domain.SiteNames, 'site') });
             columns.push({ Name: 'colBrandName', Value: domain.BrandName });
@@ -215,6 +215,10 @@
             '<span class="ico-copy mid-margin-right" title="Copy" data-domainid="', domainId, '"></span>',
             '<span class="ico-delete" title="Delete" data-domainid="', domainId, '" data-domainname="', domainName, '"></span>'
         ].join('');
+    }
+
+    function renderDomainName(domainName, offerType) {
+        return offerType === 1 ? `${domainName}<span class="ico-offer-cash domain-offer-cash-icon" title="Offer Cash"></span>` : domainName;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {

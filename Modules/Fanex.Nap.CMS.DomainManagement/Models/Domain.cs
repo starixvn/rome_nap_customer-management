@@ -27,6 +27,8 @@
 
         public string Remark { get; set; }
 
+        public byte OfferType { get; set; }
+
         public DateTime? ExpiredDate { get; set; }
 
         public string ExpiredDateString => ExpiredDate.HasValue && ExpiredDate > DateTime.MinValue ? ExpiredDate.ToShortFormatedDateWithSlash() : string.Empty;

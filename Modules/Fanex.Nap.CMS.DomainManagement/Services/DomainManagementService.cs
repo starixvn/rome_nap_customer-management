@@ -86,7 +86,13 @@
 
         public Result AddOrEditDomain(AddOrEditDomainCommand command)
         {
-            var criteria = new AddOrEditDomainCriteria(BuildDomainListXML(command), command.UserId, command.IP, command.IsEdit);
+            var criteria = new AddOrEditDomainCriteria
+            {
+                DomainList = BuildDomainListXML(command),
+                UserId = command.UserId,
+                IP = command.IP,
+                IsEdit = command.IsEdit
+            };
 
             var result = DoAction(criteria);
             if (result.IsSuccess)
@@ -104,7 +110,7 @@
         private static string BuildDomainListXML(AddOrEditDomainCommand command)
         {
             var domainList = command.Domains.Select(domain => string.Format(
-                "<Domain id=\"{0}\" d=\"{1}\" ss=\"{2}\" s=\"{3}\" stt=\"{4}\" ed=\"{5}\" c=\"{6}\" r=\"{7}\" b=\"{8}\"/>",
+                "<Domain id=\"{0}\" d=\"{1}\" ss=\"{2}\" s=\"{3}\" stt=\"{4}\" ed=\"{5}\" c=\"{6}\" r=\"{7}\" b=\"{8}\" ot=\"{9}\"/>",
                 domain.Id == 0 ? string.Empty : domain.Id.ToString(),
                 domain.Name,
                 command.System,
@@ -113,7 +119,8 @@
                 command.ExpiredDate.HasValue ? command.ExpiredDate.Value.GetEndOfDate().ToString() : string.Empty,
                 command.RestrictedCountries,
                 string.IsNullOrWhiteSpace(command.Remark) ? command.Remark : EncodeXml(command.Remark),
-                command.BrandName));
+                command.BrandName,
+                command.OfferType));
 
             return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }

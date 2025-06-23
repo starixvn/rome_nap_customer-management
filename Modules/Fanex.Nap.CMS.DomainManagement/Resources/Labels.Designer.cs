@@ -338,5 +338,32 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
                 return ResourceManager.GetString("System", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offer Cash Service.
+        /// </summary>
+        public static string OfferCashService {
+            get {
+                return ResourceManager.GetString("OfferCashService", resourceCulture);
+            }
+        }
     }
 }

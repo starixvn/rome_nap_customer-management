@@ -92,6 +92,12 @@ const domainManagementAddOrEdit = (function ($) {
         txtExpiredDate = $('#popup-expiredDate').val(domain.ExpiredDateString || resources.PleaseSelect).removeAttr('readonly');
         ddlSystem = renderCombobox('popup-system', domain.System);
         ddlOfferType = renderCombobox('popup-offer-type', domain.OfferType);
+        
+        // Hide offerType selection if in edit or bulk edit mode
+        if (isEdit() || isBulkEdit()) {
+            $('#popup-offer-type').closest('.form-row').hide();
+        }
+        
         ddlStatus = renderCombobox('popup-status', domain.Status);
         ddlBrandName = renderCombobox('popup-brandName', domain.BrandName);
         ddlSite = $('#popup-site');
@@ -155,7 +161,7 @@ const domainManagementAddOrEdit = (function ($) {
 
         const isValid = !isUndefined(domainArray)
             && !isUndefined(system)
-            && !isUndefined(offerType)
+            && (isEdit() || isBulkEdit() || !isUndefined(offerType))
             && !isUndefined(site)
             && !isUndefined(status);
 

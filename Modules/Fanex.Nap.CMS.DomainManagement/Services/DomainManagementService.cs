@@ -11,6 +11,7 @@
     using Fanex.Nap.CMS.DomainManagement.Models;
     using Fanex.Nap.CMS.DomainManagement.Requests;
     using Fanex.Nap.CMS.DomainManagement.Resources;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
@@ -34,6 +35,7 @@
     public class DomainManagementService : ServiceBase, IDomainManagementService
     {
         private readonly ISettingService settingService;
+        private const byte StatusActive = 3;
 
         public DomainManagementService()
             : this(new SettingService())
@@ -102,6 +104,7 @@
                     : Labels.AddedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
+                CallUpdateAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status);
             }
 
             return result;
@@ -149,6 +152,39 @@
             }
         }
 
+        private void CallUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus)
+        {
+            if(IsSkipUpdateAgentDomain(domainList, isEdit, offerType, domainStatus))
+            {
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    var allowCashSiteNames = AppSettings.CashOfferedSites.Split(',');
+                    var domainSites = ParseDomainSiteMapping(domainList);
+                    var allSites = settingService.GetSitesMarketCode();
+                    var sitesAllowCash = allSites.Where(site => allowCashSiteNames.Contains(site.Name) || AppSettings.CashOfferedSites == "*");
+                    var domainSiteListXml = BuildDomainSiteListXml(domainSites, sitesAllowCash);
+
+                    var criteria = new UpdateAgentDomainCriteria { DomainList = domainSiteListXml };
+                    
+                    DoAction(criteria);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
+            });
+        }
+
+        private bool IsSkipUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus)
+        {
+            return isEdit || domainStatus != StatusActive || offerType == 0 || string.IsNullOrWhiteSpace(domainList);
+        }
+
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
             var criteria = new RemoveDomainCriteria
@@ -170,6 +206,35 @@
         private static string BuildDomainListXml(IdNameModel[] domains)
         {
             var domainList = domains.Select(domain => $"<Domain id=\"{domain.Id}\" d=\"{domain.Name}\"/>");
+
+            return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
+        }
+
+        private static IEnumerable<Domain> ParseDomainSiteMapping(string domainList)
+        {
+            var xDocument = XDocument.Parse(domainList);
+
+            return xDocument.Descendants("Domain").Select(domain => new Domain
+            {
+                DomainId = int.Parse(domain.Attribute("id").Value),
+                DomainName = domain.Attribute("d").Value,
+                Site = domain.Attribute("s").Value
+            });
+        }
+
+        private static string BuildDomainSiteListXml(IEnumerable<Domain> domains, IEnumerable<IdNameModel> sites){
+            var domainList = domains
+                .Select(domain =>
+                {
+                    var domainSites = domain.Site.Split(',');
+                    var siteIds = sites.Where(site => domainSites.Any(s => s == site.Name))
+                                     .Select(site => site.Id.ToString())
+                                     .ToList();
+                    return siteIds.Count > 0 
+                        ? $"<Domain id=\"{domain.DomainId}\" s=\"{string.Join(",", siteIds)}\"/>"
+                        : null;
+                })
+                .Where(xml => xml != null);
 
             return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }

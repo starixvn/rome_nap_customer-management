@@ -262,6 +262,7 @@
     <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_CashDomainIns" SpName="NAP_Domain_CashDomainIns" DbName="DBCust.AgencyCashService.wsv_nap" />
   </Function>
   <Function Name="Bet Limit Increase">
     <Setting Key="NAP_CM_SVIPMaxBetPlayerSel" SpName="NAP_CM_SVIPMaxBetPlayerSel" DbName="DBCust.CustDB.wsv_nap" />

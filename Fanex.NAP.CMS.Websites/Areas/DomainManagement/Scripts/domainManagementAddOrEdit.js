@@ -92,6 +92,14 @@ const domainManagementAddOrEdit = (function ($) {
         txtExpiredDate = $('#popup-expiredDate').val(domain.ExpiredDateString || resources.PleaseSelect).removeAttr('readonly');
         ddlSystem = renderCombobox('popup-system', domain.System);
         ddlOfferType = renderCombobox('popup-offer-type', domain.OfferType);
+
+        ddlSystem.change(function () {
+            if (this.value !== resources.MemberSiteOption || isEdit() || isBulkEdit()) {
+                $('#popup-offer-type').closest('.form-row').hide();
+            } else {
+                $('#popup-offer-type').closest('.form-row').show();
+            }
+        });
         
         // Hide offerType selection if in edit or bulk edit mode
         if (isEdit() || isBulkEdit()) {
@@ -161,7 +169,7 @@ const domainManagementAddOrEdit = (function ($) {
 
         const isValid = !isUndefined(domainArray)
             && !isUndefined(system)
-            && (isEdit() || isBulkEdit() || !isUndefined(offerType))
+            && (isEdit() || isBulkEdit() || !isMemberSite() || !isUndefined(offerType))
             && !isUndefined(site)
             && !isUndefined(status);
 
@@ -350,6 +358,10 @@ const domainManagementAddOrEdit = (function ($) {
 
     function isBulkEdit() {
         return formMode === BULK_EDIT;
+    }
+
+    function isMemberSite() {
+        return ddlSystem.val() === resources.MemberSiteOption;
     }
 
     function renderCombobox(elementId, selectedValue) {

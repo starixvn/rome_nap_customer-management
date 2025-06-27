@@ -16,6 +16,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using CommonLabels = Infrastructure.Resources.Labels;
 
     public interface IDomainManagementService
     {
@@ -104,7 +105,7 @@
                     : Labels.AddedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
-                CallUpdateAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status);
+                CallUpdateAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status, command.System);
             }
 
             return result;
@@ -113,18 +114,17 @@
         private static string BuildDomainListXML(AddOrEditDomainCommand command)
         {
             var domainList = command.Domains.Select(domain => string.Format(
-                "<Domain id=\"{0}\" d=\"{1}\" ss=\"{2}\" s=\"{3}\" cs=\"{4}\" stt=\"{5}\" ed=\"{6}\" c=\"{7}\" r=\"{8}\" b=\"{9}\" ot=\"{10}\"/>",
+                "<Domain id=\"{0}\" d=\"{1}\" ss=\"{2}\" s=\"{3}\" cs=\"{4}\" stt=\"{5}\" ed=\"{6}\" c=\"{7}\" r=\"{8}\" b=\"{9}\" />",
                 domain.Id == 0 ? string.Empty : domain.Id.ToString(),
                 domain.Name,
                 command.System,
                 command.Site,
-                command.OfferType,
+                command.System == CommonLabels.Member ? command.OfferType : 0,
                 command.Status,
                 command.ExpiredDate.HasValue ? command.ExpiredDate.Value.GetEndOfDate().ToString() : string.Empty,
                 command.RestrictedCountries,
                 string.IsNullOrWhiteSpace(command.Remark) ? command.Remark : EncodeXml(command.Remark),
-                command.BrandName,
-                command.OfferType));
+                command.BrandName));
 
             return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }
@@ -152,9 +152,9 @@
             }
         }
 
-        private void CallUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus)
+        private void CallUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system)
         {
-            if(IsSkipUpdateAgentDomain(domainList, isEdit, offerType, domainStatus))
+            if(IsSkipUpdateAgentDomain(domainList, isEdit, offerType, domainStatus, system))
             {
                 return;
             }
@@ -180,9 +180,9 @@
             });
         }
 
-        private bool IsSkipUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus)
+        private bool IsSkipUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system)
         {
-            return isEdit || domainStatus != StatusActive || offerType == 0 || string.IsNullOrWhiteSpace(domainList);
+            return isEdit || domainStatus != StatusActive || offerType == 0 || string.IsNullOrWhiteSpace(domainList) || (!isEdit && system != CommonLabels.Member);
         }
 
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)

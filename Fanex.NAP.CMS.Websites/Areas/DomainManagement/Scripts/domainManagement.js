@@ -136,7 +136,7 @@
     function getGridOptions() {
         const columns = [
             { HeaderText: '#', Width: 40, Name: 'colNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: resources.Domain, Width: 200, Name: 'colDomain', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+            { HeaderText: resources.Domain, Width: 200, Name: 'colDomain', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: resources.System, Width: 100, Name: 'colSystem', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.Site, Width: 100, Name: 'colSite', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.BrandName, Width: 80, Name: 'colBrandName', HeaderAlign: 'center', CellAlign: 'center' },
@@ -174,7 +174,7 @@
             }
 
             columns.push({ Name: 'colNo', Value: ++number });
-            columns.push({ Name: 'colDomain', Value: renderDomainName(domain.DomainName, domain.OfferType)  });
+            columns.push({ Name: 'colDomain', Value: renderDomainName(domain.DomainName, domain.OfferType) });
             columns.push({ Name: 'colSystem', Value: domain.System });
             columns.push({ Name: 'colSite', Value: renderTooltipCell(domain.SiteNames, 'site') });
             columns.push({ Name: 'colBrandName', Value: domain.BrandName });
@@ -218,7 +218,7 @@
     }
 
     function renderDomainName(domainName, offerType) {
-        return offerType === 1 ? `${domainName}<span class="ico-offer-cash domain-offer-cash-icon" title="Offer Cash"></span>` : domainName;
+        return offerType === 1 ? `<div class="domain-name-wrapper"><div class="domain-name">${domainName}</div><div class="ico-offer-cash domain-offer-cash-icon" title="Offer Cash"></div></div>` : `<div class="domain-name">${domainName}</div>`;
     }
 
     function bindEventsAfterRenderGridSuccessfully() {

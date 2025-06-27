@@ -380,6 +380,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                 return;
             }
 
+            CMS.disableInput();
             CMS.callAjax(
                 this,
                 CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Update"),
@@ -424,6 +425,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
             CMS.showConfirmMessage(
                 'Are you sure you want to delete this setting?',
                 function () {
+                    CMS.disableInput();
                     CMS.callAjax(
                         this,
                         CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Delete?isCredit=" + elements.isCredit),

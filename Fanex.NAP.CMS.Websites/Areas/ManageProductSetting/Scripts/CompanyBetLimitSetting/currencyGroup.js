@@ -150,6 +150,7 @@ Fanex.CMS.CurrencyGroup = function () {
     }
 
     function CallUpdate(requestBody) {
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl("CurrencyGroupSetting/Update?isCredit=" + elements.isCredit),
@@ -165,6 +166,7 @@ Fanex.CMS.CurrencyGroup = function () {
     }
 
     function CallDelete(groupId) {
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl(`CurrencyGroupSetting/Delete?groupId=${groupId}&isCredit=${elements.isCredit}`),
@@ -258,6 +260,7 @@ Fanex.CMS.CurrencyGroup = function () {
             ExchangeIDs: selectedCurs
         };
         var isCredit = $("#ddlGroupType").val() === "Credit";
+        CMS.disableInput();
         CMS.callAjax(
             this,
             CMS.resolveRootUrl("CurrencyGroupSetting/Insert?isCredit=" + isCredit),

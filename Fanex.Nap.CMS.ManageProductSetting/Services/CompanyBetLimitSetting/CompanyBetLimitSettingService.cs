@@ -93,7 +93,7 @@
 
         public IEnumerable<IdNameModel> GetCurrencies(bool isCredit) =>
             GetCachedData(CurrencyCacheKey + isCredit,
-                () => dynamicRepository.Fetch<IdNameModel>(new GetCurrenciesCriteria { IsCredit = isCredit }));
+                () => dynamicRepository.Fetch<IdNameModel>(new GetCurrenciesCriteria { IsCredit = isCredit }).OrderBy(cur => cur.Id));
 
         public IEnumerable<IdNameModel> GetProducts(bool isCredit) => GetCachedData(
             ProductCacheKey + isCredit, () => dynamicRepository.Fetch<IdNameModel>(new GetProductsCriteria { IsCredit = isCredit }));
@@ -116,8 +116,8 @@
         {
             var result = new GetCurrencyGroupViewModel { IsCredit = isCredit };
             var currencyGroups = dynamicRepository.Fetch<CurrencyGroupItem>(new GetCurrencyGroupCriteria { IsCredit = isCredit });
-            result.Currencies = currencyGroups.Select(e => new SelectListItem { Text = string.Format("[{0}] {1}", e.ExchangeID, e.Currency), Value = e.ExchangeID.ToString() });
             result.CurrencyGroups = currencyGroups.Where(cur => cur.CurrencyGroupID != null).GroupBy(cur => (int)cur.CurrencyGroupID).Select(curGroup => new CurrencyGroup(curGroup.Key, curGroup.ToList()));
+            result.Currencies = currencyGroups.OrderBy(cur => cur.ExchangeID).Select(e => new SelectListItem { Text = string.Format("[{0}] {1}", e.ExchangeID, e.Currency), Value = e.ExchangeID.ToString() });
             
             return result;
         }

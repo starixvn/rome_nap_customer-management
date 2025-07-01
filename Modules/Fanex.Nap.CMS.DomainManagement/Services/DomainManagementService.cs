@@ -182,7 +182,7 @@
 
         private bool IsSkipUpdateAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system)
         {
-            return isEdit || domainStatus != StatusActive || offerType == 0 || string.IsNullOrWhiteSpace(domainList) || (!isEdit && system != CommonLabels.Member);
+            return domainStatus != StatusActive || offerType == 0 || string.IsNullOrWhiteSpace(domainList) || (!isEdit && system != CommonLabels.Member);
         }
 
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)

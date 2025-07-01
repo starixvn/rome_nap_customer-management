@@ -94,17 +94,18 @@ const domainManagementAddOrEdit = (function ($) {
         ddlOfferType = renderCombobox('popup-offer-type', domain.OfferType);
 
         ddlSystem.change(function () {
-            if (this.value !== resources.MemberSiteOption || isEdit() || isBulkEdit()) {
+            if (this.value !== resources.MemberSiteOption) {
                 $('#popup-offer-type').closest('.form-row').hide();
             } else {
                 $('#popup-offer-type').closest('.form-row').show();
             }
         });
+        ddlSystem.trigger('change');
         
         // Hide offerType selection if in edit or bulk edit mode
-        if (isEdit() || isBulkEdit()) {
-            $('#popup-offer-type').closest('.form-row').hide();
-        }
+        // if (isEdit() || isBulkEdit()) {
+        //     $('#popup-offer-type').closest('.form-row').hide();
+        // }
         
         ddlStatus = renderCombobox('popup-status', domain.Status);
         ddlBrandName = renderCombobox('popup-brandName', domain.BrandName);
@@ -169,7 +170,7 @@ const domainManagementAddOrEdit = (function ($) {
 
         const isValid = !isUndefined(domainArray)
             && !isUndefined(system)
-            && (isEdit() || isBulkEdit() || !isMemberSite() || !isUndefined(offerType))
+            && (!isMemberSite() || !isUndefined(offerType))
             && !isUndefined(site)
             && !isUndefined(status);
 

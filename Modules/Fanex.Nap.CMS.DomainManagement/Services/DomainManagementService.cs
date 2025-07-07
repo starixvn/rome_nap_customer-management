@@ -26,7 +26,7 @@
 
         IEnumerable<Domain> GetDomains(SearchDomainQuery message);
 
-        Domain GetDomain(int domainId);
+        Domain GetDomain(string domainId);
 
         Result AddOrEditDomain(AddOrEditDomainCommand command);
 
@@ -84,7 +84,7 @@
             return domains;
         }
 
-        public Domain GetDomain(int domainId)
+        public Domain GetDomain(string domainId)
             => DynamicRepository.Get<Domain>(new GetDomainByIdCriteria(domainId));
 
         public Result AddOrEditDomain(AddOrEditDomainCommand command)
@@ -238,5 +238,111 @@
 
             return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
         }
+
+        private static bool IsDomainOfferCash(Domain domain)
+        {
+            // Check if domain offers cash based on rules:
+            // 1. Agent Site (System = "Agent")
+            // 2. OfferType = 1
+            // 3. Status is Active (Status = 3)
+            return domain.System == CommonLabels.Agent && 
+                   domain.OfferType == 1 && 
+                   domain.Status == StatusActive;
+        }
+
+        private static string BuildDomainListUpdateXml(IEnumerable<Domain> oldDomains, Domain newDomain, IEnumerable<IdNameModel> allowCashSites)
+        {
+            var addedOfferCashSites = new List<string>();
+            var removedOfferCashSites = new List<string>();
+
+            // addedOfferCashSites contains all new sites that offer cash
+            // removedOfferCashSites contains all old sites that offer cash but in newDomain not offer cash or removed in newDomain
+            
+            // Parse new domain sites
+            var newDomainSites = newDomain.Site.Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+
+            // Get cash site names and IDs from allowCashSites
+            var cashSiteNames = allowCashSites.Select(site => site.Name).ToList();
+            var cashSiteNameToId = allowCashSites.ToDictionary(site => site.Name, site => site.Id.ToString());
+
+            // Check if new domain offers cash
+            var newDomainOffersCash = IsDomainOfferCash(newDomain);
+
+            // Find new domain sites that offer cash (only if domain offers cash AND site is in allowCashSites)
+            var newCashSites = newDomainOffersCash 
+                ? newDomainSites.Where(site => cashSiteNames.Contains(site)).ToList()
+                : new List<string>();
+
+            // Aggregate all old domain sites and cash sites
+            var allOldDomainSites = new List<string>();
+            var allOldCashSites = new List<string>();
+
+            foreach (var oldDomain in oldDomains)
+            {
+                var oldDomainSites = oldDomain.Site.Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                allOldDomainSites.AddRange(oldDomainSites);
+
+                var oldDomainOffersCash = IsDomainOfferCash(oldDomain);
+                if (oldDomainOffersCash)
+                {
+                    var oldCashSites = oldDomainSites.Where(site => cashSiteNames.Contains(site)).ToList();
+                    allOldCashSites.AddRange(oldCashSites);
+                }
+            }
+
+            // Remove duplicates from aggregated lists
+            allOldDomainSites = allOldDomainSites.Distinct().ToList();
+            allOldCashSites = allOldCashSites.Distinct().ToList();
+
+            // Find added cash sites (sites that are in newCashSites but not in allOldCashSites)
+            addedOfferCashSites = newCashSites.Except(allOldCashSites).ToList();
+
+            // Find removed cash sites (sites that are in allOldCashSites but not in newCashSites)
+            removedOfferCashSites = allOldCashSites.Except(newCashSites).ToList();
+
+            // Additional check: sites that were completely removed from newDomain but were cash sites in oldDomains
+            var completelyRemovedSites = allOldDomainSites.Except(newDomainSites).ToList();
+            var removedCashSitesFromRemoval = completelyRemovedSites.Where(site => cashSiteNames.Contains(site)).ToList();
+            
+            // Add completely removed cash sites to removedOfferCashSites
+            removedOfferCashSites.AddRange(removedCashSitesFromRemoval);
+
+            // Remove duplicates from removedOfferCashSites
+            removedOfferCashSites = removedOfferCashSites.Distinct().ToList();
+
+            // Build XML for each old domain
+            var domainXmls = new List<string>();
+
+            foreach (var oldDomain in oldDomains)
+            {
+                // Get old domain sites and cash sites for this specific domain
+                var oldDomainSites = oldDomain.Site.Split(',').Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                var oldDomainOffersCash = IsDomainOfferCash(oldDomain);
+                var oldCashSites = oldDomainOffersCash 
+                    ? oldDomainSites.Where(site => cashSiteNames.Contains(site)).ToList()
+                    : new List<string>();
+
+                // Find added cash sites for this specific old domain
+                var addedCashSitesForDomain = newCashSites.Except(oldCashSites).ToList();
+                if (addedCashSitesForDomain.Count > 0)
+                {
+                    var addedCashSiteIds = addedCashSitesForDomain.Select(siteName => cashSiteNameToId[siteName]).ToList();
+                    var addedCashXml = $"<Domain id=\"{oldDomain.DomainId}\" s=\"{string.Join(",", addedCashSiteIds)}\" cs=\"1\"/>";
+                    domainXmls.Add(addedCashXml);
+                }
+
+                // Find removed cash sites for this specific old domain
+                var removedCashSitesForDomain = oldCashSites.Except(newCashSites).ToList();
+                if (removedCashSitesForDomain.Count > 0)
+                {
+                    var removedCashSiteIds = removedCashSitesForDomain.Select(siteName => cashSiteNameToId[siteName]).ToList();
+                    var removedCashXml = $"<Domain id=\"{oldDomain.DomainId}\" s=\"{string.Join(",", removedCashSiteIds)}\" cs=\"0\"/>";
+                    domainXmls.Add(removedCashXml);
+                }
+            }
+
+            return $"<DomainList>{string.Join(string.Empty, domainXmls)}</DomainList>";
+        }
+
     }
 }

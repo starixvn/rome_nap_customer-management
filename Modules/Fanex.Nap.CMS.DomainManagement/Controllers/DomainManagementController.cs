@@ -44,7 +44,7 @@
             => JsonData(domainManagementService.GetDomains(message));
 
         [NapAuth(FunctionKey = CMSFunctionKeys.DomainManagement, Policy = Constant.Policy.Read)]
-        public ActionResult Get(int domainId)
+        public ActionResult Get(string domainId)
             => JsonData(domainManagementService.GetDomain(domainId));
 
         [HttpPost]

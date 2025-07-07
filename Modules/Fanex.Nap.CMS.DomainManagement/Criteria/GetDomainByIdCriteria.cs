@@ -4,10 +4,10 @@
 
     public class GetDomainByIdCriteria : CriteriaBase
     {
-        public GetDomainByIdCriteria(int domainId)
+        public GetDomainByIdCriteria(string domainId)
             => DomainId = domainId;
 
-        public int DomainId { get; }
+        public string DomainId { get; }
 
         public override string GetSettingKey()
             => "NAP_Domain_SelByID";

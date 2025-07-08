@@ -1,9 +1,8 @@
 ﻿namespace Fanex.Nap.CMS.DomainManagement.Criteria
 {
-    using Fanex.Data;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Criteria;
-
-    public class AddOrEditDomainCriteria : CommandBaseCriteria
+    public class AddDomainCriteria : CommandBaseCriteria
     {
         public string DomainList { get; set; }
 
@@ -13,11 +12,10 @@
 
         public string DomainListOutput { get; set; } = string.Empty;
 
-        [SpParam(Ignored = true)]
-        public bool IsEdit { get; set; }
+        public string CashSite { get; } = AppSettings.CashOfferedSites;
 
         public override string GetSettingKey()
-            => IsEdit ? "NAP_Domain_Upd" : "NAP_Domain_Ins";
+            => "NAP_Domain_Ins";
 
         public override bool IsValid()
             => true;

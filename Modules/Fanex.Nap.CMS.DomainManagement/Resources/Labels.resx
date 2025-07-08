@@ -219,4 +219,7 @@
   <data name="OfferCashService" xml:space="preserve">
     <value>Offer Cash Service</value>
   </data>
+  <data name="OfferCash" xml:space="preserve">
+    <value>Offer Cash</value>
+  </data>
 </root>

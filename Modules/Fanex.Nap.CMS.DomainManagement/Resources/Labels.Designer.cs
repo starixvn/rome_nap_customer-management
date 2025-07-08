@@ -277,6 +277,15 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offer Cash.
+        /// </summary>
+        public static string OfferCash {
+            get {
+                return ResourceManager.GetString("OfferCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Offer Cash Service.
         /// </summary>
         public static string OfferCashService {

@@ -260,7 +260,7 @@
   </Function>
   <Function Name="Domain Management">
     <Setting Key="NAP_Domain_Ins" SpName="NAP_Domain_Ins_xtest" DbName="DBGLOB.GlobCustDB.wsv_nap" />
-    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+    <Setting Key="NAP_Domain_Upd" SpName="NAP_Domain_Upd_xtest" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="NAP_Domain_Del" SpName="NAP_Domain_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" />
     <Setting Key="NAP_Domain_CashDomainIns" SpName="NAP_Domain_CashDomainIns_xtest" DbName="DBCust.AgencyCashService.wsv_nap" />
   </Function>

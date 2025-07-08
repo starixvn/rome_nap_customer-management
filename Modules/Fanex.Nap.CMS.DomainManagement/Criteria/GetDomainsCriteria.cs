@@ -4,24 +4,17 @@
 
     public class GetDomainsCriteria : CriteriaBase
     {
-        public GetDomainsCriteria(string system, string site, string status, string remark, string countries)
-        {
-            System = system ?? string.Empty;
-            Site = site ?? string.Empty;
-            Status = status ?? string.Empty;
-            Remark = remark;
-            Countries = countries;
-        }
+        public string System { get; set; } = string.Empty;
 
-        public string System { get; }
+        public string Site { get; set; } = string.Empty;
 
-        public string Site { get; }
+        public string Status { get; set; } = string.Empty;
 
-        public string Status { get; }
+        public string OfferType { get; set; } = string.Empty;
 
-        public string Remark { get; }
+        public string Remark { get; set; }
 
-        public string Countries { get; }
+        public string Countries { get; set; }
 
         public override string GetSettingKey()
             => "NAP_Domain_Sel";

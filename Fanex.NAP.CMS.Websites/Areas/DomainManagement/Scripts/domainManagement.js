@@ -34,6 +34,7 @@
             listData: countryListData
         });
 
+
         btnAdd.click(function () {
             domainManagementAddOrEdit.openModal(domainManagementAddOrEdit.ADD_NEW);
         });
@@ -67,6 +68,7 @@
                 system: ddlSystem.fanexMultiSelect('getItems', true).join(),
                 site: ddlSite.fanexMultiSelect('getItems', true).join(),
                 status: ddlStatus.fanexMultiSelect('getItems', true).join(),
+                offerType: $('#ddl-offerType').val() === 'All' ? '' : $('#ddl-offerType').val(),
                 remark: $.trim(txtRemark.val()),
                 countries: ddlCountry.fanexMultiSelect('isCheckAll')
                     ? '0'
@@ -224,6 +226,7 @@
     function bindEventsAfterRenderGridSuccessfully() {
         $('.note-info-message.site').tipsy({ opacity: 0.9, gravity: 'sw' });
         $('.note-info-message.country').tipsy({ opacity: 0.9, gravity: 's' });
+        $('.domain-offer-cash-icon').tipsy({ opacity: 0.9, gravity: 's' });
         $('.light-note-info-message').tipsy({ opacity: 1, gravity: 'w', html: true });
 
         if (hasHostPermisson) {

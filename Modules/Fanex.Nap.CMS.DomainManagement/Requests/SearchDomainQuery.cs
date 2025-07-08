@@ -8,6 +8,8 @@
 
         public string Status { get; set; }
 
+        public string OfferType { get; set; }
+
         public string Remark { get; set; }
 
         public string Countries { get; set; }

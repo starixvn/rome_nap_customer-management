@@ -848,6 +848,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Web.KLPROD.config" >
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -985,6 +988,9 @@
     <Content Include="Content\Sites\manageRobots.less" />
     <Content Include="Content\Sites\manageSmartPunters.less" />
     <Content Include="Views\ManageSmartPunters\Index.cshtml" />
+    <Content Include="Web.AppSettings.KLPROD.config" >
+      <DependentUpon>Web.AppSettings.config</DependentUpon>
+    </Content>
     <Content Include="Web.AppSettings.prod.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -1277,9 +1283,9 @@
     <Content Include="Web.ConnectionString.KLSIMPLE.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.AppSettings.KLPROD.config" />
-    <Content Include="Web.ConnectionString.KLPROD.config" />
-    <Content Include="Web.KLPROD.config" />
+    <Content Include="Web.ConnectionString.KLPROD.config" >
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>      
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\VirtualSettingControl\Views\BasketballVirtualRate\Scripts\virtualRateLogs.js" />

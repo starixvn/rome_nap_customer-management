@@ -91,6 +91,8 @@
 
         public Domain GetDomain(string domainId)
             => DynamicRepository.Get<Domain>(new GetDomainByIdCriteria(domainId));
+        public IEnumerable<Domain> GetDomains(string domainIds)
+            => DynamicRepository.Fetch<Domain>(new GetDomainByIdCriteria(domainIds));
 
         public Result AddOrEditDomain(AddOrEditDomainCommand command)
         {
@@ -134,6 +136,8 @@
                 IP = command.IP
             };
 
+            var oldDomainList = GetDomains(string.Join(",", command.Domains.Select(d => d.Id).ToArray()));
+
             var result = DoAction(criteria);
 
             if (result.IsSuccess)
@@ -141,6 +145,7 @@
                 result.Message = Labels.EditedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
+                CallUpdateAgentDomain(oldDomainList, command);
             }
 
             return result;
@@ -194,6 +199,31 @@
             });
         }
 
+        private void CallUpdateAgentDomain(IEnumerable<Domain> oldDomains, AddOrEditDomainCommand command = null)
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    var allowCashSiteNames = AppSettings.CashOfferedSites.Split(',');
+                    var allSites = settingService.GetSitesMarketCode();
+                    var sitesAllowCash = allSites.Where(site => allowCashSiteNames.Contains(site.Name) || AppSettings.CashOfferedSites == "*");
+                    
+                    var domainSiteListXml = DomainManagementHelper.BuildDomainListUpdateXml(oldDomains, command, sitesAllowCash);
+
+                    if (!string.IsNullOrWhiteSpace(domainSiteListXml))
+                    {
+                        var criteria = new InsertAgentDomainCriteria { DomainList = domainSiteListXml };
+                        DoAction(criteria);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
+            });
+        }
+
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
             var criteria = new RemoveDomainCriteria
@@ -203,11 +233,14 @@
                 IP = ip
             };
 
+            var oldDomainList = GetDomains(string.Join(",", domains.Select(d => d.Id).ToArray()));
+
             var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
                 result.Message = Labels.RemovedDomainSuccessfully;
+                CallUpdateAgentDomain(oldDomainList);
             }
 
             return result;

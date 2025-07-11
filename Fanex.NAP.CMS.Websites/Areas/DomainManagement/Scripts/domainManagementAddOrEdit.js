@@ -46,7 +46,8 @@ const domainManagementAddOrEdit = (function ($) {
                     my: 'center top',
                     at: 'center top',
                     of: '#headline'
-                }
+                },
+                height: 'auto'
             });
 
         cacheElements(domain);
@@ -133,6 +134,7 @@ const domainManagementAddOrEdit = (function ($) {
 
     function bindEvents(domain) {
         $('#popup-save').off().click(function () {
+            CMS.hideInlineMsg(inlineMessage);
             const formData = getFormData(domain);
             if (formData) {
                 CMS.disableInput();

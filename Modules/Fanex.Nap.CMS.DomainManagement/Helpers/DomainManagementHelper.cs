@@ -73,7 +73,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Helpers
                                      .Select(site => site.Id.ToString())
                                      .ToList();
                     return siteIds.Count > 0 
-                        ? $"<Domain id=\"{domain.DomainId}\" s=\"{string.Join(",", siteIds)}\"/>"
+                        ? $"<Domain id=\"{domain.DomainId}\" s=\"{string.Join(",", siteIds)}\" d=\"{domain.DomainName}\"/>"
                         : null;
                 })
                 .Where(xml => xml != null);
@@ -193,7 +193,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Helpers
 
             if (oldCashSites.Count > 0)
             {
-                xmlBuilder.Append($"<Domain id=\"{oldDomain.DomainId}\" s=\"{string.Join(",", oldCashSites)}\" cs=\"0\"/>");
+                xmlBuilder.Append($"<Domain id=\"{oldDomain.DomainId}\" d=\"{oldDomain.DomainName}\" s=\"{string.Join(",", oldCashSites)}\" cs=\"0\"/>");
             }
         }
 
@@ -217,14 +217,14 @@ namespace Fanex.Nap.CMS.DomainManagement.Helpers
             var addedCashSitesForDomain = newCashSites.Except(oldDomainInfo.CashSites).ToList();
             if (addedCashSitesForDomain.Count > 0)
             {
-                xmlBuilder.Append($"<Domain id=\"{oldDomainInfo.Domain.DomainId}\" s=\"{string.Join(",", addedCashSitesForDomain)}\" cs=\"1\"/>");
+                xmlBuilder.Append($"<Domain id=\"{oldDomainInfo.Domain.DomainId}\" d=\"{oldDomainInfo.Domain.DomainName}\" s=\"{string.Join(",", addedCashSitesForDomain)}\" cs=\"1\"/>");
             }
 
             // Find removed cash sites for this specific old domain
             var removedCashSitesForDomain = oldDomainInfo.CashSites.Except(newCashSites).ToList();
             if (removedCashSitesForDomain.Count > 0)
             {
-                xmlBuilder.Append($"<Domain id=\"{oldDomainInfo.Domain.DomainId}\" s=\"{string.Join(",", removedCashSitesForDomain)}\" cs=\"0\"/>");
+                xmlBuilder.Append($"<Domain id=\"{oldDomainInfo.Domain.DomainId}\" d=\"{oldDomainInfo.Domain.DomainName}\" s=\"{string.Join(",", removedCashSitesForDomain)}\" cs=\"0\"/>");
             }
         }
 

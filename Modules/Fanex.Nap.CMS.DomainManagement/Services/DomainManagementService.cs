@@ -121,7 +121,7 @@
                     : Labels.AddedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
-                CallInsertAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status, command.System);
+                CallInsertAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status, command.System, command.UserId, command.IP);
             }
 
             return result;
@@ -145,7 +145,7 @@
                 result.Message = Labels.EditedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
-                CallUpdateAgentDomain(oldDomainList, command);
+                CallUpdateAgentDomain(oldDomainList, command, command.UserId, command.IP);
             }
 
             return result;
@@ -171,7 +171,7 @@
             }
         }
 
-        private void CallInsertAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system)
+        private void CallInsertAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system, int userId = 0, string ip = "")
         {
             if(DomainManagementHelper.IsSkipUpdateAgentDomain(domainList, isEdit, offerType, domainStatus, system))
             {
@@ -188,7 +188,7 @@
                     var sitesAllowCash = allSites.Where(site => allowCashSiteNames.Contains(site.Name) || AppSettings.CashOfferedSites == "*");
                     var domainSiteListXml = DomainManagementHelper.BuildDomainSiteListXml(domainSites, sitesAllowCash);
 
-                    var criteria = new InsertAgentDomainCriteria { DomainList = domainSiteListXml };
+                    var criteria = new InsertAgentDomainCriteria { DomainList = domainSiteListXml, UserID = userId, IP = ip };
                     
                     DoAction(criteria);
                 }
@@ -199,7 +199,7 @@
             });
         }
 
-        private void CallUpdateAgentDomain(IEnumerable<Domain> oldDomains, AddOrEditDomainCommand command = null)
+        private void CallUpdateAgentDomain(IEnumerable<Domain> oldDomains, AddOrEditDomainCommand command = null, int userId = 0, string ip = "")
         {
             Task.Run(() =>
             {
@@ -213,7 +213,12 @@
 
                     if (!string.IsNullOrWhiteSpace(domainSiteListXml))
                     {
-                        var criteria = new InsertAgentDomainCriteria { DomainList = domainSiteListXml };
+                        var criteria = new UpdateAgentDomainCriteria {
+                            DomainList = domainSiteListXml,
+                            UserID = userId,
+                            IP = ip
+                        };
+
                         DoAction(criteria);
                     }
                 }
@@ -240,7 +245,7 @@
             if (result.IsSuccess)
             {
                 result.Message = Labels.RemovedDomainSuccessfully;
-                CallUpdateAgentDomain(oldDomainList);
+                CallUpdateAgentDomain(oldDomainList, null, userId, ip);
             }
 
             return result;

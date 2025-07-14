@@ -21,68 +21,68 @@
   </Function>
   <Function Name="TurnoverControl-GlobalSetting">
     <Setting Key="NAP_TOControl_CurrencySelect" SpName="NAP_TOControl_CurrencySelect" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="IsGlobalLockTOLimit" ObjectProperty="IsLock" />
-		</Setting>
+    <Setting Key="NAP_TOControl_GlobalSettingSelect" SpName="NAP_TOControl_GlobalSettingSelect" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="IsGlobalLockTOLimit" ObjectProperty="IsLock" />
+    </Setting>
     <Setting Key="NAP_TOControl_GlobalSettingUpdate" SpName="NAP_TOControl_GlobalSettingUpdate" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_TOControl_GlobalSettingInsert" SpName="NAP_TOControl_GlobalSettingInsert" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_TOControl_GlobalSettingDelete" SpName="NAP_TOControl_GlobalSettingDelete" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="profileid" ObjectProperty="Id" />
-				<Mapping DataField="profilename" ObjectProperty="Name" />
-		</Setting>
+    <Setting Key="NAP_TOControl_ProfileSelect" SpName="NAP_TOControl_ProfileSelect" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="profileid" ObjectProperty="Id" />
+      <Mapping DataField="profilename" ObjectProperty="Name" />
+    </Setting>
     <Setting Key="NAP_TOControl_GlobalSettingLockTOLimit_Update" SpName="NAP_TOControl_GlobalSettingLockTOLimit_Update" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="TurnoverControl-ImportGlobalSetting">
-		<Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="rowid" ObjectProperty="ExcelRow" />
-		</Setting>
+    <Setting Key="NAP_TOControl_GlobalSettingValidation" SpName="NAP_TOControl_GlobalSettingValidation" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="rowid" ObjectProperty="ExcelRow" />
+    </Setting>
     <Setting Key="NAP_TOControl_GlobalSettingInsertMultiple" SpName="NAP_TOControl_GlobalSettingInsertMultiple" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
     <Setting Key="Acc_CustVirtualMultiplier_Upd" SpName="Acc_CustVirtualMultiplier_Upd" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="RoleId" ObjectProperty="ReportLevel" />
-				<Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
-				<Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
-				<Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
-				<Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
-				<Mapping DataField="LevelId" ObjectProperty="Level" />
-				<Mapping DataField="ValueIdNonLive" ObjectProperty="NonliveId" />
-				<Mapping DataField="ValueNonLive" ObjectProperty="NonliveValue" />
-				<Mapping DataField="ValueIdLive" ObjectProperty="LiveId" />
-				<Mapping DataField="ValueLive" ObjectProperty="LiveValue" />
-				<Mapping DataField="IsDisableNonLiveAutoSuspend" ObjectProperty="DisableNonliveAutoSuspend" />
-				<Mapping DataField="IsDisableLiveAutoSuspend" ObjectProperty="DisableLiveAutoSuspend" />
-				<Mapping DataField="IsNonLiveAutoSuspend" ObjectProperty="NonliveAutoSuspend" />
-				<Mapping DataField="IsLiveAutoSuspend" ObjectProperty="LiveAutoSuspend" />
-		</Setting>
-		<Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="RoleId" ObjectProperty="ReportLevel" />
-				<Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
-				<Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
-				<Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
-				<Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
-				<Mapping DataField="LevelId" ObjectProperty="Level" />
-				<Mapping DataField="ValueIdNonLive" ObjectProperty="NonliveId" />
-				<Mapping DataField="ValueNonLive" ObjectProperty="NonliveValue" />
-				<Mapping DataField="ValueIdLive" ObjectProperty="LiveId" />
-				<Mapping DataField="ValueLive" ObjectProperty="LiveValue" />
-				<Mapping DataField="IsDisableNonLiveAutoSuspend" ObjectProperty="DisableNonliveAutoSuspend" />
-				<Mapping DataField="IsDisableLiveAutoSuspend" ObjectProperty="DisableLiveAutoSuspend" />
-				<Mapping DataField="IsNonLiveAutoSuspend" ObjectProperty="NonliveAutoSuspend" />
-				<Mapping DataField="IsLiveAutoSuspend" ObjectProperty="LiveAutoSuspend" />
-		</Setting>
-		<Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="ActualRate" ObjectProperty="ExchangeRate" />
-		</Setting>
-		<Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
-				<Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
-				<Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
-				<Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
-				<Mapping DataField="LevelId" ObjectProperty="Level" />
-		</Setting>
+    <Setting Key="Acc_CustVirtualMultiplierByUsername_Sel" SpName="Acc_CustVirtualMultiplierByUsername_Sel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="RoleId" ObjectProperty="ReportLevel" />
+      <Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
+      <Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
+      <Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
+      <Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
+      <Mapping DataField="LevelId" ObjectProperty="Level" />
+      <Mapping DataField="ValueIdNonLive" ObjectProperty="NonliveId" />
+      <Mapping DataField="ValueNonLive" ObjectProperty="NonliveValue" />
+      <Mapping DataField="ValueIdLive" ObjectProperty="LiveId" />
+      <Mapping DataField="ValueLive" ObjectProperty="LiveValue" />
+      <Mapping DataField="IsDisableNonLiveAutoSuspend" ObjectProperty="DisableNonliveAutoSuspend" />
+      <Mapping DataField="IsDisableLiveAutoSuspend" ObjectProperty="DisableLiveAutoSuspend" />
+      <Mapping DataField="IsNonLiveAutoSuspend" ObjectProperty="NonliveAutoSuspend" />
+      <Mapping DataField="IsLiveAutoSuspend" ObjectProperty="LiveAutoSuspend" />
+    </Setting>
+    <Setting Key="Acc_CustVirtualMultiplier_Sel" SpName="Acc_CustVirtualMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="RoleId" ObjectProperty="ReportLevel" />
+      <Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
+      <Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
+      <Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
+      <Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
+      <Mapping DataField="LevelId" ObjectProperty="Level" />
+      <Mapping DataField="ValueIdNonLive" ObjectProperty="NonliveId" />
+      <Mapping DataField="ValueNonLive" ObjectProperty="NonliveValue" />
+      <Mapping DataField="ValueIdLive" ObjectProperty="LiveId" />
+      <Mapping DataField="ValueLive" ObjectProperty="LiveValue" />
+      <Mapping DataField="IsDisableNonLiveAutoSuspend" ObjectProperty="DisableNonliveAutoSuspend" />
+      <Mapping DataField="IsDisableLiveAutoSuspend" ObjectProperty="DisableLiveAutoSuspend" />
+      <Mapping DataField="IsNonLiveAutoSuspend" ObjectProperty="NonliveAutoSuspend" />
+      <Mapping DataField="IsLiveAutoSuspend" ObjectProperty="LiveAutoSuspend" />
+    </Setting>
+    <Setting Key="Acc_CustRealMultiplier_Sel" SpName="Acc_CustRealMultiplier_Sel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="ActualRate" ObjectProperty="ExchangeRate" />
+    </Setting>
+    <Setting Key="Acc_VR_AutoSuspendThreshold_Sel" SpName="Acc_VR_AutoSuspendThreshold_Sel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="VRAutoSuspendThresholdLive" ObjectProperty="LiveAutoSuspendThreshold" />
+      <Mapping DataField="VRAutoSuspendThresholdNonLive" ObjectProperty="NonliveAutoSuspendThreshold" />
+      <Mapping DataField="LeagueGroup" ObjectProperty="LeagueGroupName" />
+      <Mapping DataField="BetTypeGroup" ObjectProperty="BetTypeGroupName" />
+      <Mapping DataField="LevelId" ObjectProperty="Level" />
+    </Setting>
     <Setting Key="Acc_VR_AutoSuspendThreshold_Upd" SpName="Acc_VR_AutoSuspendThreshold_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel_InsTmp" TimeOut="600" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_VR_AutoUpdateVirtualRate_ByExcel" SpName="Acc_VR_AutoUpdateVirtualRate_ByExcel" TimeOut="3600" DbName="DBCust.CustDB.wsv_nap" />
@@ -100,9 +100,9 @@
   </Function>
   <Function Name="Problem Accounts - Credit Sites">
     <Setting Key="Nap_ProblemAccount_AddCustomer" SpName="Nap_ProblemAccount_AddCustomer" DbName="DBCust.CustDB.wsv_nap" />
-		<Setting Key="NAP_ProblemAccount_UpdateCustomer" SpName="NAP_ProblemAccount_UpdateCustomer" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="oldreasonid" ObjectProperty="FromReasonID" />
-		</Setting>
+    <Setting Key="NAP_ProblemAccount_UpdateCustomer" SpName="NAP_ProblemAccount_UpdateCustomer" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="oldreasonid" ObjectProperty="FromReasonID" />
+    </Setting>
     <Setting Key="NAP_ProblemAccount_RemoveCustomer" SpName="NAP_ProblemAccount_RemoveCustomer" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_ProblemAccount_ReduceBetLimit" SpName="NAP_ProblemAccount_ReduceBetLimit" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_ProblemAccount_ClosedAccount" SpName="NAP_ProblemAccount_ClosedAccount" DbName="DBCust.CustDB.wsv_nap" />
@@ -128,26 +128,26 @@
     <Setting Key="NAP_BetRestriction_SiteIns" SpName="NAP_BetRestriction_SiteIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_BetRestriction_ValidateCustomer" SpName="NAP_BetRestriction_ValidateCustomer" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
-	<Function Name="Bet Restriction Management">
+  <Function Name="Bet Restriction Management">
     <Setting Key="NAP_BetRestriction_SettingUpd" SpName="NAP_BetRestriction_SettingUpd" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Possess Statistics">
-		<Setting Key="CS_Customer_PossessStatistics_Sel" SpName="CS_Customer_PossessStatistics_Sel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="rn" ObjectProperty="No" />
-				<Mapping DataField="totalpt_sb" ObjectProperty="TotalSB" />
-				<Mapping DataField="totalpt_ns" ObjectProperty="TotalNS" />
-				<Mapping DataField="super" ObjectProperty="SuperUsername" />
-				<Mapping DataField="superpt_sb" ObjectProperty="SuperSB" />
-				<Mapping DataField="superpt_ns" ObjectProperty="SuperNS" />
-				<Mapping DataField="master" ObjectProperty="MasterUsername" />
-				<Mapping DataField="masterpt_sb" ObjectProperty="MasterSB" />
-				<Mapping DataField="masterpt_ns" ObjectProperty="MasterNS" />
-				<Mapping DataField="agent" ObjectProperty="AgentUsername" />
-				<Mapping DataField="agentpt_sb" ObjectProperty="AgentSB" />
-				<Mapping DataField="agentpt_ns" ObjectProperty="AgentNS" />
-				<Mapping DataField="danger" ObjectProperty="DangerLevel" />
-				<Mapping DataField="ismonitorPT" ObjectProperty="Monitored" />
-		</Setting>
+    <Setting Key="CS_Customer_PossessStatistics_Sel" SpName="CS_Customer_PossessStatistics_Sel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="rn" ObjectProperty="No" />
+      <Mapping DataField="totalpt_sb" ObjectProperty="TotalSB" />
+      <Mapping DataField="totalpt_ns" ObjectProperty="TotalNS" />
+      <Mapping DataField="super" ObjectProperty="SuperUsername" />
+      <Mapping DataField="superpt_sb" ObjectProperty="SuperSB" />
+      <Mapping DataField="superpt_ns" ObjectProperty="SuperNS" />
+      <Mapping DataField="master" ObjectProperty="MasterUsername" />
+      <Mapping DataField="masterpt_sb" ObjectProperty="MasterSB" />
+      <Mapping DataField="masterpt_ns" ObjectProperty="MasterNS" />
+      <Mapping DataField="agent" ObjectProperty="AgentUsername" />
+      <Mapping DataField="agentpt_sb" ObjectProperty="AgentSB" />
+      <Mapping DataField="agentpt_ns" ObjectProperty="AgentNS" />
+      <Mapping DataField="danger" ObjectProperty="DangerLevel" />
+      <Mapping DataField="ismonitorPT" ObjectProperty="Monitored" />
+    </Setting>
     <Setting Key="CS_Customer_MonitorPT_Upd" SpName="CS_Customer_MonitorPT_Upd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="Acc_CustomerUpdDangercust" SpName="Acc_CustomerUpdDangercust" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
@@ -170,7 +170,7 @@
     <Setting Key="NAP_LimitPTDaily_Ins" SpName="NAP_LimitPTDaily_Ins" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LimitPTDaily_Del" SpName="NAP_LimitPTDaily_Del" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LimitPT_Upd" SpName="NAP_LimitPT_Upd" DbName="DBCust.CustDB.wsv_nap" />
-	<Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="Acc_ExchangeSel" SpName="Acc_ExchangeSel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Limit number of new created account">
     <Setting Key="Nap_ProblemAccountLimitDownlineSel" SpName="Nap_ProblemAccountLimitDownlineSel" DbName="DBCust.CustDB.wsv_nap" />
@@ -178,10 +178,10 @@
     <Setting Key="Nap_ProblemAccountLimitDownlineDel" SpName="Nap_ProblemAccountLimitDownlineDel" DbName="DBCust.CustDB.wsv_nap" />
   </Function>
   <Function Name="Whitelist Big Credit Members">
-		<Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="errorcode" ObjectProperty="Code" />
-				<Mapping DataField="errormsg" ObjectProperty="Message" />
-		</Setting>
+    <Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_Manual" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="errorcode" ObjectProperty="Code" />
+      <Mapping DataField="errormsg" ObjectProperty="Message" />
+    </Setting>
   </Function>
   <Function Name="Virtual Rate Engine">
     <Setting Key="NAP_VREngine_Rule_Insert" SpName="NAP_VREngine_Rule_Insert" DbName="DBCust.CustDB.wsv_nap" />
@@ -199,46 +199,46 @@
   <Function Name="Customer Class Management">
     <!--Rule-->
     <Setting Key="NAP_CM_CustomerClassRuleSearch" SpName="NAP_CM_CustomerClassRuleSearch" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
-		</Setting>
-		<Setting Key="NAP_CM_CustomerClassSportGet" SpName="NAP_CM_CustomerClassSportGet" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
-		</Setting>
-		<Setting Key="NAP_CM_CustomerClassRuleSel" SpName="NAP_CM_CustomerClassRuleSel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
-		</Setting>
+      <Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
+    </Setting>
+    <Setting Key="NAP_CM_CustomerClassSportGet" SpName="NAP_CM_CustomerClassSportGet" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
+    </Setting>
+    <Setting Key="NAP_CM_CustomerClassRuleSel" SpName="NAP_CM_CustomerClassRuleSel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
+    </Setting>
     <Setting Key="NAP_CM_CustomerClassRuleIns" SpName="NAP_CM_CustomerClassRuleIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassRuleUpd" SpName="NAP_LM_CustomerClassRuleUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassRuleEnable" SpName="NAP_CM_CustomerClassRuleEnable" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassRuleCheck" SpName="NAP_LM_CustomerClassRuleCheck" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassRuleDel" SpName="NAP_CM_CustomerClassRuleDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Policy-->
-		<Setting Key="NAP_CM_CustomerClassPolicySel" SpName="NAP_CM_CustomerClassPolicySel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
-		</Setting>
-		<Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.wsv_nap" />
+    <Setting Key="NAP_CM_CustomerClassPolicySel" SpName="NAP_CM_CustomerClassPolicySel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
+    </Setting>
+    <Setting Key="NAP_LM_CustomerClassPolicyGet" SpName="NAP_LM_CustomerClassPolicyGet" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyIns" SpName="NAP_LM_CustomerClassPolicyIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyUpd" SpName="NAP_LM_CustomerClassPolicyUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyCheck" SpName="NAP_LM_CustomerClassPolicyCheck" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassPolicyDel" SpName="NAP_CM_CustomerClassPolicyDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Site-->
-		<Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
-				<Mapping DataField="Platform" ObjectProperty="Platforms" />
-				<Mapping DataField="Sites" ObjectProperty="Site" />
-		</Setting>
-		<Setting Key="NAP_CM_CustomerClassPolicySiteCheck" SpName="NAP_CM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap">
-			<Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
-			<Mapping DataField="Platform" ObjectProperty="Platforms" />
-		</Setting>
+    <Setting Key="NAP_LM_CustomerClassPolicySiteSel" SpName="NAP_LM_CustomerClassPolicySiteSel" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
+      <Mapping DataField="Platform" ObjectProperty="Platforms" />
+      <Mapping DataField="Sites" ObjectProperty="Site" />
+    </Setting>
+    <Setting Key="NAP_CM_CustomerClassPolicySiteCheck" SpName="NAP_CM_CustomerClassPolicySiteCheck" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currencies" />
+      <Mapping DataField="Platform" ObjectProperty="Platforms" />
+    </Setting>
     <Setting Key="NAP_CM_CustomerClassPolicySiteIns" SpName="NAP_CM_CustomerClassPolicySiteIns" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassPolicySiteIns_Loop" SpName="NAP_CM_CustomerClassPolicySiteIns_Loop" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_LM_CustomerClassPolicyProcessImport" SpName="NAP_LM_CustomerClassPolicyProcessImport" TimeOut="2400" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassPolicySiteDel" SpName="NAP_CM_CustomerClassPolicySiteDel" DbName="DBCust.CustDB.wsv_nap" />
     <!--Customer Class Setting-->
-		<Setting Key="NAP_CM_CustomerClassSetting" SpName="NAP_CM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap">
-				<Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
-		</Setting>
+    <Setting Key="NAP_CM_CustomerClassSetting" SpName="NAP_CM_CustomerClassSetting" DbName="DBCust.CustDB.wsv_nap">
+      <Mapping DataField="LeagueGroupNames" ObjectProperty="LeagueGroups" />
+    </Setting>
     <Setting Key="NAP_CM_CustomerClassSetting_RuleDetail" SpName="NAP_CM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->
     <Setting Key="NAP_LM_CustomerClassSpreadSel" SpName="NAP_LM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />

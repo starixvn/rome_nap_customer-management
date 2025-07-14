@@ -155,7 +155,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
         ];
         if (elements.hasHostPermission) {
             groupHeaderRows[0].Columns.push({ HeaderText: viewResources.lblEdit, Name: "IconEdit", MergeRowNumber: 2 });
-            groupHeaderRows[0].Columns.push({ HeaderText: viewResources.lblRemove, Name: "IconRemove", MergeRowNumber: 2 });
+            groupHeaderRows[0].Columns.push({ HeaderText: viewResources.lblRemove + '<br/><input type="checkbox" id="chk-select-delete-all" class="ver-mid"><span id="btn-delete-selected" class="ico-trash-white ver-mid" title="Delete"></span>', Name: "IconRemove", MergeRowNumber: 2 });
         }
 
         return {
@@ -197,7 +197,7 @@ Fanex.CMS.NonSportCompanyBLC = function () {
         let currencyGroupChildren;
         let highlightClass;
         const editCol = `<span class="ico-edit col-view-sport-{0}-cur-{1}-site-{2}" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}" title={3}></span><span class="ico-save-16 col-edit-sport-{0}-cur-{1}-site-{2} hidden" title="Save" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}"></span><span class="ico-cancel col-edit-sport-{0}-cur-{1}-site-{2} ml-10 hidden" title="Cancel" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}"></span>`;
-        const delCol = `<span class="ico-delete" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}" title={3}></span>`;
+        const delCol = `<input type="checkbox" class="chk-select-delete" data-pos-sport="{0}" data-pos-cur="{1}" data-pos-site="{2}" title={3} />`;
         const minBetCol = `<div class="input-minMaxBet"><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="minbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
         const maxBetCol = `<div class="input-minMaxBet"><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><input id="maxbet-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-bet hidden" value="{4}"/></div>`;
         const remarkCol = `<div><span class="col-view-sport-{0}-cur-{1}-site-{2}">{4}</span><textarea id="remark-{0}-{1}-{2}-{3}" class="col-edit-sport-{0}-cur-{1}-site-{2} input-remark hidden" cols="5" rows="1">{4}</textarea></div>`;
@@ -401,53 +401,95 @@ Fanex.CMS.NonSportCompanyBLC = function () {
                 });
         });
 
+        
+        $("#chk-select-delete-all")
+            .off("click")
+            .click(handleCheckDelAll);
+        $("#btn-delete-selected")
+            .off("click")
+            .click(handleDelSelected);
+        $(".chk-select-delete")
+            .off("click")
+            .click(handleSingleCheckDel);
+
         $(".ico-delete").off("click").click(function () {
-            var posSport = +$(this).data("pos-sport");
-            var posCur = +$(this).data("pos-cur");
-            var posSite = +$(this).data("pos-site");
-            var requestBody = [];
-            cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
-                const entry = gameGroup.Entries.find(e => e.GameGroup === gameGroup.GameGroupName);
-                requestBody.push({
-                    SportType: entry.SportType,
-                    CurrencyGroupID: entry.CurrencyGroupID,
-                    SiteID: entry.SiteID,
-                    GameGroupID: entry.GameGroupID
-
-                });
-                cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
-                    CMS.clearTipsyError($(`#minbet-${posSport}-${posCur}-${posSite}-${index}`));
-                    CMS.clearTipsyError($(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`));
-                    CMS.clearTipsyError($(`#remark-${posSport}-${posCur}-${posSite}-${index}`));
-                });
-            });
-
-            CMS.showConfirmMessage(
-                'Are you sure you want to delete this setting?',
-                function () {
-                    CMS.disableInput();
-                    CMS.callAjax(
-                        this,
-                        CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Delete?isCredit=" + elements.isCredit),
-                        requestBody,
-                        function (response) {
-                            var result = typeof response === "string" ? JSON.parse(response) : response;
-                            if (result.IsSuccess) {
-                                CMS.showSuccessMessage("Delete successfully!", getData);
-                                $(`.col-view-sport-${posSport}-cur-${posCur}-site-${posSite}`).removeClass("hidden");
-                                $(`.col-edit-sport-${posSport}-cur-${posCur}-site-${posSite}`).each(function () {
-                                    if (!$(this).hasClass("hidden")) {
-                                        $(this).addClass("hidden");
-                                    }
-                                });
-                            } else {
-                                CMS.showErrorMessage(result.Message);
-                            }
-                        });
-                }
-            );
+            
             
         });
+    }
+
+    function handleCheckDelAll() {
+        let checked = $(this).prop("checked");
+        $(".chk-select-delete").each(function () {
+            $(this).prop("checked", checked);
+        });
+    }
+
+    function handleSingleCheckDel() {
+        let isCheckAll = true;
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") !== true) {
+                isCheckAll = false;
+
+                return false;
+            }
+        });
+
+        $("#chk-select-delete-all").prop("checked", isCheckAll);
+    }
+
+    function handleDelSelected() {
+        var requestBody = [];
+        $(".chk-select-delete").each(function () {
+            if ($(this).prop("checked") === true) {
+                var posSport = +$(this).data("pos-sport");
+                var posCur = +$(this).data("pos-cur");
+                var posSite = +$(this).data("pos-site");
+                cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
+                    const entry = gameGroup.Entries.find(e => e.GameGroup === gameGroup.GameGroupName);
+                    requestBody.push({
+                        SportType: entry.SportType,
+                        CurrencyGroupID: entry.CurrencyGroupID,
+                        SiteID: entry.SiteID,
+                        GameGroupID: entry.GameGroupID
+    
+                    });
+                    cachedData[posSport].CurrencyGroups[posCur].SiteGroups[posSite].GameGroups.forEach((gameGroup, index) => {
+                        CMS.clearTipsyError($(`#minbet-${posSport}-${posCur}-${posSite}-${index}`));
+                        CMS.clearTipsyError($(`#maxbet-${posSport}-${posCur}-${posSite}-${index}`));
+                        CMS.clearTipsyError($(`#remark-${posSport}-${posCur}-${posSite}-${index}`));
+                    });
+                });
+            }
+        });
+        if (requestBody.length === 0) {
+            return;
+        }
+
+        CMS.showConfirmMessage(
+            'Are you sure you want to delete these settings?',
+            function () {
+                CMS.disableInput();
+                CMS.callAjax(
+                    this,
+                    CMS.resolveRootUrl("NonSportsCompanyBetLimitSetting/Delete?isCredit=" + elements.isCredit),
+                    requestBody,
+                    function (response) {
+                        var result = typeof response === "string" ? JSON.parse(response) : response;
+                        if (result.IsSuccess) {
+                            CMS.showSuccessMessage("Delete successfully!", getData);
+                            $(`.col-view-sport-${posSport}-cur-${posCur}-site-${posSite}`).removeClass("hidden");
+                            $(`.col-edit-sport-${posSport}-cur-${posCur}-site-${posSite}`).each(function () {
+                                if (!$(this).hasClass("hidden")) {
+                                    $(this).addClass("hidden");
+                                }
+                            });
+                        } else {
+                            CMS.showErrorMessage(result.Message);
+                        }
+                    });
+            }
+        );
     }
 
     function renderMultiChoiceDDL() {

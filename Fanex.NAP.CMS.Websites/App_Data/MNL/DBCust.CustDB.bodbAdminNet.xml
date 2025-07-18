@@ -270,4 +270,12 @@
 		<Setting Key="NAP_CM_SVIPMaxBetPlayerUpd" SpName="NAP_CM_SVIPMaxBetPlayerUpd" DbName="DBCust.CustDB.wsv_nap" />
 		<Setting Key="NAP_CM_SVIPMaxBetPlayerDel" SpName="NAP_CM_SVIPMaxBetPlayerDel" DbName="DBCust.CustDB.wsv_nap" />
 	</Function>
+	<Function Name="Nonsports Company BetLimit Setting">
+		<Setting Key="NAP_GlobalStakeLevelGroup_Ins" SpName="NAP_GlobalStakeLevelGroup_Ins" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+		<Setting Key="NAP_GlobalStakeLevelGroup_Del" SpName="NAP_GlobalStakeLevelGroup_Del" DbName="DBGLOB.GlobCustDB.wsv_nap" />
+		<Setting Key="NAP_CurrencyGroup_Check" SpName="NAP_CurrencyGroup_Check" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CurrencyGroup_Ins" SpName="NAP_CurrencyGroup_Ins" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CurrencyGroup_Del" SpName="NAP_CurrencyGroup_Del" DbName="DBCust.CustDB.wsv_nap" />
+		<Setting Key="NAP_CurrencyGroup_Upd" SpName="NAP_CurrencyGroup_Upd" DbName="DBCust.CustDB.wsv_nap" />
+	</Function>
 </Functions>

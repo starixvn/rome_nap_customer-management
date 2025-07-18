@@ -146,7 +146,7 @@
             }
         }
 
-        private void RenderSiteGroup(ref int siteRow, ref int gameGroupRow, ref int rowCount, CurrencyGroup siteGroups)
+        private void RenderSiteGroup(ref int siteRow, ref int gameGroupRow, ref int rowCount, BetLimitCurrencyGroup siteGroups)
         {
             foreach (var siteGroup in siteGroups.SiteGroups)
             {
@@ -172,7 +172,7 @@
                 var item = gameGroup.Entries.First(e => e.GameGroup == gameGroup.GameGroupName);
                 ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, gameGroup.GameGroupName, textStyle);
                 ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.MinBet, decimalStyle);
-                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.MaxBet, intNumberStyle);
+                ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.MaxBet, decimalStyle);
                 ExportExcel.RenderCell(gameGroupRowStart, gameGroupRowEnd, ExportExcel.CurrentColumn, item.Remark, textStyle);
                 gameGroupRow += gameGroup.NumberRow;
             }

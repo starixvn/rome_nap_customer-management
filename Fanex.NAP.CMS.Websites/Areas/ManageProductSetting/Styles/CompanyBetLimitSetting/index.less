@@ -1,3 +1,5 @@
+@import "_common.less";
+
 .filter-bar .filter-row .edit-field input[type="text"].ui-multiselect-state-default {
   &:hover, &:focus, &:active {
     border: none;
@@ -29,5 +31,152 @@
         }
       }
     }
+
+    textarea {
+        resize: vertical;
+    }
+  }
+  .freegrid td, .freegrid .grid-fixed-table td {
+      overflow:unset;
   }
 }
+
+#grid-table .input-minMaxBet {
+    .error-tipsy-inner {
+        width: max-content;
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+.input-bet {
+    width: 75px;
+}
+
+.input-remark {
+    width: 150px;
+}
+
+.ml-10 {
+    margin-left: 10px
+}
+
+.fileUpload {
+    display: inline-block;
+    margin-left: 5px;
+    height: 26px;
+    line-height: 24px;
+}
+
+.inputFile {
+    background-color: white;
+}
+
+.inputFile {
+    line-height: 24px;
+}
+#form-tab-2 {
+    .filter-form{
+        margin-left: 5px;
+    }
+}
+
+.margin-top-80 {
+    margin-top: 80px;
+}
+
+.ui-multiselect-widget-header-filter {
+    width: 95% !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: center;
+}
+
+.width-40 {
+    width: 40px;
+}
+
+.width-60 {
+    width: 60px;
+}
+
+.width-160 {
+    width: 160px;
+}
+
+.width-120 {
+    width: 120px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+#grid-currency-table {
+
+    table {
+        overflow: auto;
+        display: block;
+    }
+
+    .tbl-freegrid {
+        thead {
+            position: sticky;
+            top: -1px;
+            height: 48px;
+        }
+
+        tr:hover td {
+            background-color: #ffff99 !important;
+        }
+
+        td {
+            padding: 1px;
+            position: relative;
+            background-clip: padding-box;
+            overflow: unset;
+        }
+    }
+}
+
+.tbl-freegrid-box {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+
+        td.column-rule-title {
+            padding-left: 10px;
+            position: relative;
+
+            .text {
+                border: 1px solid @border-color;
+                font-size: 0.9em;
+                height: 20px;
+                padding: 2px;
+                width: 520px;
+            }
+        }
+    }
+}
+
+.ui-dialog {
+    overflow: visible;
+
+    .ui-dialog-content {
+        overflow: visible;
+    }
+} 

@@ -5,7 +5,8 @@
     public class GetSiteCriteria : CriteriaBase
     {
         public bool IsCredit { get; set; }
-        
+        public bool IsGetAll { get; set; }
+
         public override string GetSettingKey()
             => "NAP_GlobalStakeLevelGroup_SiteSel";
 

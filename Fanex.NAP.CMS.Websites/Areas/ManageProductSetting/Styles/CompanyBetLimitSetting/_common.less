@@ -1,0 +1,87 @@
+﻿@white-color: #fff;
+@black-color: #000;
+@pink-bgColor: #FFE6E6;
+@green-bgColor: #cdec9d;
+@green-color: #006400;
+@blue-color: #0000ff;
+@border-color: #cecccd;
+@disabled-color: #f3efee;
+@table-main-header-bgColor: #2b92d6;
+@table-header-bgColor: #3c5ea5;
+@table-body-border-color: #c5c5c5;
+@table-title-border-color: #d2b24d;
+@table-title-light-bgColor: #ffcc33;
+@table-title-bgColor: #ffcc35;
+@link-color: #4f82c6;
+
+.bg_linear_gradient (@value, @value_light) {
+    background: @value;
+    background: linear-gradient(@value_light, @value) @value;
+    background: -ms-linear-gradient(@value_light, @value) @value;
+    background: -moz-linear-gradient(@value_light, @value) @value;
+    background: -webkit-linear-gradient(@value_light, @value) @value;
+}
+
+.text-green {
+    color: @green-color !important;
+}
+
+.text-blue {
+    color: @blue-color !important;
+}
+
+.freegrid td, .freegrid .grid-fixed-table td {
+    &.pink-cell {
+        background-color: @pink-bgColor;
+    }
+
+    &.green-cell {
+        background-color: @green-bgColor;
+    }
+}
+
+.tbl-freegrid-title {
+    border: solid 1px @table-title-border-color;
+    .bg_linear_gradient(@table-title-light-bgColor, @table-title-bgColor);
+    font-weight: bold;
+    margin-bottom: 3px;
+    padding: 6px;
+}
+
+.tbl-freegrid {
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-style: none;
+    width: 100%;
+
+    thead th, tbody td {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        border: solid 1px @table-body-border-color;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    thead th {
+        background: @table-header-bgColor;
+        background: -moz-linear-gradient(@table-header-bgColor, @table-header-bgColor) @table-header-bgColor;
+        background: -webkit-linear-gradient(@table-header-bgColor, @table-header-bgColor) @table-header-bgColor;
+        color: @white-color;
+        font-weight: normal;
+        text-align: center;
+    }
+}
+
+.grid-fixed-table thead .header-main {
+    background: @table-main-header-bgColor !important;
+    background: -moz-linear-gradient(@table-main-header-bgColor, @table-main-header-bgColor) @table-main-header-bgColor !important;
+    background: -webkit-linear-gradient(@table-main-header-bgColor, @table-main-header-bgColor) @table-main-header-bgColor !important;
+    .table-cell {
+        height: 30px !important;
+    }
+}
+
+.ver-mid {
+    vertical-align: middle;
+}

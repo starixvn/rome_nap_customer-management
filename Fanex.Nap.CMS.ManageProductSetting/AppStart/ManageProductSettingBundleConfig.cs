@@ -19,7 +19,9 @@
                         "~/Scripts/Libs/Fanex.Multiselect/jquery.multiselect.js",
                         "~/Scripts/Libs/Popup/dialogbox.js",
                         "~/Scripts/Tabs.js",
-                        "~/Areas/ManageProductSetting/Scripts/CompanyBetLimitSetting/index.js"
+                        "~/Areas/ManageProductSetting/Scripts/CompanyBetLimitSetting/index.js",
+                        "~/Areas/ManageProductSetting/Scripts/CompanyBetLimitSetting/importExcel.js",
+                        "~/Areas/ManageProductSetting/Scripts/CompanyBetLimitSetting/currencyGroup.js"
                     )
                 );
             bundles.AddAndInclude(

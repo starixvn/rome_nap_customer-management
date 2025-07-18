@@ -13,10 +13,10 @@
     <Setting Key="NAP_ColossusBets_BonusTicket_SelRefInfo" SpName="NAP_ColossusBets_BonusTicket_SelRefInfo" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="VirtualRateDetails">
-    <Setting Key="Acc_VirtualMultiplierList_Sel" SpName="Acc_VirtualMultiplierList_Sel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="ValueID" ObjectProperty="Id" />
-      <Mapping DataField="Value" ObjectProperty="ValueDecimal" />
-    </Setting>
+		<Setting Key="Acc_VirtualMultiplierList_Sel" SpName="Acc_VirtualMultiplierList_Sel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="ValueID" ObjectProperty="Id" />
+				<Mapping DataField="Value" ObjectProperty="ValueDecimal" />
+		</Setting>
     <Setting Key="Acc_CustVirtualMultiplierInvalid_Check" SpName="Acc_CustVirtualMultiplierInvalid_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Problem Accounts">
@@ -26,22 +26,22 @@
   </Function>
   <Function Name="Problem Accounts - Credit Sites">
     <Setting Key="NAP_ProblemAccount_CurrencySel" SpName="NAP_ProblemAccount_CurrencySel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_ProblemAccount_ReasonSel" SpName="NAP_ProblemAccount_ReasonSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="ReasonID" ObjectProperty="Id" />
-      <Mapping DataField="ReasonName" ObjectProperty="Name" />
-    </Setting>
-    <Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="informed1by" ObjectProperty="FirstWeekInformed" />
-      <Mapping DataField="informed2by" ObjectProperty="SecondWeekInformed" />
-      <Mapping DataField="createddate" ObjectProperty="CreateDate" />
-      <Mapping DataField="reasonname" ObjectProperty="Reason" />
-      <Mapping DataField="actionid" ObjectProperty="PreventiveActionId" />
-    </Setting>
+		<Setting Key="NAP_ProblemAccount_ReasonSel" SpName="NAP_ProblemAccount_ReasonSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="ReasonID" ObjectProperty="Id" />
+				<Mapping DataField="ReasonName" ObjectProperty="Name" />
+		</Setting>
+		<Setting Key="NAP_ProblemAccount_MonitorList" SpName="NAP_ProblemAccount_MonitorList" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="informed1by" ObjectProperty="FirstWeekInformed" />
+				<Mapping DataField="informed2by" ObjectProperty="SecondWeekInformed" />
+				<Mapping DataField="createddate" ObjectProperty="CreateDate" />
+				<Mapping DataField="reasonname" ObjectProperty="Reason" />
+				<Mapping DataField="actionid" ObjectProperty="PreventiveActionId" />
+		</Setting>
     <Setting Key="NAP_ProblemAccount_VoidedTransactionList" SpName="NAP_ProblemAccount_VoidedTransactionList" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_ProblemAccount_ActionSel" SpName="NAP_ProblemAccount_ActionSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="ActionID" ObjectProperty="Id" />
-      <Mapping DataField="ActionName" ObjectProperty="Name" />
-    </Setting>
+		<Setting Key="NAP_ProblemAccount_ActionSel" SpName="NAP_ProblemAccount_ActionSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="ActionID" ObjectProperty="Id" />
+				<Mapping DataField="ActionName" ObjectProperty="Name" />
+		</Setting>
   </Function>
   <Function Name="Problem Accounts - Licensee Sites">
     <Setting Key="NAP_ProblemAccount_LicenseeCurrencySel" SpName="NAP_ProblemAccount_LicenseeCurrencySel" DbName="DBACC.bodb02.wsv_nap" />
@@ -53,7 +53,7 @@
     <Setting Key="NAP_BetRestriction_SelAllSite" SpName="NAP_BetRestriction_SelAllSite" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CustomerSel" SpName="NAP_BetRestriction_CustomerSel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_SiteSel" SpName="NAP_BetRestriction_SiteSel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_BetRestriction_SelAllCurrency" SpName="NAP_BetRestriction_SelAllCurrency" DbName="DBACC.bodb02.wsv_nap" />
+	<Setting Key="NAP_BetRestriction_SelAllCurrency" SpName="NAP_BetRestriction_SelAllCurrency" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CurrencySel" SpName="NAP_BetRestriction_CurrencySel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_ValidateCurrency" SpName="NAP_BetRestriction_ValidateCurrency" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_SiteSelDetail" SpName="NAP_BetRestriction_SiteSelDetail" DbName="DBACC.bodb02.wsv_nap" />
@@ -61,10 +61,10 @@
     <Setting Key="NAP_BetRestriction_CustomerSelDetail" SpName="NAP_BetRestriction_CustomerSelDetail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CurrencySelDetail" SpName="NAP_BetRestriction_CurrencySelDetail" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_BetRestriction_CheckExistLine" SpName="NAP_BetRestriction_CheckExistLine" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_BetRestriction_LeagueGroupSel" SpName="NAP_BetRestriction_LeagueGroupSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="GroupId" ObjectProperty="LeagueGroupId" />
-      <Mapping DataField="GroupName" ObjectProperty="LeagueGroupName" />
-    </Setting>
+		<Setting Key="NAP_BetRestriction_LeagueGroupSel" SpName="NAP_BetRestriction_LeagueGroupSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="GroupId" ObjectProperty="LeagueGroupId" />
+				<Mapping DataField="GroupName" ObjectProperty="LeagueGroupName" />
+		</Setting>
   </Function>
   <Function Name="Bet Restriction Management">
     <Setting Key="NAP_BetRestriction_SettingSel" SpName="NAP_BetRestriction_SettingSel" DbName="DBACC.bodb02.wsv_nap" />
@@ -96,81 +96,81 @@
     <Setting Key="NAP_VREngine_CriteriaMatrix_Check" SpName="NAP_VREngine_CriteriaMatrix_Check" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_CriteriaMatrix_Sel" SpName="NAP_VREngine_CriteriaMatrix_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_VREngine_League_Sel" SpName="NAP_VREngine_League_Sel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="siteidlist_notapply" ObjectProperty="SiteIdListNotIn" />
-      <Mapping DataField="customerclasslist_notapply" ObjectProperty="CustomerClassListNotIn" />
-      <Mapping DataField="customerclassdetaillist_notapply" ObjectProperty="CustomerClassDetailListNotIn" />
-      <Mapping DataField="ccsporttypelist_notapply" ObjectProperty="SportTypeCCListNotIn" />
-      <Mapping DataField="vr_from" ObjectProperty="VRFrom" />
-      <Mapping DataField="vr_to" ObjectProperty="VRTo" />
-      <Mapping DataField="sporttypelist_notapply" ObjectProperty="SportTypeListNotIn" />
-      <Mapping DataField="bettypelist_notapply" ObjectProperty="BetTypeListNotIn" />
-      <Mapping DataField="leaguegrouplist_notapply" ObjectProperty="LeagueGroupListNotIn" />
-      <Mapping DataField="leaguelist_notapply" ObjectProperty="LeagueListNotIn" />
-      <Mapping DataField="stakerm_from" ObjectProperty="StakeFrom" />
-      <Mapping DataField="stakerm_to" ObjectProperty="StakeTo" />
-      <Mapping DataField="dateofweeklist" ObjectProperty="DoWList" />
-      <Mapping DataField="dateofweeklist_notapply" ObjectProperty="DoWListNotIn" />
-      <Mapping DataField="currencyidlist_notapply" ObjectProperty="CurrencyIDListNotIn" />
-      <Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
-    </Setting>
-    <Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="siteidlist_notapply" ObjectProperty="SiteIdListNotIn" />
-      <Mapping DataField="customerclasslist_notapply" ObjectProperty="CustomerClassListNotIn" />
-      <Mapping DataField="customerclassdetaillist_notapply" ObjectProperty="CustomerClassDetailListNotIn" />
-      <Mapping DataField="ccsporttypelist_notapply" ObjectProperty="SportTypeCCListNotIn" />
-      <Mapping DataField="vr_from" ObjectProperty="VRFrom" />
-      <Mapping DataField="vr_to" ObjectProperty="VRTo" />
-      <Mapping DataField="sporttypelist_notapply" ObjectProperty="SportTypeListNotIn" />
-      <Mapping DataField="bettypelist_notapply" ObjectProperty="BetTypeListNotIn" />
-      <Mapping DataField="leaguegrouplist_notapply" ObjectProperty="LeagueGroupListNotIn" />
-      <Mapping DataField="leaguelist_notapply" ObjectProperty="LeagueListNotIn" />
-      <Mapping DataField="stakerm_from" ObjectProperty="StakeFrom" />
-      <Mapping DataField="stakerm_to" ObjectProperty="StakeTo" />
-      <Mapping DataField="dateofweeklist" ObjectProperty="DoWList" />
-      <Mapping DataField="dateofweeklist_notapply" ObjectProperty="DoWListNotIn" />
-      <Mapping DataField="currencyidlist_notapply" ObjectProperty="CurrencyIDListNotIn" />
-      <Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
-    </Setting>
+		<Setting Key="NAP_VREngine_Rule_Sel" SpName="NAP_VREngine_Rule_Sel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="siteidlist_notapply" ObjectProperty="SiteIdListNotIn" />
+				<Mapping DataField="customerclasslist_notapply" ObjectProperty="CustomerClassListNotIn" />
+				<Mapping DataField="customerclassdetaillist_notapply" ObjectProperty="CustomerClassDetailListNotIn" />
+				<Mapping DataField="ccsporttypelist_notapply" ObjectProperty="SportTypeCCListNotIn" />
+				<Mapping DataField="vr_from" ObjectProperty="VRFrom" />
+				<Mapping DataField="vr_to" ObjectProperty="VRTo" />
+				<Mapping DataField="sporttypelist_notapply" ObjectProperty="SportTypeListNotIn" />
+				<Mapping DataField="bettypelist_notapply" ObjectProperty="BetTypeListNotIn" />
+				<Mapping DataField="leaguegrouplist_notapply" ObjectProperty="LeagueGroupListNotIn" />
+				<Mapping DataField="leaguelist_notapply" ObjectProperty="LeagueListNotIn" />
+				<Mapping DataField="stakerm_from" ObjectProperty="StakeFrom" />
+				<Mapping DataField="stakerm_to" ObjectProperty="StakeTo" />
+				<Mapping DataField="dateofweeklist" ObjectProperty="DoWList" />
+				<Mapping DataField="dateofweeklist_notapply" ObjectProperty="DoWListNotIn" />
+				<Mapping DataField="currencyidlist_notapply" ObjectProperty="CurrencyIDListNotIn" />
+				<Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
+		</Setting>
+		<Setting Key="NAP_VREngine_RuleDetail_Sel" SpName="NAP_VREngine_RuleDetail_Sel" DbName="DBACC.bodb02.wsv_nap">
+			<Mapping DataField="siteidlist_notapply" ObjectProperty="SiteIdListNotIn" />
+			<Mapping DataField="customerclasslist_notapply" ObjectProperty="CustomerClassListNotIn" />
+			<Mapping DataField="customerclassdetaillist_notapply" ObjectProperty="CustomerClassDetailListNotIn" />
+			<Mapping DataField="ccsporttypelist_notapply" ObjectProperty="SportTypeCCListNotIn" />
+			<Mapping DataField="vr_from" ObjectProperty="VRFrom" />
+			<Mapping DataField="vr_to" ObjectProperty="VRTo" />
+			<Mapping DataField="sporttypelist_notapply" ObjectProperty="SportTypeListNotIn" />
+			<Mapping DataField="bettypelist_notapply" ObjectProperty="BetTypeListNotIn" />
+			<Mapping DataField="leaguegrouplist_notapply" ObjectProperty="LeagueGroupListNotIn" />
+			<Mapping DataField="leaguelist_notapply" ObjectProperty="LeagueListNotIn" />
+			<Mapping DataField="stakerm_from" ObjectProperty="StakeFrom" />
+			<Mapping DataField="stakerm_to" ObjectProperty="StakeTo" />
+			<Mapping DataField="dateofweeklist" ObjectProperty="DoWList" />
+			<Mapping DataField="dateofweeklist_notapply" ObjectProperty="DoWListNotIn" />
+			<Mapping DataField="currencyidlist_notapply" ObjectProperty="CurrencyIDListNotIn" />
+			<Mapping DataField="enabled_column" ObjectProperty="EnabledCriteria" />
+		</Setting>
   </Function>
   <Function Name="Customer Class Management">
     <Setting Key="Nap_LM_CustomerClassSel" SpName="Nap_LM_CustomerClassSel" DbName="DBACC.bodb02.wsv_nap" />
-    <Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="GroupId" ObjectProperty="Id" />
-      <Mapping DataField="GroupName" ObjectProperty="Name" />
-    </Setting>
-    <Setting Key="Nap_LM_SportTypeSel" SpName="Nap_LM_SportTypeSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="SportType" ObjectProperty="Id" />
-      <Mapping DataField="SportName" ObjectProperty="Name" />
-    </Setting>
+		<Setting Key="Nap_LM_CustomerClassLeagueGroupSel" SpName="Nap_LM_CustomerClassLeagueGroupSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="GroupId" ObjectProperty="Id" />
+				<Mapping DataField="GroupName" ObjectProperty="Name" />
+		</Setting>
+		<Setting Key="Nap_LM_SportTypeSel" SpName="Nap_LM_SportTypeSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="SportType" ObjectProperty="Id" />
+				<Mapping DataField="SportName" ObjectProperty="Name" />
+		</Setting>
   </Function>
   <Function Name="Manage Product Setting">
-    <Setting Key="NAP_GlobalStakeLevelGroup_ProductSel" SpName="NAP_GlobalStakeLevelGroup_ProductSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="ProductID" ObjectProperty="Id" />
-      <Mapping DataField="ProductName" ObjectProperty="Name" />
-    </Setting>
+		<Setting Key="NAP_GlobalStakeLevelGroup_ProductSel" SpName="NAP_GlobalStakeLevelGroup_ProductSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="ProductID" ObjectProperty="Id" />
+				<Mapping DataField="ProductName" ObjectProperty="Name" />
+		</Setting>
     <Setting Key="NAP_GlobalStakeLevelGroup_CurrencySel" SpName="NAP_GlobalStakeLevelGroup_CurrencySel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="ExchangeID" ObjectProperty="Id" />
-      <Mapping DataField="Currency" ObjectProperty="Name" />
-    </Setting>
-    <Setting Key="NAP_GlobalStakeLevelGroup_SiteSel" SpName="NAP_GlobalStakeLevelGroup_SiteSel" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="SiteID" ObjectProperty="Id" />
-      <Mapping DataField="Site" ObjectProperty="Name" />
-    </Setting>
+				<Mapping DataField="ExchangeID" ObjectProperty="Id" />
+				<Mapping DataField="Currency" ObjectProperty="Name" />
+		</Setting>
+		<Setting Key="NAP_GlobalStakeLevelGroup_SiteSel" SpName="NAP_GlobalStakeLevelGroup_SiteSel" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="SiteID" ObjectProperty="Id" />
+				<Mapping DataField="Site" ObjectProperty="Name" />
+		</Setting>
     <Setting Key="NAP_GlobalStakeLevelGroup_Sel" SpName="NAP_GlobalStakeLevelGroup_Sel" DbName="DBACC.bodb02.wsv_nap" />
     <Setting Key="NAP_GlobalStakeLevelGroup_Check" SpName="NAP_GlobalStakeLevelGroup_Check" DbName="DBACC.bodb02.wsv_nap" />
   </Function>
   <Function Name="Domain Management">
-    <Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBGLOB.GlobCustDB.wsv_nap">
-      <Mapping DataField="SiteId" ObjectProperty="Id" />
-      <Mapping DataField="site" ObjectProperty="Name" />
-    </Setting>
-    <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap">
+		<Setting Key="NAP_Domain_SiteMarket" SpName="NAP_Domain_SiteMarket" DbName="DBGLOB.GlobCustDB.wsv_nap">
+				<Mapping DataField="SiteId" ObjectProperty="Id" />
+				<Mapping DataField="site" ObjectProperty="Name" />
+		</Setting>
+    <Setting Key="NAP_Domain_Sel" SpName="NAP_Domain_Sel" DbName="DBACC.bodb02.wsv_nap" >
       <Mapping DataField="Domain" ObjectProperty="DomainName" />
     </Setting>
-    <Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap">
-      <Mapping DataField="Domain" ObjectProperty="DomainName" />
-    </Setting>
+		<Setting Key="NAP_Domain_SelByID" SpName="NAP_Domain_SelByID" DbName="DBACC.bodb02.wsv_nap">
+				<Mapping DataField="Domain" ObjectProperty="DomainName" />
+		</Setting>
   </Function>
   <Function Name="Credit Payout Management">
     <Setting Key="NAP_PayoutPromotion_MatchSel" SpName="NAP_PayoutPromotion_MatchSel" DbName="DBACC.bodb02.wsv_nap" />

@@ -50,7 +50,7 @@
         hasHostPermisson = $("#btnAdd").length > 0;
         if (hasHostPermisson) {
             $("#btnAdd").off("click").click(enableRowForAdding);
-            adjustPeakHour.init(function () { $("#formSearch").trigger("submit"); });
+            adjustPeakHour.init();
             $("#btnEditPeakHour").off("click").click(function () {
                 adjustPeakHour.openModal();
             });

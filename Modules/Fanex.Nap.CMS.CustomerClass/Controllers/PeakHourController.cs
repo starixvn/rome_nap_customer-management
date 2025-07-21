@@ -29,7 +29,7 @@
             this.peakHourService = peakHourService;
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read);
@@ -39,7 +39,7 @@
             }
 
             var viewModel = new PeakHourViewModel(
-                   HasRight(CMSFunctionKeys.SpreadManagement, Constant.Policy.Host),
+                   HasRight(CMSFunctionKeys.PeakHourManagement, Constant.Policy.Host),
                    filterService.GetCustomerClasses(),
                    filterService.GetAllSites(),
                    filterService.GetAllCurrencies(), 
@@ -49,7 +49,7 @@
             return View("~/Areas/CustomerClass/Views/PeakHour/Index.cshtml", viewModel);
         }
 
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchSpreadRuleRequest request)
         {
             var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp => request.SportTypes.Split(',').Contains(sp.Id.ToString()) || request.SportTypes == "0");
@@ -63,7 +63,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult Add(AddEditSpreadRuleRequest request)
         {
             if (!HavePermissionOnSportType(request.SportType, Constant.Policy.Read))
@@ -76,7 +76,7 @@
 
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult Update(AddEditSpreadRuleRequest request)
         {
 
@@ -90,7 +90,7 @@
 
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult Delete(int policyID, short sportType)
         {
             if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
@@ -102,7 +102,7 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult Enable(int policyID, short sportType, bool enable)
         {
             if (!HavePermissionOnSportType(sportType, Constant.Policy.Read))
@@ -114,28 +114,28 @@
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetPeakHour()
         {
             return JsonData(peakHourService.GetPeakHours(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult AddPeakHour(AddEditPeakHourRequest request)
         {
             return JsonData(peakHourService.AddPeakHour(request, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult EditPeakHour(AddEditPeakHourRequest request)
         {
             return JsonData(peakHourService.UpdatePeakHour(request, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
-        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.PeakHourManagement, Policy = Constant.Policy.Host)]
         public ActionResult DeletePeakHour(int rangeId)
         {
             return JsonData(peakHourService.DeletePeakHour(rangeId, CurrentSession.UserId, CurrentContext.IP), JsonRequestBehavior.DenyGet);

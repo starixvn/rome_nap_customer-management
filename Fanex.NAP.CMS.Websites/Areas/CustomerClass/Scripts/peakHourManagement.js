@@ -44,7 +44,7 @@
             }
             cachedAddNewRule = null;
             cachedFilter = formData;
-            search();
+            setTimeout(search, 0);
         });
 
         hasHostPermisson = $("#btnAdd").length > 0;

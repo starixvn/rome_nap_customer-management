@@ -85,6 +85,8 @@ namespace Fanex.Nap.CMS.Infrastructure.Configurations
         
         public static Uri TelegramBotClientUri => new Uri(GetValue("TelegramBotClientUri"));
         
+        public static string CashOfferedSites => GetValue("CashService:OfferedSites");
+        
         /// <summary>
         /// Gets the value from web configuration.
         /// </summary>

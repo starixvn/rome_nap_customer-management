@@ -34,6 +34,7 @@
             listData: countryListData
         });
 
+
         btnAdd.click(function () {
             domainManagementAddOrEdit.openModal(domainManagementAddOrEdit.ADD_NEW);
         });
@@ -67,6 +68,7 @@
                 system: ddlSystem.fanexMultiSelect('getItems', true).join(),
                 site: ddlSite.fanexMultiSelect('getItems', true).join(),
                 status: ddlStatus.fanexMultiSelect('getItems', true).join(),
+                offerType: $('#ddl-offerType').val() === 'All' ? '' : $('#ddl-offerType').val(),
                 remark: $.trim(txtRemark.val()),
                 countries: ddlCountry.fanexMultiSelect('isCheckAll')
                     ? '0'
@@ -136,7 +138,7 @@
     function getGridOptions() {
         const columns = [
             { HeaderText: '#', Width: 40, Name: 'colNo', HeaderAlign: 'center', CellAlign: 'center' },
-            { HeaderText: resources.Domain, Width: 200, Name: 'colDomain', HeaderAlign: 'center', CellAlign: 'left', AllowTruncate: true },
+            { HeaderText: resources.Domain, Width: 200, Name: 'colDomain', HeaderAlign: 'center', CellAlign: 'left' },
             { HeaderText: resources.System, Width: 100, Name: 'colSystem', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.Site, Width: 100, Name: 'colSite', HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: resources.BrandName, Width: 80, Name: 'colBrandName', HeaderAlign: 'center', CellAlign: 'center' },
@@ -174,7 +176,7 @@
             }
 
             columns.push({ Name: 'colNo', Value: ++number });
-            columns.push({ Name: 'colDomain', Value: domain.DomainName });
+            columns.push({ Name: 'colDomain', Value: renderDomainName(domain.DomainName, domain.OfferType) });
             columns.push({ Name: 'colSystem', Value: domain.System });
             columns.push({ Name: 'colSite', Value: renderTooltipCell(domain.SiteNames, 'site') });
             columns.push({ Name: 'colBrandName', Value: domain.BrandName });
@@ -217,9 +219,14 @@
         ].join('');
     }
 
+    function renderDomainName(domainName, offerType) {
+        return offerType === 1 ? `<div class="domain-name-wrapper"><div class="domain-name">${domainName}</div><div class="ico-offer-cash domain-offer-cash-icon" title="Offer Cash"></div></div>` : `<div class="domain-name">${domainName}</div>`;
+    }
+
     function bindEventsAfterRenderGridSuccessfully() {
         $('.note-info-message.site').tipsy({ opacity: 0.9, gravity: 'sw' });
         $('.note-info-message.country').tipsy({ opacity: 0.9, gravity: 's' });
+        $('.domain-offer-cash-icon').tipsy({ opacity: 0.9, gravity: 's' });
         $('.light-note-info-message').tipsy({ opacity: 1, gravity: 'w', html: true });
 
         if (hasHostPermisson) {

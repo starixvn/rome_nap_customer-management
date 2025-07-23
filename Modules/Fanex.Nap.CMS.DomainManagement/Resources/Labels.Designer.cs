@@ -19,7 +19,7 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -259,11 +259,38 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No # found.
         /// </summary>
         public static string NoItemFound {
             get {
                 return ResourceManager.GetString("NoItemFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offer Cash.
+        /// </summary>
+        public static string OfferCash {
+            get {
+                return ResourceManager.GetString("OfferCash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offer Cash Service.
+        /// </summary>
+        public static string OfferCashService {
+            get {
+                return ResourceManager.GetString("OfferCashService", resourceCulture);
             }
         }
         
@@ -336,6 +363,15 @@ namespace Fanex.Nap.CMS.DomainManagement.Resources {
         public static string System {
             get {
                 return ResourceManager.GetString("System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

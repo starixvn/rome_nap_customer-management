@@ -40,6 +40,18 @@
             new SelectListItem { Text = "V", Value = "V" },
         };
 
+        public IEnumerable<SelectListItem> OfferTypes { get; } = new[]
+        {
+            new SelectListItem { Text = Labels.Yes, Value = "1" },
+            new SelectListItem { Text = Labels.No, Value = "0" },
+        };
+        public IEnumerable<SelectListItem> OfferCashs { get; } = new[]
+        {
+            new SelectListItem { Text = CommonLabels.All, Value = "All" },
+            new SelectListItem { Text = Labels.Yes, Value = "1" },
+            new SelectListItem { Text = Labels.No, Value = "0" },
+        };
+
         public bool HasHostPermission { get; }
 
         private static IEnumerable<SelectListItem> BuildSites(IEnumerable<Tuple<string, IEnumerable<IdNameModel>>> siteModels)

@@ -183,10 +183,14 @@
     <Compile Include="Constants\DomainStatusConst.cs" />
     <Compile Include="Controllers\DomainManagementController.cs" />
     <Compile Include="Criteria\AddNormalAnnouncementCriteria.cs" />
-    <Compile Include="Criteria\AddOrEditDomainCriteria.cs" />
+    <Compile Include="Criteria\AddDomainCriteria.cs" />
+    <Compile Include="Criteria\EditDomainCriteria.cs" />
     <Compile Include="Criteria\GetDomainByIdCriteria.cs" />
     <Compile Include="Criteria\GetDomainsCriteria.cs" />
+    <Compile Include="Criteria\InsertAgentDomainCriteria.cs" />
     <Compile Include="Criteria\RemoveDomainCriteria.cs" />
+    <Compile Include="Criteria\UpdateAgentDomainCriteria.cs" />
+    <Compile Include="Helpers\DomainManagementHelper.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\AddOrEditDomainCommand.cs" />

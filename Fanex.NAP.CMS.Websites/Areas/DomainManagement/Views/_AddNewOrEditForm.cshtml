@@ -23,6 +23,15 @@
             @Html.DropDownList("system", Model.Systems, new { @id = "popup-system", @class = "width-162" })
         </div>
     </div>
+    <div class="form-row offer-type">
+        <div class="lbl-field">
+            <label class="label">@Labels.OfferCashService</label>
+            <span class="text-red">*</span>
+        </div>
+        <div class="edit-field">
+            @Html.DropDownList("offerType", Model.OfferTypes, new { @id = "popup-offer-type", @class = "width-162" })
+        </div>
+    </div>
     <div class="form-row">
         <div class="lbl-field">
             <label class="label">@Labels.Site</label>

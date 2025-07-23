@@ -21,6 +21,8 @@
 
         public string BrandName { get; set; }
 
+        public byte OfferType { get; set; }
+
         public int UserId { get; set; }
 
         public string IP { get; set; }

@@ -18,6 +18,7 @@
             Site: '@Labels.Site',
             BrandName: '@Labels.BrandName',
             Status: '@Labels.Status',
+            OfferCash: '@Labels.OfferCash',
             RestrictedCountries: '@Labels.RestrictedCountries',
             Remark: '@Labels.Remark',
             ExpiredDate: '@Labels.ExpiredDate',
@@ -31,7 +32,8 @@
             RequiredFieldError: '@CommonLabels.RequiredFieldError',
             InvalidDomainFormat: '@Labels.InvalidDomainFormat',
             DuplicatedDomain: '@Labels.DuplicatedDomain',
-            DomainsOutOfRangeError: '@Labels.DomainsOutOfRangeError'
+            DomainsOutOfRangeError: '@Labels.DomainsOutOfRangeError',
+            MemberSiteOption: '@CommonLabels.Member',
         };
     </script>
     @Scripts.Render(DomainManagementBundleConfig.DomainManagementScripts)
@@ -64,6 +66,12 @@
             </div>
             <div class="edit-field col_6">
                 @Html.DropDownList("status", Model.Status, new { @id = "ddl-status" })
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.OfferCash</label>
+            </div>
+            <div class="edit-field col_5">
+                @Html.DropDownList("offerType", Model.OfferCashs, new { @id = "ddl-offerType", @class = "combobox-autocomplete offer-type-combobox" })
             </div>
             <div class="lbl-field col_2">
                 <label>@Labels.Remark</label>

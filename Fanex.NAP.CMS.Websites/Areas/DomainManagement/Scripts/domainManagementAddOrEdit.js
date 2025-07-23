@@ -9,6 +9,7 @@ const domainManagementAddOrEdit = (function ($) {
         inlineMessage = null,
         txtDomain = null,
         ddlSystem = null,
+        ddlOfferType = null,
         ddlSite = null,
         ddlStatus = null,
         txtExpiredDate = null,
@@ -45,7 +46,8 @@ const domainManagementAddOrEdit = (function ($) {
                     my: 'center top',
                     at: 'center top',
                     of: '#headline'
-                }
+                },
+                height: 'auto'
             });
 
         cacheElements(domain);
@@ -90,6 +92,22 @@ const domainManagementAddOrEdit = (function ($) {
             null);
         txtExpiredDate = $('#popup-expiredDate').val(domain.ExpiredDateString || resources.PleaseSelect).removeAttr('readonly');
         ddlSystem = renderCombobox('popup-system', domain.System);
+        ddlOfferType = renderCombobox('popup-offer-type', domain.OfferType);
+
+        ddlSystem.change(function () {
+            if (this.value !== resources.MemberSiteOption) {
+                $('#popup-offer-type').closest('.form-row').hide();
+            } else {
+                $('#popup-offer-type').closest('.form-row').show();
+            }
+        });
+        ddlSystem.trigger('change');
+        
+        // Hide offerType selection if in edit or bulk edit mode
+        // if (isEdit() || isBulkEdit()) {
+        //     $('#popup-offer-type').closest('.form-row').hide();
+        // }
+        
         ddlStatus = renderCombobox('popup-status', domain.Status);
         ddlBrandName = renderCombobox('popup-brandName', domain.BrandName);
         ddlSite = $('#popup-site');
@@ -116,6 +134,7 @@ const domainManagementAddOrEdit = (function ($) {
 
     function bindEvents(domain) {
         $('#popup-save').off().click(function () {
+            CMS.hideInlineMsg(inlineMessage);
             const formData = getFormData(domain);
             if (formData) {
                 CMS.disableInput();
@@ -147,11 +166,13 @@ const domainManagementAddOrEdit = (function ($) {
     function getFormData(domain) {
         const domainArray = isBulkEdit() ? [] : validateDomain();
         const system = validateCombobox(ddlSystem, ddlSystem.next('#popup-system'));
+        const offerType = validateCombobox(ddlOfferType, ddlOfferType.next('#popup-offer-type'));
         const site = validateSite();
         const status = validateCombobox(ddlStatus, ddlStatus.next('#popup-status'));
 
         const isValid = !isUndefined(domainArray)
             && !isUndefined(system)
+            && (!isMemberSite() || !isUndefined(offerType))
             && !isUndefined(site)
             && !isUndefined(status);
 
@@ -171,6 +192,7 @@ const domainManagementAddOrEdit = (function ($) {
             return {
                 domains,
                 system,
+                offerType: parseInt(offerType),
                 site,
                 status,
                 expiredDate: getExpiredDate(),
@@ -339,6 +361,10 @@ const domainManagementAddOrEdit = (function ($) {
 
     function isBulkEdit() {
         return formMode === BULK_EDIT;
+    }
+
+    function isMemberSite() {
+        return ddlSystem.val() === resources.MemberSiteOption;
     }
 
     function renderCombobox(elementId, selectedValue) {

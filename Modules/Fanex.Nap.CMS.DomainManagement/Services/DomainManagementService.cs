@@ -8,13 +8,16 @@
     using Fanex.Logging.Extensions.Web;
     using Fanex.Nap.CMS.DomainManagement.Constants;
     using Fanex.Nap.CMS.DomainManagement.Criteria;
+    using Fanex.Nap.CMS.DomainManagement.Helpers;
     using Fanex.Nap.CMS.DomainManagement.Models;
     using Fanex.Nap.CMS.DomainManagement.Requests;
     using Fanex.Nap.CMS.DomainManagement.Resources;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
     using Fanex.Nap.CMS.Infrastructure.Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using CommonLabels = Infrastructure.Resources.Labels;
 
     public interface IDomainManagementService
     {
@@ -24,7 +27,7 @@
 
         IEnumerable<Domain> GetDomains(SearchDomainQuery message);
 
-        Domain GetDomain(int domainId);
+        Domain GetDomain(string domainId);
 
         Result AddOrEditDomain(AddOrEditDomainCommand command);
 
@@ -51,18 +54,23 @@
         public IEnumerable<Tuple<string, IEnumerable<IdNameModel>>> GetSites()
             => settingService.GetSitesMarketCode().GroupBy(
                 s => s.SiteLabel,
-                (siteLabel, siteList) => Tuple.Create(siteLabel, siteList.Select(s => new IdNameModel { Id = s.Id, Name = BuildSiteMarketCode(s.Name, s.MarketCode) })));
-
-        private static string BuildSiteMarketCode(string site, string marketCode)
-            => string.IsNullOrWhiteSpace(marketCode) ? site : $"{site} ({marketCode})";
+                (siteLabel, siteList) => Tuple.Create(siteLabel, siteList.Select(s => new IdNameModel { Id = s.Id, Name = DomainManagementHelper.BuildSiteMarketCode(s.Name, s.MarketCode) })));
 
         public IEnumerable<Domain> GetDomains(SearchDomainQuery message)
         {
             var domains = DynamicRepository.Fetch<Domain>(
-                new GetDomainsCriteria(message.System, message.Site, message.Status, message.Remark, message.Countries)).ToList();
+                new GetDomainsCriteria
+                {
+                    System = message.System,
+                    Site = message.Site,
+                    Status = message.Status,
+                    OfferType = message.OfferType,
+                    Remark = message.Remark,
+                    Countries = message.Countries
+                }).ToList();
             if (domains.Any())
             {
-                var siteDictionary = settingService.GetSitesMarketCode().ToDictionary(kvp => kvp.Id, kvp => BuildSiteMarketCode(kvp.Name, kvp.MarketCode));
+                var siteDictionary = settingService.GetSitesMarketCode().ToDictionary(kvp => kvp.Id, kvp => DomainManagementHelper.BuildSiteMarketCode(kvp.Name, kvp.MarketCode));
                 var statusDictionary = DomainStatusConst.DomainStatus;
                 var countryDictionary = GetCountries().ToDictionary(kvp => kvp.Code, kvp => kvp.Name); 
 
@@ -81,12 +89,29 @@
             return domains;
         }
 
-        public Domain GetDomain(int domainId)
+        public Domain GetDomain(string domainId)
             => DynamicRepository.Get<Domain>(new GetDomainByIdCriteria(domainId));
+        public IEnumerable<Domain> GetDomains(string domainIds)
+            => DynamicRepository.Fetch<Domain>(new GetDomainByIdCriteria(domainIds));
 
         public Result AddOrEditDomain(AddOrEditDomainCommand command)
         {
-            var criteria = new AddOrEditDomainCriteria(BuildDomainListXML(command), command.UserId, command.IP, command.IsEdit);
+            if(command.IsEdit)
+            {
+                return EditDomain(command);
+            }
+
+            return AddDomain(command);
+        }
+
+        private Result AddDomain(AddOrEditDomainCommand command)
+        {
+            var criteria = new AddDomainCriteria
+            {
+                DomainList = DomainManagementHelper.BuildDomainListXML(command),
+                UserId = command.UserId,
+                IP = command.IP
+            };
 
             var result = DoAction(criteria);
             if (result.IsSuccess)
@@ -96,32 +121,37 @@
                     : Labels.AddedDomainSuccessfully;
 
                 AddNormalAnnouncement(criteria.DomainListOutput);
+                CallInsertAgentDomain(criteria.DomainListOutput, command.IsEdit, command.OfferType, command.Status, command.System, command.UserId, command.IP);
             }
 
             return result;
         }
 
-        private static string BuildDomainListXML(AddOrEditDomainCommand command)
+        private Result EditDomain(AddOrEditDomainCommand command)
         {
-            var domainList = command.Domains.Select(domain => string.Format(
-                "<Domain id=\"{0}\" d=\"{1}\" ss=\"{2}\" s=\"{3}\" stt=\"{4}\" ed=\"{5}\" c=\"{6}\" r=\"{7}\" b=\"{8}\"/>",
-                domain.Id == 0 ? string.Empty : domain.Id.ToString(),
-                domain.Name,
-                command.System,
-                command.Site,
-                command.Status,
-                command.ExpiredDate.HasValue ? command.ExpiredDate.Value.GetEndOfDate().ToString() : string.Empty,
-                command.RestrictedCountries,
-                string.IsNullOrWhiteSpace(command.Remark) ? command.Remark : EncodeXml(command.Remark),
-                command.BrandName));
+            var criteria = new EditDomainCriteria
+            {
+                DomainList = DomainManagementHelper.BuildDomainListXML(command),
+                UserId = command.UserId,
+                IP = command.IP
+            };
 
-            return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
+            var oldDomainList = GetDomains(string.Join(",", command.Domains.Select(d => d.Id).ToArray()));
+
+            var result = DoAction(criteria);
+
+            if (result.IsSuccess)
+            {
+                result.Message = Labels.EditedDomainSuccessfully;
+
+                AddNormalAnnouncement(criteria.DomainListOutput);
+                CallUpdateAgentDomain(oldDomainList, command, command.UserId, command.IP);
+            }
+
+            return result;
         }
 
-        private static string EncodeXml(string text, bool isAttribute = true, int attrSubStringLength = 5)
-            => isAttribute
-            ? new XAttribute("__n", text).ToString().Substring(attrSubStringLength).TrimEnd('\"')
-            : new XElement("t", text).LastNode.ToString();
+
 
         private void AddNormalAnnouncement(string domainList)
         {
@@ -141,29 +171,85 @@
             }
         }
 
+        private void CallInsertAgentDomain(string domainList, bool isEdit, byte offerType, byte domainStatus, string system, int userId = 0, string ip = "")
+        {
+            if(DomainManagementHelper.IsSkipUpdateAgentDomain(domainList, isEdit, offerType, domainStatus, system))
+            {
+                return;
+            }
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    var allowCashSiteNames = AppSettings.CashOfferedSites.Split(',');
+                    var domainSites = DomainManagementHelper.ParseDomainSiteMapping(domainList);
+                    var allSites = settingService.GetSitesMarketCode();
+                    var sitesAllowCash = allSites.Where(site => allowCashSiteNames.Contains(site.Name) || AppSettings.CashOfferedSites == "*");
+                    var domainSiteListXml = DomainManagementHelper.BuildDomainSiteListXml(domainSites, sitesAllowCash);
+
+                    var criteria = new InsertAgentDomainCriteria { DomainList = domainSiteListXml, UserID = userId, IP = ip };
+                    
+                    DoAction(criteria);
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
+            });
+        }
+
+        private void CallUpdateAgentDomain(IEnumerable<Domain> oldDomains, AddOrEditDomainCommand command = null, int userId = 0, string ip = "")
+        {
+            Task.Run(() =>
+            {
+                try
+                {
+                    var allowCashSiteNames = AppSettings.CashOfferedSites.Split(',');
+                    var allSites = settingService.GetSitesMarketCode();
+                    var sitesAllowCash = allSites.Where(site => allowCashSiteNames.Contains(site.Name) || AppSettings.CashOfferedSites == "*");
+                    
+                    var domainSiteListXml = DomainManagementHelper.BuildDomainListUpdateXml(oldDomains, command, sitesAllowCash);
+
+                    if (!string.IsNullOrWhiteSpace(domainSiteListXml))
+                    {
+                        var criteria = new UpdateAgentDomainCriteria {
+                            DomainList = domainSiteListXml,
+                            UserID = userId,
+                            IP = ip
+                        };
+
+                        DoAction(criteria);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ExceptionHandler.Handle(ex);
+                }
+            });
+        }
+
         public Result RemoveDomains(IdNameModel[] domains, int userId, string ip)
         {
             var criteria = new RemoveDomainCriteria
             {
-                DomainList = BuildDomainListXml(domains),
+                DomainList = DomainManagementHelper.BuildDomainListXml(domains),
                 UserId = userId,
                 IP = ip
             };
+
+            var oldDomainList = GetDomains(string.Join(",", domains.Select(d => d.Id).ToArray()));
 
             var result = DoAction(criteria);
 
             if (result.IsSuccess)
             {
                 result.Message = Labels.RemovedDomainSuccessfully;
+                CallUpdateAgentDomain(oldDomainList, null, userId, ip);
             }
 
             return result;
         }
-        private static string BuildDomainListXml(IdNameModel[] domains)
-        {
-            var domainList = domains.Select(domain => $"<Domain id=\"{domain.Id}\" d=\"{domain.Name}\"/>");
 
-            return $"<DomainList>{string.Join(string.Empty, domainList)}</DomainList>";
-        }
     }
 }

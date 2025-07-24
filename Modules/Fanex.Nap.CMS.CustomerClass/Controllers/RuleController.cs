@@ -56,7 +56,7 @@
         public ActionResult Get(int ruleId)
             => JsonData(ruleService.GetRule(ruleId));
         
-        [NapAuth(FunctionKey = CMSFunctionKeys.RuleManagement, Policy = Constant.Policy.Read)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SportsbookCCManagement, Policy = Constant.Policy.Read)]
         public ActionResult GetLeagueBySport(int sportType)
         {
             return JsonData(filterService.GetLeagueGroups(sportType), JsonRequestBehavior.AllowGet);

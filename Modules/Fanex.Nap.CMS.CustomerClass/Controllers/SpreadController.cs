@@ -13,8 +13,9 @@
     {
         private readonly IFilterService filterService;
         private readonly ISpreadService spreadService;
+        private const byte SpreadType = 1;
 
-        public SpreadController() : this(new FilterService(), new SpreadService())
+        public SpreadController() : this(new FilterService(), new SpreadService(SpreadType))
         {
         }
 
@@ -46,7 +47,10 @@
         [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Read)]
         public ActionResult Search(SearchSpreadRuleRequest request)
         {
-            var havePermissionPortTypes = GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read).Where(sp =>  request.SportTypes.Split(',').Contains(sp.Id.ToString()) || request.SportTypes == "0");
+            var havePermissionPortTypes =
+                GetHavePermissionSportTypes(filterService.GetSports(), Constant.Policy.Read)
+                    .Where(sp => request.SportTypes.Split(',')
+                    .Contains(sp.Id.ToString()) || request.SportTypes == "0");
             if (!havePermissionPortTypes.Any())
             {
                 return Forbidden(behavior: JsonRequestBehavior.AllowGet);

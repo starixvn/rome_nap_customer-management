@@ -1,6 +1,6 @@
 ﻿namespace Fanex.Nap.CMS.Infrastructure.Models
 {
-    public class CurrencyModel
+    public class CurrencyModel : IdNameModel
     {
         public string Currency { get; set; }
 

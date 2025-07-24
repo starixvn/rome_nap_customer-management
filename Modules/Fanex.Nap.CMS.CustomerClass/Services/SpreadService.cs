@@ -25,10 +25,13 @@
 
     internal class SpreadService : ServiceBase, ISpreadService
     {
-        public SpreadService() : base()
+        private byte SpreadType { get; }
+
+        public SpreadService(byte spreadType) : base()
         {
+            SpreadType = spreadType;
         }
-        
+
         public AddSpreadRuleResponse AddRule(AddEditSpreadRuleRequest request, int userId, string iP)
         {
             var criteria = new AddSpreadRuleCriteria
@@ -42,6 +45,9 @@
                 Sites = request.Sites,
                 Platforms = request.Platforms,
                 Enable = request.Enable,
+                LeagueGroups = request.LeagueGroups,
+                IsLive = request.IsLive,
+                Type = SpreadType,
                 UserId = userId,
                 IP = iP
             };
@@ -61,8 +67,11 @@
                 CustomerClasses = request.CustomerClass,
                 Sites = request.Site,
                 Currencies = request.Currency,
+                LeagueCheck = request.LeagueGroups,
+                LeagueGroups = string.Empty,
+                Spread = hasSpread ? spread : (float?)null,
                 SportTypes = string.Join(",", sportTypes.Select(sp => sp.Id)),
-                Spread = hasSpread ? spread : (float?)null
+                Type = SpreadType
             };
             return DynamicRepository.Fetch<SpreadRule>(criteria);
         }
@@ -80,6 +89,9 @@
                 Sites = request.Sites,
                 Platforms = request.Platforms,
                 Enable = request.Enable,
+                LeagueGroups = request.LeagueGroups,
+                IsLive = request.IsLive,
+                Type = SpreadType,
                 UserId = userId,
                 IP = iP
             };
@@ -92,6 +104,7 @@
             var criteria = new DeleteSpreadCriteria
             {
                 PolicyID = policyID,
+                Type = SpreadType,
                 UserId = userId,
                 IP = iP
             };
@@ -105,6 +118,7 @@
             {
                 PolicyID = policyID,
                 Enable = enable,
+                Type = SpreadType,
                 UserId = userId,
                 IP = iP
             };

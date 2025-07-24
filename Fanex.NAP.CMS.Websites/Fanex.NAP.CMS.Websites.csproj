@@ -454,10 +454,12 @@
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicketDetail.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Scripts\bonusTicket.js" />
     <Content Include="Areas\ColossusBets\Views\BonusTicket\Styles\bonusTicket.css" />
+    <Content Include="Areas\CustomerClass\Scripts\adjustPeakHour.js" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\editingGridHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\nonsports.js" />
     <Content Include="Areas\CustomerClass\Scripts\offering.js" />
+    <Content Include="Areas\CustomerClass\Scripts\peakHourManagement.js" />
     <Content Include="Areas\CustomerClass\Scripts\ruleManagementHelper.js" />
     <Content Include="Areas\CustomerClass\Scripts\customerClassSetting.js" />
     <Content Include="Areas\CustomerClass\Scripts\policyManagement.js" />
@@ -654,12 +656,14 @@
     <Content Include="Content\Extensions\images\BA.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Themes\img\add-no-border.png" />
     <Content Include="Content\Themes\img\bgmenu-hover.png" />
     <Content Include="Content\Themes\img\bgmenu-more.png" />
     <Content Include="Content\Themes\img\bg_footer.jpg" />
     <Content Include="Content\Themes\img\bg_header.png" />
     <Content Include="Content\Themes\img\btn-close.png" />
     <Content Include="Content\Themes\img\chosen-sprite.png" />
+    <Content Include="Content\Themes\img\delete-no-border.png" />
     <Content Include="Content\Themes\img\icon-save-16.png" />
     <Content Include="Content\Themes\img\icon-close.png" />
     <Content Include="Content\Themes\img\collapse-icon.png" />
@@ -1217,6 +1221,9 @@
     <Content Include="Areas\BetLimitIncrease\Styles\index.less" />
     <Content Include="Areas\BetRestriction\Views\ESports\Index.cshtml" />
     <Content Include="Areas\BetRestriction\Views\ESports\AccountManagement.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\PeakHour\Index.cshtml" />
+    <Content Include="Areas\CustomerClass\Views\PeakHour\_AdjustPeakHour.cshtml" />
+    <Content Include="Areas\CustomerClass\Styles\peakHourManagement.less" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

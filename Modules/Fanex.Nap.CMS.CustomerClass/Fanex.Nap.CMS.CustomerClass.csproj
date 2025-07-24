@@ -201,6 +201,7 @@
     <Compile Include="Constants\SportTypeConst.cs" />
     <Compile Include="Controllers\CustomerClassSettingController.cs" />
     <Compile Include="Controllers\NonsportsController.cs" />
+    <Compile Include="Controllers\PeakHourController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\RuleController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
@@ -235,6 +236,9 @@
     <Compile Include="Criteria\NonSports\EditNonSportsCriteria.cs" />
     <Compile Include="Criteria\NonSports\EnableNonSportsCriteria.cs" />
     <Compile Include="Criteria\NonSports\GetNonSportsCriteria.cs" />
+    <Compile Include="Criteria\PeakHour\AddPeakHourCriteria.cs" />
+    <Compile Include="Criteria\PeakHour\EditPeakHourCriteria.cs" />
+    <Compile Include="Criteria\PeakHour\GetPeakHourCriteria.cs" />
     <Compile Include="Criteria\QueryCriteriaBase.cs" />
     <Compile Include="Criteria\EditPolicyCriteria.cs" />
     <Compile Include="Criteria\EditRuleCriteria.cs" />
@@ -253,6 +257,12 @@
     <Compile Include="Models\LeagueGroup.cs" />
     <Compile Include="Models\NonsportModel.cs" />
     <Compile Include="Models\PagedSiteSetting.cs" />
+    <Compile Include="Models\PeakHourModel.cs" />
+    <Compile Include="Requests\PeakHour\AddEditPeakRequest.cs" />
+    <Compile Include="Criteria\PeakHour\DeletePeakHourCriteria.cs" />
+    <Compile Include="Responses\SearchPeakHourResponse.cs" />
+    <Compile Include="Services\PeakHourService.cs" />
+    <Compile Include="ViewModels\PeakHourViewModel.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyItem.cs" />
     <Compile Include="Models\PolicyRuleDTO.cs" />

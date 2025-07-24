@@ -20,6 +20,9 @@
         public const string SpreadStyles = "~/bundles/customerclass/spread-styles";
         public const string SpreadScripts = "~/bundles/customerclass/spread-scripts";
 
+        public const string PeakHourStyles = "~/bundles/customerclass/peakhour-styles";
+        public const string PeakHourScripts = "~/bundles/customerclass/peakhour-scripts";
+
         public const string OfferingStyles = "~/bundles/customerclass/offering-styles";
         public const string OfferingScripts = "~/bundles/customerclass/offering-scripts";
 
@@ -37,6 +40,7 @@
             .RegisterPolicyBundles()
             .RegisterSiteBundles()
             .RegisterSpreadBundles()
+            .RegisterPeakHourBundles()
             .RegisterOfferingBundles()
             .RegisterNonsports();
 
@@ -123,6 +127,28 @@
                 "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
                 "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
+
+            return bundles;
+        }
+        private static BundleCollection RegisterPeakHourBundles(this BundleCollection bundles)
+        {
+            bundles.AddAndInclude(
+                PeakHourStyles,
+                FanexMultiSelectStyle,
+                FanexMultiSelectCustomStyle,
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.css",
+                "~/Areas/CustomerClass/Styles/spreadManagement.less",
+                "~/Areas/CustomerClass/Styles/peakHourManagement.less");
+
+            bundles.Add(new ScriptBundle(PeakHourScripts).Include(
+                FanexMultiSelectScript,
+                "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
+                "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
+                "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
+                "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
+                "~/Scripts/Libs/jquery-timepicker/jquery.timepicker.js",
+                "~/Areas/CustomerClass/Scripts/peakHourManagement.js",
+                "~/Areas/CustomerClass/Scripts/adjustPeakHour.js"));
 
             return bundles;
         }

@@ -15,7 +15,7 @@
             DateTime sendDate,
             string status,
             string description,
-            byte retry)
+            byte? retry)
 #pragma warning restore S107
         {
             NotificationId = notificationId;
@@ -47,6 +47,6 @@
 
         public string Description { get; set; }
 
-        public byte Retry { get; set; }
+        public byte? Retry { get; set; }
     }
 }

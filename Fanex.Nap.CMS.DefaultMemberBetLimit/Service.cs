@@ -4,11 +4,10 @@
     using Fanex.Nap.CMS.DefaultMemberBetLimit.Models;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+    using Fanex.NAP.Client.Helpers.Web;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Criteria;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Models;
     using Fanex.NAP.CMS.DefaultMemberBetLimit.Requests;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
     using System.Collections.Generic;
 
     public interface IService
@@ -26,10 +25,10 @@
 
     public class Service : ServiceBase, IService
     {
-        private readonly ICurrentSession currentSession;
+        private readonly INapSession currentSession;
         private readonly ICurrentContext currentContext;
 
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext)
+        public Service(INapSession currentSession, ICurrentContext currentContext)
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;

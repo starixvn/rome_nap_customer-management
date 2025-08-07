@@ -8,8 +8,8 @@
     using Fanex.NAP.CMS.BetLimitControl.Request.BetLimitIncrease;
     using Fanex.NAP.CMS.BetLimitControl.Serivces;
     using Fanex.NAP.CMS.BetLimitControl.ViewModels;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using System.Web.Mvc;
 
     public class BetLimitIncreaseController : BaseController

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Web;
 using System.Web.Security;
-using Fanex.NAP.Core.Web.Auth;
-using Fanex.NAP.Core.Web.Session;
+using Fanex.Nap.CMS.Infrastructure.Models;
+using Fanex.NAP.Client.Helpers.Web;
 
 namespace Fanex.NAP.CMS.Controllers
 {
     public static class AuthInfoUtils
     {
-        public static void CreateAuthInfo(ICurrentSession session, HttpContextBase httpContext)
+        public static void CreateAuthInfo(INapSession session, HttpContextBase httpContext)
         {
             var authInfo = new AuthInfo
             {
@@ -19,7 +19,7 @@ namespace Fanex.NAP.CMS.Controllers
             var cookiePath = httpContext.Request.ApplicationPath;
             var authTicket = new FormsAuthenticationTicket(
                 1,
-                session.Username,
+                session.UserName,
                 DateTime.Now,
                 DateTime.Now.AddMinutes(20000),
                 false,

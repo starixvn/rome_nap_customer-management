@@ -19,6 +19,9 @@ namespace Fanex.NAP.CMS.Websites
     using System.Web.Routing;
     using Fanex.Caching;
     using Fanex.Data;
+    using Fanex.NAP.Client;
+    using Fanex.NAP.Client.Configuration;
+    using Fanex.NAP.Client.Session;
     using Logging.Extensions.Web;
     using Nap.CMS.Infrastructure.Web;
     using ONEbook.UM;
@@ -61,6 +64,9 @@ namespace Fanex.NAP.CMS.Websites
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            NapClientManager
+                .UseConfig(new NapSettings())
+                .UseSession(new NapSession());
 
             RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["RemoteRefURL"]))

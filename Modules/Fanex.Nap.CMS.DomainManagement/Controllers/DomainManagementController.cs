@@ -9,8 +9,8 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     public class DomainManagementController : BaseController
     {

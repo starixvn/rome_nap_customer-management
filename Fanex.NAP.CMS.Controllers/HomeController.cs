@@ -12,7 +12,7 @@ namespace Fanex.NAP.CMS.Controllers
     using System;
     using System.Web;
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client;
 
     /// <summary>
     /// Home controller.
@@ -37,7 +37,7 @@ namespace Fanex.NAP.CMS.Controllers
         [ChildActionOnly]
         public PartialViewResult Menu()
         {
-            ViewBag.MenuItemList = CurrentSession.MenuItemList;
+            ViewBag.MenuItemList = NapClientManager.NapSession.MenuItemList;
 
             return PartialView("~/Views/Shared/_Menu.cshtml");
         }

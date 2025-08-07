@@ -11,8 +11,8 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Models.VirtualSettingMonitor;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.CustomerDashboard;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitor;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     public class CustomerDashboardController : BaseController
     {

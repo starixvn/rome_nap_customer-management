@@ -5,8 +5,8 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VirtualSettingMonitorAdvance;
     using Fanex.Nap.CMS.VirtualSettingControl.Services.VirtualSettingMonitorAdvance;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using System.Web.Mvc;
 
     public class VirtualSettingMonitorAdvanceController : BaseController

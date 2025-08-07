@@ -6,8 +6,8 @@
     using Fanex.Nap.CMS.Customers.ViewModels.ManageRobots2;
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.Nap.CMS.Infrastructure.Controllers;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     public class ManageRobots2Controller : BaseController
     {

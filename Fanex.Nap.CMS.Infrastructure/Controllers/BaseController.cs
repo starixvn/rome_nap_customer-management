@@ -16,17 +16,13 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
     using Extensions;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
-    using NAP.Core.Context;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using Newtonsoft.Json;
     using Web;
+    using Fanex.NAP.Client.Services;
+    using Fanex.NAP.Client;
+    using Fanex.NAP.Client.Helpers.Web;
 
     [NapSuperAuth]
     public class BaseController : Controller
@@ -36,10 +32,10 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
         public BaseController()
         {
             CurrentContext = new CurrentContext();
-            CurrentSession = new CurrentSession();
-            Environment = NapSettings.Settings.Environment;
-            SiteId = NapSettings.Settings.SiteId;
-            EnableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+            CurrentSession = NapClientManager.NapSession;
+            Environment = NapClientManager.NapSettings.Environment;
+            SiteId = NapClientManager.NapSettings.SiteId;
+            EnableDirectLogin = NapClientManager.NapSettings.EnableDirectLogin;
 
             ViewBag.Session = CurrentContext;
 
@@ -47,7 +43,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
             {
                 IsLive = Environment.Equals(Constant.LIVE),
                 HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.EnableReCheckIn
+                IsReCheckin = NapClientManager.NapSettings.EnableReCheckIn
             };
 
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
@@ -66,7 +62,7 @@ namespace Fanex.Nap.CMS.Infrastructure.Controllers
 
         public ICurrentContext CurrentContext { get; }
 
-        public ICurrentSession CurrentSession { get; }
+        public INapSession CurrentSession { get; }
 
         public string Environment { get; }
 

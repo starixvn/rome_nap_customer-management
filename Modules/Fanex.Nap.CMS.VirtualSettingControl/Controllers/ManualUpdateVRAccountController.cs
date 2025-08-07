@@ -9,8 +9,8 @@
     using Fanex.Nap.CMS.Infrastructure.Web;
     using Fanex.Nap.CMS.VirtualSettingControl.Models.ManualUpdateVRAccount;
     using Fanex.NAP.CMS.Core.Resources;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using Infrastructure;
     using Infrastructure.Controllers;
     using Services.ManualUpdateVRAccount;

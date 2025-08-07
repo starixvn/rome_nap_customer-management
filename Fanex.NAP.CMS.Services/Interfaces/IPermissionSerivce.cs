@@ -1,4 +1,4 @@
-﻿using Fanex.NAP.Core.Business;
+﻿using Fanex.NAP.Client.Helpers.Business;
 
 namespace Fanex.NAP.CMS.Services.Interfaces
 {

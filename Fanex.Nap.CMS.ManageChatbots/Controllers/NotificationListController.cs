@@ -6,8 +6,8 @@
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
     using Fanex.Nap.CMS.ManageChatbots.Services.NotificationList;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.NotificationList;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     public class NotificationListController : BaseController
     {

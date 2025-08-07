@@ -10,7 +10,7 @@
 namespace Fanex.NAP.CMS.Controllers
 {
     using System.Web.Mvc;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Attributes;
 
     /// <summary>
     /// Error controller.

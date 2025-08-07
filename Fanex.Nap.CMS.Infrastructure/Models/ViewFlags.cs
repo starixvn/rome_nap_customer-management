@@ -1,0 +1,62 @@
+﻿// --------------------------------------------------------------------------
+// <copyright file="BaseController.cs">
+// Copyright (c). All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+// <history>
+//   <change who="Louis.Nguyen" date="2014.10.03">Created</change>
+// </history>
+
+namespace Fanex.Nap.CMS.Infrastructure.Models
+{
+    public class ViewFlags
+    {
+        public bool IsLive { get; set; }
+
+        public bool HasEditRight { get; set; }
+
+        public bool IsNapAdminSite { get; set; }
+
+        public bool HasAssignSiteReadRight { get; set; }
+
+        public bool HasAssignSiteRight { get; set; }
+
+        public bool HasAssignFunctionRight { get; set; }
+
+        public bool HasAssignFunctionToUserRight { get; set; }
+
+        public bool HasAssignFunctionToGroupRight { get; set; }
+
+        public bool HasManageUserRight { get; set; }
+
+        public bool IsShowLevelColumn { get; set; }
+
+        public bool IsShowActionColumn { get; set; }
+
+        public bool IsReCheckin { get; set; }
+
+        public ViewFlags()
+        {
+            IsLive = false;
+            HasEditRight = false;
+            IsNapAdminSite = false;
+            HasAssignFunctionRight = false;
+            HasAssignFunctionToUserRight = false;
+            HasAssignFunctionToGroupRight = false;
+            HasAssignSiteRight = false;
+            IsShowLevelColumn = false;
+            IsShowActionColumn = false;
+            IsReCheckin = false;
+        }
+
+        public void SetEditRight(int policy)
+        {
+            if (policy < 2)
+            {
+                return;
+            }
+
+            HasEditRight = true;
+        }
+    }
+}

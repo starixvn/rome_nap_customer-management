@@ -8,11 +8,10 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
+    using Fanex.NAP.Client.Helpers.Web;
     using Fanex.NAP.CMS.BetLimitControl.Criteria;
     using Fanex.NAP.CMS.BetLimitControl.Models;
     using Fanex.NAP.CMS.BetLimitControl.Request;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
 
     public interface IService
     {
@@ -31,10 +30,10 @@
     {
         private const int MaxUsernames = 100;
 
-        private readonly ICurrentSession currentSession;
+        private readonly INapSession currentSession;
         private readonly ICurrentContext currentContext;
 
-        public Service(ICurrentSession currentSession, ICurrentContext currentContext)
+        public Service(INapSession currentSession, ICurrentContext currentContext)
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;

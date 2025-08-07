@@ -14,8 +14,8 @@ using Fanex.Nap.CMS.TurnoverControl.Resources;
 using Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Services.ImportGlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.ViewModels.GlobalSetting;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Web.Attribute;
+using Fanex.NAP.Client.Helpers.Business;
+using Fanex.NAP.Client.Attributes;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Controllers
 {

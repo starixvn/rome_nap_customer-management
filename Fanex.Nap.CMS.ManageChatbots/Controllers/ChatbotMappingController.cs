@@ -6,10 +6,10 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Resources;
     using Fanex.Nap.CMS.ManageChatbots.Constants;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
     using Infrastructure;
     using Infrastructure.Controllers;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
     using Services.ChatBotMapping;
     using ViewModels.ChatbotMapping;
 

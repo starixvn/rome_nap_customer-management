@@ -3,9 +3,9 @@
     using System.Web.Mvc;
     using Constants;
     using Fanex.Nap.CMS.Customers.Params.PossessStatistics;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
     using Infrastructure.Controllers;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
     using Services;
     using ViewModels.PossessStatistics;
 

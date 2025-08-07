@@ -2,10 +2,10 @@
 {
     using System.Web.Mvc;
     using Exporter;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
     using Models.StatusLog;
     using Nap.CMS.Infrastructure;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
     using Services.Implements;
     using Services.Interfaces;
 

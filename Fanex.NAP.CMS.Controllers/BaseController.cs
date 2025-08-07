@@ -12,24 +12,21 @@ namespace Fanex.NAP.CMS.Controllers
     using System;
     using System.Web.Mvc;
     using Core.Helpers;
-    using Fanex.NAP.CMS.Core.Configurations;
+    using Fanex.Nap.CMS.Infrastructure.Configurations;
+    using Fanex.Nap.CMS.Infrastructure.Models;
+    using Fanex.NAP.Client;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Helpers.Web;
+    using Fanex.NAP.Client.Services;
     using Fanex.NAP.CMS.Core.Web;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Configuration;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web;
-    using Fanex.NAP.Core.Web.Attribute;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
-    using NAP.Core.Context;
 
     [NapSuperAuth]
     public class BaseController : Controller
     {
         private readonly ICurrentContext _currentContext;
 
-        private readonly ICurrentSession _currentSession;
+        private readonly INapSession _currentSession;
 
         private readonly string _environment;
 
@@ -42,10 +39,10 @@ namespace Fanex.NAP.CMS.Controllers
         public BaseController()
         {
             this._currentContext = new CurrentContext();
-            this._currentSession = new CurrentSession();
-            this._environment = NapSettings.Settings.Environment;
-            this._siteId = NapSettings.Settings.SiteId;
-            this._enableDirectLogin = NapSettings.Settings.EnableDirectLogin;
+            this._currentSession = NapClientManager.NapSession;
+            this._environment = NapClientManager.NapSettings.Environment;
+            this._siteId = NapClientManager.NapSettings.SiteId;
+            this._enableDirectLogin = NapClientManager.NapSettings.EnableDirectLogin;
 
             ViewBag.Session = this.CurrentSession;
 
@@ -53,12 +50,12 @@ namespace Fanex.NAP.CMS.Controllers
             {
                 IsLive = this.Environment.Equals(Constant.LIVE),
                 HasEditRight = false,
-                IsReCheckin = NapSettings.Settings.EnableReCheckIn
+                IsReCheckin = NapClientManager.NapSettings.EnableReCheckIn
             };
 
             ViewBag.ServerDate = ServerDate.ToShortFormatedDate();
             ViewBag.ShowMenus = SessionManager.Get<bool?>("ShowMenus");
-            ViewBag.Enviroment = AppSettings.Environment;
+            ViewBag.Enviroment = NapClientManager.NapSettings.Environment;
 
             this._userService = new UserService();
         }
@@ -84,7 +81,7 @@ namespace Fanex.NAP.CMS.Controllers
             }
         }
 
-        public ICurrentSession CurrentSession
+        public INapSession CurrentSession
         {
             get
             {

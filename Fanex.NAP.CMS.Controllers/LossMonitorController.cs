@@ -3,8 +3,8 @@
     using System.Web.Mvc;
     using Core;
     using Criteria.LossMonitor;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
     using Services.Implements;
     using Services.Interfaces;
 

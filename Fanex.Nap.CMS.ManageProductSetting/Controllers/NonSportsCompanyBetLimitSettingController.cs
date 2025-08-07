@@ -6,8 +6,8 @@
     using Services.CompanyBetLimitSetting;
     using Fanex.Nap.CMS.Infrastructure.Services.Interfaces;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using System.Collections.Generic;
     using Fanex.Nap.CMS.ManageProductSetting.Models.CompanyBetLimitSetting;
     using System.Net.Mime;

@@ -4,7 +4,7 @@
     using Fanex.Nap.CMS.Infrastructure.Models;
     using System.Collections.Generic;
     using System.Linq;
-    using static Fanex.NAP.Core.Business.Constant;
+    using static Fanex.NAP.Client.Helpers.Business.Constant;
 
     public class SportbookBaseController : BaseController
     {

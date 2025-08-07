@@ -8,8 +8,8 @@
     using Fanex.Nap.CMS.VirtualSettingControl.Criteria.VrAutoAdjustmentReport;
     using Fanex.Nap.CMS.VirtualSettingControl.Utility;
     using Fanex.Nap.CMS.VirtualSettingControl.ViewModels.VrAutoAdjustmentReport;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using Services.VirtualSettingMonitor;
     using Services.VrAutoAdjustmentReport;
 

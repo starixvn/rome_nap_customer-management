@@ -10,7 +10,6 @@
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using System.Data;
     using System.Text;
-    using static Fanex.NAP.Core.Business.Constant;
 
     public class BetRestrictionManagementService : ServiceBase, IBetRestrictionManagementService
     {

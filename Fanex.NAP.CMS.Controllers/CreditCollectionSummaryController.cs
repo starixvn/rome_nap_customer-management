@@ -2,11 +2,11 @@
 {
     using System.Web.Mvc;
     using Exporter;
+    using Fanex.NAP.Client.Attributes;
+    using Fanex.NAP.Client.Helpers.Business;
     using Models.CreditCollectionSummary;
     using Nap.CMS.Infrastructure;
     using Nap.CMS.Infrastructure.Web;
-    using NAP.Core.Business;
-    using NAP.Core.Web.Attribute;
     using Services.Implements;
     using Services.Interfaces;
 

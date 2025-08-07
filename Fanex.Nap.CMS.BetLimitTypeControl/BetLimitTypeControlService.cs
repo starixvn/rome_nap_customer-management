@@ -5,12 +5,10 @@
     using Fanex.Data;
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
-    using Fanex.Nap.CMS.Infrastructure.Web;
+    using Fanex.NAP.Client.Helpers.Web;
     using Fanex.NAP.CMS.BetLimitTypeControl.Criteria;
     using Fanex.NAP.CMS.BetLimitTypeControl.Models;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
 
     public interface IBetLimitTypeControlService
     {
@@ -31,13 +29,13 @@
 
     public class BetLimitTypeControlService : ServiceBase, IBetLimitTypeControlService
     {
-        private readonly ICurrentSession currentSession;
+        private readonly INapSession currentSession;
         private readonly ICurrentContext currentContext;
         private const string CachedLeagues = "BLT-Leagues";
         private const int CachedDefaultInMinutes = 60;
         private const string SportBetTypeMatrixCachedKey = "SportBetTypeMatrixCachedKey";
 
-        public BetLimitTypeControlService(ICurrentSession currentSession, ICurrentContext currentContext) 
+        public BetLimitTypeControlService(INapSession currentSession, ICurrentContext currentContext) 
         {
             this.currentSession = currentSession;
             this.currentContext = currentContext;

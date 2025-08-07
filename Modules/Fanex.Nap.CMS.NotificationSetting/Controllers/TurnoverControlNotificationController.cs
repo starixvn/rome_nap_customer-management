@@ -12,8 +12,8 @@ namespace Fanex.Nap.CMS.NotificationSetting.Controllers
     using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.NotificationSetting.Model.TurnoverControlNotification;
     using Fanex.Nap.CMS.NotificationSetting.Services.TurnoverControlNotification;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     /// <summary>
     /// TODO: Update summary.

@@ -14,8 +14,8 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.OpenCloseMember;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     /// <summary>
     /// Close open member controller.
@@ -73,7 +73,7 @@ namespace Fanex.NAP.CMS.Controllers
             UpdatedMembersStatusResult result = null;
 
             filter.AdminId = this.CurrentSession.UserId;
-            filter.AdminUsername = this.CurrentSession.Username;    
+            filter.AdminUsername = this.CurrentSession.UserName;    
             filter.IP = this.CurrentContext.IP;
             result = this._openCloseMemberService.UpdateMembersStatus(filter);
 

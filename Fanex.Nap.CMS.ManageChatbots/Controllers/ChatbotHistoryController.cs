@@ -4,9 +4,9 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.Nap.CMS.ManageChatbots.ViewModels.ChatbotHistory;
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatbotHistory;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Attributes;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.NAP.Core.Business;
+    using Fanex.NAP.Client.Helpers.Business;
     using Fanex.Nap.CMS.ManageChatbots.Services.ChatBotMapping;
 
     public class ChatbotHistoryController : BaseController

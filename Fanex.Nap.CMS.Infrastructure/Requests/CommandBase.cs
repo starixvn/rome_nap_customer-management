@@ -1,15 +1,14 @@
-﻿namespace Fanex.Nap.CMS.Infrastructure.Requests
-{
-    using Fanex.NAP.Core.Web.Context;
-    using Fanex.NAP.Core.Web.Session;
+﻿using Fanex.NAP.Client.Helpers.Web;
 
+namespace Fanex.Nap.CMS.Infrastructure.Requests
+{
     public class CommandBase
     {
         public int UserId { get; set; }
 
         public string IP { get; set; }
 
-        public void AssignUserIdAndIP(ICurrentSession session, ICurrentContext context)
+        public void AssignUserIdAndIP(INapSession session, ICurrentContext context)
             => AssignUserIdAndIP(session.UserId, context.IP);
 
         public void AssignUserIdAndIP(int userId, string ip)

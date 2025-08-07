@@ -12,11 +12,6 @@ using Fanex.Common.Extensions;
 using Fanex.Data.Repository;
 using Fanex.NAP.CMS.Core;
 using Fanex.NAP.CMS.Core.Helpers;
-using Fanex.NAP.Core.Business;
-using Fanex.NAP.Core.Configuration;
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.Core.Service.Interface;
-using Fanex.NAP.Core.Web.Session;
 
 namespace Fanex.NAP.CMS.Services.Implements
 {
@@ -33,6 +28,7 @@ namespace Fanex.NAP.CMS.Services.Implements
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
     using Fanex.NAP.CMS.Models.Common;
+    using Fanex.NAP.Client.Helpers.Business;
 
     /// <summary>
     /// Manage smart punters service.
@@ -44,7 +40,8 @@ namespace Fanex.NAP.CMS.Services.Implements
         private readonly IPermissionSerivce _permissionSerivce;
         private readonly IIpService _ipService;
 
-        public ManageSmartPuntersService() : this(new PermissionSerivce(new UserService()), new IpService(new DynamicRepository()))
+        public ManageSmartPuntersService()
+            : this(new PermissionSerivce(), new IpService(new DynamicRepository()))
         {
         }
 

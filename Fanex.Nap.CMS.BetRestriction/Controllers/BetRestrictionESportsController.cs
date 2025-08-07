@@ -8,8 +8,8 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
     using System.Web.Mvc;
 
     public class BetRestrictionESportsController : BaseController

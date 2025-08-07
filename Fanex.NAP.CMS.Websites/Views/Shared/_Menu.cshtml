@@ -1,4 +1,4 @@
-﻿@using Fanex.NAP.Core.Models
+﻿@using Fanex.NAP.Client.Models;
 @{
     var menuItemList = ViewBag.MenuItemList != null ? ViewBag.MenuItemList as List<MenuItem> : new List<MenuItem>();
     var lvl0MenuItemList = menuItemList.Where(m => m.ParentId == 0).OrderBy(m => m.DisplayOrder).ToList();
@@ -51,7 +51,8 @@
                                             <li><a href="@Url.Content(lvl2MenuItem.ValidUrl)">@lvl2MenuItem.Name</a></li>
                                         }
                                     </ul>
-                                </li>                                
+                                </li>
+
                             }
                         }
                     </ul>

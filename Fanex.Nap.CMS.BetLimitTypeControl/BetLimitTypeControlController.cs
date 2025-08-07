@@ -5,8 +5,8 @@
     using Fanex.Nap.CMS.Infrastructure.Controllers;
     using Fanex.NAP.CMS.BetLimitTypeControl.Models;
     using Fanex.NAP.CMS.BetLimitTypeControl.Requests;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     public class BetLimitTypeControlController : BaseController
     {

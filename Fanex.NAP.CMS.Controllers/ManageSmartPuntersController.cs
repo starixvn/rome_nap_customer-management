@@ -7,7 +7,6 @@
 //   <change who="Jason.Ly" date="2014.6.4">Created</change>
 // </history>
 
-using Fanex.NAP.Core.Service.Impl;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -21,8 +20,8 @@ namespace Fanex.NAP.CMS.Controllers
     using Fanex.NAP.CMS.Services.Implements;
     using Fanex.NAP.CMS.Services.Interfaces;
     using Fanex.NAP.CMS.ViewModels.ManageSmartPunters;
-    using Fanex.NAP.Core.Business;
-    using Fanex.NAP.Core.Web.Attribute;
+    using Fanex.NAP.Client.Helpers.Business;
+    using Fanex.NAP.Client.Attributes;
 
     /// <summary>
     /// Manage smart punters controller.
@@ -41,7 +40,7 @@ namespace Fanex.NAP.CMS.Controllers
         public ManageSmartPuntersController(IManageSmartPuntersService manageSmartPuntersService, IPermissionSerivce permissionSerivce)
         {
             _manageSmartPuntersService = manageSmartPuntersService ?? new ManageSmartPuntersService();
-            _permissionSerivce = permissionSerivce ?? new PermissionSerivce(new UserService());
+            _permissionSerivce = permissionSerivce ?? new PermissionSerivce();
         }
 
         /// <summary>

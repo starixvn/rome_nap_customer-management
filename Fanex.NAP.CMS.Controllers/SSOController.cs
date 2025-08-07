@@ -16,11 +16,11 @@ namespace Fanex.NAP.CMS.Controllers
     using System.Web.Mvc;
     using System.Web.Security;
     using Fanex.Common;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.Core.Service.Interface;
-    using Fanex.NAP.Core.Web.Session;
-    using NAP.Core.Models;
-    using NAP.Core.Models.ParameterObject;
+    using Fanex.NAP.Client;
+    using Fanex.NAP.Client.Helpers.Web;
+    using Fanex.NAP.Client.Models;
+    using Fanex.NAP.Client.Models.ParameterObject;
+    using Fanex.NAP.Client.Services;
 
     /// <summary>
     /// SSO controller.
@@ -32,7 +32,7 @@ namespace Fanex.NAP.CMS.Controllers
         private readonly int _timeExipration = 30;
 
         private readonly IUserService _userService;
-        private readonly ICurrentSession _currentSession;
+        private readonly INapSession _currentSession;
         private readonly ISecurityService _securityService;
 
         #endregion members
@@ -40,17 +40,16 @@ namespace Fanex.NAP.CMS.Controllers
         #region ctors
 
         public SSOController()
-            : this(null, null, null)
+            : this(null, null)
         {
         }
 
         public SSOController(
             IUserService userService,
-            ICurrentSession currentSession,
             ISecurityService securityService)
         {
             this._userService = userService ?? new UserService();
-            this._currentSession = currentSession ?? new CurrentSession();
+            this._currentSession = NapClientManager.NapSession;
             _securityService = securityService ?? new SecurityService();
         }
 
@@ -114,9 +113,8 @@ namespace Fanex.NAP.CMS.Controllers
         private void AssignToSession(User user, int onuserId)
         {
             _currentSession.UserId = user.Id;
-            _currentSession.Username = user.Username;
+            _currentSession.UserName = user.Username;
             _currentSession.OnUserId = onuserId;
-            _currentSession.SessionId = Session.SessionID;
             _currentSession.Level = _userService.GetUserLevel(user.Id, SiteId);
 
             if (SiteId != 0)
@@ -124,8 +122,7 @@ namespace Fanex.NAP.CMS.Controllers
                 _currentSession.MenuItemList = _userService.GetMenuItem(
                     user.Id,
                     SiteId,
-                    Environment,
-                    true).ToList();
+                    Environment).ToList();
             }
 
             AuthInfoUtils.CreateAuthInfo(_currentSession, HttpContext);

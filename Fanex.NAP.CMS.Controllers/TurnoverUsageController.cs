@@ -27,14 +27,14 @@ namespace Fanex.NAP.CMS.Controllers
     public class TurnoverUsageController : BaseController
     {
         private const byte MonitoredMode = 2;
-        private readonly ITurnoverUsageService _turnoverUsageService;
+        private readonly TurnoverUsageService _turnoverUsageService;
 
         public TurnoverUsageController() :
             this(null)
         {
         }
 
-        public TurnoverUsageController(ITurnoverUsageService turnoverUsageService)
+        public TurnoverUsageController(TurnoverUsageService turnoverUsageService)
         {
             this._turnoverUsageService = turnoverUsageService ?? new TurnoverUsageService();
         }
@@ -47,7 +47,7 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.TurnoverUsage, Policy = Constant.Policy.Read)]
         public ActionResult Index()
         {
-            ViewBag.MoveBetsDay = (this._turnoverUsageService as TurnoverUsageService).BalanceUpDate.MoveBetsDay;
+            ViewBag.MoveBetsDay = _turnoverUsageService.BalanceUpDate.MoveBetsDay;
 
             return View();
         }

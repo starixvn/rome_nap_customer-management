@@ -54,7 +54,7 @@ namespace Fanex.NAP.CMS.Controllers
         {
             int lastYear = DateTime.Today.AddYears(-1).Year;
             ViewBag.HasEditAccessRight = this.HasRight(CMSFunctionKeys.ManageSmartPunters, Constant.Policy.Host);
-            ViewBag.MinDate = new DateTime(lastYear, 1, 1);
+            ViewBag.MinDate = new DateTime(lastYear, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
             ViewBag.CanViewActionMonitoring = _permissionSerivce.HasPermission(CurrentSession.UserId, CMSFunctionKeys.ActionMonitoringLog, Constant.Policy.Read);
 
             return View();

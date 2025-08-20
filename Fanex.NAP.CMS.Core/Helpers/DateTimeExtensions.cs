@@ -65,7 +65,7 @@ namespace Fanex.NAP.CMS.Core.Helpers
 
         public static DateTime FirstDayOfMonth(this DateTime dateTime)
         {
-            return new DateTime(dateTime.Year, dateTime.Month, 1);
+            return new DateTime(dateTime.Year, dateTime.Month, 1, 0, 0, 0, dateTime.Kind);
         }
 
         public static DateTime LastDayOfMonth(this DateTime dateTime)

@@ -70,12 +70,10 @@ namespace Fanex.NAP.CMS.Controllers
         [NapAuth(FunctionKey = CMSFunctionKeys.CloseOpenMembers, Policy = Constant.Policy.Host)]
         public JsonResult UpdateMembers(UpdatedMembersStatusFilter filter)
         {
-            UpdatedMembersStatusResult result = null;
-
             filter.AdminId = this.CurrentSession.UserId;
             filter.AdminUsername = this.CurrentSession.Username;    
             filter.IP = this.CurrentContext.IP;
-            result = this._openCloseMemberService.UpdateMembersStatus(filter);
+            UpdatedMembersStatusResult result = this._openCloseMemberService.UpdateMembersStatus(filter);
 
             return Json(result);
         }

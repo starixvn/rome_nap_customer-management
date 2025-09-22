@@ -1,0 +1,40 @@
+@using Fanex.Nap.CMS.CustomerClass.ViewModels
+
+<div class="form" id="uploadForm">
+    <div id="inlineMessageUpload" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field width-60">
+            <label for="txtExcelFile">@Labels.ExcelFile</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txtExcelFile" readonly />
+            <label for="file" class="fileUpload gray-button">@Labels.Browse</label>
+            <input type="file" id="file" class="display-none"
+                   accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+            <button type="button" class="gray-button" id="btnPopupUpload" disabled>@Labels.Submit</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-60"></div>
+        <div class="edit-field width-280">
+            <div class="float-left">@Html.ActionLink(Labels.DownloadTemplate, "DownloadTemplate")</div>
+            <i class="float-right">@Labels.Max: @SpreadViewModel.UploadLimitRows.ToString("N0") rows</i>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="tbl-freegrid-title error margin-top display-none" id="tblErrorTitle"></div>
+    <div class="tbl-freegrid-box">
+        <table class="tbl-freegrid display-none" id="tblError">
+            <thead>
+                <tr>
+                    <th class="width-60">#</th>
+                    <th class="width-100">@Labels.ExcelCell</th>
+                    <th class="width-160">@Labels.ColumnName</th>
+                    <th>@Labels.Value</th>
+                    <th>@Labels.Reason</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

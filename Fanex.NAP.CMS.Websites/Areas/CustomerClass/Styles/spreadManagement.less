@@ -168,3 +168,48 @@
 .ui-autocomplete {
     z-index: 10000 !important;
 }
+
+#uploadForm {
+    width: 800px;
+
+    .form-row {
+        min-height: unset;
+        display: flex;
+
+        .fileUpload {
+            display: inline-block;
+            margin: 0 5px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .width-280 {
+            width: 280px;
+        }
+
+        a {
+            color: @link-color;
+        }
+    }
+
+    .tbl-freegrid-box {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+    }
+
+    .tbl-freegrid-title.error {
+        color: #db2c2c;
+    }
+
+    .tbl-freegrid tbody td {
+        padding: 0 2px;
+    }
+}

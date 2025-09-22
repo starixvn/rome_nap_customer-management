@@ -126,6 +126,7 @@
                 "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
                 "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
+                "~/Areas/CustomerClass/Scripts/spreadManagementUpload.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
 
             return bundles;

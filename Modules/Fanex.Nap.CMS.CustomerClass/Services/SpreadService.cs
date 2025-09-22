@@ -21,6 +21,8 @@
         Result DeleteRule(int policyID, int userId, string iP);
 
         Result EnableRule(int policyID, bool enable, int userId, string iP);
+
+        Result Upload(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels, int userId, string ip);
     }
 
     internal class SpreadService : ServiceBase, ISpreadService
@@ -124,6 +126,11 @@
             };
 
             return DoAction(criteria, Labels.EditStatusSpreadSuccessfully);
+        }
+
+        public Result Upload(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels, int userId, string ip)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

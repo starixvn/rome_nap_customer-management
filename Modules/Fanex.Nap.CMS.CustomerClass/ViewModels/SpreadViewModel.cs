@@ -8,6 +8,7 @@
 
     public class SpreadViewModel : BaseViewModel
     {
+        public const int UploadLimitRows = 10_000;
 
         public SpreadViewModel(bool hasHostPermission,
             IEnumerable<short> customerClasses,

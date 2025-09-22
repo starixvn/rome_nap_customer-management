@@ -1,6 +1,5 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Web;
@@ -9,7 +8,6 @@
     using Fanex.Nap.CMS.CustomerClass.Services;
     using Fanex.Nap.CMS.CustomerClass.ViewModels;
     using Fanex.Nap.CMS.Infrastructure;
-    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
 

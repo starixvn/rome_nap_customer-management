@@ -751,6 +751,8 @@
     <Content Include="Scripts\Libs\InputFormatter\number-commar-seperator.js" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.css" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.js" />
+    <Content Include="Scripts\Libs\Datatable\jquery-datatables.min.css" />
+    <Content Include="Scripts\Libs\Datatable\jquery-datatables.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Libs\MonthPicker\monPickr-0.0.3.js" />

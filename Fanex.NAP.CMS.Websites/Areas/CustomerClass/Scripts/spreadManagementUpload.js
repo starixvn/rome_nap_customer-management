@@ -8,6 +8,7 @@ const spreadManagementUpload = (function ($) {
         btnUpload = null,
         tblErrorTitle = null,
         tblError = null,
+        tblErrorBox = null,
         tblValidationResult = null,
         tblValidationResultText = null,
         btnProceedUploadCancel = null,
@@ -43,6 +44,7 @@ const spreadManagementUpload = (function ($) {
         btnUpload = $("#btnPopupUpload");
         tblErrorTitle = $("#tblErrorTitle");
         tblError = $("#tblError");
+        tblErrorBox = $("#tblErrorBox");
         tblValidationResult = $("#validationResult");
         tblValidationResultText = $("#validationResultText");
         btnProceedUploadCancel = $("#btnProceedUploadCancel");
@@ -118,7 +120,8 @@ const spreadManagementUpload = (function ($) {
 
     function resetErrorGrid() {
         tblErrorTitle.addClass("display-none").html("");
-        tblError.addClass("display-none").find("tbody").html("");
+        tblErrorBox.addClass("display-none");
+        tblValidationResult.addClass("display-none");
     }
 
     function handleUploadValidateFile(file) {
@@ -190,25 +193,41 @@ const spreadManagementUpload = (function ($) {
     }
 
     function renderErrorGrid(errors) {
-        const html = errors.map(function (item, index) {
-            return [
-                '<tr>',
-                '<td class="align-right">', item.ID, '</td>',
-                '<td class="align-left">', item.PolicyTitle, '</td>',
-                '<td class="align-right">', item.CustomerClass, '</td>',
-                '<td class="align-left">', item.SportType, '</td>',
-                '<td class="align-left">', item.Site, '</td>',
-                '<td class="align-left">', item.Currency, '</td>',
-                '<td class="align-left">', item.Platform, '</td>',
-                '<td class="align-right">', item.Spread, '</td>',
-                '<td class="align-left">', item.Reason, '</td>',
-                '</tr>'
-            ].join("");
-        });
-
         tblErrorTitle.html(`${resources.totalErrors}: ${errors.length}`).removeClass("display-none");
-        tblError.find("tbody").html(html.join(""));
-        tblError.removeClass("display-none");
+        tblErrorBox.removeClass("display-none");
+        $('#tblError').css({ visibility: 'visible', position: 'relative' });
+
+        if ($.fn.DataTable.isDataTable(tblError)) {
+            var table = tblError.DataTable();
+            table.clear();
+            table.rows.add(errors);
+            table.draw(false);
+        } else {
+            $.fn.dataTable.ext.errMode = 'none';
+            tblError.DataTable({
+                data: errors,
+                columns: [
+                    { data: 'ID', className: "align-right", width: "60px" },
+                    { data: 'PolicyTitle', className: "align-left", width: "100px" },
+                    { data: 'CustomerClass', className: "align-right", width: "100px" },
+                    { data: 'SportType', className: "align-left", width: "100px" },
+                    { data: 'Site', className: "align-left", width: "100px" },
+                    { data: 'Currency', className: "align-left", width: "100px" },
+                    { data: 'Platform', className: "align-left", width: "100px" },
+                    { data: 'Spread', className: "align-right", width: "100px" },
+                    { data: 'Reason', className: "align-left", width: "160px" }
+                ],
+                scrollY: 400,
+                scrollX: true,
+                scrollCollapse: true,
+                paging: false,
+                searching: false,
+                info: false,
+                ordering: false,
+                autoWidth: false,
+                destroy: true
+            });
+        }
     }
 
     function renderUploadProceedResult(result) {

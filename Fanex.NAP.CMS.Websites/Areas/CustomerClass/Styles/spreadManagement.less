@@ -1,4 +1,5 @@
 ﻿@import "_common.less";
+
 .width-60 {
     width: 60px;
 }
@@ -35,11 +36,11 @@
 .rule-cell {
     overflow: visible !important;
     word-break: break-word;
-    background-clip:padding-box;
+    background-clip: padding-box;
 }
 
 .green-button {
-    text-align: center!important;
+    text-align: center !important;
 }
 
 .add-row {
@@ -146,13 +147,16 @@
     text-align: center;
 }
 
-.ddlSportType, .ddlIsLive, .add-time {
+.ddlSportType,
+.ddlIsLive,
+.add-time {
     span {
         display: inline-flex;
         position: relative;
     }
 
-    .error-tipsy-w, .error-tipsy-sw {
+    .error-tipsy-w,
+    .error-tipsy-sw {
         min-width: 200px;
         top: 0px !important;
 
@@ -161,7 +165,8 @@
         }
     }
 }
-.width-site{
+
+.width-site {
     width: 122px;
 }
 
@@ -174,7 +179,7 @@
 }
 
 #uploadForm {
-    width: 800px;
+    width: 1100px;
 
     .form-row {
         min-height: unset;
@@ -215,5 +220,31 @@
 
     .tbl-freegrid tbody td {
         padding: 0 2px;
+    }
+
+    table.dataTable thead {
+        display: table-header-group !important;
+    }
+
+    table.dataTable {
+        width: 100% !important;
+    }
+
+    table.dataTable th,
+    table.dataTable td {
+        box-sizing: border-box;
+    }
+
+    #tblError {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    #tblError th,
+    #tblError td {
+        white-space: normal !important;
+        word-wrap: break-word;
+        word-break: break-word;
+        max-width: 200px;
     }
 }

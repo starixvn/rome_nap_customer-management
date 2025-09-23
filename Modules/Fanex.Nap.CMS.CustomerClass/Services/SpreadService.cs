@@ -130,7 +130,7 @@
 
         public Result Upload(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels, int userId, string ip)
         {
-            throw new System.NotImplementedException();
+            return new Result { Message = "Successfully" };
         }
     }
 }

@@ -15,7 +15,7 @@
 
     internal interface ISpreadUploadService
     {
-        IReadOnlyCollection<ExcelError> ExcelErrors { get; }
+        IReadOnlyCollection<SpreadSettingExcelInvalidModel> ExcelErrors { get; }
 
         bool HasExcelErrors { get; }
 
@@ -37,11 +37,11 @@
             { Labels.Spread       , nameof(SpreadSettingExcelValidModel.Spread)       },
         };
 
-        private readonly List<ExcelError> excelErrors = new List<ExcelError>();
+        private readonly List<SpreadSettingExcelInvalidModel> excelErrors = new List<SpreadSettingExcelInvalidModel>();
 
         private SpreadSettingBodyExcelBuilder Setting;
 
-        public IReadOnlyCollection<ExcelError> ExcelErrors => excelErrors;
+        public IReadOnlyCollection<SpreadSettingExcelInvalidModel> ExcelErrors => excelErrors;
 
         public bool HasExcelErrors => excelErrors.Count > 0;
 
@@ -91,7 +91,7 @@
                 ExceptionHandler.Handle(ex);
             }
 
-            excelErrors.Add(new ExcelError(Labels.NotExcelFileError));
+            excelErrors.Add(new SpreadSettingExcelInvalidModel { Reason = Labels.NotExcelFileError });
             return null;
         }
 
@@ -99,7 +99,7 @@
         {
             if (workbook.NumberOfSheets == 0)
             {
-                excelErrors.Add(new ExcelError(Labels.IncorrectLayoutError));
+                excelErrors.Add(new SpreadSettingExcelInvalidModel { Reason = Labels.IncorrectLayoutError });
 
                 return null;
             }
@@ -112,20 +112,36 @@
         {
             if (headerRow == null)
             {
-                excelErrors.Add(new ExcelError(Labels.InvalidHeader));
+                excelErrors.Add(new SpreadSettingExcelInvalidModel { Reason = Labels.InvalidHeader });
             }
             else
             {
+                var errors = new List<string>();
+                var invalid = new SpreadSettingExcelInvalidModel();
+
                 foreach (var headerVal in SpreadColumnNameMapping.Select((value, index) => new { value, index }))
                 {
-                    var headerName = headerRow.Cells[headerVal.index]?.ToString()?.Trim();
+                    var headerName = (headerVal.index >= 0 && headerVal.index < headerRow.Cells.Count) ? headerRow.Cells[headerVal.index]?.ToString()?.Trim() : null;
+
+                    var prop = typeof(SpreadSettingExcelInvalidModel).GetProperty(headerVal.value.Value);
+                    if (prop != null && prop.CanWrite)
+                    {
+                        prop.SetValue(invalid, headerName);
+                    }
+
                     if (headerName != headerVal.value.Key)
                     {
-                        var columnIndex = (char)('A' + headerVal.index);
-                        var columnRef = $"{columnIndex}:1";
-                        excelErrors.Add(new ExcelError(columnRef, headerVal.value.Key, headerName, Labels.InvalidHeader));
+                        errors.Add(headerVal.value.Key);
                     }
                 }
+
+                if (errors.Any())
+                {
+                    invalid.ID = 1;
+                    invalid.Reason = "Invalid " + string.Join(",", errors);
+                    excelErrors.Add(invalid);
+                }
+
             }
         }
 
@@ -138,7 +154,7 @@
             const int uploadLimitRows = SpreadViewModel.UploadLimitRows;
             if (sheet.LastRowNum > uploadLimitRows)
             {
-                excelErrors.Add(new ExcelError(string.Format(Labels.UploadLimitRowError, uploadLimitRows.ToString("N0"))));
+                excelErrors.Add(new SpreadSettingExcelInvalidModel { Reason = string.Format(Labels.UploadLimitRowError, uploadLimitRows.ToString("N0")) });
                 return spreadSettingExcel;
             }
 
@@ -182,37 +198,37 @@
                     ValidateWithMaxLength(title, Setting.PolicyTitleMaxLength);
 
             var customerClass = GetValueOrDefault(spreadRowData, Labels.CustomerClass);
-            short customerClassConverted = default;
+            string customerClassConverted = string.Empty;
             var isCustomerClassValid =
                     ValidateWithRequired(customerClass) &&
-                    ValidateWithHashSet(customerClass, Setting.CustomerClassesHashSet, out customerClassConverted);
+                    ValidateWithCustomerClassRule(customerClass, Setting.CustomerClassesHashSet, out customerClassConverted);
 
             var sportType = GetValueOrDefault(spreadRowData, Labels.SportType);
-            int sportTypeId = default;
+            int sportTypeId = 0;
             var isSportTypeValid =
                     ValidateWithRequired(sportType) &&
                     ValidateWithDictionary(sportType, Setting.SportTypesDictionary, out sportTypeId);
 
             var site = GetValueOrDefault(spreadRowData, Labels.Site);
-            int siteId = default;
+            int siteId = 0;
             var isSiteValid =
                     ValidateWithRequired(site) &&
                     ValidateWithDictionary(site, Setting.SitesDictionary, out siteId);
 
             var currency = GetValueOrDefault(spreadRowData, Labels.Currency);
-            int currencyId = default;
+            int currencyId = 0;
             var isCurrencyValid =
                     ValidateWithRequired(currency) &&
                     ValidateWithDictionary(currency, Setting.CurrenciesDictionary, out currencyId);
 
             var platform = GetValueOrDefault(spreadRowData, Labels.Platform);
-            byte platformId = default;
+            byte platformId = 0;
             var isPlatformValid =
                     ValidateWithRequired(platform) &&
                     ValidateWithDictionary(platform, Setting.PlatformsDictionary, out platformId);
 
             var spread = GetValueOrDefault(spreadRowData, Labels.Spread);
-            decimal spreadConverted = default;
+            decimal? spreadConverted = 0;
             var isSpreadValid =
                     ValidateWithRequired(spread) &&
                     ValidateWithRange(spread, Setting.SpreadRange, out spreadConverted);
@@ -235,7 +251,7 @@
             else
             {
                 var valid = CreateValidModel(title, customerClassConverted, sportTypeId,
-                               siteId, currencyId, platformId, spreadConverted);
+                               siteId, currencyId, platformId, spreadConverted.Value);
 
                 spreadSettingExcel.SpreadValids.Add(valid);
             }
@@ -258,7 +274,7 @@
             };
         }
 
-        private SpreadSettingExcelValidModel CreateValidModel(string title, short customerClass,
+        private SpreadSettingExcelValidModel CreateValidModel(string title, string customerClass,
                                     int sportTypeId, int siteId, int currencyId, byte platformId, decimal spread)
         {
             return new SpreadSettingExcelValidModel
@@ -285,17 +301,17 @@
             return value.Length <= maxLength;
         }
 
-        private bool ValidateWithRange<T>(string value, (T min, T max) range, out T converted) where T : IComparable<T>
+        private bool ValidateWithRange<T>(string value, (T min, T max) range, out T? converted) where T : struct, IComparable<T>
         {
             try
             {
                 converted = (T)Convert.ChangeType(value, typeof(T));
 
-                return converted.CompareTo(range.min) >= 0 && converted.CompareTo(range.max) <= 0;
+                return converted.Value.CompareTo(range.min) >= 0 && converted.Value.CompareTo(range.max) <= 0;
             }
             catch { }
 
-            converted = default;
+            converted = null;
             return false;
         }
 
@@ -304,20 +320,28 @@
             return dictionary.TryGetValue(key, out value);
         }
 
-        private bool ValidateWithHashSet<T>(string value, HashSet<T> hashSet, out T converted)
+        private bool ValidateWithCustomerClassRule(string value, HashSet<short> hashSet, out string convertedResult)
         {
             try
             {
-                converted = (T)Convert.ChangeType(value, typeof(T));
-
-                if (hashSet.Contains(converted))
+                if (value == Labels.All)
                 {
+                    convertedResult = string.Join(",", hashSet);
                     return true;
+                }
+
+                if (short.TryParse(value, out var converted))
+                {
+                    if (hashSet.Contains(converted))
+                    {
+                        convertedResult = converted.ToString();
+                        return true;
+                    }
                 }
             }
             catch { }
 
-            converted = default;
+            convertedResult = string.Empty;
             return false;
         }
 

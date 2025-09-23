@@ -7,6 +7,7 @@
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
     using System.Web;
@@ -130,10 +131,9 @@
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult UploadValidate(HttpPostedFileBase file)
         {
             var userId = CurrentSession.UserId;
-            var ip = CurrentContext.IP;
 
             if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host) || userId == 0)
             {
@@ -150,12 +150,12 @@
                 file.InputStream,
                 System.IO.Path.GetExtension(file.FileName),
                 new SpreadSettingBodyExcelPreparer(
-                    500,
-                    filterService.GetCustomerClasses(),
-                    filterService.GetSports(),
-                    filterService.GetAllSites(),
-                    filterService.GetAllCurrencies(),
-                    (0, 0.5m)
+                    policyTitleMaxLength: 500,
+                    customerClasses: filterService.GetCustomerClasses(),
+                    sportTypes: filterService.GetSports(),
+                    sites: filterService.GetAllSites(),
+                    currencies: filterService.GetAllCurrencies(),
+                    spreadRange: (0, 0.5m)
                     )
                 );
 
@@ -165,7 +165,26 @@
             }
 
             return JsonData(
-                spreadService.Upload(siteSettingExcels.SpreadValids, userId, ip),
+                siteSettingExcels,
+                JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        public ActionResult UploadSubmit(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels)
+        {
+            var userId = CurrentSession.UserId;
+            var ip = CurrentContext.IP;
+            if (!HasRight(CMSFunctionKeys.SpreadManagement, Constant.Policy.Host) || userId == 0)
+            {
+                return Forbidden();
+            }
+            if (spreadSettingExcels == null || !spreadSettingExcels.Any())
+            {
+                return BadRequest();
+            }
+
+            return JsonData(
+                spreadService.Upload(spreadSettingExcels, userId, ip),
                 JsonRequestBehavior.DenyGet);
         }
     }

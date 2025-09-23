@@ -8,6 +8,11 @@ const spreadManagementUpload = (function ($) {
         btnUpload = null,
         tblErrorTitle = null,
         tblError = null,
+        tblValidationResult = null,
+        tblValidationResultText = null,
+        btnProceedUploadCancel = null,
+        btnProceedUploadSubmit = null,
+        dataUploadProceed = null,
         reloadSpreadGridFunc = null;
 
     function init(reloadSpreadGrid) {
@@ -38,6 +43,10 @@ const spreadManagementUpload = (function ($) {
         btnUpload = $("#btnPopupUpload");
         tblErrorTitle = $("#tblErrorTitle");
         tblError = $("#tblError");
+        tblValidationResult = $("#validationResult");
+        tblValidationResultText = $("#validationResultText");
+        btnProceedUploadCancel = $("#btnProceedUploadCancel");
+        btnProceedUploadSubmit = $("#btnProceedUploadSubmit");
     }
 
     function bindEvents() {
@@ -56,7 +65,15 @@ const spreadManagementUpload = (function ($) {
 
         btnUpload.click(function () {
             resetErrorGrid();
-            fileControl && handleUpload(fileControl.files[0]);
+            fileControl && handleUploadValidateFile(fileControl.files[0]);
+        });
+
+        btnProceedUploadCancel.click(function () {
+            CMS.closePopup();
+        });
+
+        btnProceedUploadSubmit.click(function () {
+            handleUploadSubmit(dataUploadProceed);
         });
     }
 
@@ -104,14 +121,18 @@ const spreadManagementUpload = (function ($) {
         tblError.addClass("display-none").find("tbody").html("");
     }
 
-    function handleUpload(file) {
+    function handleUploadValidateFile(file) {
         CMS.disableInput();
+
+        let isUploading = false;
+        dataUploadProceed = null;
+        tblValidationResult.addClass("display-none");
 
         let formData = new FormData();
         formData.append("File", file);
 
         const jqxhr = $.ajax({
-            url: CMS.resolveRootUrl(`Spread/Upload`),
+            url: CMS.resolveRootUrl(`Spread/UploadValidate`),
             type: "POST",
             contentType: false,
             processData: false,
@@ -122,25 +143,65 @@ const spreadManagementUpload = (function ($) {
                     btnUpload.prop("disabled", true);
                     renderErrorGrid(resultJson);
                 } else {
-                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSpreadGridFunc, 5000);
-                    // showUploadProgress();
+                    if (resultJson.SpreadInvalids && resultJson.SpreadInvalids.length > 0) {
+                        btnUpload.prop("disabled", true);
+                        renderErrorGrid(resultJson.SpreadInvalids);
+                        renderUploadProceedResult(resultJson);
+
+                        dataUploadProceed = resultJson.SpreadValids;
+                    }
+                    else {
+                        isUploading = true;
+
+                        handleUploadSubmit(resultJson.SpreadValids);
+                    }
+                }
+
+                if (!isUploading) {
+                    jqxhr.always(CMS.enableInput);
                 }
             },
-            error: CMS.handleAjaxError
+            error: function () {
+                CMS.handleAjaxError();
+                jqxhr.always(CMS.enableInput);
+            }
         });
-
-        jqxhr.always(CMS.enableInput);
     }
-    
+
+    function handleUploadSubmit(spreadValids) {
+        if (spreadValids) {
+            const jqxhr = $.ajax({
+                url: CMS.resolveRootUrl(`Spread/UploadSubmit`),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                processData: false,
+                data: JSON.stringify(spreadValids),
+                success: function (result) {
+                    const resultJson = JSON.parse(result);
+                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSpreadGridFunc, 5000);
+                    jqxhr.always(CMS.enableInput);
+                },
+                error: function () {
+                    CMS.handleAjaxError();
+                    jqxhr.always(CMS.enableInput);
+                }
+            });
+        }
+    }
+
     function renderErrorGrid(errors) {
         const html = errors.map(function (item, index) {
             return [
                 '<tr>',
-                '<td class="align-center">', index + 1, '</td>',
-                '<td class="align-center">', item.Cell, '</td>',
-                '<td>', item.ColumnName, '</td>',
-                '<td>', item.Value, '</td>',
-                '<td>', item.Reason, '</td>',
+                '<td class="align-right">', item.ID, '</td>',
+                '<td class="align-left">', item.PolicyTitle, '</td>',
+                '<td class="align-right">', item.CustomerClass, '</td>',
+                '<td class="align-left">', item.SportType, '</td>',
+                '<td class="align-left">', item.Site, '</td>',
+                '<td class="align-left">', item.Currency, '</td>',
+                '<td class="align-left">', item.Platform, '</td>',
+                '<td class="align-right">', item.Spread, '</td>',
+                '<td class="align-left">', item.Reason, '</td>',
                 '</tr>'
             ].join("");
         });
@@ -148,6 +209,12 @@ const spreadManagementUpload = (function ($) {
         tblErrorTitle.html(`${resources.totalErrors}: ${errors.length}`).removeClass("display-none");
         tblError.find("tbody").html(html.join(""));
         tblError.removeClass("display-none");
+    }
+
+    function renderUploadProceedResult(result) {
+        tblValidationResultText.html(`Validation result: ${result.SpreadInvalids.length} invalid rows, ${result.SpreadValids.length} valid rows. Proceed with submission off valid rows?`)
+
+        tblValidationResult.removeClass("display-none");
     }
 
     return {

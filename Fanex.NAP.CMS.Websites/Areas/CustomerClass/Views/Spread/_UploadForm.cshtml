@@ -28,13 +28,25 @@
             <thead>
                 <tr>
                     <th class="width-60">#</th>
-                    <th class="width-100">@Labels.ExcelCell</th>
-                    <th class="width-160">@Labels.ColumnName</th>
-                    <th>@Labels.Value</th>
-                    <th>@Labels.Reason</th>
+                    <th class="width-100">@Labels.Title</th>
+                    <th class="width-100">@Labels.CustomerClass</th>
+                    <th class="width-100">@Labels.SportType</th>
+                    <th class="width-100">@Labels.Site</th>
+                    <th class="width-100">@Labels.Currency</th>
+                    <th class="width-100">@Labels.Platform</th>
+                    <th class="width-100">@Labels.Spread</th>
+                    <th class="width-160">@Labels.Reason</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
+    </div>
+
+    <div class="align-center margin-top display-none" id="validationResult">
+        <div id="validationResultText">Validation result: 1 invalid rows, 99 valid rows. Proceed with submission off valid rows?</div>
+        <div>
+            <button type="button" class="gray-button" id="btnProceedUploadCancel">No</button>
+            <button type="button" class="blue-button" id="btnProceedUploadSubmit">Yes</button>
+        </div>
     </div>
 </div>

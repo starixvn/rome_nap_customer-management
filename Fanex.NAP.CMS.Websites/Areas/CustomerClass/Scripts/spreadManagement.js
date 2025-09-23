@@ -12,8 +12,7 @@
         cachedAddNewRule = null,
         hasHostPermisson = null,
         btnAdd = null,
-        btnUpload = null,
-        isUploading = false;
+        btnUpload = null;
 
     function init() {
         renderCustomerClass();
@@ -48,7 +47,9 @@
         hasHostPermisson = btnAdd.length > 0 && btnUpload.length > 0;
 
         if (hasHostPermisson) {
-            spreadManagementUpload.init(function () { console.log("reloadSpreadGrid"); });
+            spreadManagementUpload.init(
+                function () { $("#formSearch").trigger("submit"); }
+            );
 
             $("#btnAdd").off("click").click(enableRowForAdding);
 

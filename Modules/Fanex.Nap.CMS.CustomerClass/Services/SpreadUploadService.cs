@@ -138,7 +138,7 @@
                 if (errors.Any())
                 {
                     invalid.ID = 1;
-                    invalid.Reason = "Invalid " + string.Join(",", errors);
+                    invalid.Reason = Labels.InvalidHeader;
                     excelErrors.Add(invalid);
                 }
 

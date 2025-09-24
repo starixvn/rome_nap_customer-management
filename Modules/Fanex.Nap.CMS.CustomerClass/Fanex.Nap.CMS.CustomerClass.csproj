@@ -266,6 +266,7 @@
     <Compile Include="Criteria\PeakHour\DeletePeakHourCriteria.cs" />
     <Compile Include="Responses\SearchPeakHourResponse.cs" />
     <Compile Include="Services\PeakHourService.cs" />
+    <Compile Include="Services\SpreadExporter.cs" />
     <Compile Include="Services\SpreadUploadService.cs" />
     <Compile Include="ViewModels\PeakHourViewModel.cs" />
     <Compile Include="Models\Policy.cs" />

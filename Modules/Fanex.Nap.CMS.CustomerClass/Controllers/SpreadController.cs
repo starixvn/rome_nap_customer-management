@@ -7,6 +7,7 @@
     using Fanex.Nap.CMS.Infrastructure;
     using Fanex.NAP.Core.Business;
     using Fanex.NAP.Core.Web.Attribute;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Mime;
@@ -186,6 +187,17 @@
             return JsonData(
                 spreadService.Upload(spreadSettingExcels, userId, ip),
                 JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        [NapAuth(FunctionKey = CMSFunctionKeys.SpreadManagement, Policy = Constant.Policy.Host)]
+        public void ExportUploadInvalid(string request)
+        {
+            var data = JsonConvert.DeserializeObject<IEnumerable<SpreadSettingExcelInvalidModel>>(request);
+
+            var exporter = new SpreadExporter(data);
+            exporter.ResponseStream();
         }
     }
 }

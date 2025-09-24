@@ -22,29 +22,34 @@
         </div>
     </div>
     <div class="clear-fix"></div>
-    <div class="tbl-freegrid-title error margin-top display-none" id="tblErrorTitle"></div>
+    <div class="tbl-freegrid-title grid-title margin-top display-none" id="tblErrorTitleBox">
+        <div class="error" id="tblErrorTitle"></div>
+        <div class="grid-toolbox">
+            <input type="button" id="btnExportExcel" class="btnExcel" title="Export to Excel">
+        </div>
+    </div>
     <div class="tbl-freegrid-box display-none" id="tblErrorBox">
         <table class="tbl-freegrid" id="tblError">
             <thead>
                 <tr>
-                    <th class="width-60">#</th>
-                    <th class="width-100">@Labels.Title</th>
-                    <th class="width-100">@Labels.CustomerClass</th>
-                    <th class="width-100">@Labels.SportType</th>
-                    <th class="width-100">@Labels.Site</th>
-                    <th class="width-100">@Labels.Currency</th>
-                    <th class="width-100">@Labels.Platform</th>
-                    <th class="width-100">@Labels.Spread</th>
-                    <th class="width-160">@Labels.Reason</th>
+                    <th>#</th>
+                    <th>@Labels.Title</th>
+                    <th>@Labels.CustomerClass</th>
+                    <th>@Labels.SportType</th>
+                    <th>@Labels.Site</th>
+                    <th>@Labels.Currency</th>
+                    <th>@Labels.Platform</th>
+                    <th>@Labels.Spread</th>
+                    <th>@Labels.Reason</th>
                 </tr>
             </thead>
             <tbody></tbody>
         </table>
     </div>
 
-    <div class="align-center margin-top display-none" id="validationResult">
-        <div id="validationResultText">Validation result: 1 invalid rows, 99 valid rows. Proceed with submission off valid rows?</div>
-        <div>
+    <div class="align-center display-none" id="validationResult">
+        <div class="tblErrorConfirmText" id="validationResultText">Validation result: 1 invalid rows, 99 valid rows. Proceed with submission off valid rows?</div>
+        <div class="margin-top">
             <button type="button" class="gray-button" id="btnProceedUploadCancel">No</button>
             <button type="button" class="blue-button" id="btnProceedUploadSubmit">Yes</button>
         </div>

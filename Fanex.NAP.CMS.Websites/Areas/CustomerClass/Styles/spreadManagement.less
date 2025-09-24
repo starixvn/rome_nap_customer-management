@@ -214,8 +214,18 @@
         }
     }
 
-    .tbl-freegrid-title.error {
-        color: #db2c2c;
+    .tbl-freegrid-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 6px 0 6px;
+
+        .grid-toolbox {
+            padding-top: 0;
+        }
+
+        .error {
+            color: #db2c2c;
+        }
     }
 
     .tbl-freegrid tbody td {
@@ -224,27 +234,39 @@
 
     table.dataTable thead {
         display: table-header-group !important;
+
+        th {
+            text-align: center !important;
+            white-space: nowrap;
+        }
     }
 
     table.dataTable {
         width: 100% !important;
     }
 
-    table.dataTable th,
-    table.dataTable td {
-        box-sizing: border-box;
+    table.dataTable {
+
+        th,
+        td {
+            box-sizing: border-box;
+        }
+    }
+
+    .tblErrorConfirmText {
+        font-size: 16px;
     }
 
     #tblError {
         visibility: hidden;
         position: absolute;
-    }
 
-    #tblError th,
-    #tblError td {
-        white-space: normal !important;
-        word-wrap: break-word;
-        word-break: break-word;
-        max-width: 200px;
+        th,
+        td {
+            white-space: normal !important;
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: 200px;
+        }
     }
 }

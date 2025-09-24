@@ -6,7 +6,9 @@ const spreadManagementUpload = (function ($) {
         inlineMessage = null,
         txtExcelFile = null,
         btnUpload = null,
+        tblErrorTitleBox = null,
         tblErrorTitle = null,
+        btnExportExcel = null,
         tblError = null,
         tblErrorBox = null,
         tblValidationResult = null,
@@ -14,6 +16,7 @@ const spreadManagementUpload = (function ($) {
         btnProceedUploadCancel = null,
         btnProceedUploadSubmit = null,
         dataUploadProceed = null,
+        dataExportProceed = null,
         reloadSpreadGridFunc = null;
 
     function init(reloadSpreadGrid) {
@@ -42,7 +45,9 @@ const spreadManagementUpload = (function ($) {
         inlineMessage = $("#inlineMessageUpload");
         txtExcelFile = $("#txtExcelFile");
         btnUpload = $("#btnPopupUpload");
+        tblErrorTitleBox = $("#tblErrorTitleBox");
         tblErrorTitle = $("#tblErrorTitle");
+        btnExportExcel = $("#btnExportExcel");
         tblError = $("#tblError");
         tblErrorBox = $("#tblErrorBox");
         tblValidationResult = $("#validationResult");
@@ -68,6 +73,10 @@ const spreadManagementUpload = (function ($) {
         btnUpload.click(function () {
             resetErrorGrid();
             fileControl && handleUploadValidateFile(fileControl.files[0]);
+        });
+
+        btnExportExcel.click(function () {
+            handleExportUploadInvalidData(dataExportProceed);
         });
 
         btnProceedUploadCancel.click(function () {
@@ -119,7 +128,8 @@ const spreadManagementUpload = (function ($) {
     }
 
     function resetErrorGrid() {
-        tblErrorTitle.addClass("display-none").html("");
+        tblErrorTitleBox.addClass("display-none");
+        tblErrorTitle.html("");
         tblErrorBox.addClass("display-none");
         tblValidationResult.addClass("display-none");
     }
@@ -129,6 +139,7 @@ const spreadManagementUpload = (function ($) {
 
         let isUploading = false;
         dataUploadProceed = null;
+        dataExportProceed = null;
         tblValidationResult.addClass("display-none");
 
         let formData = new FormData();
@@ -145,6 +156,8 @@ const spreadManagementUpload = (function ($) {
                 if (Array.isArray(resultJson)) {
                     btnUpload.prop("disabled", true);
                     renderErrorGrid(resultJson);
+
+                    dataExportProceed = resultJson;
                 } else {
                     if (resultJson.SpreadInvalids && resultJson.SpreadInvalids.length > 0) {
                         btnUpload.prop("disabled", true);
@@ -152,6 +165,7 @@ const spreadManagementUpload = (function ($) {
                         renderUploadProceedResult(resultJson);
 
                         dataUploadProceed = resultJson.SpreadValids;
+                        dataExportProceed = resultJson.SpreadInvalids;
                     }
                     else {
                         isUploading = true;
@@ -192,10 +206,19 @@ const spreadManagementUpload = (function ($) {
         }
     }
 
+    function handleExportUploadInvalidData(spreadInvalids)
+    {
+        if (spreadInvalids)
+        {
+            CMS.downloadFileWithPost(CMS.resolveRootUrl("Spread/ExportUploadInvalid"), spreadInvalids);
+        }
+    }
+
     function renderErrorGrid(errors) {
-        tblErrorTitle.html(`${resources.totalErrors}: ${errors.length}`).removeClass("display-none");
+        tblErrorTitleBox.removeClass("display-none");
+        tblErrorTitle.html(`${resources.totalErrors}: ${errors.length}`);
         tblErrorBox.removeClass("display-none");
-        $('#tblError').css({ visibility: 'visible', position: 'relative' });
+        tblError.css({ visibility: 'visible', position: 'relative' });
 
         if ($.fn.DataTable.isDataTable(tblError)) {
             var table = tblError.DataTable();
@@ -231,7 +254,7 @@ const spreadManagementUpload = (function ($) {
     }
 
     function renderUploadProceedResult(result) {
-        tblValidationResultText.html(`Validation result: ${result.SpreadInvalids.length} invalid rows, ${result.SpreadValids.length} valid rows. Proceed with submission off valid rows?`)
+        tblValidationResultText.html(`Validation result: ${result.SpreadInvalids.length} invalid rows, ${result.SpreadValids.length} valid rows. Proceed with submission of valid rows?`)
 
         tblValidationResult.removeClass("display-none");
     }

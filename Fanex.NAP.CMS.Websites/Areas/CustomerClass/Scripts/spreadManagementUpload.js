@@ -106,7 +106,7 @@ const spreadManagementUpload = (function ($) {
         }
 
         if (fileControl.files[0].size > MaxFileSize) {
-            CMS.showTipsyError(txtExcelFile, resources.Error_ExcessMaxFileSize, "ne");
+            CMS.showTipsyError(txtExcelFile, resources.error_ExcessMaxFileSize, "ne");
             return false;
         }
 

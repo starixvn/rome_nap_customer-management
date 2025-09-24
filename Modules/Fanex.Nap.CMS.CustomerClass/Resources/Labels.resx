@@ -573,4 +573,7 @@
   <data name="UploadSpreadSetting" xml:space="preserve">
     <value>Upload Spread Setting</value>
   </data>
+  <data name="FileExceedsMaximumSize" xml:space="preserve">
+    <value>File exceeds maximum size.</value>
+  </data>
 </root>

@@ -32,6 +32,7 @@
             uploadSiteSetting: "@Labels.UploadSpreadSetting",
             totalErrors: "@Labels.TotalErrors",
             notExcelFileError: "@Labels.NotExcelFileError",
+            error_ExcessMaxFileSize: "@Labels.FileExceedsMaximumSize"
         };
         const customerClassList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.CustomerClasses, jsonSettings))');
         const siteList = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.Sites, jsonSettings))');

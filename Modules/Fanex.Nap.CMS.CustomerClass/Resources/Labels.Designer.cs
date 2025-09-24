@@ -718,6 +718,15 @@ namespace Fanex.Nap.CMS.CustomerClass.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File exceeds maximum size..
+        /// </summary>
+        public static string FileExceedsMaximumSize {
+            get {
+                return ResourceManager.GetString("FileExceedsMaximumSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General CC.
         /// </summary>
         public static string GeneralCC {

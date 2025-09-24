@@ -17,7 +17,7 @@
     public class SpreadSettingExcelValidModel
     {
         public string PolicyTitle { get; set; }
-        public string CustomerClass { get; set; }
+        public short CustomerClass { get; set; }
         public int SportType { get; set; }
         public int Site { get; set; }
         public int Currency { get; set; }

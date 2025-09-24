@@ -31,9 +31,6 @@ namespace Fanex.Nap.CMS.CustomerClass.Models
 
         public int PolicyTitleMaxLength { get; }
 
-        /// <summary>
-        /// All: is all customerClass
-        /// </summary>
         public HashSet<short> CustomerClassesHashSet { get; }
 
         public IDictionary<string, int> SportTypesDictionary { get; }

@@ -2,14 +2,24 @@
 {
     internal class SpreadSetting
     {
+        public SpreadSetting(SpreadSettingExcelValidModel model)
+        {
+            PolicyTitle = model.PolicyTitle;
+            CustomerClass = model.CustomerClass;
+            SportType = model.SportType;
+            SiteID = model.Site;
+            Currency = model.Currency;
+            Platform = model.Platform;
+            Spread = model.Spread;
+        }
+
         public string PolicyTitle { get; set; }
-        public string CustomerClass { get; set; }
-        public short SportType { get; set; }
-        public string Site { get; set; }
-        public string Currency { get; set; }
-        public string Platform { get; set; }
+        public short CustomerClass { get; set; }
+        public int SportType { get; set; }
+        public int SiteID { get; set; }
+        public int Currency { get; set; }
+        public int Platform { get; set; }
         public decimal Spread { get; set; }
-        public bool Enable { get; set; } = true;
         //public string LeagueGroups { get; set; }
         //public byte IsLive { get; set; }
     }

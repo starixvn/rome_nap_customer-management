@@ -198,7 +198,7 @@
                     ValidateWithMaxLength(title, Setting.PolicyTitleMaxLength);
 
             var customerClass = GetValueOrDefault(spreadRowData, Labels.CustomerClass);
-            string customerClassConverted = string.Empty;
+            short customerClassConverted = 0;
             var isCustomerClassValid =
                     ValidateWithRequired(customerClass) &&
                     ValidateWithCustomerClassRule(customerClass, Setting.CustomerClassesHashSet, out customerClassConverted);
@@ -274,7 +274,7 @@
             };
         }
 
-        private SpreadSettingExcelValidModel CreateValidModel(string title, string customerClass,
+        private SpreadSettingExcelValidModel CreateValidModel(string title, short customerClass,
                                     int sportTypeId, int siteId, int currencyId, byte platformId, decimal spread)
         {
             return new SpreadSettingExcelValidModel
@@ -320,28 +320,22 @@
             return dictionary.TryGetValue(key, out value);
         }
 
-        private bool ValidateWithCustomerClassRule(string value, HashSet<short> hashSet, out string convertedResult)
+        private bool ValidateWithCustomerClassRule(string value, HashSet<short> hashSet, out short convertedResult)
         {
             try
             {
-                if (value == Labels.All)
-                {
-                    convertedResult = string.Join(",", hashSet);
-                    return true;
-                }
-
                 if (short.TryParse(value, out var converted))
                 {
                     if (hashSet.Contains(converted))
                     {
-                        convertedResult = converted.ToString();
+                        convertedResult = converted;
                         return true;
                     }
                 }
             }
             catch { }
 
-            convertedResult = string.Empty;
+            convertedResult = 0;
             return false;
         }
 

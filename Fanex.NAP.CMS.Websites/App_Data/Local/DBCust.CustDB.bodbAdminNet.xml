@@ -242,7 +242,8 @@
     <Setting Key="NAP_CM_CustomerClassSetting_RuleDetail" SpName="NAP_CM_CustomerClassSetting_RuleDetail" DbName="DBCust.CustDB.wsv_nap" />
     <!--Spread-->
     <Setting Key="NAP_CM_CustomerClassSpreadSel" SpName="NAP_CM_CustomerClassSpreadSel" DbName="DBCust.CustDB.wsv_nap" />
-    <Setting Key="NAP_CM_CustomerClassSpreadIns" SpName="NAP_CM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />
+	<Setting Key="NAP_CM_CustomerClassSpreadIns" SpName="NAP_CM_CustomerClassSpreadIns" DbName="DBCust.CustDB.wsv_nap" />
+	<Setting Key="NAP_CM_CustomerClassSpread_MultipleInsert" SpName="NAP_CM_CustomerClassSpread_MultipleInsert" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassSpreadUpd" SpName="NAP_CM_CustomerClassSpreadUpd" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassSpreadDel" SpName="NAP_CM_CustomerClassSpreadDel" DbName="DBCust.CustDB.wsv_nap" />
     <Setting Key="NAP_CM_CustomerClassSpreadEnable" SpName="NAP_CM_CustomerClassSpreadEnable" DbName="DBCust.CustDB.wsv_nap" />

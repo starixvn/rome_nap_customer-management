@@ -187,6 +187,8 @@ const spreadManagementUpload = (function ($) {
 
     function handleUploadSubmit(spreadValids) {
         if (spreadValids) {
+            CMS.disableInput();
+
             const jqxhr = $.ajax({
                 url: CMS.resolveRootUrl(`Spread/UploadSubmit`),
                 type: "POST",
@@ -195,7 +197,7 @@ const spreadManagementUpload = (function ($) {
                 data: JSON.stringify(spreadValids),
                 success: function (result) {
                     const resultJson = JSON.parse(result);
-                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSpreadGridFunc, 5000);
+                    customerClassHelper.showInlineMessageAndClosePopup(resultJson, inlineMessage, reloadSpreadGridFunc, 1000);
                     jqxhr.always(CMS.enableInput);
                 },
                 error: function () {

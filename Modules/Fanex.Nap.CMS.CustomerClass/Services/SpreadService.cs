@@ -9,6 +9,7 @@
     using Fanex.Nap.CMS.CustomerClass.Responses;
     using System.Linq;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
+    using Newtonsoft.Json;
 
     internal interface ISpreadService
     {
@@ -130,7 +131,14 @@
 
         public Result Upload(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels, int userId, string ip)
         {
-            return new Result { Message = "Successfully" };
+            var spreadSettings = spreadSettingExcels.Select(excel => new SpreadSetting(excel));
+            var dataSpread = JsonConvert.SerializeObject(spreadSettings);
+            var criteria = new AddMultiSpreadRuleCriteria
+            {
+                DataSpread = dataSpread
+            };
+
+            return DoAction(criteria, Labels.AddSpreadSuccessfully);
         }
     }
 }

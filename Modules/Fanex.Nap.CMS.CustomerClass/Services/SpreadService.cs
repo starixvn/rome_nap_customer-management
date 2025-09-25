@@ -135,7 +135,9 @@
             var dataSpread = JsonConvert.SerializeObject(spreadSettings);
             var criteria = new AddMultiSpreadRuleCriteria
             {
-                DataSpread = dataSpread
+                DataSpread = dataSpread,
+                UserId = userId,
+                IP = ip
             };
 
             return DoAction(criteria, Labels.AddSpreadSuccessfully);

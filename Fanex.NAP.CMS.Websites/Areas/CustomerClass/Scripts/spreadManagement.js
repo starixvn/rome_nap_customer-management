@@ -40,7 +40,7 @@
             cachedAddNewRule = null;
             cachedFilter = formData;
             search();
-        });
+        }).trigger("submit");
 
         btnUpload = $("#btnUpload");
         btnAdd = $("#btnAdd");

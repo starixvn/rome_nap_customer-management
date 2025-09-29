@@ -1,15 +1,16 @@
 ﻿namespace Fanex.Nap.CMS.CustomerClass.Services
 {
+    using Fanex.Nap.CMS.CustomerClass.Criteria;
     using Fanex.Nap.CMS.CustomerClass.Models;
     using Fanex.Nap.CMS.CustomerClass.Requests;
-    using System.Collections.Generic;
-    using Fanex.Nap.CMS.CustomerClass.Criteria;
-    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.CustomerClass.Resources;
     using Fanex.Nap.CMS.CustomerClass.Responses;
-    using System.Linq;
+    using Fanex.Nap.CMS.Infrastructure.Constants;
+    using Fanex.Nap.CMS.Infrastructure.Models;
     using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
     using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Linq;
 
     internal interface ISpreadService
     {
@@ -28,6 +29,7 @@
 
     internal class SpreadService : ServiceBase, ISpreadService
     {
+        private const int BatchSize = 2500;
         private byte SpreadType { get; }
 
         public SpreadService(byte spreadType) : base()
@@ -132,7 +134,72 @@
         public Result Upload(IEnumerable<SpreadSettingExcelValidModel> spreadSettingExcels, int userId, string ip)
         {
             var spreadSettings = spreadSettingExcels.Select(excel => new SpreadSetting(excel));
-            var dataSpread = JsonConvert.SerializeObject(spreadSettings);
+            var batches = CreateBatches(spreadSettings);
+
+            return ProcessBatches(batches, userId, ip);
+        }
+
+        private List<List<SpreadSetting>> CreateBatches(IEnumerable<SpreadSetting> spreadSettings)
+        {
+            var groupedSettings = spreadSettings
+                .GroupBy(s => new { s.PolicyTitle, s.SportType, s.Spread })
+                .OrderByDescending(g => g.Count())
+                .ToList();
+
+            var batches = new List<List<SpreadSetting>>();
+            var remainingGroups = new Queue<IGrouping<object, SpreadSetting>>(groupedSettings);
+
+            while (remainingGroups.Any())
+            {
+                var currentBatch = new List<SpreadSetting>();
+                
+                // Add groups to batch until we can't fit more
+                while (remainingGroups.Any())
+                {
+                    var nextGroup = remainingGroups.Peek();
+                    
+                    if (CanAddGroup(currentBatch, nextGroup, BatchSize))
+                    {
+                        currentBatch.AddRange(remainingGroups.Dequeue().ToList());
+                    }
+                    else
+                    {
+                        if (!currentBatch.Any())
+                        {
+                            currentBatch.AddRange(remainingGroups.Dequeue().ToList());
+                        }
+                        break;
+                    }
+                }
+                
+                batches.Add(currentBatch);
+            }
+
+            return batches;
+        }
+
+        private static bool CanAddGroup(List<SpreadSetting> currentBatch, IGrouping<object, SpreadSetting> group, int batchSize)
+        {
+            return currentBatch.Count + group.Count() <= batchSize;
+        }
+
+        private Result ProcessBatches(List<List<SpreadSetting>> batches, int userId, string ip)
+        {
+            foreach (var batch in batches)
+            {
+                var result = ProcessBatch(batch, userId, ip);
+                if (!result.IsSuccess)
+                {
+                    return result;
+                }
+            }
+
+            return new Result { Code = ErrorCodeConstants.NoneError, Message = Labels.AddSpreadSuccessfully };
+        }
+
+        private Result ProcessBatch(List<SpreadSetting> batch, int userId, string ip)
+        {
+            var dataSpread = JsonConvert.SerializeObject(batch);
             var criteria = new AddMultiSpreadRuleCriteria
             {
                 DataSpread = dataSpread,

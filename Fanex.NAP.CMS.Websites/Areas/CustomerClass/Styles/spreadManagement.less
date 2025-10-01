@@ -1,4 +1,5 @@
 ﻿@import "_common.less";
+
 .width-60 {
     width: 60px;
 }
@@ -35,11 +36,11 @@
 .rule-cell {
     overflow: visible !important;
     word-break: break-word;
-    background-clip:padding-box;
+    background-clip: padding-box;
 }
 
 .green-button {
-    text-align: center!important;
+    text-align: center !important;
 }
 
 .add-row {
@@ -146,13 +147,16 @@
     text-align: center;
 }
 
-.ddlSportType, .ddlIsLive, .add-time {
+.ddlSportType,
+.ddlIsLive,
+.add-time {
     span {
         display: inline-flex;
         position: relative;
     }
 
-    .error-tipsy-w, .error-tipsy-sw {
+    .error-tipsy-w,
+    .error-tipsy-sw {
         min-width: 200px;
         top: 0px !important;
 
@@ -161,10 +165,122 @@
         }
     }
 }
-.width-site{
+
+.width-site {
     width: 122px;
 }
 
 .ui-autocomplete {
     z-index: 10000 !important;
+}
+
+#dialog-popup {
+    min-height: 60px !important;
+}
+
+#uploadForm {
+    width: 1100px;
+
+    .form-row {
+        min-height: unset;
+        display: flex;
+
+        .fileUpload {
+            display: inline-block;
+            margin: 0 5px;
+            height: 24px;
+            line-height: 24px;
+        }
+
+        .width-280 {
+            width: 280px;
+        }
+
+        a {
+            color: @link-color;
+        }
+    }
+
+    .tbl-freegrid-box {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .tbl-freegrid {
+        th {
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+    }
+
+    .tbl-freegrid-title {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 6px 0 6px;
+
+        .grid-toolbox {
+            padding-top: 0;
+        }
+
+        .error {
+            color: #db2c2c;
+        }
+    }
+
+    .tbl-freegrid tbody td {
+        padding: 0 2px;
+    }
+
+    table.dataTable thead {
+        display: table-header-group !important;
+
+        th {
+            text-align: center !important;
+            white-space: nowrap;
+        }
+    }
+
+    table.dataTable {
+        width: 100% !important;
+    }
+
+    table.dataTable {
+
+        th,
+        td {
+            box-sizing: border-box;
+        }
+    }
+
+    .tblErrorConfirmText {
+        font-size: 16px;
+    }
+
+    #tblError {
+        visibility: hidden;
+        position: absolute;
+
+        th,
+        td {
+            white-space: normal !important;
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: 200px;
+        }
+    }
+
+    #validationResult {
+        display:  grid;
+        justify-items: center;
+
+
+        
+        .validation-icon {
+            background: url(../../../Content/Themes/img/icon-question.png) no-repeat;
+            margin: 15px 20px;
+            padding: 15px 0 15px 55px;
+        }
+    }
+
 }

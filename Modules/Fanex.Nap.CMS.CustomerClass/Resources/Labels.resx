@@ -567,4 +567,13 @@
   <data name="EditPeakHourSuccessfully" xml:space="preserve">
     <value>Edit Peak Hour Range Successfully</value>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="UploadSpreadSetting" xml:space="preserve">
+    <value>Upload Spread Setting</value>
+  </data>
+  <data name="FileExceedsMaximumSize" xml:space="preserve">
+    <value>File exceeds maximum size.</value>
+  </data>
 </root>

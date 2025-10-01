@@ -301,6 +301,35 @@ var CMS = (function ($) {
                 iframe.attr('src', downloadUrl);
             }
         },
+        downloadFileWithPost: function (url, data) {
+            //url and data options required
+            if (url && data) {
+                //data can be string of parameters or array/object
+                let json = (typeof data === "string") ? data : JSON.stringify(data);
+
+                let form = $('<form>')
+                    .attr('method', 'POST')
+                    .attr('action', url)
+                    .attr('target', 'download_iframe');
+
+                form.append(
+                    $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'request')
+                        .val(json)
+                );
+
+                let iframe = $('#download_iframe');
+                if (iframe.length === 0) {
+                    iframe = $('<iframe>', {
+                        id: 'download_iframe',
+                        name: 'download_iframe'
+                    }).css('display', 'none').appendTo('body');
+                }
+
+                form.appendTo('body').submit().remove();
+            }
+        },
         disableInput: function () {
             try {
                 $.blockUI();

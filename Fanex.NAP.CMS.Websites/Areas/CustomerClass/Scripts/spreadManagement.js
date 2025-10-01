@@ -10,7 +10,9 @@
         filterSpread = null,
         freeGrid = $("#freegrid"),
         cachedAddNewRule = null,
-        hasHostPermisson = null;
+        hasHostPermisson = null,
+        btnAdd = null,
+        btnUpload = null;
 
     function init() {
         renderCustomerClass();
@@ -40,9 +42,25 @@
             search();
         }).trigger("submit");
 
-        hasHostPermisson = $("#btnAdd").length > 0;
+        btnUpload = $("#btnUpload");
+        btnAdd = $("#btnAdd");
+        hasHostPermisson = btnAdd.length > 0 && btnUpload.length > 0;
 
-        hasHostPermisson && $("#btnAdd").off("click").click(enableRowForAdding);
+        if (hasHostPermisson) {
+            spreadManagementUpload.init(
+                function () { $("#formSearch").trigger("submit"); }
+            );
+
+            $("#btnAdd").off("click").click(enableRowForAdding);
+
+            btnUpload.click(function () {
+                spreadManagementUpload.openModal();
+            });
+
+            // Empty the #divPopupContent since it's children was cached.
+            // It also helps to prevent the 'for' attributes do not work correctly in the popup.
+            $("#divPopupContent").remove();
+        }
     }
 
     function buildGroupSiteList(isAllCredit, isAllLicensee, selectedValue) {
@@ -84,7 +102,7 @@
         let optionList = [];
         customerClassList.forEach(item => optionList.push({ value: item, text: item.toString(), checked: true, enable: true })
         );
-        
+
         ddlCustomerClasses = customerClassHelper.renderMultiSelect(
             "#ddlCustomerClasses",
             {
@@ -116,7 +134,7 @@
         let optionList = [];
         currencyList.forEach(item => optionList.push({ value: item.Id, text: item.Name, checked: true, enable: true })
         );
-        
+
         ddlCurrencies = customerClassHelper.renderMultiSelect(
             "#ddlCurrencies",
             {
@@ -194,15 +212,15 @@
 
     function buildRowItem(rule, index, zindex) {
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
-            `<td class="rule-cell width-180"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
-            `<td class="rule-cell width-150"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCellWithLink(rule.CustomerClass, customerClassList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-200"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
-            `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(rule.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-200"><div class="view-item text-center">${editingGridHelper.renderPlatformCell(rule.Platforms, platforms)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
-            `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
-            `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.SportType, rule.Enable)}</td>`,
-            hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
+        `<td class="rule-cell width-180"><div class="view-item">${CMS.htmlEncode(rule.PolicyTitle)}</div > <div class="dropdown-cell edit-item hidden"><input type="text" class="inputTitle" id="editTitle-${rule.PolicyID}" maxlength="500" /></div></td>`,
+        `<td class="rule-cell width-150"><div class="view-item text-center cell-customer-class">${editingGridHelper.renderCustomerClassCellWithLink(rule.CustomerClass, customerClassList)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCustomerClass-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-200"><div class="view-item text-center">${renderSportTypeCell(rule)}</div><div class="dropdown-cell edit-item ddlSportType hidden"><select id="ddlEditSportType-${rule.PolicyID}" class="select-customer-class"></select></div></td>`,
+        `<td class="rule-cell width-180"><div class="view-item text-center">${editingGridHelper.renderSiteCell(rule.Sites, siteList, cachedCreditSites, cachedLicenseeSites, "0", "-1", "-2", true)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditSite-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-150"><div class="view-item text-center">${renderCurrencyCell(rule)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditCurrency-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-200"><div class="view-item text-center">${editingGridHelper.renderPlatformCell(rule.Platforms, platforms)}</div><div class="dropdown-cell edit-item hidden"><div id="ddlEditPlatform-${rule.PolicyID}" class="select-customer-class"></div></div></td>`,
+        `<td class="rule-cell width-60"><div class="view-item text-center">${rule.Spread}</div><input type="text" class="inputSpread edit-item hidden" id="editSpread-${rule.PolicyID}" /></td>`,
+        `<td class="rule-cell width-60 text-center">${renderEnableCell(rule.PolicyID, CMS.htmlEncode(rule.PolicyTitle), rule.SportType, rule.Enable)}</td>`,
+        hasHostPermisson ? `<td class="width-60 text-center">${renderActionCell(rule.PolicyID, index, rule.edittingValue && rule.edittingValue !== null)}</td>` : '',
             `</tr>`
         ];
 
@@ -211,16 +229,16 @@
 
     function buildAddRow(zindex) {
         let rowHtml = [`<tr style="z-index: ${zindex}" class="position-relative">`,
-        `<td class="rule-cell width-180 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
-        `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
-        `<td class="rule-cell width-200 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
-        `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
-        `<td class="rule-cell width-60 add-cell"><div><input type="text" class="inputSpread" id="addNewSpread" /></div></td>`,
-        `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
+            `<td class="rule-cell width-180 add-cell"><div><input type="text" class="inputTitle" id="addNewTitle" maxlength="500" /></div></td>`,
+            `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCustomerClass" class="select-customer-class"></div></div</td>`,
+            `<td class="rule-cell width-200 add-cell"><div class="ddlSportType"><select id="ddlAddNewSportType" class="select-customer-class"></select></div></td>`,
+            `<td class="rule-cell width-180 add-cell"><div><div id="ddlAddNewSite" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-150 add-cell"><div><div id="ddlAddNewCurrency" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-200 add-cell"><div><div id="ddlAddNewPlatform" class="select-customer-class"></div></div></td>`,
+            `<td class="rule-cell width-60 add-cell"><div><input type="text" class="inputSpread" id="addNewSpread" /></div></td>`,
+            `<td class="rule-cell width-60 text-center"><input type="checkbox" class="ckbEnable" id="addNewEnable" checked /></td>`,
         hasHostPermisson ? `<td class="width-60 text-center">${renderAddActionCell()}</td>` : '',
-        `</tr>`
+            `</tr>`
         ];
 
         return rowHtml.join("");
@@ -232,7 +250,7 @@
 
     function renderActionCell(policyId, index, isEditting) {
         return [
-            `<span class="ico-edit ${ isEditting ? "is-editting" : "" } mid-margin-right view-item" title="Edit" data-policyId="${policyId}" data-index="${index}" ></span>`,
+            `<span class="ico-edit ${isEditting ? "is-editting" : ""} mid-margin-right view-item" title="Edit" data-policyId="${policyId}" data-index="${index}" ></span>`,
             `<span class="ico-trash view-item" title="Delete" data-policyId="${policyId}"></span>`,
             `<span class="ico-save-16 mid-margin-right edit-item hidden" title="Save" data-policyId="${policyId}" data-index="${index}" ></span>`,
             `<span class="ico-cancel edit-item hidden" title="Cancel" data-policyId="${policyId}" data-index="${index}"></span>`
@@ -421,7 +439,7 @@
         if (spreadManagementHelper.isEmptyValue(newRuleTitle) || !spreadManagementHelper.isValidRule(cachedAddNewRule)) {
             return;
         }
-        
+
         CMS.disableInput();
         CMS.callAjax(
             this,
@@ -492,7 +510,7 @@
             decimalPlaces: 2,
             onInvalidPaste: 'ignore'
         }).set(editPolicy.Spread);
-        
+
         $(`#editSpread-${policyId}`).change(function () { cachedData[index].edittingValue.Spread = spreadInput.get(); });
         $(`#ckbEdit-${policyId}`).change(function () { cachedData[index].edittingValue.Enable = $(`#ckbEdit-${policyId}`).is(":checked"); });
 
@@ -502,7 +520,7 @@
             .click(saveEditItem);
         rowEdit.find("span[class*=ico-cancel]")
             .off("click")
-            .click(function () { spreadInput.remove(); cancelEditItem($(this))});
+            .click(function () { spreadInput.remove(); cancelEditItem($(this)) });
         $(`#editTitle-${policyId}`).focus();
     }
 

@@ -118,18 +118,22 @@
                 SpreadStyles,
                 FanexMultiSelectStyle,
                 FanexMultiSelectCustomStyle,
+                "~/Scripts/Libs/Datatable/jquery-datatables.min.css",
                 "~/Areas/CustomerClass/Styles/spreadManagement.less");
 
             bundles.Add(new ScriptBundle(SpreadScripts).Include(
                 FanexMultiSelectScript,
+                "~/Scripts/Libs/Datatable/jquery-datatables.min.js",
                 "~/Scripts/Libs/autoNumeric/autoNumeric-4.6.0.min.js",
                 "~/Areas/CustomerClass/Scripts/customerClassHelper.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagementHelper.js",
                 "~/Areas/CustomerClass/Scripts/editingGridHelper.js",
+                "~/Areas/CustomerClass/Scripts/spreadManagementUpload.js",
                 "~/Areas/CustomerClass/Scripts/spreadManagement.js"));
 
             return bundles;
         }
+
         private static BundleCollection RegisterPeakHourBundles(this BundleCollection bundles)
         {
             bundles.AddAndInclude(

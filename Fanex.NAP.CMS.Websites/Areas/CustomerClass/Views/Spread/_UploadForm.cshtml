@@ -1,0 +1,57 @@
+@using Fanex.Nap.CMS.CustomerClass.ViewModels
+
+<div class="form" id="uploadForm">
+    <div id="inlineMessageUpload" class="inline-message"></div>
+    <div class="form-row">
+        <div class="lbl-field width-60">
+            <label for="txtExcelFile">@Labels.ExcelFile</label>
+        </div>
+        <div class="edit-field">
+            <input type="text" id="txtExcelFile" readonly />
+            <label for="file" class="fileUpload gray-button">@Labels.Browse</label>
+            <input type="file" id="file" class="display-none"
+                   accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" />
+            <button type="button" class="gray-button" id="btnPopupUpload" disabled>@Labels.Submit</button>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="lbl-field width-60"></div>
+        <div class="edit-field width-280">
+            <div class="float-left">@Html.ActionLink(Labels.DownloadTemplate, "DownloadTemplate")</div>
+            <i class="float-right">@Labels.Max: @SpreadViewModel.UploadLimitRows.ToString("N0") rows</i>
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div class="tbl-freegrid-title grid-title margin-top display-none" id="tblErrorTitleBox">
+        <div class="error" id="tblErrorTitle"></div>
+        <div class="grid-toolbox">
+            <input type="button" id="btnExportExcel" class="btnExcel" title="Export to Excel">
+        </div>
+    </div>
+    <div class="tbl-freegrid-box display-none" id="tblErrorBox">
+        <table class="tbl-freegrid" id="tblError">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>@Labels.Title</th>
+                    <th>@Labels.CustomerClass</th>
+                    <th>@Labels.SportType</th>
+                    <th>@Labels.Site</th>
+                    <th>@Labels.Currency</th>
+                    <th>@Labels.Platform</th>
+                    <th>@Labels.Spread</th>
+                    <th>@Labels.Reason</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="display-none" id="validationResult">
+        <div class="tblErrorConfirmText validation-icon" id="validationResultText">Validation result: 1 invalid rows, 99 valid rows. Proceed with submission off valid rows?</div>
+        <div class="text-center">
+            <button type="button" class="gray-button" id="btnProceedUploadCancel">No</button>
+            <button type="button" class="blue-button" id="btnProceedUploadSubmit">Yes</button>
+        </div>
+    </div>
+</div>

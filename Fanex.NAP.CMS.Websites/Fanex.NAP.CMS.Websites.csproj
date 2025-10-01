@@ -472,6 +472,7 @@
     <Content Include="Areas\CustomerClass\Scripts\siteManagementUpload.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagement.js" />
     <Content Include="Areas\CustomerClass\Scripts\spreadManagementHelper.js" />
+    <Content Include="Areas\CustomerClass\Scripts\spreadManagementUpload.js" />
     <Content Include="Areas\CustomerClass\Styles\images\switch.png" />
     <Content Include="Areas\Customers\Scripts\betlist-abnormalBetTicket.js" />
     <Content Include="Areas\Customers\Scripts\CreditPayout\credit-payout-bulk-update.js" />
@@ -750,6 +751,8 @@
     <Content Include="Scripts\Libs\InputFormatter\number-commar-seperator.js" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.css" />
     <Content Include="Scripts\Libs\jquery-timepicker\jquery.timepicker.js" />
+    <Content Include="Scripts\Libs\Datatable\jquery-datatables.min.css" />
+    <Content Include="Scripts\Libs\Datatable\jquery-datatables.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery-1.8.2.min.js" />
     <Content Include="Scripts\Libs\jQuery\jquery.blockUI.1.33.min.js" />
     <Content Include="Scripts\Libs\MonthPicker\monPickr-0.0.3.js" />
@@ -855,7 +858,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Web.KLPROD.config" >
+    <Content Include="Web.KLPROD.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
@@ -995,7 +998,7 @@
     <Content Include="Content\Sites\manageRobots.less" />
     <Content Include="Content\Sites\manageSmartPunters.less" />
     <Content Include="Views\ManageSmartPunters\Index.cshtml" />
-    <Content Include="Web.AppSettings.KLPROD.config" >
+    <Content Include="Web.AppSettings.KLPROD.config">
       <DependentUpon>Web.AppSettings.config</DependentUpon>
     </Content>
     <Content Include="Web.AppSettings.prod.config">
@@ -1224,6 +1227,8 @@
     <Content Include="Areas\CustomerClass\Views\PeakHour\Index.cshtml" />
     <Content Include="Areas\CustomerClass\Views\PeakHour\_AdjustPeakHour.cshtml" />
     <Content Include="Areas\CustomerClass\Styles\peakHourManagement.less" />
+    <Content Include="Areas\CustomerClass\Views\Spread\_UploadForm.cshtml" />
+    <Content Include="App_Data\ExcelTemplates\UploadSpreadSettingTemplate.xlsx" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1296,8 +1301,8 @@
     <Content Include="Web.ConnectionString.KLSIMPLE.config">
       <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
-    <Content Include="Web.ConnectionString.KLPROD.config" >
-      <DependentUpon>Web.ConnectionString.config</DependentUpon>      
+    <Content Include="Web.ConnectionString.KLPROD.config">
+      <DependentUpon>Web.ConnectionString.config</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

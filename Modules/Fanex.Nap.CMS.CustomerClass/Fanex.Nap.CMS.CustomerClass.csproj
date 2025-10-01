@@ -208,6 +208,7 @@
     <Compile Include="Controllers\SportbookBaseController.cs" />
     <Compile Include="Controllers\SpreadController.cs" />
     <Compile Include="Controllers\UtilityOfferingController.cs" />
+    <Compile Include="Criteria\AddMultiSpreadRuleCriteria.cs" />
     <Compile Include="Criteria\AddPolicyCriteria.cs" />
     <Compile Include="Criteria\AddRuleCriteria.cs" />
     <Compile Include="Criteria\AddSpreadRuleCriteria.cs" />
@@ -258,10 +259,16 @@
     <Compile Include="Models\NonsportModel.cs" />
     <Compile Include="Models\PagedSiteSetting.cs" />
     <Compile Include="Models\PeakHourModel.cs" />
+    <Compile Include="Models\SpreadSetting.cs" />
+    <Compile Include="Models\SpreadSettingBodyExcelBuilder.cs" />
+    <Compile Include="Models\SpreadSettingExcel.cs" />
+    <Compile Include="Models\SpreadSettingBodyExcelPreparer.cs" />
     <Compile Include="Requests\PeakHour\AddEditPeakRequest.cs" />
     <Compile Include="Criteria\PeakHour\DeletePeakHourCriteria.cs" />
     <Compile Include="Responses\SearchPeakHourResponse.cs" />
     <Compile Include="Services\PeakHourService.cs" />
+    <Compile Include="Services\SpreadExporter.cs" />
+    <Compile Include="Services\SpreadUploadService.cs" />
     <Compile Include="ViewModels\PeakHourViewModel.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\PolicyItem.cs" />

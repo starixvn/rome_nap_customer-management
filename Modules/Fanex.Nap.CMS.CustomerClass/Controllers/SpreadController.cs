@@ -136,7 +136,7 @@
         {
             var userId = CurrentSession.UserId;
 
-            if (!HasRight(CMSFunctionKeys.SiteManagement, Constant.Policy.Host) || userId == 0)
+            if (!HasRight(CMSFunctionKeys.SpreadManagement, Constant.Policy.Host) || userId == 0)
             {
                 return Forbidden();
             }

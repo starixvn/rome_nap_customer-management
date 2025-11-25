@@ -462,4 +462,7 @@
   <data name="Exposure" xml:space="preserve">
     <value>Exposure</value>
   </data>
+  <data name="TurnoverControlLeagueGroupSoccer" xml:space="preserve">
+    <value>League Group Initial Setting - Soccer</value>
+  </data>
 </root>

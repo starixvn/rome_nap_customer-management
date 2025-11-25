@@ -64,6 +64,7 @@ namespace Fanex.Nap.CMS.Infrastructure
         public const string TurnoverMonitor = "TurnoverMonitor";
         public const string TurnoverMonitorSoccer = "TurnoverMonitor_Soccer";
         public const string TurnoverMonitorOtherSports = "TurnoverMonitor_OtherSports";
+        public const string TurnoverControlLeagueGroupSoccer = "LeagueGroupInitialSetting_Soccer";
 
         // Notification Setting
         public const string TurnoverControlNotification = "TurnoverControlNotification";

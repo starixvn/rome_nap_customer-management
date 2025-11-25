@@ -1,0 +1,83 @@
+﻿@using Newtonsoft.Json
+@using Fanex.NAP.CMS.TurnoverControl.Resources
+@{
+    ViewBag.Title = Labels.TurnoverControlLeagueGroupSoccer;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Head
+{
+    
+}
+@section Headline
+{
+    <div class="title">
+        <div>
+            <span class="curr">@ViewBag.Title</span>
+        </div>
+    </div>
+}
+<div class="filter-bar">
+    @using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
+    {
+        <div class="filter-row">
+            <div class="lbl-field col_3">
+                <label for="txt-username">@Labels.UserName</label>
+            </div>
+            <div class="edit-field col_8">
+                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50" />
+            </div>
+            <div class="lbl-field col_3">
+                <label>@Labels.Currency</label>
+            </div>
+            <div class="edit-field col_7">
+                <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
+            </div>
+            <div class="submit width-auto col_3">
+                <button type="submit" class="submit">@Labels.Search</button>
+            </div>
+            @if (Model.HostPermission)
+            {
+                <div class="submit width-auto col_3">
+                    <button type="button" id="btn-add" class="submit">@Labels.Add</button>
+                </div>
+            }
+        </div>
+        <div class="filter-row"></div>
+    }
+</div>
+<div id="div-result-message" class="inline-message"></div>
+<div id="globalsetting-list-container" class="content-grid">
+    <div id="globalsetting-list" class="freegrid display-none">
+    </div>
+</div>
+@if (Model.HostPermission)
+{
+    <div id="divPopupContent" class="display-none">
+    </div>
+}
+@section Foot
+{
+    <script type="text/javascript">
+        var hasHostPermission = @Model.HostPermission.ToString().ToLowerInvariant();
+        var viewResources = {
+            Symbol_No: '@Labels.Symbol_No',
+            UserName: '@Labels.UserName',
+            Level: '@Labels.Level',
+            Currency: '@Labels.Currency',
+            Max_Turnover: "@Labels.Max_Turnover",
+            Headline: "@Labels.Headline",
+            Delete: '@Labels.Delete',
+            GlobalSetting_EditMaxTurnover_Confirm: '@Labels.GlobalSetting_EditMaxTurnover_Confirm',
+            GlobalSetting_MaxTurnover_ExceedMaxTurnover: '@Labels.GlobalSetting_MaxTurnover_ExceedMaxTurnover',
+            GlobalSetting_DeleteMaxTurnover_Confirm:'@Labels.GlobalSetting_DeleteMaxTurnover_Confirm',
+            GlobalSetting_AddNewSMA_Title: '@Labels.GlobalSetting_AddNewSMA_Title',
+            Error_RequiredField: '@Labels.Error_RequiredField',
+            Error_InvalidValue: '@Fanex.NAP.CMS.Core.Resources.Messages.InvalidValueError',
+            RM: '@Labels.RM',
+            Lock: '@Labels.Lock'
+        };
+        var currencies = @Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));
+        var profiles = @Html.Raw(JsonConvert.SerializeObject(Model.Profiles, Formatting.None));
+    </script>
+    @Scripts.Render(TurnoverControlBundleConfig.GlobalSettingScripts)
+}

@@ -560,6 +560,7 @@
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ErrorSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ImportGlobalSetting.js" />
     <Content Include="Areas\TurnoverControl\Scripts\ImportGlobalSetting\ValidSetting.js" />
+    <Content Include="Areas\TurnoverControl\Scripts\LeagueGroupSetting\LeagueGroupSettingManager.js" />
     <Content Include="Areas\TurnoverControl\Scripts\TurnoverMonitor\ToggleLockEventSetting.js" />
     <Content Include="Areas\TurnoverControl\Styles\Images\0_20.png" />
     <Content Include="Areas\TurnoverControl\Styles\Images\1.jpg" />
@@ -1229,6 +1230,7 @@
     <Content Include="Areas\CustomerClass\Styles\peakHourManagement.less" />
     <Content Include="Areas\CustomerClass\Views\Spread\_UploadForm.cshtml" />
     <Content Include="App_Data\ExcelTemplates\UploadSpreadSettingTemplate.xlsx" />
+    <Content Include="Areas\TurnoverControl\Views\LeagueGroup\Index.cshtml" />
     <None Include="BundleTransformer.Configuration.xsd">
       <SubType>Designer</SubType>
     </None>

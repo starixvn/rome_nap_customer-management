@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Fanex.Nap.CMS.Infrastructure.Constants;
 using Fanex.Nap.CMS.Infrastructure.Models;
-using Fanex.Nap.CMS.Infrastructure.Services.Implementations;
 using Fanex.Nap.CMS.Infrastructure.Web;
 using Fanex.Nap.CMS.TurnoverControl.Criteria.GlobalSetting;
 using Fanex.Nap.CMS.TurnoverControl.Models;
@@ -13,10 +12,9 @@ using Fanex.Nap.CMS.TurnoverControl.Resources;
 
 namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 {
-    public class GlobalSettingService : ServiceBase, IGlobalSettingService
+    public class GlobalSettingService : TurnoverBaseService, IGlobalSettingService
     {
         private const string CurrencyCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Currency";
-        private const string ProfileCacheKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.Profile-{0}";
         private const string GlobalSettingSessionKey = "Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting.List-{0}";
 
         public IEnumerable<IdNameModel> GetCurrencies()
@@ -125,19 +123,7 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
         }
 
         public IEnumerable<IdNameModel> GetProfiles(short sportType)
-        {
-            var cacheKey = GetProfileCacheKey(sportType);
-            var profiles = CacheManager.Get<List<IdNameModel>>(cacheKey);
-
-            if (profiles == null)
-            {
-                profiles = DynamicRepository.Fetch<IdNameModel>(new GetProfileCriteria(sportType))
-                    .ToList();
-                CacheManager.Set(cacheKey, profiles);
-            }
-
-            return profiles;
-        }
+            => GetTOProfiles(sportType);
 
         public Result Add(string username, MaxTurnoverItem[] maxTurnovers, bool isGroupHeadline, short sportType, int userId, string ip)
         {
@@ -247,9 +233,6 @@ namespace Fanex.Nap.CMS.TurnoverControl.Services.GlobalSetting
 
             return result;
         }
-
-        private static string GetProfileCacheKey(short sportType)
-            => string.Format(ProfileCacheKey, sportType);
 
         private static void RemoveGlobalSettingSessionValue(short sportType)
             => SessionManager.Set(GetGlobalSettingSessionKey(sportType), null);

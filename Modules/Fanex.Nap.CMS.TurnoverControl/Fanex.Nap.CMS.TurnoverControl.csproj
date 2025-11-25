@@ -212,9 +212,11 @@
   <ItemGroup>
     <Compile Include="AppStart\TurnoverControlBundleConfig.cs" />
     <Compile Include="Constants\GroupNameConst.cs" />
+    <Compile Include="Constants\MarketConst.cs" />
     <Compile Include="Constants\SportTypeConst.cs" />
     <Compile Include="Controllers\GlobalSettingController.cs" />
     <Compile Include="Controllers\ImportGlobalSettingController.cs" />
+    <Compile Include="Controllers\TurnoverLeagueGroupController.cs" />
     <Compile Include="Controllers\TurnoverMonitorController.cs" />
     <Compile Include="Criteria\GlobalSetting\AddGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\GlobalSetting\CurrencyListCriteria.cs" />
@@ -225,6 +227,8 @@
     <Compile Include="Criteria\GlobalSetting\LockGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\ImportGlobalSetting\AddMultipleGlobalSettingCriteria.cs" />
     <Compile Include="Criteria\ImportGlobalSetting\ValidateGlobalSettingCriteria.cs" />
+    <Compile Include="Criteria\GetLeagueGroupCriteria.cs" />
+    <Compile Include="Criteria\LeagueGroupSetting\GetLeagueGroupSettingCriteria.cs" />
     <Compile Include="Criteria\NonQueryCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetHouseTurnoverCriteria.cs" />
     <Compile Include="Criteria\TurnoverMonitor\GetLeaguesCriteria.cs" />
@@ -243,6 +247,8 @@
     <Compile Include="Models\ImportGlobalSetting\GlobalSettingExcel.cs" />
     <Compile Include="Models\ImportGlobalSetting\ImportGlobalSettingModel.cs" />
     <Compile Include="Models\ImportGlobalSetting\MaxTurnoverExcel.cs" />
+    <Compile Include="Models\LeagueGroup.cs" />
+    <Compile Include="Models\LeagueGroupSetting\LeagueGroupSettingItem.cs" />
     <Compile Include="Models\LockSettingParam.cs" />
     <Compile Include="Models\TurnoverMonitor\BetTypeTurnover.cs" />
     <Compile Include="Models\TurnoverMonitor\MatchDTO.cs" />
@@ -259,12 +265,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\TurnoverBaseService.cs" />
     <Compile Include="Services\GlobalSetting\GlobalSettingExporter.cs" />
     <Compile Include="Services\GlobalSetting\GlobalSettingService.cs" />
     <Compile Include="Services\GlobalSetting\IGlobalSettingService.cs" />
     <Compile Include="Services\ImportGlobalSetting\GlobalSettingTemplateExporter.cs" />
     <Compile Include="Services\ImportGlobalSetting\IImportGlobalSettingService.cs" />
     <Compile Include="Services\ImportGlobalSetting\ImportGlobalSettingService.cs" />
+    <Compile Include="Services\LeagueGroupSetting\ITurnoverLeagueGroupService.cs" />
+    <Compile Include="Services\LeagueGroupSetting\TurnoverLeagueGroupService.cs" />
     <Compile Include="Services\TurnoverMonitor\ITurnoverMonitorService.cs" />
     <Compile Include="Services\TurnoverMonitor\TurnoverMonitorService.cs" />
     <Compile Include="TurnoverControlAreaRegistration.cs" />
@@ -274,6 +283,7 @@
     <Compile Include="ViewModels\GlobalSetting\GetListGlobalSettingViewModel.cs" />
     <Compile Include="ViewModels\GlobalSetting\GlobalSettingViewModel.cs" />
     <Compile Include="ViewModels\GlobalSetting\LockGlobalSettingViewModel.cs" />
+    <Compile Include="ViewModels\LeagueGroup\TurnoverLeagueGroupViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\CustomerTurnoverViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\HouseTurnoverViewModel.cs" />
     <Compile Include="ViewModels\TurnoverMonitor\LeagueViewModel.cs" />
@@ -313,6 +323,7 @@
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

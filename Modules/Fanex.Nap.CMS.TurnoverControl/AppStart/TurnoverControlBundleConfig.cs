@@ -15,12 +15,17 @@ namespace Fanex.Nap.CMS.TurnoverControl.AppStart
         public const string TurnoverMonitorScripts = "~/areas/turnovercontrol/turnovermonitorscripts";
         public const string TurnoverMonitorStyles = "~/areas/turnovercontrol/turnovermonitorstyles";
 
+        public const string LeagueGroupSettingScripts = "~/areas/turnovercontrol/globalsettingcripts";
+        public const string LeagueGroupSettingStyles = "~/areas/turnovercontrol/globalsettingstyles";
+
         public static void RegisterAll(BundleCollection bundles)
         {
             RegisterGlobalSettingBundles(bundles);
             RegisterImportGlobalSettingBundles(bundles);
 
             RegisterTurnoverMonitorBundles(bundles);
+
+            RegisterLeagueGroupSettingBundles(bundles);
         }
 
         private static void RegisterGlobalSettingBundles(BundleCollection bundles)
@@ -74,6 +79,19 @@ namespace Fanex.Nap.CMS.TurnoverControl.AppStart
                 TurnoverMonitorStyles,
                 "~/Content/Themes/PopupCustomStyle.less",
                 "~/Areas/TurnoverControl/Styles/TurnoverMonitor.less");
+        }
+
+        private static void RegisterLeagueGroupSettingBundles(BundleCollection bundles)
+        {
+            bundles
+                .Add(new ScriptBundle(LeagueGroupSettingScripts)
+                .Include(
+                    "~/Scripts/Libs/Popup/dialogbox.js",
+                    "~/Areas/TurnoverControl/Scripts/LeagueGroupSetting/testview.js"));
+            AddStyle(
+                bundles,
+                LeagueGroupSettingStyles,
+                "~/Areas/TurnoverControl/Styles/LeagueGroupSetting.less");
         }
 
         private static void AddStyle(BundleCollection bundles, string bundleVirtualPath, params string[] virtualPaths)

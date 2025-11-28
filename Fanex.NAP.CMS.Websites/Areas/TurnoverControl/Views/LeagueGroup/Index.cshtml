@@ -6,7 +6,7 @@
 }
 @section Head
 {
-    
+    @Styles.Render(TurnoverControlBundleConfig.LeagueGroupSettingStyles)
 }
 @section Headline
 {
@@ -17,48 +17,43 @@
     </div>
 }
 <div class="filter-bar">
-    @using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
-    {
-        <div class="filter-row">
-            <div class="lbl-field col_3">
-                <label for="txt-username">@Labels.UserName</label>
-            </div>
-            <div class="edit-field col_8">
-                <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50" />
-            </div>
-            <div class="lbl-field col_3">
-                <label>@Labels.Currency</label>
-            </div>
-            <div class="edit-field col_7">
-                <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
-            </div>
-            <div class="submit width-auto col_3">
-                <button type="submit" class="submit">@Labels.Search</button>
-            </div>
-            @if (Model.HostPermission)
-            {
-                <div class="submit width-auto col_3">
-                    <button type="button" id="btn-add" class="submit">@Labels.Add</button>
+    @*@using (Html.BeginForm("GetList", "GlobalSetting", FormMethod.Get, new { id = "formGlobalSetting", @class = "filter-form" }))
+        {
+            <div class="filter-row">
+                <div class="lbl-field col_3">
+                    <label for="txt-username">@Labels.UserName</label>
                 </div>
-            }
-        </div>
-        <div class="filter-row"></div>
-    }
+                <div class="edit-field col_8">
+                    <input type="text" id="txt-username" class="width-180" autocomplete="off" maxlength="50" />
+                </div>
+                <div class="lbl-field col_3">
+                    <label>@Labels.Currency</label>
+                </div>
+                <div class="edit-field col_7">
+                    <select id="ddl-currency" class="combobox-autocomplete ddl-currency width-100"></select>
+                </div>
+                <div class="submit width-auto col_3">
+                    <button type="submit" class="submit">@Labels.Search</button>
+                </div>
+                @if (Model.HostPermission)
+                {
+                    <div class="submit width-auto col_3">
+                        <button type="button" id="btn-add" class="submit">@Labels.Add</button>
+                    </div>
+                }
+            </div>
+            <div class="filter-row"></div>
+        }*@
 </div>
 <div id="div-result-message" class="inline-message"></div>
-<div id="globalsetting-list-container" class="content-grid">
-    <div id="globalsetting-list" class="freegrid display-none">
+<div id="leagueGroup-list-container" class="content-grid">
+    <div id="leagueGroup-list" class="freegrid">
     </div>
 </div>
-@if (Model.HostPermission)
-{
-    <div id="divPopupContent" class="display-none">
-    </div>
-}
+
 @section Foot
 {
     <script type="text/javascript">
-        var hasHostPermission = @Model.HostPermission.ToString().ToLowerInvariant();
         var viewResources = {
             Symbol_No: '@Labels.Symbol_No',
             UserName: '@Labels.UserName',
@@ -76,8 +71,7 @@
             RM: '@Labels.RM',
             Lock: '@Labels.Lock'
         };
-        var currencies = @Html.Raw(JsonConvert.SerializeObject(Model.Currencies, Formatting.None));
         var profiles = @Html.Raw(JsonConvert.SerializeObject(Model.Profiles, Formatting.None));
     </script>
-    @Scripts.Render(TurnoverControlBundleConfig.GlobalSettingScripts)
+    @Scripts.Render(TurnoverControlBundleConfig.LeagueGroupSettingScripts)
 }

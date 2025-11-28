@@ -133,13 +133,12 @@
             leagueSetting = data[i];
             columns = [
                 { Name: "ColNo", Value: numeral(i + startIndex).format(CMSConstants.NumberFormat.IntNumber) },
-                { Name: "Username", Value: customer.Username },
-                { Name: "Level", Value: customer.Level },
-                { Name: "Lock", Value: renderLockCell(hasHostPermission, customer) },
-                { Name: "Currency", Value: customer.Currency }];
+                { Name: "LeagueGroup", Value: leagueSetting.LeagueGroupName },
+                { Name: "Market", Value: leagueSetting.MarketName }
+            ];
 
             bodyData.push({
-                Columns: renderMaxTurnovers(hasHostPermission, columns, customer),
+                Columns: renderLeagueGroupMaxTurnovers(hasHostPermission, columns, leagueSetting),
                 CssClass: "customer-row"
             });
         }
@@ -147,27 +146,23 @@
         return bodyData;
     }
 
-    function renderLockCell(hasHostPermission, customer) {
-        var cell = ['<span class="', customer.IsLock ? "ico-lock" : "ico-unlock"];
+    function renderLockCell(hasHostPermission, leagueSetting) {
+        var cell = ['<span class="', leagueSetting.IsLock ? "ico-lock" : "ico-unlock"];
 
         if (hasHostPermission) {
             cell.push(' lock-action" ');
             cell.push('data-custid="');
-            cell.push(customer.CustId);
+            cell.push(leagueSetting.CustId);
             cell.push('" data-isgroupheadline="');
-            cell.push(customer.IsGroupHeadline);
+            cell.push(leagueSetting.IsGroupHeadline);
         }
 
         cell.push('"></span>');
         return cell.join("");
     }
 
-    function renderMaxTurnovers(hasHostPermission, columns, customer) {
-        var custId = customer.CustId;
-        var username = customer.Username;
-        var level = customer.Level;
-        var isGroupHeadline = customer.IsGroupHeadline;
-        var maxTurnovers = customer.MaxTurnovers;
+    function renderLeagueGroupMaxTurnovers(hasHostPermission, columns, leagueSetting) {
+        var maxTurnovers = leagueSetting.MaxTurnovers;
         var i = 0, item;
 
         if (hasHostPermission) {
@@ -175,7 +170,7 @@
                 item = maxTurnovers[i];
                 columns.push({
                     Name: "Profile" + item.ProfileId,
-                    Value: renderMaxTurnoverCell(custId, username, level, item.ProfileId, item.MaxTurnover, isGroupHeadline),
+                    Value: item.MaxTurnover,
                     CssClass: "edit-maxturnover-container"
                 });
             }
